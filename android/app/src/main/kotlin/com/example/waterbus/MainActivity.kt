@@ -1,4 +1,4 @@
-package com.example.waterbus
+package com.waterbus.wanted
 
 import io.flutter.embedding.android.FlutterActivity
 
