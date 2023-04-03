@@ -1,16 +1,47 @@
-# waterbus
+Online Meeting App using Flutter and WebRTC
 
-A new Flutter project.
+This is an Online Meeting App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
 
-## Getting Started
+Features
 
-This project is a starting point for a Flutter application.
+Audio and video communication
+Screen sharing
+Chat functionality
+File sharing
+Requirements
 
-A few resources to get you started if this is your first Flutter project:
+Flutter
+WebRTC
+Firebase
+Android Studio / Xcode
+Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Clone the repository git clone https://github.com/username/online-meeting-app.git
+Run flutter pub get to install dependencies
+Run the app using flutter run
+Configuration
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Create a Firebase project and add the necessary configuration files to the project
+Set up a WebRTC server for video and audio communication
+Update the app configuration file with the necessary information
+Usage
+
+Sign up for an account
+Create a new meeting
+Share the meeting link with other participants
+Start the meeting and utilize the available features
+Contributing
+
+Contributions to this project are welcome. To contribute, please follow the guidelines outlined in the CONTRIBUTING.md file.
+
+License
+
+This project is licensed under the MIT License. See the LICENSE file for more information.
+
+Contact
+
+For any inquiries or suggestions, please contact us at contact@onlinemeetingapp.com.
+
+Keywords
+
+Online Meeting, Flutter, WebRTC, Audio Communication, Video Communication, Screen Sharing, Chat Functionality, File Sharing, Firebase, Virtual Meetings, Conferences, Webinars.
