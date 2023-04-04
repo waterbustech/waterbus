@@ -14,6 +14,43 @@ The Waterbus concept has been used for physical transportation, but it can also 
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_2.png.webp?raw=true" width="49.5%"/>
 </p>
 
+## Directiory Structure
+
+```
+waterbus/
+├── packages/
+│   ├── auth/
+│   │   ├── lib/
+│   │   ├── test/
+│   │   └── pubspec.yaml
+│   ├── schedule/
+│   │   ├── lib/
+│   │   ├── test/
+│   │   └── pubspec.yaml
+│   ├── settings/
+│   │   ├── lib/
+│   │   ├── test/
+│   │   └── pubspec.yaml
+│   └── meeting/
+│       ├── lib/
+│       ├── test/
+│       └── pubspec.yaml
+├── lib/
+│   ├── main.dart
+│   ├── screens/
+│   ├── widgets/
+│   ├── services/
+│   └── utils/
+│   └── bloc/
+├── assets/
+├── test/
+├── android/
+├── ios/
+├── pubspec.yaml
+└── README.md
+
+```
+
 ## Features
 
 - Audio and video communication
