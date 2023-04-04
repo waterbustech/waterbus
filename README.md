@@ -8,6 +8,12 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/mindmap.png?raw=true" width="100%"/>
 
+#### Design Idea
+<p>
+<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_1.png.webp?raw=true" width="49.5%"/>
+<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_2.png.webp?raw=true" width="49.5%"/>
+</p>
+
 ## Features
 
 - Audio and video communication
