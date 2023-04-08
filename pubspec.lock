@@ -49,6 +49,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  auth:
+    dependency: "direct main"
+    description:
+      path: "packages/auth"
+      relative: true
+    source: path
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -435,6 +442,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  meeting:
+    dependency: "direct main"
+    description:
+      path: "packages/meeting"
+      relative: true
+    source: path
+    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -531,6 +545,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  schedule:
+    dependency: "direct main"
+    description:
+      path: "packages/schedule"
+      relative: true
+    source: path
+    version: "0.0.1"
+  settings:
+    dependency: "direct main"
+    description:
+      path: "packages/settings"
+      relative: true
+    source: path
+    version: "0.0.1"
   shelf:
     dependency: transitive
     description:
@@ -698,3 +726,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.19.6 <3.0.0"
+  flutter: ">=1.17.0"
