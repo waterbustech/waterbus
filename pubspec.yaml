@@ -45,7 +45,16 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  
+  # Code Generator
+  injectable_generator: ^2.1.5
+  build_runner: ^2.3.3
+  flutter_gen_runner: ^5.2.0
+
+  # Lints
   flutter_lints: ^2.0.0
+  import_sorter: ^4.6.0
+  dart_code_metrics: ^5.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
