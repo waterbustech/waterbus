@@ -12,6 +12,17 @@ The Waterbus concept has been used for physical transportation, but it can also 
 ## Idea of Waterbus
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/mindmap.png?raw=true" width="100%"/>
 
+## Features
+
+| Feature | Android | iOS |
+| :-------------: | :-------------:| :-----: |
+| Meeting | 🟢 | 🟢 |
+| Chat | 🟢 | 🟢 |
+| Raise hand | 🟢 | 🟢 |
+| Screen sharing | 🟢 | 🟢 |
+| Schedule | 🟢 | 🟢 |
+| Upload documents | 🟢 | 🟢 |
+
 #### Design Idea
 <p>
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_1.png.webp?raw=true" width="49.5%"/>
