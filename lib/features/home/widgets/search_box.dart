@@ -13,7 +13,6 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 
 // Project imports:
 
-
 class SearchBox extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final Function(String)? onChanged;
