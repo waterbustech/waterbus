@@ -36,16 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  # Waterbus packages
-  auth:
-    path: ./features/auth
-  schedule:
-    path: ./features/schedule
-  meeting:
-    path: ./features/meeting
-  settings:
-    path: ./features/settings
-
   # State management
   flutter_bloc: ^8.1.2
   bloc_concurrency: ^0.2.1
