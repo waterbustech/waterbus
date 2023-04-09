@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/features/app/app.dart';
-import 'package:waterbus/features/app/bloc/global_bloc.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,7 @@ void main(List<String> args) async {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     runApp(
       MultiBlocProvider(
-        providers: GlobalBloc.providers,
+        providers: AppBloc.providers,
         child: const App(),
       ),
     );

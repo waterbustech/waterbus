@@ -62,6 +62,8 @@ dependencies:
   firebase_performance: ^0.9.1
 
   # Utils
+  cached_network_image: ^3.2.3
+  flutter_phosphor_icons: ^0.0.1+6
   sizer: 
     path: ./packages/sizer
 
@@ -126,3 +128,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/helvetica-neue-light.ttf
+          weight: 300
+        - asset: assets/fonts/helvetica-neue-regular.ttf
+          weight: 400
+        - asset: assets/fonts/helvetica-neue-regular.ttf
+          weight: 600
+        - asset: assets/fonts/helvetica-neue-medium.ttf
+          weight: 700
