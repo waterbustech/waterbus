@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/home_header.dart';
+import 'package:waterbus/features/home/widgets/invitation_list.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
 import 'package:waterbus/features/home/widgets/search_box.dart';
 
@@ -26,7 +27,18 @@ class _HomeScreenState extends State<HomeScreen> {
             const HomeHeader(),
             SizedBox(height: 24.sp),
             const SearchBox(),
-            const MyMeetings(),
+            SizedBox(height: 12.sp),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: const [
+                    InvitationList(),
+                    MyMeetings(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

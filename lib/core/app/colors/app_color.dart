@@ -109,7 +109,7 @@ class AppColor {
       primaryLight: mCL,
       primaryDark: colorDarkGrey,
       background: colorPrimaryBlack,
-      focusColor: colorBlack,
+      focusColor: colorPrimary,
       unFocusColor: mC,
       accent: const Color(0xFF17c063),
       disabled: mCL,
@@ -119,7 +119,7 @@ class AppColor {
       button: const Color(0xFF657786),
       contentText1: mC,
       contentText2: mCM,
-      subText1: colorBlack,
+      subText1: mCM,
       subText2: mGB,
     );
   }
