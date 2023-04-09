@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
 
 class MyMeetings extends StatelessWidget {

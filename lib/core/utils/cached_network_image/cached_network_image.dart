@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/cached_network_image/default_image.dart';
 import 'package:waterbus/core/utils/cached_network_image/place_holder.dart';
 

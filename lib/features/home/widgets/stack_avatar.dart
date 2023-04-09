@@ -1,10 +1,13 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 
 class StackAvatar extends StatelessWidget {
