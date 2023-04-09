@@ -2,15 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
 
-class MeetingCard extends StatelessWidget {
-  const MeetingCard({super.key});
+class InvitationCard extends StatelessWidget {
+  const InvitationCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class MeetingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "🍔 QA engineers Team - Waterbus.io with high-quality app 🚀",
+            "🌸 Development Team 🌱",
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 13.sp,
@@ -39,12 +38,12 @@ class MeetingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TimeCard(
-                text: "Meet at 19:30",
+                text: "Starting at 10:30",
                 backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
               ),
               SizedBox(width: 4.sp),
               const TimeCard(
-                text: "05/04/2023",
+                text: "05/06/2023",
               ),
             ],
           ),
@@ -54,41 +53,48 @@ class MeetingCard extends StatelessWidget {
                 child: StackAvatar(
                   images: const [
                     'https://avatars.githubusercontent.com/u/60530946?v=4',
-                    'https://images.unsplash.com/photo-1533973860717-d49dfd14cf64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                   ],
                   size: 24.sp,
+                  maxImages: 3,
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                  vertical: 8.sp,
+                  horizontal: 15.sp,
+                  vertical: 6.5.sp,
                 ),
+                width: 66.sp,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.redAccent,
                   borderRadius: BorderRadius.circular(30.sp),
                 ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 4.sp),
-                    Text(
-                      "Join",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 9.sp,
-                          ),
-                    ),
-                    SizedBox(width: 4.sp),
-                    Icon(
-                      PhosphorIcons.arrow_right_bold,
-                      color: Colors.white,
-                      size: 12.sp,
-                    ),
-                  ],
+                child: Text(
+                  "Reject",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 9.sp,
+                      ),
+                ),
+              ),
+              SizedBox(width: 4.sp),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 6.5.sp,
+                ),
+                width: 66.sp,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(30.sp),
+                ),
+                child: Text(
+                  "Accept",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 9.sp,
+                      ),
                 ),
               ),
             ],
