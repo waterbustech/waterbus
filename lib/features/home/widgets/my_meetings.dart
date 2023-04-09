@@ -13,7 +13,7 @@ class MyMeetings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 14.sp),
+      margin: EdgeInsets.only(top: 8.sp),
       padding: EdgeInsets.symmetric(horizontal: 12.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

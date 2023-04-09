@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
+import 'package:waterbus/features/home/widgets/time_card.dart';
 
 class InvitationCard extends StatelessWidget {
   const InvitationCard({super.key});
@@ -33,22 +34,18 @@ class InvitationCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10.sp),
-            padding: EdgeInsets.symmetric(
-              horizontal: 14.sp,
-              vertical: 6.sp,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColorLight.withOpacity(.08),
-              borderRadius: BorderRadius.circular(30.sp),
-            ),
-            child: Text(
-              "Starting at 08:00 on Friday",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 9.sp,
-                  ),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TimeCard(
+                text: "Starting at 10:30",
+                backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
+              ),
+              SizedBox(width: 4.sp),
+              const TimeCard(
+                text: "05/06/2023",
+              ),
+            ],
           ),
           Row(
             children: [
@@ -67,7 +64,7 @@ class InvitationCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 15.sp,
-                  vertical: 8.sp,
+                  vertical: 6.5.sp,
                 ),
                 width: 66.sp,
                 alignment: Alignment.center,
@@ -85,7 +82,7 @@ class InvitationCard extends StatelessWidget {
               SizedBox(width: 4.sp),
               Container(
                 padding: EdgeInsets.symmetric(
-                  vertical: 8.sp,
+                  vertical: 6.5.sp,
                 ),
                 width: 66.sp,
                 alignment: Alignment.center,

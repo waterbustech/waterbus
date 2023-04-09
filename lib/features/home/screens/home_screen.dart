@@ -25,9 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             const HomeHeader(),
-            SizedBox(height: 24.sp),
+            SizedBox(height: 16.sp),
             const SearchBox(),
-            SizedBox(height: 12.sp),
+            SizedBox(height: 16.sp),
+            const Divider(thickness: .3, height: .3),
+            SizedBox(height: 10.sp),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
