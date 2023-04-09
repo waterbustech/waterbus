@@ -9,6 +9,12 @@ This is an Online Meeting App that utilizes Flutter and WebRTC technologies to p
 The Waterbus concept has been used for physical transportation, but it can also be applied to online meeting platforms. A virtual Waterbus platform would allow users to travel along a virtual route and stop at designated locations to attend meetings. The platform could also incorporate gamification elements for increased engagement. This approach provides a unique and fun way for remote teams to collaborate while acknowledging the trend of using waterways for transportation.
 </p>
 
+## Screenshots
+<p>
+<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/screenshot_1.jpeg?raw=true" width="49.5%"/>
+<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/screenshot_2.jpeg?raw=true" width="49.5%"/>
+</p>
+
 ## Idea of Waterbus
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/mindmap.png?raw=true" width="100%"/>
 
