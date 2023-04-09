@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 
