@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
@@ -64,31 +66,40 @@ class MeetingCard extends StatelessWidget {
                   size: 24.sp,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                  vertical: 8.sp,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30.sp),
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 4.sp),
-                    Text(
-                      "Join",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 9.sp,
-                          ),
-                    ),
-                    SizedBox(width: 4.sp),
-                    Icon(
-                      PhosphorIcons.arrow_right_bold,
-                      color: Colors.white,
-                      size: 12.sp,
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  showDialogWaterbus(
+                    alignment: Alignment.bottomCenter,
+                    paddingBottom: 56.sp,
+                    child: const DialogPrepareMeeting(),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                    vertical: 8.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(30.sp),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 4.sp),
+                      Text(
+                        "Join",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 9.sp,
+                            ),
+                      ),
+                      SizedBox(width: 4.sp),
+                      Icon(
+                        PhosphorIcons.arrow_right_bold,
+                        color: Colors.white,
+                        size: 12.sp,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
