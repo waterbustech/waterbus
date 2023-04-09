@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
-  auth:
-    dependency: "direct main"
-    description:
-      path: "features/auth"
-      relative: true
-    source: path
-    version: "0.0.1"
   bloc:
     dependency: transitive
     description:
@@ -655,13 +648,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
-  meeting:
-    dependency: "direct main"
-    description:
-      path: "features/meeting"
-      relative: true
-    source: path
-    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -854,20 +840,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  schedule:
-    dependency: "direct main"
-    description:
-      path: "features/schedule"
-      relative: true
-    source: path
-    version: "0.0.1"
-  settings:
-    dependency: "direct main"
-    description:
-      path: "features/settings"
-      relative: true
-    source: path
-    version: "0.0.1"
   shelf:
     dependency: transitive
     description:
