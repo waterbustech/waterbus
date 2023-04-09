@@ -38,13 +38,13 @@ dependencies:
 
   # Waterbus packages
   auth:
-    path: ./packages/auth
+    path: ./features/auth
   schedule:
-    path: ./packages/schedule
+    path: ./features/schedule
   meeting:
-    path: ./packages/meeting
+    path: ./features/meeting
   settings:
-    path: ./packages/settings
+    path: ./features/settings
 
   # State management
   flutter_bloc: ^8.1.2
@@ -60,6 +60,10 @@ dependencies:
   firebase_auth: ^4.4.0
   firebase_crashlytics: ^3.1.0
   firebase_performance: ^0.9.1
+
+  # Utils
+  sizer: 
+    path: ./packages/sizer
 
 dev_dependencies:
   flutter_test:

@@ -60,7 +60,7 @@ packages:
   auth:
     dependency: "direct main"
     description:
-      path: "packages/auth"
+      path: "features/auth"
       relative: true
     source: path
     version: "0.0.1"
@@ -602,7 +602,7 @@ packages:
   meeting:
     dependency: "direct main"
     description:
-      path: "packages/meeting"
+      path: "features/meeting"
       relative: true
     source: path
     version: "0.0.1"
@@ -729,14 +729,14 @@ packages:
   schedule:
     dependency: "direct main"
     description:
-      path: "packages/schedule"
+      path: "features/schedule"
       relative: true
     source: path
     version: "0.0.1"
   settings:
     dependency: "direct main"
     description:
-      path: "packages/settings"
+      path: "features/settings"
       relative: true
     source: path
     version: "0.0.1"
@@ -756,6 +756,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  sizer:
+    dependency: "direct main"
+    description:
+      path: "packages/sizer"
+      relative: true
+    source: path
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
