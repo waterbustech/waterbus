@@ -5,21 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/features/home/widgets/meeting_card.dart';
+import 'package:waterbus/features/home/widgets/invitation_card.dart';
 
-class MyMeetings extends StatelessWidget {
-  const MyMeetings({super.key});
+class InvitationList extends StatelessWidget {
+  const InvitationList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 14.sp),
       padding: EdgeInsets.symmetric(horizontal: 12.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Last Meetings",
+            "Invitations",
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -29,10 +28,10 @@ class MyMeetings extends StatelessWidget {
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: 40.sp),
-            itemCount: 2,
+            padding: EdgeInsets.zero,
+            itemCount: 1,
             itemBuilder: (context, index) {
-              return const MeetingCard();
+              return const InvitationCard();
             },
           ),
         ],
