@@ -46,6 +46,21 @@ dependencies:
   settings:
     path: ./packages/settings
 
+  # State management
+  flutter_bloc: ^8.1.2
+  bloc_concurrency: ^0.2.1
+
+  # Dependency Injection
+  get_it: ^7.2.0
+  injectable: ^2.1.1
+
+  # Firebase
+  firebase_core: ^2.9.0
+  firebase_messaging: ^14.4.0
+  firebase_auth: ^4.4.0
+  firebase_crashlytics: ^3.1.0
+  firebase_performance: ^0.9.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
