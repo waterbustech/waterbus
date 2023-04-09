@@ -57,11 +57,9 @@ class _SearchBoxState extends State<SearchBox> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           hintText: "Create or Enter code",
-          hintStyle: TextStyle(
-            color: mCM,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-          ),
+          hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontSize: 12.sp,
+              ),
           filled: true,
           fillColor: Theme.of(context).brightness == Brightness.dark
               ? Colors.black.withOpacity(.2)
