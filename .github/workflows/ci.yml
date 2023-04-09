@@ -3,7 +3,7 @@ name: Analyze project
 on:
   push:
     branches:
-      - "main"
+      - "*/*"
 
 jobs:
   test:
