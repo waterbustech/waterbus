@@ -1,4 +1,4 @@
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/App-Name2000%20px.png?raw=true"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
 
 # Waterbus: Online Meeting App using Flutter and WebRTC
 
