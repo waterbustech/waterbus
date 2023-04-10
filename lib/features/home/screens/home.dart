@@ -8,11 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/account/screens/account_screen.dart';
 
 // Project imports:
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
+import 'package:waterbus/features/notifications/screens/notifications_screen.dart';
+import 'package:waterbus/features/schedule/screens/schedule_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,9 +27,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
-    const Scaffold(),
-    const Scaffold(),
-    const Scaffold(),
+    const ScheduleScreen(),
+    const NotificationsScreen(),
+    const AccountScreen(),
   ];
 
   @override
