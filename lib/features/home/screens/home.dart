@@ -28,7 +28,6 @@ class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const ScheduleScreen(),
-    const ScheduleScreen(),
     const NotificationsScreen(),
     const AccountScreen(),
   ];
@@ -51,29 +50,24 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.house,
-                  iconDataSelected: PhosphorIcons.house_bold,
+                  iconData: PhosphorIcons.house_light,
+                  iconDataSelected: PhosphorIcons.house,
                   index: 0,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.rocket,
-                  iconDataSelected: PhosphorIcons.rocket_bold,
+                  iconData: PhosphorIcons.chat_teardrop_light,
+                  iconDataSelected: PhosphorIcons.chat_teardrop,
                   index: 1,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.chat_teardrop,
-                  iconDataSelected: PhosphorIcons.chat_teardrop_bold,
+                  iconData: PhosphorIcons.bell_simple_light,
+                  iconDataSelected: PhosphorIcons.bell_simple,
                   index: 2,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.bell_simple,
-                  iconDataSelected: PhosphorIcons.bell_simple_bold,
+                  iconData: PhosphorIcons.user_circle_light,
+                  iconDataSelected: PhosphorIcons.user_circle,
                   index: 3,
-                ),
-                _buildItemBottomBar(
-                  iconData: PhosphorIcons.user_circle,
-                  iconDataSelected: PhosphorIcons.user_circle_bold,
-                  index: 4,
                 ),
               ],
             ),
@@ -105,22 +99,14 @@ class _HomeState extends State<Home> {
             final int currentIndex = state.props[0];
             return ColoredBox(
               color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ColoredBox(
-                    color: Colors.transparent,
-                    child: Icon(
-                      currentIndex == index ? iconDataSelected : iconData,
-                      size: 21.sp,
-                      color: currentIndex == index
-                          ? Theme.of(context)
-                              .bottomNavigationBarTheme
-                              .selectedItemColor
-                          : Theme.of(context).disabledColor,
-                    ),
-                  ),
-                ],
+              child: Icon(
+                currentIndex == index ? iconDataSelected : iconData,
+                size: 20.sp,
+                color: currentIndex == index
+                    ? Theme.of(context)
+                        .bottomNavigationBarTheme
+                        .selectedItemColor
+                    : Theme.of(context).disabledColor,
               ),
             );
           },
