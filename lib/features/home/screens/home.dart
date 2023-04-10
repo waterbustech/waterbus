@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const ScheduleScreen(),
+    const ScheduleScreen(),
     const NotificationsScreen(),
     const AccountScreen(),
   ];
@@ -55,19 +56,24 @@ class _HomeState extends State<Home> {
                   index: 0,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.calendar,
-                  iconDataSelected: PhosphorIcons.calendar_bold,
+                  iconData: PhosphorIcons.rocket,
+                  iconDataSelected: PhosphorIcons.rocket_bold,
                   index: 1,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.bell,
-                  iconDataSelected: PhosphorIcons.bell_bold,
+                  iconData: PhosphorIcons.chat_teardrop,
+                  iconDataSelected: PhosphorIcons.chat_teardrop_bold,
                   index: 2,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.user,
-                  iconDataSelected: PhosphorIcons.user_bold,
+                  iconData: PhosphorIcons.bell_simple,
+                  iconDataSelected: PhosphorIcons.bell_simple_bold,
                   index: 3,
+                ),
+                _buildItemBottomBar(
+                  iconData: PhosphorIcons.user_circle,
+                  iconDataSelected: PhosphorIcons.user_circle_bold,
+                  index: 4,
                 ),
               ],
             ),
