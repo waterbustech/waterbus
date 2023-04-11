@@ -10,6 +10,7 @@ import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/features/home/screens/home.dart';
+import 'package:waterbus/features/meeting/screens/meeting_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -28,6 +29,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const Scaffold(),
+        );
+
+      // Meeting
+      case Routes.meetingRoute:
+        return _buildRoute(
+          settings,
+          const MeetingScreen(),
         );
 
       default:

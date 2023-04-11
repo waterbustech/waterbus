@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -10,9 +11,13 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/features/account/screens/account_screen.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/screens/chats_screen.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
+import 'package:waterbus/features/notifications/screens/notifications_screen.dart';
+import 'package:waterbus/features/schedule/screens/schedule_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,49 +29,72 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
-    const Scaffold(),
-    const Scaffold(),
-    const Scaffold(),
+    const ScheduleScreen(),
+    const ChatsScreen(),
+    const NotificationsScreen(),
+    const AccountScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: SafeArea(
         bottom: false,
-        child: Container(
-          height: Platform.isIOS ? 64.sp : 60.sp,
-          padding: EdgeInsets.symmetric(horizontal: 6.5.sp).add(
-            EdgeInsets.only(bottom: Platform.isIOS ? 14.sp : 12.sp),
-          ),
-          alignment: Alignment.center,
-          child: Container(
-            width: SizerUtil.isTablet ? 60.w : double.infinity,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildItemBottomBar(
-                  iconData: PhosphorIcons.house,
-                  iconDataSelected: PhosphorIcons.house_bold,
-                  index: 0,
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 15,
+              sigmaY: 30,
+            ),
+            child: Container(
+              height: Platform.isIOS ? 64.sp : 60.sp,
+              padding: EdgeInsets.symmetric(horizontal: 10.sp).add(
+                EdgeInsets.only(
+                  bottom: Platform.isIOS ? 0 : 12.sp,
+                  top: 10.sp,
                 ),
-                _buildItemBottomBar(
-                  iconData: PhosphorIcons.calendar,
-                  iconDataSelected: PhosphorIcons.calendar_bold,
-                  index: 1,
+              ),
+              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(.8),
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: SizerUtil.isTablet ? 60.w : double.infinity,
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildItemBottomBar(
+                      iconData: PhosphorIcons.house_light,
+                      iconDataSelected: PhosphorIcons.house,
+                      label: 'Home',
+                    ),
+                    _buildItemBottomBar(
+                      iconData: PhosphorIcons.calendar_check_light,
+                      iconDataSelected: PhosphorIcons.calendar_check,
+                      label: 'Schedule',
+                      index: 1,
+                    ),
+                    _buildItemBottomBar(
+                      iconData: PhosphorIcons.chats_teardrop_light,
+                      iconDataSelected: PhosphorIcons.chats_teardrop,
+                      label: 'Chats',
+                      index: 2,
+                    ),
+                    _buildItemBottomBar(
+                      iconData: PhosphorIcons.bell_simple_light,
+                      iconDataSelected: PhosphorIcons.bell_simple,
+                      label: 'Notifications',
+                      index: 3,
+                    ),
+                    _buildItemBottomBar(
+                      iconData: PhosphorIcons.user_circle_light,
+                      iconDataSelected: PhosphorIcons.user_circle,
+                      label: 'Profile',
+                      index: 4,
+                    ),
+                  ],
                 ),
-                _buildItemBottomBar(
-                  iconData: PhosphorIcons.bell,
-                  iconDataSelected: PhosphorIcons.bell_bold,
-                  index: 2,
-                ),
-                _buildItemBottomBar(
-                  iconData: PhosphorIcons.user,
-                  iconDataSelected: PhosphorIcons.user_bold,
-                  index: 3,
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -82,6 +110,7 @@ class _HomeState extends State<Home> {
   Widget _buildItemBottomBar({
     required IconData iconData,
     required IconData iconDataSelected,
+    required String label,
     int index = 0,
   }) {
     return Expanded(
@@ -97,13 +126,24 @@ class _HomeState extends State<Home> {
             return ColoredBox(
               color: Colors.transparent,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ColoredBox(
-                    color: Colors.transparent,
-                    child: Icon(
-                      currentIndex == index ? iconDataSelected : iconData,
-                      size: 21.sp,
+                  Icon(
+                    currentIndex == index ? iconDataSelected : iconData,
+                    size: 20.sp,
+                    color: currentIndex == index
+                        ? Theme.of(context)
+                            .bottomNavigationBarTheme
+                            .selectedItemColor
+                        : Theme.of(context).disabledColor,
+                  ),
+                  SizedBox(height: 3.sp),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 8.5.sp,
+                      fontWeight: currentIndex == index
+                          ? FontWeight.w600
+                          : FontWeight.normal,
                       color: currentIndex == index
                           ? Theme.of(context)
                               .bottomNavigationBarTheme

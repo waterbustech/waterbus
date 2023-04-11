@@ -19,7 +19,7 @@ class MyMeetings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Last Meetings",
+            "My Meetings",
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
