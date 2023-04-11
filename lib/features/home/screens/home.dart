@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
                       iconData: PhosphorIcons.house_light,
                       iconDataSelected: PhosphorIcons.house,
                       label: 'Home',
-                      index: 0,
                     ),
                     _buildItemBottomBar(
                       iconData: PhosphorIcons.calendar_check_light,

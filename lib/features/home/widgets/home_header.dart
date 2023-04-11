@@ -22,8 +22,6 @@ class HomeHeader extends StatelessWidget {
         children: [
           Expanded(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomNetworkImage(
                   height: 35.sp,

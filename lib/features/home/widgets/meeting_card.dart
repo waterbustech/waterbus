@@ -38,7 +38,6 @@ class MeetingCard extends StatelessWidget {
                 ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TimeCard(
                 text: "Meet at 19:30",

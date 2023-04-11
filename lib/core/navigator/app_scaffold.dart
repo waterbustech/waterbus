@@ -12,9 +12,9 @@ class AppScaffold extends StatefulWidget {
   final Widget child;
 
   const AppScaffold({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _AppScaffoldState();
@@ -48,18 +48,20 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(builder: (context, orientation) {
-      return SafeArea(
-        top: false,
-        bottom: false,
-        child: Platform.isIOS
-            ? _child
-            : WillPopScope(
-                onWillPop: _goBackward,
-                child: _child,
-              ),
-      );
-    });
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return SafeArea(
+          top: false,
+          bottom: false,
+          child: Platform.isIOS
+              ? _child
+              : WillPopScope(
+                  onWillPop: _goBackward,
+                  child: _child,
+                ),
+        );
+      },
+    );
   }
 
   Widget get _child {
@@ -81,11 +83,11 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
               if (Platform.isIOS && ![].contains(AppNavigator.currentRoute())) {
                 //set the sensitivity for your ios gesture anywhere between 10-50 is good
 
-                int sensitivity = 15;
+                const int sensitivity = 15;
 
                 if (details.delta.dx > sensitivity) {
                   //SWIPE FROM RIGHT DETECTION
-                  bool canBackward = await _goBackward();
+                  final bool canBackward = await _goBackward();
                   if (canBackward) {
                     AppNavigator.pop();
                   }
