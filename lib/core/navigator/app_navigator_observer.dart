@@ -45,9 +45,10 @@ class AppNavigatorObserver extends NavigatorObserver {
   void updateCurrentRouteToBloc(String routeName) {}
 
   // Static
-  static String? get currentRouteName =>
-      routeNames.lastWhere((route) => route != null && route.isNotEmpty,
-          orElse: () => null,);
+  static String? get currentRouteName => routeNames.lastWhere(
+        (route) => route != null && route.isNotEmpty,
+        orElse: () => null,
+      );
 
   static void resetRoutes() {
     routeNames = [];

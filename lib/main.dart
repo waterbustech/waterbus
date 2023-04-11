@@ -20,9 +20,11 @@ void main(List<String> args) async {
   PaintingBinding.instance.imageCache.maximumSizeBytes =
       1024 * 1024 * 300; // 300 MB
   await runZonedGuarded(() async {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ),);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     await Application.initialAppLication();
 
     await Firebase.initializeApp();
