@@ -33,6 +33,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                     width: 265.sp,
                     height: 200.sp,
                     decoration: BoxDecoration(
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(12.sp),
                       image: const DecorationImage(
                         image: NetworkImage(
@@ -79,7 +80,7 @@ class DialogPrepareMeeting extends StatelessWidget {
               ),
               SizedBox(height: 16.sp),
               Text(
-                "🍔 QA engineers Team - Waterbus.io with high-quality app 🚀",
+                "🚀 QA engineers Team - Waterbus.io with high-quality app",
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -92,14 +93,20 @@ class DialogPrepareMeeting extends StatelessWidget {
                 children: [
                   TimeCard(
                     text: "Meet at 19:30",
+                    iconData: PhosphorIcons.clock,
                     backgroundColor:
                         Theme.of(context).primaryColor.withOpacity(.2),
                   ),
                   SizedBox(width: 4.sp),
-                  const TimeCard(text: "05/04/2023"),
+                  TimeCard(
+                    text: "05/04/2023",
+                    iconData: PhosphorIcons.calendar,
+                    backgroundColor: Colors.greenAccent.withOpacity(.25),
+                  ),
                   SizedBox(width: 4.sp),
                   const TimeCard(
                     text: "Share",
+                    iconData: PhosphorIcons.export,
                     backgroundColor: Colors.green,
                   ),
                 ],

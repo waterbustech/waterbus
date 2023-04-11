@@ -6,11 +6,13 @@ import 'package:sizer/sizer.dart';
 
 class TimeCard extends StatelessWidget {
   final String text;
+  final IconData? iconData;
   final Color? backgroundColor;
   const TimeCard({
     super.key,
     required this.text,
     this.backgroundColor,
+    this.iconData,
   });
 
   @override
@@ -18,7 +20,7 @@ class TimeCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.sp),
       padding: EdgeInsets.symmetric(
-        horizontal: 14.sp,
+        horizontal: 10.sp,
         vertical: 6.sp,
       ),
       decoration: BoxDecoration(
@@ -26,11 +28,23 @@ class TimeCard extends StatelessWidget {
             Theme.of(context).primaryColorLight.withOpacity(.08),
         borderRadius: BorderRadius.circular(30.sp),
       ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: 9.sp,
+      child: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 4.sp),
+            child: Icon(
+              iconData,
+              size: 12.sp,
+              color: Colors.white,
             ),
+          ),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: 9.sp,
+                ),
+          ),
+        ],
       ),
     );
   }

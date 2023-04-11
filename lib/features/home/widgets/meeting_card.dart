@@ -30,10 +30,10 @@ class MeetingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "🍔 QA engineers Team - Waterbus.io with high-quality app 🚀",
+            "🚀 QA engineers Team - Waterbus.io with high-quality app",
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 13.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
           ),
@@ -42,11 +42,14 @@ class MeetingCard extends StatelessWidget {
             children: [
               TimeCard(
                 text: "Meet at 19:30",
+                iconData: PhosphorIcons.clock,
                 backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
               ),
               SizedBox(width: 4.sp),
-              const TimeCard(
+              TimeCard(
                 text: "05/04/2023",
+                iconData: PhosphorIcons.calendar,
+                backgroundColor: Colors.greenAccent.withOpacity(.25),
               ),
             ],
           ),
@@ -63,7 +66,7 @@ class MeetingCard extends StatelessWidget {
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                   ],
-                  size: 22.sp,
+                  size: 24.sp,
                 ),
               ),
               GestureDetector(
