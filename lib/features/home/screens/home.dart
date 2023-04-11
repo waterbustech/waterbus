@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const ScheduleScreen(),
+    const ScheduleScreen(),
     const NotificationsScreen(),
     const AccountScreen(),
   ];
@@ -39,10 +40,13 @@ class _HomeState extends State<Home> {
         bottom: false,
         child: Container(
           height: Platform.isIOS ? 64.sp : 60.sp,
-          padding: EdgeInsets.symmetric(horizontal: 6.5.sp).add(
-            EdgeInsets.only(bottom: Platform.isIOS ? 14.sp : 12.sp),
+          padding: EdgeInsets.symmetric(horizontal: 10.sp).add(
+            EdgeInsets.only(
+              bottom: Platform.isIOS ? 0 : 12.sp,
+              top: 12.sp,
+            ),
           ),
-          alignment: Alignment.center,
+          alignment: Alignment.bottomCenter,
           child: Container(
             width: SizerUtil.isTablet ? 60.w : double.infinity,
             alignment: Alignment.center,
@@ -55,19 +59,24 @@ class _HomeState extends State<Home> {
                   index: 0,
                 ),
                 _buildItemBottomBar(
-                  iconData: PhosphorIcons.chat_teardrop_light,
-                  iconDataSelected: PhosphorIcons.chat_teardrop,
+                  iconData: PhosphorIcons.calendar_check_light,
+                  iconDataSelected: PhosphorIcons.calendar_check,
                   index: 1,
+                ),
+                _buildItemBottomBar(
+                  iconData: PhosphorIcons.chats_teardrop_light,
+                  iconDataSelected: PhosphorIcons.chats_teardrop,
+                  index: 2,
                 ),
                 _buildItemBottomBar(
                   iconData: PhosphorIcons.bell_simple_light,
                   iconDataSelected: PhosphorIcons.bell_simple,
-                  index: 2,
+                  index: 3,
                 ),
                 _buildItemBottomBar(
                   iconData: PhosphorIcons.user_circle_light,
                   iconDataSelected: PhosphorIcons.user_circle,
-                  index: 3,
+                  index: 4,
                 ),
               ],
             ),
@@ -99,14 +108,31 @@ class _HomeState extends State<Home> {
             final int currentIndex = state.props[0];
             return ColoredBox(
               color: Colors.transparent,
-              child: Icon(
-                currentIndex == index ? iconDataSelected : iconData,
-                size: 20.sp,
-                color: currentIndex == index
-                    ? Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .selectedItemColor
-                    : Theme.of(context).disabledColor,
+              child: Column(
+                children: [
+                  Icon(
+                    currentIndex == index ? iconDataSelected : iconData,
+                    size: 21.sp,
+                    color: currentIndex == index
+                        ? Theme.of(context)
+                            .bottomNavigationBarTheme
+                            .selectedItemColor
+                        : Theme.of(context).disabledColor,
+                  ),
+                  SizedBox(height: 4.sp),
+                  Container(
+                    height: 3.sp,
+                    width: 3.sp,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: currentIndex == index
+                          ? Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .selectedItemColor
+                          : Colors.transparent,
+                    ),
+                  ),
+                ],
               ),
             );
           },

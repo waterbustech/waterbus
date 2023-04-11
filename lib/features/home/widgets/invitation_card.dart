@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
-import 'package:waterbus/features/home/widgets/time_card.dart';
 
 class InvitationCard extends StatelessWidget {
   const InvitationCard({super.key});
@@ -27,26 +27,30 @@ class InvitationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "🌸 Development Team 🌱",
+            "Research Plan for WebRTC conference meeting app 🌱",
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 13.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TimeCard(
-                text: "Starting at 10:30",
-                backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
-              ),
-              SizedBox(width: 4.sp),
-              const TimeCard(
-                text: "05/06/2023",
-              ),
-            ],
+          SizedBox(height: 4.sp),
+          Text(
+            "10:00 AM - 11:00 AM",
+            maxLines: 1,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: 10.sp,
+                ),
           ),
+          SizedBox(height: 4.sp),
+          Text(
+            "Host: lambiengcode",
+            maxLines: 1,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontSize: 10.sp,
+                ),
+          ),
+          SizedBox(height: 4.sp),
           Row(
             children: [
               Expanded(
@@ -57,44 +61,35 @@ class InvitationCard extends StatelessWidget {
                     'https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                   ],
-                  size: 22.sp,
-                  maxImages: 3,
+                  size: 24.sp,
+                  maxImages: 5,
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15.sp,
-                  vertical: 6.5.sp,
-                ),
-                width: 66.sp,
+                height: 34.sp,
+                width: 34.sp,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
                   color: Colors.redAccent,
-                  borderRadius: BorderRadius.circular(30.sp),
                 ),
-                child: Text(
-                  "Reject",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 9.sp,
-                      ),
+                child: Icon(
+                  PhosphorIcons.x,
+                  size: 16.sp,
                 ),
               ),
-              SizedBox(width: 4.sp),
+              SizedBox(width: 8.sp),
               Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 6.5.sp,
-                ),
-                width: 66.sp,
+                height: 34.sp,
+                width: 34.sp,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
                   color: Colors.green,
-                  borderRadius: BorderRadius.circular(30.sp),
                 ),
-                child: Text(
-                  "Accept",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 9.sp,
-                      ),
+                child: Icon(
+                  PhosphorIcons.check,
+                  size: 16.sp,
                 ),
               ),
             ],
