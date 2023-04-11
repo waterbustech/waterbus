@@ -62,7 +62,6 @@ class InvitationCard extends StatelessWidget {
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                   ],
                   size: 24.sp,
-                  maxImages: 5,
                 ),
               ),
               Container(

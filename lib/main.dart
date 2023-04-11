@@ -22,7 +22,7 @@ void main(List<String> args) async {
   await runZonedGuarded(() async {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-    ));
+    ),);
     await Application.initialAppLication();
 
     await Firebase.initializeApp();

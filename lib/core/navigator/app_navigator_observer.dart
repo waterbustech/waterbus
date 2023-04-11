@@ -33,7 +33,8 @@ class AppNavigatorObserver extends NavigatorObserver {
   @override
   void didRemove(Route route, Route? previousRoute) {
     super.didRemove(route, previousRoute);
-    int indexOfRoute = routeNames.indexOf(route.settings.name ?? '');
+
+    final int indexOfRoute = routeNames.indexOf(route.settings.name ?? '');
     if (indexOfRoute != -1) {
       routeNames.removeRange(indexOfRoute, routeNames.length);
     }
@@ -46,7 +47,7 @@ class AppNavigatorObserver extends NavigatorObserver {
   // Static
   static String? get currentRouteName =>
       routeNames.lastWhere((route) => route != null && route.isNotEmpty,
-          orElse: () => null);
+          orElse: () => null,);
 
   static void resetRoutes() {
     routeNames = [];
