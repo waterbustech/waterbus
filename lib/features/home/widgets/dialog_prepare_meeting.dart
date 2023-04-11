@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/button_action_call.dart';
@@ -108,34 +111,39 @@ class DialogPrepareMeeting extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.sp),
-              Container(
-                width: 80.sp,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                  vertical: 8.sp,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30.sp),
-                ),
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 4.sp),
-                    Text(
-                      "Start",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 9.sp,
-                          ),
-                    ),
-                    SizedBox(width: 4.sp),
-                    Icon(
-                      PhosphorIcons.arrow_right_bold,
-                      color: Colors.white,
-                      size: 12.sp,
-                    ),
-                  ],
+              GestureWrapper(
+                onTap: () {
+                  AppNavigator.push(Routes.meetingRoute);
+                },
+                child: Container(
+                  width: 80.sp,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                    vertical: 8.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(30.sp),
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 4.sp),
+                      Text(
+                        "Start",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 9.sp,
+                            ),
+                      ),
+                      SizedBox(width: 4.sp),
+                      Icon(
+                        PhosphorIcons.arrow_right_bold,
+                        color: Colors.white,
+                        size: 12.sp,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 8.sp),

@@ -13,6 +13,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/features/account/screens/account_screen.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/screens/chats_screen.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/notifications/screens/notifications_screen.dart';
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const ScheduleScreen(),
-    const ScheduleScreen(),
+    const ChatsScreen(),
     const NotificationsScreen(),
     const AccountScreen(),
   ];
