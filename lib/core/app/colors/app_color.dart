@@ -110,7 +110,7 @@ class AppColor {
       primaryDark: colorDarkGrey,
       background: colorPrimaryBlack,
       focusColor: colorPrimary,
-      unFocusColor: mC,
+      unFocusColor: mCH,
       accent: const Color(0xFF17c063),
       disabled: mCL,
       error: const Color(0xFFFF7466),

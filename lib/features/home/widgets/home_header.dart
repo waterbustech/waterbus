@@ -44,7 +44,7 @@ class HomeHeader extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "Senior at Askany",
+                      "Senior at Waterbus",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 10.5.sp,
                           ),
