@@ -30,23 +30,25 @@ class MeetingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "🍔 QA engineers Team - Waterbus.io with high-quality app 🚀",
+            "🚀 QA engineers Team - Waterbus.io with high-quality app",
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 13.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TimeCard(
                 text: "Meet at 19:30",
+                iconData: PhosphorIcons.clock,
                 backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
               ),
               SizedBox(width: 4.sp),
-              const TimeCard(
+              TimeCard(
                 text: "05/04/2023",
+                iconData: PhosphorIcons.calendar,
+                backgroundColor: Colors.greenAccent.withOpacity(.25),
               ),
             ],
           ),

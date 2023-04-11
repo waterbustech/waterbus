@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -22,8 +22,6 @@ class HomeHeader extends StatelessWidget {
         children: [
           Expanded(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomNetworkImage(
                   height: 35.sp,
@@ -44,7 +42,7 @@ class HomeHeader extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "Senior at Askany",
+                      "Senior at Waterbus",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 10.5.sp,
                           ),
@@ -62,10 +60,10 @@ class HomeHeader extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.centerRight,
-            child: Icon(
-              PhosphorIcons.sun,
-              color: Theme.of(context).primaryColor,
-              size: 22.sp,
+            child: Image.asset(
+              Assets.icons.icNewMeeting.path,
+              height: 22.sp,
+              fit: BoxFit.fitHeight,
             ),
           ),
         ],

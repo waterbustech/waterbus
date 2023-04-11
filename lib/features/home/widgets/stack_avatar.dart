@@ -29,10 +29,7 @@ class StackAvatar extends StatelessWidget {
             .sublist(0, min(maxImages, images.length))
             .asMap()
             .map((index, img) => MapEntry(index, _buildAvatar(context, index)))
-            .values
-            .toList(),
-        // .reversed
-        // .toList(),
+            .values,
         images.length > maxImages
             ? Container(
                 height: size,

@@ -6,6 +6,9 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/button_action_call.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
@@ -24,7 +27,6 @@ class DialogPrepareMeeting extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.sp),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(
@@ -33,6 +35,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                     width: 265.sp,
                     height: 200.sp,
                     decoration: BoxDecoration(
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(12.sp),
                       image: const DecorationImage(
                         image: NetworkImage(
@@ -47,9 +50,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                     left: 0.0,
                     right: 0.0,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         const ButtonActionCall(
                           icon: PhosphorIcons.microphone_bold,
@@ -75,11 +76,10 @@ class DialogPrepareMeeting extends StatelessWidget {
                   'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                 ],
                 size: 32.sp,
-                maxImages: 5,
               ),
               SizedBox(height: 16.sp),
               Text(
-                "🍔 QA engineers Team - Waterbus.io with high-quality app 🚀",
+                "🚀 QA engineers Team - Waterbus.io with high-quality app",
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -92,47 +92,58 @@ class DialogPrepareMeeting extends StatelessWidget {
                 children: [
                   TimeCard(
                     text: "Meet at 19:30",
+                    iconData: PhosphorIcons.clock,
                     backgroundColor:
                         Theme.of(context).primaryColor.withOpacity(.2),
                   ),
                   SizedBox(width: 4.sp),
-                  const TimeCard(text: "05/04/2023"),
+                  TimeCard(
+                    text: "05/04/2023",
+                    iconData: PhosphorIcons.calendar,
+                    backgroundColor: Colors.greenAccent.withOpacity(.25),
+                  ),
                   SizedBox(width: 4.sp),
                   const TimeCard(
                     text: "Share",
+                    iconData: PhosphorIcons.export,
                     backgroundColor: Colors.green,
                   ),
                 ],
               ),
               SizedBox(height: 8.sp),
-              Container(
-                width: 80.sp,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                  vertical: 8.sp,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30.sp),
-                ),
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 4.sp),
-                    Text(
-                      "Start",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 9.sp,
-                          ),
-                    ),
-                    SizedBox(width: 4.sp),
-                    Icon(
-                      PhosphorIcons.arrow_right_bold,
-                      color: Colors.white,
-                      size: 12.sp,
-                    ),
-                  ],
+              GestureWrapper(
+                onTap: () {
+                  AppNavigator.push(Routes.meetingRoute);
+                },
+                child: Container(
+                  width: 80.sp,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                    vertical: 8.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(30.sp),
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 4.sp),
+                      Text(
+                        "Start",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 9.sp,
+                            ),
+                      ),
+                      SizedBox(width: 4.sp),
+                      Icon(
+                        PhosphorIcons.arrow_right_bold,
+                        color: Colors.white,
+                        size: 12.sp,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 8.sp),
