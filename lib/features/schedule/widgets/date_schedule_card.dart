@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/features/schedule/widgets/schedule_card.dart';
