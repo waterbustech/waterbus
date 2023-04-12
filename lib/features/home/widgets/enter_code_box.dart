@@ -11,24 +11,26 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 
-// Project imports:
-
-class SearchBox extends StatefulWidget {
+class EnterCodeBox extends StatefulWidget {
+  final Function()? onTap;
   final EdgeInsetsGeometry? margin;
   final Function(String)? onChanged;
-  final Function()? handleClear;
-  const SearchBox({
+  final EdgeInsetsGeometry? contentPadding;
+  final String hintTextContent;
+  const EnterCodeBox({
     super.key,
+    this.onTap,
     this.margin,
     this.onChanged,
-    this.handleClear,
+    this.contentPadding = EdgeInsets.zero,
+    this.hintTextContent = "Enter code to join meeting",
   });
 
   @override
-  State<StatefulWidget> createState() => _SearchBoxState();
+  State<StatefulWidget> createState() => _EnterCodeBoxState();
 }
 
-class _SearchBoxState extends State<SearchBox> {
+class _EnterCodeBoxState extends State<EnterCodeBox> {
   TextEditingController searchKey = TextEditingController();
   Timer? _debounce;
 
@@ -45,18 +47,21 @@ class _SearchBoxState extends State<SearchBox> {
     return Container(
       width: 100.w,
       margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 16.sp),
-      height: 34.sp,
+      height: 36.sp,
       child: TextFormField(
+        autofocus: widget.onTap == null,
+        readOnly: widget.onTap != null,
+        onTap: widget.onTap,
         controller: searchKey,
         style: TextStyle(
           color: mC,
-          fontSize: 12.sp,
+          fontSize: 11.sp,
         ),
         keyboardType: TextInputType.multiline,
         minLines: 1,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          hintText: "Create or Enter code",
+          contentPadding: widget.contentPadding,
+          hintText: widget.hintTextContent,
           hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: 12.sp,
               ),
@@ -65,37 +70,24 @@ class _SearchBoxState extends State<SearchBox> {
               ? Colors.black.withOpacity(.2)
               : mC,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.sp),
+            borderRadius: BorderRadius.circular(6.sp),
             borderSide: BorderSide.none,
           ),
           prefixIconConstraints: BoxConstraints(
             maxHeight: 20.sp,
             maxWidth: 36.sp,
           ),
-          prefixIcon: Container(
-            height: 20.sp,
-            width: 36.sp,
-            alignment: Alignment.center,
-            child: Icon(
-              PhosphorIcons.magnifying_glass_bold,
-              size: 12.sp,
-            ),
-          ),
-          suffixIcon: searchKey.text.isEmpty
-              ? const SizedBox()
-              : IconButton(
-                  onPressed: () {
-                    if (widget.handleClear == null) {
-                    } else {
-                      widget.handleClear!();
-                    }
-                    searchKey.text = '';
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    color: Color(0xFFA4A4A4),
+          prefixIcon: widget.onTap != null
+              ? Container(
+                  height: 20.sp,
+                  width: 36.sp,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    PhosphorIcons.magnifying_glass_bold,
+                    size: 12.sp,
                   ),
-                ),
+                )
+              : null,
         ),
         onChanged: widget.onChanged ??
             (val) {
