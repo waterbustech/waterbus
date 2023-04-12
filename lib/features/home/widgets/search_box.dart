@@ -17,11 +17,13 @@ class SearchBox extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final Function(String)? onChanged;
   final Function()? handleClear;
+  final String? hintText;
   const SearchBox({
     super.key,
     this.margin,
     this.onChanged,
     this.handleClear,
+    this.hintText,
   });
 
   @override
@@ -56,7 +58,7 @@ class _SearchBoxState extends State<SearchBox> {
         minLines: 1,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
-          hintText: "Create or Enter code",
+          hintText: widget.hintText ?? "Create or Enter code",
           hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: 12.sp,
               ),
