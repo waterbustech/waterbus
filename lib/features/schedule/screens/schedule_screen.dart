@@ -1,7 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/home/widgets/search_box.dart';
