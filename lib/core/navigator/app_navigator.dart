@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:sizer/sizer.dart';
-
 // Project imports:
 import 'package:waterbus/core/navigator/app_material_page_route.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
@@ -99,58 +96,21 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     });
   }
 
-  static void pop({BuildContext? context}) {
-    if (SizerUtil.isTablet) {
-      if (context != null &&
-          getRouteTablet(ModalRoute.of(context)?.settings.name ?? '')) {
-        if (!canAccountPop) return;
-
-        accountState?.pop();
-
-        return;
-      }
-    }
-
+  static void pop() {
     if (!canPop) return;
 
     state.pop();
-  }
-
-  static void navigatorAccountPop() {
-    if (!canAccountPop) return;
-
-    accountState?.pop();
   }
 
   // _getArguments(RouteSettings settings) {
   //   return settings.arguments;
   // }
 
-  static void navigatorAccountPopToRoot() {
-    accountState?.popUntil((route) => route.isFirst);
-  }
-
   static bool get canPop => state.canPop();
-
-  static bool get canAccountPop => accountState?.canPop() ?? true;
 
   static String? currentRoute() => AppNavigatorObserver.currentRouteName;
 
   static BuildContext? get context => navigatorKey.currentContext;
 
-  static BuildContext? get accountContext => navigatorAccountKey.currentContext;
-
   static NavigatorState get state => navigatorKey.currentState!;
-
-  static NavigatorState? get accountState => navigatorAccountKey.currentState;
-
-  static bool getRouteTablet(String route) => [].contains(route);
-
-  static bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-    if (!SizerUtil.isTablet) return false;
-
-    return popupInstrealOfScreen.contains(route);
-  }
-
-  static List<String> popupInstrealOfScreen = [];
 }
