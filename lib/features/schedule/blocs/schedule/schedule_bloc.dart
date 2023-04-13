@@ -33,7 +33,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     });
   }
 
-  // Private:
+  // MARK: Private methods
   ScheduleLoaded get _getScheduleLoaded {
     return ScheduleLoaded(
       selectedDate: selectedDate,

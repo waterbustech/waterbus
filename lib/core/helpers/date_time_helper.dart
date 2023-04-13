@@ -46,8 +46,6 @@ class DateTimeHelper {
     final inputDate = dateTime ?? DateTime.now();
     final thisMonth = inputDate.month;
     final thisYear = inputDate.year;
-    // print('================');
-    // print(inputDate);
     int firstDayOfMonth = DateTime(inputDate.year, thisMonth).weekday;
     firstDayOfMonth = firstDayOfMonth + 1;
     if (firstDayOfMonth == 8) {
