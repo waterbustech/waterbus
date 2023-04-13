@@ -9,9 +9,9 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/home/widgets/button_action_call.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
+import 'package:waterbus/features/meeting/widgets/call_action_button.dart';
 
 class DialogPrepareMeeting extends StatelessWidget {
   const DialogPrepareMeeting({super.key});
@@ -52,12 +52,14 @@ class DialogPrepareMeeting extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const ButtonActionCall(
+                        CallActionButton(
                           icon: PhosphorIcons.microphone_bold,
+                          onTap: () {},
                         ),
                         SizedBox(width: 12.sp),
-                        const ButtonActionCall(
+                        CallActionButton(
                           icon: PhosphorIcons.camera_slash_bold,
+                          onTap: () {},
                         ),
                       ],
                     ),
@@ -113,6 +115,7 @@ class DialogPrepareMeeting extends StatelessWidget {
               SizedBox(height: 8.sp),
               GestureWrapper(
                 onTap: () {
+                  AppNavigator.pop();
                   AppNavigator.push(Routes.meetingRoute);
                 },
                 child: Container(

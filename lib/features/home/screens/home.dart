@@ -11,6 +11,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/account/screens/account_screen.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/screens/chats_screen.dart';
@@ -114,7 +115,7 @@ class _HomeState extends State<Home> {
     int index = 0,
   }) {
     return Expanded(
-      child: GestureDetector(
+      child: GestureWrapper(
         onTap: () {
           AppBloc.homeBloc.add(
             OnChangeTabEvent(tabIndex: index),
