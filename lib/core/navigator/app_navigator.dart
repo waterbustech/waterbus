@@ -7,6 +7,7 @@ import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/features/home/screens/home.dart';
+import 'package:waterbus/features/meeting/screens/enter_meeting_code.dart';
 import 'package:waterbus/features/meeting/screens/meeting_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
@@ -33,6 +34,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const MeetingScreen(),
+        );
+      case Routes.enterCodeRoute:
+        return _buildRoute(
+          settings,
+          const EnterMeetingCode(),
         );
 
       default:

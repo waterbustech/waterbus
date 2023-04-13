@@ -5,6 +5,7 @@ class Routes {
 
   // Meeting
   static const String meetingRoute = '/meeting';
+  static const String enterCodeRoute = '/enterCodeRoute';
 
   // Others
   static const String dialogRoute = '/dialog';

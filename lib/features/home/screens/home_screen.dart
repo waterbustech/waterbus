@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/home_header.dart';
 import 'package:waterbus/features/home/widgets/invitation_list.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
-import 'package:waterbus/features/home/widgets/search_box.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const HomeHeader(),
             SizedBox(height: 16.sp),
-            const SearchBox(),
+            EnterCodeBox(
+              onTap: () {
+                AppNavigator.push(Routes.enterCodeRoute);
+              },
+            ),
             SizedBox(height: 16.sp),
             const Divider(thickness: .3, height: .3),
             SizedBox(height: 10.sp),

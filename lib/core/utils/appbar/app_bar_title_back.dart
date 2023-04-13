@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -54,7 +55,7 @@ AppBar appBarTitleBack(
         Text(
           title,
           style: TextStyle(
-            fontSize: titleTextSize ?? 15.sp,
+            fontSize: titleTextSize ?? 13.5.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -70,10 +71,9 @@ AppBar appBarTitleBack(
           child: Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
-            child: Image.asset(
-              ' Assets.icons.icBack.path',
-              width: 33.sp,
-              height: 33.sp,
+            child: Icon(
+              PhosphorIcons.arrow_left,
+              size: 20.sp,
               color: colorChild,
             ),
           ),
