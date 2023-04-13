@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/features/home/widgets/search_box.dart';
+import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/schedule/widgets/list_schedule.dart';
 import 'package:waterbus/features/schedule/widgets/schedule.dart';
 
@@ -48,8 +48,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         child: Column(
           children: [
             SizedBox(height: 10.sp),
-            const SearchBox(
-              hintText: 'Find anything here',
+            const EnterCodeBox(
+              hintTextContent: 'Find anything here',
             ),
             SizedBox(height: 15.sp),
             const Schedule(),
