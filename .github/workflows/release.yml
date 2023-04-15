@@ -54,7 +54,7 @@ jobs:
       - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
-          name: "Askany ${{ github.ref_name }}"
+          name: "Waterbus ${{ github.ref_name }}"
           bodyFile: "RELEASE.md"
           artifacts: "build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.TOKEN }}
