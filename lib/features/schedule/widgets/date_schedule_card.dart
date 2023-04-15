@@ -22,7 +22,7 @@ class DateScheduleCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 35.sp,
+          width: 30.sp,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -51,7 +51,7 @@ class DateScheduleCard extends StatelessWidget {
         SizedBox(width: 15.sp),
         Expanded(
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: 3,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {

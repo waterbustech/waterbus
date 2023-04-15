@@ -12,7 +12,6 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/account/screens/account_screen.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/screens/chats_screen.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
@@ -33,7 +32,6 @@ class _HomeState extends State<Home> {
     const ScheduleScreen(),
     const ChatsScreen(),
     const NotificationsScreen(),
-    const AccountScreen(),
   ];
 
   @override
@@ -46,11 +44,11 @@ class _HomeState extends State<Home> {
           child: BackdropFilter(
             filter: ImageFilter.blur(
               sigmaX: 15,
-              sigmaY: 30,
+              sigmaY: 25,
             ),
             child: Container(
               height: Platform.isIOS ? 64.sp : 60.sp,
-              padding: EdgeInsets.symmetric(horizontal: 10.sp).add(
+              padding: EdgeInsets.symmetric(horizontal: 8.sp).add(
                 EdgeInsets.only(
                   bottom: Platform.isIOS ? 0 : 12.sp,
                   top: 10.sp,
@@ -66,32 +64,26 @@ class _HomeState extends State<Home> {
                   children: [
                     _buildItemBottomBar(
                       iconData: PhosphorIcons.house_light,
-                      iconDataSelected: PhosphorIcons.house,
+                      iconDataSelected: PhosphorIcons.house_fill,
                       label: 'Home',
                     ),
                     _buildItemBottomBar(
-                      iconData: PhosphorIcons.calendar_check_light,
-                      iconDataSelected: PhosphorIcons.calendar_check,
+                      iconData: PhosphorIcons.calendar_light,
+                      iconDataSelected: PhosphorIcons.calendar_fill,
                       label: 'Schedule',
                       index: 1,
                     ),
                     _buildItemBottomBar(
                       iconData: PhosphorIcons.chats_teardrop_light,
-                      iconDataSelected: PhosphorIcons.chats_teardrop,
+                      iconDataSelected: PhosphorIcons.chats_teardrop_fill,
                       label: 'Chats',
                       index: 2,
                     ),
                     _buildItemBottomBar(
                       iconData: PhosphorIcons.bell_simple_light,
-                      iconDataSelected: PhosphorIcons.bell_simple,
+                      iconDataSelected: PhosphorIcons.bell_simple_fill,
                       label: 'Notifications',
                       index: 3,
-                    ),
-                    _buildItemBottomBar(
-                      iconData: PhosphorIcons.user_circle_light,
-                      iconDataSelected: PhosphorIcons.user_circle,
-                      label: 'Profile',
-                      index: 4,
                     ),
                   ],
                 ),

@@ -29,7 +29,7 @@ class MyMeetings extends StatelessWidget {
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: 40.sp),
+            padding: EdgeInsets.only(bottom: 80.sp),
             itemCount: 2,
             itemBuilder: (context, index) {
               return const MeetingCard();

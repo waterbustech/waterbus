@@ -22,13 +22,7 @@ class ListSchedule extends StatelessWidget {
           builder: (context, state) {
             final DateTime date =
                 state is ScheduleLoaded ? state.selectedDate : DateTime.now();
-            return Column(
-              children: [
-                DateScheduleCard(date: date),
-                SizedBox(height: 15.sp),
-                DateScheduleCard(date: date.add(const Duration(days: 1))),
-              ],
-            );
+            return DateScheduleCard(date: date);
           },
         ),
       ),
