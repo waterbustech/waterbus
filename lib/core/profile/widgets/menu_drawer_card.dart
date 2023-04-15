@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/profile/fake/fake_menu_items.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 

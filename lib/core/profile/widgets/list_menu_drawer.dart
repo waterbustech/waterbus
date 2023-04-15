@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:waterbus/core/profile/fake/fake_menu_items.dart';
 import 'package:waterbus/core/profile/widgets/menu_drawer_card.dart';
 

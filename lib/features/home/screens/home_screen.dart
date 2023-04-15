@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 // Package imports:
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/constants/constants.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/profile/widgets/profile_drawer_layout.dart';
