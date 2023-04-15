@@ -1,8 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';

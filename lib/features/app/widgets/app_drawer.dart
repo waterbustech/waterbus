@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/profile/widgets/profile_drawer_layout.dart';
 
