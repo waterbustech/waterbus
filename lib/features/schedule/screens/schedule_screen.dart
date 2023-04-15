@@ -41,7 +41,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 10.sp),
+            SizedBox(height: 4.sp),
             EnterCodeBox(
               hintTextContent: 'Find anything here',
               onTap: () {},

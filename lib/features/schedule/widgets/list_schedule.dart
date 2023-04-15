@@ -25,7 +25,7 @@ class ListSchedule extends StatelessWidget {
             return Column(
               children: [
                 DateScheduleCard(date: date),
-                SizedBox(height: 15.sp),
+                SizedBox(height: 10.sp),
                 DateScheduleCard(date: date.add(const Duration(days: 1))),
               ],
             );
