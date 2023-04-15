@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/features/chats/models/chat_model.dart';
 import 'package:waterbus/features/chats/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/widgets/chats_header.dart';
