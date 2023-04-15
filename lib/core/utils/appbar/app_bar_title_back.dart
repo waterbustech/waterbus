@@ -59,25 +59,27 @@ AppBar appBarTitleBack(
             fontWeight: FontWeight.w700,
           ),
         ),
-    leading: leading ??
-        GestureWrapper(
-          onTap: () {
-            if (onBackPressed != null) {
-              onBackPressed();
-            } else {
-              AppNavigator.pop();
-            }
-          },
-          child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
-            child: Icon(
-              PhosphorIcons.arrow_left,
-              size: 20.sp,
-              color: colorChild,
+    leading: !isVisibleBackButton
+        ? null
+        : leading ??
+            GestureWrapper(
+              onTap: () {
+                if (onBackPressed != null) {
+                  onBackPressed();
+                } else {
+                  AppNavigator.pop();
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
+                child: Icon(
+                  PhosphorIcons.arrow_left,
+                  size: 20.sp,
+                  color: colorChild,
+                ),
+              ),
             ),
-          ),
-        ),
     actions: actions,
     bottom: bottom,
   );

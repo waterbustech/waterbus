@@ -84,7 +84,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   alignment: Alignment.center,
                   child: Icon(
                     PhosphorIcons.magnifying_glass_bold,
-                    size: 12.sp,
+                    size: 14.sp,
                   ),
                 )
               : null,
