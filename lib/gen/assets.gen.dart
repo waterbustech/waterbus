@@ -7,18 +7,21 @@
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
-// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
+
+  /// File path: assets/icons/ic_end_call.png
+  AssetGenImage get icEndCall =>
+      const AssetGenImage('assets/icons/ic_end_call.png');
 
   /// File path: assets/icons/ic_new_meeting.png
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [icNewMeeting];
+  List<AssetGenImage> get values => [icEndCall, icNewMeeting];
 }
 
 class Assets {
