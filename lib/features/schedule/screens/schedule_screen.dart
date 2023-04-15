@@ -23,6 +23,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: appBarTitleBack(
         context,
         "Schedule",
@@ -38,24 +39,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           SizedBox(width: 16.sp),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 4.sp),
-            EnterCodeBox(
-              hintTextContent: 'Find anything here',
-              onTap: () {},
-            ),
-            SizedBox(height: 15.sp),
-            const Schedule(),
-            SizedBox(height: 20.sp),
-            dividerContainer,
-            SizedBox(height: 10.sp),
-            const Expanded(
-              child: ListSchedule(),
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          SizedBox(height: 4.sp),
+          EnterCodeBox(
+            hintTextContent: 'Find anything here',
+            onTap: () {},
+          ),
+          SizedBox(height: 15.sp),
+          const Schedule(),
+          SizedBox(height: 20.sp),
+          dividerContainer,
+          SizedBox(height: 10.sp),
+          const Expanded(
+            child: ListSchedule(),
+          ),
+        ],
       ),
     );
   }

@@ -51,7 +51,7 @@ class DateScheduleCard extends StatelessWidget {
         SizedBox(width: 15.sp),
         Expanded(
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: 3,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {

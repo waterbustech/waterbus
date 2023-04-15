@@ -45,14 +45,16 @@ class ScheduleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Meeting with Hans',
+            '🚀 QA engineers Team - Waterbus.io',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: mCL,
-              fontSize: 13.sp,
+              fontSize: 11.5.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(height: 7.sp),
+          SizedBox(height: 6.sp),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,7 +70,7 @@ class ScheduleCard extends StatelessWidget {
                     '9:00 AM - 9:35 AM',
                     style: TextStyle(
                       color: fCL,
-                      fontSize: 11.sp,
+                      fontSize: 10.sp,
                     ),
                   )
                 ],
