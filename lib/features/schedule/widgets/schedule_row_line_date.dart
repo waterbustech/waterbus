@@ -84,16 +84,6 @@ class _ScheduleRowLineDateState extends State<ScheduleRowLineDate> {
                   fontSize: 11.5.sp,
                 ),
               ),
-              // quantity > 0
-              //     ? Column(
-              //         children: [
-              //           SizedBox(height: 2.sp),
-              //           DotBelowDate(
-              //             quantity: quantity,
-              //           ),
-              //         ],
-              //       )
-              //     : SizedBox(height: 3.sp),
             ],
           ),
         ),
