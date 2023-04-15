@@ -15,9 +15,7 @@ class ScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        bottom: 10.sp,
-      ),
+      margin: EdgeInsets.only(bottom: 10.sp),
       decoration: BoxDecoration(
         color: colorBlack1,
         border: Border(
