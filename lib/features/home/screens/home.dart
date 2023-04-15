@@ -44,11 +44,11 @@ class _HomeState extends State<Home> {
           child: BackdropFilter(
             filter: ImageFilter.blur(
               sigmaX: 15,
-              sigmaY: 30,
+              sigmaY: 25,
             ),
             child: Container(
               height: Platform.isIOS ? 64.sp : 60.sp,
-              padding: EdgeInsets.symmetric(horizontal: 10.sp).add(
+              padding: EdgeInsets.symmetric(horizontal: 8.sp).add(
                 EdgeInsets.only(
                   bottom: Platform.isIOS ? 0 : 12.sp,
                   top: 10.sp,
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                       label: 'Home',
                     ),
                     _buildItemBottomBar(
-                      iconData: PhosphorIcons.calendar_check_light,
+                      iconData: PhosphorIcons.calendar_light,
                       iconDataSelected: PhosphorIcons.calendar_fill,
                       label: 'Schedule',
                       index: 1,
