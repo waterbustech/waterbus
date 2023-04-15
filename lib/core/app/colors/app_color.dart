@@ -18,9 +18,12 @@ const Color colorAttendance = Color(0xFF0CCF4C);
 
 const Color colorBlueGrey = Color(0xFF455A64);
 const Color colorBlueGreyIos = Color(0xFF1C1F2E);
+const Color colorGray2 = Color(0xFFACACB9);
 
 const Color colorGreyWhite = Color(0x4dE3E3E3);
 const Color colorGreyWhite2 = Color(0xFFE3E3E3);
+
+const Color colorBlack1 = Color(0xFF0d0d0d);
 
 final Color colorRedTitle = Colors.red.shade800;
 final Color bgNotifyFail = Colors.red.shade100;
