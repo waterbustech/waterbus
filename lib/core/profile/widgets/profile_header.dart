@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 
 class ProfileHeader extends StatelessWidget {
