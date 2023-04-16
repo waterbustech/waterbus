@@ -1,0 +1,26 @@
+coverage:
+  status:
+    project:
+      default:
+        base: auto
+        branches:
+          - main
+          - dev
+          - "*/*"
+        flags:
+          - unit
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+        paths:
+          - lib
+        target: 80%
+        threshold: 1%
+    patch:
+      default:
+        target: 80%
+  ignore:
+    - "lib/gen"
+    - "lib/core"
+    - "lib/main.dart"
+    - "**/*.g.dart"
