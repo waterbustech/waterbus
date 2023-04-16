@@ -24,7 +24,7 @@ class ScheduleHeader extends StatelessWidget {
               final DateTime date =
                   state is! ScheduleLoaded ? DateTime.now() : state.props[0];
               return Text(
-                '${DateTimeHelper.listMonth[(int.parse(DateTimeHelper().addZeroPrefix(date.month)) - 1)]}  ${date.year}',
+                '${DateTimeHelper.listMonth[(int.parse(DateTimeHelper().addZeroPrefix(date.month)) - 1)]} ${date.year}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 13.sp,
