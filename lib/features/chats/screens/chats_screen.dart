@@ -1,15 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 // Package imports:
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/widgets/app_drawer.dart';
-
-// Project imports:
 import 'package:waterbus/features/chats/models/chat_model.dart';
 import 'package:waterbus/features/chats/widgets/chat_card.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
