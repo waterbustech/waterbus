@@ -18,7 +18,7 @@ class ChatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20.sp),
+      margin: EdgeInsets.only(bottom: 8.sp),
       child: Row(
         children: [
           Stack(
@@ -61,7 +61,7 @@ class ChatCard extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(
                             color: mCL,
-                            fontSize: 14.sp,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
                           ),
                           children: [
@@ -105,7 +105,7 @@ class ChatCard extends StatelessWidget {
                                           StatusSeenMessage.seen
                                       ? colorGreenLight
                                       : fCL,
-                                  size: 13.sp,
+                                  size: 12.sp,
                                 ),
                               ),
                             ),
@@ -118,9 +118,7 @@ class ChatCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5.sp,
-                ),
+                SizedBox(height: 2.sp),
                 Row(
                   children: [
                     Expanded(
@@ -129,7 +127,7 @@ class ChatCard extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(
                             color: mCL,
-                            fontSize: 11.5.sp,
+                            fontSize: 11.sp,
                           ),
                           children: [
                             TextSpan(
