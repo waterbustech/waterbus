@@ -16,3 +16,8 @@ Widget dividerContainer = Container(
   color: colorBlack1,
   height: 6.sp,
 );
+
+Divider divider = Divider(
+  height: 1.sp,
+  color: colorGreyWhite,
+);
