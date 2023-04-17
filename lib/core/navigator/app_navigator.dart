@@ -6,6 +6,7 @@ import 'package:waterbus/core/navigator/app_material_page_route.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
+import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
 import 'package:waterbus/features/meeting/screens/enter_meeting_code.dart';
 import 'package:waterbus/features/meeting/screens/meeting_screen.dart';
@@ -39,6 +40,12 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const EnterMeetingCode(),
+        );
+
+      case Routes.conversationRoute:
+        return _buildRoute(
+          settings,
+          const ConversationScreen(),
         );
 
       default:
