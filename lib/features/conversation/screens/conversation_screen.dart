@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/conversation/models/message_model.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
