@@ -13,6 +13,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_camera_video.png
+  AssetGenImage get icCameraVideo =>
+      const AssetGenImage('assets/icons/ic_camera_video.png');
+
   /// File path: assets/icons/ic_end_call.png
   AssetGenImage get icEndCall =>
       const AssetGenImage('assets/icons/ic_end_call.png');
@@ -22,7 +26,7 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [icEndCall, icNewMeeting];
+  List<AssetGenImage> get values => [icCameraVideo, icEndCall, icNewMeeting];
 }
 
 class Assets {
