@@ -12,19 +12,26 @@ class ButtonIcon extends StatelessWidget {
   final Color? colorBackground;
   final EdgeInsetsGeometry? margin;
   final BoxBorder? border;
+  final double? sizeIcon;
+  final EdgeInsetsGeometry? padding;
+  final Color? colorIcon;
   const ButtonIcon({
     super.key,
     required this.icon,
     this.colorBackground,
     this.margin,
     this.border,
+    this.sizeIcon,
+    this.padding,
+    this.colorIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin ?? EdgeInsets.only(right: 12.sp),
-      padding: colorBackground != null ? EdgeInsets.all(5.sp) : null,
+      padding:
+          padding ?? (colorBackground != null ? EdgeInsets.all(5.sp) : null),
       decoration: BoxDecoration(
         color: colorBackground ?? Colors.transparent,
         shape: BoxShape.circle,
@@ -33,8 +40,8 @@ class ButtonIcon extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: Icon(
         icon,
-        size: colorBackground != null ? 15.sp : 20.sp,
-        color: mCL,
+        size: sizeIcon ?? (colorBackground != null ? 15.sp : 20.sp),
+        color: colorIcon ?? mCL,
       ),
     );
   }
