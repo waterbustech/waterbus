@@ -7,11 +7,13 @@
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
-// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
+
+  /// File path: assets/icons/ic_apple.png
+  AssetGenImage get icApple => const AssetGenImage('assets/icons/ic_apple.png');
 
   /// File path: assets/icons/ic_camera_video.png
   AssetGenImage get icCameraVideo =>
@@ -21,18 +23,39 @@ class $AssetsIconsGen {
   AssetGenImage get icEndCall =>
       const AssetGenImage('assets/icons/ic_end_call.png');
 
+  /// File path: assets/icons/ic_facebook.png
+  AssetGenImage get icFacebook =>
+      const AssetGenImage('assets/icons/ic_facebook.png');
+
+  /// File path: assets/icons/ic_google.png
+  AssetGenImage get icGoogle =>
+      const AssetGenImage('assets/icons/ic_google.png');
+
   /// File path: assets/icons/ic_new_meeting.png
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [icCameraVideo, icEndCall, icNewMeeting];
+  List<AssetGenImage> get values =>
+      [icApple, icCameraVideo, icEndCall, icFacebook, icGoogle, icNewMeeting];
+}
+
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/img_logo.png
+  AssetGenImage get imgLogo =>
+      const AssetGenImage('assets/images/img_logo.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [imgLogo];
 }
 
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 
 class AssetGenImage {

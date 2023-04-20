@@ -6,6 +6,7 @@ import 'package:waterbus/core/navigator/app_material_page_route.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
+import 'package:waterbus/features/auth/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
 import 'package:waterbus/features/meeting/screens/enter_meeting_code.dart';
@@ -24,10 +25,17 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           const Home(),
         );
 
+      // Authenication
       case Routes.authenticationRoute:
         return _buildRoute(
           settings,
           const Scaffold(),
+        );
+
+      case Routes.loginRoute:
+        return _buildRoute(
+          settings,
+          const LogInScreen(),
         );
 
       // Meeting
