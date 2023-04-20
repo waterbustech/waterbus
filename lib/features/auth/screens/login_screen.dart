@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+
+// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/auth/widgets/button_login.dart';
 import 'package:waterbus/gen/assets.gen.dart';
