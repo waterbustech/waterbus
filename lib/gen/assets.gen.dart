@@ -7,7 +7,6 @@
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
-// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 class $AssetsIconsGen {
@@ -44,12 +43,16 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/img_app_logo.png
+  AssetGenImage get imgAppLogo =>
+      const AssetGenImage('assets/images/img_app_logo.png');
+
   /// File path: assets/images/img_logo.png
   AssetGenImage get imgLogo =>
       const AssetGenImage('assets/images/img_logo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [imgLogo];
+  List<AssetGenImage> get values => [imgAppLogo, imgLogo];
 }
 
 class Assets {
