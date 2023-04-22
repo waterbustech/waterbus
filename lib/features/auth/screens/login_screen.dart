@@ -29,10 +29,10 @@ class _LogInScreenState extends State<LogInScreen> {
           children: [
             SizedBox(height: 15.sp),
             Image.asset(
-              Assets.images.imgLogo.path,
-              height: 40.sp,
+              Assets.images.imgAppLogo.path,
+              height: 100.sp,
             ),
-            SizedBox(height: 48.sp),
+            SizedBox(height: 12.sp),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -52,9 +52,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         children: const [
                           TextSpan(
                             text: 'Welcome to\n',
+                            style: TextStyle(
+                              color: Color(0xFFEFB7E9),
+                            ),
                           ),
                           TextSpan(
-                            text: 'Waterbus outsource ',
+                            text: 'Waterbus',
                             style: TextStyle(
                               color: colorPrimary,
                             ),
@@ -68,12 +71,11 @@ class _LogInScreenState extends State<LogInScreen> {
                       'secure video calls and meetings on any phone.',
                       softWrap: true,
                       strutStyle: StrutStyle.disabled,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w300,
-                        height: 1.4,
-                        color: colorGreyWhite,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w300,
+                            height: 1.4,
+                          ),
                     ),
                     const Spacer(),
                     ButtonLogin(
@@ -126,12 +128,12 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(height: 20.sp),
                     RichText(
                       text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 11.5.sp,
-                          fontWeight: FontWeight.w300,
-                          color: colorGreyWhite,
-                          height: 1.5.sp,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  fontSize: 11.5.sp,
+                                  fontWeight: FontWeight.w300,
+                                  height: 1.5.sp,
+                                ),
                         children: const [
                           TextSpan(
                             text: 'By signing up, you agree to our ',
