@@ -71,7 +71,7 @@ dev_dependencies:
   # Code Generator
   injectable_generator: ^2.1.5
   build_runner: ^2.3.3
-  flutter_gen_runner: ^5.2.0
+  flutter_gen_runner: ^5.3.0
 
   # Lints
   flutter_lints: ^2.0.0
