@@ -31,10 +31,22 @@
 			<string>com.waterbus.wanted</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fb989363838888620</string>
 				<string>com.googleusercontent.apps.727554668212-b4qpqkcl5792g0gkqng85kugh5c5r51e</string>
 				<string>https</string>
 			</array>
 		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>989363838888620</string>
+	<key>FacebookClientToken</key>
+	<string>31eb9fca6bd344110ad109ca6d8af68f</string>
+	<key>FacebookDisplayName</key>
+	<string>Waterbus</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
