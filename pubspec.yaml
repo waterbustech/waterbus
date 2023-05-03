@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # Packages
+  auth:
+    path: ./packages/auth
+
   # State management
   flutter_bloc: ^8.1.2
   bloc_concurrency: ^0.2.1
@@ -59,8 +63,10 @@ dependencies:
     path: ./packages/sizer
 
 dev_dependencies:
+  # Test
   flutter_test:
     sdk: flutter
+  mockito: ^5.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
