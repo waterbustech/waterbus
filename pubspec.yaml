@@ -48,6 +48,9 @@ dependencies:
   get_it: ^7.2.0
   injectable: ^2.1.1
 
+  # Storage
+  hive: ^2.2.3
+
   # Firebase
   firebase_core: ^2.9.0
   firebase_messaging: ^14.4.0

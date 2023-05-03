@@ -42,7 +42,8 @@ class AuthService {
 
       return AuthPayloadModel(
         fullName: googleUser.displayName ?? 'google.user',
-        googleId: firebaseUserCredential.user!.uid,
+        googleId: firebaseUserCredential.user?.uid ?? '',
+        email: firebaseUserCredential.user?.email,
       );
     } catch (e) {
       return null;
@@ -62,8 +63,9 @@ class AuthService {
               await _firebaseAuth.signInWithCredential(facebookAuthCredential);
           return AuthPayloadModel(
             fullName:
-                firebaseUserCredential.user!.displayName ?? 'facebook.user',
-            facebookId: firebaseUserCredential.user!.uid,
+                firebaseUserCredential.user?.displayName ?? 'facebook.user',
+            facebookId: firebaseUserCredential.user?.uid ?? '',
+            email: firebaseUserCredential.user?.email,
           );
         case LoginStatus.cancelled:
           await _facebookAuth.logOut();
@@ -110,7 +112,8 @@ class AuthService {
 
       return AuthPayloadModel(
         fullName: appleCredential.givenName ?? 'apple.user',
-        appleId: firebaseUserCredential.user!.uid,
+        appleId: firebaseUserCredential.user?.uid ?? '',
+        email: firebaseUserCredential.user?.email,
       );
     } catch (e) {
       return null;
