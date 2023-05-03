@@ -1,9 +1,9 @@
 // Flutter imports:
-import 'package:auth/auth.dart';
-import 'package:auth/models/auth_payload_model.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auth/auth.dart';
+import 'package:auth/models/auth_payload_model.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
