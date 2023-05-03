@@ -20,8 +20,6 @@ import 'package:waterbus/features/home/bloc/home/home_bloc.dart' as _i3;
 import 'package:waterbus/features/schedule/blocs/schedule/schedule_bloc.dart'
     as _i4;
 
-/// ignore_for_file: unnecessary_lambdas
-/// ignore_for_file: lines_longer_than_80_chars
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
   _i1.GetIt getIt, {

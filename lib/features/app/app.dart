@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -26,6 +27,7 @@ class _AppState extends State<App> {
           themeMode: ThemeMode.dark,
           theme: AppTheme.light().data,
           darkTheme: AppTheme.dark().data,
+          initialRoute: Routes.loginRoute,
           navigatorObservers: [
             NavigatorObserver(),
           ],
