@@ -48,7 +48,7 @@ dependencies:
   firebase_core: ^2.9.0
   firebase_messaging: ^14.4.0
   firebase_auth: ^4.4.1
-  firebase_crashlytics: ^3.1.2
+  firebase_crashlytics: ^3.2.0
   firebase_performance: ^0.9.1
 
   # Utils
