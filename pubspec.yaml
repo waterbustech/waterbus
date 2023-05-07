@@ -45,7 +45,7 @@ dependencies:
   injectable: ^2.1.1
 
   # Firebase
-  firebase_core: ^2.9.0
+  firebase_core: ^2.11.0
   firebase_messaging: ^14.4.0
   firebase_auth: ^4.4.1
   firebase_crashlytics: ^3.1.2
