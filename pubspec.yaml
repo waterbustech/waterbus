@@ -45,18 +45,18 @@ dependencies:
   bloc_concurrency: ^0.2.1
 
   # Dependency Injection
-  get_it: ^7.2.0
+  get_it: ^7.4.1
   injectable: ^2.1.1
 
   # Storage
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.9.0
-  firebase_messaging: ^14.4.0
-  firebase_auth: ^4.4.1
-  firebase_crashlytics: ^3.1.2
-  firebase_performance: ^0.9.1
+  firebase_core: ^2.10.0
+  firebase_messaging: ^14.5.0
+  firebase_auth: ^4.5.0
+  firebase_crashlytics: ^3.2.0
+  firebase_performance: ^0.9.1+2
 
   # Utils
   cached_network_image: ^3.2.3

@@ -1,9 +1,9 @@
 PODS:
-  - AppAuth (1.6.1):
-    - AppAuth/Core (= 1.6.1)
-    - AppAuth/ExternalUserAgent (= 1.6.1)
-  - AppAuth/Core (1.6.1)
-  - AppAuth/ExternalUserAgent (1.6.1):
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - FBAEMKit (15.1.0):
     - FBSDKCoreKit_Basics (= 15.1.0)
@@ -27,22 +27,22 @@ PODS:
   - Firebase/Performance (10.7.0):
     - Firebase/CoreOnly
     - FirebasePerformance (~> 10.7.0)
-  - firebase_auth (4.4.2):
+  - firebase_auth (4.5.0):
     - Firebase/Auth (= 10.7.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.10.0):
+  - firebase_core (2.11.0):
     - Firebase/CoreOnly (= 10.7.0)
     - Flutter
-  - firebase_crashlytics (3.1.2):
+  - firebase_crashlytics (3.2.0):
     - Firebase/Crashlytics (= 10.7.0)
     - firebase_core
     - Flutter
-  - firebase_messaging (14.4.1):
+  - firebase_messaging (14.5.0):
     - Firebase/Messaging (= 10.7.0)
     - firebase_core
     - Flutter
-  - firebase_performance (0.9.1-1):
+  - firebase_performance (0.9.1-2):
     - Firebase/Performance (= 10.7.0)
     - firebase_core
     - Flutter
@@ -238,17 +238,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: e48b432bb4ba88b10cb2bcc50d7f3af21e78b9c2
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   FBAEMKit: c7f82b5145d446bcbbcd50485c032689032fc6a2
   FBSDKCoreKit: 7542746fc63a2a38dd6a865eeb54268341f37b83
   FBSDKCoreKit_Basics: 92d6b26c0bed30ab09bbdd96dccaa26e6c9978d1
   FBSDKLoginKit: 4e275d30cf90e92bdf3a7c82857a8642abf23037
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
-  firebase_auth: 98778cde4127b34d2d006f8bd049d3a8131f37bd
-  firebase_core: 18d44f087248303a4a8f05d0099a000c46e3c77a
-  firebase_crashlytics: 621d91c0c5752e8219f8fe05a4d1e76394f4896a
-  firebase_messaging: 90b11d16c537444a39e50b818ebe1a51ec0e38c2
-  firebase_performance: 7dd98298ea2f19f480efd59ccbfcad3972ced984
+  firebase_auth: 1eb69de8f57040c5c78bb3267412e9cb395fd08c
+  firebase_core: dee76ded6c693fdb38b8ea39aef7129e32e587a3
+  firebase_crashlytics: 450dc80dcb167d04714c147336dd04a7230d20e4
+  firebase_messaging: 67fbcdaf6a7c81849590e542eff2409dc49d9fa5
+  firebase_performance: 6a92bbefc5286e6488629b1cc3c32a7a8a7032f2
   FirebaseABTesting: 005b70969e2817e2a1e631e8dba29134a04c0622
   FirebaseAuth: dd64c01631df724b09f33e584625775c52f7d71f
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
