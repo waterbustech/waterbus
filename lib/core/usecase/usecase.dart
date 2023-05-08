@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
+// Project imports:
 import 'package:waterbus/core/error/failures.dart';
 
 abstract class UseCase<Type, Params> {
