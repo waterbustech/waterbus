@@ -41,7 +41,7 @@ dependencies:
   bloc_concurrency: ^0.2.1
 
   # Dependency Injection
-  get_it: ^7.2.0
+  get_it: ^7.5.0
   injectable: ^2.1.1
 
   # Firebase
