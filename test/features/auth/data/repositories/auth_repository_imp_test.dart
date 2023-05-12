@@ -7,9 +7,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:waterbus/core/error/auth_failure.dart';
 
 // Project imports:
+import 'package:waterbus/core/error/auth_failure.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_remote_datasource.dart';
