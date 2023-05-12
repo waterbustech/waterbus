@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/features/chats/models/chat_model.dart';
+import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 
 class AvatarChat extends StatelessWidget {
   final ChatModel chatModel;

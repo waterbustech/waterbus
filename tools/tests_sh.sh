@@ -11,7 +11,7 @@ do
 		break
 		;;
 		2)
-		very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/models/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 80 
+		very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 80 
 		break
         ;;
 		3)
@@ -25,7 +25,7 @@ do
 			'lib/features/**/widgets/**' \
 			'lib/features/**/bloc/**' \
 			'lib/features/**/blocs/**' \
-			'lib/features/**/models/**' \
+			'lib/features/**/xmodels/**' \
 			'lib/features/**/screens/**' \
 			'lib/main.dart'
 

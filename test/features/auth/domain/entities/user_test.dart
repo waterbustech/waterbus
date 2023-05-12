@@ -38,6 +38,7 @@ void main() {
 
       expect(user == userModel1, true);
       expect(user == userModel2, false);
+      expect(user.toString(), userModel1.toString());
     });
   });
 
