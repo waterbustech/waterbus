@@ -10,8 +10,8 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/chats/widgets/avatar_chat.dart';
+import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ChatCard extends StatelessWidget {
