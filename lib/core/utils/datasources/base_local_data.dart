@@ -7,7 +7,7 @@ import 'package:waterbus/core/utils/path_helper.dart';
 
 class BaseLocalData {
   static Future<void> initialBox() async {
-    final String path = await PathHelper.localStoreDirStreamOS;
+    final String path = await PathHelper.localStoreDirWaterbus;
     Hive.init(path);
     await openBoxApp();
   }

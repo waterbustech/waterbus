@@ -9,7 +9,14 @@ import 'package:waterbus/features/auth/data/models/user_model.dart';
 abstract class AuthLocalDataSource {
   UserModel? getUserModel();
   void saveUserModel(UserModel userModel);
+  void saveTokens({
+    required String? accessToken,
+    required String? refreshToken,
+  });
   void clearUser();
+
+  String? get accessToken;
+  String? get refreshToken;
 }
 
 @LazySingleton(as: AuthLocalDataSource)
@@ -34,4 +41,27 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   void saveUserModel(UserModel userModel) {
     hiveBox.put(StorageKeys.userModel, userModel.toJson());
   }
+
+  @override
+  void saveTokens({
+    required String? accessToken,
+    required String? refreshToken,
+  }) {
+    final UserModel? user = getUserModel();
+
+    if (user == null) return;
+
+    saveUserModel(
+      user.copyWith(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      ),
+    );
+  }
+
+  @override
+  String? get accessToken => getUserModel()?.accessToken;
+
+  @override
+  String? get refreshToken => getUserModel()?.refreshToken;
 }
