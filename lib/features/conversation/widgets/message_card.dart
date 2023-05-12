@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/features/conversation/models/message_model.dart';
+import 'package:waterbus/features/conversation/xmodels/message_model.dart';
 
 class MessageCard extends StatelessWidget {
   final MessageModel messageModel;

@@ -72,8 +72,4 @@ class AvatarModel {
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ src.hashCode;
-
-  String get urlToImage {
-    return location;
-  }
 }
