@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+// Dart imports:
 import 'dart:convert';
 
+// Project imports:
 import 'package:waterbus/features/auth/data/models/avatar_model.dart';
 
 class UserModel {

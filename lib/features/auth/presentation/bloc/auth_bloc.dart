@@ -3,6 +3,8 @@ import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+// Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';

@@ -1,7 +1,10 @@
+// Package imports:
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+
+// Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
