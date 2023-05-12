@@ -32,19 +32,19 @@ class AuthPayloadModel {
 
   Map<String, dynamic> toMap() {
     final Map<String, String> result = {
-      'fullname': fullName,
+      'fullName': fullName,
     };
 
     if (googleId != null) {
-      result['googleID'] = googleId!;
+      result['googleId'] = googleId!;
     }
 
     if (appleId != null) {
-      result['appleID'] = appleId!;
+      result['appleId'] = appleId!;
     }
 
     if (facebookId != null) {
-      result['facebookID'] = facebookId!;
+      result['facebookId'] = facebookId!;
     }
 
     if (email != null) {
