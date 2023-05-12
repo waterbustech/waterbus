@@ -37,8 +37,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<(String?, String?)> refreshToken() async {
-    final Response response = await _baseRemoteData.getRoute(
+    final Response response = await _baseRemoteData.dio.get(
       ApiEndpoints.refreshToken,
+      options: _baseRemoteData.getOptionsRefreshToken,
     );
 
     if (response.statusCode == StatusCode.ok) {

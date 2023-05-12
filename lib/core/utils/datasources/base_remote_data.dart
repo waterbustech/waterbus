@@ -9,7 +9,9 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/injection/injection_container.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
+import 'package:waterbus/core/utils/dio/dio_configuration.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -255,5 +257,16 @@ class BaseRemoteData {
       'Accept': '*/*',
       'Accept-Encoding': 'gzip, deflate, br',
     };
+  }
+
+  initialize() async {
+    await Future.wait([
+      getIt<DioConfiguration>()
+          .configuration(dio)
+          .then((client) => dio = client),
+      getIt<DioConfiguration>().configRefreshToken(dio).then(
+            (client) => dio = client,
+          ),
+    ]);
   }
 }
