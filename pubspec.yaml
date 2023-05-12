@@ -56,7 +56,7 @@ dependencies:
   bloc_concurrency: ^0.2.1
 
   # Dependency Injection
-  get_it: ^7.4.1
+  get_it: ^7.5.0
   injectable: ^2.1.1
 
   # Storage
@@ -93,7 +93,7 @@ dev_dependencies:
   # Code Generator
   injectable_generator: ^2.1.5
   build_runner: ^2.4.2
-  flutter_gen_runner: ^5.2.0
+  flutter_gen_runner: ^5.3.1
 
   # Lints
   flutter_lints: ^2.0.0
