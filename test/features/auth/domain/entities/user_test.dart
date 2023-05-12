@@ -16,7 +16,29 @@ void main() {
       'should be a subclass of User entity',
       () {},
     );
-    test('operator ==', () => null);
+    test('operator ==', () {
+      const User userModel1 = User(
+        id: "lambiengcode",
+        userName: "lambiengcode",
+        fullName: "Kai Dao",
+      );
+      const User userModel2 = User(
+        id: "lambiengcode1",
+        userName: "lambiengcode",
+        fullName: "Kai Dao",
+      );
+
+      // arrange
+      final Map<String, dynamic> userJson = jsonDecode(
+        fixture(userSample),
+      );
+
+      // act
+      final User user = User.fromMap(userJson);
+
+      expect(user == userModel1, true);
+      expect(user == userModel2, false);
+    });
   });
 
   group('copyWith', () {
@@ -84,6 +106,40 @@ void main() {
         expect(userActual.id, userModel.id);
         expect(userActual.userName, userModel.userName);
         expect(userActual.fullName, userModel.fullName);
+      },
+    );
+  });
+
+  group('fromJson', () {
+    test(
+      'fromJson - should return a valid model when the JSON',
+      () {
+        // arrange
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userSample),
+        );
+
+        // act
+        final User user = User.fromMap(userJson);
+
+        // assert
+        expect(user, isNotNull);
+      },
+    );
+
+    test(
+      'toJson - should return a valid model when the JSON',
+      () {
+        // arrange
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userSample),
+        );
+
+        // act
+        final User user = User.fromMap(userJson);
+
+        // assert
+        expect(user.toJson(), isNotNull);
       },
     );
   });

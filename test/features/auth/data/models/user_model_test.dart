@@ -6,30 +6,67 @@ import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/user_model.dart';
-import 'package:waterbus/features/auth/domain/entities/user.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   group('user model', () {
     test(
-      'should be a subclass of User Model',
-      () {},
+      'should be a subclass of User entity',
+      () {
+        // arrange
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userModelSample),
+        );
+
+        // act
+        final UserModel user = UserModel.fromMap(userJson);
+
+        expect(user, isA<UserModel>());
+      },
     );
-    test('operator ==', () => null);
+    test('operator ==', () {
+      final UserModel userModel1 = UserModel(
+        id: "lambiengcode",
+        userName: "lambiengcode",
+        fullName: "Kai Dao",
+        accessToken: "token_1",
+        refreshToken: "token_2",
+        avatar: null,
+      );
+      final UserModel userModel2 = UserModel(
+        id: "lambiengcode1",
+        userName: "lambiengcode",
+        fullName: "Kai Dao",
+        accessToken: "token_1",
+        refreshToken: "token_2",
+        avatar: null,
+      );
+
+      // arrange
+      final Map<String, dynamic> userJson = jsonDecode(
+        fixture(userModelSample),
+      );
+
+      // act
+      final UserModel user = UserModel.fromMap(userJson);
+
+      expect(user == userModel1, true);
+      expect(user == userModel2, false);
+    });
   });
 
   group('copyWith', () {
     test('should return new value', () {
       // arrange
       final Map<String, dynamic> userJson = jsonDecode(
-        fixture(userSample),
+        fixture(userModelSample),
       );
 
       // act
-      final User user = User.fromMap(userJson);
+      final UserModel user = UserModel.fromMap(userJson);
 
-      final User userClone = user.copyWith(
+      final UserModel userClone = user.copyWith(
         userName: "lambiengcode1",
         fullName: "Kai",
       );
@@ -47,13 +84,13 @@ void main() {
       () {
         // arrange
         final Map<String, dynamic> userJson = jsonDecode(
-          fixture(userSample),
+          fixture(userModelSample),
         );
 
         // act
-        final User user = User.fromMap(userJson);
+        final UserModel user = UserModel.fromMap(userJson);
 
-        final User userClone = user.copyWith(
+        final UserModel userClone = user.copyWith(
           userName: "lambiengcode1",
           fullName: "Kai",
         );
@@ -62,28 +99,38 @@ void main() {
         expect(userClone, isNotNull);
       },
     );
+  });
 
+  group('fromJson', () {
     test(
-      'fromUserModel - should return a valid model when the JSON',
+      'fromJson - should return a valid model when the JSON',
       () {
         // arrange
-        final UserModel userModel = UserModel(
-          id: 'lam',
-          userName: 'lam',
-          fullName: 'Kai',
-          accessToken: 'a',
-          refreshToken: '',
-          avatar: null,
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userSample),
         );
 
         // act
-
-        final User userActual = User.fromUserModel(userModel);
+        final UserModel user = UserModel.fromMap(userJson);
 
         // assert
-        expect(userActual.id, userModel.id);
-        expect(userActual.userName, userModel.userName);
-        expect(userActual.fullName, userModel.fullName);
+        expect(user, isNotNull);
+      },
+    );
+
+    test(
+      'toJson - should return a valid model when the JSON',
+      () {
+        // arrange
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userSample),
+        );
+
+        // act
+        final UserModel user = UserModel.fromMap(userJson);
+
+        // assert
+        expect(user.toJson(), isNotNull);
       },
     );
   });
