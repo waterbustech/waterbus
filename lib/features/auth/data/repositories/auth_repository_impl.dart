@@ -26,29 +26,27 @@ class AuthRepositoryImpl extends AuthRepository {
 
     if (response == null) return Left(NullValue());
 
-    final (String? accessToken, String? refreshToken) =
-        await _remoteDataSource.refreshToken();
+    _localDataSource.saveUserModel(response);
 
-    if (accessToken == null) return Left(NullValue());
-
-    final UserModel userModel = response.copyWith(
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    );
-
-    _localDataSource.saveUserModel(userModel);
-
-    return Right(User.fromUserModel(userModel));
+    return Right(User.fromUserModel(response));
   }
 
   @override
   Future<Either<Failure, User>> onAuthCheck() async {
     final UserModel? user = _localDataSource.getUserModel();
 
-    if (user != null) {
-      return Right(User.fromUserModel(user));
-    }
+    if (user == null) return Left(NullValue());
 
-    return Left(NullValue());
+    final (String? accessToken, String? refreshToken) =
+        await _remoteDataSource.refreshToken();
+
+    if (accessToken == null) return Left(NullValue());
+
+    final UserModel userModel = user.copyWith(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+
+    return Right(User.fromUserModel(userModel));
   }
 }
