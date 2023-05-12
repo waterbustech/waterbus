@@ -10,6 +10,9 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 const int delay300ms = 300;
 const int delay500ms = 500;
 
+const int connectTimeOut = 10000;
+const int receiveTimeOut = 10000;
+
 const unlimited = 99999;
 
 Widget dividerContainer = Container(

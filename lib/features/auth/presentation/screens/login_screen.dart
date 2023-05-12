@@ -8,6 +8,8 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -84,6 +86,10 @@ class _LogInScreenState extends State<LogInScreen> {
                             await Auth().signInWithGoogle();
 
                         if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
                       },
                     ),
                     SizedBox(height: 12.sp),
@@ -95,6 +101,10 @@ class _LogInScreenState extends State<LogInScreen> {
                             await Auth().signInWithFacebook();
 
                         if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
                       },
                     ),
                     Padding(
@@ -136,6 +146,10 @@ class _LogInScreenState extends State<LogInScreen> {
                             await Auth().signInWithApple();
 
                         if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
                       },
                     ),
                     SizedBox(height: 20.sp),
