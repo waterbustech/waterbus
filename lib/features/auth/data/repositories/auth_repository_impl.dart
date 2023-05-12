@@ -37,16 +37,18 @@ class AuthRepositoryImpl extends AuthRepository {
 
     if (user == null) return Left(NullValue());
 
-    final (String? accessToken, String? refreshToken) =
-        await _remoteDataSource.refreshToken();
+    try {
+      final (String accessToken, String refreshToken) =
+          await _remoteDataSource.refreshToken();
 
-    if (accessToken == null) return Left(NullValue());
+      final UserModel userModel = user.copyWith(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
 
-    final UserModel userModel = user.copyWith(
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    );
-
-    return Right(User.fromUserModel(userModel));
+      return Right(User.fromUserModel(userModel));
+    } catch (_) {
+      return Left(NullValue());
+    }
   }
 }
