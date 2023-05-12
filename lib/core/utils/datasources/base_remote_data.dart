@@ -10,10 +10,17 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 
 @singleton
 class BaseRemoteData {
-  static Dio dio = Dio(
+  final AuthLocalDataSource _authLocalDataSource;
+
+  BaseRemoteData(this._authLocalDataSource);
+
+  Dio dio = Dio(
     BaseOptions(
       baseUrl: ApiEndpoints.baseUrl,
       connectTimeout: const Duration(milliseconds: connectTimeOut),
@@ -208,6 +215,26 @@ class BaseRemoteData {
       requestOptions: RequestOptions(path: gateway),
       statusCode: StatusCode.badGateway,
       statusMessage: "CATCH EXCEPTION DIO",
+    );
+  }
+
+  Options get getOptionsRefreshToken {
+    return Options(
+      validateStatus: (status) {
+        if (status == StatusCode.notAcceptable &&
+            _authLocalDataSource.accessToken != null) {
+          AppBloc.authBloc.add(LogOutEvent());
+        }
+
+        return true;
+      },
+      headers: {
+        'Authorization': 'Bearer ${_authLocalDataSource.refreshToken}',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Connection': 'keep-alive',
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+      },
     );
   }
 

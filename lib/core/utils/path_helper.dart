@@ -17,9 +17,9 @@ class PathHelper {
     }
   }
 
-  static Future<void> createDirStreamOS() async {
-    final String tempWaterbusDir = await tempDirStreamOS;
-    final String localStoreWaterbusDir = await localStoreDirStreamOS;
+  static Future<void> createDirWaterbus() async {
+    final String tempWaterbusDir = await tempDirWaterbus;
+    final String localStoreWaterbusDir = await localStoreDirWaterbus;
     final Directory myDir = Directory(tempWaterbusDir);
     final Directory localDir = Directory(localStoreWaterbusDir);
     if (!myDir.existsSync()) {
@@ -31,10 +31,10 @@ class PathHelper {
     }
   }
 
-  static Future<String> get tempDirStreamOS async =>
-      '${(await getTemporaryDirectory()).path}/streamOS';
+  static Future<String> get tempDirWaterbus async =>
+      '${(await getTemporaryDirectory()).path}/Waterbus';
 
-  static Future<String> get localStoreDirStreamOS async =>
+  static Future<String> get localStoreDirWaterbus async =>
       '${(await getTemporaryDirectory()).path}/hive';
 
   static Future<Directory> get appDir async =>
@@ -56,7 +56,7 @@ class PathHelper {
   }
 
   static Future<int> getTempSize() async {
-    final String tempWaterbusDir = await tempDirStreamOS;
+    final String tempWaterbusDir = await tempDirWaterbus;
     final Directory myDir = Directory(tempWaterbusDir);
 
     if (!myDir.existsSync()) return 0;
@@ -65,7 +65,7 @@ class PathHelper {
   }
 
   static Future<void> clearTempDir() async {
-    final String tempWaterbusDir = await tempDirStreamOS;
+    final String tempWaterbusDir = await tempDirWaterbus;
     final Directory myDir = Directory(tempWaterbusDir);
 
     if (!myDir.existsSync()) return;
