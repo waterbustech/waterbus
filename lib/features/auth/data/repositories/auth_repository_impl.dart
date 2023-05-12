@@ -1,10 +1,13 @@
+// Package imports:
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+
+// Project imports:
+import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/core/error/failures.dart';
-import 'package:dartz/dartz.dart';
 import 'package:waterbus/features/auth/domain/repositories/auth_repository.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
 

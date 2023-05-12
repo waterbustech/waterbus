@@ -9,12 +9,13 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
+// Package imports:
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
+// Project imports:
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
-import '../../features/auth/data/datasources/auth_remote_datasource.dart'
-    as _i7;
 import '../../features/auth/data/repositories/auth_repository_impl.dart' as _i9;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i8;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i10;
@@ -23,6 +24,9 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i12;
 import '../../features/home/bloc/home/home_bloc.dart' as _i5;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i6;
 import '../utils/datasources/base_remote_data.dart' as _i4;
+
+import '../../features/auth/data/datasources/auth_remote_datasource.dart'
+    as _i7;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars

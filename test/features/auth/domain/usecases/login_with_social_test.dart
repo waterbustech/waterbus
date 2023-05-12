@@ -1,15 +1,18 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+
+// Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/repositories/auth_repository.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
-
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'check_auth_test.mocks.dart';
