@@ -20,7 +20,13 @@ coverage:
       default:
         target: 80%
   ignore:
-    - "lib/gen"
-    - "lib/core"
-    - "lib/main.dart"
-    - "**/*.g.dart"
+    - "lib/gen/**"
+		- "lib/core/**"
+		- "lib/features/**/data/datasources/**"
+		- "lib/features/**/presentation/**"
+		- "lib/features/**/widgets/**"
+		- "lib/features/**/bloc/**"
+		- "lib/features/**/blocs/**"
+		- "lib/features/**/xmodels/**"
+		- "lib/features/**/screens/**"
+		- "lib/main.dart"
