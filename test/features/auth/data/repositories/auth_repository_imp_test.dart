@@ -135,5 +135,42 @@ void main() {
     });
   });
 
-  group('logInWithSocial', () {});
+  group('logInWithSocial', () {
+    final AuthParams authParams = AuthParams(
+      payloadModel: AuthPayloadModel(fullName: ''),
+    );
+
+    test('login success', () async {
+      // arrange
+      final Map<String, dynamic> userJson = jsonDecode(
+        fixture(userSample),
+      );
+      final UserModel user = UserModel.fromMap(userJson);
+
+      when(mockAuthRemoteDataSource.signInWithSocial(authParams.payloadModel))
+          .thenAnswer(
+        (realInvocation) => Future.value(user),
+      );
+
+      // act
+      final Either<Failure, User> result = await repository.loginWithSocial(
+        authParams,
+      );
+
+      // assert
+      expect(
+        result.isRight(),
+        Right<Failure, User>(User.fromUserModel(user)).isRight(),
+      );
+
+      verify(repository.loginWithSocial(authParams));
+      verify(mockAuthLocalDataSource.saveUserModel(user));
+      verifyNever(
+        mockAuthLocalDataSource.saveTokens(accessToken: '', refreshToken: ''),
+      );
+      verifyNever(
+        repository.onAuthCheck(),
+      );
+    });
+  });
 }

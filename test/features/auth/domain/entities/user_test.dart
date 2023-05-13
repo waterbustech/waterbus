@@ -39,6 +39,7 @@ void main() {
       expect(user == userModel1, true);
       expect(user == userModel2, false);
       expect(user.toString(), userModel1.toString());
+      expect(user.hashCode, user.copyWith().hashCode);
     });
   });
 
@@ -116,12 +117,10 @@ void main() {
       'fromJson - should return a valid model when the JSON',
       () {
         // arrange
-        final Map<String, dynamic> userJson = jsonDecode(
-          fixture(userSample),
-        );
+        final String userJson = fixture(userSample);
 
         // act
-        final User user = User.fromMap(userJson);
+        final User user = User.fromJson(userJson);
 
         // assert
         expect(user, isNotNull);

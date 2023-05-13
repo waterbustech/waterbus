@@ -27,41 +27,56 @@ void main() {
     usecase = LoginWithSocial(mockAuthRepository);
   });
 
-  test(
-    'should sign in successful',
-    () async {
-      // arrange
-      final Map<String, dynamic> userJson = jsonDecode(
-        fixture(userSample),
-      );
+  group('AuthParams Unit Test', () {
+    final AuthParams authParams1 = AuthParams(
+      payloadModel: AuthPayloadModel(fullName: '1'),
+    );
+    final AuthParams authParams2 = AuthParams(
+      payloadModel: AuthPayloadModel(fullName: '2'),
+    );
 
-      // act
-      final User user = User.fromMap(userJson);
+    test('test equatable AuthPrams', () {
+      expect(authParams1 != authParams2, true);
+      expect(authParams1.props != authParams2.props, true);
+    });
 
-      final AuthParams authParamsSample = AuthParams(
-        payloadModel: AuthPayloadModel(
-          fullName: 'Kai',
-          googleId: 'lambiengcode',
-        ),
-      );
+    test(
+      'should sign in successful',
+      () async {
+        // arrange
+        final Map<String, dynamic> userJson = jsonDecode(
+          fixture(userSample),
+        );
 
-      when(
-        mockAuthRepository.loginWithSocial(authParamsSample),
-      ).thenAnswer(
-        (realInvocation) => Future.value(Right(user)),
-      );
+        // act
+        final User user = User.fromMap(userJson);
 
-      // act
-      final Either<Failure, User> result = await usecase.call(authParamsSample);
+        final AuthParams authParamsSample = AuthParams(
+          payloadModel: AuthPayloadModel(
+            fullName: 'Kai',
+            googleId: 'lambiengcode',
+          ),
+        );
 
-      // assert
-      expect(
-        result.isRight(),
-        Right<Failure, User>(user).isRight(),
-      );
+        when(
+          mockAuthRepository.loginWithSocial(authParamsSample),
+        ).thenAnswer(
+          (realInvocation) => Future.value(Right(user)),
+        );
 
-      verify(mockAuthRepository.loginWithSocial(authParamsSample));
-      verifyNoMoreInteractions(mockAuthRepository);
-    },
-  );
+        // act
+        final Either<Failure, User> result =
+            await usecase.call(authParamsSample);
+
+        // assert
+        expect(
+          result.isRight(),
+          Right<Failure, User>(user).isRight(),
+        );
+
+        verify(mockAuthRepository.loginWithSocial(authParamsSample));
+        verifyNoMoreInteractions(mockAuthRepository);
+      },
+    );
+  });
 }

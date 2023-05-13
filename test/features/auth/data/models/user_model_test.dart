@@ -82,6 +82,7 @@ void main() {
       expect(userClone.accessToken != user.accessToken, true);
       expect(userClone.refreshToken != user.refreshToken, true);
       expect(userClone.id != user.id, true);
+      expect(user.hashCode, user.copyWith().hashCode);
     });
   });
 
@@ -147,12 +148,10 @@ void main() {
       'fromJson - should return a valid model when the JSON',
       () {
         // arrange
-        final Map<String, dynamic> userJson = jsonDecode(
-          fixture(userSample),
-        );
+        final String userJson = fixture(userModelSample);
 
         // act
-        final UserModel user = UserModel.fromMap(userJson);
+        final UserModel user = UserModel.fromJson(userJson);
 
         // assert
         expect(user, isNotNull);
