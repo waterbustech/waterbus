@@ -23,7 +23,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.7.11"
+          flutter-version: "3.10.0"
           cache: true
       - run: flutter pub get
       - run: flutter analyze
@@ -47,14 +47,14 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.7.11"
+          flutter-version: "3.10.0"
           cache: true
       - run: flutter pub get
       - run: flutter build apk --target-platform android-arm,android-arm64 --dart-define="lambiengcode=PRODUCTION" --release -v
       - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
-          name: "Askany ${{ github.ref_name }}"
+          name: "Waterbus ${{ github.ref_name }}"
           bodyFile: "RELEASE.md"
           artifacts: "build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.TOKEN }}

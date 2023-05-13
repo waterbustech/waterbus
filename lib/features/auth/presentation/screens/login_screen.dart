@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auth/auth.dart';
+import 'package:auth/models/auth_payload_model.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/features/auth/widgets/button_login.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
 import 'package:waterbus/gen/assets.gen.dart';
-
-// Package imports:
-
-// Project imports:
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -81,13 +81,31 @@ class _LogInScreenState extends State<LogInScreen> {
                     ButtonLogin(
                       title: 'Continue with Google',
                       iconAsset: Assets.icons.icGoogle.path,
-                      onPressed: () {},
+                      onPressed: () async {
+                        final AuthPayloadModel? payload =
+                            await Auth().signInWithGoogle();
+
+                        if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
+                      },
                     ),
                     SizedBox(height: 12.sp),
                     ButtonLogin(
                       title: 'Continue with Facebook',
                       iconAsset: Assets.icons.icFacebook.path,
-                      onPressed: () {},
+                      onPressed: () async {
+                        final AuthPayloadModel? payload =
+                            await Auth().signInWithFacebook();
+
+                        if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -123,7 +141,16 @@ class _LogInScreenState extends State<LogInScreen> {
                     ButtonLogin(
                       title: 'Continue with Apple',
                       iconAsset: Assets.icons.icApple.path,
-                      onPressed: () {},
+                      onPressed: () async {
+                        final AuthPayloadModel? payload =
+                            await Auth().signInWithApple();
+
+                        if (payload == null) return;
+
+                        AppBloc.authBloc.add(
+                          LogInWithSocialEvent(authPayload: payload),
+                        );
+                      },
                     ),
                     SizedBox(height: 20.sp),
                     RichText(

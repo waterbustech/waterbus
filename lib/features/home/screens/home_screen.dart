@@ -123,11 +123,11 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 16.sp),
               const Divider(thickness: .3, height: .3),
               SizedBox(height: 10.sp),
-              Expanded(
+              const Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
-                    children: const [
+                    children: [
                       InvitationList(),
                       MyMeetings(),
                     ],

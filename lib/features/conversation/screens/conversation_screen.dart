@@ -6,10 +6,10 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/features/conversation/models/message_model.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
 import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
+import 'package:waterbus/features/conversation/xmodels/message_model.dart';
 
 class ConversationScreen extends StatelessWidget {
   const ConversationScreen({super.key});
