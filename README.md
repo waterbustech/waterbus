@@ -1,5 +1,6 @@
 [![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.io?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
 # Waterbus: Online Meeting App using Flutter and WebRTC
 
 <p align="justify">
