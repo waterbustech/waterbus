@@ -1,6 +1,7 @@
 echo "1. optimization test"
 echo "2. start testing"
 echo "3. check code coverage"
+echo "4. validate codecov.yml"
 
 while :
 do 
@@ -36,6 +37,10 @@ do
 		open coverage/html/index.html
 		break
         ;;
+		4)
+		cat codecov.yml | curl --data-binary @- https://codecov.io/validate
+		break
+		;;
         *)
 		;;
 	esac

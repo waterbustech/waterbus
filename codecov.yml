@@ -20,13 +20,14 @@ coverage:
       default:
         target: 80%
   ignore:
-    - "**/gen/**"
-		- "**/core/**"
-		- "**/features/**/data/datasources/**"
-		- "**/features/**/presentation/**"
-		- "**/features/**/widgets/**"
-		- "**/features/**/bloc/**"
-		- "**/features/**/blocs/**"
-		- "**/features/**/xmodels/**"
-		- "**/features/**/screens/**"
-		- "**/main.dart"
+    - "lib/gen/**"  # ignore folders and all its contents
+    - "lib/core/**"
+    - "lib/features/**/data/datasources/**"
+    - "lib/features/**/presentation/**"
+    - "lib/features/**/widgets/**"
+    - "lib/features/**/bloc/**"
+    - "**/*.g.dart"
+    - "lib/features/**/blocs/**"
+    - "lib/features/**/xmodels/**"
+    - "lib/features/**/screens/**"
+    - "lib/main.dart"
