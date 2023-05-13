@@ -1,0 +1,33 @@
+coverage:
+  status:
+    project:
+      default:
+        base: auto
+        branches:
+          - main
+          - dev
+          - "*/*"
+        flags:
+          - unit
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+        paths:
+          - lib
+        target: 80%
+        threshold: 1%
+    patch:
+      default:
+        target: 80%
+  ignore:
+    - "lib/gen/**"  # ignore folders and all its contents
+    - "lib/core/**"
+    - "lib/features/**/data/datasources/**"
+    - "lib/features/**/presentation/**"
+    - "lib/features/**/widgets/**"
+    - "lib/features/**/bloc/**"
+    - "**/*.g.dart"
+    - "lib/features/**/blocs/**"
+    - "lib/features/**/xmodels/**"
+    - "lib/features/**/screens/**"
+    - "lib/main.dart"
