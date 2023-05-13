@@ -2,5 +2,6 @@
     "_id": "1",
     "name": "a",
     "src": "b",
-    "location": "location"
+    "location": "location",
+    "v": 1
 }
