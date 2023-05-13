@@ -58,8 +58,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
         body: ColoredBox(
           color: Theme.of(context).scaffoldBackgroundColor,
-          child: Column(
-            children: const [
+          child: const Column(
+            children: [
               Divider(height: .5, thickness: .5),
             ],
           ),

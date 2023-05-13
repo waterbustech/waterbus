@@ -1,4 +1,4 @@
-name: Analyze project
+name: Analyze & Test project
 
 on:
   push:
@@ -23,12 +23,14 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.7.11"
+          flutter-version: "3.10.0"
           cache: true
       - run: flutter pub get
       - run: flutter analyze
-      # - run: flutter test
-      - uses: codecov/codecov-action@v3
+      - run: dart pub global activate very_good_cli
+      - run: very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 80
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
