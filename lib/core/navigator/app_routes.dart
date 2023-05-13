@@ -13,4 +13,5 @@ class Routes {
 
   // Others
   static const String dialogRoute = '/dialog';
+  static const String loadingRoute = '/loadingRoute';
 }
