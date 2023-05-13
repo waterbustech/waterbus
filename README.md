@@ -1,5 +1,4 @@
-[![codecov.io](https://codecov.io/github/lambiengcode/waterbus/coverage.svg?branch=main)](https://codecov.io/github/lambiengcode/waterbus/coverage.svg?branch=main)
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)
 
 # Waterbus: Online Meeting App using Flutter and WebRTC
 
@@ -12,10 +11,10 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 ## Screenshots
 <p>
-<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_1.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_2.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_3.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_4.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_1.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_2.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_3.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_4.jpeg?raw=true" width="200px"/>
 </p>
 
 ## Idea of Waterbus
@@ -32,11 +31,11 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Schedule | 🟢 | 🟢 |
 | Upload documents | 🟢 | 🟢 |
 
-#### Design Idea
+<!-- #### Design Idea
 <p>
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_1.png.webp?raw=true" width="49.5%"/>
 <img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_2.png.webp?raw=true" width="49.5%"/>
-</p>
+</p> -->
 
 ## Directiory Structure
 
