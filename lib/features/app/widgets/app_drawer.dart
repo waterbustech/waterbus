@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/profile/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
 
 class AppDrawer extends StatefulWidget {
   final GlobalKey<SliderDrawerState> sliderDrawerKey;

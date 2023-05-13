@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/profile/widgets/list_menu_drawer.dart';
-import 'package:waterbus/core/profile/widgets/profile_header.dart';
+import 'package:waterbus/features/profile/presentation/widgets/list_menu_drawer.dart';
+import 'package:waterbus/features/profile/presentation/widgets/profile_header.dart';
 
 class ProfileDrawerLayout extends StatelessWidget {
   final Function() closeSlider;

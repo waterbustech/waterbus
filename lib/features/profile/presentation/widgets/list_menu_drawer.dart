@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:waterbus/core/profile/fake/fake_menu_items.dart';
-import 'package:waterbus/core/profile/widgets/menu_drawer_card.dart';
+import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
+import 'package:waterbus/features/profile/presentation/widgets/menu_drawer_card.dart';
 
 class ListMenuDrawer extends StatelessWidget {
   const ListMenuDrawer({super.key});
