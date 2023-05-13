@@ -14,11 +14,11 @@ coverage:
         only_pulls: false
         paths:
           - lib
-        target: 80%
+        target: 90%
         threshold: 1%
     patch:
       default:
-        target: 80%
+        target: 90%
   ignore:
     - "lib/gen/**"  # ignore folders and all its contents
     - "lib/core/**"
