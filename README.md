@@ -1,3 +1,4 @@
+[![codecov.io](https://codecov.io/github/lambiengcode/waterbus/coverage.svg?branch=main)](https://codecov.io/github/lambiengcode/waterbus/coverage.svg?branch=main)
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
 
 # Waterbus: Online Meeting App using Flutter and WebRTC
@@ -11,8 +12,10 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 ## Screenshots
 <p>
-<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/screenshot_2.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/screenshot_1.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_1.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_2.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_3.jpeg?raw=true" width="200px"/>
+<img src="https://github.com/lambiengcode/waterbus/blob/feat/auth/screenshots/waterbus_4.jpeg?raw=true" width="200px"/>
 </p>
 
 ## Idea of Waterbus

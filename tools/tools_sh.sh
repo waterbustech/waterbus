@@ -28,6 +28,8 @@ do
 		5)
 		# -d = --delete-conflicting-outputs
 		flutter packages pub run build_runner build -d
+		flutter pub run import_sorter:main
+		dart fix --apply 
 		break
         ;;
         *)
