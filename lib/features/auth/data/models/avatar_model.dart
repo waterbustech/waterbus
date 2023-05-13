@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 // Dart imports:
 import 'dart:convert';
 
@@ -62,21 +63,20 @@ class AvatarModel {
   @override
   bool operator ==(covariant AvatarModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.name == name &&
-      other.src == src &&
-      other.location == location &&
-      other.version == version;
+
+    return other.id == id &&
+        other.name == name &&
+        other.src == src &&
+        other.location == location &&
+        other.version == version;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      src.hashCode ^
-      location.hashCode ^
-      version.hashCode;
+        name.hashCode ^
+        src.hashCode ^
+        location.hashCode ^
+        version.hashCode;
   }
 }

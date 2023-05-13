@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
   final MenuItemModel item;
