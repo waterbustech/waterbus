@@ -28,19 +28,23 @@ void main() {
     test('operator ==', () {
       // arrange
       final AvatarModel avatar1 = AvatarModel(
-        name: '',
-        src: '',
-        location: '',
+        id: '3',
+        name: '2',
+        src: '1',
+        location: '0',
         version: 1,
       );
       final AvatarModel avatar2 = AvatarModel(
+        id: '0',
         name: '1',
-        src: '',
-        location: '',
+        src: '2',
+        location: '3',
         version: 1,
       );
 
+      expect(avatar1 == avatar1.copyWith(), true);
       expect(avatar1 != avatar2, true);
+      expect(avatar1.hashCode, avatar1.copyWith().hashCode);
       expect(avatar1.toString() != avatar2.toString(), true);
     });
   });
@@ -59,6 +63,7 @@ void main() {
         name: "3",
         src: "4",
         location: "5",
+        version: 2,
       );
 
       // assert
@@ -66,6 +71,11 @@ void main() {
       expect(avatarClone.name, "3");
       expect(avatarClone.src, "4");
       expect(avatarClone.location, "5");
+      expect(avatarClone.version, 2);
+      expect(avatar.id != avatarClone.id, true);
+      expect(avatar.name != avatarClone.name, true);
+      expect(avatar.src != avatarClone.src, true);
+      expect(avatar.location != avatarClone.location, true);
     });
   });
 

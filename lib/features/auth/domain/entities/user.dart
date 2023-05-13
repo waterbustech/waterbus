@@ -3,13 +3,10 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 
-class User extends Equatable {
+class User {
   final String id;
   final String fullName;
   final String userName;
@@ -61,8 +58,14 @@ class User extends Equatable {
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  bool get stringify => true;
+  bool operator ==(covariant User other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.fullName == fullName &&
+        other.userName == userName;
+  }
 
   @override
-  List<Object> get props => [id, fullName, userName];
+  int get hashCode => id.hashCode ^ fullName.hashCode ^ userName.hashCode;
 }
