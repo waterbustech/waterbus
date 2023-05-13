@@ -31,3 +31,7 @@ jobs:
       - run: very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 80
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          fail_ci_if_error: true
