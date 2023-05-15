@@ -53,15 +53,17 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
     saveUserModel(
       user.copyWith(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        token: user.token?.copyWith(
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        ),
       ),
     );
   }
 
   @override
-  String? get accessToken => getUserModel()?.accessToken;
+  String? get accessToken => getUserModel()?.token?.accessToken;
 
   @override
-  String? get refreshToken => getUserModel()?.refreshToken;
+  String? get refreshToken => getUserModel()?.token?.refreshToken;
 }

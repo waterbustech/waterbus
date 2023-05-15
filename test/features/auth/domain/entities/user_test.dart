@@ -3,6 +3,7 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:waterbus/features/auth/data/models/token_model.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/user_model.dart';
@@ -95,8 +96,10 @@ void main() {
           id: 'lam',
           userName: 'lam',
           fullName: 'Kai',
-          accessToken: 'a',
-          refreshToken: '',
+          token: TokenModel(
+            accessToken: 'a',
+            refreshToken: '',
+          ),
           avatar: null,
         );
 

@@ -5,19 +5,20 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 // Dart imports:
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 // Package imports:
-import 'package:auth/models/auth_payload_model.dart' as _i6;
+import 'package:auth/models/auth_payload_model.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // Project imports:
-import 'package:waterbus/features/auth/data/models/user_model.dart' as _i3;
+import 'package:waterbus/features/auth/data/models/token_model.dart' as _i2;
+import 'package:waterbus/features/auth/data/models/user_model.dart' as _i4;
 
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart'
-    as _i2;
+    as _i3;
 import 'package:waterbus/features/auth/data/datasources/auth_remote_datasource.dart'
-    as _i4;
+    as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -30,13 +31,23 @@ import 'package:waterbus/features/auth/data/datasources/auth_remote_datasource.d
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeTokenModel_0 extends _i1.SmartFake implements _i2.TokenModel {
+  _FakeTokenModel_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [AuthLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthLocalDataSource extends _i1.Mock
-    implements _i2.AuthLocalDataSource {
+    implements _i3.AuthLocalDataSource {
   @override
-  void saveUserModel(_i3.UserModel? userModel) => super.noSuchMethod(
+  void saveUserModel(_i4.UserModel? userModel) => super.noSuchMethod(
         Invocation.method(
           #saveUserModel,
           [userModel],
@@ -73,26 +84,38 @@ class MockAuthLocalDataSource extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthRemoteDataSource extends _i1.Mock
-    implements _i4.AuthRemoteDataSource {
+    implements _i5.AuthRemoteDataSource {
   @override
-  _i5.Future<(String, String)> refreshToken() => (super.noSuchMethod(
+  _i6.Future<_i2.TokenModel> refreshToken() => (super.noSuchMethod(
         Invocation.method(
           #refreshToken,
           [],
         ),
-        returnValue: _i5.Future<(String, String)>.value(('a', 'b')),
+        returnValue: _i6.Future<_i2.TokenModel>.value(_FakeTokenModel_0(
+          this,
+          Invocation.method(
+            #refreshToken,
+            [],
+          ),
+        )),
         returnValueForMissingStub:
-            _i5.Future<(String, String)>.value(('a', 'b')),
-      ) as _i5.Future<(String, String)>);
+            _i6.Future<_i2.TokenModel>.value(_FakeTokenModel_0(
+          this,
+          Invocation.method(
+            #refreshToken,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.TokenModel>);
   @override
-  _i5.Future<_i3.UserModel?> signInWithSocial(
-          _i6.AuthPayloadModel? authPayload) =>
+  _i6.Future<_i4.UserModel?> signInWithSocial(
+          _i7.AuthPayloadModel? authPayload) =>
       (super.noSuchMethod(
         Invocation.method(
           #signInWithSocial,
           [authPayload],
         ),
-        returnValue: _i5.Future<_i3.UserModel?>.value(),
-        returnValueForMissingStub: _i5.Future<_i3.UserModel?>.value(),
-      ) as _i5.Future<_i3.UserModel?>);
+        returnValue: _i6.Future<_i4.UserModel?>.value(),
+        returnValueForMissingStub: _i6.Future<_i4.UserModel?>.value(),
+      ) as _i6.Future<_i4.UserModel?>);
 }

@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/avatar_model.dart';
+import 'package:waterbus/features/auth/data/models/token_model.dart';
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
@@ -38,16 +39,20 @@ void main() {
         id: "lambiengcode",
         userName: "lambiengcode",
         fullName: "Kai Dao",
-        accessToken: "token_1",
-        refreshToken: "token_2",
+        token: TokenModel(
+          accessToken: "token_1",
+          refreshToken: "token_2",
+        ),
         avatar: avatarModel,
       );
       final UserModel userModel2 = UserModel(
         id: "lambiengcode1",
         userName: "lambiengcode",
         fullName: "Kai Dao",
-        accessToken: "token_1",
-        refreshToken: "token_2",
+        token: TokenModel(
+          accessToken: "token_1",
+          refreshToken: "token_2",
+        ),
         avatar: null,
       );
 
@@ -78,8 +83,10 @@ void main() {
       final UserModel userClone = user.copyWith(
         userName: "lambiengcode1",
         fullName: "Kai",
-        accessToken: '1',
-        refreshToken: '2',
+        token: TokenModel(
+          accessToken: "1",
+          refreshToken: "2",
+        ),
         id: 'a',
       );
       // assert
@@ -87,8 +94,8 @@ void main() {
       expect(userClone.fullName, "Kai");
       expect(userClone.userName != user.userName, true);
       expect(userClone.fullName != user.fullName, true);
-      expect(userClone.accessToken != user.accessToken, true);
-      expect(userClone.refreshToken != user.refreshToken, true);
+      expect(userClone.token?.accessToken != user.token?.accessToken, true);
+      expect(userClone.token?.refreshToken != user.token?.refreshToken, true);
       expect(userClone.id != user.id, true);
       expect(user.hashCode, user.copyWith().hashCode);
     });
@@ -182,12 +189,12 @@ void main() {
       'toJson - should return a valid model when the JSON',
       () {
         // arrange
-        final Map<String, dynamic> userJson = jsonDecode(
-          fixture(userSample),
+        final Map<String, dynamic> userModelJson = jsonDecode(
+          fixture(userModelSample),
         );
 
         // act
-        final UserModel user = UserModel.fromMap(userJson);
+        final UserModel user = UserModel.fromMap(userModelJson);
 
         // assert
         expect(user.toJson(), isNotNull);

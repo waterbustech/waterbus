@@ -92,13 +92,13 @@ dev_dependencies:
 
   # Code Generator
   injectable_generator: ^2.1.5
-  build_runner: ^2.4.2
+  build_runner: ^2.4.4
   flutter_gen_runner: ^5.3.1
 
   # Lints
   flutter_lints: ^2.0.0
   import_sorter: ^4.6.0
-  dart_code_metrics: ^5.7.2
+  dart_code_metrics: ^5.7.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

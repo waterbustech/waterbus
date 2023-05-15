@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:waterbus/features/auth/data/models/token_model.dart';
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/repositories/auth_repository.dart';
@@ -38,13 +39,9 @@ class AuthRepositoryImpl extends AuthRepository {
     if (user == null) return Left(NullValue());
 
     try {
-      final (String accessToken, String refreshToken) =
-          await _remoteDataSource.refreshToken();
+      final TokenModel token = await _remoteDataSource.refreshToken();
 
-      final UserModel userModel = user.copyWith(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      );
+      final UserModel userModel = user.copyWith(token: token);
 
       return Right(User.fromUserModel(userModel));
     } catch (_) {

@@ -5,21 +5,20 @@ import 'dart:convert';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/avatar_model.dart';
+import 'package:waterbus/features/auth/data/models/token_model.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 
 class UserModel {
   final String id;
   final String userName;
   final String fullName;
-  final String accessToken;
-  final String refreshToken;
+  final TokenModel? token;
   final AvatarModel? avatar;
   UserModel({
     required this.id,
     required this.userName,
     required this.fullName,
-    required this.accessToken,
-    required this.refreshToken,
+    required this.token,
     required this.avatar,
   });
 
@@ -27,16 +26,14 @@ class UserModel {
     String? id,
     String? userName,
     String? fullName,
-    String? accessToken,
-    String? refreshToken,
     AvatarModel? avatar,
+    TokenModel? token,
   }) {
     return UserModel(
       id: id ?? this.id,
       userName: userName ?? this.userName,
       fullName: fullName ?? this.fullName,
-      accessToken: accessToken ?? this.accessToken,
-      refreshToken: refreshToken ?? this.refreshToken,
+      token: token ?? this.token,
       avatar: avatar ?? this.avatar,
     );
   }
@@ -46,8 +43,8 @@ class UserModel {
       '_id': id,
       'userName': userName,
       'fullName': fullName,
-      'accessToken': accessToken,
-      'refreshToken': refreshToken,
+      'accessToken': token?.accessToken,
+      'refreshToken': token?.refreshToken,
       'avatar': avatar?.toMap(),
     };
   }
@@ -57,8 +54,7 @@ class UserModel {
       id: map['_id'] ?? '',
       userName: map['userName'] ?? '',
       fullName: map['fullName'] ?? '',
-      accessToken: map['accessToken'] ?? '',
-      refreshToken: map['refreshToken'] ?? '',
+      token: TokenModel.fromMap(map),
       avatar: map['avatar'] != null
           ? AvatarModel.fromMap(map['avatar'] as Map<String, dynamic>)
           : null,
@@ -70,8 +66,7 @@ class UserModel {
       id: map['user']['_id'] ?? '',
       userName: map['user']['userName'] ?? '',
       fullName: map['user']['fullName'] ?? '',
-      accessToken: map['accessToken'] ?? '',
-      refreshToken: map['refreshToken'] ?? '',
+      token: TokenModel.fromMap(map),
       avatar: map['user']['avatar'] != null
           ? AvatarModel.fromMap(map['user']['avatar'] as Map<String, dynamic>)
           : null,
@@ -83,8 +78,7 @@ class UserModel {
       id: user.id,
       userName: user.userName,
       fullName: user.fullName,
-      accessToken: '',
-      refreshToken: '',
+      token: null,
       avatar: null,
     );
   }
@@ -95,19 +89,13 @@ class UserModel {
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'UserModel(id: $id, username: $userName, fullName: $fullName, accessToken: $accessToken, refreshToken: $refreshToken, avatar: $avatar)';
-  }
-
-  @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
         other.userName == userName &&
         other.fullName == fullName &&
-        other.accessToken == accessToken &&
-        other.refreshToken == refreshToken &&
+        other.token == token &&
         other.avatar == avatar;
   }
 
@@ -116,8 +104,12 @@ class UserModel {
     return id.hashCode ^
         userName.hashCode ^
         fullName.hashCode ^
-        accessToken.hashCode ^
-        refreshToken.hashCode ^
+        token.hashCode ^
         avatar.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, userName: $userName, fullName: $fullName, token: $token, avatar: $avatar)';
   }
 }

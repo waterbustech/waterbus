@@ -12,7 +12,7 @@ do
 		break
 		;;
 		2)
-		very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 96 
+		very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 96 --concurrency 25
 		break
         ;;
 		3)
