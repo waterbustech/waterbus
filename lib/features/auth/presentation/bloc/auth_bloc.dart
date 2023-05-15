@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:auth/auth.dart';
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,13 +39,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
       }
 
-      if (event is LogInWithSocialEvent) {
-        showDialogLoading();
-
+      if (event is LogInWithGoogleEvent ||
+          event is LogInWithFacebookEvent ||
+          event is LogInWithAppleEvent) {
         await _handleLogin(event);
-
-        // Pop loading after request completed
-        AppNavigator.pop();
 
         if (user != null) emit(AuthSuccess());
       }
@@ -54,9 +52,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   // MARK: Private methods
-  Future<void> _handleLogin(LogInWithSocialEvent event) async {
-    final Either<Failure, User> loginSucceed = await _loginWithSocial
-        .call(AuthParams(payloadModel: event.authPayload));
+  Future<void> _handleLogin(AuthEvent event) async {
+    showDialogLoading();
+
+    late final AuthPayloadModel? payload;
+
+    switch (event) {
+      case LogInWithGoogleEvent():
+        payload = await Auth().signInWithGoogle();
+        break;
+      case LogInWithFacebookEvent():
+        payload = await Auth().signInWithFacebook();
+        break;
+      case LogInWithAppleEvent():
+        payload = await Auth().signInWithApple();
+        break;
+      default:
+        payload = null;
+        break;
+    }
+
+    if (payload == null) {
+      // Pop loading
+      AppNavigator.pop();
+      return;
+    }
+
+    final Either<Failure, User> loginSucceed = await _loginWithSocial.call(
+      AuthParams(payloadModel: payload),
+    );
+
+    // Pop loading
+    AppNavigator.pop();
 
     loginSucceed.fold((l) {}, (r) {
       user = r;
