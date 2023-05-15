@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auth/auth.dart';
-import 'package:auth/models/auth_payload_model.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -82,14 +80,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       title: 'Continue with Google',
                       iconAsset: Assets.icons.icGoogle.path,
                       onPressed: () async {
-                        final AuthPayloadModel? payload =
-                            await Auth().signInWithGoogle();
-
-                        if (payload == null) return;
-
-                        AppBloc.authBloc.add(
-                          LogInWithSocialEvent(authPayload: payload),
-                        );
+                        AppBloc.authBloc.add(LogInWithGoogleEvent());
                       },
                     ),
                     SizedBox(height: 12.sp),
@@ -97,14 +88,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       title: 'Continue with Facebook',
                       iconAsset: Assets.icons.icFacebook.path,
                       onPressed: () async {
-                        final AuthPayloadModel? payload =
-                            await Auth().signInWithFacebook();
-
-                        if (payload == null) return;
-
-                        AppBloc.authBloc.add(
-                          LogInWithSocialEvent(authPayload: payload),
-                        );
+                        AppBloc.authBloc.add(LogInWithFacebookEvent());
                       },
                     ),
                     Padding(
@@ -142,14 +126,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       title: 'Continue with Apple',
                       iconAsset: Assets.icons.icApple.path,
                       onPressed: () async {
-                        final AuthPayloadModel? payload =
-                            await Auth().signInWithApple();
-
-                        if (payload == null) return;
-
-                        AppBloc.authBloc.add(
-                          LogInWithSocialEvent(authPayload: payload),
-                        );
+                        AppBloc.authBloc.add(LogInWithAppleEvent());
                       },
                     ),
                     SizedBox(height: 20.sp),
