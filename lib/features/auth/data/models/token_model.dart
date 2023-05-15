@@ -35,18 +35,19 @@ class TokenModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TokenModel.fromJson(String source) => TokenModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TokenModel.fromJson(String source) =>
+      TokenModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'TokenModel(accessToken: $accessToken, refreshToken: $refreshToken)';
+  String toString() =>
+      'TokenModel(accessToken: $accessToken, refreshToken: $refreshToken)';
 
   @override
   bool operator ==(covariant TokenModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.accessToken == accessToken &&
-      other.refreshToken == refreshToken;
+
+    return other.accessToken == accessToken &&
+        other.refreshToken == refreshToken;
   }
 
   @override
