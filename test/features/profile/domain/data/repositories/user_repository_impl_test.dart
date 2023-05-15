@@ -159,5 +159,32 @@ void main() {
       verifyNever(mockRemoteDataSource.updateUserProfile(userModel));
       verifyNever(mockRemoteDataSource.getUserProfile());
     });
+
+    test('update profile failure', () async {
+      when(
+        mockRemoteDataSource.updateUserProfile(
+          UserModel.fromUserEntity(userEntity),
+        ),
+      ).thenAnswer(
+        (realInvocation) => Future.value(),
+      );
+
+      final Either<Failure, User> result = await repository.updateUserProfile(
+        userEntity,
+      );
+
+      expect(
+        result.isLeft(),
+        Left<Failure, User>(NullValue()).isLeft(),
+      );
+
+      verify(
+        mockRemoteDataSource.updateUserProfile(
+          UserModel.fromUserEntity(userEntity),
+        ),
+      );
+      verifyNever(mockRemoteDataSource.updateUserProfile(userModel));
+      verifyNever(mockRemoteDataSource.getUserProfile());
+    });
   });
 }

@@ -97,8 +97,8 @@ DA:106,6
 DA:107,6
 DA:108,6
 DA:109,6
-DA:110,3
-DA:111,3
+DA:110,6
+DA:111,6
 DA:114,1
 DA:116,3
 DA:117,3
@@ -204,9 +204,9 @@ DA:27,1
 DA:29,2
 DA:30,1
 DA:33,2
-DA:35,0
+DA:35,1
 LF:10
-LH:9
+LH:10
 end_of_record
 TN:
 SF:lib/features/profile/domain/usecases/get_user_profile.dart
