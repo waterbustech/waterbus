@@ -5,6 +5,7 @@ import 'dart:convert';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/avatar_model.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 
 class UserModel {
   final String id;
@@ -74,6 +75,17 @@ class UserModel {
       avatar: map['user']['avatar'] != null
           ? AvatarModel.fromMap(map['user']['avatar'] as Map<String, dynamic>)
           : null,
+    );
+  }
+
+  factory UserModel.fromUserEntity(User user) {
+    return UserModel(
+      id: user.id,
+      userName: user.userName,
+      fullName: user.fullName,
+      accessToken: '',
+      refreshToken: '',
+      avatar: null,
     );
   }
 

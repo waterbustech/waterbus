@@ -30,7 +30,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.created) {
-      return UserModel.fromMapRemote(response.data['data']);
+      return UserModel.fromMapRemote(response.data['responseSuccess']['data']);
     }
 
     return null;
@@ -45,8 +45,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
     if (response.statusCode == StatusCode.ok) {
       return (
-        response.data['data']['accessToken'].toString(),
-        response.data['data']['refreshToken'].toString()
+        response.data['responseSuccess']['data']['accessToken'].toString(),
+        response.data['responseSuccess']['data']['refreshToken'].toString()
       );
     }
 

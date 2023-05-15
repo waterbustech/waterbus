@@ -21,8 +21,10 @@ import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'auth_repository_imp_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<AuthLocalDataSource>()])
-@GenerateNiceMocks([MockSpec<AuthRemoteDataSource>()])
+@GenerateNiceMocks([
+  MockSpec<AuthLocalDataSource>(),
+  MockSpec<AuthRemoteDataSource>(),
+])
 void main() {
   late AuthRepositoryImpl repository;
   late MockAuthLocalDataSource mockAuthLocalDataSource;
