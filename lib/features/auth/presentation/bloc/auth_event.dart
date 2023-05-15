@@ -4,9 +4,10 @@ abstract class AuthEvent {}
 
 class OnAuthCheckEvent extends AuthEvent {}
 
-class LogInWithSocialEvent extends AuthEvent {
-  final AuthPayloadModel authPayload;
-  LogInWithSocialEvent({required this.authPayload});
-}
+class LogInWithGoogleEvent extends AuthEvent {}
+
+class LogInWithFacebookEvent extends AuthEvent {}
+
+class LogInWithAppleEvent extends AuthEvent {}
 
 class LogOutEvent extends AuthEvent {}

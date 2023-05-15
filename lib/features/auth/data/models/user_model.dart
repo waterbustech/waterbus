@@ -71,9 +71,9 @@ class UserModel {
       fullName: map['user']['fullName'] ?? '',
       accessToken: map['accessToken'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
-      avatar: map['avatar'] == null
-          ? null
-          : AvatarModel.fromMap(map['avatar'] as Map<String, dynamic>),
+      avatar: map['user']['avatar'] != null
+          ? AvatarModel.fromMap(map['user']['avatar'] as Map<String, dynamic>)
+          : null,
     );
   }
 
