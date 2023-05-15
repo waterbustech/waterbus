@@ -3,6 +3,7 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:waterbus/features/auth/data/models/avatar_model.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/data/models/user_model.dart';
@@ -26,13 +27,20 @@ void main() {
       },
     );
     test('operator ==', () {
+      // arrange
+      final Map<String, dynamic> avatarJson = jsonDecode(
+        fixture(avatarModelSample),
+      );
+
+      final AvatarModel avatarModel = AvatarModel.fromMap(avatarJson);
+
       final UserModel userModel1 = UserModel(
         id: "lambiengcode",
         userName: "lambiengcode",
         fullName: "Kai Dao",
         accessToken: "token_1",
         refreshToken: "token_2",
-        avatar: null,
+        avatar: avatarModel,
       );
       final UserModel userModel2 = UserModel(
         id: "lambiengcode1",
@@ -128,7 +136,14 @@ void main() {
               "createdAt":
                   "Thu May 11 2023 07:58:20 GMT+0000 (Coordinated Universal Time)",
               "modifiedAt":
-                  "Thu May 11 2023 07:58:20 GMT+0000 (Coordinated Universal Time)"
+                  "Thu May 11 2023 07:58:20 GMT+0000 (Coordinated Universal Time)",
+              "avatar": {
+                "_id": "1",
+                "name": "a",
+                "src": "b",
+                "location": "location",
+                "v": 1
+              }
             }
           },
           "message": "done"
@@ -139,6 +154,7 @@ void main() {
 
         // assert
         expect(user.fullName, "lambiengcode");
+        expect(user.avatar, isNotNull);
       },
     );
   });
