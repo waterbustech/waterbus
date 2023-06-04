@@ -76,10 +76,10 @@ packages:
     dependency: "direct main"
     description:
       name: bloc_concurrency
-      sha256: "9a94e05be7754ec9cfc6e7a68b340be63381a54cadabee25ec3296838646ad3e"
+      sha256: "44535c9f429cd7e91d548cf89fde1c23a8b4b3637decdb1865bb583091a00d4e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   boolean_selector:
     dependency: transitive
     description:
