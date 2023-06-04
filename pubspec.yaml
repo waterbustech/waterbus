@@ -52,7 +52,7 @@ dependencies:
   native_dio_adapter: ^0.1.0
 
   # State management
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
   bloc_concurrency: ^0.2.1
 
   # Dependency Injection
