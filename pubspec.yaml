@@ -92,7 +92,7 @@ dev_dependencies:
 
   # Code Generator
   injectable_generator: ^2.1.5
-  build_runner: ^2.4.4
+  build_runner: ^2.4.5
   flutter_gen_runner: ^5.3.1
 
   # Lints
