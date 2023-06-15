@@ -48,7 +48,7 @@ dependencies:
   cookie_jar: ^4.0.2
   dio: ^5.1.2
   dio_smart_retry: ^5.0.0
-  dio_cookie_manager: ^3.0.0
+  dio_cookie_manager: ^3.1.0
   native_dio_adapter: ^0.1.0
 
   # State management
