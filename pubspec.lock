@@ -252,10 +252,10 @@ packages:
     dependency: "direct main"
     description:
       name: cookie_jar
-      sha256: "700cda09e47e90c749a3bcaf6daef3cdef4eca246db63eceabceeb29cef93bcc"
+      sha256: "1024f3a52bee181fc8f10f4a359085471587d7406323090a53a7171bc0aa5c37"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "4.0.5"
   cronet_http:
     dependency: transitive
     description:
