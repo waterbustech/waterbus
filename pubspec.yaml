@@ -96,7 +96,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.3.1
 
   # Lints
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.2
   import_sorter: ^4.6.0
   dart_code_metrics: ^5.7.4
 
