@@ -61,8 +61,8 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -79,8 +79,8 @@ class BaseRemoteData {
         onReceiveProgress: (received, total) {},
       );
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -105,8 +105,8 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -122,8 +122,8 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -149,8 +149,8 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -175,8 +175,8 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
@@ -204,13 +204,13 @@ class BaseRemoteData {
       );
 
       return response;
-    } on DioError catch (exception) {
-      return catchDioError(exception: exception, gateway: gateway);
+    } on DioException catch (exception) {
+      return catchDioException(exception: exception, gateway: gateway);
     }
   }
 
-  Response catchDioError({
-    required DioError exception,
+  Response catchDioException({
+    required DioException exception,
     required String gateway,
   }) {
     return Response(
