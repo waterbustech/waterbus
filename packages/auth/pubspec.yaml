@@ -1,7 +1,6 @@
 name: auth
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -15,9 +14,9 @@ dependencies:
   firebase_auth: ^4.4.2
 
   # Authenticate
-  google_sign_in: ^6.1.0
-  sign_in_with_apple: ^4.3.0
-  flutter_facebook_auth: ^5.0.10
+  google_sign_in: ^6.1.4
+  sign_in_with_apple: ^5.0.0
+  flutter_facebook_auth: ^6.0.0
 
   # Encryption
   crypto: ^3.0.2
