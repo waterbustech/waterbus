@@ -57,7 +57,7 @@ dependencies:
 
   # Dependency Injection
   get_it: ^7.5.0
-  injectable: ^2.1.2
+  injectable: ^2.2.0
 
   # Storage
   hive: ^2.2.3
@@ -91,7 +91,7 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.1.6
+  injectable_generator: ^2.3.0
   build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.1
 
