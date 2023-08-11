@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/features/profile/presentation/widgets/list_menu_drawer.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_header.dart';
+import 'package:waterbus/features/profile/presentation/widgets/version_info_footer.dart';
 
 class ProfileDrawerLayout extends StatelessWidget {
   const ProfileDrawerLayout({super.key});
@@ -29,6 +30,8 @@ class ProfileDrawerLayout extends StatelessWidget {
               ),
             ),
             const ListMenuDrawer(),
+            const Spacer(),
+            const VersionInfoFooter(),
           ],
         ),
       ),
