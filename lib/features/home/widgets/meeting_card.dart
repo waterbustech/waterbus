@@ -9,7 +9,6 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
-import 'package:waterbus/features/home/widgets/time_card.dart';
 
 class MeetingCard extends StatelessWidget {
   const MeetingCard({super.key});
@@ -20,12 +19,13 @@ class MeetingCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 5.sp),
       padding: EdgeInsets.symmetric(
         vertical: 14.sp,
-        horizontal: 16.sp,
+        horizontal: 2.sp,
       ),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0d0d0d),
-        borderRadius: BorderRadius.circular(14.sp),
-      ),
+
+      // decoration: BoxDecoration(
+      //   color: const Color(0xFF0d0d0d),
+      //   borderRadius: BorderRadius.circular(14.sp),
+      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,21 +37,7 @@ class MeetingCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          Row(
-            children: [
-              TimeCard(
-                text: "Meet at 19:30",
-                iconData: PhosphorIcons.clock,
-                backgroundColor: Theme.of(context).primaryColor.withOpacity(.2),
-              ),
-              SizedBox(width: 4.sp),
-              TimeCard(
-                text: "05/04/2023",
-                iconData: PhosphorIcons.calendar,
-                backgroundColor: Colors.greenAccent.withOpacity(.25),
-              ),
-            ],
-          ),
+          SizedBox(height: 8.sp),
           Row(
             children: [
               Expanded(
@@ -65,7 +51,7 @@ class MeetingCard extends StatelessWidget {
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                     'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
                   ],
-                  size: 24.sp,
+                  size: 20.sp,
                 ),
               ),
               GestureDetector(
@@ -83,7 +69,7 @@ class MeetingCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(30.sp),
+                    borderRadius: BorderRadius.circular(10.sp),
                   ),
                   child: Row(
                     children: [
