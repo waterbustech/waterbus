@@ -1,6 +1,18 @@
-echo "1. Run debug"
-echo "2. Run profile"
-echo "3. Run release"
+#!/bin/bash
+
+# Text formatting
+BOLD=$(tput bold)
+ITALIC=$(tput sitm)
+NORMAL=$(tput sgr0)
+UNDERLINE=$(tput smul)
+CYAN=$(tput setaf 6)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+
+echo "${BOLD}${CYAN}Select an option:${NORMAL}"
+echo "1. Run mode: ${GREEN}${ITALIC}DEBUG${NORMAL}"
+echo "1. Run mode: ${GREEN}${ITALIC}PROFILE${NORMAL}"
+echo "1. Run mode: ${GREEN}${ITALIC}RELEASE${NORMAL}"
 while :
 do 
 	read -p "Run with: " input

@@ -25,7 +25,7 @@ class MenuDrawerCard extends StatelessWidget {
           children: [
             Icon(
               item.iconData,
-              size: 22.sp,
+              size: 20.sp,
               color: Colors.white,
             ),
             SizedBox(width: 10.sp),
