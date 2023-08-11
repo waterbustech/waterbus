@@ -1,6 +1,7 @@
 // Package imports:
 // ignore_for_file: dead_code
 
+// Package imports:
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';

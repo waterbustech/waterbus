@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 // Package imports:
+import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
