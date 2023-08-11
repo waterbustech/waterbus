@@ -8,7 +8,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
-import 'package:waterbus/features/home/screens/home.dart';
+import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/meeting/screens/enter_meeting_code.dart';
 import 'package:waterbus/features/meeting/screens/meeting_screen.dart';
 
@@ -22,7 +22,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       case Routes.rootRoute:
         return _buildRoute(
           settings,
-          const Home(),
+          const HomeScreen(),
         );
 
       // Authenication
@@ -59,7 +59,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       default:
         return _buildRoute(
           const RouteSettings(name: Routes.rootRoute),
-          const Home(),
+          const HomeScreen(),
         );
     }
   }

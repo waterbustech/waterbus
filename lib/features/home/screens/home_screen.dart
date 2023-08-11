@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 // Package imports:
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -10,11 +10,10 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/app/widgets/app_drawer.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/invitation_list.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
+import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,73 +24,66 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<SliderDrawerState> _sliderDrawerKey =
-      GlobalKey<SliderDrawerState>();
+  final GlobalKey<SlidingDrawerState> _sideMenuKey =
+      GlobalKey<SlidingDrawerState>();
 
-  bool _isDrawerOpen = false;
+  void _toggleDrawer() {
+    final state = _sideMenuKey.currentState;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _sliderDrawerKey.currentState?.animationController.addListener(() {
-      _isDrawerOpen = _sliderDrawerKey.currentState!.isDrawerOpen;
-
-      if (mounted) setState(() {});
-    });
+    if (state == null) return;
+    if (state.isOpen) {
+      state.closeSlidingDrawer(); // close side menu
+    } else {
+      state.openSlidingDrawer(); // open side menu
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AppDrawer(
-        sliderDrawerKey: _sliderDrawerKey,
+    return SlidingDrawer(
+      key: _sideMenuKey,
+      drawerBuilder: (_) => const ProfileDrawerLayout(),
+      contentBuilder: (_) => Scaffold(
         appBar: appBarTitleBack(
           context,
           '',
           centerTitle: false,
           isVisibleBackButton: false,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          titleWidget: _isDrawerOpen
-              ? const SizedBox()
-              : Row(
-                  children: [
-                    SizedBox(width: 6.sp),
-                    GestureWrapper(
-                      onTap: () {
-                        _sliderDrawerKey.currentState?.toggle();
-                      },
-                      child: CustomNetworkImage(
-                        height: 30.sp,
-                        width: 30.sp,
-                        urlToImage:
-                            'https://avatars.githubusercontent.com/u/60530946?v=4',
-                      ),
-                    ),
-                    SizedBox(width: 10.sp),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Kai Dao",
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                        Text(
-                          "Senior at Waterbus",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 10.sp,
-                                  ),
-                        )
-                      ],
-                    ),
-                  ],
+          titleWidget: Row(
+            children: [
+              SizedBox(width: 6.sp),
+              GestureDetector(
+                onTap: _toggleDrawer,
+                child: CustomNetworkImage(
+                  height: 30.sp,
+                  width: 30.sp,
+                  urlToImage:
+                      'https://avatars.githubusercontent.com/u/60530946?v=4',
                 ),
+              ),
+              SizedBox(width: 10.sp),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Kai Dao",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  Text(
+                    "Senior at Waterbus",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 10.sp,
+                        ),
+                  )
+                ],
+              ),
+            ],
+          ),
           actions: [
             Container(
               width: 36.sp,
