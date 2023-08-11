@@ -11,7 +11,6 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/home/widgets/invitation_list.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -116,15 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const Divider(thickness: .3, height: .3),
               SizedBox(height: 10.sp),
               const Expanded(
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      InvitationList(),
-                      MyMeetings(),
-                    ],
-                  ),
-                ),
+                child: MyMeetings(),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
@@ -26,14 +27,23 @@ class MyMeetings extends StatelessWidget {
                 ),
           ),
           SizedBox(height: 10.sp),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: 80.sp),
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              return const MeetingCard();
-            },
+          Expanded(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.only(bottom: 80.sp),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    const MeetingCard(),
+                    index >= 2
+                        ? const E2eeTitleFooter()
+                        : const Divider(thickness: .3, height: .3)
+                  ],
+                );
+              },
+            ),
           ),
         ],
       ),
