@@ -73,6 +73,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_phosphor_icons: ^0.0.1+6
   flutter_sliding_drawer: ^1.0.0+1
+  intl: ^0.18.1
   dartz: ^0.10.1
   equatable: ^2.0.5
   sizer: 

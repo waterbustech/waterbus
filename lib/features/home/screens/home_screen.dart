@@ -111,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppNavigator.push(Routes.enterCodeRoute);
                 },
               ),
-              SizedBox(height: 16.sp),
-              const Divider(thickness: .3, height: .3),
-              SizedBox(height: 10.sp),
+              SizedBox(height: 8.sp),
               const Expanded(
                 child: MyMeetings(),
               ),

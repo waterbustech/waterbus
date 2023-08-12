@@ -17,20 +17,12 @@ class MeetingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 5.sp),
-      padding: EdgeInsets.symmetric(
-        vertical: 14.sp,
-        horizontal: 2.sp,
-      ),
-
-      // decoration: BoxDecoration(
-      //   color: const Color(0xFF0d0d0d),
-      //   borderRadius: BorderRadius.circular(14.sp),
-      // ),
+      padding: EdgeInsets.all(14.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "🚀 QA engineers Team - Waterbus.io with high-quality app",
+            "QA engineers Team - Waterbus.io with high-quality app",
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 12.sp,

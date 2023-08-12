@@ -11,8 +11,8 @@ YELLOW=$(tput setaf 3)
 
 echo "${BOLD}${CYAN}Select an option:${NORMAL}"
 echo "1. Run mode: ${GREEN}${ITALIC}DEBUG${NORMAL}"
-echo "1. Run mode: ${GREEN}${ITALIC}PROFILE${NORMAL}"
-echo "1. Run mode: ${GREEN}${ITALIC}RELEASE${NORMAL}"
+echo "2. Run mode: ${GREEN}${ITALIC}PROFILE${NORMAL}"
+echo "3. Run mode: ${GREEN}${ITALIC}RELEASE${NORMAL}"
 while :
 do 
 	read -p "Run with: " input
