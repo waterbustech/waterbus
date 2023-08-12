@@ -46,7 +46,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 16.sp),
+      margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 12.sp),
       height: 36.sp,
       child: TextFormField(
         autofocus: widget.onTap == null,
