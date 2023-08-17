@@ -37,8 +37,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         "name": "a",
         "src": "b",
         "location": "https://avatars.githubusercontent.com/u/60530946?v=4",
-        "v": 1
-      }
+        "v": 1,
+      },
     });
     final Map<String, dynamic> body = authPayload.toMap();
     final Response response = await _baseRemoteData.postRoute(
@@ -58,8 +58,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
           "name": "a",
           "src": "b",
           "location": "location",
-          "v": 1
-        }
+          "v": 1,
+        },
       });
     }
 

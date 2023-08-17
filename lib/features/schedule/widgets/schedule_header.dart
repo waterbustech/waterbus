@@ -44,7 +44,7 @@ class ScheduleHeader extends StatelessWidget {
             PhosphorIcons.plus_bold,
             color: Colors.blue.shade700,
             size: 15.sp,
-          )
+          ),
         ],
       ),
     );

@@ -63,7 +63,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               SizedBox(height: 16.sp),

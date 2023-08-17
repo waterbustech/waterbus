@@ -63,7 +63,7 @@ class ConversationHeader extends StatelessWidget {
                       color: colorGreenLight,
                       fontSize: 10.sp,
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
