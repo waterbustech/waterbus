@@ -72,7 +72,7 @@ class ScheduleCard extends StatelessWidget {
                       color: fCL,
                       fontSize: 10.sp,
                     ),
-                  )
+                  ),
                 ],
               ),
               StackAvatar(
@@ -85,7 +85,7 @@ class ScheduleCard extends StatelessWidget {
                 maxImages: 3,
               ),
             ],
-          )
+          ),
         ],
       ),
     );

@@ -17,7 +17,10 @@ class MeetingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 5.sp),
-      padding: EdgeInsets.all(14.sp),
+      padding: EdgeInsets.symmetric(
+        vertical: 14.sp,
+        horizontal: 10.sp,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

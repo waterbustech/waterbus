@@ -87,7 +87,7 @@ class InputSendMessage extends StatelessWidget {
                 color: mCL,
                 size: 18.sp,
               ),
-            )
+            ),
           ],
         ),
       ),

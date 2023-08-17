@@ -142,11 +142,11 @@ void main() {
                 "name": "a",
                 "src": "b",
                 "location": "location",
-                "v": 1
-              }
-            }
+                "v": 1,
+              },
+            },
           },
-          "message": "done"
+          "message": "done",
         };
 
         // act

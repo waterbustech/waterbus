@@ -19,8 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ">=3.1.0 <4.0.0"
+  flutter: ">=3.13.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -63,16 +63,16 @@ dependencies:
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.15.0
-  firebase_messaging: ^14.6.5
-  firebase_auth: ^4.7.2
-  firebase_crashlytics: ^3.3.4
-  firebase_performance: ^0.9.2+4
+  firebase_core: ^2.15.1
+  firebase_messaging: ^14.6.6
+  firebase_auth: ^4.7.3
+  firebase_crashlytics: ^3.3.5
+  firebase_performance: ^0.9.2+5
 
   # Utils
   cached_network_image: ^3.2.3
   flutter_phosphor_icons: ^0.0.1+6
-  flutter_sliding_drawer: ^1.0.0+1
+  flutter_sliding_drawer: ^2.0.0
   intl: ^0.18.1
   dartz: ^0.10.1
   equatable: ^2.0.5

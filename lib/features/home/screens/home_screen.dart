@@ -27,14 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       GlobalKey<SlidingDrawerState>();
 
   void _toggleDrawer() {
-    final state = _sideMenuKey.currentState;
-
-    if (state == null) return;
-    if (state.isOpen) {
-      state.closeSlidingDrawer(); // close side menu
-    } else {
-      state.openSlidingDrawer(); // open side menu
-    }
+    _sideMenuKey.toggle();
   }
 
   @override
@@ -78,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: 10.sp,
                         ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -105,13 +98,13 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             children: [
-              SizedBox(height: 16.sp),
+              SizedBox(height: 10.sp),
               EnterCodeBox(
                 onTap: () {
                   AppNavigator.push(Routes.enterCodeRoute);
                 },
               ),
-              SizedBox(height: 8.sp),
+              SizedBox(height: 12.sp),
               const Expanded(
                 child: MyMeetings(),
               ),
