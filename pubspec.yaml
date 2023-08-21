@@ -92,7 +92,7 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.3.0
+  injectable_generator: ^2.4.0
   build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.1
 
