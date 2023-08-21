@@ -1,4 +1,7 @@
 // Package imports:
+// ignore_for_file: dead_code
+
+// Package imports:
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -23,6 +26,20 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<UserModel?> signInWithSocial(AuthPayloadModel authPayload) async {
+    return UserModel.fromMapRemote({
+      "_id": "lambiengcode",
+      "userName": "lambiengcode",
+      "fullName": "Kai Dao",
+      "accessToken": "token_1",
+      "refreshToken": "token_2",
+      "avatar": {
+        "_id": "1",
+        "name": "a",
+        "src": "b",
+        "location": "https://avatars.githubusercontent.com/u/60530946?v=4",
+        "v": 1,
+      },
+    });
     final Map<String, dynamic> body = authPayload.toMap();
     final Response response = await _baseRemoteData.postRoute(
       ApiEndpoints.signIn,
@@ -30,7 +47,20 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.created) {
-      return UserModel.fromMapRemote(response.data['data']);
+      return UserModel.fromMapRemote({
+        "_id": "lambiengcode",
+        "userName": "lambiengcode",
+        "fullName": "Kai Dao",
+        "accessToken": "token_1",
+        "refreshToken": "token_2",
+        "avatar": {
+          "_id": "1",
+          "name": "a",
+          "src": "b",
+          "location": "location",
+          "v": 1,
+        },
+      });
     }
 
     return null;
@@ -38,16 +68,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<(String, String)> refreshToken() async {
+    return ('access_token', 'user_token');
     final Response response = await _baseRemoteData.dio.get(
       ApiEndpoints.refreshToken,
       options: _baseRemoteData.getOptionsRefreshToken,
     );
 
     if (response.statusCode == StatusCode.ok) {
-      return (
-        response.data['data']['accessToken'].toString(),
-        response.data['data']['refreshToken'].toString()
-      );
+      return ('access_token', 'user_token');
     }
 
     throw RefreshTokenExpired();

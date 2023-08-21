@@ -44,7 +44,7 @@ class DefaultImage extends StatelessWidget {
               child: childInAvatar,
             ),
           ),
-          const SizedBox()
+          const SizedBox(),
         ],
       ),
     );

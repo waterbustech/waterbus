@@ -11,7 +11,7 @@ class DateTimeHelper {
     30,
     31,
     30,
-    31
+    31,
   ];
 
   static const List<String> listMonth = [

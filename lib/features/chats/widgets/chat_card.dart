@@ -86,7 +86,7 @@ class ChatCard extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12.sp,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -119,7 +119,7 @@ class ChatCard extends StatelessWidget {
                               ),
                               TextSpan(
                                 text: chatModel.dateTime,
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -155,7 +155,7 @@ class ChatCard extends StatelessWidget {
                                             StatusMessage.none
                                         ? chatModel.lastestMessage
                                         : '6m : 32sec',
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -218,7 +218,7 @@ class ChatCard extends StatelessWidget {
                           fontSize: 11.sp,
                           fontWeight: FontWeight.w600,
                         ),
-                      )
+                      ),
                     ],
                   )
                 : const SizedBox(),
