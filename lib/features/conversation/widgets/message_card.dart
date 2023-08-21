@@ -69,7 +69,7 @@ class MessageCard extends StatelessWidget {
               messageModel.description,
               style: TextStyle(color: mCL, fontSize: 12.sp),
             ),
-          )
+          ),
         ],
       ),
     );
