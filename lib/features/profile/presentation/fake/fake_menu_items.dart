@@ -21,4 +21,8 @@ final List<MenuItemModel> fakeMenuItems = [
     title: 'Term & Privacy',
     iconData: PhosphorIcons.shield_check,
   ),
+  const MenuItemModel(
+    title: 'Logout',
+    iconData: PhosphorIcons.sign_out,
+  ),
 ];

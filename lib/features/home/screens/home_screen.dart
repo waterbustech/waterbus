@@ -11,6 +11,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
@@ -37,11 +38,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, auth) {
-        if (auth is! AuthSuccess) return const LogInScreen();
+        if (auth is AuthInitial) return const SizedBox();
+
+        if (auth is AuthFailure) return const LogInScreen();
 
         return SlidingDrawer(
           key: _sideMenuKey,
-          drawerBuilder: (_) => const ProfileDrawerLayout(),
+          drawerBuilder: (_) => ProfileDrawerLayout(
+            onTapItem: (item) {
+              _toggleDrawer();
+
+              Future.delayed(const Duration(milliseconds: 300), () {
+                if (item.title == "Logout") {
+                  AppBloc.authBloc.add(LogOutEvent());
+                }
+              });
+            },
+          ),
           contentBuilder: (_) => Scaffold(
             appBar: appBarTitleBack(
               context,

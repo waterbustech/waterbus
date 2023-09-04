@@ -46,6 +46,11 @@ class AuthRepositoryImpl extends AuthRepository {
         refreshToken: refreshToken,
       );
 
+      _localDataSource.saveTokens(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+
       return Right(User.fromUserModel(userModel));
     } catch (_) {
       return Left(NullValue());

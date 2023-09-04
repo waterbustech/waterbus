@@ -27,7 +27,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final Map<String, dynamic> body = authPayload.toMap();
     final Response response = await _baseRemoteData.postRoute(
       ApiEndpoints.signIn,
-      body,
+      body: body,
     );
 
     if (response.statusCode == StatusCode.created) {
@@ -54,7 +54,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<bool> logOut() async {
-    final Response response = await _baseRemoteData.dio.post(
+    final Response response = await _baseRemoteData.postRoute(
       ApiEndpoints.signOut,
     );
 
