@@ -20,7 +20,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.13.0"
+  flutter: ">=3.13.2"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,7 +35,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.6
 
   # Packages
   auth:
@@ -56,16 +56,16 @@ dependencies:
   bloc_concurrency: ^0.2.2
 
   # Dependency Injection
-  get_it: ^7.5.0
-  injectable: ^2.2.0
+  get_it: ^7.6.2
+  injectable: ^2.3.0
 
   # Storage
   hive: ^2.2.3
 
   # Firebase
   firebase_core: ^2.15.1
-  firebase_messaging: ^14.6.6
-  firebase_auth: ^4.7.3
+  firebase_messaging: ^14.6.7
+  firebase_auth: ^4.9.0
   firebase_crashlytics: ^3.3.5
   firebase_performance: ^0.9.2+5
 
@@ -92,12 +92,12 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.3.0
+  injectable_generator: ^2.4.0
   build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.1
 
   # Lints
-  flutter_lints: ^2.0.2
+  flutter_lints: ^2.0.3
   import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
