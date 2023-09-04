@@ -8,9 +8,11 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
+import 'package:waterbus/features/auth/domain/usecases/logout.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 
 part 'auth_event.dart';
@@ -20,12 +22,14 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckAuth _checkAuth;
   final LoginWithSocial _loginWithSocial;
+  final LogOut _logOut;
 
   User? user;
 
   AuthBloc(
     this._checkAuth,
     this._loginWithSocial,
+    this._logOut,
   ) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
@@ -47,7 +51,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (user != null) emit(AuthSuccess());
       }
 
-      if (event is LogOutEvent) {}
+      if (event is LogOutEvent) {
+        await _handleLogOut();
+
+        if (user == null) {
+          emit(AuthFailure());
+        }
+      }
     });
   }
 
@@ -88,5 +98,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     loginSucceed.fold((l) {}, (r) {
       user = r;
     });
+  }
+
+  Future<void> _handleLogOut() async {
+    final Either<Failure, bool> logOutSucceed = await _logOut.call(NoParams());
+
+    if (logOutSucceed.isRight()) {
+      user = null;
+    }
   }
 }
