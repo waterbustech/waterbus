@@ -18,8 +18,9 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i11;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i13;
-import '../../features/auth/domain/usecases/login_with_social.dart' as _i14;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i15;
+import '../../features/auth/domain/usecases/login_with_social.dart' as _i15;
+import '../../features/auth/domain/usecases/logout.dart' as _i14;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i16;
 import '../../features/home/bloc/home/home_bloc.dart' as _i6;
 import '../../features/profile/domain/repositories/user_repository.dart' as _i8;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i7;
@@ -62,11 +63,13 @@ _i1.GetIt $initGetIt(
         gh<_i10.AuthRemoteDataSource>(),
       ));
   gh.factory<_i13.CheckAuth>(() => _i13.CheckAuth(gh<_i11.AuthRepository>()));
-  gh.factory<_i14.LoginWithSocial>(
-      () => _i14.LoginWithSocial(gh<_i11.AuthRepository>()));
-  gh.factory<_i15.AuthBloc>(() => _i15.AuthBloc(
+  gh.factory<_i14.LogOut>(() => _i14.LogOut(gh<_i11.AuthRepository>()));
+  gh.factory<_i15.LoginWithSocial>(
+      () => _i15.LoginWithSocial(gh<_i11.AuthRepository>()));
+  gh.factory<_i16.AuthBloc>(() => _i16.AuthBloc(
         gh<_i13.CheckAuth>(),
-        gh<_i14.LoginWithSocial>(),
+        gh<_i15.LoginWithSocial>(),
+        gh<_i14.LogOut>(),
       ));
   return getIt;
 }
