@@ -10,8 +10,8 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/features/meeting/widgets/call_action_button.dart';
-import 'package:waterbus/features/meeting/widgets/meet_view.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
 class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});

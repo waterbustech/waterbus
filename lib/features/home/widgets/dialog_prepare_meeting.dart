@@ -11,7 +11,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
-import 'package:waterbus/features/meeting/widgets/call_action_button.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 
 class DialogPrepareMeeting extends StatelessWidget {
   const DialogPrepareMeeting({super.key});

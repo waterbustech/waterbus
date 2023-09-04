@@ -9,8 +9,8 @@ import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
-import 'package:waterbus/features/meeting/screens/enter_meeting_code.dart';
-import 'package:waterbus/features/meeting/screens/meeting_screen.dart';
+import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code.dart';
+import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
