@@ -1,7 +1,4 @@
 // Package imports:
-// ignore_for_file: dead_code
-
-// Package imports:
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -16,6 +13,7 @@ import 'package:waterbus/features/auth/data/models/user_model.dart';
 abstract class AuthRemoteDataSource {
   Future<(String, String)> refreshToken();
   Future<UserModel?> signInWithSocial(AuthPayloadModel authPayload);
+  Future<bool> logOut();
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
@@ -26,20 +24,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<UserModel?> signInWithSocial(AuthPayloadModel authPayload) async {
-    return UserModel.fromMapRemote({
-      "_id": "lambiengcode",
-      "userName": "lambiengcode",
-      "fullName": "Kai Dao",
-      "accessToken": "token_1",
-      "refreshToken": "token_2",
-      "avatar": {
-        "_id": "1",
-        "name": "a",
-        "src": "b",
-        "location": "https://avatars.githubusercontent.com/u/60530946?v=4",
-        "v": 1,
-      },
-    });
     final Map<String, dynamic> body = authPayload.toMap();
     final Response response = await _baseRemoteData.postRoute(
       ApiEndpoints.signIn,
@@ -47,20 +31,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.created) {
-      return UserModel.fromMapRemote({
-        "_id": "lambiengcode",
-        "userName": "lambiengcode",
-        "fullName": "Kai Dao",
-        "accessToken": "token_1",
-        "refreshToken": "token_2",
-        "avatar": {
-          "_id": "1",
-          "name": "a",
-          "src": "b",
-          "location": "location",
-          "v": 1,
-        },
-      });
+      return UserModel.fromMapRemote(response.data);
     }
 
     return null;
@@ -68,16 +39,29 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<(String, String)> refreshToken() async {
-    return ('access_token', 'user_token');
-    final Response response = await _baseRemoteData.dio.get(
+    final Response response = await _baseRemoteData.dio.post(
       ApiEndpoints.refreshToken,
       options: _baseRemoteData.getOptionsRefreshToken,
     );
 
     if (response.statusCode == StatusCode.ok) {
-      return ('access_token', 'user_token');
+      final rawData = response.data;
+      return (rawData['token'] as String, rawData['refreshToken'] as String);
     }
 
     throw RefreshTokenExpired();
+  }
+
+  @override
+  Future<bool> logOut() async {
+    final Response response = await _baseRemoteData.dio.post(
+      ApiEndpoints.signOut,
+    );
+
+    if (response.statusCode == StatusCode.noContent) {
+      return true;
+    }
+
+    return false;
   }
 }

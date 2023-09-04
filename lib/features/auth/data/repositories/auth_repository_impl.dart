@@ -51,4 +51,16 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(NullValue());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> logOut() async {
+    final bool isSignedOut = await _remoteDataSource.logOut();
+
+    if (isSignedOut) {
+      _localDataSource.clearUser();
+      return Right(isSignedOut);
+    }
+
+    return Left(NullValue());
+  }
 }
