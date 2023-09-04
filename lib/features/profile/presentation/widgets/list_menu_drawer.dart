@@ -6,7 +6,11 @@ import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart
 import 'package:waterbus/features/profile/presentation/widgets/menu_drawer_card.dart';
 
 class ListMenuDrawer extends StatelessWidget {
-  const ListMenuDrawer({super.key});
+  final Function(MenuItemModel) onTapItem;
+  const ListMenuDrawer({
+    super.key,
+    required this.onTapItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,12 @@ class ListMenuDrawer extends StatelessWidget {
       padding: EdgeInsets.zero,
       itemCount: fakeMenuItems.length,
       itemBuilder: (context, index) {
-        return MenuDrawerCard(item: fakeMenuItems[index]);
+        return GestureDetector(
+          onTap: () {
+            onTapItem(fakeMenuItems[index]);
+          },
+          child: MenuDrawerCard(item: fakeMenuItems[index]),
+        );
       },
     );
   }
