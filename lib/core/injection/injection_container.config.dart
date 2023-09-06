@@ -16,23 +16,28 @@ import 'package:injectable/injectable.dart' as _i2;
 
 // Project imports:
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
-import '../../features/auth/domain/repositories/auth_repository.dart' as _i11;
-import '../../features/auth/domain/usecases/check_auth.dart' as _i13;
-import '../../features/auth/domain/usecases/login_with_social.dart' as _i15;
-import '../../features/auth/domain/usecases/logout.dart' as _i14;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i16;
+import '../../features/auth/domain/repositories/auth_repository.dart' as _i13;
+import '../../features/auth/domain/usecases/check_auth.dart' as _i15;
+import '../../features/auth/domain/usecases/login_with_social.dart' as _i17;
+import '../../features/auth/domain/usecases/logout.dart' as _i16;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i18;
 import '../../features/home/bloc/home/home_bloc.dart' as _i6;
-import '../../features/profile/domain/repositories/user_repository.dart' as _i8;
-import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i7;
+import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i9;
 import '../utils/datasources/base_remote_data.dart' as _i4;
 import '../utils/dio/dio_configuration.dart' as _i5;
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart'
-    as _i10;
-import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i12;
+import '../../features/auth/data/repositories/auth_repository_impl.dart'
+    as _i14;
+import '../../features/meeting/data/repositories/meeting_repository_impl.dart'
+    as _i8;
+import '../../features/meeting/domain/repositories/meeting_repository.dart'
+    as _i7;
 import '../../features/profile/data/repositories/user_repository_impl.dart'
-    as _i9;
+    as _i11;
+import '../../features/profile/domain/repositories/user_repository.dart'
+    as _i10;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -54,22 +59,23 @@ _i1.GetIt $initGetIt(
     gh<_i3.AuthLocalDataSource>(),
   ));
   gh.factory<_i6.HomeBloc>(() => _i6.HomeBloc());
-  gh.factory<_i7.ScheduleBloc>(() => _i7.ScheduleBloc());
-  gh.lazySingleton<_i8.UserRepository>(() => _i9.UserRepositoryImpl());
-  gh.lazySingleton<_i10.AuthRemoteDataSource>(
-      () => _i10.AuthRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
-  gh.lazySingleton<_i11.AuthRepository>(() => _i12.AuthRepositoryImpl(
+  gh.lazySingleton<_i7.MeetingRepository>(() => _i8.MeetingRepositoryImpl());
+  gh.factory<_i9.ScheduleBloc>(() => _i9.ScheduleBloc());
+  gh.lazySingleton<_i10.UserRepository>(() => _i11.UserRepositoryImpl());
+  gh.lazySingleton<_i12.AuthRemoteDataSource>(
+      () => _i12.AuthRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
+  gh.lazySingleton<_i13.AuthRepository>(() => _i14.AuthRepositoryImpl(
         gh<_i3.AuthLocalDataSource>(),
-        gh<_i10.AuthRemoteDataSource>(),
+        gh<_i12.AuthRemoteDataSource>(),
       ));
-  gh.factory<_i13.CheckAuth>(() => _i13.CheckAuth(gh<_i11.AuthRepository>()));
-  gh.factory<_i14.LogOut>(() => _i14.LogOut(gh<_i11.AuthRepository>()));
-  gh.factory<_i15.LoginWithSocial>(
-      () => _i15.LoginWithSocial(gh<_i11.AuthRepository>()));
-  gh.factory<_i16.AuthBloc>(() => _i16.AuthBloc(
-        gh<_i13.CheckAuth>(),
-        gh<_i15.LoginWithSocial>(),
-        gh<_i14.LogOut>(),
+  gh.factory<_i15.CheckAuth>(() => _i15.CheckAuth(gh<_i13.AuthRepository>()));
+  gh.factory<_i16.LogOut>(() => _i16.LogOut(gh<_i13.AuthRepository>()));
+  gh.factory<_i17.LoginWithSocial>(
+      () => _i17.LoginWithSocial(gh<_i13.AuthRepository>()));
+  gh.factory<_i18.AuthBloc>(() => _i18.AuthBloc(
+        gh<_i15.CheckAuth>(),
+        gh<_i17.LoginWithSocial>(),
+        gh<_i16.LogOut>(),
       ));
   return getIt;
 }
