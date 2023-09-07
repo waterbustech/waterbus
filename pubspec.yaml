@@ -56,7 +56,7 @@ dependencies:
   bloc_concurrency: ^0.2.2
 
   # Dependency Injection
-  get_it: ^7.6.2
+  get_it: ^7.6.4
   injectable: ^2.3.0
 
   # Storage
