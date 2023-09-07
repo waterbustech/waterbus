@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -57,8 +58,12 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
           color: mC,
           fontSize: 11.sp,
         ),
-        keyboardType: TextInputType.multiline,
+        keyboardType: TextInputType.number,
         minLines: 1,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(6),
+        ],
         decoration: InputDecoration(
           contentPadding: widget.contentPadding,
           hintText: widget.hintTextContent,
