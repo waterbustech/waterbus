@@ -1,10 +1,10 @@
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/core/constants/api_endpoints.dart';
-import 'package:waterbus/core/types/http_status_code.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
