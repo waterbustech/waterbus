@@ -49,8 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
               _toggleDrawer();
 
               Future.delayed(const Duration(milliseconds: 300), () {
-                if (item.title == "Logout") {
-                  AppBloc.authBloc.add(LogOutEvent());
+                switch (item.title) {
+                  case "Logout":
+                    AppBloc.authBloc.add(LogOutEvent());
+                    break;
+                  case "Profile":
+                    AppNavigator.push(Routes.profileRoute);
+                    break;
+                  case "Settings":
+                    AppNavigator.push(Routes.settingsRoute);
+                    break;
+                  case "Term & Privacy":
+                    AppNavigator.push(Routes.privacyRoute);
+                    break;
+                  default:
+                    break;
                 }
               });
             },

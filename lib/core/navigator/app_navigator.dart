@@ -11,6 +11,9 @@ import 'package:waterbus/features/conversation/screens/conversation_screen.dart'
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code.dart';
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
+import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -36,6 +39,23 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const LogInScreen(),
+        );
+
+      // Users
+      case Routes.profileRoute:
+        return _buildRoute(
+          settings,
+          const ProfileScreen(),
+        );
+      case Routes.settingsRoute:
+        return _buildRoute(
+          settings,
+          const SettingsScreen(),
+        );
+      case Routes.privacyRoute:
+        return _buildRoute(
+          settings,
+          const PrivacyScreen(),
         );
 
       // Meeting
