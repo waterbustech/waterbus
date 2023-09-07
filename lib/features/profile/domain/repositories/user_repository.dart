@@ -7,5 +7,6 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> getUserProfile();
-  Future<Either<Failure, User>> updateUserProfile();
+  Future<Either<Failure, User>> updateUserProfile(User user);
+  Future<Either<Failure, String>> getPresignedUrl();
 }
