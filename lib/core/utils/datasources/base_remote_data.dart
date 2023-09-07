@@ -156,7 +156,7 @@ class BaseRemoteData {
 
   Future<Response<dynamic>> getRoute(
     String gateway, {
-    String? params,
+    String params = '',
     String? query,
   }) async {
     try {

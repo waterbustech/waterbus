@@ -8,6 +8,7 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
+import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 
 @LazySingleton(as: MeetingRepository)
 class MeetingRepositoryImpl extends MeetingRepository {
@@ -27,12 +28,12 @@ class MeetingRepositoryImpl extends MeetingRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> leaveMeeting() {
+  Future<Either<Failure, Meeting>> updateMeeting(CreateMeetingParams params) {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, Meeting>> updateMeeting(CreateMeetingParams params) {
+  Future<Either<Failure, bool>> leaveMeeting(LeaveMeetingParams params) {
     throw UnimplementedError();
   }
 }
