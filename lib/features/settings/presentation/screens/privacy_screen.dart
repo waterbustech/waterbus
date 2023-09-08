@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 
 class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({super.key});
@@ -11,6 +12,11 @@ class PrivacyScreen extends StatefulWidget {
 class _SettingScreenState extends State<PrivacyScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: appBarTitleBack(
+        context,
+        'Term & Privacy',
+      ),
+    );
   }
 }

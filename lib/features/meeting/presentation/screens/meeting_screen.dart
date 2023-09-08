@@ -104,7 +104,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                         ),
                         image: const DecorationImage(
                           image: NetworkImage(
-                            'https://images.unsplash.com/photo-1533973860717-d49dfd14cf64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+                            'https://avatars.githubusercontent.com/u/85678598?s=200&v=4',
                           ),
                           fit: BoxFit.cover,
                         ),

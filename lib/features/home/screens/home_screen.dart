@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/constants/constants.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -18,6 +18,7 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -81,13 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, state) {
                   final User user = state is UserGetDone && state.user != null
                       ? state.user!
-                      : const User(
-                          id: 0,
-                          fullName: 'Waterbus',
-                          userName: 'waterbus.io',
-                          avatar:
-                              'https://avatars.githubusercontent.com/u/60530946?v=4',
-                        );
+                      : defaultUser;
 
                   return Row(
                     children: [
@@ -102,10 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Assets.images.imgAppLogo.path,
                                 ),
                               )
-                            : CustomNetworkImage(
-                                height: 30.sp,
-                                width: 30.sp,
-                                urlToImage: user.avatar,
+                            : AvatarCard(
+                                urlToImage: user.avatar!,
+                                size: 30.sp,
                               ),
                       ),
                       SizedBox(width: 10.sp),

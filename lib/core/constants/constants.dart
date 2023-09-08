@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 
 const int delay300ms = 300;
 const int delay500ms = 500;
@@ -23,4 +24,11 @@ Widget dividerContainer = Container(
 Divider divider = Divider(
   height: 1.sp,
   color: colorGreyWhite,
+);
+
+const User defaultUser = User(
+  id: 0,
+  fullName: 'Waterbus',
+  userName: 'waterbus.io',
+  avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
