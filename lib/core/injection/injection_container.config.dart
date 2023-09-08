@@ -18,15 +18,19 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i17;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i19;
-import '../../features/auth/domain/usecases/login_with_social.dart' as _i24;
-import '../../features/auth/domain/usecases/logout.dart' as _i23;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i25;
+import '../../features/auth/domain/usecases/login_with_social.dart' as _i26;
+import '../../features/auth/domain/usecases/logout.dart' as _i25;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i29;
 import '../../features/home/bloc/home/home_bloc.dart' as _i6;
-import '../../features/meeting/domain/usecases/create_meeting.dart' as _i20;
+import '../../features/meeting/domain/usecases/create_meeting.dart' as _i21;
 import '../../features/meeting/domain/usecases/get_info_meeting.dart' as _i22;
-import '../../features/meeting/domain/usecases/join_meeting.dart' as _i21;
-import '../../features/meeting/domain/usecases/leave_meeting.dart' as _i12;
-import '../../features/meeting/domain/usecases/update_meeting.dart' as _i11;
+import '../../features/meeting/domain/usecases/join_meeting.dart' as _i20;
+import '../../features/meeting/domain/usecases/leave_meeting.dart' as _i11;
+import '../../features/meeting/domain/usecases/update_meeting.dart' as _i12;
+import '../../features/profile/domain/usecases/get_presigned_url.dart' as _i23;
+import '../../features/profile/domain/usecases/get_profile.dart' as _i24;
+import '../../features/profile/domain/usecases/update_profile.dart' as _i27;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i28;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i10;
 import '../utils/datasources/base_remote_data.dart' as _i4;
 import '../utils/dio/dio_configuration.dart' as _i5;
@@ -93,13 +97,23 @@ _i1.GetIt $initGetIt(
       () => _i21.CreateMeeting(gh<_i8.MeetingRepository>()));
   gh.factory<_i22.GetInfoMeeting>(
       () => _i22.GetInfoMeeting(gh<_i8.MeetingRepository>()));
-  gh.factory<_i23.LogOut>(() => _i23.LogOut(gh<_i17.AuthRepository>()));
-  gh.factory<_i24.LoginWithSocial>(
-      () => _i24.LoginWithSocial(gh<_i17.AuthRepository>()));
-  gh.factory<_i25.AuthBloc>(() => _i25.AuthBloc(
+  gh.factory<_i23.GetPresignedUrl>(
+      () => _i23.GetPresignedUrl(gh<_i14.UserRepository>()));
+  gh.factory<_i24.GetProfile>(() => _i24.GetProfile(gh<_i14.UserRepository>()));
+  gh.factory<_i25.LogOut>(() => _i25.LogOut(gh<_i17.AuthRepository>()));
+  gh.factory<_i26.LoginWithSocial>(
+      () => _i26.LoginWithSocial(gh<_i17.AuthRepository>()));
+  gh.factory<_i27.UpdateProfile>(
+      () => _i27.UpdateProfile(gh<_i14.UserRepository>()));
+  gh.factory<_i28.UserBloc>(() => _i28.UserBloc(
+        gh<_i27.UpdateProfile>(),
+        gh<_i23.GetPresignedUrl>(),
+        gh<_i24.GetProfile>(),
+      ));
+  gh.factory<_i29.AuthBloc>(() => _i29.AuthBloc(
         gh<_i19.CheckAuth>(),
-        gh<_i24.LoginWithSocial>(),
-        gh<_i23.LogOut>(),
+        gh<_i26.LoginWithSocial>(),
+        gh<_i25.LogOut>(),
       ));
   return getIt;
 }

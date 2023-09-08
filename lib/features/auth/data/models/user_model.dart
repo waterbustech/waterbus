@@ -3,16 +3,13 @@
 // Dart imports:
 import 'dart:convert';
 
-// Project imports:
-import 'package:waterbus/features/auth/data/models/avatar_model.dart';
-
 class UserModel {
-  final String id;
+  final int id;
   final String userName;
   final String fullName;
   final String accessToken;
   final String refreshToken;
-  final AvatarModel? avatar;
+  final String? avatar;
   UserModel({
     required this.id,
     required this.userName,
@@ -23,12 +20,12 @@ class UserModel {
   });
 
   UserModel copyWith({
-    String? id,
+    int? id,
     String? userName,
     String? fullName,
     String? accessToken,
     String? refreshToken,
-    AvatarModel? avatar,
+    String? avatar,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -42,38 +39,34 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      '_id': id,
+      'id': id,
       'userName': userName,
       'fullName': fullName,
       'accessToken': accessToken,
       'refreshToken': refreshToken,
-      'avatar': avatar?.toMap(),
+      'avatar': avatar,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['_id'] ?? '',
+      id: map['id'] ?? 0,
       userName: map['userName'] ?? '',
       fullName: map['fullName'] ?? '',
       accessToken: map['accessToken'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
-      avatar: map['avatar'] != null
-          ? AvatarModel.fromMap(map['avatar'] as Map<String, dynamic>)
-          : null,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
 
   factory UserModel.fromMapRemote(Map<String, dynamic> map) {
     return UserModel(
-      id: map['user']['_id'] ?? '',
+      id: map['user']['id'] ?? '',
       userName: map['user']['userName'] ?? '',
       fullName: map['user']['fullName'] ?? '',
       accessToken: map['token'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
-      avatar: map['user']['avatar'] != null
-          ? AvatarModel.fromMap(map['user']['avatar'] as Map<String, dynamic>)
-          : null,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
 
