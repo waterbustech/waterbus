@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 
 class SettingsScreen extends StatefulWidget {

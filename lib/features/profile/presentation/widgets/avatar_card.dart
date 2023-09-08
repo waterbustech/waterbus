@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 
 class AvatarCard extends StatelessWidget {
