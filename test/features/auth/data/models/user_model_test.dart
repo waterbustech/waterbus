@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
-import 'package:waterbus/features/auth/data/models/avatar_model.dart';
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
@@ -27,23 +26,16 @@ void main() {
       },
     );
     test('operator ==', () {
-      // arrange
-      final Map<String, dynamic> avatarJson = jsonDecode(
-        fixture(avatarModelSample),
-      );
-
-      final AvatarModel avatarModel = AvatarModel.fromMap(avatarJson);
-
       final UserModel userModel1 = UserModel(
-        id: "lambiengcode",
+        id: 1,
         userName: "lambiengcode",
         fullName: "Kai Dao",
         accessToken: "token_1",
         refreshToken: "token_2",
-        avatar: avatarModel,
+        avatar: "abc",
       );
       final UserModel userModel2 = UserModel(
-        id: "lambiengcode1",
+        id: 2,
         userName: "lambiengcode",
         fullName: "Kai Dao",
         accessToken: "token_1",
@@ -80,7 +72,7 @@ void main() {
         fullName: "Kai",
         accessToken: '1',
         refreshToken: '2',
-        id: 'a',
+        id: 1,
       );
       // assert
       expect(userClone.userName, "lambiengcode1");

@@ -18,12 +18,12 @@ void main() {
     );
     test('operator ==', () {
       const User userModel1 = User(
-        id: "lambiengcode",
+        id: 1,
         userName: "lambiengcode",
         fullName: "Kai Dao",
       );
       const User userModel2 = User(
-        id: "lambiengcode1",
+        id: 1,
         userName: "lambiengcode",
         fullName: "Kai Dao",
       );
@@ -92,7 +92,7 @@ void main() {
       () {
         // arrange
         final UserModel userModel = UserModel(
-          id: 'lam',
+          id: 1,
           userName: 'lam',
           fullName: 'Kai',
           accessToken: 'a',

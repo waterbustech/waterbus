@@ -8,3 +8,8 @@ sealed class UserState extends Equatable {
 }
 
 final class UserInitial extends UserState {}
+
+class UserGetDone extends UserState {
+  final User? user;
+  const UserGetDone({required this.user});
+}

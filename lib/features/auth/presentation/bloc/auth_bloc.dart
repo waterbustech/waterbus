@@ -9,11 +9,13 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/usecase/usecase.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
 import 'package:waterbus/features/auth/domain/usecases/logout.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -38,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           (l) => emit(AuthFailure()),
           (r) {
             user = r;
-            return emit(AuthSuccess());
+            return emit(_authSuccess);
           },
         );
       }
@@ -48,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event is LogInWithAppleEvent) {
         await _handleLogin(event);
 
-        if (user != null) emit(AuthSuccess());
+        if (user != null) emit(_authSuccess);
       }
 
       if (event is LogOutEvent) {
@@ -59,6 +61,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
     });
+  }
+
+  // MARK: state
+  AuthSuccess get _authSuccess {
+    AppBloc.userBloc.add(GetProfileEvent());
+    return AuthSuccess();
   }
 
   // MARK: Private methods
@@ -105,6 +113,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (logOutSucceed.isRight()) {
       user = null;
+      AppBloc.userBloc.add(CleanProfileEvent());
     }
   }
 }

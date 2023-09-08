@@ -35,7 +35,7 @@ class AvatarModel {
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
+      'id': id,
       'name': name,
       'src': src,
       'location': location,
@@ -44,7 +44,7 @@ class AvatarModel {
 
   factory AvatarModel.fromMap(Map<String, dynamic> map) {
     return AvatarModel(
-      id: map['_id'] ?? '',
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
       src: map['src'] ?? '',
       location: map['location'] ?? '',

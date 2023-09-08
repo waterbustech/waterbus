@@ -12,10 +12,12 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -75,39 +77,64 @@ class _HomeScreenState extends State<HomeScreen> {
               centerTitle: false,
               isVisibleBackButton: false,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              titleWidget: Row(
-                children: [
-                  SizedBox(width: 6.sp),
-                  GestureDetector(
-                    onTap: _toggleDrawer,
-                    child: CustomNetworkImage(
-                      height: 30.sp,
-                      width: 30.sp,
-                      urlToImage:
-                          'https://avatars.githubusercontent.com/u/60530946?v=4',
-                    ),
-                  ),
-                  SizedBox(width: 10.sp),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+              titleWidget: BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  final User user = state is UserGetDone && state.user != null
+                      ? state.user!
+                      : const User(
+                          id: 0,
+                          fullName: 'Waterbus',
+                          userName: 'waterbus.io',
+                          avatar:
+                              'https://avatars.githubusercontent.com/u/60530946?v=4',
+                        );
+
+                  return Row(
                     children: [
-                      Text(
-                        "Kai Dao",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      SizedBox(width: 6.sp),
+                      GestureDetector(
+                        onTap: _toggleDrawer,
+                        child: user.avatar == null
+                            ? CircleAvatar(
+                                radius: 15.sp,
+                                backgroundColor: Colors.black,
+                                backgroundImage: AssetImage(
+                                  Assets.images.imgAppLogo.path,
+                                ),
+                              )
+                            : CustomNetworkImage(
+                                height: 30.sp,
+                                width: 30.sp,
+                                urlToImage: user.avatar,
+                              ),
                       ),
-                      Text(
-                        "Senior at Waterbus",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 10.sp,
-                            ),
+                      SizedBox(width: 10.sp),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            user.fullName,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            '@${user.userName}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 10.sp,
+                                ),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
               actions: [
                 Container(
