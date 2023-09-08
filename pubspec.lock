@@ -1179,6 +1179,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  superellipse_shape:
+    dependency: "direct main"
+    description:
+      name: superellipse_shape
+      sha256: "8475f974a35be6d299ddbbe5b6be26ff2bc5521752cc631ffa8349aeb420bb18"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   synchronized:
     dependency: transitive
     description:

@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/constants/constants.dart';
 
 // Project imports:
-import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -21,12 +22,7 @@ class ProfileHeader extends StatelessWidget {
       builder: (context, state) {
         final User user = state is UserGetDone && state.user != null
             ? state.user!
-            : const User(
-                id: 0,
-                fullName: 'Waterbus',
-                userName: 'waterbus.io',
-                avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
-              );
+            : defaultUser;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,10 +39,9 @@ class ProfileHeader extends StatelessWidget {
                           Assets.images.imgAppLogo.path,
                         ),
                       )
-                    : CustomNetworkImage(
-                        height: 26.sp,
-                        width: 26.sp,
-                        urlToImage: user.avatar,
+                    : AvatarCard(
+                        urlToImage: user.avatar!,
+                        size: 26.sp,
                       ),
                 IconButton(
                   onPressed: () {},

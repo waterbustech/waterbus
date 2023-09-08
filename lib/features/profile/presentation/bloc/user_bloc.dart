@@ -97,4 +97,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       (url) => url,
     );
   }
+
+  // MARK: export getter
+  User? get user => _user;
 }
