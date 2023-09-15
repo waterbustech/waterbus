@@ -137,7 +137,6 @@ void main() {
 
         // act
         final UserModel user = UserModel.fromMapRemote(userJson['data']);
-        print(user.toString());
         // assert
         expect(user.fullName, "lambiengcode");
         expect(user.avatar, isNotNull);
