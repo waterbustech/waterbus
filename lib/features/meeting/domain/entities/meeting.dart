@@ -15,10 +15,10 @@ class Meeting {
   final List<Participant> users;
   final String code;
   Meeting({
-    required this.id,
+    this.id = -1,
     required this.title,
-    required this.users,
-    required this.code,
+    this.users = const [],
+    this.code = '',
   });
 
   Meeting copyWith({

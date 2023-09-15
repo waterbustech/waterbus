@@ -9,10 +9,10 @@ import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 
 @injectable
-class UpdateMeeting implements UseCase<bool, LeaveMeetingParams> {
+class LeaveMeeting implements UseCase<bool, LeaveMeetingParams> {
   final MeetingRepository repository;
 
-  UpdateMeeting(this.repository);
+  LeaveMeeting(this.repository);
 
   @override
   Future<Either<Failure, bool>> call(LeaveMeetingParams params) async {
