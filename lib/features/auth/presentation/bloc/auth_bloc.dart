@@ -3,6 +3,7 @@ import 'package:auth/auth.dart';
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
@@ -36,6 +37,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
         final Either<Failure, User> hasLogined = await _checkAuth.call(null);
+        FlutterNativeSplash.remove();
+
         hasLogined.fold(
           (l) => emit(AuthFailure()),
           (r) {
