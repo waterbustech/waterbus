@@ -61,12 +61,12 @@ class UserModel {
 
   factory UserModel.fromMapRemote(Map<String, dynamic> map) {
     return UserModel(
-      id: map['user']['id'] ?? '',
+      id: map['user']['id'] ?? 0,
       userName: map['user']['userName'] ?? '',
       fullName: map['user']['fullName'] ?? '',
       accessToken: map['token'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
-      avatar: map['avatar'] != null ? map['avatar'] as String : null,
+      avatar: map['user']['avatar'],
     );
   }
 
