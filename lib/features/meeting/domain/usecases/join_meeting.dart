@@ -10,10 +10,10 @@ import 'package:waterbus/features/meeting/domain/repositories/meeting_repository
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 
 @injectable
-class CreateMeeting implements UseCase<Meeting, CreateMeetingParams> {
+class JoinMeeting implements UseCase<Meeting, CreateMeetingParams> {
   final MeetingRepository repository;
 
-  CreateMeeting(this.repository);
+  JoinMeeting(this.repository);
 
   @override
   Future<Either<Failure, Meeting>> call(CreateMeetingParams params) async {
