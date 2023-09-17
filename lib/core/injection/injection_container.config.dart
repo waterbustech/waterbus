@@ -79,7 +79,7 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i8.MeetingRepository>(() => _i9.MeetingRepositoryImpl());
   gh.factory<_i10.ScheduleBloc>(() => _i10.ScheduleBloc());
   gh.lazySingleton<_i11.SocketConnection>(
-      () => _i11.SocketConnection(gh<_i3.AuthLocalDataSource>()));
+      () => _i11.SocketConnectionImpl(gh<_i3.AuthLocalDataSource>()));
   gh.factory<_i12.UpdateMeeting>(
       () => _i12.UpdateMeeting(gh<_i8.MeetingRepository>()));
   gh.lazySingleton<_i13.UserRemoteDataSource>(
