@@ -85,8 +85,8 @@ class BaseRemoteData {
   }
 
   Future<Response<dynamic>> postRoute(
-    String gateway,
-    Map<String, dynamic> body, {
+    String gateway, {
+    Map<String, dynamic>? body,
     String? query,
   }) async {
     try {
@@ -99,7 +99,7 @@ class BaseRemoteData {
       }
       final Response response = await dio.post(
         gateway,
-        data: convert.jsonEncode(body),
+        data: body == null ? null : convert.jsonEncode(body),
         options: getOptions(),
         queryParameters: query == null ? null : paramsObject,
       );
@@ -156,7 +156,7 @@ class BaseRemoteData {
 
   Future<Response<dynamic>> getRoute(
     String gateway, {
-    String? params,
+    String params = '',
     String? query,
   }) async {
     try {
@@ -251,7 +251,7 @@ class BaseRemoteData {
 
   getHeaders() {
     return {
-      'Authorization': 'Bearer ',
+      'Authorization': 'Bearer ${_authLocalDataSource.accessToken ?? ''}',
       'Content-Type': 'application/json; charset=UTF-8',
       'Connection': 'keep-alive',
       'Accept': '*/*',

@@ -16,22 +16,42 @@ import 'package:injectable/injectable.dart' as _i2;
 
 // Project imports:
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
-import '../../features/auth/domain/repositories/auth_repository.dart' as _i11;
-import '../../features/auth/domain/usecases/check_auth.dart' as _i13;
-import '../../features/auth/domain/usecases/login_with_social.dart' as _i14;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i15;
+import '../../features/auth/domain/repositories/auth_repository.dart' as _i16;
+import '../../features/auth/domain/usecases/check_auth.dart' as _i18;
+import '../../features/auth/domain/usecases/login_with_social.dart' as _i26;
+import '../../features/auth/domain/usecases/logout.dart' as _i25;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i30;
 import '../../features/home/bloc/home/home_bloc.dart' as _i6;
-import '../../features/profile/domain/repositories/user_repository.dart' as _i8;
-import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i7;
+import '../../features/meeting/domain/usecases/create_meeting.dart' as _i19;
+import '../../features/meeting/domain/usecases/get_info_meeting.dart' as _i20;
+import '../../features/meeting/domain/usecases/join_meeting.dart' as _i23;
+import '../../features/meeting/domain/usecases/leave_meeting.dart' as _i24;
+import '../../features/meeting/domain/usecases/update_meeting.dart' as _i11;
+import '../../features/meeting/presentation/bloc/meeting_bloc.dart' as _i27;
+import '../../features/profile/domain/usecases/get_presigned_url.dart' as _i21;
+import '../../features/profile/domain/usecases/get_profile.dart' as _i22;
+import '../../features/profile/domain/usecases/update_profile.dart' as _i28;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i29;
+import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i10;
 import '../utils/datasources/base_remote_data.dart' as _i4;
 import '../utils/dio/dio_configuration.dart' as _i5;
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart'
-    as _i10;
+    as _i15;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
+    as _i17;
+import '../../features/meeting/data/datasources/meeting_remote_datasource.dart'
+    as _i7;
+import '../../features/meeting/data/repositories/meeting_repository_impl.dart'
+    as _i9;
+import '../../features/meeting/domain/repositories/meeting_repository.dart'
+    as _i8;
+import '../../features/profile/data/datasource/user_remote_datasource.dart'
     as _i12;
 import '../../features/profile/data/repositories/user_repository_impl.dart'
-    as _i9;
+    as _i14;
+import '../../features/profile/domain/repositories/user_repository.dart'
+    as _i13;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -53,20 +73,55 @@ _i1.GetIt $initGetIt(
     gh<_i3.AuthLocalDataSource>(),
   ));
   gh.factory<_i6.HomeBloc>(() => _i6.HomeBloc());
-  gh.factory<_i7.ScheduleBloc>(() => _i7.ScheduleBloc());
-  gh.lazySingleton<_i8.UserRepository>(() => _i9.UserRepositoryImpl());
-  gh.lazySingleton<_i10.AuthRemoteDataSource>(
-      () => _i10.AuthRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
-  gh.lazySingleton<_i11.AuthRepository>(() => _i12.AuthRepositoryImpl(
+  gh.lazySingleton<_i7.MeetingRemoteDataSource>(
+      () => _i7.MeetingRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
+  gh.lazySingleton<_i8.MeetingRepository>(() => _i9.MeetingRepositoryImpl());
+  gh.factory<_i10.ScheduleBloc>(() => _i10.ScheduleBloc());
+  gh.factory<_i11.UpdateMeeting>(
+      () => _i11.UpdateMeeting(gh<_i8.MeetingRepository>()));
+  gh.lazySingleton<_i12.UserRemoteDataSource>(
+      () => _i12.UserRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
+  gh.lazySingleton<_i13.UserRepository>(
+      () => _i14.UserRepositoryImpl(gh<_i12.UserRemoteDataSource>()));
+  gh.lazySingleton<_i15.AuthRemoteDataSource>(
+      () => _i15.AuthRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
+  gh.lazySingleton<_i16.AuthRepository>(() => _i17.AuthRepositoryImpl(
         gh<_i3.AuthLocalDataSource>(),
-        gh<_i10.AuthRemoteDataSource>(),
+        gh<_i15.AuthRemoteDataSource>(),
       ));
-  gh.factory<_i13.CheckAuth>(() => _i13.CheckAuth(gh<_i11.AuthRepository>()));
-  gh.factory<_i14.LoginWithSocial>(
-      () => _i14.LoginWithSocial(gh<_i11.AuthRepository>()));
-  gh.factory<_i15.AuthBloc>(() => _i15.AuthBloc(
-        gh<_i13.CheckAuth>(),
-        gh<_i14.LoginWithSocial>(),
+  gh.factory<_i18.CheckAuth>(() => _i18.CheckAuth(gh<_i16.AuthRepository>()));
+  gh.factory<_i19.CreateMeeting>(
+      () => _i19.CreateMeeting(gh<_i8.MeetingRepository>()));
+  gh.factory<_i20.GetInfoMeeting>(
+      () => _i20.GetInfoMeeting(gh<_i8.MeetingRepository>()));
+  gh.factory<_i21.GetPresignedUrl>(
+      () => _i21.GetPresignedUrl(gh<_i13.UserRepository>()));
+  gh.factory<_i22.GetProfile>(() => _i22.GetProfile(gh<_i13.UserRepository>()));
+  gh.factory<_i23.JoinMeeting>(
+      () => _i23.JoinMeeting(gh<_i8.MeetingRepository>()));
+  gh.factory<_i24.LeaveMeeting>(
+      () => _i24.LeaveMeeting(gh<_i8.MeetingRepository>()));
+  gh.factory<_i25.LogOut>(() => _i25.LogOut(gh<_i16.AuthRepository>()));
+  gh.factory<_i26.LoginWithSocial>(
+      () => _i26.LoginWithSocial(gh<_i16.AuthRepository>()));
+  gh.factory<_i27.MeetingBloc>(() => _i27.MeetingBloc(
+        gh<_i19.CreateMeeting>(),
+        gh<_i23.JoinMeeting>(),
+        gh<_i11.UpdateMeeting>(),
+        gh<_i20.GetInfoMeeting>(),
+        gh<_i24.LeaveMeeting>(),
+      ));
+  gh.factory<_i28.UpdateProfile>(
+      () => _i28.UpdateProfile(gh<_i13.UserRepository>()));
+  gh.factory<_i29.UserBloc>(() => _i29.UserBloc(
+        gh<_i28.UpdateProfile>(),
+        gh<_i21.GetPresignedUrl>(),
+        gh<_i22.GetProfile>(),
+      ));
+  gh.factory<_i30.AuthBloc>(() => _i30.AuthBloc(
+        gh<_i18.CheckAuth>(),
+        gh<_i26.LoginWithSocial>(),
+        gh<_i25.LogOut>(),
       ));
   return getIt;
 }

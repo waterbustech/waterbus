@@ -4,6 +4,11 @@ class Routes {
   static const String authenticationRoute = '/authentication';
   static const String loginRoute = '/login';
 
+  // Users
+  static const String profileRoute = '/profile';
+  static const String settingsRoute = '/settings';
+  static const String privacyRoute = '/privacy';
+
   // Meeting
   static const String meetingRoute = '/meeting';
   static const String enterCodeRoute = '/enterCodeRoute';

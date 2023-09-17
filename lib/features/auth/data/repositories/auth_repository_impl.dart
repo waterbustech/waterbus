@@ -46,9 +46,26 @@ class AuthRepositoryImpl extends AuthRepository {
         refreshToken: refreshToken,
       );
 
+      _localDataSource.saveTokens(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+
       return Right(User.fromUserModel(userModel));
     } catch (_) {
       return Left(NullValue());
     }
+  }
+
+  @override
+  Future<Either<Failure, bool>> logOut() async {
+    final bool isSignedOut = await _remoteDataSource.logOut();
+
+    if (isSignedOut) {
+      _localDataSource.clearUser();
+      return Right(isSignedOut);
+    }
+
+    return Left(NullValue());
   }
 }
