@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static const String baseUrl = 'http://149.28.156.10:5980/busapi/v1/';
+  static const String wsUrl = '';
 
   // Auth
   static const String signIn = 'auth/login';
