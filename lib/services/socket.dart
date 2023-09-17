@@ -7,14 +7,23 @@ import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/constants/socket_event.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 
-@lazySingleton
-class SocketConnection {
+abstract class SocketConnection {
+  void establishConnection({bool forceConnection = false});
+  void disconnection();
+  void sendJoinCall();
+  void sendSdp();
+  void sendCandidate();
+}
+
+@LazySingleton(as: SocketConnection)
+class SocketConnectionImpl extends SocketConnection {
   final AuthLocalDataSource _dataSource;
-  SocketConnection(this._dataSource);
+  SocketConnectionImpl(this._dataSource);
 
   Socket? _socket;
 
-  Future<void> establishConnection({bool forceConnection = false}) async {
+  @override
+  void establishConnection({bool forceConnection = false}) {
     if (_socket != null && !forceConnection) return;
 
     _socket = io(
@@ -37,10 +46,27 @@ class SocketConnection {
     _socket?.on(SocketEvent.sendSdpSSC, (data) {});
   }
 
+  @override
   void disconnection() {
     if (_socket == null) return;
 
     _socket?.disconnect();
     _socket = null;
+  }
+
+  // MARK: emit functions
+  @override
+  void sendJoinCall() {
+    _socket?.emit(SocketEvent.joinCallCSS);
+  }
+
+  @override
+  void sendCandidate() {
+    _socket?.emit(SocketEvent.sendCandidateCSS);
+  }
+
+  @override
+  void sendSdp() {
+    _socket?.emit(SocketEvent.sendSdpCSS);
   }
 }
