@@ -9,4 +9,5 @@ import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
 abstract class AuthRepository {
   Future<Either<Failure, User>> onAuthCheck();
   Future<Either<Failure, User>> loginWithSocial(AuthParams params);
+  Future<Either<Failure, bool>> logOut();
 }

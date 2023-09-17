@@ -1,14 +1,8 @@
 {
-    "_id": "lambiengcode",
+    "id": 1,
     "userName": "lambiengcode",
     "fullName": "Kai Dao",
     "accessToken": "token_1",
     "refreshToken": "token_2",
-    "avatar": {
-        "_id": "1",
-        "name": "a",
-        "src": "b",
-        "location": "location",
-        "v": 1
-    }
+    "avatar": "https://lambiengcode.png"
 }

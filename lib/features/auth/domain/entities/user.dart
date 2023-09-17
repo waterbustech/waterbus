@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 // Dart imports:
 import 'dart:convert';
 
@@ -7,40 +5,46 @@ import 'dart:convert';
 import 'package:waterbus/features/auth/data/models/user_model.dart';
 
 class User {
-  final String id;
+  final int id;
   final String fullName;
   final String userName;
+  final String? avatar;
   const User({
     required this.id,
     required this.fullName,
     required this.userName,
+    this.avatar,
   });
 
   User copyWith({
-    String? id,
+    int? id,
     String? fullName,
     String? userName,
+    String? avatar,
   }) {
     return User(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       userName: userName ?? this.userName,
+      avatar: avatar ?? this.avatar,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      '_id': id,
+      'id': id,
       'fullName': fullName,
       'userName': userName,
+      'avatar': avatar,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['_id'] as String,
-      fullName: map['fullName'] as String,
-      userName: map['userName'] as String,
+      id: map['id'] ?? 0,
+      fullName: map['fullName'] ?? '',
+      userName: map['userName'] ?? '',
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
 
@@ -49,6 +53,7 @@ class User {
       id: userModel.id,
       fullName: userModel.fullName,
       userName: userModel.userName,
+      avatar: userModel.avatar,
     );
   }
 
@@ -58,14 +63,25 @@ class User {
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
+  String toString() {
+    return 'User(id: $id, fullName: $fullName, userName: $userName, avatar: $avatar)';
+  }
+
+  @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
         other.fullName == fullName &&
-        other.userName == userName;
+        other.userName == userName &&
+        other.avatar == avatar;
   }
 
   @override
-  int get hashCode => id.hashCode ^ fullName.hashCode ^ userName.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        fullName.hashCode ^
+        userName.hashCode ^
+        avatar.hashCode;
+  }
 }

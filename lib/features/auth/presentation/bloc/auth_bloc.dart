@@ -3,15 +3,20 @@ import 'package:auth/auth.dart';
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/usecase/usecase.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
+import 'package:waterbus/features/auth/domain/usecases/logout.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -20,21 +25,25 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckAuth _checkAuth;
   final LoginWithSocial _loginWithSocial;
+  final LogOut _logOut;
 
   User? user;
 
   AuthBloc(
     this._checkAuth,
     this._loginWithSocial,
+    this._logOut,
   ) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
         final Either<Failure, User> hasLogined = await _checkAuth.call(null);
+        FlutterNativeSplash.remove();
+
         hasLogined.fold(
           (l) => emit(AuthFailure()),
           (r) {
             user = r;
-            return emit(AuthSuccess());
+            return emit(_authSuccess);
           },
         );
       }
@@ -44,11 +53,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event is LogInWithAppleEvent) {
         await _handleLogin(event);
 
-        if (user != null) emit(AuthSuccess());
+        if (user != null) emit(_authSuccess);
       }
 
-      if (event is LogOutEvent) {}
+      if (event is LogOutEvent) {
+        await _handleLogOut();
+
+        if (user == null) {
+          emit(AuthFailure());
+        }
+      }
     });
+  }
+
+  // MARK: state
+  AuthSuccess get _authSuccess {
+    AppBloc.userBloc.add(GetProfileEvent());
+    return AuthSuccess();
   }
 
   // MARK: Private methods
@@ -88,5 +109,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     loginSucceed.fold((l) {}, (r) {
       user = r;
     });
+  }
+
+  Future<void> _handleLogOut() async {
+    final Either<Failure, bool> logOutSucceed = await _logOut.call(NoParams());
+
+    if (logOutSucceed.isRight()) {
+      user = null;
+      AppBloc.userBloc.add(CleanProfileEvent());
+    }
   }
 }

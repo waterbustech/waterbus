@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
@@ -15,7 +16,11 @@ import 'package:waterbus/features/app/app.dart';
 
 void main(List<String> args) async {
   await runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+    final WidgetsBinding widgetsBinding =
+        WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(
+      widgetsBinding: widgetsBinding,
+    );
 
     PaintingBinding.instance.imageCache.maximumSizeBytes =
         1024 * 1024 * 300; // 300 MB
