@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/features/profile/data/datasource/user_remote_datasource.dart';
+import 'package:waterbus/features/profile/data/datasources/user_remote_datasource.dart';
 import 'package:waterbus/features/profile/domain/repositories/user_repository.dart';
 
 @LazySingleton(as: UserRepository)

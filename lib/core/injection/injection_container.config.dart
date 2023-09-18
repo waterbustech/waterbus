@@ -50,7 +50,7 @@ import '../../features/meeting/data/repositories/meeting_repository_impl.dart'
     as _i10;
 import '../../features/meeting/domain/repositories/meeting_repository.dart'
     as _i9;
-import '../../features/profile/data/datasource/user_remote_datasource.dart'
+import '../../features/profile/data/datasources/user_remote_datasource.dart'
     as _i14;
 import '../../features/profile/data/repositories/user_repository_impl.dart'
     as _i16;

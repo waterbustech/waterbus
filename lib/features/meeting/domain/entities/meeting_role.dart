@@ -7,17 +7,6 @@ enum MeetingRole {
 }
 
 extension MeetingRoleX on MeetingRole {
-  int get value {
-    switch (this) {
-      case MeetingRole.host:
-        return 0;
-      case MeetingRole.attendee:
-        return 1;
-      default:
-        throw Exception('Unknown MeetingRole');
-    }
-  }
-
   static MeetingRole fromValue(int value) {
     switch (value) {
       case 0:

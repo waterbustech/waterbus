@@ -23,8 +23,27 @@ void main() {
 
   final testMeeting = Meeting(title: 'Meeting with Kai');
   const testPassword = 'KaiDao';
-  final createMeetingParams =
-      CreateMeetingParams(meeting: testMeeting, password: testPassword);
+  final createMeetingParams = CreateMeetingParams(
+    meeting: testMeeting,
+    password: testPassword,
+  );
+
+  test('should have correct props', () {
+    // Arrange
+    final param1 = CreateMeetingParams(
+      meeting: testMeeting,
+      password: testPassword,
+    );
+    final param2 = CreateMeetingParams(
+      meeting: testMeeting,
+      password: '${testPassword}01',
+    );
+
+    // Act & Assert
+    expect(param1.props, [param1.meeting, param1.password]);
+    expect(param2.props, [param2.meeting, param2.password]);
+    expect(param1.props, isNot(equals(param2.props)));
+  });
 
   test('should create a meeting for the given parameters', () async {
     // Arrange
