@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/features/meeting/presentation/widgets/e2ee_label_line.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class E2eeBottomSheet extends StatelessWidget {
@@ -14,7 +16,7 @@ class E2eeBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      padding: EdgeInsets.symmetric(horizontal: 20.sp),
+      padding: EdgeInsets.symmetric(horizontal: 16.sp),
       child: Column(
         children: [
           SizedBox(height: 40.sp),
@@ -25,21 +27,32 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 16.sp),
           Text(
-            'Your messages and meetings are private',
+            'Your messages and meetings\n are private',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 17.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: 12.sp),
           Text(
             'End-to-end encryption keeps your personal meetings between you and the other participants. Not event Waterbus can listen to them. This includes your:',
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+            strutStyle: StrutStyle.disabled,
             style: TextStyle(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w400,
+              fontSize: 12.sp,
+              height: 1.4,
             ),
+          ),
+          SizedBox(height: 20.sp),
+          const E2eeLabelLine(
+            icon: PhosphorIcons.video_camera,
+            label: 'Audio and video calls',
+          ),
+          SizedBox(height: 8.sp),
+          const E2eeLabelLine(
+            icon: PhosphorIcons.chats_teardrop,
+            label: 'Text messages',
           ),
         ],
       ),
