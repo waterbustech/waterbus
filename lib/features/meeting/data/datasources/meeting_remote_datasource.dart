@@ -21,9 +21,9 @@ abstract class MeetingRemoteDataSource {
     required Meeting meeting,
     required String password,
   });
-  Future<Meeting?> getInfoMeeting(String code);
+  Future<Meeting?> getInfoMeeting(int code);
   Future<bool> leaveMeeting({
-    required String code,
+    required int code,
     required int participantId,
   });
 }
@@ -54,7 +54,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }
 
   @override
-  Future<Meeting?> getInfoMeeting(String code) async {
+  Future<Meeting?> getInfoMeeting(int code) async {
     final Response response = await _remoteData.getRoute(
       '${ApiEndpoints.meetings}/$code',
     );
@@ -87,7 +87,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
 
   @override
   Future<bool> leaveMeeting({
-    required String code,
+    required int code,
     required int participantId,
   }) async {
     final Response response = await _remoteData.deleteRoute(

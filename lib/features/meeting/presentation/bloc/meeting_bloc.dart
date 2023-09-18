@@ -110,7 +110,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleJoinMeeting(JoinMeetingEvent event) async {
     final Either<Failure, Meeting> meeting = await _joinMeeting.call(
       CreateMeetingParams(
-        meeting: Meeting(title: '', code: event.roomCode.toString()),
+        meeting: Meeting(title: '', code: event.roomCode),
         password: event.password,
       ),
     );
@@ -131,7 +131,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     final Either<Failure, bool> isLeaveSucceed = await _leaveMeeting.call(
       LeaveMeetingParams(
-        code: int.parse(_currentMeeting!.code),
+        code: _currentMeeting!.code,
         participantId: participant.id,
       ),
     );

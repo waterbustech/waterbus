@@ -13,19 +13,19 @@ class Meeting {
   final int id;
   final String title;
   final List<Participant> users;
-  final String code;
+  final int code;
   Meeting({
     this.id = -1,
     required this.title,
     this.users = const [],
-    this.code = '',
+    this.code = -1,
   });
 
   Meeting copyWith({
     int? id,
     String? title,
     List<Participant>? users,
-    String? code,
+    int? code,
   }) {
     return Meeting(
       id: id ?? this.id,
@@ -49,11 +49,11 @@ class Meeting {
       id: map['id'] as int,
       title: map['title'] as String,
       users: List<Participant>.from(
-        (map['users'] as List<int>).map<Participant>(
+        (map['users'] as List).map<Participant>(
           (x) => Participant.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      code: map['code'] as String,
+      code: map['code'],
     );
   }
 

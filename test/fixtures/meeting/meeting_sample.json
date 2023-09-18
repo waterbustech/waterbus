@@ -1,0 +1,28 @@
+{
+    "title": "Meeting with Kai 1",
+    "users": [
+      {
+        "id": 2,
+        "role": 0,
+        "createdAt": "2023-09-17T14:44:01.137Z",
+        "deletedAt": null,
+        "user": {
+          "id": 4,
+          "fullName": "Kai (C.Monster)",
+          "userName": "hngvinh1694143382000",
+          "googleId": "TCQpA7f6oYUGnnXrw9WSGzGOc1n1",
+          "facebookId": null,
+          "appleId": null,
+          "avatar": "https://avatars.githubusercontent.com/u/60530946?v=4",
+          "createdAt": "2023-09-08T03:23:01.999Z",
+          "updatedAt": "2023-09-08T03:27:30.269Z",
+          "deletedAt": null
+        }
+      }
+    ],
+    "code": 754908,
+    "deletedAt": null,
+    "id": 2,
+    "createdAt": "2023-09-17T14:44:01.157Z",
+    "updatedAt": "2023-09-17T14:44:01.157Z"
+  }

@@ -1,17 +1,26 @@
+// Dart imports:
+import 'dart:async';
+
 // Package imports:
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
 import 'package:native_dio_adapter/native_dio_adapter.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
+import 'package:waterbus/core/utils/dio/completer_queue.dart';
 import 'package:waterbus/core/utils/path_helper.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 
 @singleton
 class DioConfiguration {
@@ -20,37 +29,47 @@ class DioConfiguration {
 
   DioConfiguration(this._remoteData, this._localDataSource);
 
-  Future<void> onRefreshToken({
-    Function(String accessToken, String refreshToken)? callback,
-  }) async {
-    if (_localDataSource.accessToken != null ||
-        _localDataSource.refreshToken != null) return;
+  bool _isRefreshing = false;
+  final CompleterQueue<(String, String)> _refreshTokenCompleters =
+      CompleterQueue<(String, String)>();
 
-    final Response response = await _remoteData.dio.get(
-      ApiEndpoints.refreshToken,
-      options: _remoteData.getOptionsRefreshToken,
-    );
-
-    if (response.statusCode == StatusCode.ok) {
-      final String accessToken = response.data['data']['accessToken'];
-      final String refreshToken = response.data['data']['refreshToken'];
-
-      _localDataSource.saveTokens(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      );
-
-      callback?.call(accessToken, refreshToken);
-    }
-  }
-
+  // MARK: public methods
   Future<Dio> configuration(Dio dioClient) async {
     // Integration cookie
     final String tempDir = await PathHelper.tempDirWaterbus;
     final PersistCookieJar cookieJar = PersistCookieJar(
-      storage: FileStorage(tempDir),
+      ignoreExpires: true,
+      storage: FileStorage("$tempDir/.cookies/"),
     );
     dioClient.interceptors.add(CookieManager(cookieJar));
+    dioClient.httpClientAdapter = Http2Adapter(
+      ConnectionManager(
+        idleTimeout: 10.seconds,
+      ),
+    );
+
+    final MemCacheStore cacheStore = MemCacheStore(
+      maxSize: 10485760,
+      maxEntrySize: 1048576,
+    );
+
+    // Global options
+    final CacheOptions options = CacheOptions(
+      // A default store is required for interceptor.
+      store: cacheStore,
+      // Returns a cached response on error but for statuses 401 & 403.
+      // Also allows to return a cached response on network errors (e.g. offline usage).
+      // Defaults to [null].
+      hitCacheOnErrorExcept: [StatusCode.forbiden, StatusCode.badGateway],
+      // Overrides any HTTP directive to delete entry past this duration.
+      // Useful only when origin server has no cache config or custom behaviour is desired.
+      // Defaults to [null].
+      maxStale: 1.seconds,
+      priority: CachePriority.high,
+      // Default. Allows 3 cache sets and ease cleanup.
+    );
+
+    dioClient.interceptors.add(DioCacheInterceptor(options: options));
 
     // Integration retry
     dioClient.interceptors.add(
@@ -66,6 +85,40 @@ class DioConfiguration {
       ),
     );
 
+    // Add interceptor for prevent response when system is maintaining...
+    dioClient.interceptors.add(
+      InterceptorsWrapper(
+        onResponse: (response, handler) async {
+          if (response.statusCode == StatusCode.unauthorized) {
+            try {
+              final String oldAccessToken =
+                  (response.requestOptions.headers['Authorization'] ?? '')
+                      .toString()
+                      .split(' ')
+                      .last;
+
+              final (String accessToken, String _) =
+                  await onRefreshToken(oldAccessToken: oldAccessToken);
+
+              response.requestOptions.headers['Authorization'] =
+                  'Bearer $accessToken';
+
+              final Response cloneReq = await dioClient.fetch(
+                response.requestOptions,
+              );
+
+              handler.resolve(cloneReq);
+            } catch (_) {
+              handler.next(response);
+              _logOut();
+            }
+          } else {
+            handler.next(response);
+          }
+        },
+      ),
+    );
+
     dioClient.httpClientAdapter = NativeAdapter();
 
     return dioClient;
@@ -74,42 +127,109 @@ class DioConfiguration {
   Future<Dio> configRefreshToken(Dio dioClient) async {
     dioClient.interceptors.add(
       InterceptorsWrapper(
-        onError: (error, handler) async {
-          if (error.response?.statusCode == StatusCode.unauthorized) {
-            try {
-              await onRefreshToken(
-                callback: (accessToken, refreshToken) async {
-                  // Set bearer token in header for resolve later
-                  error.requestOptions.headers["Authorization"] =
-                      "Bearer $accessToken";
+        onResponse: (response, handler) async {
+          if (response.statusCode == StatusCode.unauthorized) {
+            if (_localDataSource.refreshToken != null &&
+                _localDataSource.accessToken != null) {
+              try {
+                final String oldAccessToken =
+                    response.requestOptions.headers['Authorization'];
 
-                  // Create request with new access token
-                  final opts = Options(
-                    method: error.requestOptions.method,
-                    headers: error.requestOptions.headers,
-                  );
+                final (String accessToken, String _) =
+                    await onRefreshToken(oldAccessToken: oldAccessToken);
 
-                  final cloneReq = await dioClient.request(
-                    error.requestOptions.path,
-                    options: opts,
-                    data: error.requestOptions.data,
-                    queryParameters: error.requestOptions.queryParameters,
-                  );
+                response.requestOptions.headers['Authorization'] =
+                    'Bearer $accessToken';
 
-                  return handler.resolve(cloneReq);
-                },
-              );
-              // ignore: empty_catches
-            } catch (_) {
-              handler.reject(error);
+                final Response cloneReq = await dioClient.fetch(
+                  response.requestOptions,
+                );
+
+                handler.resolve(cloneReq);
+                // ignore: empty_catches
+              } catch (_) {
+                handler.next(response);
+                _logOut();
+              }
+            } else {
+              handler.next(response);
             }
+          } else {
+            handler.next(response);
           }
-
-          return handler.next(error);
         },
+        onError: (error, handler) async {},
       ),
     );
 
     return dioClient;
+  }
+
+  Future<(String, String)> onRefreshToken({
+    String oldAccessToken = '',
+    Function(
+      String accessToken,
+      String refreshToken,
+    )? callback,
+  }) async {
+    if (oldAccessToken != 'Bearer ${_localDataSource.accessToken}') {
+      return (_localDataSource.accessToken!, _localDataSource.refreshToken!);
+    }
+
+    final completer = Completer<(String, String)>();
+    _refreshTokenCompleters.add(completer);
+
+    if (!_isRefreshing) {
+      _isRefreshing = true;
+
+      final (String, String) result = await _performRefreshToken(
+        callback: callback,
+      );
+
+      _isRefreshing = false;
+      _refreshTokenCompleters.completeAllQueue(result);
+    }
+
+    return completer.future;
+  }
+
+  // MARK: Private methods
+  Future<(String, String)> _performRefreshToken({
+    Function(
+      String accessToken,
+      String refreshToken,
+    )? callback,
+  }) async {
+    if (_localDataSource.refreshToken != null) {
+      if (_localDataSource.accessToken != null) {
+        _logOut();
+      }
+      return ("", "");
+    }
+
+    final Response response = await _remoteData.dio.get(
+      ApiEndpoints.refreshToken,
+      options: _remoteData.getOptionsRefreshToken,
+    );
+
+    if (response.statusCode == StatusCode.ok) {
+      final String accessToken = response.data['token'];
+      final String refreshToken = response.data['refreshToken'];
+
+      _localDataSource.saveTokens(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+
+      callback?.call(accessToken, refreshToken);
+
+      return (accessToken, refreshToken);
+    }
+
+    return ("", "");
+  }
+
+  void _logOut() {
+    AppBloc.authBloc.add(LogOutEvent());
   }
 }

@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
+import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
@@ -12,28 +14,85 @@ import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 
 @LazySingleton(as: MeetingRepository)
 class MeetingRepositoryImpl extends MeetingRepository {
+  final MeetingRemoteDataSource _remoteDataSource;
+  final MeetingLocalDataSource _localDataSource;
+
+  MeetingRepositoryImpl(this._remoteDataSource, this._localDataSource);
+
   @override
-  Future<Either<Failure, Meeting>> createMeeting(CreateMeetingParams params) {
-    throw UnimplementedError();
+  Future<Either<Failure, Meeting>> createMeeting(
+    CreateMeetingParams params,
+  ) async {
+    final Meeting? meeting = await _remoteDataSource.createMeeting(
+      meeting: params.meeting,
+      password: params.password,
+    );
+
+    if (meeting == null) {
+      return Left(NullValue());
+    }
+
+    _localDataSource.addOrMeeting(meeting);
+
+    return Right(meeting);
   }
 
   @override
-  Future<Either<Failure, Meeting>> getInfoMeeting(GetMeetingParams params) {
-    throw UnimplementedError();
+  Future<Either<Failure, Meeting>> getInfoMeeting(
+    GetMeetingParams params,
+  ) async {
+    final Meeting? meeting = await _remoteDataSource.getInfoMeeting(
+      params.code,
+    );
+
+    if (meeting == null) return Left(NullValue());
+
+    return Right(meeting);
   }
 
   @override
-  Future<Either<Failure, Meeting>> joinMeeting(CreateMeetingParams params) {
-    throw UnimplementedError();
+  Future<Either<Failure, Meeting>> joinMeeting(
+    CreateMeetingParams params,
+  ) async {
+    final Meeting? meeting = await _remoteDataSource.joinMeeting(
+      meeting: params.meeting,
+      password: params.password,
+    );
+
+    if (meeting == null) return Left(NullValue());
+
+    _localDataSource.addOrMeeting(meeting);
+
+    return Right(meeting);
   }
 
   @override
-  Future<Either<Failure, Meeting>> updateMeeting(CreateMeetingParams params) {
-    throw UnimplementedError();
+  Future<Either<Failure, Meeting>> updateMeeting(
+    CreateMeetingParams params,
+  ) async {
+    final Meeting? meeting = await _remoteDataSource.updateMeeting(
+      meeting: params.meeting,
+      password: params.password,
+    );
+
+    if (meeting == null) return Left(NullValue());
+
+    _localDataSource.addOrMeeting(meeting);
+
+    return Right(meeting);
   }
 
   @override
-  Future<Either<Failure, bool>> leaveMeeting(LeaveMeetingParams params) {
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> leaveMeeting(LeaveMeetingParams params) async {
+    final bool isLeaveSucceed = await _remoteDataSource.leaveMeeting(
+      code: params.code,
+      participantId: params.participantId,
+    );
+
+    if (isLeaveSucceed) {
+      _localDataSource.removeMeeting(params.code);
+    }
+
+    return Right(isLeaveSucceed);
   }
 }
