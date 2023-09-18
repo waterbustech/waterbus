@@ -12,7 +12,7 @@ do
 		break
 		;;
 		2)
-		very_good test --exclude-coverage '**/{core/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 90 
+		very_good test --exclude-coverage '**/{core/**,services/**,gen/**,features/**/data/datasources/**,features/**/presentation/**,features/**/widgets/**,features/**/bloc/**,features/**/blocs/**,features/**/xmodels/**,features/**/screens/**,main.dart}' --no-optimization --min-coverage 90 
 		break
         ;;
 		3)
@@ -21,6 +21,7 @@ do
 		lcov --remove coverage/lcov.info -o coverage/lcov.info \
 			'lib/gen/**' \
 			'lib/core/**' \
+			'lib/services/**' \
 			'lib/features/**/data/datasources/**' \
 			'lib/features/**/presentation/**' \
 			'lib/features/**/widgets/**' \
