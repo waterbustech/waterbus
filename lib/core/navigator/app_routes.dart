@@ -11,6 +11,7 @@ class Routes {
 
   // Meeting
   static const String meetingRoute = '/meeting';
+  static const String createMeetingRoute = '/createMeeting';
   static const String enterCodeRoute = '/enterCodeRoute';
 
   // Chat

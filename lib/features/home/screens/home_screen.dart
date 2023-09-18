@@ -11,6 +11,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -131,19 +132,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               actions: [
-                Container(
-                  width: 36.sp,
-                  height: 36.sp,
-                  margin: EdgeInsets.only(right: 16.sp),
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    Assets.icons.icNewMeeting.path,
-                    height: 22.sp,
-                    fit: BoxFit.fitHeight,
+                GestureWrapper(
+                  onTap: () {
+                    AppNavigator.push(Routes.createMeetingRoute);
+                  },
+                  child: Container(
+                    width: 36.sp,
+                    height: 36.sp,
+                    margin: EdgeInsets.only(right: 16.sp),
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.centerRight,
+                    child: Image.asset(
+                      Assets.icons.icNewMeeting.path,
+                      height: 22.sp,
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
                 ),
               ],
