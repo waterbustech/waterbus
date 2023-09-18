@@ -9,6 +9,7 @@ import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -64,28 +65,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.sp),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 24.sp),
-                      _user!.avatar == null
-                          ? CircleAvatar(
-                              radius: 40.sp,
-                              backgroundColor: Colors.black,
-                              backgroundImage: AssetImage(
-                                Assets.images.imgAppLogo.path,
+                      Align(
+                        child: _user!.avatar == null
+                            ? CircleAvatar(
+                                radius: 40.sp,
+                                backgroundColor: Colors.black,
+                                backgroundImage: AssetImage(
+                                  Assets.images.imgAppLogo.path,
+                                ),
+                              )
+                            : AvatarCard(
+                                urlToImage: _user!.avatar!,
+                                size: 80.sp,
                               ),
-                            )
-                          : AvatarCard(
-                              urlToImage: _user!.avatar!,
-                              size: 80.sp,
-                            ),
+                      ),
                       SizedBox(height: 20.sp),
+                      const LabelText(label: 'Full name'),
                       TextFieldInput(
                         validatorForm: (val) {
-                          if (val?.isEmpty ?? true) return "Invalid fullname";
+                          if (val?.isEmpty ?? true) return "Invalid full name";
 
                           return null;
                         },
-                        hintText: 'Your Fullname',
+                        hintText: 'Your full name',
                         controller: _fullNameController,
                       ),
                     ],
