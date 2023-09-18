@@ -3,9 +3,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:waterbus/core/error/failures.dart';
 
 // Project imports:
+import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/data/repositories/meeting_repository_impl.dart';
@@ -13,7 +13,6 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
-
 import 'meeting_repository_test.mocks.dart';
 
 @GenerateNiceMocks([
