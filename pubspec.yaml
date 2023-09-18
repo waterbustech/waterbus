@@ -50,6 +50,8 @@ dependencies:
   dio_smart_retry: ^5.0.0
   dio_cookie_manager: ^3.1.0+1
   native_dio_adapter: ^1.0.0+2
+  dio_http2_adapter: ^2.3.1+1
+  dio_cache_interceptor: ^3.4.2
 
   # State management
   flutter_bloc: ^8.1.3

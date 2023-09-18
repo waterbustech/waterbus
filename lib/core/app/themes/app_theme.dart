@@ -49,6 +49,7 @@ class AppTheme {
       bottomSheetTheme: ThemeData.dark().bottomSheetTheme.copyWith(
             elevation: 0,
             modalElevation: 0,
+            modalBarrierColor: Colors.blueGrey.withOpacity(.2),
           ),
       appBarTheme: AppBarTheme(
         scrolledUnderElevation: 0,
@@ -131,6 +132,7 @@ class AppTheme {
       bottomSheetTheme: ThemeData.dark().bottomSheetTheme.copyWith(
             elevation: 0,
             modalElevation: 0,
+            modalBarrierColor: Colors.blueGrey.withOpacity(.2),
           ),
       appBarTheme: AppBarTheme(
         scrolledUnderElevation: 0,

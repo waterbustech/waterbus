@@ -26,6 +26,8 @@ class SocketConnectionImpl extends SocketConnection {
   void establishConnection({bool forceConnection = false}) {
     if (_socket != null && !forceConnection) return;
 
+    if (ApiEndpoints.wsUrl.isEmpty) return;
+
     _socket = io(
       ApiEndpoints.wsUrl,
       OptionBuilder().enableReconnection().enableForceNew().setAuth(
