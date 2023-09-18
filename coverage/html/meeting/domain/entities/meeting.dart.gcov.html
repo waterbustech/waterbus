@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.base.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">28</td>
             <td class="headerCovTableEntry">33</td>
-            <td class="headerCovTableEntryMed">75.8 %</td>
+            <td class="headerCovTableEntryMed">84.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-09-18 14:48:13</td>
+            <td class="headerValue">2023-09-18 16:12:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -76,7 +76,7 @@
 <a name="14"><span class="lineNum">      14 </span>            :   final String title;</a>
 <a name="15"><span class="lineNum">      15 </span>            :   final List&lt;Participant&gt; users;</a>
 <a name="16"><span class="lineNum">      16 </span>            :   final int code;</a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          4 :   Meeting({</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          6 :   Meeting({</span></a>
 <a name="18"><span class="lineNum">      18 </span>            :     this.id = -1,</a>
 <a name="19"><span class="lineNum">      19 </span>            :     required this.title,</a>
 <a name="20"><span class="lineNum">      20 </span>            :     this.users = const [],</a>
@@ -90,7 +90,7 @@
 <a name="28"><span class="lineNum">      28 </span>            :     int? code,</a>
 <a name="29"><span class="lineNum">      29 </span>            :   }) {</a>
 <a name="30"><span class="lineNum">      30 </span><span class="lineCov">          1 :     return Meeting(</span></a>
-<a name="31"><span class="lineNum">      31 </span><span class="lineCov">          1 :       id: id ?? this.id,</span></a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineNoCov">          0 :       id: id ?? this.id,</span></a>
 <a name="32"><span class="lineNum">      32 </span><span class="lineNoCov">          0 :       title: title ?? this.title,</span></a>
 <a name="33"><span class="lineNum">      33 </span><span class="lineCov">          1 :       users: users ?? this.users,</span></a>
 <a name="34"><span class="lineNum">      34 </span><span class="lineCov">          1 :       code: code ?? this.code,</span></a>
@@ -124,12 +124,12 @@
 <a name="62"><span class="lineNum">      62 </span><span class="lineCov">          1 :   factory Meeting.fromJson(String source) =&gt;</span></a>
 <a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :       Meeting.fromMap(json.decode(source) as Map&lt;String, dynamic&gt;);</span></a>
 <a name="64"><span class="lineNum">      64 </span>            : </a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineNoCov">          0 :   @override</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="66"><span class="lineNum">      66 </span>            :   String toString() {</a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineNoCov">          0 :     return 'Meeting(id: $id, title: $title, users: $users, code: $code)';</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          5 :     return 'Meeting(id: $id, title: $title, users: $users, code: $code)';</span></a>
 <a name="68"><span class="lineNum">      68 </span>            :   }</a>
 <a name="69"><span class="lineNum">      69 </span>            : </a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          4 :   @override</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          6 :   @override</span></a>
 <a name="71"><span class="lineNum">      71 </span>            :   bool operator ==(covariant Meeting other) {</a>
 <a name="72"><span class="lineNum">      72 </span>            :     if (identical(this, other)) return true;</a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
@@ -139,9 +139,9 @@
 <a name="77"><span class="lineNum">      77 </span><span class="lineNoCov">          0 :         other.code == code;</span></a>
 <a name="78"><span class="lineNum">      78 </span>            :   }</a>
 <a name="79"><span class="lineNum">      79 </span>            : </a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :   @override</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="81"><span class="lineNum">      81 </span>            :   int get hashCode {</a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineNoCov">          0 :     return id.hashCode ^ title.hashCode ^ users.hashCode ^ code.hashCode;</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">         11 :     return id.hashCode ^ title.hashCode ^ users.hashCode ^ code.hashCode;</span></a>
 <a name="83"><span class="lineNum">      83 </span>            :   }</a>
 <a name="84"><span class="lineNum">      84 </span>            : }</a>
 </pre>

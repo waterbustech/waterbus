@@ -38,18 +38,35 @@ void main() {
       expect(participant.user, userModel);
     });
 
-    test('Should copy a Participant instance', () {
+    test('Should create a new Participant instance with updated values', () {
+      const User userModel = User(
+        id: 1,
+        userName: 'lambiengcode',
+        fullName: 'Kai',
+      );
+
+      const User updatedUserModel = User(
+        id: 2,
+        userName: 'updatedUserName',
+        fullName: 'UpdatedName',
+      );
+
       final participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
       );
 
-      final copiedParticipant = participant.copyWith(id: 2);
-      expect(copiedParticipant, isA<Participant>());
-      expect(copiedParticipant.id, 2);
-      expect(copiedParticipant.role, MeetingRole.attendee);
-      expect(copiedParticipant.user, userModel);
+      final updatedParticipant = participant.copyWith(
+        id: 2,
+        role: MeetingRole.host,
+        user: updatedUserModel,
+      );
+
+      expect(updatedParticipant, isA<Participant>());
+      expect(updatedParticipant.id, 2);
+      expect(updatedParticipant.role, MeetingRole.host);
+      expect(updatedParticipant.user, updatedUserModel);
     });
 
     test('Should convert Participant to Map', () {
@@ -121,6 +138,20 @@ void main() {
 
       expect(participant1, isNot(equals(participant3)));
       expect(participant1.hashCode, isNot(equals(participant3.hashCode)));
+    });
+
+    test('toString - should return a string representation of the Participant',
+        () {
+      final participant = Participant(
+        id: 1,
+        role: MeetingRole.attendee,
+        user: userModel,
+      );
+
+      final participantString = participant.toString();
+
+      expect(participantString, contains('Participant'));
+      expect(participantString, contains(participant.id.toString()));
     });
   });
 }

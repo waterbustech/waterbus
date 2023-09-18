@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-09-18 14:48:13</td>
+            <td class="headerValue">2023-09-18 16:12:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -71,7 +71,7 @@
 <a name="9"><span class="lineNum">       9 </span>            :   final String fullName;</a>
 <a name="10"><span class="lineNum">      10 </span>            :   final String userName;</a>
 <a name="11"><span class="lineNum">      11 </span>            :   final String? avatar;</a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         13 :   const User({</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         30 :   const User({</span></a>
 <a name="13"><span class="lineNum">      13 </span>            :     required this.id,</a>
 <a name="14"><span class="lineNum">      14 </span>            :     required this.fullName,</a>
 <a name="15"><span class="lineNum">      15 </span>            :     required this.userName,</a>
@@ -124,16 +124,16 @@
 <a name="62"><span class="lineNum">      62 </span><span class="lineCov">          1 :   factory User.fromJson(String source) =&gt;</span></a>
 <a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :       User.fromMap(json.decode(source) as Map&lt;String, dynamic&gt;);</span></a>
 <a name="64"><span class="lineNum">      64 </span>            : </a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          3 :   @override</span></a>
 <a name="66"><span class="lineNum">      66 </span>            :   String toString() {</a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          5 :     return 'User(id: $id, fullName: $fullName, userName: $userName, avatar: $avatar)';</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">         15 :     return 'User(id: $id, fullName: $fullName, userName: $userName, avatar: $avatar)';</span></a>
 <a name="68"><span class="lineNum">      68 </span>            :   }</a>
 <a name="69"><span class="lineNum">      69 </span>            : </a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          2 :   @override</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          5 :   @override</span></a>
 <a name="71"><span class="lineNum">      71 </span>            :   bool operator ==(covariant User other) {</a>
 <a name="72"><span class="lineNum">      72 </span>            :     if (identical(this, other)) return true;</a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          6 :     return other.id == id &amp;&amp;</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          9 :     return other.id == id &amp;&amp;</span></a>
 <a name="75"><span class="lineNum">      75 </span><span class="lineCov">          6 :         other.fullName == fullName &amp;&amp;</span></a>
 <a name="76"><span class="lineNum">      76 </span><span class="lineCov">          6 :         other.userName == userName &amp;&amp;</span></a>
 <a name="77"><span class="lineNum">      77 </span><span class="lineCov">          6 :         other.avatar == avatar;</span></a>

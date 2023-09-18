@@ -21,8 +21,10 @@ import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'auth_repository_imp_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<AuthLocalDataSource>()])
-@GenerateNiceMocks([MockSpec<AuthRemoteDataSource>()])
+@GenerateNiceMocks([
+  MockSpec<AuthLocalDataSource>(),
+  MockSpec<AuthRemoteDataSource>(),
+])
 void main() {
   late AuthRepositoryImpl repository;
   late MockAuthLocalDataSource mockAuthLocalDataSource;
@@ -171,6 +173,40 @@ void main() {
       verifyNever(
         repository.onAuthCheck(),
       );
+    });
+  });
+
+  group('logOut', () {
+    test('log out success', () async {
+      // arrange
+      when(mockAuthRemoteDataSource.logOut()).thenAnswer(
+        (realInvocation) => Future.value(true),
+      );
+
+      // act
+      final Either<Failure, bool> result = await repository.logOut();
+
+      // assert
+      expect(result.isRight(), const Right<Failure, bool>(true).isRight());
+
+      verify(mockAuthRemoteDataSource.logOut());
+      verify(mockAuthLocalDataSource.clearUser());
+    });
+
+    test('log out failure - unsuccessful log out', () async {
+      // arrange
+      when(mockAuthRemoteDataSource.logOut()).thenAnswer(
+        (realInvocation) => Future.value(false),
+      );
+
+      // act
+      final Either<Failure, bool> result = await repository.logOut();
+
+      // assert
+      expect(result.isLeft(), Left<Failure, bool>(NullValue()).isLeft());
+
+      verify(mockAuthRemoteDataSource.logOut());
+      verifyNever(mockAuthLocalDataSource.clearUser());
     });
   });
 }
