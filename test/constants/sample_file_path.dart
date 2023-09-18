@@ -5,3 +5,4 @@ const String avatarModelSample = 'auth/avatar_model_sample.json';
 
 // Meeting
 const String meetingSample = 'meeting/meeting_sample.json';
+const String participantSample = 'meeting/participant_sample.json';
