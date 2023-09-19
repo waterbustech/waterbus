@@ -57,42 +57,45 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
       body: Column(
         children: [
           const Divider(),
-          SizedBox(height: 20.sp),
-          const PreviewCameraCard(),
-          SizedBox(height: 20.sp),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const LabelText(label: 'Room name'),
-                  TextFieldInput(
-                    validatorForm: (val) {
-                      if (val?.isEmpty ?? true) return "Invalid name";
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.sp),
+                      child: const PreviewCameraCard(),
+                    ),
+                    const LabelText(label: 'Room name'),
+                    TextFieldInput(
+                      validatorForm: (val) {
+                        if (val?.isEmpty ?? true) return "Invalid name";
 
-                      return null;
-                    },
-                    hintText: 'Meeting label',
-                    controller: _roomNameController,
-                  ),
-                  SizedBox(height: 8.sp),
-                  const LabelText(label: 'Password'),
-                  TextFieldInput(
-                    obscureText: true,
-                    validatorForm: (val) {
-                      if (val?.isEmpty ?? true) return null;
+                        return null;
+                      },
+                      hintText: 'Meeting label',
+                      controller: _roomNameController,
+                    ),
+                    SizedBox(height: 8.sp),
+                    const LabelText(label: 'Password'),
+                    TextFieldInput(
+                      obscureText: true,
+                      validatorForm: (val) {
+                        if (val?.isEmpty ?? true) return null;
 
-                      if (val!.length < 6) {
-                        return "Password must be at least 6 characters";
-                      }
+                        if (val!.length < 6) {
+                          return "Password must be at least 6 characters";
+                        }
 
-                      return null;
-                    },
-                    hintText: 'Password',
-                    controller: _passwordController,
-                  ),
-                ],
+                        return null;
+                      },
+                      hintText: 'Password',
+                      controller: _passwordController,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
