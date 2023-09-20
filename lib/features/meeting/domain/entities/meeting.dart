@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 // Dart imports:
 import 'dart:convert';
 
@@ -14,11 +12,13 @@ class Meeting {
   final String title;
   final List<Participant> users;
   final int code;
+  final DateTime? createdAt;
   Meeting({
     this.id = -1,
     required this.title,
     this.users = const [],
     this.code = -1,
+    this.createdAt,
   });
 
   Meeting copyWith({
@@ -41,6 +41,7 @@ class Meeting {
       'title': title,
       'users': users.map((x) => x.toMap()).toList(),
       'code': code,
+      'createdAt': createdAt.toString(),
     };
   }
 
@@ -61,6 +62,7 @@ class Meeting {
         ),
       ),
       code: map['code'],
+      createdAt: DateTime.parse(map['createdAt']),
     );
   }
 
