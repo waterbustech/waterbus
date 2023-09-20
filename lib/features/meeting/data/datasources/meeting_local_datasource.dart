@@ -7,7 +7,7 @@ import 'package:waterbus/core/constants/storage_keys.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 abstract class MeetingLocalDataSource {
-  void addOrMeeting(Meeting meeting);
+  void insertOrUpdate(Meeting meeting);
   List<Meeting> get meetings;
   void removeMeeting(int code);
   void removeAll();
@@ -18,7 +18,7 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
   final Box hiveBox = Hive.box(StorageKeys.boxMeeting);
 
   @override
-  void addOrMeeting(Meeting meeting) {
+  void insertOrUpdate(Meeting meeting) {
     final List<Meeting> meetingsList = meetings;
 
     final int indexOfMeeting = meetingsList.indexWhere(
@@ -27,7 +27,7 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
 
     if (indexOfMeeting == -1) {
       // Not exists in local caches
-      meetingsList.add(meeting);
+      meetingsList.insert(0, meeting);
     } else {
       meetingsList[indexOfMeeting] = meeting;
     }
@@ -37,8 +37,10 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
 
   @override
   List<Meeting> get meetings {
-    final List<String> meetingsList =
-        hiveBox.get(StorageKeys.meetings, defaultValue: []);
+    final List meetingsList = hiveBox.get(
+      StorageKeys.meetings,
+      defaultValue: [],
+    );
     return meetingsList
         .map((meetingJson) => Meeting.fromJson(meetingJson))
         .toList();

@@ -42,7 +42,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }) async {
     final Response response = await _remoteData.postRoute(
       ApiEndpoints.meetings,
-      body: meeting.toMap(),
+      body: meeting.toMapCreate(password),
     );
 
     if (response.statusCode == StatusCode.created) {
@@ -74,7 +74,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }) async {
     final Response response = await _remoteData.postRoute(
       ApiEndpoints.meetings,
-      body: meeting.toMap(),
+      body: meeting.toMapCreate(password),
     );
 
     if (response.statusCode == StatusCode.created) {
@@ -111,7 +111,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }) async {
     final Response response = await _remoteData.putRoute(
       ApiEndpoints.meetings,
-      meeting.toMap(),
+      meeting.toMapCreate(password),
     );
 
     if (response.statusCode == StatusCode.ok) {
