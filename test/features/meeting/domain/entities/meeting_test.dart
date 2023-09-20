@@ -1,11 +1,10 @@
-// Dart imports:
 import 'dart:convert';
-
-// Package imports:
 import 'package:flutter_test/flutter_test.dart';
-
-// Project imports:
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -17,18 +16,41 @@ void main() {
     );
 
     test('operator ==', () {
-      final Meeting meeting1 = Meeting(title: 'Meeting with Kai 1');
-      final Meeting meeting2 = Meeting(title: 'Meeting with Kai 2');
+      const User userModel = User(
+        id: 1,
+        userName: 'lambiengcode',
+        fullName: 'Kai',
+      );
+      final participant1 = Participant(
+        id: 1,
+        role: MeetingRole.attendee,
+        user: userModel,
+      );
+      final participant2 = Participant(
+        id: 2,
+        role: MeetingRole.host,
+        user: userModel,
+      );
 
-      // Arrange
-      final Map<String, dynamic> meetingSampleJson =
-          jsonDecode(fixture(meetingSample));
+      final Meeting meeting1 = Meeting(
+        title: 'Meeting with Kai 1',
+        id: 1,
+        users: [participant1],
+        code: 1,
+      );
+      final Meeting meeting2 = Meeting(
+        title: 'Meeting with Kai 2',
+        id: 2,
+        users: [participant2],
+        code: 2,
+      );
 
       // Act
-      final Meeting meeting = Meeting.fromMap(meetingSampleJson);
+      final Meeting meeting = meeting1.copyWith();
 
       // Assert
       expect(meeting.title == meeting1.title, true);
+      expect(meeting == meeting1, true);
       expect(meeting == meeting2, false);
     });
 
@@ -74,6 +96,20 @@ void main() {
 
       // Assert
       expect(hashCode, isA<int>());
+    });
+
+    test('toMapCreate - should return a map for creating a Meeting', () {
+      // Arrange
+      final Meeting meeting = Meeting(title: 'Sample Meeting');
+      const String password = 'sample_password';
+
+      // Act
+      final Map<String, String> map = meeting.toMapCreate(password);
+
+      // Assert
+      expect(map, isA<Map<String, String>>());
+      expect(map['title'], 'Sample Meeting');
+      expect(map['password'], 'sample_password');
     });
   });
 
