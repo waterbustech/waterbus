@@ -85,7 +85,7 @@ class AppTheme {
       dividerTheme: DividerThemeData(
         color: appColors.divider,
         space: 0,
-        thickness: .2,
+        thickness: .4,
       ),
       fontFamily: FontFamily.helvetica,
       colorScheme: const ColorScheme.light().copyWith(
@@ -168,7 +168,7 @@ class AppTheme {
       dividerTheme: DividerThemeData(
         color: appColors.divider,
         space: 0,
-        thickness: .2,
+        thickness: .4,
       ),
       fontFamily: FontFamily.helvetica,
       colorScheme: const ColorScheme.dark().copyWith(

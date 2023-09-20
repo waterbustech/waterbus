@@ -11,7 +11,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
 
 class DialogPrepareMeeting extends StatelessWidget {
   const DialogPrepareMeeting({super.key});
@@ -29,43 +29,7 @@ class DialogPrepareMeeting extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    width: 265.sp,
-                    height: 200.sp,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(12.sp),
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://avatars.githubusercontent.com/u/60530946?v=4',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10.sp,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CallActionButton(
-                          icon: PhosphorIcons.microphone_bold,
-                          onTap: () {},
-                        ),
-                        SizedBox(width: 12.sp),
-                        CallActionButton(
-                          icon: PhosphorIcons.camera_slash_bold,
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              const PreviewCameraCard(),
               SizedBox(height: 16.sp),
               StackAvatar(
                 images: const [

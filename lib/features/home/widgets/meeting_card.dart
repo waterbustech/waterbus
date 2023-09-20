@@ -10,45 +10,71 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 class MeetingCard extends StatelessWidget {
-  const MeetingCard({super.key});
+  final Meeting meeting;
+  const MeetingCard({
+    super.key,
+    required this.meeting,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5.sp),
-      padding: EdgeInsets.symmetric(
-        vertical: 14.sp,
-        horizontal: 10.sp,
-      ),
+      margin: EdgeInsets.only(bottom: 4.sp),
+      padding: EdgeInsets.all(10.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "QA engineers Team - Waterbus.io with high-quality app",
+            meeting.title,
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 12.sp,
+                  fontSize: 12.5.sp,
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          SizedBox(height: 8.sp),
+          SizedBox(height: 4.sp),
+          RichText(
+            text: TextSpan(
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontSize: 11.sp),
+              children: [
+                const TextSpan(text: 'Room code: '),
+                TextSpan(
+                  text: meeting.code.toString(),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: StackAvatar(
-                  images: const [
-                    'https://avatars.githubusercontent.com/u/60530946?v=4',
-                    'https://images.unsplash.com/photo-1533973860717-d49dfd14cf64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                  ],
-                  size: 20.sp,
-                ),
+                child: meeting.users.length < 2
+                    ? Text(
+                        "No participants yet",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(fontSize: 11.sp),
+                      )
+                    : StackAvatar(
+                        images: meeting.users
+                            .map(
+                              (user) => user.user.avatar,
+                            )
+                            .toList(),
+                        size: 20.sp,
+                      ),
               ),
               GestureDetector(
                 onTap: () {

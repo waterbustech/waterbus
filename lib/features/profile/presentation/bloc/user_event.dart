@@ -10,8 +10,8 @@ sealed class UserEvent extends Equatable {
 class GetProfileEvent extends UserEvent {}
 
 class UpdateProfileEvent extends UserEvent {
-  final User user;
-  const UpdateProfileEvent({required this.user});
+  final String fullName;
+  const UpdateProfileEvent({required this.fullName});
 }
 
 class UpdateAvatarEvent extends UserEvent {

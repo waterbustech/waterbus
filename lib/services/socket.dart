@@ -1,3 +1,6 @@
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -26,26 +29,35 @@ class SocketConnectionImpl extends SocketConnection {
   void establishConnection({bool forceConnection = false}) {
     if (_socket != null && !forceConnection) return;
 
-    if (ApiEndpoints.wsUrl.isEmpty) return;
-
     _socket = io(
       ApiEndpoints.wsUrl,
-      OptionBuilder().enableReconnection().enableForceNew().setAuth(
-        {
-          'Authorization': 'Bearer ${_dataSource.accessToken}',
-        },
-      ).build(),
+      OptionBuilder()
+          .setTransports(['websocket'])
+          .enableReconnection()
+          .enableForceNew()
+          .setAuth(
+            {
+              'authorization': 'Bearer ${_dataSource.accessToken}',
+            },
+          )
+          .build(),
     );
 
     _socket?.connect();
 
-    _socket?.on(SocketEvent.joinCallSSC, (data) {});
+    _socket?.onError((data) => debugPrint(data));
 
-    _socket?.on(SocketEvent.newParticipantSSC, (data) {});
+    _socket?.onConnect((_) async {
+      debugPrint('established connection - sid: ${_socket?.id}');
 
-    _socket?.on(SocketEvent.sendCandidateSSC, (data) {});
+      _socket?.on(SocketEvent.joinCallSSC, (data) {});
 
-    _socket?.on(SocketEvent.sendSdpSSC, (data) {});
+      _socket?.on(SocketEvent.newParticipantSSC, (data) {});
+
+      _socket?.on(SocketEvent.sendCandidateSSC, (data) {});
+
+      _socket?.on(SocketEvent.sendSdpSSC, (data) {});
+    });
   }
 
   @override

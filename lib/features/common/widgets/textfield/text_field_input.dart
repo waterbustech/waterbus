@@ -27,6 +27,7 @@ class TextFieldInput extends StatelessWidget {
   final TextStyle? errorStyle;
   final InputBorder? errorBorder;
   final BorderSide? borderSide;
+  final bool obscureText;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
@@ -50,16 +51,18 @@ class TextFieldInput extends StatelessWidget {
     this.errorStyle,
     this.errorBorder,
     this.borderSide,
+    this.obscureText = false,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        top: maxLength != null ? 0.0 : 10.sp,
+        top: maxLength != null ? 0.0 : 4.sp,
         bottom: maxLength != null ? 4.sp : 0.0,
       ),
       width: double.infinity,
       child: TextFormField(
+        obscureText: obscureText,
         onTap: onTap ?? () {},
         focusNode: focusNode,
         readOnly: readOnly,
@@ -76,7 +79,7 @@ class TextFieldInput extends StatelessWidget {
         cursorColor: Theme.of(context).primaryColor,
         keyboardType: textInputType ?? TextInputType.multiline,
         onChanged: onChanged,
-        maxLines: maxLines == 1 ? null : maxLines,
+        maxLines: obscureText ? 1 : maxLines,
         inputFormatters: inputFormatters ??
             [
               LengthLimitingTextInputFormatter(maxLength),

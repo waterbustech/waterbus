@@ -125,7 +125,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
         returnValueForMissingStub: <_i4.Meeting>[],
       ) as List<_i4.Meeting>);
   @override
-  void addOrMeeting(_i4.Meeting? meeting) => super.noSuchMethod(
+  void insertOrUpdate(_i4.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
           #addOrMeeting,
           [meeting],

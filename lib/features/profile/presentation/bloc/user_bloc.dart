@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_presigned_url.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_profile.dart';
@@ -65,7 +66,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   // MARK: state
-  UserGetDone get _userGetDone => UserGetDone(user: _user);
+  UserGetDone get _userGetDone => UserGetDone(user: _user!);
 
   // MARK: private methods
   Future<void> _getUserProfile() async {
@@ -78,13 +79,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _updateUserProfile(UpdateProfileEvent event) async {
+    if (_user == null) return;
+
     final Either<Failure, User> user = await _updateProfile.call(
-      UpdateUserParams(user: event.user),
+      UpdateUserParams(user: _user!.copyWith(fullName: event.fullName)),
     );
+
+    AppNavigator.pop();
 
     user.fold(
       (l) => {},
-      (r) => _user = r,
+      (r) {
+        AppNavigator.pop();
+
+        return _user = r;
+      },
     );
   }
 

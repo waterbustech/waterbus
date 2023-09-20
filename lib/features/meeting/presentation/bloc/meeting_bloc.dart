@@ -6,11 +6,13 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
+import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
@@ -20,6 +22,7 @@ part 'meeting_state.dart';
 
 @injectable
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
+  final GetRecentJoined _recentJoined;
   final CreateMeeting _createMeeting;
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
@@ -28,8 +31,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: private
   Meeting? _currentMeeting;
+  Participant? _myParticipant;
+  final List<Meeting> _recentMeetings = [];
 
   MeetingBloc(
+    this._recentJoined,
     this._createMeeting,
     this._joinMeeting,
     this._updateMeeting,
@@ -37,6 +43,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._leaveMeeting,
   ) : super(MeetingInitial()) {
     on<MeetingEvent>((event, emit) async {
+      if (event is GetRecentJoinedEvent) {
+        await _getRecentJoined(event);
+
+        emit(_joinedMeeting);
+      }
+
       if (event is CreateMeetingEvent) {
         await _handleCreateMeeting(event);
 
@@ -70,9 +82,19 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: state
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
+        recentMeetings: _recentMeetings,
       );
 
   // MARK: Private
+  Future<void> _getRecentJoined(GetRecentJoinedEvent event) async {
+    final Either<Failure, List<Meeting>> meetings =
+        await _recentJoined.call(null);
+
+    meetings.fold((l) => null, (r) {
+      return _recentMeetings.addAll(r);
+    });
+  }
+
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
     final Either<Failure, Meeting> meeting = await _createMeeting.call(
       CreateMeetingParams(
@@ -81,8 +103,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       ),
     );
 
+    AppNavigator.pop();
+
     meeting.fold((l) => null, (r) {
-      _currentMeeting = r;
+      AppNavigator.replaceWith(Routes.meetingRoute);
+      _recentMeetings.insert(0, r);
+      _myParticipant = r.users.first;
+      return _currentMeeting = r;
     });
   }
 
@@ -119,25 +146,18 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
-    if (_currentMeeting == null) return;
-
-    final int indexOfParticipant = _currentMeeting!.users.indexWhere(
-      (user) => user.user.userName == AppBloc.userBloc.user?.userName,
-    );
-
-    if (indexOfParticipant == -1) return;
-
-    final Participant participant = _currentMeeting!.users[indexOfParticipant];
+    if (_currentMeeting == null || _myParticipant == null) return;
 
     final Either<Failure, bool> isLeaveSucceed = await _leaveMeeting.call(
       LeaveMeetingParams(
         code: _currentMeeting!.code,
-        participantId: participant.id,
+        participantId: _myParticipant!.id,
       ),
     );
 
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
+      _myParticipant = null;
     });
   }
 }

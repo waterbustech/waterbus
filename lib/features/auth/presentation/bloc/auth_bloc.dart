@@ -71,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // MARK: state
   AuthSuccess get _authSuccess {
-    AppBloc.userBloc.add(GetProfileEvent());
+    AppBloc.instance.bootstrap();
     _socket.establishConnection();
     return AuthSuccess();
   }
