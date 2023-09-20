@@ -22,11 +22,8 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5.sp),
-      padding: EdgeInsets.symmetric(
-        vertical: 14.sp,
-        horizontal: 10.sp,
-      ),
+      margin: EdgeInsets.only(bottom: 4.sp),
+      padding: EdgeInsets.all(10.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,22 +31,50 @@ class MeetingCard extends StatelessWidget {
             meeting.title,
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 12.sp,
+                  fontSize: 12.5.sp,
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          SizedBox(height: 8.sp),
+          SizedBox(height: 4.sp),
+          RichText(
+            text: TextSpan(
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontSize: 11.sp),
+              children: [
+                const TextSpan(text: 'Room code: '),
+                TextSpan(
+                  text: meeting.code.toString(),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: StackAvatar(
-                  images: meeting.users
-                      .map(
-                        (user) => user.user.avatar,
+                child: meeting.users.length < 2
+                    ? Text(
+                        "No participants yet",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(fontSize: 11.sp),
                       )
-                      .toList(),
-                  size: 20.sp,
-                ),
+                    : StackAvatar(
+                        images: meeting.users
+                            .map(
+                              (user) => user.user.avatar,
+                            )
+                            .toList(),
+                        size: 20.sp,
+                      ),
               ),
               GestureDetector(
                 onTap: () {

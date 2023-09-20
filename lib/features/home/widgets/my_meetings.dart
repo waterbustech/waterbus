@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/helpers/date_time_helper.dart';
 
 // Project imports:
 import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
@@ -29,17 +30,23 @@ class MyMeetings extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 80.sp),
           itemCount: recentMeetings.length,
           itemBuilder: (context, index) {
+            // First or current created at not equal previous
+            final bool hasLabelCreatedAt = index == 0 ||
+                !DateTimeHelper().isEqualTwoDate(
+                  recentMeetings[index - 1].createdAt,
+                  recentMeetings[index].createdAt,
+                );
+
             return Column(
               children: [
-                index == 0
+                hasLabelCreatedAt
                     ? DateTitleCard(
-                        lastJoinedAt: DateTime.now().subtract(
-                          Duration(days: index),
-                        ),
+                        lastJoinedAt:
+                            recentMeetings[index].createdAt ?? DateTime.now(),
                       )
                     : const SizedBox(),
                 MeetingCard(meeting: recentMeetings[index]),
-                index >= recentMeetings.length
+                index == recentMeetings.length - 1
                     ? const E2eeTitleFooter()
                     : const Divider(thickness: .3, height: .3),
               ],
