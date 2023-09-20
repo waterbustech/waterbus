@@ -62,7 +62,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
         minLines: 1,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(6),
+          LengthLimitingTextInputFormatter(8),
         ],
         decoration: InputDecoration(
           contentPadding: widget.contentPadding,

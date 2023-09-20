@@ -69,7 +69,7 @@ class _EnterMeetingCardState extends State {
                 left: 16.sp,
                 right: 10.sp,
               ),
-              hintTextContent: "Example: 123456",
+              hintTextContent: "Example: 12345678",
             ),
           ],
         ),
