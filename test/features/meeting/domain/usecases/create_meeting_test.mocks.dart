@@ -50,6 +50,32 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// See the documentation for Mockito's code generation for more information.
 class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
   @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>> getRecentJoined() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getRecentJoined,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Meeting>>(
+          this,
+          Invocation.method(
+            #getRecentJoined,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Meeting>>(
+          this,
+          Invocation.method(
+            #getRecentJoined,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>>);
+  @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> createMeeting(
           _i7.CreateMeetingParams? params) =>
       (super.noSuchMethod(

@@ -7,6 +7,8 @@ sealed class MeetingEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetRecentJoinedEvent extends MeetingEvent {}
+
 class CreateMeetingEvent extends MeetingEvent {
   final String roomName;
   final String password;

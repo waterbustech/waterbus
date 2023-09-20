@@ -44,6 +44,13 @@ class Meeting {
     };
   }
 
+  Map<String, String> toMapCreate(String password) {
+    return {
+      'title': title,
+      'password': password,
+    };
+  }
+
   factory Meeting.fromMap(Map<String, dynamic> map) {
     return Meeting(
       id: map['id'] as int,

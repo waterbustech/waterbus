@@ -9,6 +9,7 @@ import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart'
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 
 abstract class MeetingRepository {
+  Future<Either<Failure, List<Meeting>>> getRecentJoined();
   Future<Either<Failure, Meeting>> createMeeting(CreateMeetingParams params);
   Future<Either<Failure, Meeting>> updateMeeting(CreateMeetingParams params);
   Future<Either<Failure, Meeting>> joinMeeting(CreateMeetingParams params);
