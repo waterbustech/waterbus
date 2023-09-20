@@ -63,7 +63,7 @@ void main() {
           password: testPassword,
         ),
       );
-      verify(mockLocalDataSource.addOrMeeting(testMeeting));
+      verify(mockLocalDataSource.insertOrUpdate(testMeeting));
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });
@@ -146,7 +146,7 @@ void main() {
           password: testPassword,
         ),
       );
-      verify(mockLocalDataSource.addOrMeeting(testMeeting));
+      verify(mockLocalDataSource.insertOrUpdate(testMeeting));
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });
@@ -197,7 +197,7 @@ void main() {
           password: testPassword,
         ),
       );
-      verify(mockLocalDataSource.addOrMeeting(testMeeting));
+      verify(mockLocalDataSource.insertOrUpdate(testMeeting));
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });

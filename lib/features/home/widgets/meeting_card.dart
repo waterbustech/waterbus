@@ -10,9 +10,14 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 class MeetingCard extends StatelessWidget {
-  const MeetingCard({super.key});
+  final Meeting meeting;
+  const MeetingCard({
+    super.key,
+    required this.meeting,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class MeetingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "QA engineers Team - Waterbus.io with high-quality app",
+            meeting.title,
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 12.sp,
@@ -38,15 +43,11 @@ class MeetingCard extends StatelessWidget {
             children: [
               Expanded(
                 child: StackAvatar(
-                  images: const [
-                    'https://avatars.githubusercontent.com/u/60530946?v=4',
-                    'https://images.unsplash.com/photo-1533973860717-d49dfd14cf64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                    'https://plus.unsplash.com/premium_photo-1667810132017-c40be88c6b25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vZGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                  ],
+                  images: meeting.users
+                      .map(
+                        (user) => user.user.avatar,
+                      )
+                      .toList(),
                   size: 20.sp,
                 ),
               ),

@@ -32,7 +32,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
       return Left(NullValue());
     }
 
-    _localDataSource.addOrMeeting(meeting);
+    _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
   }
@@ -61,7 +61,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
-    _localDataSource.addOrMeeting(meeting);
+    _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
   }
@@ -77,7 +77,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
-    _localDataSource.addOrMeeting(meeting);
+    _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
   }
@@ -94,5 +94,12 @@ class MeetingRepositoryImpl extends MeetingRepository {
     }
 
     return Right(isLeaveSucceed);
+  }
+
+  @override
+  Future<Either<Failure, List<Meeting>>> getRecentJoined() async {
+    final List<Meeting> meetings = _localDataSource.meetings;
+
+    return Right(meetings);
   }
 }
