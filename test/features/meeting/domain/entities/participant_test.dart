@@ -57,16 +57,18 @@ void main() {
         user: userModel,
       );
 
-      final updatedParticipant = participant.copyWith(
+      final updatedParticipant1 = participant.copyWith(
         id: 2,
         role: MeetingRole.host,
         user: updatedUserModel,
       );
+      final updatedParticipant2 = participant.copyWith();
 
-      expect(updatedParticipant, isA<Participant>());
-      expect(updatedParticipant.id, 2);
-      expect(updatedParticipant.role, MeetingRole.host);
-      expect(updatedParticipant.user, updatedUserModel);
+      expect(participant == updatedParticipant2, true);
+      expect(updatedParticipant1, isA<Participant>());
+      expect(updatedParticipant1.id, 2);
+      expect(updatedParticipant1.role, MeetingRole.host);
+      expect(updatedParticipant1.user, updatedUserModel);
     });
 
     test('Should convert Participant to Map', () {

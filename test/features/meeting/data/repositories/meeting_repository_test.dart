@@ -276,5 +276,24 @@ void main() {
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });
+
+    test(
+        'should return a list of recent joined meetings from local data source',
+        () async {
+      final testMeetings = [
+        Meeting(id: 1, title: 'Meeting 1', code: 123),
+        Meeting(id: 2, title: 'Meeting 2', code: 456),
+      ];
+      // Arrange
+      when(mockLocalDataSource.meetings).thenReturn(testMeetings);
+
+      // Act
+      final result = await repository.getRecentJoined();
+
+      // Assert
+      expect(result, Right(testMeetings));
+      verify(mockLocalDataSource.meetings);
+      verifyNoMoreInteractions(mockLocalDataSource);
+    });
   });
 }

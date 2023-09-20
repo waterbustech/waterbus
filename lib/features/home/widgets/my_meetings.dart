@@ -39,7 +39,7 @@ class MyMeetings extends StatelessWidget {
                       )
                     : const SizedBox(),
                 MeetingCard(meeting: recentMeetings[index]),
-                index >= 2
+                index >= recentMeetings.length
                     ? const E2eeTitleFooter()
                     : const Divider(thickness: .3, height: .3),
               ],
