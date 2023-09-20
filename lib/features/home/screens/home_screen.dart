@@ -81,9 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               titleWidget: BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
-                  final User user = state is UserGetDone && state.user != null
-                      ? state.user!
-                      : defaultUser;
+                  final User user =
+                      state is UserGetDone ? state.user : defaultUser;
 
                   return Row(
                     children: [
