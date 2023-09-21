@@ -102,4 +102,10 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     return Right(meetings);
   }
+
+  @override
+  Either<Failure, bool> cleanAllRecentJoined() {
+    _localDataSource.removeAll();
+    return const Right(true);
+  }
 }

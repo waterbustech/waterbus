@@ -9,6 +9,8 @@ sealed class MeetingEvent extends Equatable {
 
 class GetRecentJoinedEvent extends MeetingEvent {}
 
+class CleanAllRecentJoinedEvent extends MeetingEvent {}
+
 class CreateMeetingEvent extends MeetingEvent {
   final String roomName;
   final String password;

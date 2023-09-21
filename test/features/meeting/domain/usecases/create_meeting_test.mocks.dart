@@ -205,4 +205,25 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+  @override
+  _i2.Either<_i5.Failure, bool> cleanAllRecentJoined() => (super.noSuchMethod(
+        Invocation.method(
+          #cleanAllRecentJoined,
+          [],
+        ),
+        returnValue: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #cleanAllRecentJoined,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #cleanAllRecentJoined,
+            [],
+          ),
+        ),
+      ) as _i2.Either<_i5.Failure, bool>);
 }

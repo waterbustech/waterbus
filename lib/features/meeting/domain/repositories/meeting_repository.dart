@@ -15,4 +15,5 @@ abstract class MeetingRepository {
   Future<Either<Failure, Meeting>> joinMeeting(CreateMeetingParams params);
   Future<Either<Failure, bool>> leaveMeeting(LeaveMeetingParams params);
   Future<Either<Failure, Meeting>> getInfoMeeting(GetMeetingParams params);
+  Either<Failure, bool> cleanAllRecentJoined();
 }
