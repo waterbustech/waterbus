@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -90,11 +91,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       GestureDetector(
                         onTap: _toggleDrawer,
                         child: user.avatar == null
-                            ? CircleAvatar(
-                                radius: 15.sp,
-                                backgroundColor: Colors.black,
-                                backgroundImage: AssetImage(
+                            ? Material(
+                                shape: SuperellipseShape(
+                                  borderRadius: BorderRadius.circular(18.sp),
+                                  side: BorderSide(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(.5),
+                                    width: .5,
+                                  ),
+                                ),
+                                child: Image.asset(
                                   Assets.images.imgAppLogo.path,
+                                  width: 30.sp,
+                                  height: 30.sp,
                                 ),
                               )
                             : AvatarCard(

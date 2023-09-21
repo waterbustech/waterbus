@@ -92,7 +92,7 @@ class MeetingCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
-                      vertical: 8.sp,
+                      vertical: 7.sp,
                     ),
                     child: Row(
                       children: [
@@ -101,7 +101,7 @@ class MeetingCard extends StatelessWidget {
                           "Join",
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 9.sp,
+                                    fontSize: 10.sp,
                                   ),
                         ),
                         SizedBox(width: 4.sp),

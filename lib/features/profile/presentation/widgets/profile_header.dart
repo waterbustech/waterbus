@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -30,11 +31,19 @@ class ProfileHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 user.avatar == null
-                    ? CircleAvatar(
-                        radius: 13.sp,
-                        backgroundColor: Colors.black,
-                        backgroundImage: AssetImage(
+                    ? Material(
+                        shape: SuperellipseShape(
+                          borderRadius: BorderRadius.circular(18.sp),
+                          side: BorderSide(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(.5),
+                            width: .5,
+                          ),
+                        ),
+                        child: Image.asset(
                           Assets.images.imgAppLogo.path,
+                          width: 26.sp,
+                          height: 26.sp,
                         ),
                       )
                     : AvatarCard(

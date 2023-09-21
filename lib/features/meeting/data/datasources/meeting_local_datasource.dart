@@ -25,12 +25,11 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
       (meetX) => meetX.id == meeting.id,
     );
 
-    if (indexOfMeeting == -1) {
-      // Not exists in local caches
-      meetingsList.insert(0, meeting);
-    } else {
-      meetingsList[indexOfMeeting] = meeting;
+    if (indexOfMeeting != -1) {
+      meetingsList.removeAt(indexOfMeeting);
     }
+
+    meetingsList.insert(0, meeting);
 
     _saveMeetingsList(meetingsList);
   }
