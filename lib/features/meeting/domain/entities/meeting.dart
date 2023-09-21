@@ -26,12 +26,14 @@ class Meeting {
     String? title,
     List<Participant>? users,
     int? code,
+    DateTime? createdAt,
   }) {
     return Meeting(
       id: id ?? this.id,
       title: title ?? this.title,
       users: users ?? this.users,
       code: code ?? this.code,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -45,10 +47,11 @@ class Meeting {
     };
   }
 
-  Map<String, String> toMapCreate(String password) {
+  Map<String, dynamic> toMapCreate(String password) {
     return {
       'title': title,
       'password': password,
+      'code': code,
     };
   }
 

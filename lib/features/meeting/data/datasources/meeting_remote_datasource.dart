@@ -13,7 +13,7 @@ abstract class MeetingRemoteDataSource {
     required Meeting meeting,
     required String password,
   });
-  Future<Meeting?> updateMeeting({
+  Future<bool> updateMeeting({
     required Meeting meeting,
     required String password,
   });
@@ -105,7 +105,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }
 
   @override
-  Future<Meeting?> updateMeeting({
+  Future<bool> updateMeeting({
     required Meeting meeting,
     required String password,
   }) async {
@@ -115,10 +115,9 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.ok) {
-      final Map<String, dynamic> rawData = response.data;
-      return Meeting.fromMap(rawData);
+      return true;
     }
 
-    return null;
+    return false;
   }
 }

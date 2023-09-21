@@ -141,15 +141,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
+    if (_currentMeeting == null) return;
+
     final Either<Failure, Meeting> meeting = await _updateMeeting.call(
       CreateMeetingParams(
-        meeting: Meeting(title: event.roomName),
+        meeting: _currentMeeting!.copyWith(title: event.roomName),
         password: event.password,
       ),
     );
 
+    AppNavigator.pop();
+
     meeting.fold((l) => null, (r) {
-      _currentMeeting = r;
+      AppNavigator.popUntil(Routes.meetingRoute);
+      return _currentMeeting = r;
     });
   }
 
@@ -174,9 +179,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       ),
     );
 
+    AppNavigator.pop();
+
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
       _myParticipant = null;
+
+      AppNavigator.pop();
     });
   }
 }

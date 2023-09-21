@@ -108,10 +108,10 @@ void main() {
       const String password = 'sample_password';
 
       // Act
-      final Map<String, String> map = meeting.toMapCreate(password);
+      final Map<String, dynamic> map = meeting.toMapCreate(password);
 
       // Assert
-      expect(map, isA<Map<String, String>>());
+      expect(map, isA<Map<String, dynamic>>());
       expect(map['title'], 'Sample Meeting');
       expect(map['password'], 'sample_password');
     });
