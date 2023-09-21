@@ -13,7 +13,7 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
-import 'meeting_repository_test.mocks.dart';
+import 'meeting_repository_impl_test.mocks.dart';
 
 @GenerateNiceMocks([
   MockSpec<MeetingRemoteDataSource>(),
@@ -184,7 +184,7 @@ void main() {
           meeting: testMeeting,
           password: testPassword,
         ),
-      ).thenAnswer((_) async => testMeeting);
+      ).thenAnswer((_) async => true);
 
       // Act
       final result = await repository.updateMeeting(createMeetingParams);
@@ -209,7 +209,7 @@ void main() {
           meeting: testMeeting,
           password: testPassword,
         ),
-      ).thenAnswer((_) async => null);
+      ).thenAnswer((_) async => false);
 
       // Act
       final result = await repository.updateMeeting(createMeetingParams);

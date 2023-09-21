@@ -70,16 +70,16 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> updateMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.updateMeeting(
+    final bool isUpdateSucceed = await _remoteDataSource.updateMeeting(
       meeting: params.meeting,
       password: params.password,
     );
 
-    if (meeting == null) return Left(NullValue());
+    if (!isUpdateSucceed) return Left(NullValue());
 
-    _localDataSource.insertOrUpdate(meeting);
+    _localDataSource.insertOrUpdate(params.meeting);
 
-    return Right(meeting);
+    return Right(params.meeting);
   }
 
   @override
