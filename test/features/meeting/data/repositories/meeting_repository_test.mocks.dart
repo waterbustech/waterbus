@@ -127,7 +127,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
   @override
   void insertOrUpdate(_i4.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
-          #addOrMeeting,
+          #insertOrUpdate,
           [meeting],
         ),
         returnValueForMissingStub: null,

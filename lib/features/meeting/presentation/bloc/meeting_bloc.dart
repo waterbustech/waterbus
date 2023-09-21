@@ -10,6 +10,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
@@ -23,6 +24,7 @@ part 'meeting_state.dart';
 @injectable
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetRecentJoined _recentJoined;
+  final CleanAllRecentJoined _cleanAllRecentJoined;
   final CreateMeeting _createMeeting;
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
@@ -36,6 +38,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   MeetingBloc(
     this._recentJoined,
+    this._cleanAllRecentJoined,
     this._createMeeting,
     this._joinMeeting,
     this._updateMeeting,
@@ -44,7 +47,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   ) : super(MeetingInitial()) {
     on<MeetingEvent>((event, emit) async {
       if (event is GetRecentJoinedEvent) {
-        await _getRecentJoined(event);
+        await _handleGetRecentJoined();
+
+        emit(_joinedMeeting);
+      }
+
+      if (event is CleanAllRecentJoinedEvent) {
+        await _handleCleanAllRecentJoined();
 
         emit(_joinedMeeting);
       }
@@ -86,13 +95,23 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
   // MARK: Private
-  Future<void> _getRecentJoined(GetRecentJoinedEvent event) async {
+  Future<void> _handleGetRecentJoined() async {
     final Either<Failure, List<Meeting>> meetings =
         await _recentJoined.call(null);
 
     meetings.fold((l) => null, (r) {
+      _recentMeetings.clear();
       return _recentMeetings.addAll(r);
     });
+  }
+
+  Future<void> _handleCleanAllRecentJoined() async {
+    final Either<Failure, bool> isCleanSucceed =
+        await _cleanAllRecentJoined.call(null);
+
+    if (isCleanSucceed.isRight()) {
+      _recentMeetings.clear();
+    }
   }
 
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {

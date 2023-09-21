@@ -276,7 +276,9 @@ void main() {
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });
+  });
 
+  group('recent joined meetings', () {
     test(
         'should return a list of recent joined meetings from local data source',
         () async {
@@ -294,6 +296,21 @@ void main() {
       expect(result, Right(testMeetings));
       verify(mockLocalDataSource.meetings);
       verifyNoMoreInteractions(mockLocalDataSource);
+    });
+
+    test('local data source should remove all recent joined meetings',
+        () async {
+      // Arrange
+      when(mockLocalDataSource.removeAll()).thenReturn(null);
+
+      // Act
+      final result = repository.cleanAllRecentJoined();
+
+      // Assert
+      expect(result, const Right(true));
+      verify(mockLocalDataSource.removeAll());
+      verifyNoMoreInteractions(mockLocalDataSource);
+      verifyNoMoreInteractions(mockRemoteDataSource);
     });
   });
 }
