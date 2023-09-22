@@ -89,10 +89,6 @@ class MeetingRepositoryImpl extends MeetingRepository {
       participantId: params.participantId,
     );
 
-    if (isLeaveSucceed) {
-      _localDataSource.removeMeeting(params.code);
-    }
-
     return Right(isLeaveSucceed);
   }
 
