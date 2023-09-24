@@ -247,7 +247,7 @@ void main() {
           participantId: leaveMeetingParams.participantId,
         ),
       );
-      verify(mockLocalDataSource.removeMeeting(leaveMeetingParams.code));
+      verifyNever(mockLocalDataSource.removeMeeting(leaveMeetingParams.code));
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyNoMoreInteractions(mockLocalDataSource);
     });
