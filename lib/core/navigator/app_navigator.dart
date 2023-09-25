@@ -10,7 +10,7 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code.dart';
+import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';

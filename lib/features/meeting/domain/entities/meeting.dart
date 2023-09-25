@@ -65,7 +65,7 @@ class Meeting {
         ),
       ),
       code: map['code'],
-      createdAt: DateTime.parse(map['createdAt']),
+      createdAt: DateTime.parse(map['createdAt']).toLocal(),
     );
   }
 

@@ -9,11 +9,13 @@ sealed class MeetingState extends Equatable {
 
 final class MeetingInitial extends MeetingState {}
 
-class CheckingMeeting extends MeetingState {}
+class PreJoinMeeting extends MeetingState {
+  final Meeting meeting;
+  const PreJoinMeeting({required this.meeting});
 
-class CheckedMeeting extends MeetingState {}
-
-class PrepareJoinMeeting extends MeetingState {}
+  @override
+  List<Object?> get props => [meeting];
+}
 
 class JoinedMeeting extends MeetingState {
   final Meeting? meeting;

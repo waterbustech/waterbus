@@ -47,6 +47,8 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
+    _localDataSource.insertOrUpdate(meeting);
+
     return Right(meeting);
   }
 

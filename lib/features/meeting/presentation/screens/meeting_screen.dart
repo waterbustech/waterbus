@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
@@ -30,9 +32,11 @@ class _MeetingScreenState extends State<MeetingScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
-        if (state is! JoinedMeeting) {
+        if (state is! JoinedMeeting || state.meeting == null) {
           return const SizedBox();
         }
+
+        final Meeting meeting = state.meeting!;
 
         return Scaffold(
           backgroundColor: Colors.black,
@@ -79,7 +83,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                         AppNavigator.push(
                           Routes.createMeetingRoute,
                           arguments: {
-                            'meeting': state.meeting,
+                            'meeting': meeting,
                           },
                         );
                       },
@@ -104,40 +108,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      Expanded(
-                        child: MeetView(
-                          displayName: 'Kai',
-                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(12.sp),
-                            ),
-                            image: const DecorationImage(
-                              image: NetworkImage(
-                                'https://avatars.githubusercontent.com/u/60530946?v=4',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: MeetView(
-                          displayName: 'Waterbus Staff',
-                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(14.sp),
-                            ),
-                            image: const DecorationImage(
-                              image: NetworkImage(
-                                'https://avatars.githubusercontent.com/u/85678598?s=200&v=4',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
+                      _buildMeetingView(context: context, meeting: meeting),
                       SizedBox(height: 12.sp),
                     ],
                   ),
@@ -147,6 +118,104 @@ class _MeetingScreenState extends State<MeetingScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildMeetingView({
+    required BuildContext context,
+    required Meeting meeting,
+  }) {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+        child: meeting.users.length < 2
+            ? _buildLayoutMultipleUsers(
+                context,
+                meeting.copyWith(
+                  users: [
+                    meeting.users.first,
+                    meeting.users.first,
+                    meeting.users.first,
+                    meeting.users.first,
+                  ],
+                ),
+              )
+            : Material(
+                clipBehavior: Clip.hardEdge,
+                shape: SuperellipseShape(
+                  side: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                    width: 1.sp,
+                  ),
+                  borderRadius: BorderRadius.circular(30.sp),
+                ),
+                child: _buildLayoutLess2Users(context, meeting),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildLayoutLess2Users(BuildContext context, Meeting meeting) {
+    return Column(
+      children: [meeting.users.first, meeting.users.first]
+          .map<Widget>(
+            (participant) => Expanded(
+              child: MeetView(
+                participant: participant,
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _buildLayoutMultipleUsers(BuildContext context, Meeting meeting) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Material(
+            shape: SuperellipseShape(
+              side: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.sp,
+              ),
+              borderRadius: BorderRadius.circular(18.sp),
+            ),
+            child: MeetView(
+              participant: meeting.users.first,
+            ),
+          ),
+        ),
+        SizedBox(height: 6.sp),
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: meeting.users.length - 1,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(right: 6.sp),
+                child: Material(
+                  shape: SuperellipseShape(
+                    side: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 1.sp,
+                    ),
+                    borderRadius: BorderRadius.circular(18.sp),
+                  ),
+                  child: SizedBox(
+                    width: 150.sp,
+                    child: MeetView(
+                      participant: meeting.users[index + 1],
+                      avatarSize: 35.sp,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

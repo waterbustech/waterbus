@@ -1,13 +1,18 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
@@ -26,6 +31,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetRecentJoined _recentJoined;
   final CleanAllRecentJoined _cleanAllRecentJoined;
   final CreateMeeting _createMeeting;
+  // ignore: unused_field
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
   final GetInfoMeeting _getInfoMeeting;
@@ -75,7 +81,18 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       }
 
       if (event is JoinMeetingEvent) {
-        await _handleJoinMeeting(event);
+        // await _handleJoinMeeting(event);
+        _currentMeeting = event.meeting;
+
+        final int indexOfParticipant = _currentMeeting!.users.indexWhere(
+          (user) => user.user.id == AppBloc.userBloc.user?.id,
+        );
+
+        if (indexOfParticipant == -1) return;
+        _myParticipant = _currentMeeting!.users[indexOfParticipant];
+
+        emit(_joinedMeeting);
+        AppNavigator.push(Routes.meetingRoute);
       }
 
       if (event is GetInfoMeetingEvent) {
@@ -84,6 +101,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       if (event is LeaveMeetingEvent) {
         await _handleLeaveMeeting(event);
+      }
+
+      if (event is DisplayDialogMeetingEvent) {
+        _displayDialogJoinMeeting(event.meeting);
       }
     });
   }
@@ -137,7 +158,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       GetMeetingParams(code: event.roomCode),
     );
 
-    return meeting.fold((l) => null, (r) => r);
+    AppNavigator.pop();
+
+    return meeting.fold((l) => null, (r) {
+      _displayDialogJoinMeeting(r);
+      return r;
+    });
   }
 
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
@@ -154,19 +180,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     meeting.fold((l) => null, (r) {
       AppNavigator.popUntil(Routes.meetingRoute);
+      final int indexOfMeeting = _recentMeetings.indexWhere(
+        (meeting) => r.id == meeting.id,
+      );
+
+      if (indexOfMeeting != -1) {
+        _recentMeetings[indexOfMeeting] = r;
+      }
+
       return _currentMeeting = r;
     });
-  }
-
-  Future<void> _handleJoinMeeting(JoinMeetingEvent event) async {
-    final Either<Failure, Meeting> meeting = await _joinMeeting.call(
-      CreateMeetingParams(
-        meeting: Meeting(title: '', code: event.roomCode),
-        password: event.password,
-      ),
-    );
-
-    meeting.fold((l) => null, (r) => _currentMeeting = r);
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
@@ -187,5 +210,19 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       AppNavigator.pop();
     });
+  }
+
+  void _displayDialogJoinMeeting(Meeting meeting) {
+    showDialogWaterbus(
+      alignment: Alignment.bottomCenter,
+      paddingBottom: 56.sp,
+      child: DialogPrepareMeeting(
+        meeting: meeting,
+        handleJoinMeeting: () {
+          AppNavigator.popUntil(Routes.rootRoute);
+          add(JoinMeetingEvent(meeting: meeting));
+        },
+      ),
+    );
   }
 }
