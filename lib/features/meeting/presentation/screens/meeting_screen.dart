@@ -128,7 +128,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
     return Expanded(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.sp),
-        child: meeting.users.length < 2
+        child: meeting.users.length > 2
             ? _buildLayoutMultipleUsers(
                 context,
                 meeting.copyWith(
