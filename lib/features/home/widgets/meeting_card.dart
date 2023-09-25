@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 
 // Project imports:
-import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 
 class MeetingCard extends StatelessWidget {
   final Meeting meeting;
@@ -78,10 +78,8 @@ class MeetingCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  showDialogWaterbus(
-                    alignment: Alignment.bottomCenter,
-                    paddingBottom: 56.sp,
-                    child: const DialogPrepareMeeting(),
+                  AppBloc.meetingBloc.add(
+                    DisplayDialogMeetingEvent(meeting: meeting),
                   );
                 },
                 child: Material(

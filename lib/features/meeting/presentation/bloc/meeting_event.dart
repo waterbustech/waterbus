@@ -24,9 +24,8 @@ class UpdateMeetingEvent extends MeetingEvent {
 }
 
 class JoinMeetingEvent extends MeetingEvent {
-  final int roomCode;
-  final String password;
-  const JoinMeetingEvent({required this.roomCode, required this.password});
+  final Meeting meeting;
+  const JoinMeetingEvent({required this.meeting});
 }
 
 class GetInfoMeetingEvent extends MeetingEvent {
@@ -35,3 +34,8 @@ class GetInfoMeetingEvent extends MeetingEvent {
 }
 
 class LeaveMeetingEvent extends MeetingEvent {}
+
+class DisplayDialogMeetingEvent extends MeetingEvent {
+  final Meeting meeting;
+  const DisplayDialogMeetingEvent({required this.meeting});
+}
