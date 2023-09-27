@@ -16,6 +16,8 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
@@ -42,6 +44,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
         }
 
         final Meeting meeting = state.meeting!;
+        final Participant participant = state.participant!;
 
         return Scaffold(
           backgroundColor: Colors.black,
@@ -85,16 +88,19 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       icon: PhosphorIcons.chats_teardrop,
                       onTap: () {},
                     ),
-                    CallActionButton(
-                      icon: PhosphorIcons.gear_six,
-                      onTap: () {
-                        AppNavigator.push(
-                          Routes.createMeetingRoute,
-                          arguments: {
-                            'meeting': meeting,
-                          },
-                        );
-                      },
+                    Visibility(
+                      visible: participant.role == MeetingRole.host,
+                      child: CallActionButton(
+                        icon: PhosphorIcons.gear_six,
+                        onTap: () {
+                          AppNavigator.push(
+                            Routes.createMeetingRoute,
+                            arguments: {
+                              'meeting': meeting,
+                            },
+                          );
+                        },
+                      ),
                     ),
                     CallActionButton(
                       icon: PhosphorIcons.x,

@@ -145,6 +145,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
         recentMeetings: _recentMeetings,
+        participant: _myParticipant,
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(

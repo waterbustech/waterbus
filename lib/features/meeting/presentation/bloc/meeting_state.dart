@@ -19,9 +19,14 @@ class PreJoinMeeting extends MeetingState {
 
 class JoinedMeeting extends MeetingState {
   final Meeting? meeting;
+  final Participant? participant;
   final List<Meeting> recentMeetings;
-  const JoinedMeeting({required this.meeting, required this.recentMeetings});
+  const JoinedMeeting({
+    required this.meeting,
+    required this.recentMeetings,
+    required this.participant,
+  });
 
   @override
-  List<Object?> get props => [meeting, recentMeetings];
+  List<Object?> get props => [meeting, recentMeetings, participant];
 }
