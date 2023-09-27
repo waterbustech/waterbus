@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
@@ -43,14 +44,15 @@ void main() {
   test('should call leaveMeeting on the repository with the given parameters',
       () async {
     // Arrange
+    final testMeeting = Meeting(title: 'Meeting with Kai');
     when(mockRepository.leaveMeeting(leaveMeetingParams))
-        .thenAnswer((_) async => const Right(true));
+        .thenAnswer((_) async => Right(testMeeting));
 
     // Act
     final result = await leaveMeeting(leaveMeetingParams);
 
     // Assert
-    expect(result, const Right(true));
+    expect(result, Right(testMeeting));
     verify(mockRepository.leaveMeeting(leaveMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });

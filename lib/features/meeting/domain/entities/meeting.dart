@@ -7,17 +7,18 @@ import 'package:flutter/foundation.dart';
 // Project imports:
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
 class Meeting {
   final int id;
   final String title;
-  final List<Participant> users;
+  final List<Participant> participants;
   final int code;
   final DateTime? createdAt;
   Meeting({
     this.id = -1,
     required this.title,
-    this.users = const [],
+    this.participants = const [],
     this.code = -1,
     this.createdAt,
   });
@@ -25,14 +26,14 @@ class Meeting {
   Meeting copyWith({
     int? id,
     String? title,
-    List<Participant>? users,
+    List<Participant>? participants,
     int? code,
     DateTime? createdAt,
   }) {
     return Meeting(
       id: id ?? this.id,
       title: title ?? this.title,
-      users: users ?? this.users,
+      participants: participants ?? this.participants,
       code: code ?? this.code,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -42,7 +43,7 @@ class Meeting {
     return <String, dynamic>{
       'id': id,
       'title': title,
-      'users': users.map((x) => x.toMap()).toList(),
+      'users': participants.map((x) => x.toMap()).toList(),
       'code': code,
       'createdAt': createdAt.toString(),
     };
@@ -60,7 +61,7 @@ class Meeting {
     return Meeting(
       id: map['id'] as int,
       title: map['title'] as String,
-      users: List<Participant>.from(
+      participants: List<Participant>.from(
         (map['users'] as List).map<Participant>(
           (x) => Participant.fromMap(x as Map<String, dynamic>),
         ),
@@ -77,7 +78,7 @@ class Meeting {
 
   @override
   String toString() {
-    return 'Meeting(id: $id, title: $title, users: $users, code: $code)';
+    return 'Meeting(id: $id, title: $title, users: $participants, code: $code)';
   }
 
   @override
@@ -86,17 +87,21 @@ class Meeting {
 
     return other.id == id &&
         other.title == title &&
-        listEquals(other.users, users) &&
+        listEquals(other.participants, participants) &&
         other.code == code;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ title.hashCode ^ users.hashCode ^ code.hashCode;
+    return id.hashCode ^ title.hashCode ^ participants.hashCode ^ code.hashCode;
   }
 }
 
 extension MeetingX on Meeting {
+  List<Participant> get users => participants
+      .where((participant) => participant.status == StatusEnum.active)
+      .toList();
+
   bool get isNoOneElse {
     if (users.isEmpty) return true;
 

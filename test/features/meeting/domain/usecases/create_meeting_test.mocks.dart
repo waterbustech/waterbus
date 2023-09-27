@@ -154,15 +154,15 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, bool>> leaveMeeting(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> leaveMeeting(
           _i8.LeaveMeetingParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #leaveMeeting,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
-            _FakeEither_0<_i5.Failure, bool>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
+            _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
             #leaveMeeting,
@@ -170,15 +170,15 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
-                _FakeEither_0<_i5.Failure, bool>(
+            _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
+                _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
             #leaveMeeting,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> getInfoMeeting(
           _i9.GetMeetingParams? params) =>
