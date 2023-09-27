@@ -83,29 +83,33 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       }
 
       if (event is JoinMeetingEvent) {
-        _currentMeeting = event.meeting;
-
         final int indexOfMeetingInRecent = _recentMeetings.indexWhere(
           (meeting) => meeting.code == event.meeting.code,
         );
 
-        // If room join recently -> check role is host -> join directly
+        // Will be take the meeting object in recent joined
         if (indexOfMeetingInRecent != -1) {
-          final int indexOfParticipant = _currentMeeting!.users.indexWhere(
+          _currentMeeting = _recentMeetings[indexOfMeetingInRecent];
+
+          final int indexOfParticipant =
+              _currentMeeting!.participants.indexWhere(
             (participant) =>
                 participant.isMe && participant.role == MeetingRole.host,
           );
 
           final bool isHost = indexOfParticipant != -1;
 
+          // Will join directly if the participant is the host of room
           if (isHost) {
-            _myParticipant = _currentMeeting!.users[indexOfParticipant];
+            _myParticipant = _currentMeeting!.participants[indexOfParticipant];
 
             emit(_joinedMeeting);
             AppNavigator.push(Routes.meetingRoute);
             return;
           }
         }
+
+        _currentMeeting = event.meeting;
 
         emit(_preJoinMeeting);
         AppNavigator.push(Routes.meetingRoute);
@@ -180,7 +184,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     meeting.fold((l) => null, (r) {
       AppNavigator.replaceWith(Routes.meetingRoute);
       _recentMeetings.insert(0, r);
-      _myParticipant = r.users.first;
+      _myParticipant = r.participants.first;
       return _currentMeeting = r;
     });
   }
@@ -202,12 +206,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       _recentMeetings.insert(0, r);
 
-      final int indexOfMyParticipant = r.users.lastIndexWhere(
+      final int indexOfMyParticipant = r.participants.lastIndexWhere(
         (participant) => participant.isMe,
       );
 
       if (indexOfMyParticipant != -1) {
-        _myParticipant = r.users[indexOfMyParticipant];
+        _myParticipant = r.participants[indexOfMyParticipant];
       }
 
       return true;
@@ -256,7 +260,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
     if (_currentMeeting == null || _myParticipant == null) return;
 
-    final Either<Failure, bool> isLeaveSucceed = await _leaveMeeting.call(
+    final Either<Failure, Meeting> isLeaveSucceed = await _leaveMeeting.call(
       LeaveMeetingParams(
         code: _currentMeeting!.code,
         participantId: _myParticipant!.id,
@@ -268,6 +272,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
       _myParticipant = null;
+
+      _findAndModifyRecent(r);
 
       AppNavigator.pop();
     });
@@ -285,5 +291,15 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         },
       ),
     );
+  }
+
+  void _findAndModifyRecent(Meeting meeting) {
+    final int indexOfMeeting = _recentMeetings.indexWhere(
+      (m) => m.id == meeting.id,
+    );
+
+    if (indexOfMeeting == -1) return;
+
+    _recentMeetings[indexOfMeeting] = meeting;
   }
 }

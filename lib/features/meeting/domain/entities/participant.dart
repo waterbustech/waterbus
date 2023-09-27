@@ -6,10 +6,12 @@ import 'dart:convert';
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
+import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
 class Participant {
   final int id;
   final MeetingRole role;
+  final StatusEnum status;
   final User user;
   bool isMe;
   Participant({
@@ -17,6 +19,7 @@ class Participant {
     required this.role,
     required this.user,
     this.isMe = false,
+    this.status = StatusEnum.active,
   });
 
   Participant copyWith({
@@ -24,12 +27,14 @@ class Participant {
     MeetingRole? role,
     User? user,
     bool? isMe,
+    StatusEnum? status,
   }) {
     return Participant(
       id: id ?? this.id,
       role: role ?? this.role,
       user: user ?? this.user,
       isMe: isMe ?? this.isMe,
+      status: status ?? this.status,
     );
   }
 
@@ -39,15 +44,17 @@ class Participant {
       'role': role.value,
       'user': user.toMap(),
       'isMe': isMe,
+      'status': status.value,
     };
   }
 
   factory Participant.fromMap(Map<String, dynamic> map) {
     return Participant(
       id: map['id'] as int,
-      role: MeetingRoleX.fromValue(map['role'] ?? 1),
+      role: MeetingRoleX.fromValue(map['role'] ?? MeetingRole.attendee.value),
       user: User.fromMap(map['user'] as Map<String, dynamic>),
       isMe: map['isMe'] ?? false,
+      status: StatusX.fromValue(map['status'] ?? StatusEnum.inactive.value),
     );
   }
 

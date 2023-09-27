@@ -39,13 +39,13 @@ void main() {
       final Meeting meeting1 = Meeting(
         title: 'Meeting with Kai 1',
         id: 1,
-        users: [participant1],
+        participants: [participant1],
         code: 1,
       );
       final Meeting meeting2 = Meeting(
         title: 'Meeting with Kai 2',
         id: 2,
-        users: [participant2],
+        participants: [participant2],
         code: 2,
       );
 

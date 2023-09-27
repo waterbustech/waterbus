@@ -72,8 +72,16 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     required Meeting meeting,
     required String password,
   }) async {
+    final int indexOfMyParticipant = meeting.participants.indexWhere(
+      (participant) => participant.isMe,
+    );
+
+    final int? participantId = indexOfMyParticipant == -1
+        ? null
+        : meeting.participants[indexOfMyParticipant].id;
+
     final Response response = await _remoteData.postRoute(
-      '${ApiEndpoints.meetings}/${meeting.code}',
+      '${ApiEndpoints.meetings}/${meeting.code}${participantId != null ? '/rejoin/$participantId' : ''}',
       body: meeting.toMapCreate(password),
     );
 
