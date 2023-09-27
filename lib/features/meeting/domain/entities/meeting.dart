@@ -3,9 +3,9 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
 
 // Project imports:
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 
 class Meeting {
