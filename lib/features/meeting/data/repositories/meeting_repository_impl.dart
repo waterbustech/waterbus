@@ -8,8 +8,6 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
-import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
@@ -35,7 +33,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
       return Left(NullValue());
     }
 
-    meeting = _findMyParticipantObject(meeting);
+    meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -65,7 +63,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
-    meeting = _findMyParticipantObject(meeting);
+    meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -91,43 +89,16 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> leaveMeeting(
     LeaveMeetingParams params,
   ) async {
-    final bool isLeaveSucceed = await _remoteDataSource.leaveMeeting(
+    final Meeting? meeting = await _remoteDataSource.leaveMeeting(
       code: params.code,
       participantId: params.participantId,
     );
 
-    if (isLeaveSucceed) {
-      final int indexOfMeetingInRecent = _localDataSource.meetings.indexWhere(
-        (meeting) => meeting.code == params.code,
-      );
+    if (meeting == null) return Left(NullValue());
 
-      if (indexOfMeetingInRecent != -1) {
-        final List<Participant> participants =
-            _localDataSource.meetings[indexOfMeetingInRecent].participants;
+    _localDataSource.update(meeting);
 
-        final int indexOfParticipant = participants.indexWhere(
-          (participant) => participant.isMe,
-        );
-
-        if (indexOfParticipant != -1) {
-          participants[indexOfParticipant] =
-              participants[indexOfParticipant].copyWith(
-            status: StatusEnum.inactive,
-          );
-
-          final Meeting meeting =
-              _localDataSource.meetings[indexOfMeetingInRecent].copyWith(
-            participants: participants,
-          );
-
-          _localDataSource.insertOrUpdate(meeting);
-
-          return Right(meeting);
-        }
-      }
-    }
-
-    return Left(NullValue());
+    return Right(meeting);
   }
 
   @override
@@ -143,7 +114,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
     return const Right(true);
   }
 
-  Meeting _findMyParticipantObject(Meeting meeting) {
+  Meeting findMyParticipantObject(Meeting meeting) {
     final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
       (participant) => participant.user.id == AppBloc.userBloc.user?.id,
     );

@@ -8,6 +8,7 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 abstract class MeetingLocalDataSource {
   void insertOrUpdate(Meeting meeting);
+  void update(Meeting meeting);
   List<Meeting> get meetings;
   void removeMeeting(int code);
   void removeAll();
@@ -56,6 +57,21 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
     meetingsList.removeWhere((meeting) => meeting.code == code);
 
     _saveMeetingsList(meetingsList);
+  }
+
+  @override
+  void update(Meeting meeting) {
+    final List<Meeting> meetingsList = meetings;
+
+    final int indexOfMeeting = meetingsList.indexWhere(
+      (meetX) => meetX.id == meeting.id,
+    );
+
+    if (indexOfMeeting == -1) return;
+
+    meetingsList[indexOfMeeting] = meeting;
+
+    _saveMeetingsList(meetings);
   }
 
   // MARK: private functions
