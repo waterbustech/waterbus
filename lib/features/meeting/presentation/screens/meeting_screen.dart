@@ -17,6 +17,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
@@ -32,6 +33,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
+        if (state is PreJoinMeeting) {
+          return const EnterMeetingPasswordScreen();
+        }
+
         if (state is! JoinedMeeting || state.meeting == null) {
           return const SizedBox();
         }
@@ -72,7 +77,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       icon: PhosphorIcons.microphone,
                       onTap: () {},
                     ),
-                    CallActionButton(icon: PhosphorIcons.camera, onTap: () {}),
+                    CallActionButton(
+                      icon: PhosphorIcons.camera,
+                      onTap: () {},
+                    ),
                     CallActionButton(
                       icon: PhosphorIcons.chats_teardrop,
                       onTap: () {},
@@ -108,7 +116,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      _buildMeetingView(context: context, meeting: meeting),
+                      _buildMeetingView(
+                        context: context,
+                        meeting: meeting,
+                      ),
                       SizedBox(height: 12.sp),
                     ],
                   ),
@@ -129,17 +140,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.sp),
         child: meeting.users.length > 2
-            ? _buildLayoutMultipleUsers(
-                context,
-                meeting.copyWith(
-                  users: [
-                    meeting.users.first,
-                    meeting.users.first,
-                    meeting.users.first,
-                    meeting.users.first,
-                  ],
-                ),
-              )
+            ? _buildLayoutMultipleUsers(context, meeting)
             : Material(
                 clipBehavior: Clip.hardEdge,
                 shape: SuperellipseShape(
@@ -157,7 +158,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   Widget _buildLayoutLess2Users(BuildContext context, Meeting meeting) {
     return Column(
-      children: [meeting.users.first, meeting.users.first]
+      children: meeting.users
           .map<Widget>(
             (participant) => Expanded(
               child: MeetView(

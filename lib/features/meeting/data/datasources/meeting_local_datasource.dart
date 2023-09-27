@@ -27,6 +27,8 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
 
     if (indexOfMeeting != -1) {
       meetingsList.removeAt(indexOfMeeting);
+    } else {
+
     }
 
     meetingsList.insert(0, meeting);

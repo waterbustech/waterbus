@@ -110,9 +110,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                       TextFieldInput(
                         obscureText: true,
                         validatorForm: (val) {
-                          if (val?.isEmpty ?? true) return null;
-
-                          if (val!.length < 6) {
+                          if (val == null || val.length < 6) {
                             return "Password must be at least 6 characters";
                           }
 

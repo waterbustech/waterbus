@@ -38,7 +38,7 @@ class DialogPrepareMeeting extends StatelessWidget {
             children: [
               const PreviewCameraCard(),
               SizedBox(height: 16.sp),
-              meeting.users.length < 2
+              meeting.isNoOneElse
                   ? Text(
                       "No participants yet",
                       style: Theme.of(context)

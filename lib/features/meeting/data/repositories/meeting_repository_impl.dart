@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
@@ -23,7 +24,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> createMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.createMeeting(
+    Meeting? meeting = await _remoteDataSource.createMeeting(
       meeting: params.meeting,
       password: params.password,
     );
@@ -32,6 +33,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
       return Left(NullValue());
     }
 
+    meeting = _findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -47,8 +49,6 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
-    _localDataSource.insertOrUpdate(meeting);
-
     return Right(meeting);
   }
 
@@ -56,13 +56,14 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> joinMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.joinMeeting(
+    Meeting? meeting = await _remoteDataSource.joinMeeting(
       meeting: params.meeting,
       password: params.password,
     );
 
     if (meeting == null) return Left(NullValue());
 
+    meeting = _findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -105,5 +106,17 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Either<Failure, bool> cleanAllRecentJoined() {
     _localDataSource.removeAll();
     return const Right(true);
+  }
+
+  Meeting _findMyParticipantObject(Meeting meeting) {
+    final int indexOfMyParticipant = meeting.users.lastIndexWhere(
+      (participant) => participant.user.id == AppBloc.userBloc.user?.id,
+    );
+
+    if (indexOfMyParticipant == -1) return meeting;
+
+    meeting.users[indexOfMyParticipant].isMe = true;
+
+    return meeting;
   }
 }
