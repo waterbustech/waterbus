@@ -11,21 +11,25 @@ class Participant {
   final int id;
   final MeetingRole role;
   final User user;
+  bool isMe;
   Participant({
     required this.id,
     required this.role,
     required this.user,
+    this.isMe = false,
   });
 
   Participant copyWith({
     int? id,
     MeetingRole? role,
     User? user,
+    bool? isMe,
   }) {
     return Participant(
       id: id ?? this.id,
       role: role ?? this.role,
       user: user ?? this.user,
+      isMe: isMe ?? this.isMe,
     );
   }
 
@@ -34,6 +38,7 @@ class Participant {
       'id': id,
       'role': role.value,
       'user': user.toMap(),
+      'isMe': isMe,
     };
   }
 
@@ -42,6 +47,7 @@ class Participant {
       id: map['id'] as int,
       role: MeetingRoleX.fromValue(map['role'] ?? 1),
       user: User.fromMap(map['user'] as Map<String, dynamic>),
+      isMe: map['isMe'] ?? false,
     );
   }
 

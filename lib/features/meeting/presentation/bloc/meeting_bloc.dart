@@ -13,9 +13,9 @@ import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
@@ -83,18 +83,44 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       }
 
       if (event is JoinMeetingEvent) {
-        // await _handleJoinMeeting(event);
         _currentMeeting = event.meeting;
 
-        final int indexOfParticipant = _currentMeeting!.users.indexWhere(
-          (user) => user.user.id == AppBloc.userBloc.user?.id,
+        final int indexOfMeetingInRecent = _recentMeetings.indexWhere(
+          (meeting) => meeting.code == event.meeting.code,
         );
 
-        if (indexOfParticipant == -1) return;
-        _myParticipant = _currentMeeting!.users[indexOfParticipant];
+        // If room join recently -> check role is host -> join directly
+        if (indexOfMeetingInRecent != -1) {
+          final int indexOfParticipant = _currentMeeting!.users.indexWhere(
+            (participant) =>
+                participant.isMe && participant.role == MeetingRole.host,
+          );
 
-        emit(_joinedMeeting);
+          final bool isHost = indexOfParticipant != -1;
+
+          if (isHost) {
+            _myParticipant = _currentMeeting!.users[indexOfParticipant];
+
+            emit(_joinedMeeting);
+            AppNavigator.push(Routes.meetingRoute);
+            return;
+          }
+        }
+
+        emit(_preJoinMeeting);
         AppNavigator.push(Routes.meetingRoute);
+      }
+
+      if (event is JoinMeetingWithPasswordEvent) {
+        if (_currentMeeting == null) return;
+
+        final bool isJoinSucceed = await _handleJoinWithPassword(event);
+
+        AppNavigator.pop();
+
+        if (isJoinSucceed) {
+          emit(_joinedMeeting);
+        }
       }
 
       if (event is GetInfoMeetingEvent) {
@@ -115,6 +141,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
         recentMeetings: _recentMeetings,
+      );
+
+  PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
+        meeting: _currentMeeting,
       );
 
   // MARK: Private
@@ -152,6 +182,35 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _recentMeetings.insert(0, r);
       _myParticipant = r.users.first;
       return _currentMeeting = r;
+    });
+  }
+
+  Future<bool> _handleJoinWithPassword(
+    JoinMeetingWithPasswordEvent event,
+  ) async {
+    final Either<Failure, Meeting> meeting = await _joinMeeting.call(
+      CreateMeetingParams(
+        meeting: _currentMeeting!,
+        password: event.password,
+      ),
+    );
+
+    return meeting.fold((l) => false, (r) {
+      _currentMeeting = r;
+
+      _recentMeetings.removeWhere((meeting) => meeting.id == r.id);
+
+      _recentMeetings.insert(0, r);
+
+      final int indexOfMyParticipant = r.users.lastIndexWhere(
+        (participant) => participant.isMe,
+      );
+
+      if (indexOfMyParticipant != -1) {
+        _myParticipant = r.users[indexOfMyParticipant];
+      }
+
+      return true;
     });
   }
 

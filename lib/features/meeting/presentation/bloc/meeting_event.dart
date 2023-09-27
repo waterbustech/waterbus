@@ -28,6 +28,13 @@ class JoinMeetingEvent extends MeetingEvent {
   const JoinMeetingEvent({required this.meeting});
 }
 
+class JoinMeetingWithPasswordEvent extends MeetingEvent {
+  final String password;
+  const JoinMeetingWithPasswordEvent({
+    required this.password,
+  });
+}
+
 class GetInfoMeetingEvent extends MeetingEvent {
   final int roomCode;
   const GetInfoMeetingEvent({required this.roomCode});

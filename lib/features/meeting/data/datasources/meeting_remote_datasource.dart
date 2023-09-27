@@ -73,7 +73,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     required String password,
   }) async {
     final Response response = await _remoteData.postRoute(
-      ApiEndpoints.meetings,
+      '${ApiEndpoints.meetings}/${meeting.code}',
       body: meeting.toMapCreate(password),
     );
 

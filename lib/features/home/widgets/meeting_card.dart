@@ -59,7 +59,7 @@ class MeetingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: meeting.users.length < 2
+                child: meeting.isNoOneElse
                     ? Text(
                         "No participants yet",
                         style: Theme.of(context)

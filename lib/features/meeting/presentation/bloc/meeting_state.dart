@@ -10,7 +10,7 @@ sealed class MeetingState extends Equatable {
 final class MeetingInitial extends MeetingState {}
 
 class PreJoinMeeting extends MeetingState {
-  final Meeting meeting;
+  final Meeting? meeting;
   const PreJoinMeeting({required this.meeting});
 
   @override
