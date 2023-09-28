@@ -58,6 +58,7 @@ class DialogPrepareMeeting extends StatelessWidget {
               Text(
                 meeting.title,
                 maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 13.sp,

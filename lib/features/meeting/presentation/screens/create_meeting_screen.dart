@@ -53,7 +53,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
             onPressed: () {
               if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-              showDialogLoading();
+              displayLoadingLayer();
 
               if (_isEditing) {
                 AppBloc.meetingBloc.add(

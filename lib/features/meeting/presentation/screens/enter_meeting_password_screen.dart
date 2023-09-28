@@ -36,7 +36,7 @@ class _EnterMeetingPasswordScreenState
             onTap: () {
               if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-              showDialogLoading();
+              displayLoadingLayer();
 
               AppBloc.meetingBloc.add(
                 JoinMeetingWithPasswordEvent(

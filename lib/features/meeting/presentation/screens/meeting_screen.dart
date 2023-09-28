@@ -106,7 +106,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       icon: PhosphorIcons.x,
                       backgroundColor: Colors.red,
                       onTap: () {
-                        showDialogLoading();
+                        displayLoadingLayer();
                         AppBloc.meetingBloc.add(LeaveMeetingEvent());
                       },
                     ),
