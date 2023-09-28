@@ -79,7 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // MARK: Private methods
   Future<void> _handleLogin(AuthEvent event) async {
-    showDialogLoading();
+    displayLoadingLayer();
 
     late final AuthPayloadModel? payload;
 

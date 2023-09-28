@@ -89,12 +89,17 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> leaveMeeting(
     LeaveMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.leaveMeeting(
+    Meeting? meeting = await _remoteDataSource.leaveMeeting(
       code: params.code,
       participantId: params.participantId,
     );
 
     if (meeting == null) return Left(NullValue());
+
+    meeting = findMyParticipantObject(
+      meeting,
+      participantId: params.participantId,
+    );
 
     _localDataSource.update(meeting);
 
@@ -114,9 +119,14 @@ class MeetingRepositoryImpl extends MeetingRepository {
     return const Right(true);
   }
 
-  Meeting findMyParticipantObject(Meeting meeting) {
+  Meeting findMyParticipantObject(
+    Meeting meeting, {
+    int? participantId,
+  }) {
     final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
-      (participant) => participant.user.id == AppBloc.userBloc.user?.id,
+      (participant) => participantId != null
+          ? participant.id == participantId
+          : participant.user.id == AppBloc.userBloc.user?.id,
     );
 
     if (indexOfMyParticipant == -1) return meeting;

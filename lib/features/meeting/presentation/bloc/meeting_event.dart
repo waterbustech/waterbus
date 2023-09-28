@@ -30,8 +30,10 @@ class JoinMeetingEvent extends MeetingEvent {
 
 class JoinMeetingWithPasswordEvent extends MeetingEvent {
   final String password;
+  final bool isHost;
   const JoinMeetingWithPasswordEvent({
     required this.password,
+    this.isHost = false,
   });
 }
 

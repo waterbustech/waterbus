@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
@@ -105,7 +104,7 @@ extension MeetingX on Meeting {
   bool get isNoOneElse {
     if (users.isEmpty) return true;
 
-    if (users.length == 1 && users.first.user.id == AppBloc.userBloc.user?.id) {
+    if (users.length == 1 && users.first.isMe) {
       return true;
     }
 

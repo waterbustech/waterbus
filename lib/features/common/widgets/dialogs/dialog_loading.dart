@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 
-showDialogLoading() {
+void displayLoadingLayer() {
   showDialog(
     routeSettings: const RouteSettings(name: Routes.loadingRoute),
     context: AppNavigator.context!,

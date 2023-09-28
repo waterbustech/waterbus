@@ -30,6 +30,7 @@ class MeetingCard extends StatelessWidget {
           Text(
             meeting.title,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 12.5.sp,
                   fontWeight: FontWeight.w600,

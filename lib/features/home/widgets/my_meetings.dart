@@ -20,7 +20,7 @@ class MyMeetings extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
-        if (state is! JoinedMeeting) return const SizedBox();
+        if (state is MeetingInitial) return const SizedBox();
 
         final List<Meeting> recentMeetings = state.recentMeetings;
 

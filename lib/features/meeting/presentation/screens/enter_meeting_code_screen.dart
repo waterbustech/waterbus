@@ -26,7 +26,7 @@ class _EnterMeetingCardState extends State {
   void _onSubmited() {
     if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-    showDialogLoading();
+    displayLoadingLayer();
 
     AppBloc.meetingBloc.add(
       GetInfoMeetingEvent(roomCode: int.parse(_codeController.text)),

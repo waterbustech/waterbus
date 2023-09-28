@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () {
               if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-              showDialogLoading();
+              displayLoadingLayer();
 
               AppBloc.userBloc.add(
                 UpdateProfileEvent(fullName: _fullNameController.text),

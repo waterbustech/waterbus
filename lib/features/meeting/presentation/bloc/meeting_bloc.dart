@@ -13,6 +13,7 @@ import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
@@ -52,7 +53,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._updateMeeting,
     this._getInfoMeeting,
     this._leaveMeeting,
-  ) : super(MeetingInitial()) {
+  ) : super(const MeetingInitial()) {
     on<MeetingEvent>((event, emit) async {
       if (event is GetRecentJoinedEvent) {
         await _handleGetRecentJoined();
@@ -103,8 +104,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           if (isHost) {
             _myParticipant = _currentMeeting!.participants[indexOfParticipant];
 
-            emit(_joinedMeeting);
-            AppNavigator.push(Routes.meetingRoute);
+            displayLoadingLayer();
+
+            add(
+              const JoinMeetingWithPasswordEvent(password: '', isHost: true),
+            );
             return;
           }
         }
@@ -124,6 +128,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         if (isJoinSucceed) {
           emit(_joinedMeeting);
+
+          if (event.isHost) {
+            AppNavigator.push(Routes.meetingRoute);
+          }
         }
       }
 
@@ -150,6 +158,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
         meeting: _currentMeeting,
+        recentMeetings: _recentMeetings,
+        participant: _myParticipant,
       );
 
   // MARK: Private
