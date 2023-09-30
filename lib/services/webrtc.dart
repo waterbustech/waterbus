@@ -1,11 +1,11 @@
 // Package imports:
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:sdp_transform/sdp_transform.dart';
-import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/services/socket.dart';
 
 abstract class WaterbusWebRTCManager {
