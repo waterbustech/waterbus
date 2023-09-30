@@ -25,6 +25,7 @@ import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
+import 'package:waterbus/services/webrtc.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
@@ -34,11 +35,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetRecentJoined _recentJoined;
   final CleanAllRecentJoined _cleanAllRecentJoined;
   final CreateMeeting _createMeeting;
-  // ignore: unused_field
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
   final GetInfoMeeting _getInfoMeeting;
   final LeaveMeeting _leaveMeeting;
+  // ignore: unused_field
+  final WaterbusWebRTCManager _rtcManager;
 
   // MARK: private
   Meeting? _currentMeeting;
@@ -53,6 +55,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._updateMeeting,
     this._getInfoMeeting,
     this._leaveMeeting,
+    this._rtcManager,
   ) : super(const MeetingInitial()) {
     on<MeetingEvent>((event, emit) async {
       if (event is GetRecentJoinedEvent) {
