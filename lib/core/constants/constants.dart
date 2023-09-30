@@ -32,3 +32,33 @@ const User defaultUser = User(
   userName: 'waterbus.io',
   avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
+
+const Map<String, dynamic> configurationWebRTC = {
+  'iceServers': [
+    {
+      "urls": ["stun:hk-turn1.xirsys.com"],
+    },
+    {
+      "username":
+          "4rBa7ppl_U6p0eE5PZUrpQXRLWfn8ZZ1aglRQGlsReViBb_G_fbKp3P3IIW62N7RAAAAAGN18pZkaW5odHJvbmcwNTAz",
+      "credential": "f3d0dacc-6652-11ed-a6d5-0242ac120004",
+      "urls": [
+        "turn:hk-turn1.xirsys.com:80?transport=udp",
+        "turn:hk-turn1.xirsys.com:3478?transport=udp",
+        "turn:hk-turn1.xirsys.com:80?transport=tcp",
+        "turn:hk-turn1.xirsys.com:3478?transport=tcp",
+        "turns:hk-turn1.xirsys.com:443?transport=tcp",
+        "turns:hk-turn1.xirsys.com:5349?transport=tcp",
+      ],
+    }
+  ],
+  'sdpSemantics': "unified-plan",
+};
+
+const Map<String, dynamic> offerSdpConstraints = {
+  'mandatory': {
+    'OfferToReceiveAudio': true,
+    'OfferToReceiveVideo': true,
+  },
+  'optional': [],
+};

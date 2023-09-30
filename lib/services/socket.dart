@@ -13,9 +13,13 @@ import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.da
 abstract class SocketConnection {
   void establishConnection({bool forceConnection = false});
   void disconnection();
-  void sendJoinCall();
-  void sendSdp();
-  void sendCandidate();
+  void establishBroadcast({required String sdp, required String roomId});
+  void establishReceiver({
+    required String roomId,
+    required String targetId,
+    required String sdp,
+  });
+  void leaveRoom(String roomId);
 }
 
 @LazySingleton(as: SocketConnection)
@@ -50,13 +54,21 @@ class SocketConnectionImpl extends SocketConnection {
     _socket?.onConnect((_) async {
       debugPrint('established connection - sid: ${_socket?.id}');
 
-      _socket?.on(SocketEvent.joinCallSSC, (data) {});
+      _socket?.on(SocketEvent.broadcastSSC, (data) {
+        // pc context: only send peer
+        // will receive sdp remote from service side if you join success
+      });
 
-      _socket?.on(SocketEvent.newParticipantSSC, (data) {});
+      _socket?.on(SocketEvent.newParticipantSSC, (data) {
+        // will receive signal when someone join,
+      });
 
-      _socket?.on(SocketEvent.sendCandidateSSC, (data) {});
+      _socket?.on(SocketEvent.sendReceiverSdpSSC, (data) {
+        // pc context: only receive peer
+        // will receive sdp, get it and add to pc
+      });
 
-      _socket?.on(SocketEvent.sendSdpSSC, (data) {});
+      _socket?.on(SocketEvent.participantHasLeftSSC, (data) {});
     });
   }
 
@@ -70,17 +82,28 @@ class SocketConnectionImpl extends SocketConnection {
 
   // MARK: emit functions
   @override
-  void sendJoinCall() {
-    _socket?.emit(SocketEvent.joinCallCSS);
+  void establishBroadcast({required String sdp, required String roomId}) {
+    _socket?.emit(SocketEvent.broadcastCSS, {
+      "roomId": roomId,
+      "sdp": sdp,
+    });
   }
 
   @override
-  void sendCandidate() {
-    _socket?.emit(SocketEvent.sendCandidateCSS);
+  void establishReceiver({
+    required String roomId,
+    required String targetId,
+    required String sdp,
+  }) {
+    _socket?.emit(SocketEvent.sendReceiverSdpCSS, {
+      "roomId": roomId,
+      "targetId": targetId,
+      "sdp": sdp,
+    });
   }
 
   @override
-  void sendSdp() {
-    _socket?.emit(SocketEvent.sendSdpCSS);
+  void leaveRoom(String roomId) {
+    _socket?.emit(SocketEvent.sendLeaveRoomCSS, {"roomId": roomId});
   }
 }

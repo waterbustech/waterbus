@@ -97,7 +97,8 @@ _i1.GetIt $initGetIt(
       () => _i14.UserRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
   gh.lazySingleton<_i15.UserRepository>(
       () => _i16.UserRepositoryImpl(gh<_i14.UserRemoteDataSource>()));
-  gh.lazySingleton<_i17.WebRTCWrapper>(() => _i17.WebRTCWrapperImpl());
+  gh.lazySingleton<_i17.WaterbusWebRTCManager>(
+      () => _i17.WaterbusWebRTCManagerIpml(gh<_i12.SocketConnection>()));
   gh.lazySingleton<_i18.AuthRemoteDataSource>(
       () => _i18.AuthRemoteDataSourceImpl(gh<_i4.BaseRemoteData>()));
   gh.lazySingleton<_i19.AuthRepository>(() => _i20.AuthRepositoryImpl(
@@ -131,6 +132,7 @@ _i1.GetIt $initGetIt(
         gh<_i13.UpdateMeeting>(),
         gh<_i24.GetInfoMeeting>(),
         gh<_i29.LeaveMeeting>(),
+        gh<_i17.WaterbusWebRTCManager>(),
       ));
   gh.factory<_i33.UpdateProfile>(
       () => _i33.UpdateProfile(gh<_i15.UserRepository>()));
