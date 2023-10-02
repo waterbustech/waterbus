@@ -341,18 +341,18 @@ packages:
     dependency: "direct main"
     description:
       name: dio_cache_interceptor
-      sha256: "4b4afbc59a407cc16ed69bdeb5a2b072537f43a7965a3571647eb5ba546481bf"
+      sha256: "7c0cb435963f08aa751ae8769b360d462f01160adc1d2d5b80e3b8c450b386e3"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.3"
+    version: "3.4.4"
   dio_cookie_manager:
     dependency: "direct main"
     description:
       name: dio_cookie_manager
-      sha256: "884b1099cba70a83751969d318084577c29de148600ffb7d4796f752d2cade02"
+      sha256: e79498b0f632897ff0c28d6e8178b4bc6e9087412401f618c31fa0904ace050d
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0+1"
+    version: "3.1.1"
   dio_http2_adapter:
     dependency: "direct main"
     description:
