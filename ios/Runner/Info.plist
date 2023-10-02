@@ -77,6 +77,10 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+		<string>Waterbus Camera Usage!</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Waterbus Microphone Usage!</string>
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>

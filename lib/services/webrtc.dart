@@ -21,6 +21,8 @@ abstract class WaterbusWebRTCManager {
   Future<void> newParticipant(String targetId);
   Future<void> participantHasLeft(String targetId);
   Future<void> dispose();
+
+  CallState callState();
 }
 
 @LazySingleton(as: WaterbusWebRTCManager)
@@ -36,14 +38,17 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   final Map<String, RTCVideoRenderer> _remoteRenderers = {};
 
   // MARK: export
-  CallState get callState => CallState(
-        localRenderer: _localRenderer,
-        remoteRenderers: _remoteRenderers,
-        remoteCameraState: {},
-        remoteMicState: {},
-        localCameraState: true,
-        localMicState: true,
-      );
+  @override
+  CallState callState() {
+    return CallState(
+      localRenderer: _localRenderer,
+      remoteRenderers: _remoteRenderers,
+      remoteCameraState: {},
+      remoteMicState: {},
+      localCameraState: true,
+      localMicState: true,
+    );
+  }
 
   @override
   Future<void> dispose() async {
@@ -109,6 +114,10 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       mediaConstraints,
     );
 
+    _localRenderer = RTCVideoRenderer();
+    await _localRenderer?.initialize();
+    _localRenderer?.srcObject = stream;
+
     return stream;
   }
 
@@ -122,6 +131,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _roomId = roomId;
 
     _localStream = await getUserMedia();
+
     _pcStreamLocalMedia = await _createPeerConnection();
 
     _localStream!.getTracks().forEach((track) {

@@ -16,6 +16,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
@@ -206,6 +207,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         meeting: _currentMeeting,
         recentMeetings: _recentMeetings,
         participant: _myParticipant,
+        callState: _rtcManager.callState(),
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
