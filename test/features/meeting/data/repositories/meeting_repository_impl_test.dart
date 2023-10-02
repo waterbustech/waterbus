@@ -348,6 +348,7 @@ void main() {
       // Act
       final updatedMeeting = repository.findMyParticipantObject(
         currentUserMeeting,
+        participantId: 1,
       );
 
       // Assert
