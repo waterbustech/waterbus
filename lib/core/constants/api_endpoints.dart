@@ -13,4 +13,5 @@ class ApiEndpoints {
 
   // Meetings
   static const String meetings = 'meetings';
+  static const String participants = 'meetings/participants';
 }

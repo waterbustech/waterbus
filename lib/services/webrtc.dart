@@ -9,7 +9,10 @@ import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/services/socket.dart';
 
 abstract class WaterbusWebRTCManager {
-  Future<void> startBroadcastLocalMedia(String roomId);
+  Future<void> startBroadcastLocalMedia({
+    required String roomId,
+    required int participantId,
+  });
   Future<void> establishReceiverStream(List<String> targetIds);
   Future<MediaStream> getUserMedia();
   Future<MediaStream> getDisplayMedia();
@@ -110,7 +113,10 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> startBroadcastLocalMedia(String roomId) async {
+  Future<void> startBroadcastLocalMedia({
+    required String roomId,
+    required int participantId,
+  }) async {
     if (_pcStreamLocalMedia != null) return;
 
     _roomId = roomId;
@@ -123,7 +129,11 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     });
 
     final String sdp = await _createOffer(_pcStreamLocalMedia!);
-    _wsConnections.establishBroadcast(sdp: sdp, roomId: _roomId!);
+    _wsConnections.establishBroadcast(
+      sdp: sdp,
+      roomId: _roomId!,
+      participantId: participantId.toString(),
+    );
   }
 
   @override

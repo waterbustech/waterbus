@@ -40,8 +40,8 @@ const Map<String, dynamic> configurationWebRTC = {
     },
     {
       "username":
-          "4rBa7ppl_U6p0eE5PZUrpQXRLWfn8ZZ1aglRQGlsReViBb_G_fbKp3P3IIW62N7RAAAAAGN18pZkaW5odHJvbmcwNTAz",
-      "credential": "f3d0dacc-6652-11ed-a6d5-0242ac120004",
+          "2PExpnKaMnfeEv-Q17l_AIzddJjcTYqYZBZG3P19ocYnPDpDaRo-HBkXfYhO7zQXAAAAAGUaT-BsYW1iaWVuZ2NvZGU=",
+      "credential": "78a9fdc6-60e1-11ee-9c54-0242ac120004",
       "urls": [
         "turn:hk-turn1.xirsys.com:80?transport=udp",
         "turn:hk-turn1.xirsys.com:3478?transport=udp",
