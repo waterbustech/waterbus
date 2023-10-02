@@ -10,11 +10,13 @@ import 'package:waterbus/services/socket.dart';
 
 abstract class WaterbusWebRTCManager {
   Future<void> startBroadcastLocalMedia(String roomId);
-  Future<void> establishReceiverStream();
+  Future<void> establishReceiverStream(List<String> targetIds);
   Future<MediaStream> getUserMedia();
   Future<MediaStream> getDisplayMedia();
-  Future<void> setBroadcastRemoteSdp();
-  Future<void> setReceiverRemoteSdp(String targetId);
+  Future<void> setBroadcastRemoteSdp(String sdp);
+  Future<void> setReceiverRemoteSdp(String targetId, String sdp);
+  Future<void> newParticipant(String targetId);
+  Future<void> participantHasLeft(String targetId);
   Future<void> dispose();
 }
 
@@ -42,6 +44,10 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   @override
   Future<void> dispose() async {
+    if (_roomId == null) return;
+
+    _wsConnections.leaveRoom(_roomId!);
+
     for (final pc in _pcReceiveMedia.values) {
       await pc.close();
     }
@@ -104,11 +110,6 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> establishReceiverStream() {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> startBroadcastLocalMedia(String roomId) async {
     if (_pcStreamLocalMedia != null) return;
 
@@ -126,13 +127,37 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> setBroadcastRemoteSdp() {
-    throw UnimplementedError();
+  Future<void> establishReceiverStream(List<String> targetIds) async {
+    for (final targetId in targetIds) {
+      await _makeConnectionReceive(targetId);
+    }
   }
 
   @override
-  Future<void> setReceiverRemoteSdp(String targetId) {
-    throw UnimplementedError();
+  Future<void> newParticipant(String targetId) async {
+    await _makeConnectionReceive(targetId);
+  }
+
+  @override
+  Future<void> participantHasLeft(String targetId) async {
+    await _remoteRenderers[targetId]?.dispose();
+    await _pcReceiveMedia[targetId]?.close();
+    _remoteRenderers.remove(targetId);
+    _pcReceiveMedia.remove(targetId);
+  }
+
+  @override
+  Future<void> setBroadcastRemoteSdp(String sdp) async {
+    await _setRemoteDescription(pc: _pcStreamLocalMedia!, sdp: sdp);
+  }
+
+  @override
+  Future<void> setReceiverRemoteSdp(String targetId, String sdp) async {
+    final RTCPeerConnection? pc = _pcReceiveMedia[targetId];
+
+    if (pc == null) return;
+
+    await _setRemoteDescription(pc: pc, sdp: sdp);
   }
 
   // MARK: Private methods
@@ -156,5 +181,43 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     peerConnection.setLocalDescription(description);
 
     return sdp;
+  }
+
+  Future<void> _setRemoteDescription({
+    required RTCPeerConnection pc,
+    required String sdp,
+  }) async {
+    final RTCSessionDescription description = RTCSessionDescription(
+      sdp,
+      'answer',
+    );
+
+    await pc.setRemoteDescription(description);
+  }
+
+  Future<void> _makeConnectionReceive(String targetId) async {
+    _remoteRenderers[targetId] = RTCVideoRenderer();
+
+    final RTCPeerConnection rtcPeerConnection = await _createPeerConnection();
+
+    rtcPeerConnection.addTransceiver(
+      kind: RTCRtpMediaType.RTCRtpMediaTypeVideo,
+      init: RTCRtpTransceiverInit(
+        direction: TransceiverDirection.RecvOnly,
+      ),
+    );
+
+    rtcPeerConnection.onTrack = (track) {
+      _remoteRenderers[targetId]?.srcObject = track.streams.first;
+    };
+
+    final String sdp = await _createOffer(rtcPeerConnection);
+    _wsConnections.establishReceiver(
+      roomId: _roomId!,
+      targetId: targetId,
+      sdp: sdp,
+    );
+
+    _pcReceiveMedia[targetId] = rtcPeerConnection;
   }
 }
