@@ -2,6 +2,7 @@
 import 'package:flutter/widgets.dart';
 
 // Package imports:
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,9 +19,11 @@ import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
+import 'package:waterbus/features/meeting/domain/usecases/get_participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
@@ -39,6 +42,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final UpdateMeeting _updateMeeting;
   final GetInfoMeeting _getInfoMeeting;
   final LeaveMeeting _leaveMeeting;
+  final GetParticipant _getParticipant;
   // ignore: unused_field
   final WaterbusWebRTCManager _rtcManager;
 
@@ -55,101 +59,146 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._updateMeeting,
     this._getInfoMeeting,
     this._leaveMeeting,
+    this._getParticipant,
     this._rtcManager,
   ) : super(const MeetingInitial()) {
-    on<MeetingEvent>((event, emit) async {
-      if (event is GetRecentJoinedEvent) {
-        await _handleGetRecentJoined();
+    on<MeetingEvent>(
+      transformer: sequential(),
+      (event, emit) async {
+        if (event is GetRecentJoinedEvent) {
+          await _handleGetRecentJoined();
 
-        emit(_joinedMeeting);
-      }
-
-      if (event is CleanAllRecentJoinedEvent) {
-        await _handleCleanAllRecentJoined();
-
-        emit(_joinedMeeting);
-      }
-
-      if (event is CreateMeetingEvent) {
-        await _handleCreateMeeting(event);
-
-        if (_currentMeeting != null) {
           emit(_joinedMeeting);
         }
-      }
 
-      if (event is UpdateMeetingEvent) {
-        await _handleUpdateMeeting(event);
+        if (event is CleanAllRecentJoinedEvent) {
+          await _handleCleanAllRecentJoined();
 
-        if (_currentMeeting != null) {
           emit(_joinedMeeting);
         }
-      }
 
-      if (event is JoinMeetingEvent) {
-        final int indexOfMeetingInRecent = _recentMeetings.indexWhere(
-          (meeting) => meeting.code == event.meeting.code,
-        );
+        if (event is CreateMeetingEvent) {
+          await _handleCreateMeeting(event);
 
-        // Will be take the meeting object in recent joined
-        if (indexOfMeetingInRecent != -1) {
-          _currentMeeting = _recentMeetings[indexOfMeetingInRecent];
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
 
-          final int indexOfParticipant =
-              _currentMeeting!.participants.indexWhere(
-            (participant) =>
-                participant.isMe && participant.role == MeetingRole.host,
+        if (event is UpdateMeetingEvent) {
+          await _handleUpdateMeeting(event);
+
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
+
+        if (event is JoinMeetingEvent) {
+          final int indexOfMeetingInRecent = _recentMeetings.indexWhere(
+            (meeting) => meeting.code == event.meeting.code,
           );
 
-          final bool isHost = indexOfParticipant != -1;
+          // Will be take the meeting object in recent joined
+          if (indexOfMeetingInRecent != -1) {
+            _currentMeeting = _recentMeetings[indexOfMeetingInRecent];
 
-          // Will join directly if the participant is the host of room
-          if (isHost) {
-            _myParticipant = _currentMeeting!.participants[indexOfParticipant];
-
-            displayLoadingLayer();
-
-            add(
-              const JoinMeetingWithPasswordEvent(password: '', isHost: true),
+            final int indexOfParticipant =
+                _currentMeeting!.participants.indexWhere(
+              (participant) =>
+                  participant.isMe && participant.role == MeetingRole.host,
             );
-            return;
+
+            final bool isHost = indexOfParticipant != -1;
+
+            // Will join directly if the participant is the host of room
+            if (isHost) {
+              _myParticipant =
+                  _currentMeeting!.participants[indexOfParticipant];
+
+              displayLoadingLayer();
+
+              add(
+                const JoinMeetingWithPasswordEvent(password: '', isHost: true),
+              );
+              return;
+            }
+          }
+
+          _currentMeeting = event.meeting;
+
+          emit(_preJoinMeeting);
+          AppNavigator.push(Routes.meetingRoute);
+        }
+
+        if (event is JoinMeetingWithPasswordEvent) {
+          if (_currentMeeting == null) return;
+
+          final bool isJoinSucceed = await _handleJoinWithPassword(event);
+
+          if (isJoinSucceed) {
+            await _initialWebRTCManager(
+              roomCode: _currentMeeting!.code.toString(),
+              participantId: _myParticipant!.id,
+            );
+          }
+
+          AppNavigator.pop();
+
+          if (isJoinSucceed) {
+            emit(_joinedMeeting);
+
+            if (event.isHost) {
+              AppNavigator.push(Routes.meetingRoute);
+            }
           }
         }
 
-        _currentMeeting = event.meeting;
+        if (event is GetInfoMeetingEvent) {
+          await _handleGetInfoMeeting(event);
+        }
 
-        emit(_preJoinMeeting);
-        AppNavigator.push(Routes.meetingRoute);
-      }
+        if (event is LeaveMeetingEvent) {
+          await _handleLeaveMeeting(event);
+        }
 
-      if (event is JoinMeetingWithPasswordEvent) {
-        if (_currentMeeting == null) return;
+        if (event is DisplayDialogMeetingEvent) {
+          _displayDialogJoinMeeting(event.meeting);
+        }
 
-        final bool isJoinSucceed = await _handleJoinWithPassword(event);
+        // During meeting
+        if (event is EstablishBroadcastSuccessEvent) {
+          await _handleEstablishBroadcastSuccess(event);
 
-        AppNavigator.pop();
-
-        if (isJoinSucceed) {
-          emit(_joinedMeeting);
-
-          if (event.isHost) {
-            AppNavigator.push(Routes.meetingRoute);
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
           }
         }
-      }
 
-      if (event is GetInfoMeetingEvent) {
-        await _handleGetInfoMeeting(event);
-      }
+        if (event is EstablishReceiverSuccessEvent) {
+          await _handleEstablishReceiverSuccess(event);
 
-      if (event is LeaveMeetingEvent) {
-        await _handleLeaveMeeting(event);
-      }
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
 
-      if (event is DisplayDialogMeetingEvent) {
-        _displayDialogJoinMeeting(event.meeting);
-      }
-    });
+        if (event is NewParticipantEvent) {
+          await _handleNewParticipant(event);
+
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
+
+        if (event is ParticipantHasLeftEvent) {
+          await _handleParticipantHasLeft(event);
+
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
+      },
+    );
   }
 
   // MARK: state
@@ -195,10 +244,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.pop();
 
-    meeting.fold((l) => null, (r) {
+    meeting.fold((l) => null, (r) async {
       AppNavigator.replaceWith(Routes.meetingRoute);
       _recentMeetings.insert(0, r);
       _myParticipant = r.participants.first;
+
+      await _initialWebRTCManager(
+        roomCode: r.code.toString(),
+        participantId: _myParticipant!.id,
+      );
+
       return _currentMeeting = r;
     });
   }
@@ -289,8 +344,95 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       _findAndModifyRecent(r);
 
+      _rtcManager.dispose();
+
       AppNavigator.pop();
     });
+  }
+
+  Future<void> _handleEstablishBroadcastSuccess(
+    EstablishBroadcastSuccessEvent event,
+  ) async {
+    await Future.wait([
+      _rtcManager.setBroadcastRemoteSdp(event.sdp),
+      _rtcManager.establishReceiverStream(event.participants),
+    ]);
+  }
+
+  Future<void> _handleEstablishReceiverSuccess(
+    EstablishReceiverSuccessEvent event,
+  ) async {
+    await _rtcManager.setReceiverRemoteSdp(
+      event.participantId,
+      event.sdp,
+    );
+  }
+
+  Future<void> _handleNewParticipant(NewParticipantEvent event) async {
+    if (_currentMeeting == null) return;
+
+    _rtcManager.newParticipant(event.participantId);
+
+    final List<Participant> participants = _currentMeeting!.participants;
+
+    final int indexOfParticipant = participants.indexWhere(
+      (participant) => participant.id == int.parse(event.participantId),
+    );
+
+    if (indexOfParticipant != -1) return;
+
+    final Either<Failure, Participant> participant = await _getParticipant.call(
+      GetPariticipantParams(
+        participantId: int.parse(event.participantId),
+      ),
+    );
+
+    participant.fold((l) => null, (r) {
+      participants.add(r);
+      _currentMeeting = _currentMeeting!.copyWith(
+        participants: participants,
+      );
+      _findAndModifyRecent(_currentMeeting!);
+
+      return r;
+    });
+  }
+
+  Future<void> _handleParticipantHasLeft(
+    ParticipantHasLeftEvent event,
+  ) async {
+    if (_currentMeeting == null) return;
+
+    await _rtcManager.participantHasLeft(event.participantId);
+
+    final List<Participant> participants = _currentMeeting!.participants;
+
+    final int indexOfParticipant = participants.indexWhere(
+      (participant) => participant.id == int.parse(event.participantId),
+    );
+
+    if (indexOfParticipant != -1) {
+      participants[indexOfParticipant] =
+          participants[indexOfParticipant].copyWith(
+        status: StatusEnum.inactive,
+      );
+
+      _currentMeeting = _currentMeeting!.copyWith(
+        participants: participants,
+      );
+
+      _findAndModifyRecent(_currentMeeting!);
+    }
+  }
+
+  Future<void> _initialWebRTCManager({
+    required String roomCode,
+    required int participantId,
+  }) async {
+    await _rtcManager.startBroadcastLocalMedia(
+      roomId: roomCode,
+      participantId: participantId,
+    );
   }
 
   void _displayDialogJoinMeeting(Meeting meeting) {

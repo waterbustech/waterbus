@@ -7,6 +7,7 @@ import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 
 abstract class MeetingRemoteDataSource {
   Future<Meeting?> createMeeting({
@@ -26,6 +27,7 @@ abstract class MeetingRemoteDataSource {
     required int code,
     required int participantId,
   });
+  Future<Participant?> getParticipant(int participantId);
 }
 
 @LazySingleton(as: MeetingRemoteDataSource)
@@ -128,5 +130,19 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     }
 
     return false;
+  }
+
+  @override
+  Future<Participant?> getParticipant(int participantId) async {
+    final Response response = await _remoteData.getRoute(
+      '${ApiEndpoints.participants}/$participantId',
+    );
+
+    if (response.statusCode == StatusCode.ok) {
+      final Map<String, dynamic> rawData = response.data;
+      return Participant.fromMap(rawData['participant']);
+    }
+
+    return null;
   }
 }

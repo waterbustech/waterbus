@@ -48,3 +48,31 @@ class DisplayDialogMeetingEvent extends MeetingEvent {
   final Meeting meeting;
   const DisplayDialogMeetingEvent({required this.meeting});
 }
+
+class NewParticipantEvent extends MeetingEvent {
+  final String participantId;
+  const NewParticipantEvent({required this.participantId});
+}
+
+class ParticipantHasLeftEvent extends MeetingEvent {
+  final String participantId;
+  const ParticipantHasLeftEvent({required this.participantId});
+}
+
+class EstablishBroadcastSuccessEvent extends MeetingEvent {
+  final String sdp;
+  final List<String> participants;
+  const EstablishBroadcastSuccessEvent({
+    required this.sdp,
+    required this.participants,
+  });
+}
+
+class EstablishReceiverSuccessEvent extends MeetingEvent {
+  final String sdp;
+  final String participantId;
+  const EstablishReceiverSuccessEvent({
+    required this.participantId,
+    required this.sdp,
+  });
+}
