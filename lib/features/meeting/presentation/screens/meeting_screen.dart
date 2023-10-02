@@ -15,6 +15,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
@@ -45,6 +46,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
         final Meeting meeting = state.meeting!;
         final Participant participant = state.participant!;
+        final CallState? callState = state.callState;
 
         return Scaffold(
           backgroundColor: Colors.black,
@@ -125,6 +127,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       _buildMeetingView(
                         context: context,
                         meeting: meeting,
+                        callState: callState,
                       ),
                       SizedBox(height: 12.sp),
                     ],
@@ -141,12 +144,17 @@ class _MeetingScreenState extends State<MeetingScreen> {
   Widget _buildMeetingView({
     required BuildContext context,
     required Meeting meeting,
+    required CallState? callState,
   }) {
     return Expanded(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.sp),
         child: meeting.users.length > 2
-            ? _buildLayoutMultipleUsers(context, meeting)
+            ? _buildLayoutMultipleUsers(
+                context,
+                meeting,
+                callState,
+              )
             : Material(
                 clipBehavior: Clip.hardEdge,
                 shape: SuperellipseShape(
@@ -156,19 +164,24 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   ),
                   borderRadius: BorderRadius.circular(30.sp),
                 ),
-                child: _buildLayoutLess2Users(context, meeting),
+                child: _buildLayoutLess2Users(context, meeting, callState),
               ),
       ),
     );
   }
 
-  Widget _buildLayoutLess2Users(BuildContext context, Meeting meeting) {
+  Widget _buildLayoutLess2Users(
+    BuildContext context,
+    Meeting meeting,
+    CallState? callState,
+  ) {
     return Column(
       children: meeting.users
           .map<Widget>(
             (participant) => Expanded(
               child: MeetView(
                 participant: participant,
+                callState: callState,
               ),
             ),
           )
@@ -176,7 +189,11 @@ class _MeetingScreenState extends State<MeetingScreen> {
     );
   }
 
-  Widget _buildLayoutMultipleUsers(BuildContext context, Meeting meeting) {
+  Widget _buildLayoutMultipleUsers(
+    BuildContext context,
+    Meeting meeting,
+    CallState? callState,
+  ) {
     return Column(
       children: [
         Expanded(
@@ -191,6 +208,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
             ),
             child: MeetView(
               participant: meeting.users.first,
+              callState: callState,
             ),
           ),
         ),
@@ -215,6 +233,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     child: MeetView(
                       participant: meeting.users[index + 1],
                       avatarSize: 35.sp,
+                      callState: callState,
                     ),
                   ),
                 ),

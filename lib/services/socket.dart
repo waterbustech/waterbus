@@ -71,7 +71,9 @@ class SocketConnectionImpl extends SocketConnection {
         AppBloc.meetingBloc.add(
           EstablishBroadcastSuccessEvent(
             sdp: data['sdp'],
-            participants: data['otherParticipants'],
+            participants: ((data['otherParticipants'] ?? []) as List)
+                .map((e) => e.toString())
+                .toList(),
           ),
         );
       });

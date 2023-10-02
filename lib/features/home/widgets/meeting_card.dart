@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/utils/permission_handler.dart';
 
 // Project imports:
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -78,9 +80,14 @@ class MeetingCard extends StatelessWidget {
                       ),
               ),
               GestureDetector(
-                onTap: () {
-                  AppBloc.meetingBloc.add(
-                    DisplayDialogMeetingEvent(meeting: meeting),
+                onTap: () async {
+                  await WaterbusPermissionHandler().checkGrantedForExecute(
+                    permissions: [Permission.camera, Permission.microphone],
+                    callBack: () async {
+                      AppBloc.meetingBloc.add(
+                        DisplayDialogMeetingEvent(meeting: meeting),
+                      );
+                    },
                   );
                 },
                 child: Material(
