@@ -1,4 +1,4 @@
-// Flutter imports:
+// Package imports:
 import 'package:permission_handler/permission_handler.dart';
 
 class WaterbusPermissionHandler {
