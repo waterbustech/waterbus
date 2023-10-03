@@ -33,6 +33,10 @@ abstract class WaterbusWebRTCManager {
   Future<void> participantHasLeft(String targetId);
   Future<void> dispose();
 
+  // MARK: control
+  Future<void> toggleMic();
+  Future<void> toggleCam();
+
   CallState callState();
 }
 
@@ -48,10 +52,15 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   final Map<String, RTCPeerConnection> _pcReceiveMedia = {};
   final Map<String, RTCVideoRenderer> _remoteRenderers = {};
   final Map<String, List<RTCIceCandidate>> _receiverCandidates = {};
+  final Map<String, List<RTCIceCandidate>> _queueServerCandidates = {};
+  final Map<String, bool> _flagsServerReceiveCandidates = {};
   final Map<String, bool> _flagsReceiveSdp = {};
   final List<RTCIceCandidate> _candidates = [];
   bool _flagReceiveSdp = false;
   bool _flagRenegotiationNeeded = false;
+
+  bool _myMicEnabled = true;
+  bool _myCamEnabled = true;
 
   // MARK: export
   @override
@@ -61,8 +70,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       remoteRenderers: _remoteRenderers,
       remoteCameraState: {},
       remoteMicState: {},
-      localCameraState: true,
-      localMicState: true,
+      localCameraState: _myCamEnabled,
+      localMicState: _myMicEnabled,
     );
   }
 
@@ -75,6 +84,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _flagsReceiveSdp.clear();
     _receiverCandidates.clear();
     _candidates.clear();
+    _flagsServerReceiveCandidates.clear();
+    _queueServerCandidates.clear();
     _flagReceiveSdp = false;
     _flagRenegotiationNeeded = false;
 
@@ -154,6 +165,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
     _localStream = await getUserMedia();
 
+    await _toggleSpeakerPhone();
+
     _pcStreamLocalMedia = await _createPeerConnection();
 
     _localStream?.getTracks().forEach((track) {
@@ -215,6 +228,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _remoteRenderers.remove(targetId);
     _pcReceiveMedia.remove(targetId);
     _flagsReceiveSdp.remove(targetId);
+    _flagsServerReceiveCandidates.remove(targetId);
+    _queueServerCandidates.remove(targetId);
   }
 
   @override
@@ -249,6 +264,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
         debugPrint('Error setting remote description: $e');
       }
 
+      // MARK: send local candidate queue to server
       for (final candidate in _receiverCandidates[targetId] ?? []) {
         _wsConnections.sendReceiverCandidate(
           candidate: candidate,
@@ -256,8 +272,15 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
         );
       }
 
-      _receiverCandidates[targetId]?.clear();
+      _receiverCandidates.remove(targetId);
       _flagsReceiveSdp[targetId] = true;
+
+      // MARK: process remote candidate queue
+      _flagsServerReceiveCandidates[targetId] = true;
+      for (final candidate in _queueServerCandidates[targetId] ?? []) {
+        addReceiverIceCandidate(targetId, candidate);
+      }
+      _queueServerCandidates.remove(targetId);
     } else {
       debugPrint('RTCPeerConnection not found for $targetId');
     }
@@ -275,7 +298,48 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     String targetId,
     RTCIceCandidate candidate,
   ) async {
-    await _pcReceiveMedia[targetId]?.addCandidate(candidate);
+    if (_flagsServerReceiveCandidates[targetId] ?? false) {
+      await _pcReceiveMedia[targetId]?.addCandidate(candidate);
+    } else {
+      final List<RTCIceCandidate> candidates =
+          _queueServerCandidates[targetId] ?? [];
+
+      candidates.add(candidate);
+
+      _queueServerCandidates[targetId] = candidates;
+    }
+  }
+
+  @override
+  Future<void> toggleCam() async {
+    final tracks = _localStream?.getVideoTracks() ?? [];
+
+    if (_myCamEnabled) {
+      for (final track in tracks) {
+        track.enabled = false;
+      }
+    } else {
+      for (final track in tracks) {
+        track.enabled = true;
+      }
+    }
+    _myCamEnabled = !_myCamEnabled;
+  }
+
+  @override
+  Future<void> toggleMic() async {
+    final tracks = _localStream?.getAudioTracks() ?? [];
+
+    if (_myMicEnabled) {
+      for (final track in tracks) {
+        track.enabled = false;
+      }
+    } else {
+      for (final track in tracks) {
+        track.enabled = true;
+      }
+    }
+    _myMicEnabled = !_myMicEnabled;
   }
 
   // MARK: Private methods
@@ -368,5 +432,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     };
 
     _pcReceiveMedia[targetId] = rtcPeerConnection;
+  }
+
+  Future<void> _toggleSpeakerPhone() async {
+    Helper.setSpeakerphoneOn(true);
   }
 }
