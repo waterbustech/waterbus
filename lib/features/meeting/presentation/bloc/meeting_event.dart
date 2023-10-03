@@ -76,3 +76,19 @@ class EstablishReceiverSuccessEvent extends MeetingEvent {
     required this.sdp,
   });
 }
+
+class NewBroadcastCandidateEvent extends MeetingEvent {
+  final RTCIceCandidate candidate;
+  const NewBroadcastCandidateEvent({required this.candidate});
+}
+
+class NewReceiverCandidateEvent extends MeetingEvent {
+  final RTCIceCandidate candidate;
+  final String targetId;
+  const NewReceiverCandidateEvent({
+    required this.candidate,
+    required this.targetId,
+  });
+}
+
+class UpdateNewMeetingEvent extends MeetingEvent {}

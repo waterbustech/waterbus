@@ -36,23 +36,24 @@ const User defaultUser = User(
 const Map<String, dynamic> configurationWebRTC = {
   'iceServers': [
     {
-      "urls": ["stun:hk-turn1.xirsys.com"],
+      "urls": ["stun:ss-turn1.xirsys.com"],
     },
     {
       "username":
-          "2PExpnKaMnfeEv-Q17l_AIzddJjcTYqYZBZG3P19ocYnPDpDaRo-HBkXfYhO7zQXAAAAAGUaT-BsYW1iaWVuZ2NvZGU=",
-      "credential": "78a9fdc6-60e1-11ee-9c54-0242ac120004",
+          "4kHBzu7DVCQm2uxo8Gk_eLvg8Wzqcvdpq3y9OF38MRLJxuH8SVqKDj0CgjQCya_QAAAAAGN9laxkaW5odHJvbmcwNTAz",
+      "credential": "468a04dc-6ae0-11ed-9d14-0242ac140004",
       "urls": [
-        "turn:hk-turn1.xirsys.com:80?transport=udp",
-        "turn:hk-turn1.xirsys.com:3478?transport=udp",
-        "turn:hk-turn1.xirsys.com:80?transport=tcp",
-        "turn:hk-turn1.xirsys.com:3478?transport=tcp",
-        "turns:hk-turn1.xirsys.com:443?transport=tcp",
-        "turns:hk-turn1.xirsys.com:5349?transport=tcp",
+        "turn:ss-turn1.xirsys.com:80?transport=udp",
+        "turn:ss-turn1.xirsys.com:3478?transport=udp",
+        "turn:ss-turn1.xirsys.com:80?transport=tcp",
+        "turn:ss-turn1.xirsys.com:3478?transport=tcp",
+        "turns:ss-turn1.xirsys.com:443?transport=tcp",
+        "turns:ss-turn1.xirsys.com:5349?transport=tcp",
       ],
     }
   ],
   'sdpSemantics': "unified-plan",
+  'iceTransportPolicy': 'relay',
 };
 
 const Map<String, dynamic> offerSdpConstraints = {

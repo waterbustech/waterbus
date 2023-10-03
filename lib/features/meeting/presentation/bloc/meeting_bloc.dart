@@ -6,6 +6,7 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 
@@ -198,6 +199,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
           }
         }
+
+        if (event is NewBroadcastCandidateEvent) {
+          _rtcManager.addBroadcastIceCandidate(event.candidate);
+        }
+
+        if (event is NewReceiverCandidateEvent) {
+          _rtcManager.addReceiverIceCandidate(event.targetId, event.candidate);
+        }
+
+        if (event is UpdateNewMeetingEvent) {
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
       },
     );
   }
@@ -355,10 +370,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleEstablishBroadcastSuccess(
     EstablishBroadcastSuccessEvent event,
   ) async {
-    await Future.wait([
-      _rtcManager.setBroadcastRemoteSdp(event.sdp),
-      _rtcManager.establishReceiverStream(event.participants),
-    ]);
+    await _rtcManager.setBroadcastRemoteSdp(event.sdp);
+    await _rtcManager.establishReceiverStream(event.participants);
   }
 
   Future<void> _handleEstablishReceiverSuccess(
@@ -381,7 +394,19 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       (participant) => participant.id == int.parse(event.participantId),
     );
 
-    if (indexOfParticipant != -1) return;
+    if (indexOfParticipant != -1) {
+      participants[indexOfParticipant] =
+          participants[indexOfParticipant].copyWith(
+        status: StatusEnum.active,
+      );
+
+      _currentMeeting = _currentMeeting!.copyWith(
+        participants: participants,
+      );
+      _findAndModifyRecent(_currentMeeting!);
+
+      return;
+    }
 
     final Either<Failure, Participant> participant = await _getParticipant.call(
       GetPariticipantParams(
