@@ -207,7 +207,7 @@ class DioConfiguration {
       return ("", "");
     }
 
-    final Response response = await _remoteData.dio.get(
+    final Response response = await _remoteData.dio.post(
       ApiEndpoints.refreshToken,
       options: _remoteData.getOptionsRefreshToken,
     );
