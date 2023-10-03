@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 // Package imports:
 import 'package:injectable/injectable.dart';
@@ -24,6 +25,11 @@ abstract class SocketConnection {
     required String roomId,
     required String targetId,
     required String sdp,
+  });
+  void sendBroadcastCandidate(RTCIceCandidate candidate);
+  void sendReceiverCandidate({
+    required RTCIceCandidate candidate,
+    required targetId,
   });
   void leaveRoom(String roomId);
 }
@@ -113,6 +119,41 @@ class SocketConnectionImpl extends SocketConnection {
           ParticipantHasLeftEvent(participantId: data['targetId']),
         );
       });
+
+      _socket?.on(SocketEvent.sendBroadcastCandidateSSC, (data) {
+        /// candidate json
+        ///
+        if (data == null) return;
+
+        AppBloc.meetingBloc.add(
+          NewBroadcastCandidateEvent(
+            candidate: RTCIceCandidate(
+              data['candidate'],
+              data['sdpMid'],
+              data['sdpMLineIndex'],
+            ),
+          ),
+        );
+      });
+
+      _socket?.on(SocketEvent.sendReceiverCandidateSSC, (data) {
+        /// targetId, candidate json
+        ///
+        if (data == null) return;
+
+        final Map<String, dynamic> candidate = data['candidate'];
+
+        AppBloc.meetingBloc.add(
+          NewReceiverCandidateEvent(
+            targetId: data['targetId'],
+            candidate: RTCIceCandidate(
+              candidate['candidate'],
+              candidate['sdpMid'],
+              candidate['sdpMLineIndex'],
+            ),
+          ),
+        );
+      });
     });
   }
 
@@ -154,5 +195,24 @@ class SocketConnectionImpl extends SocketConnection {
   @override
   void leaveRoom(String roomId) {
     _socket?.emit(SocketEvent.sendLeaveRoomCSS, {"roomId": roomId});
+  }
+
+  @override
+  void sendBroadcastCandidate(RTCIceCandidate candidate) {
+    _socket?.emit(
+      SocketEvent.sendBroadcastCandidateCSS,
+      candidate.toMap(),
+    );
+  }
+
+  @override
+  void sendReceiverCandidate({
+    required RTCIceCandidate candidate,
+    required targetId,
+  }) {
+    _socket?.emit(SocketEvent.sendReceiverCandidateCSS, {
+      'targetId': targetId,
+      'candidate': candidate.toMap(),
+    });
   }
 }

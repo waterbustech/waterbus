@@ -1,11 +1,15 @@
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sdp_transform/sdp_transform.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/types/extensions/duration_x.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 import 'package:waterbus/services/socket.dart';
 
 abstract class WaterbusWebRTCManager {
@@ -18,6 +22,11 @@ abstract class WaterbusWebRTCManager {
   Future<MediaStream> getDisplayMedia();
   Future<void> setBroadcastRemoteSdp(String sdp);
   Future<void> setReceiverRemoteSdp(String targetId, String sdp);
+  Future<void> addBroadcastIceCandidate(RTCIceCandidate candidate);
+  Future<void> addReceiverIceCandidate(
+    String targetId,
+    RTCIceCandidate candidate,
+  );
   Future<void> newParticipant(String targetId);
   Future<void> participantHasLeft(String targetId);
   Future<void> dispose();
@@ -36,6 +45,11 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   MediaStream? _localStream;
   final Map<String, RTCPeerConnection> _pcReceiveMedia = {};
   final Map<String, RTCVideoRenderer> _remoteRenderers = {};
+  final Map<String, List<RTCIceCandidate>> _receiverCandidates = {};
+  final Map<String, bool> _flagsReceiveSdp = {};
+  final List<RTCIceCandidate> _candidates = [];
+  bool _flagReceiveSdp = false;
+  bool _flagRenegotiationNeeded = false;
 
   // MARK: export
   @override
@@ -55,6 +69,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     if (_roomId == null) return;
 
     _wsConnections.leaveRoom(_roomId!);
+
+    _flagsReceiveSdp.clear();
+    _receiverCandidates.clear();
+    _candidates.clear();
+    _flagReceiveSdp = false;
+    _flagRenegotiationNeeded = false;
 
     for (final pc in _pcReceiveMedia.values) {
       await pc.close();
@@ -79,7 +99,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   Future<MediaStream> getUserMedia() async {
     const Map<String, dynamic> mediaConstraints = {
       'audio': {
-        'sampleRate': '96000',
+        'sampleRate': '48000',
         'sampleSize': '16',
         'channelCount': '1',
         'mandatory': {
@@ -98,12 +118,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       },
       'video': {
         'mandatory': {
-          'minHeight': '720',
-          'minWidth': '1280',
-          'minFrameRate': '24',
-          'frameRate': '24',
-          'height': '720',
-          'width': '1280',
+          'minHeight': '360',
+          'minWidth': '480',
+          'minFrameRate': '15',
+          'frameRate': '15',
+          'height': '360',
+          'width': '480',
         },
         'facingMode': 'user',
         'optional': [],
@@ -134,27 +154,55 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
     _pcStreamLocalMedia = await _createPeerConnection();
 
-    _localStream!.getTracks().forEach((track) {
+    _localStream?.getTracks().forEach((track) {
       _pcStreamLocalMedia?.addTrack(track, _localStream!);
     });
 
-    final String sdp = await _createOffer(_pcStreamLocalMedia!);
-    _wsConnections.establishBroadcast(
-      sdp: sdp,
-      roomId: _roomId!,
-      participantId: participantId.toString(),
-    );
+    _pcStreamLocalMedia?.onIceCandidate = (candidate) {
+      if (_flagReceiveSdp) {
+        _wsConnections.sendBroadcastCandidate(candidate);
+      } else {
+        _candidates.add(candidate);
+      }
+    };
+
+    _pcStreamLocalMedia?.onRenegotiationNeeded = () async {
+      if (_flagRenegotiationNeeded) return;
+
+      _flagRenegotiationNeeded = true;
+
+      final String sdp = await _createOffer(
+        _pcStreamLocalMedia!,
+        isReceive: false,
+      );
+      final RTCSessionDescription description = RTCSessionDescription(
+        sdp,
+        'offer',
+      );
+      await _pcStreamLocalMedia?.setLocalDescription(description);
+      _wsConnections.establishBroadcast(
+        sdp: sdp,
+        roomId: _roomId!,
+        participantId: participantId.toString(),
+      );
+    };
   }
 
   @override
   Future<void> establishReceiverStream(List<String> targetIds) async {
-    for (final targetId in targetIds) {
-      await _makeConnectionReceive(targetId);
-    }
+    final List<Future<void>> makeConnections = targetIds
+        .map(
+          (targetId) => _makeConnectionReceive(
+            targetId,
+          ),
+        )
+        .toList();
+    await Future.wait(makeConnections);
   }
 
   @override
   Future<void> newParticipant(String targetId) async {
+    await Future.delayed(1.seconds);
     await _makeConnectionReceive(targetId);
   }
 
@@ -164,59 +212,99 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     await _pcReceiveMedia[targetId]?.close();
     _remoteRenderers.remove(targetId);
     _pcReceiveMedia.remove(targetId);
+    _flagsReceiveSdp.remove(targetId);
   }
 
   @override
   Future<void> setBroadcastRemoteSdp(String sdp) async {
-    await _setRemoteDescription(pc: _pcStreamLocalMedia!, sdp: sdp);
+    final RTCSessionDescription description = RTCSessionDescription(
+      sdp,
+      'answer',
+    );
+
+    await _pcStreamLocalMedia?.setRemoteDescription(description);
+
+    for (final candidate in _candidates) {
+      _wsConnections.sendBroadcastCandidate(candidate);
+    }
+
+    _candidates.clear();
+    _flagReceiveSdp = true;
   }
 
   @override
   Future<void> setReceiverRemoteSdp(String targetId, String sdp) async {
-    final RTCPeerConnection? pc = _pcReceiveMedia[targetId];
+    final RTCSessionDescription description = RTCSessionDescription(
+      sdp,
+      'answer',
+    );
 
-    if (pc == null) return;
+    final rtcPeerConnection = _pcReceiveMedia[targetId];
+    if (rtcPeerConnection != null) {
+      try {
+        await rtcPeerConnection.setRemoteDescription(description);
+      } catch (e) {
+        debugPrint('Error setting remote description: $e');
+      }
 
-    await _setRemoteDescription(pc: pc, sdp: sdp);
+      for (final candidate in _receiverCandidates[targetId] ?? []) {
+        _wsConnections.sendReceiverCandidate(
+          candidate: candidate,
+          targetId: targetId,
+        );
+      }
+
+      _receiverCandidates[targetId]?.clear();
+      _flagsReceiveSdp[targetId] = true;
+    } else {
+      debugPrint('RTCPeerConnection not found for $targetId');
+    }
+  }
+
+  @override
+  Future<void> addBroadcastIceCandidate(RTCIceCandidate candidate) async {
+    if (_pcStreamLocalMedia == null) return;
+
+    await _pcStreamLocalMedia?.addCandidate(candidate);
+  }
+
+  @override
+  Future<void> addReceiverIceCandidate(
+    String targetId,
+    RTCIceCandidate candidate,
+  ) async {
+    await _pcReceiveMedia[targetId]?.addCandidate(candidate);
   }
 
   // MARK: Private methods
   Future<RTCPeerConnection> _createPeerConnection() async {
     final RTCPeerConnection pc = await createPeerConnection(
       configurationWebRTC,
-      offerSdpConstraints,
     );
 
     return pc;
   }
 
   Future<String> _createOffer(
-    RTCPeerConnection peerConnection,
-  ) async {
-    final RTCSessionDescription description =
-        await peerConnection.createOffer();
+    RTCPeerConnection peerConnection, {
+    required bool isReceive,
+  }) async {
+    final RTCSessionDescription description = await peerConnection.createOffer({
+      'mandatory': {
+        'OfferToReceiveAudio': isReceive,
+        'OfferToReceiveVideo': isReceive,
+      },
+      'optional': [],
+    });
     final session = parse(description.sdp.toString());
     final String sdp = write(session, null);
-
-    peerConnection.setLocalDescription(description);
 
     return sdp;
   }
 
-  Future<void> _setRemoteDescription({
-    required RTCPeerConnection pc,
-    required String sdp,
-  }) async {
-    final RTCSessionDescription description = RTCSessionDescription(
-      sdp,
-      'answer',
-    );
-
-    await pc.setRemoteDescription(description);
-  }
-
   Future<void> _makeConnectionReceive(String targetId) async {
     _remoteRenderers[targetId] = RTCVideoRenderer();
+    _flagsReceiveSdp[targetId] = false;
 
     final RTCPeerConnection rtcPeerConnection = await _createPeerConnection();
 
@@ -227,16 +315,55 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       ),
     );
 
-    rtcPeerConnection.onTrack = (track) {
-      _remoteRenderers[targetId]?.srcObject = track.streams.first;
+    rtcPeerConnection.addTransceiver(
+      kind: RTCRtpMediaType.RTCRtpMediaTypeAudio,
+      init: RTCRtpTransceiverInit(
+        direction: TransceiverDirection.RecvOnly,
+      ),
+    );
+
+    rtcPeerConnection.onAddStream = (stream) async {
+      if (_remoteRenderers[targetId] == null) return;
+
+      await _remoteRenderers[targetId]?.initialize();
+      _remoteRenderers[targetId]?.srcObject = stream;
+
+      AppBloc.meetingBloc.add(UpdateNewMeetingEvent());
     };
 
-    final String sdp = await _createOffer(rtcPeerConnection);
-    _wsConnections.establishReceiver(
-      roomId: _roomId!,
-      targetId: targetId,
-      sdp: sdp,
-    );
+    rtcPeerConnection.onIceCandidate = (candidate) {
+      if (!_flagsReceiveSdp[targetId]!) {
+        final List<RTCIceCandidate> candidates =
+            _receiverCandidates[targetId] ?? [];
+
+        candidates.add(candidate);
+
+        _receiverCandidates[targetId] = candidates;
+      } else {
+        _wsConnections.sendReceiverCandidate(
+          candidate: candidate,
+          targetId: targetId,
+        );
+      }
+    };
+
+    rtcPeerConnection.onRenegotiationNeeded = () async {
+      final String sdp = await _createOffer(
+        rtcPeerConnection,
+        isReceive: true,
+      );
+
+      final RTCSessionDescription description = RTCSessionDescription(
+        sdp,
+        'offer',
+      );
+      await rtcPeerConnection.setLocalDescription(description);
+      _wsConnections.establishReceiver(
+        roomId: _roomId!,
+        targetId: targetId,
+        sdp: sdp,
+      );
+    };
 
     _pcReceiveMedia[targetId] = rtcPeerConnection;
   }

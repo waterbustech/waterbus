@@ -184,6 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: b8db3080e59b2503ca9e7922c3df2072cf13992354d5e944074ffa836fba43b7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   clock:
     dependency: transitive
     description:
@@ -299,12 +307,11 @@ packages:
   dart_webrtc:
     dependency: transitive
     description:
-      path: "."
-      ref: "1.1.1+1"
-      resolved-ref: ed60f0cddfe68a00bf9dd314f4f1f5467edbe234
-      url: "https://github.com/lambiengcode/dart-webrtc.git"
-    source: git
-    version: "1.1.1+1"
+      name: dart_webrtc
+      sha256: "5897a3bdd6c7fded07e80e250260ca4c9cd61f9080911aa308b516e1206745a9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.3"
   dartx:
     dependency: transitive
     description:
@@ -590,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.2"
+  flutter_launcher_icons:
+    dependency: "direct dev"
+    description:
+      name: flutter_launcher_icons
+      sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -683,12 +698,11 @@ packages:
   flutter_webrtc:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: d0881a3b52eb523231a02297a7195120724003d0
-      url: "https://github.com/webrtcsdk/flutter-webrtc.git"
-    source: git
-    version: "0.9.36+2"
+      name: flutter_webrtc
+      sha256: da6fb0f0f9515b2c64608011e3ad314e6a858bbf1c57477f418621996e7d22d2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.45"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1440,12 +1454,11 @@ packages:
   webrtc_interface:
     dependency: transitive
     description:
-      path: "."
-      ref: "1.1.0+1"
-      resolved-ref: "7d56d5974ab190f1b2d9792e9facd71ce59bc472"
-      url: "https://github.com/lambiengcode/webrtc-interface.git"
-    source: git
-    version: "1.1.0+1"
+      name: webrtc_interface
+      sha256: "2efbd3e4e5ebeb2914253bcc51dafd3053c4b87b43f3076c74835a9deecbae3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   win32:
     dependency: transitive
     description:
