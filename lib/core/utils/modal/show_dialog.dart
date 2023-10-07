@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/types/slide.dart';
@@ -13,7 +12,7 @@ import 'package:waterbus/core/types/slide.dart';
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
   required Widget child,
-  int duration = delay300ms,
+  int duration = 300,
   double paddingTop = 0.0,
   double paddingBottom = 0.0,
   Color? backgroundColor,

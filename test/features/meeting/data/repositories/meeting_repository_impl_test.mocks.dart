@@ -57,6 +57,7 @@ class MockMeetingRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<_i4.Meeting?>.value(),
         returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
       ) as _i3.Future<_i4.Meeting?>);
+
   @override
   _i3.Future<bool> updateMeeting({
     required _i4.Meeting? meeting,
@@ -74,6 +75,7 @@ class MockMeetingRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<_i4.Meeting?> joinMeeting({
     required _i4.Meeting? meeting,
@@ -91,6 +93,7 @@ class MockMeetingRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<_i4.Meeting?>.value(),
         returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
       ) as _i3.Future<_i4.Meeting?>);
+
   @override
   _i3.Future<_i4.Meeting?> getInfoMeeting(int? code) => (super.noSuchMethod(
         Invocation.method(
@@ -100,6 +103,7 @@ class MockMeetingRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<_i4.Meeting?>.value(),
         returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
       ) as _i3.Future<_i4.Meeting?>);
+
   @override
   _i3.Future<_i4.Meeting?> leaveMeeting({
     required int? code,
@@ -117,6 +121,7 @@ class MockMeetingRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<_i4.Meeting?>.value(),
         returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
       ) as _i3.Future<_i4.Meeting?>);
+
   @override
   _i3.Future<_i5.Participant?> getParticipant(int? participantId) =>
       (super.noSuchMethod(
@@ -140,6 +145,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
         returnValue: <_i4.Meeting>[],
         returnValueForMissingStub: <_i4.Meeting>[],
       ) as List<_i4.Meeting>);
+
   @override
   void insertOrUpdate(_i4.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
@@ -148,6 +154,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void update(_i4.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
@@ -156,6 +163,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void removeMeeting(int? code) => super.noSuchMethod(
         Invocation.method(
@@ -164,6 +172,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void removeAll() => super.noSuchMethod(
         Invocation.method(
@@ -190,18 +199,21 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
           Invocation.getter(#state),
         ),
       ) as _i7.UserState);
+
   @override
   _i3.Stream<_i7.UserState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
         returnValue: _i3.Stream<_i7.UserState>.empty(),
         returnValueForMissingStub: _i3.Stream<_i7.UserState>.empty(),
       ) as _i3.Stream<_i7.UserState>);
+
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
   @override
   void add(_i7.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -210,6 +222,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onEvent(_i7.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -218,6 +231,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void emit(_i7.UserState? state) => super.noSuchMethod(
         Invocation.method(
@@ -226,6 +240,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void on<E extends _i7.UserEvent>(
     _i9.EventHandler<E, _i7.UserState>? handler, {
@@ -239,6 +254,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onTransition(_i9.Transition<_i7.UserEvent, _i7.UserState>? transition) =>
       super.noSuchMethod(
@@ -248,6 +264,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   _i3.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
@@ -257,6 +274,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
   @override
   void onChange(_i9.Change<_i7.UserState>? change) => super.noSuchMethod(
         Invocation.method(
@@ -265,6 +283,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void addError(
     Object? error, [
@@ -280,6 +299,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onError(
     Object? error,

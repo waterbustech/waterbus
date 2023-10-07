@@ -43,6 +43,7 @@ class MockAuthLocalDataSource extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void saveTokens({
     required String? accessToken,
@@ -59,6 +60,7 @@ class MockAuthLocalDataSource extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void clearUser() => super.noSuchMethod(
         Invocation.method(
@@ -83,6 +85,7 @@ class MockAuthRemoteDataSource extends _i1.Mock
         returnValue: _i5.Future<(String, String)>.value(('', '')),
         returnValueForMissingStub: _i5.Future<(String, String)>.value(('', '')),
       ) as _i5.Future<(String, String)>);
+
   @override
   _i5.Future<_i3.UserModel?> signInWithSocial(
           _i6.AuthPayloadModel? authPayload) =>
@@ -94,6 +97,7 @@ class MockAuthRemoteDataSource extends _i1.Mock
         returnValue: _i5.Future<_i3.UserModel?>.value(),
         returnValueForMissingStub: _i5.Future<_i3.UserModel?>.value(),
       ) as _i5.Future<_i3.UserModel?>);
+
   @override
   _i5.Future<bool> logOut() => (super.noSuchMethod(
         Invocation.method(

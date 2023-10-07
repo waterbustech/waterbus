@@ -30,7 +30,7 @@ import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
-import 'package:waterbus/services/webrtc.dart';
+import 'package:waterbus/services/webrtc/webrtc_interface.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
@@ -201,11 +201,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is NewBroadcastCandidateEvent) {
-          _rtcManager.addBroadcastIceCandidate(event.candidate);
+          _rtcManager.addPublisherCandidate(event.candidate);
         }
 
         if (event is NewReceiverCandidateEvent) {
-          _rtcManager.addReceiverIceCandidate(event.targetId, event.candidate);
+          _rtcManager.addSubscriberCandidate(event.targetId, event.candidate);
         }
 
         if (event is UpdateNewMeetingEvent) {

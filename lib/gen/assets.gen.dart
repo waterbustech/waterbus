@@ -36,9 +36,20 @@ class $AssetsIconsGen {
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
+  /// File path: assets/icons/launcher_icon.png
+  AssetGenImage get launcherIcon =>
+      const AssetGenImage('assets/icons/launcher_icon.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [icApple, icCameraVideo, icEndCall, icFacebook, icGoogle, icNewMeeting];
+  List<AssetGenImage> get values => [
+        icApple,
+        icCameraVideo,
+        icEndCall,
+        icFacebook,
+        icGoogle,
+        icNewMeeting,
+        launcherIcon
+      ];
 }
 
 class $AssetsImagesGen {

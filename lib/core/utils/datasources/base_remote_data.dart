@@ -8,8 +8,8 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/injection/injection_container.dart';
+import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/dio/dio_configuration.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -25,9 +25,9 @@ class BaseRemoteData {
   Dio dio = Dio(
     BaseOptions(
       baseUrl: ApiEndpoints.baseUrl,
-      connectTimeout: const Duration(milliseconds: connectTimeOut),
-      receiveTimeout: const Duration(milliseconds: receiveTimeOut),
-      sendTimeout: const Duration(milliseconds: receiveTimeOut),
+      connectTimeout: 10.seconds,
+      receiveTimeout: 10.seconds,
+      sendTimeout: 10.seconds,
     ),
   ); // with default Options
 

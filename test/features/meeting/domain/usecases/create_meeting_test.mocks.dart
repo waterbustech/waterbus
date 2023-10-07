@@ -77,6 +77,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> createMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -103,6 +104,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> updateMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -129,6 +131,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> joinMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -155,6 +158,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> leaveMeeting(
           _i8.LeaveMeetingParams? params) =>
@@ -181,6 +185,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> getInfoMeeting(
           _i9.GetMeetingParams? params) =>
@@ -207,6 +212,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i2.Either<_i5.Failure, bool> cleanAllRecentJoined() => (super.noSuchMethod(
         Invocation.method(
@@ -228,6 +234,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         ),
       ) as _i2.Either<_i5.Failure, bool>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>> getParticipantById(
           int? participantId) =>

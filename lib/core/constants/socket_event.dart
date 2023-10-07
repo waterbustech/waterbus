@@ -1,6 +1,8 @@
 class SocketEvent {
   static const String broadcastCSS = 'BROADCAST_CSS';
   static const String broadcastSSC = 'BROADCAST_SSC';
+  static const String requestEstablishSubscriberCSS =
+      'REQUEST_ESTABLISH_SUBSCRIBER_CSS';
   static const String sendReceiverSdpSSC = 'SEND_RECEIVER_SDP_SSC';
   static const String sendReceiverSdpCSS = 'SEND_RECEIVER_SDP_CSS';
   static const String sendBroadcastCandidateCSS =

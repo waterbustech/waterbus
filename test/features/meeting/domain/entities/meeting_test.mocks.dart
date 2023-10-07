@@ -42,18 +42,21 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
           Invocation.getter(#state),
         ),
       ) as _i2.UserState);
+
   @override
   _i4.Stream<_i2.UserState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
         returnValue: _i4.Stream<_i2.UserState>.empty(),
         returnValueForMissingStub: _i4.Stream<_i2.UserState>.empty(),
       ) as _i4.Stream<_i2.UserState>);
+
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
   @override
   void add(_i2.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -62,6 +65,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onEvent(_i2.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -70,6 +74,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void emit(_i2.UserState? state) => super.noSuchMethod(
         Invocation.method(
@@ -78,6 +83,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void on<E extends _i2.UserEvent>(
     _i5.EventHandler<E, _i2.UserState>? handler, {
@@ -91,6 +97,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onTransition(_i5.Transition<_i2.UserEvent, _i2.UserState>? transition) =>
       super.noSuchMethod(
@@ -100,6 +107,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   _i4.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
@@ -109,6 +117,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
   @override
   void onChange(_i5.Change<_i2.UserState>? change) => super.noSuchMethod(
         Invocation.method(
@@ -117,6 +126,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void addError(
     Object? error, [
@@ -132,6 +142,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
         ),
         returnValueForMissingStub: null,
       );
+
   @override
   void onError(
     Object? error,
