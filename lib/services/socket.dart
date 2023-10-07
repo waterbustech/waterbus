@@ -14,24 +14,32 @@ import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.da
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 
 abstract class SocketConnection {
-  void establishConnection({bool forceConnection = false});
+  void establishConnection({
+    bool forceConnection = false,
+  });
   void disconnection();
   void establishBroadcast({
     required String sdp,
     required String roomId,
     required String participantId,
   });
-  void establishReceiver({
-    required String roomId,
+  void requestEstablishSubscriber({
+    required String targetId,
+  });
+  void answerEstablishSubscriber({
     required String targetId,
     required String sdp,
   });
-  void sendBroadcastCandidate(RTCIceCandidate candidate);
+  void sendBroadcastCandidate(
+    RTCIceCandidate candidate,
+  );
   void sendReceiverCandidate({
     required RTCIceCandidate candidate,
     required targetId,
   });
-  void leaveRoom(String roomId);
+  void leaveRoom(
+    String roomId,
+  );
 }
 
 @LazySingleton(as: SocketConnection)
@@ -60,8 +68,6 @@ class SocketConnectionImpl extends SocketConnection {
     );
 
     _socket?.connect();
-
-    _socket?.onError((data) => debugPrint(data));
 
     _socket?.onConnect((_) async {
       debugPrint('established connection - sid: ${_socket?.id}');
@@ -100,7 +106,7 @@ class SocketConnectionImpl extends SocketConnection {
         // will receive sdp, get it and add to pc
         /// sdp, targetId
         ///
-        if (data == null) return;
+        if (data['sdp'] == null) return;
 
         AppBloc.meetingBloc.add(
           EstablishReceiverSuccessEvent(
@@ -180,19 +186,6 @@ class SocketConnectionImpl extends SocketConnection {
   }
 
   @override
-  void establishReceiver({
-    required String roomId,
-    required String targetId,
-    required String sdp,
-  }) {
-    _socket?.emit(SocketEvent.sendReceiverSdpCSS, {
-      "roomId": roomId,
-      "targetId": targetId,
-      "sdp": sdp,
-    });
-  }
-
-  @override
   void leaveRoom(String roomId) {
     _socket?.emit(SocketEvent.sendLeaveRoomCSS, {"roomId": roomId});
   }
@@ -213,6 +206,26 @@ class SocketConnectionImpl extends SocketConnection {
     _socket?.emit(SocketEvent.sendReceiverCandidateCSS, {
       'targetId': targetId,
       'candidate': candidate.toMap(),
+    });
+  }
+
+  @override
+  void answerEstablishSubscriber({
+    required String targetId,
+    required String sdp,
+  }) {
+    _socket?.emit(SocketEvent.sendReceiverSdpCSS, {
+      "targetId": targetId,
+      "sdp": sdp,
+    });
+  }
+
+  @override
+  void requestEstablishSubscriber({
+    required String targetId,
+  }) {
+    _socket?.emit(SocketEvent.requestEstablishSubscriberCSS, {
+      "targetId": targetId,
     });
   }
 }

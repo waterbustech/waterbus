@@ -41,6 +41,7 @@ class MockUserRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<_i4.User?>.value(),
         returnValueForMissingStub: _i3.Future<_i4.User?>.value(),
       ) as _i3.Future<_i4.User?>);
+
   @override
   _i3.Future<bool> updateUserProfile(_i4.User? user) => (super.noSuchMethod(
         Invocation.method(
@@ -50,6 +51,7 @@ class MockUserRemoteDataSource extends _i1.Mock
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<String?> getPresignedUrl() => (super.noSuchMethod(
         Invocation.method(
