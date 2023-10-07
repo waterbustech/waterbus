@@ -101,6 +101,15 @@ extension MeetingX on Meeting {
       .where((participant) => participant.status == StatusEnum.active)
       .toList();
 
+  List<Participant> get getUniqueUsers {
+    final Set<int> uniqueStatuses =
+        participants.map((participant) => participant.user.id).toSet();
+
+    return participants
+        .where((participant) => uniqueStatuses.contains(participant.user.id))
+        .toList();
+  }
+
   bool get isNoOneElse {
     if (users.isEmpty) return true;
 
