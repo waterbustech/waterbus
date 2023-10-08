@@ -9,6 +9,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/constants/socket_event.dart';
+import 'package:waterbus/core/utils/dio/dio_configuration.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
@@ -45,13 +46,18 @@ abstract class SocketConnection {
 @LazySingleton(as: SocketConnection)
 class SocketConnectionImpl extends SocketConnection {
   final AuthLocalDataSource _dataSource;
-  SocketConnectionImpl(this._dataSource);
+  final DioConfiguration _dioConfiguration;
+  SocketConnectionImpl(this._dataSource, this._dioConfiguration);
 
   Socket? _socket;
 
   @override
   void establishConnection({bool forceConnection = false}) {
     if (_socket != null && !forceConnection) return;
+
+    final String currentAccessToken = _dataSource.accessToken ?? '';
+
+    if (currentAccessToken.isEmpty) return;
 
     _socket = io(
       ApiEndpoints.wsUrl,
@@ -61,7 +67,7 @@ class SocketConnectionImpl extends SocketConnection {
           .enableForceNew()
           .setAuth(
             {
-              'Authorization': 'Bearer ${_dataSource.accessToken}',
+              'Authorization': 'Bearer $currentAccessToken',
             },
           )
           .build(),
@@ -69,10 +75,20 @@ class SocketConnectionImpl extends SocketConnection {
 
     _socket?.connect();
 
+    _socket?.onError((data) async {
+      if (_dataSource.accessToken?.isEmpty ?? true) return;
+
+      final (_, _) = await _dioConfiguration.onRefreshToken(
+        oldAccessToken: currentAccessToken,
+      );
+
+      establishConnection();
+    });
+
     _socket?.onConnect((_) async {
       debugPrint('established connection - sid: ${_socket?.id}');
 
-      _socket?.on(SocketEvent.broadcastSSC, (data) {
+      _socket?.on(SocketEvent.joinRoomSSC, (data) {
         // pc context: only send peer
         // will receive sdp remote from service side if you join success
         /// otherParticipants, sdp (data)
@@ -101,7 +117,7 @@ class SocketConnectionImpl extends SocketConnection {
         );
       });
 
-      _socket?.on(SocketEvent.sendReceiverSdpSSC, (data) {
+      _socket?.on(SocketEvent.answerSubscriberSSC, (data) {
         // pc context: only receive peer
         // will receive sdp, get it and add to pc
         /// sdp, targetId
@@ -126,7 +142,7 @@ class SocketConnectionImpl extends SocketConnection {
         );
       });
 
-      _socket?.on(SocketEvent.sendBroadcastCandidateSSC, (data) {
+      _socket?.on(SocketEvent.publisherCandidateSSC, (data) {
         /// candidate json
         ///
         if (data == null) return;
@@ -142,7 +158,7 @@ class SocketConnectionImpl extends SocketConnection {
         );
       });
 
-      _socket?.on(SocketEvent.sendReceiverCandidateSSC, (data) {
+      _socket?.on(SocketEvent.subscriberCandidateSSC, (data) {
         /// targetId, candidate json
         ///
         if (data == null) return;
@@ -178,7 +194,7 @@ class SocketConnectionImpl extends SocketConnection {
     required String roomId,
     required String participantId,
   }) {
-    _socket?.emit(SocketEvent.broadcastCSS, {
+    _socket?.emit(SocketEvent.joinRoomCSS, {
       "roomId": roomId,
       "sdp": sdp,
       "participantId": participantId,
@@ -193,7 +209,7 @@ class SocketConnectionImpl extends SocketConnection {
   @override
   void sendBroadcastCandidate(RTCIceCandidate candidate) {
     _socket?.emit(
-      SocketEvent.sendBroadcastCandidateCSS,
+      SocketEvent.publisherCandidateCSS,
       candidate.toMap(),
     );
   }
@@ -203,7 +219,7 @@ class SocketConnectionImpl extends SocketConnection {
     required RTCIceCandidate candidate,
     required targetId,
   }) {
-    _socket?.emit(SocketEvent.sendReceiverCandidateCSS, {
+    _socket?.emit(SocketEvent.subscriberCandidateCSS, {
       'targetId': targetId,
       'candidate': candidate.toMap(),
     });
@@ -214,7 +230,7 @@ class SocketConnectionImpl extends SocketConnection {
     required String targetId,
     required String sdp,
   }) {
-    _socket?.emit(SocketEvent.sendReceiverSdpCSS, {
+    _socket?.emit(SocketEvent.answerSubscriberCSS, {
       "targetId": targetId,
       "sdp": sdp,
     });
@@ -224,7 +240,7 @@ class SocketConnectionImpl extends SocketConnection {
   void requestEstablishSubscriber({
     required String targetId,
   }) {
-    _socket?.emit(SocketEvent.requestEstablishSubscriberCSS, {
+    _socket?.emit(SocketEvent.makeSubscriberCSS, {
       "targetId": targetId,
     });
   }

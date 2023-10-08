@@ -111,9 +111,9 @@ extension MeetingX on Meeting {
   }
 
   bool get isNoOneElse {
-    if (users.isEmpty) return true;
+    if (getUniqueUsers.isEmpty) return true;
 
-    if (users.length == 1 && users.first.isMe) {
+    if (getUniqueUsers.length == 1 && getUniqueUsers.first.isMe) {
       return true;
     }
 
