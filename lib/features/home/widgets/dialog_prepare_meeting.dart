@@ -6,9 +6,9 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/core/helpers/share_utils.dart';
 
 // Project imports:
+import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
