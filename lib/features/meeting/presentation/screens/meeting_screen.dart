@@ -9,16 +9,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/helpers/share_utils.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
@@ -45,11 +45,30 @@ class _MeetingScreenState extends State<MeetingScreen> {
         }
 
         final Meeting meeting = state.meeting!;
-        final Participant participant = state.participant!;
         final CallState? callState = state.callState;
 
         return Scaffold(
           backgroundColor: Colors.black,
+          appBar: appBarTitleBack(
+            context,
+            'code: ${meeting.code}',
+            centerTitle: false,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await ShareUtils().share(
+                    link: meeting.inviteLink,
+                    description: meeting.title,
+                  );
+                },
+                icon: Icon(
+                  PhosphorIcons.share,
+                  size: 18.sp,
+                ),
+              ),
+              SizedBox(width: 10.sp),
+            ],
+          ),
           bottomNavigationBar: ClipRRect(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(12.sp),
@@ -90,19 +109,16 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       icon: PhosphorIcons.chats_teardrop,
                       onTap: () {},
                     ),
-                    Visibility(
-                      visible: participant.role == MeetingRole.host,
-                      child: CallActionButton(
-                        icon: PhosphorIcons.gear_six,
-                        onTap: () {
-                          AppNavigator.push(
-                            Routes.createMeetingRoute,
-                            arguments: {
-                              'meeting': meeting,
-                            },
-                          );
-                        },
-                      ),
+                    CallActionButton(
+                      icon: PhosphorIcons.gear_six,
+                      onTap: () {
+                        AppNavigator.push(
+                          Routes.createMeetingRoute,
+                          arguments: {
+                            'meeting': meeting,
+                          },
+                        );
+                      },
                     ),
                     CallActionButton(
                       icon: PhosphorIcons.x,

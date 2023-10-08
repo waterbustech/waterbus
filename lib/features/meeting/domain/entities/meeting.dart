@@ -119,4 +119,6 @@ extension MeetingX on Meeting {
 
     return false;
   }
+
+  String get inviteLink => 'https:/waterbus.tech/meeting/$code';
 }
