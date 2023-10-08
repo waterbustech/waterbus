@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 )
                               : AvatarCard(
-                                  urlToImage: _user!.avatar!,
+                                  urlToImage: _user!.avatar,
                                   size: 80.sp,
                                 ),
                         ),

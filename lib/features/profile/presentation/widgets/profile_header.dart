@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -30,26 +28,10 @@ class ProfileHeader extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                user.avatar == null
-                    ? Material(
-                        shape: SuperellipseShape(
-                          borderRadius: BorderRadius.circular(18.sp),
-                          side: BorderSide(
-                            color:
-                                Theme.of(context).primaryColor.withOpacity(.5),
-                            width: .5,
-                          ),
-                        ),
-                        child: Image.asset(
-                          Assets.images.imgAppLogo.path,
-                          width: 26.sp,
-                          height: 26.sp,
-                        ),
-                      )
-                    : AvatarCard(
-                        urlToImage: user.avatar!,
-                        size: 26.sp,
-                      ),
+                AvatarCard(
+                  urlToImage: user.avatar,
+                  size: 26.sp,
+                ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(

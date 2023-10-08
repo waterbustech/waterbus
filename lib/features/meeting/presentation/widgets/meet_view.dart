@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class MeetView extends StatelessWidget {
   final EdgeInsets? margin;
@@ -44,27 +42,10 @@ class MeetView extends StatelessWidget {
                 )
               : Container(
                   alignment: Alignment.center,
-                  child: participant.user.avatar == null
-                      ? Material(
-                          shape: SuperellipseShape(
-                            borderRadius: BorderRadius.circular(18.sp),
-                            side: BorderSide(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(.5),
-                              width: .5,
-                            ),
-                          ),
-                          child: Image.asset(
-                            Assets.images.imgAppLogo.path,
-                            width: avatarSize,
-                            height: avatarSize,
-                          ),
-                        )
-                      : AvatarCard(
-                          urlToImage: participant.user.avatar!,
-                          size: avatarSize,
-                        ),
+                  child: AvatarCard(
+                    urlToImage: participant.user.avatar,
+                    size: avatarSize,
+                  ),
                 ),
           Positioned(
             left: 10.sp,
