@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/helpers/share_utils.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -76,10 +77,18 @@ class DialogPrepareMeeting extends StatelessWidget {
                         Theme.of(context).primaryColor.withOpacity(.2),
                   ),
                   SizedBox(width: 4.sp),
-                  const TimeCard(
-                    text: "Share link",
-                    iconData: PhosphorIcons.export,
-                    backgroundColor: Colors.blueGrey,
+                  GestureWrapper(
+                    onTap: () async {
+                      await ShareUtils().share(
+                        link: meeting.inviteLink,
+                        description: meeting.title,
+                      );
+                    },
+                    child: const TimeCard(
+                      text: "Share link",
+                      iconData: PhosphorIcons.export,
+                      backgroundColor: Colors.blueGrey,
+                    ),
                   ),
                 ],
               ),
