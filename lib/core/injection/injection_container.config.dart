@@ -20,7 +20,7 @@ import '../../features/auth/domain/repositories/auth_repository.dart' as _i20;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i22;
 import '../../features/auth/domain/usecases/login_with_social.dart' as _i33;
 import '../../features/auth/domain/usecases/logout.dart' as _i32;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i37;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i38;
 import '../../features/home/bloc/home/home_bloc.dart' as _i6;
 import '../../features/meeting/domain/usecases/create_meeting.dart' as _i24;
 import '../../features/meeting/domain/usecases/get_info_meeting.dart' as _i25;
@@ -33,7 +33,8 @@ import '../../features/meeting/presentation/bloc/meeting_bloc.dart' as _i34;
 import '../../features/profile/domain/usecases/get_presigned_url.dart' as _i27;
 import '../../features/profile/domain/usecases/get_profile.dart' as _i28;
 import '../../features/profile/domain/usecases/update_profile.dart' as _i35;
-import '../../features/profile/presentation/bloc/user_bloc.dart' as _i36;
+import '../../features/profile/domain/usecases/upload_avatar.dart' as _i36;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i37;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i11;
 import '../../services/socket.dart' as _i12;
 import '../../services/webrtc/webrtc_impl.dart' as _i18;
@@ -91,8 +92,10 @@ _i1.GetIt $initGetIt(
         gh<_i7.MeetingLocalDataSource>(),
       ));
   gh.factory<_i11.ScheduleBloc>(() => _i11.ScheduleBloc());
-  gh.lazySingleton<_i12.SocketConnection>(
-      () => _i12.SocketConnectionImpl(gh<_i3.AuthLocalDataSource>()));
+  gh.lazySingleton<_i12.SocketConnection>(() => _i12.SocketConnectionImpl(
+        gh<_i3.AuthLocalDataSource>(),
+        gh<_i5.DioConfiguration>(),
+      ));
   gh.factory<_i13.UpdateMeeting>(
       () => _i13.UpdateMeeting(gh<_i9.MeetingRepository>()));
   gh.lazySingleton<_i14.UserRemoteDataSource>(
@@ -141,12 +144,15 @@ _i1.GetIt $initGetIt(
       ));
   gh.factory<_i35.UpdateProfile>(
       () => _i35.UpdateProfile(gh<_i15.UserRepository>()));
-  gh.factory<_i36.UserBloc>(() => _i36.UserBloc(
+  gh.factory<_i36.UploadAvatar>(
+      () => _i36.UploadAvatar(gh<_i15.UserRepository>()));
+  gh.factory<_i37.UserBloc>(() => _i37.UserBloc(
         gh<_i35.UpdateProfile>(),
         gh<_i27.GetPresignedUrl>(),
         gh<_i28.GetProfile>(),
+        gh<_i36.UploadAvatar>(),
       ));
-  gh.factory<_i37.AuthBloc>(() => _i37.AuthBloc(
+  gh.factory<_i38.AuthBloc>(() => _i38.AuthBloc(
         gh<_i22.CheckAuth>(),
         gh<_i33.LoginWithSocial>(),
         gh<_i32.LogOut>(),

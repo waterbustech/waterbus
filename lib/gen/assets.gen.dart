@@ -40,6 +40,10 @@ class $AssetsIconsGen {
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
 
+  /// File path: assets/icons/launcher_icon_android12.png
+  AssetGenImage get launcherIconAndroid12 =>
+      const AssetGenImage('assets/icons/launcher_icon_android12.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         icApple,
@@ -48,7 +52,8 @@ class $AssetsIconsGen {
         icFacebook,
         icGoogle,
         icNewMeeting,
-        launcherIcon
+        launcherIcon,
+        launcherIconAndroid12
       ];
 }
 

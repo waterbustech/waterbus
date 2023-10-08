@@ -1,5 +1,12 @@
 // Package imports:
+// ignore_for_file: depend_on_referenced_packages
+
+// Dart imports:
+import 'dart:io';
+
+// Package imports:
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
 // Project imports:
@@ -12,6 +19,10 @@ abstract class UserRemoteDataSource {
   Future<User?> getUserProfile();
   Future<bool> updateUserProfile(User user);
   Future<String?> getPresignedUrl();
+  Future<String?> uploadImageToS3({
+    required String uploadUrl,
+    required File image,
+  });
 }
 
 @LazySingleton(as: UserRemoteDataSource)
@@ -31,6 +42,30 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     }
 
     return null;
+  }
+
+  @override
+  Future<String?> uploadImageToS3({
+    required String uploadUrl,
+    required File image,
+  }) async {
+    try {
+      final Uri uri = Uri.parse(uploadUrl);
+
+      final http.Response response = await http.put(
+        uri,
+        body: image.readAsBytesSync(),
+        headers: const {"Content-Type": 'image/png'},
+      );
+
+      if (response.statusCode == StatusCode.ok) {
+        return uploadUrl.split('?').first;
+      }
+
+      return null;
+    } catch (error) {
+      return null;
+    }
   }
 
   @override

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -10,6 +11,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -85,19 +87,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 24.sp),
-                        Align(
-                          child: _user!.avatar == null
-                              ? CircleAvatar(
-                                  radius: 40.sp,
-                                  backgroundColor: Colors.black,
-                                  backgroundImage: AssetImage(
-                                    Assets.images.imgAppLogo.path,
-                                  ),
-                                )
-                              : AvatarCard(
-                                  urlToImage: _user!.avatar,
-                                  size: 80.sp,
-                                ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            final User? user =
+                                state is UserGetDone ? state.user : null;
+
+                            return Align(
+                              child: GestureWrapper(
+                                onTap: () {
+                                  WaterbusImagePicker().openImagePicker(
+                                    context: context,
+                                    handleFinish: (image) {
+                                      displayLoadingLayer();
+
+                                      AppBloc.userBloc.add(
+                                        UpdateAvatarEvent(image: image),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: user!.avatar == null
+                                    ? CircleAvatar(
+                                        radius: 40.sp,
+                                        backgroundColor: Colors.black,
+                                        backgroundImage: AssetImage(
+                                          Assets.images.imgAppLogo.path,
+                                        ),
+                                      )
+                                    : AvatarCard(
+                                        urlToImage: user.avatar,
+                                        size: 80.sp,
+                                      ),
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(height: 20.sp),
                         const LabelText(label: 'Full name'),

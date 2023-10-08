@@ -57,6 +57,7 @@ class StackAvatar extends StatelessWidget {
       size: size,
       margin: EdgeInsets.only(left: index * (size * 0.8)),
       urlToImage: images[index],
+      isCircleShape: true,
     );
   }
 }

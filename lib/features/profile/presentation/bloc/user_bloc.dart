@@ -14,6 +14,7 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_presigned_url.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_profile.dart';
 import 'package:waterbus/features/profile/domain/usecases/update_profile.dart';
+import 'package:waterbus/features/profile/domain/usecases/upload_avatar.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -23,6 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetProfile _getProfile;
   final UpdateProfile _updateProfile;
   final GetPresignedUrl _getPresignedUrl;
+  final UploadAvatar _uploadAvatar;
 
   // MARK: private
   User? _user;
@@ -31,6 +33,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     this._updateProfile,
     this._getPresignedUrl,
     this._getProfile,
+    this._uploadAvatar,
   ) : super(UserInitial()) {
     on<UserEvent>(
       (event, emit) async {
@@ -53,7 +56,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }
 
         if (event is UpdateAvatarEvent) {
-          await _getPresignedUrlS3();
+          await _handleChangeAvatar(event);
+
+          if (_user != null) {
+            emit(_userGetDone);
+          }
         }
 
         if (event is CleanProfileEvent) {
@@ -78,11 +85,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     );
   }
 
-  Future<void> _updateUserProfile(UpdateProfileEvent event) async {
+  Future<void> _updateUserProfile(
+    UpdateProfileEvent event, {
+    bool ignorePop = false,
+  }) async {
     if (_user == null) return;
 
     final Either<Failure, User> user = await _updateProfile.call(
-      UpdateUserParams(user: _user!.copyWith(fullName: event.fullName)),
+      UpdateUserParams(
+        user: _user!.copyWith(
+          fullName: event.fullName,
+          avatar: event.avatar,
+        ),
+      ),
     );
 
     AppNavigator.pop();
@@ -90,10 +105,34 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     user.fold(
       (l) => {},
       (r) {
-        AppNavigator.pop();
+        if (!ignorePop) {
+          AppNavigator.pop();
+        }
 
         return _user = r;
       },
+    );
+  }
+
+  Future<void> _handleChangeAvatar(UpdateAvatarEvent event) async {
+    final String? presignedUrl = await _getPresignedUrlS3();
+
+    if (presignedUrl == null) return;
+
+    final Either<Failure, String> uploadAvatar = await _uploadAvatar.call(
+      UploadAvatarParams(
+        uploadUrl: presignedUrl,
+        image: event.image,
+      ),
+    );
+
+    final String? urlToImage = uploadAvatar.fold((l) => null, (r) => r);
+
+    if (urlToImage == null) return;
+
+    await _updateUserProfile(
+      UpdateProfileEvent(fullName: _user!.fullName, avatar: urlToImage),
+      ignorePop: true,
     );
   }
 
