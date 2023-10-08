@@ -84,6 +84,12 @@ dependencies:
   sizer: 
     path: ./packages/sizer
 
+  # Media
+  image_picker: ^1.0.4
+  image_picker_android: ^0.8.8+1
+  image_picker_platform_interface: ^2.9.1
+  flutter_image_compress: ^2.0.4
+
   # Video call
   sdp_transform: ^0.3.2
   flutter_webrtc: ^0.9.45
