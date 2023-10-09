@@ -15,6 +15,7 @@ import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
@@ -22,14 +23,13 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
-import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_participant.dart';
-import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 import 'package:waterbus/services/webrtc/webrtc_interface.dart';
 
 part 'meeting_event.dart';
@@ -37,8 +37,6 @@ part 'meeting_state.dart';
 
 @injectable
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
-  final GetRecentJoined _recentJoined;
-  final CleanAllRecentJoined _cleanAllRecentJoined;
   final CreateMeeting _createMeeting;
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
@@ -51,11 +49,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: private
   Meeting? _currentMeeting;
   Participant? _myParticipant;
-  final List<Meeting> _recentMeetings = [];
 
   MeetingBloc(
-    this._recentJoined,
-    this._cleanAllRecentJoined,
     this._createMeeting,
     this._joinMeeting,
     this._updateMeeting,
@@ -67,18 +62,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     on<MeetingEvent>(
       transformer: sequential(),
       (event, emit) async {
-        if (event is GetRecentJoinedEvent) {
-          await _handleGetRecentJoined();
-
-          emit(_joinedMeeting);
-        }
-
-        if (event is CleanAllRecentJoinedEvent) {
-          await _handleCleanAllRecentJoined();
-
-          emit(_joinedMeeting);
-        }
-
         if (event is CreateMeetingEvent) {
           await _handleCreateMeeting(event);
 
@@ -96,13 +79,15 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is JoinMeetingEvent) {
-          final int indexOfMeetingInRecent = _recentMeetings.indexWhere(
+          final int indexOfMeetingInRecent =
+              AppBloc.meetingListBloc.recentMeetings.indexWhere(
             (meeting) => meeting.code == event.meeting.code,
           );
 
           // Will be take the meeting object in recent joined
           if (indexOfMeetingInRecent != -1) {
-            _currentMeeting = _recentMeetings[indexOfMeetingInRecent];
+            _currentMeeting =
+                AppBloc.meetingListBloc.recentMeetings[indexOfMeetingInRecent];
 
             final int indexOfParticipant =
                 _currentMeeting!.participants.indexWhere(
@@ -220,37 +205,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: state
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
-        recentMeetings: _recentMeetings,
         participant: _myParticipant,
         callState: _rtcManager.callState(),
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
         meeting: _currentMeeting,
-        recentMeetings: _recentMeetings,
         participant: _myParticipant,
       );
 
   // MARK: Private
-  Future<void> _handleGetRecentJoined() async {
-    final Either<Failure, List<Meeting>> meetings =
-        await _recentJoined.call(null);
-
-    meetings.fold((l) => null, (r) {
-      _recentMeetings.clear();
-      return _recentMeetings.addAll(r);
-    });
-  }
-
-  Future<void> _handleCleanAllRecentJoined() async {
-    final Either<Failure, bool> isCleanSucceed =
-        await _cleanAllRecentJoined.call(null);
-
-    if (isCleanSucceed.isRight()) {
-      _recentMeetings.clear();
-    }
-  }
-
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
     final Either<Failure, Meeting> meeting = await _createMeeting.call(
       CreateMeetingParams(
@@ -263,7 +227,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     meeting.fold((l) => null, (r) async {
       AppNavigator.replaceWith(Routes.meetingRoute);
-      _recentMeetings.insert(0, r);
+      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
       _myParticipant = r.participants.first;
 
       await _initialWebRTCManager(
@@ -288,9 +252,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     return meeting.fold((l) => false, (r) {
       _currentMeeting = r;
 
-      _recentMeetings.removeWhere((meeting) => meeting.id == r.id);
-
-      _recentMeetings.insert(0, r);
+      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
 
       final int indexOfMyParticipant = r.participants.lastIndexWhere(
         (participant) => participant.isMe,
@@ -331,13 +293,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     meeting.fold((l) => null, (r) {
       AppNavigator.popUntil(Routes.meetingRoute);
-      final int indexOfMeeting = _recentMeetings.indexWhere(
-        (meeting) => r.id == meeting.id,
-      );
-
-      if (indexOfMeeting != -1) {
-        _recentMeetings[indexOfMeeting] = r;
-      }
+      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
 
       return _currentMeeting = r;
     });
@@ -359,7 +315,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _currentMeeting = null;
       _myParticipant = null;
 
-      _findAndModifyRecent(r);
+      AppBloc.meetingListBloc.add(UpdateRecentJoinEvent(meeting: r));
 
       _rtcManager.dispose();
 
@@ -403,7 +359,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _currentMeeting = _currentMeeting!.copyWith(
         participants: participants,
       );
-      _findAndModifyRecent(_currentMeeting!);
+
+      AppBloc.meetingListBloc.add(
+        UpdateRecentJoinEvent(meeting: _currentMeeting!),
+      );
 
       return;
     }
@@ -419,7 +378,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _currentMeeting = _currentMeeting!.copyWith(
         participants: participants,
       );
-      _findAndModifyRecent(_currentMeeting!);
+
+      AppBloc.meetingListBloc.add(
+        UpdateRecentJoinEvent(meeting: _currentMeeting!),
+      );
 
       return r;
     });
@@ -448,7 +410,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         participants: participants,
       );
 
-      _findAndModifyRecent(_currentMeeting!);
+      AppBloc.meetingListBloc.add(
+        UpdateRecentJoinEvent(meeting: _currentMeeting!),
+      );
     }
   }
 
@@ -474,15 +438,5 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         },
       ),
     );
-  }
-
-  void _findAndModifyRecent(Meeting meeting) {
-    final int indexOfMeeting = _recentMeetings.indexWhere(
-      (m) => m.id == meeting.id,
-    );
-
-    if (indexOfMeeting == -1) return;
-
-    _recentMeetings[indexOfMeeting] = meeting;
   }
 }

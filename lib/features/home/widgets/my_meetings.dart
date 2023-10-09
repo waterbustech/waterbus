@@ -11,14 +11,15 @@ import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
 import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 
 class MyMeetings extends StatelessWidget {
   const MyMeetings({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MeetingBloc, MeetingState>(
+    return BlocBuilder<MeetingListBloc, MeetingListState>(
       builder: (context, state) {
         if (state is MeetingInitial) return const SizedBox();
 

@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.io?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
 
@@ -104,7 +104,7 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Contact Information
 
-If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.io`.
+If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.tech`.
 
 ## License
 
