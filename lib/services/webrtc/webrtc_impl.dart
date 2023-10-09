@@ -6,10 +6,10 @@ import 'package:sdp_transform/sdp_transform.dart';
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/services/socket.dart';
-import 'package:waterbus/services/webrtc/webrtc_interface.dart';
+import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
+import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 @LazySingleton(as: WaterbusWebRTCManager)
 class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
