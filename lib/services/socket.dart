@@ -12,7 +12,7 @@ import 'package:waterbus/core/constants/socket_event.dart';
 import 'package:waterbus/core/utils/dio/dio_configuration.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 abstract class SocketConnection {
   void establishConnection({
@@ -47,7 +47,10 @@ abstract class SocketConnection {
 class SocketConnectionImpl extends SocketConnection {
   final AuthLocalDataSource _dataSource;
   final DioConfiguration _dioConfiguration;
-  SocketConnectionImpl(this._dataSource, this._dioConfiguration);
+  SocketConnectionImpl(
+    this._dataSource,
+    this._dioConfiguration,
+  );
 
   Socket? _socket;
 

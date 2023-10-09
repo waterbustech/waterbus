@@ -12,7 +12,7 @@ import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class MeetingCard extends StatelessWidget {
   final Meeting meeting;

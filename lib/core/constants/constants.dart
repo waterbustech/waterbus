@@ -4,7 +4,7 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 const User defaultUser = User(
   id: 0,
   fullName: 'Waterbus',
-  userName: 'waterbus.io',
+  userName: 'waterbus.tech',
   avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
 

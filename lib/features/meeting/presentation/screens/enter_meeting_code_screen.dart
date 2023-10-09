@@ -10,7 +10,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class EnterMeetingCode extends StatefulWidget {
   const EnterMeetingCode({super.key});

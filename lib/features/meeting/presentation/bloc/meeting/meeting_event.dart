@@ -7,10 +7,6 @@ sealed class MeetingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetRecentJoinedEvent extends MeetingEvent {}
-
-class CleanAllRecentJoinedEvent extends MeetingEvent {}
-
 class CreateMeetingEvent extends MeetingEvent {
   final String roomName;
   final String password;
@@ -59,6 +55,7 @@ class ParticipantHasLeftEvent extends MeetingEvent {
   const ParticipantHasLeftEvent({required this.participantId});
 }
 
+// MARK: related to WebRTC
 class EstablishBroadcastSuccessEvent extends MeetingEvent {
   final String sdp;
   final List<String> participants;

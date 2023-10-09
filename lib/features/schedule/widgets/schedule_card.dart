@@ -45,7 +45,7 @@ class ScheduleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '🚀 QA engineers Team - Waterbus.io',
+            '🚀 QA engineers Team - waterbus.tech',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
