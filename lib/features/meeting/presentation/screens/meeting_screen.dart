@@ -17,12 +17,12 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
-import 'package:waterbus/features/meeting/domain/entities/call_state.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
+import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});

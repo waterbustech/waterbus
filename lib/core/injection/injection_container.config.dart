@@ -36,8 +36,8 @@ import '../../features/profile/domain/usecases/upload_avatar.dart' as _i37;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i38;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i11;
 import '../../services/socket.dart' as _i12;
+import '../../services/webrtc/abstract/webrtc_interface.dart' as _i17;
 import '../../services/webrtc/webrtc_impl.dart' as _i18;
-import '../../services/webrtc/webrtc_interface.dart' as _i17;
 import '../utils/datasources/base_remote_data.dart' as _i4;
 import '../utils/dio/dio_configuration.dart' as _i5;
 
