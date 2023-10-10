@@ -1,6 +1,8 @@
 // Flutter imports:
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
 
 // Project imports:
 import 'package:waterbus/services/webrtc/models/participant_sfu.dart';
