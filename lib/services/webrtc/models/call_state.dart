@@ -1,42 +1,43 @@
-// Package imports:
-import 'package:flutter_webrtc/flutter_webrtc.dart';
+// Flutter imports:
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
-class CallState {
-  final RTCVideoRenderer? localRenderer;
-  final Map<String, RTCVideoRenderer> remoteRenderers;
-  final Map<String, bool> remoteMicState;
-  final Map<String, bool> remoteCameraState;
-  final bool localMicState;
-  final bool localCameraState;
-  CallState({
-    required this.localRenderer,
-    required this.remoteRenderers,
-    required this.remoteMicState,
-    required this.remoteCameraState,
-    required this.localMicState,
-    required this.localCameraState,
+// Project imports:
+import 'package:waterbus/services/webrtc/models/participant_sfu.dart';
+
+class CallState extends Equatable {
+  final ParticipantSFU? mParticipant;
+  final Map<String, ParticipantSFU> participants;
+  const CallState({
+    this.mParticipant,
+    required this.participants,
   });
 
   CallState copyWith({
-    RTCVideoRenderer? localRenderer,
-    Map<String, RTCVideoRenderer>? remoteRenderers,
-    Map<String, bool>? remoteMicState,
-    Map<String, bool>? remoteCameraState,
-    bool? localMicState,
-    bool? localCameraState,
+    ParticipantSFU? mParticipant,
+    Map<String, ParticipantSFU>? participants,
   }) {
     return CallState(
-      localRenderer: localRenderer ?? this.localRenderer,
-      remoteRenderers: remoteRenderers ?? this.remoteRenderers,
-      remoteMicState: remoteMicState ?? this.remoteMicState,
-      remoteCameraState: remoteCameraState ?? this.remoteCameraState,
-      localMicState: localMicState ?? this.localMicState,
-      localCameraState: localCameraState ?? this.localCameraState,
+      mParticipant: mParticipant ?? this.mParticipant,
+      participants: participants ?? this.participants,
     );
   }
 
   @override
-  String toString() {
-    return 'MeetingState(localRenderer: $localRenderer, remoteRenderers: $remoteRenderers, remoteMicState: $remoteMicState, remoteCameraState: $remoteCameraState, localMicState: $localMicState, localCameraState: $localCameraState)';
+  String toString() =>
+      'CallState(mParticipant: $mParticipant, participants: $participants)';
+
+  @override
+  bool operator ==(covariant CallState other) {
+    if (identical(this, other)) return true;
+
+    return other.mParticipant == mParticipant &&
+        mapEquals(other.participants, participants);
   }
+
+  @override
+  int get hashCode => mParticipant.hashCode ^ participants.hashCode;
+
+  @override
+  List<Object?> get props => [mParticipant, participants];
 }

@@ -55,6 +55,12 @@ class ParticipantHasLeftEvent extends MeetingEvent {
   const ParticipantHasLeftEvent({required this.participantId});
 }
 
+class ToggleMicEvent extends MeetingEvent {}
+
+class ToggleCamEvent extends MeetingEvent {}
+
+class RefreshDisplayMeetingEvent extends MeetingEvent {}
+
 // MARK: related to WebRTC
 class EstablishBroadcastSuccessEvent extends MeetingEvent {
   final String sdp;
@@ -87,5 +93,3 @@ class NewReceiverCandidateEvent extends MeetingEvent {
     required this.targetId,
   });
 }
-
-class UpdateNewMeetingEvent extends MeetingEvent {}

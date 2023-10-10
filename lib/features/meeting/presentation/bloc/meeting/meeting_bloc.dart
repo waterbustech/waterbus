@@ -152,7 +152,21 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           _displayDialogJoinMeeting(event.meeting);
         }
 
-        // During meeting
+        if (event is ToggleCamEvent) {
+          await _rtcManager.toggleCam();
+        }
+
+        if (event is ToggleMicEvent) {
+          await _rtcManager.toggleMic();
+        }
+
+        if (event is RefreshDisplayMeetingEvent) {
+          if (_currentMeeting != null) {
+            emit(_joinedMeeting);
+          }
+        }
+
+        // Related to WebRTC
         if (event is EstablishBroadcastSuccessEvent) {
           await _handleEstablishBroadcastSuccess(event);
 
@@ -191,12 +205,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         if (event is NewReceiverCandidateEvent) {
           _rtcManager.addSubscriberCandidate(event.targetId, event.candidate);
-        }
-
-        if (event is UpdateNewMeetingEvent) {
-          if (_currentMeeting != null) {
-            emit(_joinedMeeting);
-          }
         }
       },
     );
@@ -326,14 +334,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleEstablishBroadcastSuccess(
     EstablishBroadcastSuccessEvent event,
   ) async {
-    await _rtcManager.setBroadcastRemoteSdp(event.sdp);
-    await _rtcManager.establishReceiverStream(event.participants);
+    await _rtcManager.setPublisherRemoteSdp(event.sdp);
+    await _rtcManager.subscribe(event.participants);
   }
 
   Future<void> _handleEstablishReceiverSuccess(
     EstablishReceiverSuccessEvent event,
   ) async {
-    await _rtcManager.setReceiverRemoteSdp(
+    await _rtcManager.setSubscriberRemoteSdp(
       event.participantId,
       event.sdp,
     );
@@ -420,10 +428,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     required String roomCode,
     required int participantId,
   }) async {
-    await _rtcManager.startBroadcastLocalMedia(
+    await _rtcManager.joinRoom(
       roomId: roomCode,
       participantId: participantId,
     );
+
+    _rtcManager.notifyChanged.listen((state) {
+      add(RefreshDisplayMeetingEvent());
+    });
   }
 
   void _displayDialogJoinMeeting(Meeting meeting) {

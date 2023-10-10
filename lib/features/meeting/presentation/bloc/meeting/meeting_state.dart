@@ -1,6 +1,6 @@
 part of 'meeting_bloc.dart';
 
-abstract class MeetingState extends Equatable {
+abstract class MeetingState {
   const MeetingState({
     this.meeting,
     this.participant,
@@ -11,8 +11,8 @@ abstract class MeetingState extends Equatable {
   final Participant? participant;
   final CallState? callState;
 
-  @override
-  List<Object?> get props => [meeting, participant, callState];
+  // @override
+  // List<Object?> get props => [meeting, participant, callState];
 }
 
 class MeetingInitial extends MeetingState {
