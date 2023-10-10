@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -60,15 +61,30 @@ class MeetView extends StatelessWidget {
                 color: Colors.black.withOpacity(.3),
               ),
               alignment: Alignment.center,
-              child: Text(
-                participant.user.fullName,
-                style: TextStyle(
-                  color: participant.role == MeetingRole.host
-                      ? Colors.yellow
-                      : Colors.white,
-                  fontSize: avatarSize / 6,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    participant.user.fullName,
+                    style: TextStyle(
+                      color: participant.role == MeetingRole.host
+                          ? Colors.yellow
+                          : Colors.white,
+                      fontSize: avatarSize / 6,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Visibility(
+                    visible: !hasFirstFrameRendered,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 6.sp),
+                      child: CupertinoActivityIndicator(
+                        radius: 6.5,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -78,14 +94,31 @@ class MeetView extends StatelessWidget {
   }
 
   RTCVideoRenderer? get videoRenderer {
-    if (callState != null) {
-      if (participant.isMe) {
-        return callState!.localRenderer;
-      } else {
-        return callState!.remoteRenderers[participant.id.toString()];
-      }
-    }
+    if (!hasFirstFrameRendered || !isCameraEnabled) return null;
 
-    return null;
+    if (participant.isMe) {
+      return callState?.mParticipant?.renderer;
+    } else {
+      return callState?.participants[participant.id.toString()]?.renderer;
+    }
+  }
+
+  bool get hasFirstFrameRendered {
+    if (participant.isMe) {
+      return callState?.mParticipant?.hasFirstFrameRendered ?? false;
+    } else {
+      return callState?.participants[participant.id.toString()]
+              ?.hasFirstFrameRendered ??
+          false;
+    }
+  }
+
+  bool get isCameraEnabled {
+    if (participant.isMe) {
+      return callState?.mParticipant?.isCamEnabled ?? false;
+    } else {
+      return callState?.participants[participant.id.toString()]?.isCamEnabled ??
+          false;
+    }
   }
 }

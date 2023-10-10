@@ -1,16 +1,18 @@
 // Package imports:
+import 'dart:async';
+
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sdp_transform/sdp_transform.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/services/socket.dart';
 import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
 import 'package:waterbus/services/webrtc/helpers/extensions/sdp_extensions.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
+import 'package:waterbus/services/webrtc/models/description_type.dart';
+import 'package:waterbus/services/webrtc/models/participant_sfu.dart';
 
 @LazySingleton(as: WaterbusWebRTCManager)
 class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
@@ -18,35 +20,38 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   WaterbusWebRTCManagerIpml(this._wsConnections);
 
   String? _roomId;
-  RTCPeerConnection? _publisherPeer;
-  RTCVideoRenderer? _localRenderer;
   MediaStream? _localStream;
-  final Map<String, RTCPeerConnection> _subscriberPeers = {};
-  final Map<String, RTCVideoRenderer> _subscriberRenderers = {};
-  final Map<String, List<RTCIceCandidate>> _queueRemoteSubscriberCandidates =
-      {};
-  final List<RTCIceCandidate> _queuePublisherCandidates = [];
+  ParticipantSFU? _mParticipant;
   bool _flagPublisherCanAddCandidate = false;
-
-  bool _myMicEnabled = true;
-  bool _myCamEnabled = true;
+  final Map<String, ParticipantSFU> _subscribers = {};
+  final Map<String, List<RTCIceCandidate>> _queueRemoteSubCandidates = {};
+  final List<RTCIceCandidate> _queuePublisherCandidates = [];
+  // ignore: close_sinks
+  final StreamController<CallState> _notifyChanged =
+      StreamController<CallState>.broadcast();
 
   @override
-  Future<void> startBroadcastLocalMedia({
+  Future<void> joinRoom({
     required String roomId,
     required int participantId,
   }) async {
-    if (_publisherPeer != null) return;
+    if (_mParticipant?.peerConnection != null) return;
 
     _roomId = roomId;
 
+    final RTCPeerConnection peerConnection = await _createPeerConnection(
+      offerPublisherSdpConstraints,
+    );
+
+    _mParticipant = ParticipantSFU(
+      participantId: participantId.toString(),
+      peerConnection: peerConnection,
+      onChanged: _notify,
+    );
+
     _localStream = await _getUserMedia();
 
-    await _toggleSpeakerPhone();
-
-    _publisherPeer = await _createPeerConnection(offerPublisherSdpConstraints);
-
-    _publisherPeer?.onIceCandidate = (candidate) {
+    peerConnection.onIceCandidate = (candidate) {
       if (_flagPublisherCanAddCandidate) {
         _wsConnections.sendBroadcastCandidate(candidate);
       } else {
@@ -55,22 +60,22 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     };
 
     _localStream?.getTracks().forEach((track) {
-      _publisherPeer?.addTrack(track, _localStream!);
+      peerConnection.addTrack(track, _localStream!);
     });
 
-    _publisherPeer?.onRenegotiationNeeded = () async {
-      if ((await _publisherPeer?.getRemoteDescription()) != null) return;
+    peerConnection.onRenegotiationNeeded = () async {
+      if ((await peerConnection.getRemoteDescription()) != null) return;
 
-      String sdp = await _createOffer(_publisherPeer!);
+      String sdp = await _createOffer(peerConnection);
 
       sdp = sdp.enableAudioDTX();
 
       final RTCSessionDescription description = RTCSessionDescription(
         sdp,
-        'offer',
+        DescriptionType.offer.type,
       );
 
-      await _publisherPeer?.setLocalDescription(description);
+      await peerConnection.setLocalDescription(description);
 
       _wsConnections.establishBroadcast(
         sdp: sdp,
@@ -81,7 +86,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> establishReceiverStream(List<String> targetIds) async {
+  Future<void> subscribe(List<String> targetIds) async {
     for (final targetId in targetIds) {
       _makeConnectionReceive(targetId);
     }
@@ -94,23 +99,19 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   @override
   Future<void> participantHasLeft(String targetId) async {
-    await _subscriberRenderers[targetId]?.dispose();
-    await _subscriberPeers[targetId]?.close();
-    _subscriberRenderers.remove(targetId);
-    _subscriberPeers.remove(targetId);
-    _queueRemoteSubscriberCandidates.remove(targetId);
+    await _subscribers[targetId]?.dispose();
+    _subscribers.remove(targetId);
+    _queueRemoteSubCandidates.remove(targetId);
   }
 
   @override
-  Future<void> setBroadcastRemoteSdp(String sdp) async {
-    if ((await _publisherPeer?.getRemoteDescription()) != null) return;
-
+  Future<void> setPublisherRemoteSdp(String sdp) async {
     final RTCSessionDescription description = RTCSessionDescription(
       sdp,
-      'answer',
+      DescriptionType.answer.type,
     );
 
-    await _publisherPeer?.setRemoteDescription(description);
+    await _mParticipant?.setRemoteDescription(description);
 
     for (final candidate in _queuePublisherCandidates) {
       _wsConnections.sendBroadcastCandidate(candidate);
@@ -121,12 +122,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> setReceiverRemoteSdp(String targetId, String sdp) async {
-    if (_subscriberPeers[targetId] != null) return;
+  Future<void> setSubscriberRemoteSdp(String targetId, String sdp) async {
+    if (_subscribers[targetId] != null) return;
 
     final RTCSessionDescription description = RTCSessionDescription(
       sdp,
-      'offer',
+      DescriptionType.offer.type,
     );
 
     await _answerSubscriber(targetId, description);
@@ -134,9 +135,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   @override
   Future<void> addPublisherCandidate(RTCIceCandidate candidate) async {
-    if (_publisherPeer == null) return;
-
-    await _publisherPeer?.addCandidate(candidate);
+    await _mParticipant?.addCandidate(candidate);
   }
 
   @override
@@ -144,23 +143,25 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     String targetId,
     RTCIceCandidate candidate,
   ) async {
-    if (_subscriberPeers[targetId] != null) {
-      await _subscriberPeers[targetId]?.addCandidate(candidate);
+    if (_subscribers[targetId] != null) {
+      await _subscribers[targetId]?.addCandidate(candidate);
     } else {
       final List<RTCIceCandidate> candidates =
-          _queueRemoteSubscriberCandidates[targetId] ?? [];
+          _queueRemoteSubCandidates[targetId] ?? [];
 
       candidates.add(candidate);
 
-      _queueRemoteSubscriberCandidates[targetId] = candidates;
+      _queueRemoteSubCandidates[targetId] = candidates;
     }
   }
 
   @override
   Future<void> toggleCam() async {
+    if (_mParticipant == null) return;
+
     final tracks = _localStream?.getVideoTracks() ?? [];
 
-    if (_myCamEnabled) {
+    if (_mParticipant!.isCamEnabled) {
       for (final track in tracks) {
         track.enabled = false;
       }
@@ -169,14 +170,18 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
         track.enabled = true;
       }
     }
-    _myCamEnabled = !_myCamEnabled;
+
+    _mParticipant!.isCamEnabled = !_mParticipant!.isCamEnabled;
+    _notify();
   }
 
   @override
   Future<void> toggleMic() async {
+    if (_mParticipant == null) return;
+
     final tracks = _localStream?.getAudioTracks() ?? [];
 
-    if (_myMicEnabled) {
+    if (_mParticipant!.isMicEnabled) {
       for (final track in tracks) {
         track.enabled = false;
       }
@@ -185,7 +190,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
         track.enabled = true;
       }
     }
-    _myMicEnabled = !_myMicEnabled;
+
+    _mParticipant!.isMicEnabled = !_mParticipant!.isMicEnabled;
+    _notify();
   }
 
   @override
@@ -195,40 +202,21 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _wsConnections.leaveRoom(_roomId!);
 
     _queuePublisherCandidates.clear();
-    _queueRemoteSubscriberCandidates.clear();
+    _queueRemoteSubCandidates.clear();
     _flagPublisherCanAddCandidate = false;
 
-    for (final pc in _subscriberPeers.values) {
-      await pc.close();
+    for (final subscriber in _subscribers.values) {
+      await subscriber.dispose();
     }
-
-    _subscriberPeers.clear();
-    _subscriberRenderers.clear();
+    _subscribers.clear();
 
     await _localStream?.dispose();
-    await _publisherPeer?.close();
-    _publisherPeer = null;
-    _localRenderer = null;
+    await _mParticipant?.dispose();
+    _mParticipant = null;
     _localStream = null;
   }
 
-  @override
-  CallState callState() {
-    return CallState(
-      localRenderer: _localRenderer,
-      remoteRenderers: _subscriberRenderers,
-      remoteCameraState: {},
-      remoteMicState: {},
-      localCameraState: _myCamEnabled,
-      localMicState: _myMicEnabled,
-    );
-  }
-
   // MARK: Private methods
-  // Future<MediaStream> _getDisplayMedia() {
-  //   throw UnimplementedError();
-  // }
-
   Future<MediaStream> _getUserMedia() async {
     const Map<String, dynamic> mediaConstraints = defaultMediaConstraints;
 
@@ -236,9 +224,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       mediaConstraints,
     );
 
-    _localRenderer = RTCVideoRenderer();
-    await _localRenderer?.initialize();
-    _localRenderer?.srcObject = stream;
+    _mParticipant?.setSrcObject(stream);
+
+    await _toggleSpeakerPhone();
 
     return stream;
   }
@@ -280,21 +268,20 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     String targetId,
     RTCSessionDescription remoteDescription,
   ) async {
-    _subscriberRenderers[targetId] = RTCVideoRenderer();
-
     final RTCPeerConnection rtcPeerConnection = await _createPeerConnection(
       offerSubscriberSdpConstraints,
     );
 
-    _subscriberPeers[targetId] = rtcPeerConnection;
+    _subscribers[targetId] = ParticipantSFU(
+      participantId: targetId,
+      peerConnection: rtcPeerConnection,
+      onChanged: _notify,
+    );
 
     rtcPeerConnection.onAddStream = (stream) async {
-      if (_subscriberRenderers[targetId] == null) return;
+      if (_subscribers[targetId] == null) return;
 
-      await _subscriberRenderers[targetId]?.initialize();
-      _subscriberRenderers[targetId]?.srcObject = stream;
-
-      AppBloc.meetingBloc.add(UpdateNewMeetingEvent());
+      _subscribers[targetId]?.setSrcObject(stream);
     };
 
     rtcPeerConnection.onIceCandidate = (candidate) {
@@ -307,15 +294,17 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     rtcPeerConnection.setRemoteDescription(remoteDescription);
 
     final String sdp = await _createAnswer(rtcPeerConnection);
-    final RTCSessionDescription description =
-        RTCSessionDescription(sdp, 'answer');
+    final RTCSessionDescription description = RTCSessionDescription(
+      sdp,
+      DescriptionType.answer.type,
+    );
     await rtcPeerConnection.setLocalDescription(description);
 
     _wsConnections.answerEstablishSubscriber(targetId: targetId, sdp: sdp);
 
     // Process queue candidates from server
     final List<RTCIceCandidate> candidates =
-        _queueRemoteSubscriberCandidates[targetId] ?? [];
+        _queueRemoteSubCandidates[targetId] ?? [];
 
     for (final candidate in candidates) {
       addSubscriberCandidate(targetId, candidate);
@@ -324,5 +313,20 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   Future<void> _toggleSpeakerPhone() async {
     Helper.setSpeakerphoneOn(true);
+  }
+
+  void _notify() {
+    _notifyChanged.sink.add(callState());
+  }
+
+  @override
+  Stream<CallState> get notifyChanged => _notifyChanged.stream;
+
+  @override
+  CallState callState() {
+    return CallState(
+      mParticipant: _mParticipant,
+      participants: _subscribers,
+    );
   }
 }

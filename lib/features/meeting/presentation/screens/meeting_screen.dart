@@ -98,12 +98,26 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CallActionButton(
-                      icon: PhosphorIcons.microphone,
-                      onTap: () {},
+                      icon: callState?.mParticipant == null ||
+                              callState!.mParticipant!.isMicEnabled
+                          ? PhosphorIcons.microphone
+                          : PhosphorIcons.microphone_slash,
+                      onTap: () {
+                        if (callState?.mParticipant == null) return;
+
+                        AppBloc.meetingBloc.add(ToggleMicEvent());
+                      },
                     ),
                     CallActionButton(
-                      icon: PhosphorIcons.camera,
-                      onTap: () {},
+                      icon: callState?.mParticipant == null ||
+                              callState!.mParticipant!.isCamEnabled
+                          ? PhosphorIcons.camera
+                          : PhosphorIcons.camera_slash,
+                      onTap: () {
+                        if (callState?.mParticipant == null) return;
+
+                        AppBloc.meetingBloc.add(ToggleCamEvent());
+                      },
                     ),
                     CallActionButton(
                       icon: PhosphorIcons.chats_teardrop,
