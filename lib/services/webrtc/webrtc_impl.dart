@@ -9,6 +9,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/services/socket.dart';
 import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
+import 'package:waterbus/services/webrtc/helpers/extensions/sdp_extensions.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 @LazySingleton(as: WaterbusWebRTCManager)
@@ -60,9 +61,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _publisherPeer?.onRenegotiationNeeded = () async {
       if ((await _publisherPeer?.getRemoteDescription()) != null) return;
 
-      final String sdp = await _createOffer(_publisherPeer!);
+      String sdp = await _createOffer(_publisherPeer!);
 
-      // sdp = WebRTCUtils.enableAudioDTX(sdp: sdp);
+      sdp = sdp.enableAudioDTX();
 
       final RTCSessionDescription description = RTCSessionDescription(
         sdp,
