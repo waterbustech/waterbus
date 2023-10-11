@@ -8,15 +8,15 @@ class ParticipantSFU extends Equatable {
   final String participantId;
   final RTCPeerConnection? peerConnection;
   RTCVideoRenderer? renderer;
-  bool isMicEnabled;
-  bool isCamEnabled;
+  bool isVideoEnabled;
+  bool isAudioEnabled;
   bool isSharingScreen;
   bool hasFirstFrameRendered;
   final Function() onChanged;
   ParticipantSFU({
     required this.participantId,
-    this.isMicEnabled = true,
-    this.isCamEnabled = true,
+    this.isVideoEnabled = true,
+    this.isAudioEnabled = true,
     this.isSharingScreen = false,
     this.hasFirstFrameRendered = false,
     required this.peerConnection,
@@ -28,16 +28,16 @@ class ParticipantSFU extends Equatable {
 
   ParticipantSFU copyWith({
     String? participantId,
-    bool? isMicEnabled,
-    bool? isCamEnabled,
+    bool? isAudioEnabled,
+    bool? isVideoEnabled,
     bool? isSharingScreen,
     RTCPeerConnection? peerConnection,
     RTCVideoRenderer? renderer,
   }) {
     return ParticipantSFU(
       participantId: participantId ?? this.participantId,
-      isMicEnabled: isMicEnabled ?? this.isMicEnabled,
-      isCamEnabled: isCamEnabled ?? this.isCamEnabled,
+      isVideoEnabled: isAudioEnabled ?? this.isVideoEnabled,
+      isAudioEnabled: isVideoEnabled ?? this.isAudioEnabled,
       isSharingScreen: isSharingScreen ?? this.isSharingScreen,
       peerConnection: peerConnection ?? this.peerConnection,
       renderer: renderer ?? this.renderer,
@@ -47,7 +47,7 @@ class ParticipantSFU extends Equatable {
 
   @override
   String toString() {
-    return 'ParticipantSFU(participantId: $participantId, isMicEnabled: $isMicEnabled, isCamEnabled: $isCamEnabled, isSharingScreen: $isSharingScreen, peerConnection: $peerConnection, renderer: $renderer)';
+    return 'ParticipantSFU(participantId: $participantId, isMicEnabled: $isVideoEnabled, isCamEnabled: $isAudioEnabled, isSharingScreen: $isSharingScreen, peerConnection: $peerConnection, renderer: $renderer)';
   }
 
   @override
@@ -55,8 +55,8 @@ class ParticipantSFU extends Equatable {
     if (identical(this, other)) return true;
 
     return other.participantId == participantId &&
-        other.isMicEnabled == isMicEnabled &&
-        other.isCamEnabled == isCamEnabled &&
+        other.isVideoEnabled == isVideoEnabled &&
+        other.isAudioEnabled == isAudioEnabled &&
         other.isSharingScreen == isSharingScreen &&
         other.peerConnection == peerConnection &&
         other.hasFirstFrameRendered == hasFirstFrameRendered &&
@@ -66,8 +66,8 @@ class ParticipantSFU extends Equatable {
   @override
   int get hashCode {
     return participantId.hashCode ^
-        isMicEnabled.hashCode ^
-        isCamEnabled.hashCode ^
+        isVideoEnabled.hashCode ^
+        isAudioEnabled.hashCode ^
         isSharingScreen.hashCode ^
         hasFirstFrameRendered.hashCode ^
         peerConnection.hashCode ^
@@ -78,8 +78,8 @@ class ParticipantSFU extends Equatable {
   List<Object> get props {
     return [
       participantId,
-      isMicEnabled,
-      isCamEnabled,
+      isVideoEnabled,
+      isAudioEnabled,
       isSharingScreen,
       hasFirstFrameRendered,
       onChanged,

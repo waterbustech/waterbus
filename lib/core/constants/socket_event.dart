@@ -11,4 +11,8 @@ class SocketEvent {
   static const String newParticipantSSC = 'NEW_PARTICIPANT_SSC';
   static const String participantHasLeftSSC = 'PARTICIPANT_HAS_LEFT_SSC';
   static const String sendLeaveRoomCSS = 'LEAVE_ROOM_CSS';
+  static const String setVideoEnabledCSS = "SET_VIDEO_ENABLED_CSS";
+  static const String setVideoEnabledSSC = "SET_VIDEO_ENABLED_SSC";
+  static const String setAudioEnabledCSS = "SET_AUDIO_ENABLED_CSS";
+  static const String setAudioEnabledSSC = "SET_AUDIO_ENABLED_SSC";
 }

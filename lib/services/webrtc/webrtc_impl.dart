@@ -40,6 +40,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
     _roomId = roomId;
 
+    _localStream = await _getUserMedia();
+
     final RTCPeerConnection peerConnection = await _createPeerConnection(
       offerPublisherSdpConstraints,
     );
@@ -50,7 +52,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       onChanged: _notify,
     );
 
-    _localStream = await _getUserMedia();
+    _mParticipant?.setSrcObject(_localStream!);
 
     peerConnection.onIceCandidate = (candidate) {
       if (_flagPublisherCanAddCandidate) {
@@ -123,7 +125,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> setSubscriberRemoteSdp(String targetId, String sdp) async {
+  Future<void> setSubscriberRemoteSdp(
+    String targetId,
+    String sdp,
+    bool videoEnabled,
+    bool audioEnabled,
+  ) async {
     if (_subscribers[targetId] != null) return;
 
     final RTCSessionDescription description = RTCSessionDescription(
@@ -131,7 +138,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       DescriptionType.offer.type,
     );
 
-    await _answerSubscriber(targetId, description);
+    await _answerSubscriber(
+      targetId,
+      description,
+      videoEnabled,
+      audioEnabled,
+    );
   }
 
   @override
@@ -162,7 +174,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
     final tracks = _localStream?.getVideoTracks() ?? [];
 
-    if (_mParticipant!.isCamEnabled) {
+    if (_mParticipant!.isAudioEnabled) {
       for (final track in tracks) {
         track.enabled = false;
       }
@@ -172,8 +184,10 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       }
     }
 
-    _mParticipant!.isCamEnabled = !_mParticipant!.isCamEnabled;
+    _mParticipant!.isAudioEnabled = !_mParticipant!.isAudioEnabled;
     _notify();
+
+    _wsConnections.setVideoEnabled(_mParticipant!.isAudioEnabled);
   }
 
   @override
@@ -182,7 +196,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
     final tracks = _localStream?.getAudioTracks() ?? [];
 
-    if (_mParticipant!.isMicEnabled) {
+    if (_mParticipant!.isVideoEnabled) {
       for (final track in tracks) {
         track.enabled = false;
       }
@@ -192,7 +206,21 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       }
     }
 
-    _mParticipant!.isMicEnabled = !_mParticipant!.isMicEnabled;
+    _mParticipant!.isVideoEnabled = !_mParticipant!.isVideoEnabled;
+    _notify();
+
+    _wsConnections.setAudioEnabled(_mParticipant!.isVideoEnabled);
+  }
+
+  @override
+  void setVideoEnabled({required String targetId, required bool isEnabled}) {
+    _subscribers[targetId]?.isAudioEnabled = isEnabled;
+    _notify();
+  }
+
+  @override
+  void setAudioEnabled({required String targetId, required bool isEnabled}) {
+    _subscribers[targetId]?.isVideoEnabled = isEnabled;
     _notify();
   }
 
@@ -224,8 +252,6 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     final MediaStream stream = await navigator.mediaDevices.getUserMedia(
       mediaConstraints,
     );
-
-    _mParticipant?.setSrcObject(stream);
 
     await _toggleSpeakerPhone();
 
@@ -268,6 +294,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   Future<void> _answerSubscriber(
     String targetId,
     RTCSessionDescription remoteDescription,
+    bool videoEnabled,
+    bool audioEnabled,
   ) async {
     final RTCPeerConnection rtcPeerConnection = await _createPeerConnection(
       offerSubscriberSdpConstraints,
@@ -277,6 +305,8 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       participantId: targetId,
       peerConnection: rtcPeerConnection,
       onChanged: _notify,
+      isAudioEnabled: videoEnabled,
+      isVideoEnabled: audioEnabled,
     );
 
     rtcPeerConnection.onAddStream = (stream) async {

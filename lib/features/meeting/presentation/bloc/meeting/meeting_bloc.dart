@@ -160,6 +160,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           await _rtcManager.toggleMic();
         }
 
+        if (event is SetSubscriberVideoEnabledEvent) {
+          _rtcManager.setVideoEnabled(
+            targetId: event.targetId,
+            isEnabled: event.isEnabled,
+          );
+        }
+
+        if (event is SetSubscriberAudioEnabledEvent) {
+          _rtcManager.setAudioEnabled(
+            targetId: event.targetId,
+            isEnabled: event.isEnabled,
+          );
+        }
+
         if (event is RefreshDisplayMeetingEvent) {
           if (_currentMeeting != null) {
             emit(_joinedMeeting);
@@ -344,6 +358,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     await _rtcManager.setSubscriberRemoteSdp(
       event.participantId,
       event.sdp,
+      event.isVideoEnabled,
+      event.isAudioEnabled,
     );
   }
 
