@@ -115,9 +115,10 @@ class MeetView extends StatelessWidget {
 
   bool get isCameraEnabled {
     if (participant.isMe) {
-      return callState?.mParticipant?.isCamEnabled ?? false;
+      return callState?.mParticipant?.isAudioEnabled ?? false;
     } else {
-      return callState?.participants[participant.id.toString()]?.isCamEnabled ??
+      return callState
+              ?.participants[participant.id.toString()]?.isAudioEnabled ??
           false;
     }
   }

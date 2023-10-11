@@ -59,6 +59,24 @@ class ToggleMicEvent extends MeetingEvent {}
 
 class ToggleCamEvent extends MeetingEvent {}
 
+class SetSubscriberVideoEnabledEvent extends MeetingEvent {
+  final String targetId;
+  final bool isEnabled;
+  const SetSubscriberVideoEnabledEvent({
+    required this.targetId,
+    required this.isEnabled,
+  });
+}
+
+class SetSubscriberAudioEnabledEvent extends MeetingEvent {
+  final String targetId;
+  final bool isEnabled;
+  const SetSubscriberAudioEnabledEvent({
+    required this.targetId,
+    required this.isEnabled,
+  });
+}
+
 class RefreshDisplayMeetingEvent extends MeetingEvent {}
 
 // MARK: related to WebRTC
@@ -74,9 +92,13 @@ class EstablishBroadcastSuccessEvent extends MeetingEvent {
 class EstablishReceiverSuccessEvent extends MeetingEvent {
   final String sdp;
   final String participantId;
+  final bool isVideoEnabled;
+  final bool isAudioEnabled;
   const EstablishReceiverSuccessEvent({
     required this.participantId,
     required this.sdp,
+    required this.isAudioEnabled,
+    required this.isVideoEnabled,
   });
 }
 

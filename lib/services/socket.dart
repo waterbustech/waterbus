@@ -38,6 +38,8 @@ abstract class SocketConnection {
     required RTCIceCandidate candidate,
     required targetId,
   });
+  void setVideoEnabled(bool isEnabled);
+  void setAudioEnabled(bool isEnabled);
   void leaveRoom(
     String roomId,
   );
@@ -95,7 +97,6 @@ class SocketConnectionImpl extends SocketConnection {
         // pc context: only send peer
         // will receive sdp remote from service side if you join success
         /// otherParticipants, sdp (data)
-        ///
 
         if (data == null) return;
 
@@ -112,7 +113,6 @@ class SocketConnectionImpl extends SocketConnection {
       _socket?.on(SocketEvent.newParticipantSSC, (data) {
         // will receive signal when someone join,
         /// targetId
-        ///
         if (data == null) return;
 
         AppBloc.meetingBloc.add(
@@ -124,20 +124,20 @@ class SocketConnectionImpl extends SocketConnection {
         // pc context: only receive peer
         // will receive sdp, get it and add to pc
         /// sdp, targetId
-        ///
         if (data['sdp'] == null) return;
 
         AppBloc.meetingBloc.add(
           EstablishReceiverSuccessEvent(
             participantId: data['targetId'],
-            sdp: data['sdp'],
+            sdp: data['offer'],
+            isAudioEnabled: data['audioEnabled'],
+            isVideoEnabled: data['videoEnabled'],
           ),
         );
       });
 
       _socket?.on(SocketEvent.participantHasLeftSSC, (data) {
         /// targetId
-        ///
         if (data == null) return;
 
         AppBloc.meetingBloc.add(
@@ -147,7 +147,6 @@ class SocketConnectionImpl extends SocketConnection {
 
       _socket?.on(SocketEvent.publisherCandidateSSC, (data) {
         /// candidate json
-        ///
         if (data == null) return;
 
         AppBloc.meetingBloc.add(
@@ -176,6 +175,30 @@ class SocketConnectionImpl extends SocketConnection {
               candidate['sdpMid'],
               candidate['sdpMLineIndex'],
             ),
+          ),
+        );
+      });
+
+      _socket?.on(SocketEvent.setAudioEnabledSSC, (data) {
+        /// targetId, isEnabled
+        if (data == null) return;
+
+        AppBloc.meetingBloc.add(
+          SetSubscriberAudioEnabledEvent(
+            targetId: data['targetId'],
+            isEnabled: data['isEnabled'],
+          ),
+        );
+      });
+
+      _socket?.on(SocketEvent.setVideoEnabledSSC, (data) {
+        /// targetId, isEnabled
+        if (data == null) return;
+
+        AppBloc.meetingBloc.add(
+          SetSubscriberVideoEnabledEvent(
+            targetId: data['targetId'],
+            isEnabled: data['isEnabled'],
           ),
         );
       });
@@ -246,5 +269,15 @@ class SocketConnectionImpl extends SocketConnection {
     _socket?.emit(SocketEvent.makeSubscriberCSS, {
       "targetId": targetId,
     });
+  }
+
+  @override
+  void setAudioEnabled(bool isEnabled) {
+    _socket?.emit(SocketEvent.setAudioEnabledCSS, {'isEnabled': isEnabled});
+  }
+
+  @override
+  void setVideoEnabled(bool isEnabled) {
+    _socket?.emit(SocketEvent.setVideoEnabledCSS, {'isEnabled': isEnabled});
   }
 }

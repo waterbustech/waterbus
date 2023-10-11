@@ -8,7 +8,12 @@ abstract class WaterbusWebRTCManager {
   Future<void> joinRoom({required String roomId, required int participantId});
   Future<void> subscribe(List<String> targetIds);
   Future<void> setPublisherRemoteSdp(String sdp);
-  Future<void> setSubscriberRemoteSdp(String targetId, String sdp);
+  Future<void> setSubscriberRemoteSdp(
+    String targetId,
+    String sdp,
+    bool videoEnabled,
+    bool audioEnabled,
+  );
   Future<void> addPublisherCandidate(RTCIceCandidate candidate);
   Future<void> addSubscriberCandidate(
     String targetId,
@@ -21,6 +26,8 @@ abstract class WaterbusWebRTCManager {
   // MARK: control
   Future<void> toggleMic();
   Future<void> toggleCam();
+  void setVideoEnabled({required String targetId, required bool isEnabled});
+  void setAudioEnabled({required String targetId, required bool isEnabled});
 
   CallState callState();
   Stream<CallState> get notifyChanged;

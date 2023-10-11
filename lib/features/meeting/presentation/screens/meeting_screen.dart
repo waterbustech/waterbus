@@ -99,7 +99,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   children: [
                     CallActionButton(
                       icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isMicEnabled
+                              callState!.mParticipant!.isVideoEnabled
                           ? PhosphorIcons.microphone
                           : PhosphorIcons.microphone_slash,
                       onTap: () {
@@ -110,7 +110,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     ),
                     CallActionButton(
                       icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isCamEnabled
+                              callState!.mParticipant!.isAudioEnabled
                           ? PhosphorIcons.camera
                           : PhosphorIcons.camera_slash,
                       onTap: () {
