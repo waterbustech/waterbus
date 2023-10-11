@@ -10,9 +10,6 @@ abstract class MeetingState {
   final Meeting? meeting;
   final Participant? participant;
   final CallState? callState;
-
-  // @override
-  // List<Object?> get props => [meeting, participant, callState];
 }
 
 class MeetingInitial extends MeetingState {
@@ -23,6 +20,7 @@ class PreJoinMeeting extends MeetingState {
   const PreJoinMeeting({
     required super.meeting,
     required super.participant,
+    required super.callState,
   });
 }
 

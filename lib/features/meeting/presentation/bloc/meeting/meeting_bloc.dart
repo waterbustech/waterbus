@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -48,7 +50,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: private
   Meeting? _currentMeeting;
-  Participant? _myParticipant;
+  Participant? _mParticipant;
 
   MeetingBloc(
     this._createMeeting,
@@ -99,8 +101,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
             // Will join directly if the participant is the host of room
             if (isHost) {
-              _myParticipant =
-                  _currentMeeting!.participants[indexOfParticipant];
+              _mParticipant = _currentMeeting!.participants[indexOfParticipant];
 
               displayLoadingLayer();
 
@@ -125,7 +126,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           if (isJoinSucceed) {
             await _initialWebRTCManager(
               roomCode: _currentMeeting!.code.toString(),
-              participantId: _myParticipant!.id,
+              participantId: _mParticipant!.id,
             );
           }
 
@@ -141,7 +142,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is GetInfoMeetingEvent) {
-          await _handleGetInfoMeeting(event);
+          final Meeting? meeting = await _handleGetInfoMeeting(event);
+
+          if (meeting != null) {
+            await _displayDialogJoinMeeting(meeting);
+
+            emit(_preJoinMeeting);
+          }
         }
 
         if (event is LeaveMeetingEvent) {
@@ -149,15 +156,17 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is DisplayDialogMeetingEvent) {
-          _displayDialogJoinMeeting(event.meeting);
+          await _displayDialogJoinMeeting(event.meeting);
+
+          emit(_preJoinMeeting);
         }
 
         if (event is ToggleCamEvent) {
-          await _rtcManager.toggleCam();
+          await _rtcManager.toggleVideo();
         }
 
         if (event is ToggleMicEvent) {
-          await _rtcManager.toggleMic();
+          await _rtcManager.toggleAudio();
         }
 
         if (event is SetSubscriberVideoEnabledEvent) {
@@ -175,9 +184,18 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is RefreshDisplayMeetingEvent) {
-          if (_currentMeeting != null) {
+          if (state is MeetingInitial) return;
+
+          if (state is PreJoinMeeting) {
+            emit(_preJoinMeeting);
+          } else {
             emit(_joinedMeeting);
           }
+        }
+
+        if (event is DisposeMeetingEvent) {
+          await _dispose();
+          emit(const MeetingInitial());
         }
 
         // Related to WebRTC
@@ -227,13 +245,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: state
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
-        participant: _myParticipant,
+        participant: _mParticipant,
         callState: _rtcManager.callState(),
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
         meeting: _currentMeeting,
-        participant: _myParticipant,
+        participant: _mParticipant,
+        callState: _rtcManager.callState(),
       );
 
   // MARK: Private
@@ -250,11 +269,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     meeting.fold((l) => null, (r) async {
       AppNavigator.replaceWith(Routes.meetingRoute);
       AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
-      _myParticipant = r.participants.first;
+      _mParticipant = r.participants.first;
 
       await _initialWebRTCManager(
         roomCode: r.code.toString(),
-        participantId: _myParticipant!.id,
+        participantId: _mParticipant!.id,
       );
 
       return _currentMeeting = r;
@@ -281,7 +300,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
       if (indexOfMyParticipant != -1) {
-        _myParticipant = r.participants[indexOfMyParticipant];
+        _mParticipant = r.participants[indexOfMyParticipant];
       }
 
       return true;
@@ -296,7 +315,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     AppNavigator.pop();
 
     return meeting.fold((l) => null, (r) {
-      _displayDialogJoinMeeting(r);
       return r;
     });
   }
@@ -322,12 +340,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
-    if (_currentMeeting == null || _myParticipant == null) return;
+    if (_currentMeeting == null || _mParticipant == null) return;
 
     final Either<Failure, Meeting> isLeaveSucceed = await _leaveMeeting.call(
       LeaveMeetingParams(
         code: _currentMeeting!.code,
-        participantId: _myParticipant!.id,
+        participantId: _mParticipant!.id,
       ),
     );
 
@@ -335,7 +353,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
-      _myParticipant = null;
+      _mParticipant = null;
 
       AppBloc.meetingListBloc.add(UpdateRecentJoinEvent(meeting: r));
 
@@ -454,17 +472,40 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     });
   }
 
-  void _displayDialogJoinMeeting(Meeting meeting) {
+  Future<void> _displayDialogJoinMeeting(Meeting meeting) async {
+    final StreamSubscription<CallState> listener =
+        _rtcManager.notifyChanged.listen((state) {
+      add(RefreshDisplayMeetingEvent());
+    });
+
+    await _rtcManager.prepareMedia();
+
+    bool isDismissWithoutJoin = true;
+
     showDialogWaterbus(
       alignment: Alignment.bottomCenter,
       paddingBottom: 56.sp,
       child: DialogPrepareMeeting(
         meeting: meeting,
         handleJoinMeeting: () {
+          isDismissWithoutJoin = false;
+
           AppNavigator.popUntil(Routes.rootRoute);
           add(JoinMeetingEvent(meeting: meeting));
         },
       ),
-    );
+    ).then((value) {
+      listener.cancel();
+
+      if (isDismissWithoutJoin) {
+        add(DisposeMeetingEvent());
+      }
+    });
+  }
+
+  Future<void> _dispose() async {
+    await _rtcManager.dispose();
+    _currentMeeting = null;
+    _mParticipant = null;
   }
 }

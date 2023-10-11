@@ -5,6 +5,7 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 abstract class WaterbusWebRTCManager {
+  Future<void> prepareMedia();
   Future<void> joinRoom({required String roomId, required int participantId});
   Future<void> subscribe(List<String> targetIds);
   Future<void> setPublisherRemoteSdp(String sdp);
@@ -24,8 +25,8 @@ abstract class WaterbusWebRTCManager {
   Future<void> dispose();
 
   // MARK: control
-  Future<void> toggleMic();
-  Future<void> toggleCam();
+  Future<void> toggleAudio();
+  Future<void> toggleVideo();
   void setVideoEnabled({required String targetId, required bool isEnabled});
   void setAudioEnabled({required String targetId, required bool isEnabled});
 

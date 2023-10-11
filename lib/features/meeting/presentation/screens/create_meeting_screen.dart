@@ -13,7 +13,6 @@ import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
 
 class CreateMeetingScreen extends StatefulWidget {
   final Meeting? meeting;
@@ -91,10 +90,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.sp),
-                        child: const PreviewCameraCard(),
-                      ),
+                      SizedBox(height: 16.sp),
                       const LabelText(label: 'Room name'),
                       TextFieldInput(
                         validatorForm: (val) {

@@ -7,6 +7,8 @@ sealed class MeetingEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class PrepareMediaStreamEvent extends MeetingEvent {}
+
 class CreateMeetingEvent extends MeetingEvent {
   final String roomName;
   final String password;
@@ -39,6 +41,8 @@ class GetInfoMeetingEvent extends MeetingEvent {
 }
 
 class LeaveMeetingEvent extends MeetingEvent {}
+
+class DisposeMeetingEvent extends MeetingEvent {}
 
 class DisplayDialogMeetingEvent extends MeetingEvent {
   final Meeting meeting;
