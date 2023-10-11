@@ -32,27 +32,22 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
       StreamController<CallState>.broadcast();
 
   @override
+  Future<void> prepareMedia() async {
+    await _prepareMedia();
+  }
+
+  @override
   Future<void> joinRoom({
     required String roomId,
     required int participantId,
   }) async {
-    if (_mParticipant?.peerConnection != null) return;
+    await _prepareMedia();
+
+    if (_mParticipant?.peerConnection == null) return;
 
     _roomId = roomId;
 
-    _localStream = await _getUserMedia();
-
-    final RTCPeerConnection peerConnection = await _createPeerConnection(
-      offerPublisherSdpConstraints,
-    );
-
-    _mParticipant = ParticipantSFU(
-      participantId: participantId.toString(),
-      peerConnection: peerConnection,
-      onChanged: _notify,
-    );
-
-    _mParticipant?.setSrcObject(_localStream!);
+    final RTCPeerConnection peerConnection = _mParticipant!.peerConnection;
 
     peerConnection.onIceCandidate = (candidate) {
       if (_flagPublisherCanAddCandidate) {
@@ -93,18 +88,6 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     for (final targetId in targetIds) {
       _makeConnectionReceive(targetId);
     }
-  }
-
-  @override
-  Future<void> newParticipant(String targetId) async {
-    await _makeConnectionReceive(targetId);
-  }
-
-  @override
-  Future<void> participantHasLeft(String targetId) async {
-    await _subscribers[targetId]?.dispose();
-    _subscribers.remove(targetId);
-    _queueRemoteSubCandidates.remove(targetId);
   }
 
   @override
@@ -169,32 +152,23 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   @override
-  Future<void> toggleCam() async {
-    if (_mParticipant == null) return;
-
-    final tracks = _localStream?.getVideoTracks() ?? [];
-
-    if (_mParticipant!.isAudioEnabled) {
-      for (final track in tracks) {
-        track.enabled = false;
-      }
-    } else {
-      for (final track in tracks) {
-        track.enabled = true;
-      }
-    }
-
-    _mParticipant!.isAudioEnabled = !_mParticipant!.isAudioEnabled;
-    _notify();
-
-    _wsConnections.setVideoEnabled(_mParticipant!.isAudioEnabled);
+  Future<void> newParticipant(String targetId) async {
+    await _makeConnectionReceive(targetId);
   }
 
   @override
-  Future<void> toggleMic() async {
+  Future<void> participantHasLeft(String targetId) async {
+    await _subscribers[targetId]?.dispose();
+    _subscribers.remove(targetId);
+    _queueRemoteSubCandidates.remove(targetId);
+  }
+
+  // MARK: Control Media
+  @override
+  Future<void> toggleVideo() async {
     if (_mParticipant == null) return;
 
-    final tracks = _localStream?.getAudioTracks() ?? [];
+    final tracks = _localStream?.getVideoTracks() ?? [];
 
     if (_mParticipant!.isVideoEnabled) {
       for (final track in tracks) {
@@ -209,7 +183,33 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _mParticipant!.isVideoEnabled = !_mParticipant!.isVideoEnabled;
     _notify();
 
-    _wsConnections.setAudioEnabled(_mParticipant!.isVideoEnabled);
+    if (_roomId != null) {
+      _wsConnections.setVideoEnabled(_mParticipant!.isVideoEnabled);
+    }
+  }
+
+  @override
+  Future<void> toggleAudio() async {
+    if (_mParticipant == null) return;
+
+    final tracks = _localStream?.getAudioTracks() ?? [];
+
+    if (_mParticipant!.isAudioEnabled) {
+      for (final track in tracks) {
+        track.enabled = false;
+      }
+    } else {
+      for (final track in tracks) {
+        track.enabled = true;
+      }
+    }
+
+    _mParticipant!.isAudioEnabled = !_mParticipant!.isAudioEnabled;
+    _notify();
+
+    if (_roomId != null) {
+      _wsConnections.setAudioEnabled(_mParticipant!.isAudioEnabled);
+    }
   }
 
   @override
@@ -226,9 +226,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   @override
   Future<void> dispose() async {
-    if (_roomId == null) return;
-
-    _wsConnections.leaveRoom(_roomId!);
+    if (_roomId != null) {
+      _wsConnections.leaveRoom(_roomId!);
+    }
 
     _queuePublisherCandidates.clear();
     _queueRemoteSubCandidates.clear();
@@ -246,6 +246,23 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   // MARK: Private methods
+  Future<void> _prepareMedia() async {
+    if (_mParticipant?.peerConnection != null) return;
+
+    final RTCPeerConnection peerConnection = await _createPeerConnection(
+      offerPublisherSdpConstraints,
+    );
+
+    _mParticipant = ParticipantSFU(
+      peerConnection: peerConnection,
+      onChanged: _notify,
+    );
+
+    _localStream = await _getUserMedia();
+
+    _mParticipant?.setSrcObject(_localStream!);
+  }
+
   Future<MediaStream> _getUserMedia() async {
     const Map<String, dynamic> mediaConstraints = defaultMediaConstraints;
 
@@ -302,7 +319,6 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     );
 
     _subscribers[targetId] = ParticipantSFU(
-      participantId: targetId,
       peerConnection: rtcPeerConnection,
       onChanged: _notify,
       isAudioEnabled: videoEnabled,

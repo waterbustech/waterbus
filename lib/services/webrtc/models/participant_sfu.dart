@@ -5,8 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 class ParticipantSFU extends Equatable {
-  final String participantId;
-  final RTCPeerConnection? peerConnection;
+  final RTCPeerConnection peerConnection;
   RTCVideoRenderer? renderer;
   bool isVideoEnabled;
   bool isAudioEnabled;
@@ -14,7 +13,6 @@ class ParticipantSFU extends Equatable {
   bool hasFirstFrameRendered;
   final Function() onChanged;
   ParticipantSFU({
-    required this.participantId,
     this.isVideoEnabled = true,
     this.isAudioEnabled = true,
     this.isSharingScreen = false,
@@ -35,7 +33,6 @@ class ParticipantSFU extends Equatable {
     RTCVideoRenderer? renderer,
   }) {
     return ParticipantSFU(
-      participantId: participantId ?? this.participantId,
       isVideoEnabled: isAudioEnabled ?? this.isVideoEnabled,
       isAudioEnabled: isVideoEnabled ?? this.isAudioEnabled,
       isSharingScreen: isSharingScreen ?? this.isSharingScreen,
@@ -47,15 +44,14 @@ class ParticipantSFU extends Equatable {
 
   @override
   String toString() {
-    return 'ParticipantSFU(participantId: $participantId, isMicEnabled: $isVideoEnabled, isCamEnabled: $isAudioEnabled, isSharingScreen: $isSharingScreen, peerConnection: $peerConnection, renderer: $renderer)';
+    return 'ParticipantSFU(isMicEnabled: $isVideoEnabled, isCamEnabled: $isAudioEnabled, isSharingScreen: $isSharingScreen, peerConnection: $peerConnection, renderer: $renderer)';
   }
 
   @override
   bool operator ==(covariant ParticipantSFU other) {
     if (identical(this, other)) return true;
 
-    return other.participantId == participantId &&
-        other.isVideoEnabled == isVideoEnabled &&
+    return other.isVideoEnabled == isVideoEnabled &&
         other.isAudioEnabled == isAudioEnabled &&
         other.isSharingScreen == isSharingScreen &&
         other.peerConnection == peerConnection &&
@@ -65,8 +61,7 @@ class ParticipantSFU extends Equatable {
 
   @override
   int get hashCode {
-    return participantId.hashCode ^
-        isVideoEnabled.hashCode ^
+    return isVideoEnabled.hashCode ^
         isAudioEnabled.hashCode ^
         isSharingScreen.hashCode ^
         hasFirstFrameRendered.hashCode ^
@@ -77,7 +72,6 @@ class ParticipantSFU extends Equatable {
   @override
   List<Object> get props {
     return [
-      participantId,
       isVideoEnabled,
       isAudioEnabled,
       isSharingScreen,
@@ -90,15 +84,15 @@ class ParticipantSFU extends Equatable {
 extension ParticipantSFUX on ParticipantSFU {
   Future<void> dispose() async {
     renderer?.dispose();
-    peerConnection?.close();
+    peerConnection.close();
   }
 
   Future<void> addCandidate(RTCIceCandidate candidate) async {
-    await peerConnection?.addCandidate(candidate);
+    await peerConnection.addCandidate(candidate);
   }
 
   Future<void> setRemoteDescription(RTCSessionDescription description) async {
-    await peerConnection?.setRemoteDescription(description);
+    await peerConnection.setRemoteDescription(description);
   }
 
   // ignore: use_setters_to_change_properties

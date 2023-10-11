@@ -26,7 +26,7 @@ Future showDialogWaterbus({
   bool isBottomDialog = false,
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
-}) {
+}) async {
   var beginOffset = const Offset(-1, 0);
   switch (slideFrom) {
     case Slide.left:
@@ -43,7 +43,7 @@ Future showDialogWaterbus({
       break;
   }
 
-  return showGeneralDialog(
+  return await showGeneralDialog(
     routeSettings: RouteSettings(name: routeName),
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
