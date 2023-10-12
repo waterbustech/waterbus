@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -109,6 +111,64 @@ void main() {
       // Assert
       expect(result, Left(NullValue()));
       verify(mockDataSource.getPresignedUrl());
+      verifyNoMoreInteractions(mockDataSource);
+    });
+  });
+
+  group('uploadImageToS3', () {
+    const testUploadUrl = 'https://example.com/upload';
+    final testImage = File('path_to_image.png');
+    const testImageUrl = 'https://example.com/image.png';
+
+    test('should return the uploaded image URL', () async {
+      // Arrange
+      when(
+        mockDataSource.uploadImageToS3(
+          uploadUrl: anyNamed('uploadUrl'),
+          image: anyNamed('image'),
+        ),
+      ).thenAnswer((_) async => testImageUrl);
+
+      // Act
+      final result = await repository.uploadImageToS3(
+        uploadUrl: testUploadUrl,
+        image: testImage,
+      );
+
+      // Assert
+      expect(result, const Right(testImageUrl));
+      verify(
+        mockDataSource.uploadImageToS3(
+          uploadUrl: testUploadUrl,
+          image: testImage,
+        ),
+      );
+      verifyNoMoreInteractions(mockDataSource);
+    });
+
+    test('should return a failure when upload fails', () async {
+      // Arrange
+      when(
+        mockDataSource.uploadImageToS3(
+          uploadUrl: anyNamed('uploadUrl'),
+          image: anyNamed('image'),
+        ),
+      ).thenAnswer((_) async => null);
+
+      // Act
+      final result = await repository.uploadImageToS3(
+        uploadUrl: testUploadUrl,
+        image: testImage,
+      );
+
+      // Assert
+      expect(result, Left(NullValue()));
+      verify(
+        mockDataSource.uploadImageToS3(
+          uploadUrl: testUploadUrl,
+          image: testImage,
+        ),
+      );
       verifyNoMoreInteractions(mockDataSource);
     });
   });

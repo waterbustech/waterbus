@@ -71,72 +71,86 @@ class _EnterMeetingPasswordScreenState
       ),
       body: Form(
         key: _formStateKey,
-        child: Column(
-          children: [
-            const Divider(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 24.sp),
-                    Align(
-                      child: Lottie.asset(
-                        Assets.lotties.unlockLottie,
-                        width: 150.sp,
-                        height: 150.sp,
-                        fit: BoxFit.contain,
-                        frameRate: FrameRate.max,
-                        repeat: true,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Divider(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                  child: Column(
+                    children: [
+                      Align(
+                        child: Lottie.asset(
+                          Assets.lotties.unlockLottie,
+                          width: 140.sp,
+                          height: 140.sp,
+                          fit: BoxFit.contain,
+                          frameRate: FrameRate.max,
+                          repeat: true,
+                        ),
                       ),
-                    ),
-                    Text(
-                      widget.meeting.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.justify,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    SizedBox(height: 12.sp),
-                    widget.meeting.isNoOneElse
-                        ? Text(
-                            "No participants yet",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(fontSize: 11.sp),
-                          )
-                        : StackAvatar(
-                            images: widget.meeting.getUniqueUsers
-                                .map(
-                                  (user) => user.user.avatar,
-                                )
-                                .toList(),
-                            size: 20.sp,
-                          ),
-                    SizedBox(height: 12.sp),
-                    const LabelText(label: 'Password'),
-                    TextFieldInput(
-                      obscureText: true,
-                      validatorForm: (val) {
-                        if (val == null || val.length < 6) {
-                          return "Password must be at least 6 characters";
-                        }
+                      Text(
+                        widget.meeting.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      SizedBox(height: 12.sp),
+                      widget.meeting.isNoOneElse
+                          ? Text(
+                              "No participants yet",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(fontSize: 11.sp),
+                            )
+                          : StackAvatar(
+                              images: widget.meeting.getUniqueUsers
+                                  .map(
+                                    (user) => user.user.avatar,
+                                  )
+                                  .toList(),
+                              size: 20.sp,
+                            ),
+                      widget.meeting.participantsOnlineTile != null
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12.sp),
+                              child: Text(
+                                widget.meeting.participantsOnlineTile!,
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            )
+                          : SizedBox(height: 12.sp),
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: LabelText(label: 'Password'),
+                      ),
+                      TextFieldInput(
+                        obscureText: true,
+                        validatorForm: (val) {
+                          if (val == null || val.length < 6) {
+                            return "Password must be at least 6 characters";
+                          }
 
-                        return null;
-                      },
-                      hintText: 'Password',
-                      controller: _passwordController,
-                    ),
-                  ],
+                          return null;
+                        },
+                        hintText: 'Password',
+                        controller: _passwordController,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

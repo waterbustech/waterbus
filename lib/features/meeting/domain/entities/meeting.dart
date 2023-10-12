@@ -102,12 +102,17 @@ extension MeetingX on Meeting {
       .toList();
 
   List<Participant> get getUniqueUsers {
-    final Set<int> uniqueStatuses =
-        participants.map((participant) => participant.user.id).toSet();
+    final Set<int> uniqueUserIds = <int>{};
+    final List<Participant> uniqueParticipants = [];
 
-    return participants
-        .where((participant) => uniqueStatuses.contains(participant.user.id))
-        .toList();
+    for (final Participant participant in participants) {
+      if (!uniqueUserIds.contains(participant.user.id)) {
+        uniqueUserIds.add(participant.user.id);
+        uniqueParticipants.add(participant);
+      }
+    }
+
+    return uniqueParticipants;
   }
 
   bool get isNoOneElse {
@@ -121,4 +126,23 @@ extension MeetingX on Meeting {
   }
 
   String get inviteLink => 'https:/waterbus.tech/meeting/$code';
+
+  String? get participantsOnlineTile {
+    if (users.isEmpty) return null;
+
+    final n = users.length;
+
+    if (n == 1) {
+      return '${participants[0].user.fullName} is in the room';
+    } else if (n == 2) {
+      return '${participants[0].user.fullName} and ${participants[1].user.fullName} are in the room';
+    } else {
+      final int otherParticipants = n - 2;
+      final String participantList = participants
+          .sublist(0, 2)
+          .map<String>((participant) => participant.user.fullName)
+          .join(', ');
+      return '$participantList and $otherParticipants others are in the room';
+    }
+  }
 }

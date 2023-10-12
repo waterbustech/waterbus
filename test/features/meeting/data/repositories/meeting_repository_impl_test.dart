@@ -330,6 +330,51 @@ void main() {
     });
   });
 
+  group('getParticipantById', () {
+    test(
+        'getParticipantById - should return a Participant when the remote call is successful',
+        () async {
+      // Arrange
+      const participantId = 123;
+      final participant = Participant(
+        id: participantId,
+        role: MeetingRole.attendee,
+        user: const User(
+          id: 1,
+          fullName: 'Kai',
+          userName: 'kai',
+        ),
+      );
+      when(mockRemoteDataSource.getParticipant(participantId))
+          .thenAnswer((_) async => participant);
+
+      // Act
+      final result = await repository.getParticipantById(participantId);
+
+      // Assert
+      expect(result, Right(participant));
+      verify(mockRemoteDataSource.getParticipant(participantId));
+      verifyNoMoreInteractions(mockRemoteDataSource);
+    });
+
+    test(
+        'getParticipantById - should return a NullValue when the remote call fails',
+        () async {
+      // Arrange
+      const participantId = 123;
+      when(mockRemoteDataSource.getParticipant(participantId))
+          .thenAnswer((_) async => null);
+
+      // Act
+      final result = await repository.getParticipantById(participantId);
+
+      // Assert
+      expect(result, Left(NullValue()));
+      verify(mockRemoteDataSource.getParticipant(participantId));
+      verifyNoMoreInteractions(mockRemoteDataSource);
+    });
+  });
+
   group('findMyParticipantObject', () {
     test('should set isMe to true for the current user', () {
       // Arrange
