@@ -23,7 +23,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.13.6"
+          flutter-version: "3.13.7"
           cache: true
       - run: flutter pub get
       - run: flutter analyze
