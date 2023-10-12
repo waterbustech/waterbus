@@ -264,9 +264,6 @@ class BaseRemoteData {
       getIt<DioConfiguration>()
           .configuration(dio)
           .then((client) => dio = client),
-      getIt<DioConfiguration>().configRefreshToken(dio).then(
-            (client) => dio = client,
-          ),
     ]);
   }
 }
