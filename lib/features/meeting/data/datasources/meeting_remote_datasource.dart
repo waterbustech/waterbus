@@ -61,7 +61,8 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
       '${ApiEndpoints.meetings}/$code',
     );
 
-    if (response.statusCode == StatusCode.ok) {
+    if (response.statusCode == StatusCode.ok &&
+        response.data.toString().isNotEmpty) {
       final Map<String, dynamic> rawData = response.data;
       return Meeting.fromMap(rawData);
     }

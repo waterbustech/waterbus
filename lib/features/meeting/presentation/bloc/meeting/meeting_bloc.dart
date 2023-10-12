@@ -153,7 +153,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is LeaveMeetingEvent) {
-          await _handleLeaveMeeting(event);
+          if (state is PreJoinMeeting) {
+            await _dispose();
+          } else {
+            await _handleLeaveMeeting(event);
+          }
+          emit(const MeetingInitial());
         }
 
         if (event is DisplayDialogMeetingEvent) {

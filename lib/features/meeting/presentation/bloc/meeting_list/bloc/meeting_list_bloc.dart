@@ -40,6 +40,8 @@ class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
 
         if (event is UpdateRecentJoinEvent) {
           _findAndModifyRecent(event.meeting);
+
+          emit(_getDoneMeetings);
         }
 
         if (event is CleanAllRecentJoinedEvent) {

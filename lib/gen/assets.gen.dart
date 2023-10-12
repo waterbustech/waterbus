@@ -72,11 +72,22 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [imgAppLogo, imgLogo];
 }
 
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/unlock-lottie.json
+  String get unlockLottie => 'assets/lotties/unlock-lottie.json';
+
+  /// List of all assets
+  List<String> get values => [unlockLottie];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
 }
 
 class AssetGenImage {
