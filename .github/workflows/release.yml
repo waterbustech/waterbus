@@ -23,7 +23,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.13.6"
+          flutter-version: "3.13.7"
           cache: true
       - run: flutter pub get
       - run: flutter analyze
@@ -47,7 +47,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.13.6"
+          flutter-version: "3.13.7"
           cache: true
       - run: flutter pub get
       - run: flutter build apk --target-platform android-arm,android-arm64 --dart-define="lambiengcode=PRODUCTION" --release -v
