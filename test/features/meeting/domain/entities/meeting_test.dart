@@ -224,5 +224,108 @@ void main() {
     test('should return false for isNoOneElse when multiple active users', () {
       expect(meetingWithParticipants.isNoOneElse, false);
     });
+
+    test('inviteLink - should return the invite link', () {
+      final meeting = Meeting(code: 123, title: '1');
+      expect(meeting.inviteLink, 'https:/waterbus.tech/meeting/123');
+    });
+
+    test('participantsOnlineTile - should return the appropriate text', () {
+      // Test with 1 participant
+      final meeting1Participant = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting1Participant.participantsOnlineTile,
+        'Alice is in the room',
+      );
+
+      // Test with 2 participants
+      final meeting2Participants = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+          Participant(
+            id: 2,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Bob',
+              userName: 'bob',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting2Participants.participantsOnlineTile,
+        'Alice and Bob are in the room',
+      );
+
+      // Test with 3 or more participants
+      final meeting3Participants = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+          Participant(
+            id: 2,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Bob',
+              userName: 'bob',
+            ),
+          ),
+          Participant(
+            id: 3,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Kai',
+              userName: 'kai',
+            ),
+          ),
+          Participant(
+            id: 4,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'lambiengcode',
+              userName: 'lambiengcode',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting3Participants.participantsOnlineTile,
+        'Alice, Bob and 2 others are in the room',
+      );
+    });
   });
 }

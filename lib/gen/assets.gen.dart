@@ -75,11 +75,14 @@ class $AssetsImagesGen {
 class $AssetsLottiesGen {
   const $AssetsLottiesGen();
 
+  /// File path: assets/lotties/broadcast-lottie.json
+  String get broadcastLottie => 'assets/lotties/broadcast-lottie.json';
+
   /// File path: assets/lotties/unlock-lottie.json
   String get unlockLottie => 'assets/lotties/unlock-lottie.json';
 
   /// List of all assets
-  List<String> get values => [unlockLottie];
+  List<String> get values => [broadcastLottie, unlockLottie];
 }
 
 class Assets {
