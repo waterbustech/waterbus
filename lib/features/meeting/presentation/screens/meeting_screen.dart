@@ -33,11 +33,17 @@ class MeetingScreen extends StatefulWidget {
 
 class _MeetingScreenState extends State<MeetingScreen> {
   @override
+  void dispose() {
+    AppBloc.meetingBloc.add(LeaveMeetingEvent());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
         if (state is PreJoinMeeting) {
-          return const EnterMeetingPasswordScreen();
+          return EnterMeetingPasswordScreen(meeting: state.meeting!);
         }
 
         if (state is! JoinedMeeting || state.meeting == null) {
@@ -99,7 +105,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   children: [
                     CallActionButton(
                       icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isVideoEnabled
+                              callState!.mParticipant!.isAudioEnabled
                           ? PhosphorIcons.microphone
                           : PhosphorIcons.microphone_slash,
                       onTap: () {
@@ -110,7 +116,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     ),
                     CallActionButton(
                       icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isAudioEnabled
+                              callState!.mParticipant!.isVideoEnabled
                           ? PhosphorIcons.camera
                           : PhosphorIcons.camera_slash,
                       onTap: () {
@@ -120,7 +126,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       },
                     ),
                     CallActionButton(
-                      icon: PhosphorIcons.chats_teardrop,
+                      icon: PhosphorIcons.screencast,
                       onTap: () {},
                     ),
                     CallActionButton(
@@ -151,18 +157,12 @@ class _MeetingScreenState extends State<MeetingScreen> {
             bottom: false,
             child: Column(
               children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildMeetingView(
-                        context: context,
-                        meeting: meeting,
-                        callState: callState,
-                      ),
-                      SizedBox(height: 12.sp),
-                    ],
-                  ),
+                _buildMeetingView(
+                  context: context,
+                  meeting: meeting,
+                  callState: callState,
                 ),
+                SizedBox(height: 12.sp),
               ],
             ),
           ),
@@ -251,6 +251,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
               return Container(
                 margin: EdgeInsets.only(right: 6.sp),
                 child: Material(
+                  clipBehavior: Clip.hardEdge,
                   shape: SuperellipseShape(
                     side: BorderSide(
                       color: Theme.of(context).primaryColor,

@@ -72,6 +72,7 @@ dependencies:
   firebase_performance: ^0.9.2+7
 
   # Utils
+  lottie: ^2.6.0
   flutter_native_splash: ^2.3.3
   superellipse_shape: ^0.2.0
   cached_network_image: ^3.3.0
@@ -136,6 +137,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
+    - assets/lotties/
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

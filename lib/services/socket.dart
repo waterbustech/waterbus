@@ -124,7 +124,7 @@ class SocketConnectionImpl extends SocketConnection {
         // pc context: only receive peer
         // will receive sdp, get it and add to pc
         /// sdp, targetId
-        if (data['sdp'] == null) return;
+        if (data == null) return;
 
         AppBloc.meetingBloc.add(
           EstablishReceiverSuccessEvent(
@@ -185,7 +185,7 @@ class SocketConnectionImpl extends SocketConnection {
 
         AppBloc.meetingBloc.add(
           SetSubscriberAudioEnabledEvent(
-            targetId: data['targetId'],
+            targetId: data['participantId'],
             isEnabled: data['isEnabled'],
           ),
         );
@@ -197,7 +197,7 @@ class SocketConnectionImpl extends SocketConnection {
 
         AppBloc.meetingBloc.add(
           SetSubscriberVideoEnabledEvent(
-            targetId: data['targetId'],
+            targetId: data['participantId'],
             isEnabled: data['isEnabled'],
           ),
         );
