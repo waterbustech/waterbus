@@ -11,7 +11,6 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -29,18 +28,10 @@ class ProfileHeader extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                user.avatar == null
-                    ? CircleAvatar(
-                        radius: 13.sp,
-                        backgroundColor: Colors.black,
-                        backgroundImage: AssetImage(
-                          Assets.images.imgAppLogo.path,
-                        ),
-                      )
-                    : AvatarCard(
-                        urlToImage: user.avatar!,
-                        size: 26.sp,
-                      ),
+                AvatarCard(
+                  urlToImage: user.avatar,
+                  size: 26.sp,
+                ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(

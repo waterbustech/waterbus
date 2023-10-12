@@ -35,7 +35,64 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+         end
+      end
+  end
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'AUDIO_SESSION_MICROPHONE=0',
+        ## dart: PermissionGroup.calendar
+        'PERMISSION_EVENTS=0',
+    
+        ## dart: PermissionGroup.reminders
+        'PERMISSION_REMINDERS=0',
+    
+        ## dart: PermissionGroup.contacts
+        'PERMISSION_CONTACTS=0',
+    
+        ## dart: PermissionGroup.camera
+        'PERMISSION_CAMERA=1',
+    
+        ## dart: PermissionGroup.microphone
+        'PERMISSION_MICROPHONE=1',
+    
+        ## dart: PermissionGroup.speech
+        'PERMISSION_SPEECH_RECOGNIZER=0',
+    
+        ## dart: PermissionGroup.photos
+        'PERMISSION_PHOTOS=1',
+
+        ## dart: PermissionGroup.location
+        'PERMISSION_LOCATION=1',
+       
+        ## dart: PermissionGroup.notification
+        'PERMISSION_NOTIFICATIONS=1',
+    
+        ## dart: PermissionGroup.mediaLibrary
+        'PERMISSION_MEDIA_LIBRARY=0',
+    
+        ## dart: PermissionGroup.sensors
+        'PERMISSION_SENSORS=0'
+      ]
+    end
+  end
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      xcconfig_path = config.base_configuration_reference.real_path
+      xcconfig = File.read(xcconfig_path)
+      xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+      File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
+    end
   end
 end

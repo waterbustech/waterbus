@@ -10,7 +10,7 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code.dart';
+import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
@@ -21,7 +21,8 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorAccountKey = GlobalKey();
 
   Route<dynamic> getRoute(RouteSettings settings) {
-    // Map<String, dynamic>? arguments = _getArguments(settings);
+    final Map<String, dynamic>? arguments = _getArguments(settings);
+
     switch (settings.name) {
       case Routes.rootRoute:
         return _buildRoute(
@@ -68,7 +69,9 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       case Routes.createMeetingRoute:
         return _buildRoute(
           settings,
-          const CreateMeetingScreen(),
+          CreateMeetingScreen(
+            meeting: arguments?['meeting'],
+          ),
         );
       case Routes.enterCodeRoute:
         return _buildRoute(
@@ -149,9 +152,9 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     state.pop();
   }
 
-  // _getArguments(RouteSettings settings) {
-  //   return settings.arguments;
-  // }
+  _getArguments(RouteSettings settings) {
+    return settings.arguments;
+  }
 
   static bool get canPop => state.canPop();
 

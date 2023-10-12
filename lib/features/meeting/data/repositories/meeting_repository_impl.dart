@@ -4,9 +4,11 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
@@ -23,7 +25,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> createMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.createMeeting(
+    Meeting? meeting = await _remoteDataSource.createMeeting(
       meeting: params.meeting,
       password: params.password,
     );
@@ -32,6 +34,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
       return Left(NullValue());
     }
 
+    meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -54,13 +57,14 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> joinMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.joinMeeting(
+    Meeting? meeting = await _remoteDataSource.joinMeeting(
       meeting: params.meeting,
       password: params.password,
     );
 
     if (meeting == null) return Left(NullValue());
 
+    meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
     return Right(meeting);
@@ -70,30 +74,37 @@ class MeetingRepositoryImpl extends MeetingRepository {
   Future<Either<Failure, Meeting>> updateMeeting(
     CreateMeetingParams params,
   ) async {
-    final Meeting? meeting = await _remoteDataSource.updateMeeting(
+    final bool isUpdateSucceed = await _remoteDataSource.updateMeeting(
       meeting: params.meeting,
       password: params.password,
     );
 
-    if (meeting == null) return Left(NullValue());
+    if (!isUpdateSucceed) return Left(NullValue());
 
-    _localDataSource.insertOrUpdate(meeting);
+    _localDataSource.insertOrUpdate(params.meeting);
 
-    return Right(meeting);
+    return Right(params.meeting);
   }
 
   @override
-  Future<Either<Failure, bool>> leaveMeeting(LeaveMeetingParams params) async {
-    final bool isLeaveSucceed = await _remoteDataSource.leaveMeeting(
+  Future<Either<Failure, Meeting>> leaveMeeting(
+    LeaveMeetingParams params,
+  ) async {
+    Meeting? meeting = await _remoteDataSource.leaveMeeting(
       code: params.code,
       participantId: params.participantId,
     );
 
-    if (isLeaveSucceed) {
-      _localDataSource.removeMeeting(params.code);
-    }
+    if (meeting == null) return Left(NullValue());
 
-    return Right(isLeaveSucceed);
+    meeting = findMyParticipantObject(
+      meeting,
+      participantId: params.participantId,
+    );
+
+    _localDataSource.update(meeting);
+
+    return Right(meeting);
   }
 
   @override
@@ -101,5 +112,42 @@ class MeetingRepositoryImpl extends MeetingRepository {
     final List<Meeting> meetings = _localDataSource.meetings;
 
     return Right(meetings);
+  }
+
+  @override
+  Either<Failure, bool> cleanAllRecentJoined() {
+    _localDataSource.removeAll();
+    return const Right(true);
+  }
+
+  @override
+  Future<Either<Failure, Participant>> getParticipantById(
+    int participantId,
+  ) async {
+    final Participant? participant = await _remoteDataSource.getParticipant(
+      participantId,
+    );
+
+    if (participant == null) return Left(NullValue());
+
+    return Right(participant);
+  }
+
+  // MARK: private
+  Meeting findMyParticipantObject(
+    Meeting meeting, {
+    int? participantId,
+  }) {
+    final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
+      (participant) => participantId != null
+          ? participant.id == participantId
+          : participant.user.id == AppBloc.userBloc.user?.id,
+    );
+
+    if (indexOfMyParticipant == -1) return meeting;
+
+    meeting.participants[indexOfMyParticipant].isMe = true;
+
+    return meeting;
   }
 }

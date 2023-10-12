@@ -7,13 +7,14 @@ import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 
 abstract class MeetingRemoteDataSource {
   Future<Meeting?> createMeeting({
     required Meeting meeting,
     required String password,
   });
-  Future<Meeting?> updateMeeting({
+  Future<bool> updateMeeting({
     required Meeting meeting,
     required String password,
   });
@@ -22,10 +23,11 @@ abstract class MeetingRemoteDataSource {
     required String password,
   });
   Future<Meeting?> getInfoMeeting(int code);
-  Future<bool> leaveMeeting({
+  Future<Meeting?> leaveMeeting({
     required int code,
     required int participantId,
   });
+  Future<Participant?> getParticipant(int participantId);
 }
 
 @LazySingleton(as: MeetingRemoteDataSource)
@@ -59,7 +61,8 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
       '${ApiEndpoints.meetings}/$code',
     );
 
-    if (response.statusCode == StatusCode.ok) {
+    if (response.statusCode == StatusCode.ok &&
+        response.data.toString().isNotEmpty) {
       final Map<String, dynamic> rawData = response.data;
       return Meeting.fromMap(rawData);
     }
@@ -72,8 +75,16 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     required Meeting meeting,
     required String password,
   }) async {
+    final int indexOfMyParticipant = meeting.participants.indexWhere(
+      (participant) => participant.isMe,
+    );
+
+    final int? participantId = indexOfMyParticipant == -1
+        ? null
+        : meeting.participants[indexOfMyParticipant].id;
+
     final Response response = await _remoteData.postRoute(
-      ApiEndpoints.meetings,
+      '${ApiEndpoints.meetings}/${meeting.code}${participantId != null ? '/rejoin/$participantId' : ''}',
       body: meeting.toMapCreate(password),
     );
 
@@ -86,7 +97,7 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
   }
 
   @override
-  Future<bool> leaveMeeting({
+  Future<Meeting?> leaveMeeting({
     required int code,
     required int participantId,
   }) async {
@@ -98,14 +109,15 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.ok) {
-      return true;
+      final Map<String, dynamic> rawData = response.data;
+      return Meeting.fromMap(rawData);
     }
 
-    return false;
+    return null;
   }
 
   @override
-  Future<Meeting?> updateMeeting({
+  Future<bool> updateMeeting({
     required Meeting meeting,
     required String password,
   }) async {
@@ -115,8 +127,21 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
     );
 
     if (response.statusCode == StatusCode.ok) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  Future<Participant?> getParticipant(int participantId) async {
+    final Response response = await _remoteData.getRoute(
+      '${ApiEndpoints.participants}/$participantId',
+    );
+
+    if (response.statusCode == StatusCode.ok) {
       final Map<String, dynamic> rawData = response.data;
-      return Meeting.fromMap(rawData);
+      return Participant.fromMap(rawData['participant']);
     }
 
     return null;

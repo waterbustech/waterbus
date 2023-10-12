@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:io';
+
 // Package imports:
 import 'package:dartz/dartz.dart';
 
@@ -9,4 +12,8 @@ abstract class UserRepository {
   Future<Either<Failure, User>> getUserProfile();
   Future<Either<Failure, User>> updateUserProfile(User user);
   Future<Either<Failure, String>> getPresignedUrl();
+  Future<Either<Failure, String>> uploadImageToS3({
+    required String uploadUrl,
+    required File image,
+  });
 }

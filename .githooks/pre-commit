@@ -1,6 +1,14 @@
 #!/bin/sh
 
+BOT_MESSAGE="🤖 Automated formatting and import sorting"
+
+if git log --pretty=%B -n 1 | grep -q $BOT_MESSAGE; then
+  echo "No changes to commit."
+  exit 0
+fi
+
 printf "\e[33;1m%s\e[0m\n" 'Running the Flutter formatter'
+flutter pub run import_sorter:main
 dart format .
 printf "\e[33;1m%s\e[0m\n" 'Running the import_sorter'
 flutter pub run import_sorter:main
@@ -12,3 +20,10 @@ if [ "$branch" = "master" ]; then
   echo "You can't commit directly to master branch"
   exit 1
 fi
+
+if ! git diff --cached --exit-code > /dev/null; then
+  git commit -m $BOT_MESSAGE
+  exit 0
+fi
+
+exit 0

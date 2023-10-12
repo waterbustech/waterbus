@@ -6,6 +6,7 @@
 
 // Dart imports:
 import 'dart:async' as _i4;
+import 'dart:io' as _i7;
 
 // Package imports:
 import 'package:dartz/dartz.dart' as _i2;
@@ -68,6 +69,7 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.User>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.User>> updateUserProfile(
           _i6.User? user) =>
@@ -94,6 +96,7 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.User>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, String>> getPresignedUrl() =>
       (super.noSuchMethod(
@@ -116,6 +119,47 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
           Invocation.method(
             #getPresignedUrl,
             [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, String>> uploadImageToS3({
+    required String? uploadUrl,
+    required _i7.File? image,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #uploadImageToS3,
+          [],
+          {
+            #uploadUrl: uploadUrl,
+            #image: image,
+          },
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
+            _FakeEither_0<_i5.Failure, String>(
+          this,
+          Invocation.method(
+            #uploadImageToS3,
+            [],
+            {
+              #uploadUrl: uploadUrl,
+              #image: image,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, String>>.value(
+                _FakeEither_0<_i5.Failure, String>(
+          this,
+          Invocation.method(
+            #uploadImageToS3,
+            [],
+            {
+              #uploadUrl: uploadUrl,
+              #image: image,
+            },
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, String>>);

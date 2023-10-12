@@ -3,16 +3,31 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
+import 'meeting_test.mocks.dart';
 
+@GenerateNiceMocks([MockSpec<UserBloc>()])
 void main() {
+  late MockUserBloc mockUserBloc;
+
+  setUpAll(() {
+    final di = GetIt.instance;
+    mockUserBloc = MockUserBloc();
+    di.registerFactory<UserBloc>(() => mockUserBloc);
+  });
+
   group('Meeting entity', () {
     test(
       'should be a subclass of Meeting entity',
@@ -39,13 +54,13 @@ void main() {
       final Meeting meeting1 = Meeting(
         title: 'Meeting with Kai 1',
         id: 1,
-        users: [participant1],
+        participants: [participant1],
         code: 1,
       );
       final Meeting meeting2 = Meeting(
         title: 'Meeting with Kai 2',
         id: 2,
-        users: [participant2],
+        participants: [participant2],
         code: 2,
       );
 
@@ -108,10 +123,10 @@ void main() {
       const String password = 'sample_password';
 
       // Act
-      final Map<String, String> map = meeting.toMapCreate(password);
+      final Map<String, dynamic> map = meeting.toMapCreate(password);
 
       // Assert
-      expect(map, isA<Map<String, String>>());
+      expect(map, isA<Map<String, dynamic>>());
       expect(map['title'], 'Sample Meeting');
       expect(map['password'], 'sample_password');
     });
@@ -162,5 +177,155 @@ void main() {
         expect(meeting.toJson(), isNotNull);
       },
     );
+  });
+
+  group('MeetingX', () {
+    const user1 = User(id: 1, fullName: '1', userName: '1');
+    const user2 = User(id: 2, fullName: '1', userName: '1');
+    const user3 = User(id: 3, fullName: '1', userName: '1');
+
+    final participant1 =
+        Participant(user: user1, id: 1, role: MeetingRole.attendee);
+    final participant2 =
+        Participant(user: user2, id: 2, role: MeetingRole.attendee);
+    final participant3 = Participant(
+      user: user3,
+      id: 3,
+      role: MeetingRole.attendee,
+      status: StatusEnum.inactive,
+    );
+
+    final meetingWithParticipants = Meeting(
+      title: "Meeting with Kai",
+      participants: [participant1, participant2, participant3],
+    );
+
+    final meetingWithoutParticipants = Meeting(
+      participants: [],
+      title: "Meeting with Kai",
+    );
+
+    test('should return active users', () {
+      expect(meetingWithParticipants.users, [participant1, participant2]);
+    });
+
+    test('should return true for isNoOneElse when no users', () {
+      expect(meetingWithoutParticipants.isNoOneElse, true);
+    });
+
+    test(
+        'should return true for isNoOneElse when one user is the same as the current user',
+        () {
+      when(mockUserBloc.user).thenAnswer((realInvocation) => user1);
+
+      expect(meetingWithoutParticipants.isNoOneElse, true);
+    });
+
+    test('should return false for isNoOneElse when multiple active users', () {
+      expect(meetingWithParticipants.isNoOneElse, false);
+    });
+
+    test('inviteLink - should return the invite link', () {
+      final meeting = Meeting(code: 123, title: '1');
+      expect(meeting.inviteLink, 'https:/waterbus.tech/meeting/123');
+    });
+
+    test('participantsOnlineTile - should return the appropriate text', () {
+      // Test with 1 participant
+      final meeting1Participant = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting1Participant.participantsOnlineTile,
+        'Alice is in the room',
+      );
+
+      // Test with 2 participants
+      final meeting2Participants = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+          Participant(
+            id: 2,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Bob',
+              userName: 'bob',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting2Participants.participantsOnlineTile,
+        'Alice and Bob are in the room',
+      );
+
+      // Test with 3 or more participants
+      final meeting3Participants = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+          Participant(
+            id: 2,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Bob',
+              userName: 'bob',
+            ),
+          ),
+          Participant(
+            id: 3,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'Kai',
+              userName: 'kai',
+            ),
+          ),
+          Participant(
+            id: 4,
+            role: MeetingRole.attendee,
+            user: const User(
+              id: 1,
+              fullName: 'lambiengcode',
+              userName: 'lambiengcode',
+            ),
+          ),
+        ],
+      );
+      expect(
+        meeting3Participants.participantsOnlineTile,
+        'Alice, Bob and 2 others are in the room',
+      );
+    });
   });
 }

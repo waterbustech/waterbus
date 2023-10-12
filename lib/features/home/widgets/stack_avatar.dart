@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class StackAvatar extends StatelessWidget {
   final List<String?> images;
@@ -53,11 +53,11 @@ class StackAvatar extends StatelessWidget {
   }
 
   Widget _buildAvatar(context, index) {
-    return CustomNetworkImage(
-      height: size,
-      width: size,
+    return AvatarCard(
+      size: size,
       margin: EdgeInsets.only(left: index * (size * 0.8)),
       urlToImage: images[index],
+      isCircleShape: true,
     );
   }
 }
