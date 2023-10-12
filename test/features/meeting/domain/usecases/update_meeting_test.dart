@@ -19,9 +19,9 @@ void main() {
     usecase = UpdateMeeting(mockRepository);
   });
 
-  final testMeeting = Meeting(title: 'Meeting with Kai');
+  const testMeeting = Meeting(title: 'Meeting with Kai');
   const testPassword = 'KaiDao';
-  final createMeetingParams = CreateMeetingParams(
+  const createMeetingParams = CreateMeetingParams(
     meeting: testMeeting,
     password: testPassword,
   );
@@ -29,13 +29,13 @@ void main() {
   test('should update a meeting for the given parameters', () async {
     // Arrange
     when(mockRepository.updateMeeting(any))
-        .thenAnswer((_) async => Right(testMeeting));
+        .thenAnswer((_) async => const Right(testMeeting));
 
     // Act
     final result = await usecase(createMeetingParams);
 
     // Assert
-    expect(result, Right(testMeeting));
+    expect(result, const Right(testMeeting));
     verify(mockRepository.updateMeeting(createMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });

@@ -71,20 +71,20 @@ class _EnterMeetingPasswordScreenState
       ),
       body: Form(
         key: _formStateKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Divider(),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+        child: Column(
+          children: [
+            const Divider(),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Align(
                         child: Lottie.asset(
                           Assets.lotties.unlockLottie,
-                          width: 140.sp,
-                          height: 140.sp,
+                          width: 130.sp,
+                          height: 130.sp,
                           fit: BoxFit.contain,
                           frameRate: FrameRate.max,
                           repeat: true,
@@ -134,6 +134,7 @@ class _EnterMeetingPasswordScreenState
                         child: LabelText(label: 'Password'),
                       ),
                       TextFieldInput(
+                        autofocus: true,
                         obscureText: true,
                         validatorForm: (val) {
                           if (val == null || val.length < 6) {
@@ -149,8 +150,8 @@ class _EnterMeetingPasswordScreenState
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

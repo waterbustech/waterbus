@@ -54,9 +54,17 @@ class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
   }
 
   // MARK: state
-  GetDoneMeetings get _getDoneMeetings => GetDoneMeetings(
-        recentMeetings: _recentMeetings,
-      );
+  GetDoneMeetings get _getDoneMeetings {
+    _recentMeetings.sort(
+      (pre, cur) {
+        return cur.latestJoinedTime.compareTo(pre.latestJoinedTime);
+      },
+    );
+
+    return GetDoneMeetings(
+      recentMeetings: _recentMeetings,
+    );
+  }
 
   // MARK: private functions
   Future<void> _handleGetRecentJoined() async {

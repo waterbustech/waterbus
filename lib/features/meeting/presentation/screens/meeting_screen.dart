@@ -111,7 +111,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       onTap: () {
                         if (callState?.mParticipant == null) return;
 
-                        AppBloc.meetingBloc.add(ToggleMicEvent());
+                        AppBloc.meetingBloc.add(ToggleAudioEvent());
                       },
                     ),
                     CallActionButton(
@@ -122,7 +122,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       onTap: () {
                         if (callState?.mParticipant == null) return;
 
-                        AppBloc.meetingBloc.add(ToggleCamEvent());
+                        AppBloc.meetingBloc.add(ToggleVideoEvent());
                       },
                     ),
                     CallActionButton(

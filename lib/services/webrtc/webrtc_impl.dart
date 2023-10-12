@@ -214,13 +214,13 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
   @override
   void setVideoEnabled({required String targetId, required bool isEnabled}) {
-    _subscribers[targetId]?.isAudioEnabled = isEnabled;
+    _subscribers[targetId]?.isVideoEnabled = isEnabled;
     _notify();
   }
 
   @override
   void setAudioEnabled({required String targetId, required bool isEnabled}) {
-    _subscribers[targetId]?.isVideoEnabled = isEnabled;
+    _subscribers[targetId]?.isAudioEnabled = isEnabled;
     _notify();
   }
 

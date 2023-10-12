@@ -23,6 +23,7 @@ class TextFieldInput extends StatelessWidget {
   final double? height;
   final AutovalidateMode? autovalidateMode;
   final bool readOnly;
+  final bool autofocus;
   final Color? fillColor;
   final TextStyle? errorStyle;
   final InputBorder? errorBorder;
@@ -47,6 +48,7 @@ class TextFieldInput extends StatelessWidget {
     this.height,
     this.autovalidateMode,
     this.readOnly = false,
+    this.autofocus = false,
     this.fillColor,
     this.errorStyle,
     this.errorBorder,
@@ -62,6 +64,7 @@ class TextFieldInput extends StatelessWidget {
       ),
       width: double.infinity,
       child: TextFormField(
+        autofocus: autofocus,
         obscureText: obscureText,
         onTap: onTap ?? () {},
         focusNode: focusNode,

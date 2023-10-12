@@ -44,9 +44,9 @@ void main() {
         MeetingRepositoryImpl(mockRemoteDataSource, mockLocalDataSource);
   });
 
-  final testMeeting = Meeting(title: 'Meeting with Kai');
+  const testMeeting = Meeting(title: 'Meeting with Kai');
   const testPassword = 'KaiDao';
-  final createMeetingParams =
+  const createMeetingParams =
       CreateMeetingParams(meeting: testMeeting, password: testPassword);
   const getMeetingParams = GetMeetingParams(code: 1);
   const leaveMeetingParams = LeaveMeetingParams(
@@ -69,7 +69,7 @@ void main() {
       final result = await repository.createMeeting(createMeetingParams);
 
       // Assert
-      expect(result, Right(testMeeting));
+      expect(result, const Right(testMeeting));
       verify(
         mockRemoteDataSource.createMeeting(
           meeting: testMeeting,
@@ -116,7 +116,7 @@ void main() {
       final result = await repository.getInfoMeeting(getMeetingParams);
 
       // Assert
-      expect(result, Right(testMeeting));
+      expect(result, const Right(testMeeting));
       verify(mockRemoteDataSource.getInfoMeeting(getMeetingParams.code));
       verifyNoMoreInteractions(mockRemoteDataSource);
       verifyZeroInteractions(mockLocalDataSource);
@@ -152,7 +152,7 @@ void main() {
       final result = await repository.joinMeeting(createMeetingParams);
 
       // Assert
-      expect(result, Right(testMeeting));
+      expect(result, const Right(testMeeting));
       verify(
         mockRemoteDataSource.joinMeeting(
           meeting: testMeeting,
@@ -203,7 +203,7 @@ void main() {
       final result = await repository.updateMeeting(createMeetingParams);
 
       // Assert
-      expect(result, Right(testMeeting));
+      expect(result, const Right(testMeeting));
       verify(
         mockRemoteDataSource.updateMeeting(
           meeting: testMeeting,
@@ -242,7 +242,7 @@ void main() {
   group('leaveMeeting', () {
     test('should return true when the remote call is successful', () async {
       // Arrange
-      final Meeting testMeeting = Meeting(title: "Meeting with Kai");
+      const Meeting testMeeting = Meeting(title: "Meeting with Kai");
       when(
         mockRemoteDataSource.leaveMeeting(
           code: leaveMeetingParams.code,
@@ -254,7 +254,7 @@ void main() {
       final result = await repository.leaveMeeting(leaveMeetingParams);
 
       // Assert
-      expect(result, Right(testMeeting));
+      expect(result, const Right(testMeeting));
       verify(
         mockRemoteDataSource.leaveMeeting(
           code: leaveMeetingParams.code,
@@ -299,8 +299,8 @@ void main() {
         'should return a list of recent joined meetings from local data source',
         () async {
       final testMeetings = [
-        Meeting(id: 1, title: 'Meeting 1', code: 123),
-        Meeting(id: 2, title: 'Meeting 2', code: 456),
+        const Meeting(id: 1, title: 'Meeting 1', code: 123),
+        const Meeting(id: 2, title: 'Meeting 2', code: 456),
       ];
       // Arrange
       when(mockLocalDataSource.meetings).thenReturn(testMeetings);
@@ -336,10 +336,10 @@ void main() {
         () async {
       // Arrange
       const participantId = 123;
-      final participant = Participant(
+      const participant = Participant(
         id: participantId,
         role: MeetingRole.attendee,
-        user: const User(
+        user: User(
           id: 1,
           fullName: 'Kai',
           userName: 'kai',
@@ -352,7 +352,7 @@ void main() {
       final result = await repository.getParticipantById(participantId);
 
       // Assert
-      expect(result, Right(participant));
+      expect(result, const Right(participant));
       verify(mockRemoteDataSource.getParticipant(participantId));
       verifyNoMoreInteractions(mockRemoteDataSource);
     });
@@ -380,7 +380,7 @@ void main() {
       // Arrange
       const user1 = User(id: 1, userName: '1', fullName: '1');
       const user2 = User(id: 2, userName: '2', fullName: '2');
-      final currentUserMeeting = Meeting(
+      const currentUserMeeting = Meeting(
         title: 'Meeting with Kai',
         participants: [
           Participant(user: user1, id: 1, role: MeetingRole.attendee),
@@ -409,7 +409,7 @@ void main() {
       const user1 = User(id: 1, userName: '1', fullName: '1');
       const user2 = User(id: 2, userName: '2', fullName: '2');
       const user3 = User(id: 3, userName: '2', fullName: '2');
-      final currentUserMeeting = Meeting(
+      const currentUserMeeting = Meeting(
         title: 'Meeting with Kai',
         participants: [
           Participant(user: user1, id: 1, role: MeetingRole.attendee),

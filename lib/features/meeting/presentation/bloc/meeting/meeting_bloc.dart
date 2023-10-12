@@ -82,38 +82,34 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is JoinMeetingEvent) {
-          final int indexOfMeetingInRecent =
-              AppBloc.meetingListBloc.recentMeetings.indexWhere(
-            (meeting) => meeting.code == event.meeting.code,
+          // Will be take the meeting object in recent joined
+          _currentMeeting = event.meeting;
+
+          final int indexOfParticipant =
+              _currentMeeting!.participants.indexWhere(
+            (participant) =>
+                participant.user.id == AppBloc.userBloc.user?.id &&
+                participant.role == MeetingRole.host,
           );
 
-          // Will be take the meeting object in recent joined
-          if (indexOfMeetingInRecent != -1) {
-            _currentMeeting =
-                AppBloc.meetingListBloc.recentMeetings[indexOfMeetingInRecent];
+          final bool isHost = indexOfParticipant != -1;
 
-            final int indexOfParticipant =
-                _currentMeeting!.participants.indexWhere(
-              (participant) =>
-                  participant.isMe && participant.role == MeetingRole.host,
-            );
-
-            final bool isHost = indexOfParticipant != -1;
-
-            // Will join directly if the participant is the host of room
-            if (isHost) {
+          // Will join directly if the participant is the host of room
+          if (isHost) {
+            if (_currentMeeting!.participants[indexOfParticipant].isMe) {
               _mParticipant = _currentMeeting!.participants[indexOfParticipant];
-
-              displayLoadingLayer();
-
-              add(
-                const JoinMeetingWithPasswordEvent(password: '', isHost: true),
-              );
-              return;
             }
-          }
 
-          _currentMeeting = event.meeting;
+            displayLoadingLayer();
+
+            add(
+              const JoinMeetingWithPasswordEvent(
+                password: '',
+                isHost: true,
+              ),
+            );
+            return;
+          }
 
           emit(_preJoinMeeting);
           AppNavigator.push(Routes.meetingRoute);
@@ -167,11 +163,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(_preJoinMeeting);
         }
 
-        if (event is ToggleCamEvent) {
+        if (event is ToggleVideoEvent) {
           await _rtcManager.toggleVideo();
         }
 
-        if (event is ToggleMicEvent) {
+        if (event is ToggleAudioEvent) {
           await _rtcManager.toggleAudio();
         }
 
@@ -299,7 +295,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     return meeting.fold((l) => false, (r) {
       _currentMeeting = r;
 
-      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
+      AppBloc.meetingListBloc.add(
+        InsertRecentJoinEvent(meeting: r),
+      );
 
       final int indexOfMyParticipant = r.participants.lastIndexWhere(
         (participant) => participant.isMe,

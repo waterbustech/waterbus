@@ -3,18 +3,20 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
-class Participant {
+class Participant extends Equatable {
   final int id;
   final MeetingRole role;
   final StatusEnum status;
   final User user;
-  bool isMe;
-  Participant({
+  final bool isMe;
+  const Participant({
     required this.id,
     required this.role,
     required this.user,
@@ -70,9 +72,29 @@ class Participant {
   bool operator ==(covariant Participant other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.role == role && other.user == user;
+    return other.id == id &&
+        other.role == role &&
+        other.user == user &&
+        other.isMe == isMe &&
+        other.status == status;
   }
 
   @override
-  int get hashCode => id.hashCode ^ role.hashCode ^ user.hashCode;
+  int get hashCode =>
+      id.hashCode ^
+      role.hashCode ^
+      user.hashCode ^
+      isMe.hashCode ^
+      status.hashCode;
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      role,
+      status,
+      user,
+      isMe,
+    ];
+  }
 }

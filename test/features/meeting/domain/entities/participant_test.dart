@@ -26,7 +26,7 @@ void main() {
     );
 
     test('Should create a Participant instance', () {
-      final participant = Participant(
+      const participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
@@ -51,7 +51,7 @@ void main() {
         fullName: 'UpdatedName',
       );
 
-      final participant = Participant(
+      const participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('Should convert Participant to Map', () {
-      final participant = Participant(
+      const participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
@@ -96,7 +96,7 @@ void main() {
     });
 
     test('Should convert Participant to JSON', () {
-      final participant = Participant(
+      const participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
@@ -117,19 +117,19 @@ void main() {
     });
 
     test('Should check equality of Participant instances', () {
-      final participant1 = Participant(
+      const participant1 = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
       );
 
-      final participant2 = Participant(
+      const participant2 = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
       );
 
-      final participant3 = Participant(
+      const participant3 = Participant(
         id: 2,
         role: MeetingRole.host,
         user: hostModel,
@@ -144,7 +144,7 @@ void main() {
 
     test('toString - should return a string representation of the Participant',
         () {
-      final participant = Participant(
+      const participant = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
