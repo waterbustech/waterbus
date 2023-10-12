@@ -30,13 +30,13 @@ class E2eeBottomSheet extends StatelessWidget {
             'Your messages and meetings\n are private',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: 12.sp),
           Text(
-            'End-to-end encryption keeps your personal meetings between you and the other participants. Not event Waterbus can listen to them. This includes your:',
+            'E2E encryption keeps your personal meetings between you and the other people. Not event Waterbus can listen to them. This includes your:',
             textAlign: TextAlign.justify,
             strutStyle: StrutStyle.disabled,
             style: TextStyle(

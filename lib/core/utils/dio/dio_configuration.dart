@@ -89,47 +89,16 @@ class DioConfiguration {
     dioClient.interceptors.add(
       InterceptorsWrapper(
         onResponse: (response, handler) async {
+          final bool isRefreshingToken =
+              [ApiEndpoints.refreshToken, ApiEndpoints.signOut].contains(
+            response.requestOptions.path,
+          );
+
           if (response.statusCode == StatusCode.unauthorized) {
-            try {
-              final String oldAccessToken =
-                  (response.requestOptions.headers['Authorization'] ?? '')
-                      .toString()
-                      .split(' ')
-                      .last;
-
-              final (String accessToken, String _) =
-                  await onRefreshToken(oldAccessToken: oldAccessToken);
-
-              response.requestOptions.headers['Authorization'] =
-                  'Bearer $accessToken';
-
-              final Response cloneReq = await dioClient.fetch(
-                response.requestOptions,
-              );
-
-              handler.resolve(cloneReq);
-            } catch (_) {
+            if (isRefreshingToken) {
               handler.next(response);
               _logOut();
-            }
-          } else {
-            handler.next(response);
-          }
-        },
-      ),
-    );
-
-    dioClient.httpClientAdapter = NativeAdapter();
-
-    return dioClient;
-  }
-
-  Future<Dio> configRefreshToken(Dio dioClient) async {
-    dioClient.interceptors.add(
-      InterceptorsWrapper(
-        onResponse: (response, handler) async {
-          if (response.statusCode == StatusCode.unauthorized) {
-            if (_localDataSource.refreshToken != null &&
+            } else if (_localDataSource.refreshToken != null &&
                 _localDataSource.accessToken != null) {
               try {
                 final String oldAccessToken =
@@ -161,6 +130,8 @@ class DioConfiguration {
         onError: (error, handler) async {},
       ),
     );
+
+    dioClient.httpClientAdapter = NativeAdapter();
 
     return dioClient;
   }
@@ -200,14 +171,14 @@ class DioConfiguration {
       String refreshToken,
     )? callback,
   }) async {
-    if (_localDataSource.refreshToken != null) {
+    if (_localDataSource.refreshToken == null) {
       if (_localDataSource.accessToken != null) {
         _logOut();
       }
       return ("", "");
     }
 
-    final Response response = await _remoteData.dio.get(
+    final Response response = await _remoteData.dio.post(
       ApiEndpoints.refreshToken,
       options: _remoteData.getOptionsRefreshToken,
     );

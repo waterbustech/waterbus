@@ -24,7 +24,7 @@ class VersionInfoFooter extends StatelessWidget {
           ),
           SizedBox(height: 4.sp),
           Text(
-            '@Waterbus.io',
+            '@Waterbus.tech',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 9.25.sp,

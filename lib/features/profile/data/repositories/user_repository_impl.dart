@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:io';
+
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -41,5 +44,20 @@ class UserRepositoryImpl extends UserRepository {
     if (presignedUrl == null) return Left(NullValue());
 
     return Right(presignedUrl);
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImageToS3({
+    required String uploadUrl,
+    required File image,
+  }) async {
+    final String? urlToImage = await _remoteDataSource.uploadImageToS3(
+      uploadUrl: uploadUrl,
+      image: image,
+    );
+
+    if (urlToImage == null) return Left(NullValue());
+
+    return Right(urlToImage);
   }
 }

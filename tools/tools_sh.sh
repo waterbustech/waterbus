@@ -18,7 +18,7 @@ do
 		break
         ;;
 		3)
-		flutter pub run flutter_native_splash:create --path=../native_splash_generator.yaml
+		dart run flutter_native_splash:create --path=splash-setup.yaml
 		break
         ;;
 		4)

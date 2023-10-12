@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
-import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
+import 'package:waterbus/core/utils/permission_handler.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class MeetingCard extends StatelessWidget {
   final Meeting meeting;
@@ -30,6 +32,7 @@ class MeetingCard extends StatelessWidget {
           Text(
             meeting.title,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 12.5.sp,
                   fontWeight: FontWeight.w600,
@@ -59,7 +62,7 @@ class MeetingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: meeting.users.length < 2
+                child: meeting.isNoOneElse
                     ? Text(
                         "No participants yet",
                         style: Theme.of(context)
@@ -68,7 +71,7 @@ class MeetingCard extends StatelessWidget {
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
-                        images: meeting.users
+                        images: meeting.getUniqueUsers
                             .map(
                               (user) => user.user.avatar,
                             )
@@ -77,11 +80,14 @@ class MeetingCard extends StatelessWidget {
                       ),
               ),
               GestureDetector(
-                onTap: () {
-                  showDialogWaterbus(
-                    alignment: Alignment.bottomCenter,
-                    paddingBottom: 56.sp,
-                    child: const DialogPrepareMeeting(),
+                onTap: () async {
+                  await WaterbusPermissionHandler().checkGrantedForExecute(
+                    permissions: [Permission.camera, Permission.microphone],
+                    callBack: () async {
+                      AppBloc.meetingBloc.add(
+                        DisplayDialogMeetingEvent(meeting: meeting),
+                      );
+                    },
                   );
                 },
                 child: Material(
@@ -92,7 +98,7 @@ class MeetingCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
-                      vertical: 8.sp,
+                      vertical: 7.sp,
                     ),
                     child: Row(
                       children: [
@@ -101,7 +107,7 @@ class MeetingCard extends StatelessWidget {
                           "Join",
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 9.sp,
+                                    fontSize: 10.sp,
                                   ),
                         ),
                         SizedBox(width: 4.sp),

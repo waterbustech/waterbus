@@ -1,8 +1,8 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.io?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
 
-# Waterbus: Online Meeting App using Flutter and WebRTC
+# Waterbus: Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
 <p align="justify">
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/launcher_icon_rounded.png?raw=true" width="180px" height=auto align="right" alt="Computador"/>
@@ -19,25 +19,18 @@ The Waterbus concept has been used for physical transportation, but it can also 
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_4.jpeg?raw=true" width="200px"/>
 </p>
 
-## Idea of Waterbus
-<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/mindmap.png?raw=true" width="100%"/>
+## Online Meeting Diagram
+<img src="./screenshots/meeting_sequence_diagram.png" width="100%"/>
 
-## Features
+## Meeting Features
 
 | Feature | Android | iOS |
 | :-------------: | :-------------:| :-----: |
-| Meeting | 🟢 | 🟢 |
-| Chat | 🟢 | 🟢 |
-| Raise hand | 🟢 | 🟢 |
-| Screen sharing | 🟢 | 🟢 |
-| Schedule | 🟢 | 🟢 |
-| Upload documents | 🟢 | 🟢 |
-
-<!-- #### Design Idea
-<p>
-<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_1.png.webp?raw=true" width="49.5%"/>
-<img src="https://github.com/lambiengcode/waterbus-webrtc-mobile-app/blob/main/screenshots/idea_2.png.webp?raw=true" width="49.5%"/>
-</p> -->
+| Audio/Video | :heavy_check_mark: | :heavy_check_mark: |
+| Screen Sharing | [WIP] | [WIP] |  
+| Picture in Picture | [WIP] | [WIP] | 
+| Virtual Background | [WIP] | [WIP] | 
+| Recorder | [WIP] | [WIP] | 
 
 ## Directiory Structure
 
@@ -76,13 +69,6 @@ waterbus/
 
 ```
 
-## Features
-
-- Audio and video communication
-- Screen sharing
-- Chat functionality
-- File sharing
-
 ## Requirements
 
 Flutter
@@ -118,7 +104,7 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Contact Information
 
-If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.io`.
+If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.tech`.
 
 ## License
 

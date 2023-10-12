@@ -36,9 +36,25 @@ class $AssetsIconsGen {
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
+  /// File path: assets/icons/launcher_icon.png
+  AssetGenImage get launcherIcon =>
+      const AssetGenImage('assets/icons/launcher_icon.png');
+
+  /// File path: assets/icons/launcher_icon_android12.png
+  AssetGenImage get launcherIconAndroid12 =>
+      const AssetGenImage('assets/icons/launcher_icon_android12.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [icApple, icCameraVideo, icEndCall, icFacebook, icGoogle, icNewMeeting];
+  List<AssetGenImage> get values => [
+        icApple,
+        icCameraVideo,
+        icEndCall,
+        icFacebook,
+        icGoogle,
+        icNewMeeting,
+        launcherIcon,
+        launcherIconAndroid12
+      ];
 }
 
 class $AssetsImagesGen {
@@ -56,11 +72,25 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [imgAppLogo, imgLogo];
 }
 
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/broadcast-lottie.json
+  String get broadcastLottie => 'assets/lotties/broadcast-lottie.json';
+
+  /// File path: assets/lotties/unlock-lottie.json
+  String get unlockLottie => 'assets/lotties/unlock-lottie.json';
+
+  /// List of all assets
+  List<String> get values => [broadcastLottie, unlockLottie];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
 }
 
 class AssetGenImage {

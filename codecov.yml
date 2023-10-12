@@ -23,6 +23,7 @@ coverage:
     - "lib/gen/**"  # ignore folders and all its contents
     - "lib/core/**"
     - "lib/services/**"
+    - "lib/features/common/**"
     - "lib/features/**/data/datasources/**"
     - "lib/features/**/presentation/**"
     - "lib/features/**/widgets/**"

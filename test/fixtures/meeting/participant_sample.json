@@ -6,6 +6,8 @@
         "fullName": "Kai",
         "userName": "lambiengcode",
         "avatar": null
-    }
+    },
+    "isMe": false,
+    "status": 0
   }
   

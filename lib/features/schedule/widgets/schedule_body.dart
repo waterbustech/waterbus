@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/features/schedule/blocs/schedule/schedule_bloc.dart';
 import 'package:waterbus/features/schedule/widgets/schedule_row_line_date.dart';
@@ -25,8 +24,8 @@ class ScheduleBody extends StatefulWidget {
 }
 
 class _ScheduleBodyState extends State<ScheduleBody> {
-  int _currentIndex = unlimited;
-  final controller = PageController(initialPage: unlimited);
+  int _currentIndex = -1;
+  final controller = PageController(initialPage: -1);
   @override
   Widget build(BuildContext context) {
     return Padding(

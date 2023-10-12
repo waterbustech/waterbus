@@ -15,6 +15,8 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:waterbus/core/error/failures.dart' as _i5;
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i6;
 
+import 'package:waterbus/features/meeting/domain/entities/participant.dart'
+    as _i10;
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart'
     as _i3;
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart'
@@ -75,6 +77,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Meeting>>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> createMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -101,6 +104,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> updateMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -127,6 +131,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> joinMeeting(
           _i7.CreateMeetingParams? params) =>
@@ -153,16 +158,17 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
-  _i4.Future<_i2.Either<_i5.Failure, bool>> leaveMeeting(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> leaveMeeting(
           _i8.LeaveMeetingParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #leaveMeeting,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
-            _FakeEither_0<_i5.Failure, bool>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
+            _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
             #leaveMeeting,
@@ -170,15 +176,16 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
-                _FakeEither_0<_i5.Failure, bool>(
+            _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
+                _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
             #leaveMeeting,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> getInfoMeeting(
           _i9.GetMeetingParams? params) =>
@@ -205,4 +212,54 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
+
+  @override
+  _i2.Either<_i5.Failure, bool> cleanAllRecentJoined() => (super.noSuchMethod(
+        Invocation.method(
+          #cleanAllRecentJoined,
+          [],
+        ),
+        returnValue: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #cleanAllRecentJoined,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #cleanAllRecentJoined,
+            [],
+          ),
+        ),
+      ) as _i2.Either<_i5.Failure, bool>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>> getParticipantById(
+          int? participantId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getParticipantById,
+          [participantId],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>.value(
+                _FakeEither_0<_i5.Failure, _i10.Participant>(
+          this,
+          Invocation.method(
+            #getParticipantById,
+            [participantId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>.value(
+                _FakeEither_0<_i5.Failure, _i10.Participant>(
+          this,
+          Invocation.method(
+            #getParticipantById,
+            [participantId],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>);
 }

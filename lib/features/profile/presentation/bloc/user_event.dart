@@ -11,7 +11,8 @@ class GetProfileEvent extends UserEvent {}
 
 class UpdateProfileEvent extends UserEvent {
   final String fullName;
-  const UpdateProfileEvent({required this.fullName});
+  final String? avatar;
+  const UpdateProfileEvent({required this.fullName, this.avatar});
 }
 
 class UpdateAvatarEvent extends UserEvent {

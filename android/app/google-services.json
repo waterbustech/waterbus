@@ -22,7 +22,15 @@
           }
         },
         {
-          "client_id": "727554668212-r0ml2ok8411dej7r2s9t1trr0onab3ck.apps.googleusercontent.com",
+          "client_id": "727554668212-sjrh1p70hcovd41cp9oua764e6kaina4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterbus.wanted",
+            "certificate_hash": "7ab29f21ff06f2d9dd6a8720128dbfea28553626"
+          }
+        },
+        {
+          "client_id": "727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "727554668212-r0ml2ok8411dej7r2s9t1trr0onab3ck.apps.googleusercontent.com",
+              "client_id": "727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com",
               "client_type": 3
             },
             {

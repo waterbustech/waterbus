@@ -10,12 +10,16 @@ import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
 
 class CreateMeetingScreen extends StatefulWidget {
-  const CreateMeetingScreen({super.key});
+  final Meeting? meeting;
+  const CreateMeetingScreen({
+    super.key,
+    required this.meeting,
+  });
 
   @override
   State<CreateMeetingScreen> createState() => _CreateMeetingScreenState();
@@ -25,13 +29,14 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   final TextEditingController _roomNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late final _isEditing = widget.meeting != null;
 
   @override
   void initState() {
     super.initState();
 
     if (AppBloc.userBloc.user?.fullName != null) {
-      _roomNameController.text =
+      _roomNameController.text = widget.meeting?.title ??
           'Meeting with ${AppBloc.userBloc.user!.fullName}';
     }
   }
@@ -41,20 +46,29 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Create Meeting',
+        _isEditing ? 'Edit Meeting' : 'Create Meeting',
         actions: [
           IconButton(
             onPressed: () {
               if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-              showDialogLoading();
+              displayLoadingLayer();
 
-              AppBloc.meetingBloc.add(
-                CreateMeetingEvent(
-                  roomName: _roomNameController.text,
-                  password: _passwordController.text,
-                ),
-              );
+              if (_isEditing) {
+                AppBloc.meetingBloc.add(
+                  UpdateMeetingEvent(
+                    roomName: _roomNameController.text,
+                    password: _passwordController.text,
+                  ),
+                );
+              } else {
+                AppBloc.meetingBloc.add(
+                  CreateMeetingEvent(
+                    roomName: _roomNameController.text,
+                    password: _passwordController.text,
+                  ),
+                );
+              }
             },
             icon: Icon(
               PhosphorIcons.check,
@@ -76,10 +90,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.sp),
-                        child: const PreviewCameraCard(),
-                      ),
+                      SizedBox(height: 16.sp),
                       const LabelText(label: 'Room name'),
                       TextFieldInput(
                         validatorForm: (val) {
@@ -95,9 +106,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                       TextFieldInput(
                         obscureText: true,
                         validatorForm: (val) {
-                          if (val?.isEmpty ?? true) return null;
-
-                          if (val!.length < 6) {
+                          if (val == null || val.length < 6) {
                             return "Password must be at least 6 characters";
                           }
 

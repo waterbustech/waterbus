@@ -77,5 +77,18 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Waterbus needs access to your photos so you can include them in your profile.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Waterbus needs access to your photos so you can include them in your profile.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Waterbus Camera Usage!</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Waterbus Microphone Usage!</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 	</dict>
 </plist>
