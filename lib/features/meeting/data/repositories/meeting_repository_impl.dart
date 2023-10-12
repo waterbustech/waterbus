@@ -64,6 +64,7 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
+    meeting = meeting.copyWith(latestJoinedAt: DateTime.now());
     meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
@@ -138,7 +139,10 @@ class MeetingRepositoryImpl extends MeetingRepository {
     Meeting meeting, {
     int? participantId,
   }) {
-    final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
+    final List<Participant> participants =
+        meeting.participants.map((e) => e).toList();
+
+    final int indexOfMyParticipant = participants.lastIndexWhere(
       (participant) => participantId != null
           ? participant.id == participantId
           : participant.user.id == AppBloc.userBloc.user?.id,
@@ -146,8 +150,9 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (indexOfMyParticipant == -1) return meeting;
 
-    meeting.participants[indexOfMyParticipant].isMe = true;
+    participants.add(participants[indexOfMyParticipant].copyWith(isMe: true));
+    participants.removeAt(indexOfMyParticipant);
 
-    return meeting;
+    return meeting.copyWith(participants: participants);
   }
 }

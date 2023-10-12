@@ -59,9 +59,9 @@ class ParticipantHasLeftEvent extends MeetingEvent {
   const ParticipantHasLeftEvent({required this.participantId});
 }
 
-class ToggleMicEvent extends MeetingEvent {}
+class ToggleAudioEvent extends MeetingEvent {}
 
-class ToggleCamEvent extends MeetingEvent {}
+class ToggleVideoEvent extends MeetingEvent {}
 
 class SetSubscriberVideoEnabledEvent extends MeetingEvent {
   final String targetId;

@@ -2,24 +2,27 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
-class Meeting {
+class Meeting extends Equatable {
   final int id;
   final String title;
   final List<Participant> participants;
   final int code;
   final DateTime? createdAt;
-  Meeting({
+  final DateTime? latestJoinedAt;
+  const Meeting({
     this.id = -1,
     required this.title,
     this.participants = const [],
     this.code = -1,
     this.createdAt,
+    this.latestJoinedAt,
   });
 
   Meeting copyWith({
@@ -28,6 +31,7 @@ class Meeting {
     List<Participant>? participants,
     int? code,
     DateTime? createdAt,
+    DateTime? latestJoinedAt,
   }) {
     return Meeting(
       id: id ?? this.id,
@@ -35,6 +39,7 @@ class Meeting {
       participants: participants ?? this.participants,
       code: code ?? this.code,
       createdAt: createdAt ?? this.createdAt,
+      latestJoinedAt: latestJoinedAt ?? this.latestJoinedAt,
     );
   }
 
@@ -45,6 +50,7 @@ class Meeting {
       'users': participants.map((x) => x.toMap()).toList(),
       'code': code,
       'createdAt': createdAt.toString(),
+      'latestJoinedAt': latestJoinedAt.toString(),
     };
   }
 
@@ -67,6 +73,9 @@ class Meeting {
       ),
       code: map['code'],
       createdAt: DateTime.parse(map['createdAt']).toLocal(),
+      latestJoinedAt: DateTime.parse(
+        map['latestJoinedAt'] ?? map['createdAt'],
+      ).toLocal(),
     );
   }
 
@@ -76,24 +85,39 @@ class Meeting {
       Meeting.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'Meeting(id: $id, title: $title, users: $participants, code: $code)';
-  }
-
-  @override
   bool operator ==(covariant Meeting other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
         other.title == title &&
+        other.createdAt == createdAt &&
+        other.latestJoinedAt == latestJoinedAt &&
         listEquals(other.participants, participants) &&
         other.code == code;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ title.hashCode ^ participants.hashCode ^ code.hashCode;
+    return id.hashCode ^
+        title.hashCode ^
+        participants.hashCode ^
+        code.hashCode ^
+        createdAt.hashCode ^
+        latestJoinedAt.hashCode;
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        participants,
+        code,
+        createdAt,
+        title,
+        latestJoinedAt,
+      ];
+
+  @override
+  bool get stringify => true;
 }
 
 extension MeetingX on Meeting {
@@ -144,5 +168,9 @@ extension MeetingX on Meeting {
           .join(', ');
       return '$participantList and $otherParticipants others are in the room';
     }
+  }
+
+  DateTime get latestJoinedTime {
+    return latestJoinedAt ?? createdAt ?? DateTime.now();
   }
 }

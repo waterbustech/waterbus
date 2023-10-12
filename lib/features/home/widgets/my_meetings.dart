@@ -34,16 +34,15 @@ class MyMeetings extends StatelessWidget {
             // First or current created at not equal previous
             final bool hasLabelCreatedAt = index == 0 ||
                 !DateTimeHelper().isEqualTwoDate(
-                  recentMeetings[index - 1].createdAt,
-                  recentMeetings[index].createdAt,
+                  recentMeetings[index - 1].latestJoinedTime,
+                  recentMeetings[index].latestJoinedTime,
                 );
 
             return Column(
               children: [
                 hasLabelCreatedAt
                     ? DateTitleCard(
-                        lastJoinedAt:
-                            recentMeetings[index].createdAt ?? DateTime.now(),
+                        lastJoinedAt: recentMeetings[index].latestJoinedTime,
                       )
                     : const SizedBox(),
                 MeetingCard(meeting: recentMeetings[index]),

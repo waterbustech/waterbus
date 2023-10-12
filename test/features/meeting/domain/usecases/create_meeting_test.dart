@@ -21,20 +21,20 @@ void main() {
     usecase = CreateMeeting(mockRepository);
   });
 
-  final testMeeting = Meeting(title: 'Meeting with Kai');
+  const testMeeting = Meeting(title: 'Meeting with Kai');
   const testPassword = 'KaiDao';
-  final createMeetingParams = CreateMeetingParams(
+  const createMeetingParams = CreateMeetingParams(
     meeting: testMeeting,
     password: testPassword,
   );
 
   test('should have correct props', () {
     // Arrange
-    final param1 = CreateMeetingParams(
+    const param1 = CreateMeetingParams(
       meeting: testMeeting,
       password: testPassword,
     );
-    final param2 = CreateMeetingParams(
+    const param2 = CreateMeetingParams(
       meeting: testMeeting,
       password: '${testPassword}01',
     );
@@ -49,13 +49,13 @@ void main() {
     // Arrange
     when(
       mockRepository.createMeeting(createMeetingParams),
-    ).thenAnswer((_) async => Right(testMeeting));
+    ).thenAnswer((_) async => const Right(testMeeting));
 
     // Act
     final result = await usecase(createMeetingParams);
 
     // Assert
-    expect(result, Right(testMeeting));
+    expect(result, const Right(testMeeting));
     verify(mockRepository.createMeeting(createMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });

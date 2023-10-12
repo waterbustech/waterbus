@@ -18,9 +18,9 @@ void main() {
     joinMeeting = JoinMeeting(mockRepository);
   });
 
-  final testMeeting = Meeting(title: 'Test Meeting');
+  const testMeeting = Meeting(title: 'Test Meeting');
   const testPassword = 'TestPassword';
-  final createMeetingParams = CreateMeetingParams(
+  const createMeetingParams = CreateMeetingParams(
     meeting: testMeeting,
     password: testPassword,
   );
@@ -29,13 +29,13 @@ void main() {
       () async {
     // Arrange
     when(mockRepository.joinMeeting(createMeetingParams))
-        .thenAnswer((_) async => Right(testMeeting));
+        .thenAnswer((_) async => const Right(testMeeting));
 
     // Act
     final result = await joinMeeting(createMeetingParams);
 
     // Assert
-    expect(result, Right(testMeeting));
+    expect(result, const Right(testMeeting));
     verify(mockRepository.joinMeeting(createMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });

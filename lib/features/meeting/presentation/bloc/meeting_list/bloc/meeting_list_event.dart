@@ -11,7 +11,9 @@ class GetRecentJoinedEvent extends MeetingListEvent {}
 
 class InsertRecentJoinEvent extends MeetingListEvent {
   final Meeting meeting;
-  const InsertRecentJoinEvent({required this.meeting});
+  const InsertRecentJoinEvent({
+    required this.meeting,
+  });
 }
 
 class UpdateRecentJoinEvent extends MeetingListEvent {

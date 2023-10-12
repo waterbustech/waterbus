@@ -6,13 +6,21 @@ abstract class MeetingListState extends Equatable {
   });
 
   final List<Meeting> recentMeetings;
-
-  @override
-  List<Object> get props => [recentMeetings];
 }
 
-final class MeetingListInitial extends MeetingListState {}
+final class MeetingListInitial extends MeetingListState {
+  @override
+  List<Object?> get props => [];
+}
 
 class GetDoneMeetings extends MeetingListState {
-  const GetDoneMeetings({required super.recentMeetings});
+  const GetDoneMeetings({
+    required super.recentMeetings,
+  });
+
+  @override
+  List<Object?> get props => [
+        recentMeetings,
+        identityHashCode(this),
+      ];
 }

@@ -40,24 +40,24 @@ void main() {
         userName: 'lambiengcode',
         fullName: 'Kai',
       );
-      final participant1 = Participant(
+      const participant1 = Participant(
         id: 1,
         role: MeetingRole.attendee,
         user: userModel,
       );
-      final participant2 = Participant(
+      const participant2 = Participant(
         id: 2,
         role: MeetingRole.host,
         user: userModel,
       );
 
-      final Meeting meeting1 = Meeting(
+      const Meeting meeting1 = Meeting(
         title: 'Meeting with Kai 1',
         id: 1,
         participants: [participant1],
         code: 1,
       );
-      final Meeting meeting2 = Meeting(
+      const Meeting meeting2 = Meeting(
         title: 'Meeting with Kai 2',
         id: 2,
         participants: [participant2],
@@ -119,7 +119,7 @@ void main() {
 
     test('toMapCreate - should return a map for creating a Meeting', () {
       // Arrange
-      final Meeting meeting = Meeting(title: 'Sample Meeting');
+      const Meeting meeting = Meeting(title: 'Sample Meeting');
       const String password = 'sample_password';
 
       // Act
@@ -184,24 +184,23 @@ void main() {
     const user2 = User(id: 2, fullName: '1', userName: '1');
     const user3 = User(id: 3, fullName: '1', userName: '1');
 
-    final participant1 =
+    const participant1 =
         Participant(user: user1, id: 1, role: MeetingRole.attendee);
-    final participant2 =
+    const participant2 =
         Participant(user: user2, id: 2, role: MeetingRole.attendee);
-    final participant3 = Participant(
+    const participant3 = Participant(
       user: user3,
       id: 3,
       role: MeetingRole.attendee,
       status: StatusEnum.inactive,
     );
 
-    final meetingWithParticipants = Meeting(
+    const meetingWithParticipants = Meeting(
       title: "Meeting with Kai",
       participants: [participant1, participant2, participant3],
     );
 
-    final meetingWithoutParticipants = Meeting(
-      participants: [],
+    const meetingWithoutParticipants = Meeting(
       title: "Meeting with Kai",
     );
 
@@ -226,19 +225,19 @@ void main() {
     });
 
     test('inviteLink - should return the invite link', () {
-      final meeting = Meeting(code: 123, title: '1');
+      const meeting = Meeting(code: 123, title: '1');
       expect(meeting.inviteLink, 'https:/waterbus.tech/meeting/123');
     });
 
     test('participantsOnlineTile - should return the appropriate text', () {
       // Test with 1 participant
-      final meeting1Participant = Meeting(
+      const meeting1Participant = Meeting(
         title: '1',
         participants: [
           Participant(
             id: 1,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Alice',
               userName: 'alice',
@@ -252,13 +251,13 @@ void main() {
       );
 
       // Test with 2 participants
-      final meeting2Participants = Meeting(
+      const meeting2Participants = Meeting(
         title: '1',
         participants: [
           Participant(
             id: 1,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Alice',
               userName: 'alice',
@@ -267,7 +266,7 @@ void main() {
           Participant(
             id: 2,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Bob',
               userName: 'bob',
@@ -281,13 +280,13 @@ void main() {
       );
 
       // Test with 3 or more participants
-      final meeting3Participants = Meeting(
+      const meeting3Participants = Meeting(
         title: '1',
         participants: [
           Participant(
             id: 1,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Alice',
               userName: 'alice',
@@ -296,7 +295,7 @@ void main() {
           Participant(
             id: 2,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Bob',
               userName: 'bob',
@@ -305,7 +304,7 @@ void main() {
           Participant(
             id: 3,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'Kai',
               userName: 'kai',
@@ -314,7 +313,7 @@ void main() {
           Participant(
             id: 4,
             role: MeetingRole.attendee,
-            user: const User(
+            user: User(
               id: 1,
               fullName: 'lambiengcode',
               userName: 'lambiengcode',

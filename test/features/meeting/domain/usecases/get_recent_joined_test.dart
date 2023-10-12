@@ -22,7 +22,7 @@ void main() {
   test('should get a list of meetings from the repository', () async {
     // Arrange
     final List<Meeting> meetings = [
-      Meeting(title: 'Kai'),
+      const Meeting(title: 'Kai'),
     ];
     when(mockRepository.getRecentJoined())
         .thenAnswer((_) async => Right(meetings));

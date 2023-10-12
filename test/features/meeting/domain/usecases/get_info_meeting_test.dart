@@ -19,7 +19,7 @@ void main() {
 
   const testMeetingCode = 123;
   const getMeetingParams = GetMeetingParams(code: testMeetingCode);
-  final testMeeting = Meeting(title: 'Test Meeting');
+  const testMeeting = Meeting(title: 'Test Meeting');
 
   test('should have correct props', () {
     // Arrange
@@ -36,13 +36,13 @@ void main() {
       () async {
     // Arrange
     when(mockRepository.getInfoMeeting(getMeetingParams))
-        .thenAnswer((_) async => Right(testMeeting));
+        .thenAnswer((_) async => const Right(testMeeting));
 
     // Act
     final result = await getInfoMeeting(getMeetingParams);
 
     // Assert
-    expect(result, Right(testMeeting));
+    expect(result, const Right(testMeeting));
     verify(mockRepository.getInfoMeeting(getMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });

@@ -21,16 +21,16 @@ void main() {
   });
 
   const tParticipantId = 1;
-  final tParticipant = Participant(
+  const tParticipant = Participant(
     id: tParticipantId,
     role: MeetingRole.host,
-    user: const User(id: 1, fullName: 'Kai', userName: 'Kai'),
+    user: User(id: 1, fullName: 'Kai', userName: 'Kai'),
   );
 
   test('should get a participant from the repository', () async {
     // Arrange
     when(mockMeetingRepository.getParticipantById(any))
-        .thenAnswer((_) async => Right(tParticipant));
+        .thenAnswer((_) async => const Right(tParticipant));
 
     // Act
     final result = await usecase(
@@ -40,7 +40,7 @@ void main() {
     );
 
     // Assert
-    expect(result, Right(tParticipant));
+    expect(result, const Right(tParticipant));
     verify(mockMeetingRepository.getParticipantById(tParticipantId));
     verifyNoMoreInteractions(mockMeetingRepository);
   });
