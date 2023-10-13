@@ -86,7 +86,7 @@ Android Studio / Xcode
 
 ## Installation
 
-1. Clone the repository git clone https://github.com/lambiengcode/waterbus-webrtc-mobile-app.git
+1. Clone the repository git clone https://github.com/lambiengcode/waterbus.git
 2. Run `flutter pub get` to install dependencies
 3. Run the app using `flutter run`
 
