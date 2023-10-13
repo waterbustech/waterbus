@@ -155,5 +155,31 @@ void main() {
       expect(participantString, contains('Participant'));
       expect(participantString, contains(participant.id.toString()));
     });
+
+    test('should have correct props', () {
+      // Arrange
+      const participant1 = Participant(
+        id: 1,
+        role: MeetingRole.attendee,
+        user: userModel,
+      );
+
+      const participant2 = Participant(
+        id: 2,
+        role: MeetingRole.host,
+        user: userModel,
+      );
+
+      // Act & Assert
+      expect(participant1.props, [
+        participant1.id,
+        participant1.role,
+        participant1.status,
+        participant1.user,
+        participant1.isMe,
+      ]);
+
+      expect(participant1.props, isNot(equals(participant2.props)));
+    });
   });
 }

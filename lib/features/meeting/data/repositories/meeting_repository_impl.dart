@@ -64,7 +64,6 @@ class MeetingRepositoryImpl extends MeetingRepository {
 
     if (meeting == null) return Left(NullValue());
 
-    meeting = meeting.copyWith(latestJoinedAt: DateTime.now());
     meeting = findMyParticipantObject(meeting);
     _localDataSource.insertOrUpdate(meeting);
 
