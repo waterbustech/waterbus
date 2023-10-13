@@ -20,7 +20,7 @@ The Waterbus concept has been used for physical transportation, but it can also 
 </p>
 
 ## Online Meeting Diagram
-<img src="./screenshots/meeting_sequence_diagram.png" width="100%"/>
+<img src="./screenshots/waterbus-diagram.png" width="100%"/>
 
 ## Meeting Features
 
@@ -36,37 +36,45 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 ```
 waterbus/
-├── packages/
-│   ├── auth/
-│   │   ├── lib/
-│   │   ├── test/
-│   │   └── pubspec.yaml
-│   ├── schedule/
-│   │   ├── lib/
-│   │   ├── test/
-│   │   └── pubspec.yaml
-│   ├── settings/
-│   │   ├── lib/
-│   │   ├── test/
-│   │   └── pubspec.yaml
-│   └── meeting/
-│       ├── lib/
-│       ├── test/
-│       └── pubspec.yaml
-├── lib/
-│   ├── main.dart
-│   ├── screens/
-│   ├── widgets/
-│   ├── services/
-│   └── utils/
-│   └── bloc/
-├── assets/
-├── test/
+├── README.md
+├── RELEASE.md
+├── analysis_options.yaml
 ├── android/
+├── assets/
+├── build/
+├── codecov.yml
+├── coverage/
 ├── ios/
+├── launcher_icon_setup.yaml
+├── lib/
+│   ├── core/
+│   ├── features/
+│   │   ├── app/
+│   │   ├── auth/
+│   │   ├── chats/
+│   │   ├── common/
+│   │   ├── conversation/
+│   │   ├── home/
+│   │   ├── meeting/
+│   │   │   ├── data/
+│   │   │   ├── domain/
+│   │   │   └── presentation/
+│   │   ├── notifications/
+│   │   ├── profile/
+│   │   ├── schedule/
+│   │   ├── settings/
+│   ├── gen/
+│   ├── main.dart
+│   ├── services/
+├── packages/
+├── pubspec.lock
 ├── pubspec.yaml
-└── README.md
-
+├── run.sh
+├── screenshots/
+├── splash-setup.yaml
+├── test/
+├── tools/
+└── waterbus.iml
 ```
 
 ## Requirements
