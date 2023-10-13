@@ -42,7 +42,7 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  connectivity_plus: ^4.0.2
+  connectivity_plus: ^5.0.0
   http_parser: ^4.0.2
   socket_io_client: ^2.0.3+1
   cookie_jar: ^4.0.8
@@ -59,7 +59,7 @@ dependencies:
 
   # Dependency Injection
   get_it: ^7.6.4
-  injectable: ^2.3.1
+  injectable: ^2.3.2
 
   # Storage
   hive: ^2.2.3
@@ -113,7 +113,7 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.4.0
+  injectable_generator: ^2.4.1
   build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.2
 
