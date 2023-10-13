@@ -3,6 +3,7 @@
 // Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:equatable/equatable.dart';
 
 // Project imports:

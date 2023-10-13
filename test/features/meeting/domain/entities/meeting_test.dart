@@ -326,5 +326,90 @@ void main() {
         'Alice, Bob and 2 others are in the room',
       );
     });
+
+    group('latestJoinedTime', () {
+      const testMeeting = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.attendee,
+            user: User(
+              id: 1,
+              fullName: 'Alice',
+              userName: 'alice',
+            ),
+          ),
+        ],
+      );
+      test('latestJoinedAt not null', () {
+        final DateTime latestJoinedAt = DateTime.now();
+        final Meeting meeting = testMeeting.copyWith(
+          latestJoinedAt: latestJoinedAt,
+        );
+
+        expect(meeting.latestJoinedTime, latestJoinedAt);
+      });
+      test('latestJoinedAt is null, createdAt not null', () {
+        final DateTime createdAt = DateTime.now();
+        final Meeting meeting = testMeeting.copyWith(
+          createdAt: createdAt,
+        );
+
+        expect(meeting.latestJoinedTime, createdAt);
+        expect(meeting.latestJoinedAt, isNull);
+      });
+      test('latestJoinedAt is null, createdAt is also null', () {
+        final Meeting meeting = testMeeting.copyWith();
+
+        expect(meeting.latestJoinedTime, DateTime.now());
+        expect(meeting.latestJoinedAt, isNull);
+        expect(meeting.createdAt, isNull);
+      });
+    });
+  });
+
+  test('should have correct props', () {
+    // Arrange
+    const meeting1 = Meeting(
+      title: '1',
+      participants: [
+        Participant(
+          id: 1,
+          role: MeetingRole.attendee,
+          user: User(
+            id: 1,
+            fullName: 'Alice',
+            userName: 'alice',
+          ),
+        ),
+      ],
+    );
+    const meeting2 = Meeting(
+      title: '2',
+      participants: [
+        Participant(
+          id: 2,
+          role: MeetingRole.host,
+          user: User(
+            id: 1,
+            fullName: 'Bob',
+            userName: 'bob',
+          ),
+        ),
+      ],
+    );
+
+    // Act & Assert
+    expect(meeting1.props, [
+      meeting1.id,
+      meeting1.participants,
+      meeting1.code,
+      meeting1.createdAt,
+      meeting1.title,
+      meeting1.latestJoinedAt,
+    ]);
+
+    expect(meeting1.props, isNot(equals(meeting2.props)));
   });
 }

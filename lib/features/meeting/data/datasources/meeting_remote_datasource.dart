@@ -90,7 +90,9 @@ class MeetingRemoteDataSourceImpl extends MeetingRemoteDataSource {
 
     if (response.statusCode == StatusCode.created) {
       final Map<String, dynamic> rawData = response.data;
-      return Meeting.fromMap(rawData);
+      return Meeting.fromMap(rawData).copyWith(
+        latestJoinedAt: DateTime.now(),
+      );
     }
 
     return null;
