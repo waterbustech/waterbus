@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+
+// Project imports:
 import 'package:waterbus/services/webrtc/models/priority_rtc.dart';
 
 /// The RTP capabilities define what mediasoup or an endpoint can receive at
@@ -39,17 +42,16 @@ class RtpCapabilities {
     List<String>? fecMechanisms,
   }) {
     return RtpCapabilities(
-      codecs:
-          codecs ?? List<RtpCodecCapability>.from(old.codecs),
-      headerExtensions: headerExtensions ?? List<RtpHeaderExtension>.from(old.headerExtensions),
+      codecs: codecs ?? List<RtpCodecCapability>.from(old.codecs),
+      headerExtensions: headerExtensions ??
+          List<RtpHeaderExtension>.from(old.headerExtensions),
       fecMechanisms: fecMechanisms ?? List<String>.from(old.fecMechanisms),
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'codecs':
-          codecs.map((codec) => codec.toMap()).toList(),
+      'codecs': codecs.map((codec) => codec.toMap()).toList(),
     };
   }
 }
@@ -244,8 +246,7 @@ class RtpCodecCapability {
       'clockRate': clockRate,
       'channels': channels,
       'parameters': parameters,
-      'rtcpFeedback':
-          rtcpFeedback.map((fb) => fb.toMap()).toList(),
+      'rtcpFeedback': rtcpFeedback.map((fb) => fb.toMap()).toList(),
     };
   }
 }
@@ -649,8 +650,7 @@ class RtpCodecParameters {
       'clockRate': clockRate,
       'channels': channels,
       'parameters': parameters,
-      'rtcpFeedback':
-          rtcpFeedback.map((rtcpFB) => rtcpFB.toMap()).toList(),
+      'rtcpFeedback': rtcpFeedback.map((rtcpFB) => rtcpFB.toMap()).toList(),
     };
   }
 }
@@ -739,31 +739,26 @@ class RtpParameters {
     RtcpParameters? rtcp,
   }) {
     return RtpParameters(
-      codecs:
-          codecs ?? List<RtpCodecParameters>.from(old.codecs),
+      codecs: codecs ?? List<RtpCodecParameters>.from(old.codecs),
       encodings: encodings ?? List<RtpEncodingParameters>.from(old.encodings),
-      headerExtensions: headerExtensions ?? List<RtpHeaderExtensionParameters>.from(old.headerExtensions),
+      headerExtensions: headerExtensions ??
+          List<RtpHeaderExtensionParameters>.from(old.headerExtensions),
       mid: mid ?? old.mid,
-      rtcp: rtcp ?? (old.rtcp != null
-              ? RtcpParameters.copy(old.rtcp!)
-              : null),
+      rtcp: rtcp ?? (old.rtcp != null ? RtcpParameters.copy(old.rtcp!) : null),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'mid': mid,
-      'codecs':
-          codecs.map((codec) => codec.toMap()).toList(),
+      'codecs': codecs.map((codec) => codec.toMap()).toList(),
       'headerExtensions': headerExtensions
           .map(
             (rtpHeaderExtensionParameters) =>
                 rtpHeaderExtensionParameters.toMap(),
           )
           .toList(),
-      'encodings': encodings
-          .map((encoding) => encoding.toMap())
-          .toList(),
+      'encodings': encodings.map((encoding) => encoding.toMap()).toList(),
       'rtcp': rtcp?.toMap(),
     };
   }
