@@ -82,7 +82,7 @@ dependencies:
   intl: ^0.18.1
   dartz: ^0.10.1
   equatable: ^2.0.5
-  share_plus: ^7.1.0
+  share_plus: ^7.2.1
   sizer: 
     path: ./packages/sizer
 
