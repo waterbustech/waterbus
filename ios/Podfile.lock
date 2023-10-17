@@ -51,9 +51,9 @@ PODS:
     - Firebase/Performance (= 10.15.0)
     - firebase_core
     - Flutter
-  - FirebaseABTesting (10.15.0):
+  - FirebaseABTesting (10.16.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseAppCheckInterop (10.15.0)
+  - FirebaseAppCheckInterop (10.16.0)
   - FirebaseAuth (10.15.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
@@ -65,9 +65,9 @@ PODS:
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreExtension (10.15.0):
+  - FirebaseCoreExtension (10.16.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.15.0):
+  - FirebaseCoreInternal (10.16.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseCrashlytics (10.15.0):
     - FirebaseCore (~> 10.5)
@@ -77,7 +77,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.15.0):
+  - FirebaseInstallations (10.16.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -101,13 +101,13 @@ PODS:
     - GoogleUtilities/ISASwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseRemoteConfig (10.15.0):
+  - FirebaseRemoteConfig (10.16.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseSessions (10.15.0):
+  - FirebaseSessions (10.16.0):
     - FirebaseCore (~> 10.5)
     - FirebaseCoreExtension (~> 10.0)
     - FirebaseInstallations (~> 10.0)
@@ -130,7 +130,7 @@ PODS:
     - Flutter
   - flutter_webrtc (0.9.36):
     - Flutter
-    - WebRTC-SDK (= 114.5735.08)
+    - KaiRTC (= 118.5993.01)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -171,6 +171,7 @@ PODS:
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
+  - KaiRTC (118.5993.01)
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
     - libwebp/mux (= 1.3.2)
@@ -201,10 +202,10 @@ PODS:
     - PromisesObjC (= 2.3.1)
   - ReachabilitySwift (5.0.0)
   - RecaptchaInterop (100.0.0)
-  - SDWebImage (5.18.2):
-    - SDWebImage/Core (= 5.18.2)
-  - SDWebImage/Core (5.18.2)
-  - SDWebImageWebPCoder (0.13.0):
+  - SDWebImage (5.18.3):
+    - SDWebImage/Core (= 5.18.3)
+  - SDWebImage/Core (5.18.3)
+  - SDWebImageWebPCoder (0.14.0):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
   - share_plus (0.0.1):
@@ -214,7 +215,6 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - WebRTC-SDK (114.5735.08)
 
 DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -264,6 +264,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - KaiRTC
     - libwebp
     - Mantle
     - nanopb
@@ -273,7 +274,6 @@ SPEC REPOS:
     - RecaptchaInterop
     - SDWebImage
     - SDWebImageWebPCoder
-    - WebRTC-SDK
 
 EXTERNAL SOURCES:
   connectivity_plus:
@@ -331,24 +331,24 @@ SPEC CHECKSUMS:
   firebase_crashlytics: 36b8a72e23437dbb69bd97102661ce31b6721be5
   firebase_messaging: 91ec967913a5d144f951b3c3ac17a57796d38735
   firebase_performance: 0cd853c1ae53c1f576dcaf3b4d0e31c4ea799792
-  FirebaseABTesting: 7fa3bca17f79ac433301d20d5cd33401f7738dca
-  FirebaseAppCheckInterop: a8c555b1c2db1d9445e6c3a08a848167ddb7eb51
+  FirebaseABTesting: 03f0a8b88cf618350527f2c6a2234e29b9c65064
+  FirebaseAppCheckInterop: 82358cff9f33452dd44259e88eea5e562500b1cb
   FirebaseAuth: a55ec5f7f8a5b1c2dd750235c1bb419bfb642445
   FirebaseCore: 2cec518b43635f96afe7ac3a9c513e47558abd2e
-  FirebaseCoreExtension: d3f1ea3725fb41f56e8fbfb29eeaff54e7ffb8f6
-  FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
+  FirebaseCoreExtension: 2dbc745b337eb99d2026a7a309ae037bd873f45e
+  FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
   FirebaseCrashlytics: a83f26fb922a3fe181eb738fb4dcf0c92bba6455
-  FirebaseInstallations: cae95cab0f965ce05b805189de1d4c70b11c76fb
+  FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
   FirebaseMessaging: 0c0ae1eb722ef0c07f7801e5ded8dccd1357d6d4
   FirebasePerformance: b7988bc06c87e9c3b9e6b1ae854cd460b646ebd6
-  FirebaseRemoteConfig: 64b6ada098c649304114a817effd7e5f87229b11
-  FirebaseSessions: ee59a7811bef4c15f65ef6472f3210faa293f9c8
+  FirebaseRemoteConfig: 17ec974c6cac5cdc6cf8297062c2219851857f06
+  FirebaseSessions: 96e7781e545929cde06dd91088ddbb0841391b43
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_facebook_auth: 47c7a8594f2d6864618e30b5a6d59dff0d2e59fe
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  flutter_webrtc: 55df3aaa802114dad390191a46c2c8d535751268
+  flutter_webrtc: 96bae47799b2154bbb57adf8570bfbf0612350de
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
@@ -357,6 +357,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  KaiRTC: 749e7e1ae2b50014f3a6d6a8f70dbcdc5a9d05e1
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
@@ -366,13 +367,12 @@ SPEC CHECKSUMS:
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
-  SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
+  SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
+  SDWebImageWebPCoder: 3027af94522d94df79c21c070894c8a2128927ff
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
 PODFILE CHECKSUM: 52fd15cec49abfb4d32261dcd9b7f149dbc0ed6b
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

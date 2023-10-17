@@ -22,6 +22,8 @@ const Map<String, dynamic> configurationWebRTC = {
     }
   ],
   'iceTransportPolicy': 'all',
+  'bundlePolicy': 'max-bundle',
+  'rtcpMuxPolicy': 'require',
   'sdpSemantics': 'unified-plan',
 };
 
