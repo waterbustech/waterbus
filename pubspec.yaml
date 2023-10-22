@@ -123,7 +123,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.3.2
 
   # Lints
-  flutter_lints: ^2.0.3
+  flutter_lints: ^3.0.0
   import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
