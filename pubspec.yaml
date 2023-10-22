@@ -65,7 +65,7 @@ dependencies:
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.17.0
+  firebase_core: ^2.19.0
   firebase_messaging: ^14.6.9
   firebase_auth: ^4.10.1
   firebase_crashlytics: ^3.3.7
