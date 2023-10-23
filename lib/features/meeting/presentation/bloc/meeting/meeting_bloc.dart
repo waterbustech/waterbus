@@ -358,9 +358,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
       _mParticipant = null;
-
-      AppBloc.meetingListBloc.add(UpdateRecentJoinEvent(meeting: r));
-
       _rtcManager.dispose();
 
       AppNavigator.pop();
