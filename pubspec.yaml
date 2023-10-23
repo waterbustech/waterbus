@@ -96,11 +96,11 @@ dependencies:
   sdp_transform: ^0.3.2
   h264_profile_level_id: ^0.2.1
   flutter_webrtc:
-    path: /Users/lambiengcode/Documents/webrtc/flutter-webrtc
-    # git:
-    #   url: https://github.com/waterbustech/flutter-webrtc.git
-    #   path: "."
-    #   ref: 0.9.45+2
+    # path: /Users/lambiengcode/Documents/webrtc/flutter-webrtc
+    git:
+      url: https://github.com/waterbustech/flutter-webrtc.git
+      path: "."
+      ref: 0.9.45+3
 
 dependency_overrides: 
   watcher: ^1.1.0
