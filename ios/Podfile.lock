@@ -130,7 +130,7 @@ PODS:
     - Flutter
   - flutter_webrtc (0.9.36):
     - Flutter
-    - KaiRTC (= 118.5993.01)
+    - KaiRTC (= 119.6045.01)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -171,7 +171,7 @@ PODS:
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - KaiRTC (118.5993.01)
+  - KaiRTC (119.6045.01)
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
     - libwebp/mux (= 1.3.2)
@@ -348,7 +348,7 @@ SPEC CHECKSUMS:
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  flutter_webrtc: 96bae47799b2154bbb57adf8570bfbf0612350de
+  flutter_webrtc: 0b82383bb27d45d2f5badb95e5d068ce3aafac23
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
@@ -357,7 +357,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
-  KaiRTC: 749e7e1ae2b50014f3a6d6a8f70dbcdc5a9d05e1
+  KaiRTC: fd4a098a3031846a6654332afe38a31c1c23bff7
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431

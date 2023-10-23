@@ -787,12 +787,10 @@ packages:
   flutter_webrtc:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.9.45+1"
-      resolved-ref: d59532bee95c41d56835d8499b4c36f46624e26c
-      url: "https://github.com/waterbustech/flutter-webrtc.git"
-    source: git
-    version: "0.9.45+1"
+      path: "/Users/lambiengcode/Documents/webrtc/flutter-webrtc"
+      relative: false
+    source: path
+    version: "0.9.45+2"
   frontend_server_client:
     dependency: transitive
     description:
