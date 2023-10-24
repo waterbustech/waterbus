@@ -105,7 +105,9 @@ class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
 
     if (indexOfMeeting == -1) return;
 
-    _recentMeetings[indexOfMeeting] = meeting;
+    _recentMeetings[indexOfMeeting] = meeting.copyWith(
+      latestJoinedAt: _recentMeetings[indexOfMeeting].latestJoinedAt,
+    );
   }
 
   // MARK: export

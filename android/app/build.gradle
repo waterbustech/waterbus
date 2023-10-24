@@ -35,6 +35,9 @@ android {
     compileSdkVersion 33
 
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+        
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -56,6 +59,10 @@ android {
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
+
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -76,10 +83,16 @@ android {
             debuggable false                // make app non-debuggable
             crunchPngs true                 // shrink images
             minifyEnabled true              // obfuscate code and remove unused code
-            shrinkResources false         
+            shrinkResources true         
             multiDexEnabled true
         }
     }
+
+    lint {
+        checkReleaseBuilds false
+    }
+
+    namespace "com.waterbus.wanted"
 }
 
 flutter {
@@ -92,6 +105,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging-directboot:23.2.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
