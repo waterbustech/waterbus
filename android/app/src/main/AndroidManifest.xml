@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.waterbus.wanted">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:installLocation="preferExternal">
     <supports-screens android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
