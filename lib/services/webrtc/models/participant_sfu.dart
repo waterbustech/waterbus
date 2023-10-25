@@ -3,6 +3,7 @@
 // Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:waterbus/services/webrtc/helpers/extensions/peer_extensions.dart';
 
 class ParticipantSFU extends Equatable {
   final RTCPeerConnection peerConnection;
@@ -22,6 +23,7 @@ class ParticipantSFU extends Equatable {
     required this.onChanged,
   }) {
     _initialRenderer();
+    peerConnection.statistics();
   }
 
   ParticipantSFU copyWith({
