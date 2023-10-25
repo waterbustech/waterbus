@@ -1,3 +1,7 @@
+import 'package:h264_profile_level_id/h264_profile_level_id.dart';
+import 'package:sdp_transform/sdp_transform.dart';
+import 'package:waterbus/services/webrtc/helpers/codec_selector.dart';
+
 extension SdpX on String {
   String removeRTCPMux() {
     return replaceAll(RegExp(r'a=rtcp-mux.*\r\n'), '');
@@ -8,6 +12,35 @@ extension SdpX on String {
       'a=fmtp:111 minptime=10;useinbandfec=1',
       'a=fmtp:111 minptime=10;useinbandfec=1;usedtx=1',
     );
+  }
+
+  String useH264HighLevel() {
+    final profileLevelId = ProfileLevelId(
+      profile: H264Utils.ProfileConstrainedBaseline,
+      level: H264Utils.Level3_1,
+    );
+    final session = parse(this);
+    session['media'][0]['profile-level-id'] = H264Utils.profileLevelIdToString(
+      profileLevelId,
+    );
+    final newSdp = write(session, null);
+
+    return newSdp;
+  }
+
+  String setPreferredCodec() {
+    final capSel = CodecCapabilitySelector(this);
+
+    final vcaps = capSel.getCapabilities('video');
+    if (vcaps != null) {
+      vcaps.codecs = vcaps.codecs
+          .where((e) => (e['codec'] as String).toLowerCase() == 'h264')
+          .toList();
+      vcaps.setCodecPreferences('video', vcaps.codecs);
+      capSel.setCapabilities(vcaps);
+    }
+
+    return capSel.sdp().useH264HighLevel();
   }
 
   String optimizeSdp() {

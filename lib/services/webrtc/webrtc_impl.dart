@@ -10,7 +10,6 @@ import 'package:sdp_transform/sdp_transform.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/services/socket.dart';
 import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
-import 'package:waterbus/services/webrtc/helpers/extensions/peer_extensions.dart';
 import 'package:waterbus/services/webrtc/helpers/extensions/sdp_extensions.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 import 'package:waterbus/services/webrtc/models/description_type.dart';
@@ -67,14 +66,12 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
       String sdp = await _createOffer(peerConnection);
 
-      sdp = sdp.enableAudioDTX();
+      sdp = sdp.enableAudioDTX().setPreferredCodec();
 
       final RTCSessionDescription description = RTCSessionDescription(
         sdp,
         DescriptionType.offer.type,
       );
-
-      await peerConnection.setVideoCodec(90000);
 
       await peerConnection.setLocalDescription(description);
 

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:waterbus/services/webrtc/helpers/stats/webrtc_stats.dart';
 
 extension PeerX on RTCPeerConnection {
   void setMaxBandwidth(int? bandwidth) {
@@ -26,27 +27,20 @@ extension PeerX on RTCPeerConnection {
     });
   }
 
-  Future<void> setVideoCodec(int clockRate) async {
-    final codecs = [
-      RTCRTPCodec(
-        name: 'video/H264',
-        kind: 'video',
-        clockRate: clockRate,
-        parameters: {
-          'level-asymmetry-allowed': '1',
-          'packetization-mode': '1',
-          'profile-level-id': '640d61',
-        },
-      ),
-    ];
+  void statistics() {
+    final WebRTCStatsUtility stats = WebRTCStatsUtility(this);
 
-    final senders = await getSenders();
-    for (final sender in senders) {
-      if (sender.track?.kind == 'video') {
-        final senderParameters = sender.parameters;
-        senderParameters.codecs = codecs;
-        sender.setParameters(senderParameters);
+    onIceConnectionState = (state) {
+      switch (state) {
+        case RTCIceConnectionState.RTCIceConnectionStateConnected:
+          stats.start();
+          break;
+        case RTCIceConnectionState.RTCIceConnectionStateClosed:
+          stats.stop();
+          break;
+        default:
+          break;
       }
-    }
+    };
   }
 }
