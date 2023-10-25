@@ -3,6 +3,8 @@
 // Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+
+// Project imports:
 import 'package:waterbus/services/webrtc/helpers/extensions/peer_extensions.dart';
 
 class ParticipantSFU extends Equatable {
