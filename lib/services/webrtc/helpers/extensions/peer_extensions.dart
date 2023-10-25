@@ -29,6 +29,8 @@ extension PeerX on RTCPeerConnection {
   Future<void> setVideoCodec(int clockRate) async {
     final codecs = [
       RTCRTPCodec(
+        name: 'video/H264',
+        kind: 'video',
         clockRate: clockRate,
         parameters: {
           'level-asymmetry-allowed': '1',
