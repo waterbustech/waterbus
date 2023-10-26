@@ -256,6 +256,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _mParticipant = ParticipantSFU(
       peerConnection: peerConnection,
       onChanged: _notify,
+      enableStats: true,
     );
 
     _localStream = await _getUserMedia();

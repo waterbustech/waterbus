@@ -12,15 +12,16 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/share_utils.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
@@ -57,8 +58,47 @@ class _MeetingScreenState extends State<MeetingScreen> {
           backgroundColor: Colors.black,
           appBar: appBarTitleBack(
             context,
-            'code: ${meeting.code}',
-            centerTitle: false,
+            '',
+            titleWidget: Column(
+              children: [
+                Text(
+                  meeting.code.toString(),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 2.sp),
+                GestureWrapper(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const E2eeBottomSheet();
+                      },
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        PhosphorIcons.lock_fill,
+                        color: Colors.green,
+                        size: 9.sp,
+                      ),
+                      SizedBox(width: 4.sp),
+                      Text(
+                        'End-to-end encrypted',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 9.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             actions: [
               IconButton(
                 onPressed: () async {
@@ -68,7 +108,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   );
                 },
                 icon: Icon(
-                  PhosphorIcons.share,
+                  PhosphorIcons.export,
                   size: 18.sp,
                 ),
               ),
@@ -132,10 +172,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     CallActionButton(
                       icon: PhosphorIcons.gear_six,
                       onTap: () {
-                        AppNavigator.push(
-                          Routes.createMeetingRoute,
-                          arguments: {
-                            'meeting': meeting,
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return const CallSettingsBottomSheet();
                           },
                         );
                       },
