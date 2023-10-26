@@ -4,6 +4,7 @@ import 'package:sdp_transform/sdp_transform.dart';
 
 // Project imports:
 import 'package:waterbus/services/webrtc/helpers/codec_selector.dart';
+import 'package:waterbus/services/webrtc/models/codec.dart';
 
 extension SdpX on String {
   String removeRTCPMux() {
@@ -31,13 +32,13 @@ extension SdpX on String {
     return newSdp;
   }
 
-  String setPreferredCodec() {
+  String setPreferredCodec({WebRTCCodec codec = WebRTCCodec.h264}) {
     final capSel = CodecCapabilitySelector(this);
 
     final vcaps = capSel.getCapabilities('video');
     if (vcaps != null) {
       vcaps.codecs = vcaps.codecs
-          .where((e) => (e['codec'] as String).toLowerCase() == 'h264')
+          .where((e) => (e['codec'] as String).toLowerCase() == codec.codec)
           .toList();
       vcaps.setCodecPreferences('video', vcaps.codecs);
       capSel.setCapabilities(vcaps);
