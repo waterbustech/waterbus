@@ -22,12 +22,17 @@ class PathHelper {
     final String localStoreWaterbusDir = await localStoreDirWaterbus;
     final Directory myDir = Directory(tempWaterbusDir);
     final Directory localDir = Directory(localStoreWaterbusDir);
+    final Directory appDirectory = await appDir;
     if (!myDir.existsSync()) {
       await myDir.create();
     }
 
     if (!localDir.existsSync()) {
       await localDir.create();
+    }
+
+    if (!appDirectory.existsSync()) {
+      await appDirectory.create();
     }
   }
 

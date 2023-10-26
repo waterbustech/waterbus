@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 // Project imports:
 import 'package:waterbus/core/types/extensions/duration_x.dart';
+import 'package:waterbus/core/utils/path_helper.dart';
 
 class WebRTCStatsUtility {
   RTCPeerConnection peerConnection;
@@ -16,11 +18,15 @@ class WebRTCStatsUtility {
   WebRTCStatsUtility(this.peerConnection);
 
   final List<double> _latencyMeasurements = [];
+  final List<double> _avgLatencyMeasurements = [];
+  final List<double> _bytesSentMeasurements = [];
   Timer? _statsTimer;
 
   void start() {
     // Clear any previous measurements
     _latencyMeasurements.clear();
+    _avgLatencyMeasurements.clear();
+    _bytesSentMeasurements.clear();
 
     // Start collecting stats periodically
     _statsTimer = Timer.periodic(1.seconds, (timer) {
@@ -30,6 +36,7 @@ class WebRTCStatsUtility {
 
   void stop() {
     _statsTimer?.cancel();
+    _writeStatsToAsset();
   }
 
   Future<void> _collectStats() async {
@@ -51,6 +58,9 @@ class WebRTCStatsUtility {
           // Convert bytes to KB
           final double kilobytesSent = bytesSent / 1024.0;
 
+          _bytesSentMeasurements.add(kilobytesSent);
+          _avgLatencyMeasurements.add(_calculateAverageLatency() * 1000);
+
           // Print packet size in KB
           debugPrint('Kilobytes Sent: $kilobytesSent KB');
         }
@@ -70,5 +80,25 @@ class WebRTCStatsUtility {
     }
     final double totalLatency = _latencyMeasurements.reduce((a, b) => a + b);
     return totalLatency / _latencyMeasurements.length;
+  }
+
+  Future<void> _writeStatsToAsset() async {
+    String stats = '''''';
+    for (int index = 0; index < _bytesSentMeasurements.length; index++) {
+      final double latency = _avgLatencyMeasurements[index] * 1000;
+      stats += '''$index $latency ${_bytesSentMeasurements[index]}\n''';
+    }
+
+    final Directory path = await PathHelper.appDir;
+    final filePath = File('${path.path}/benchmark.txt');
+
+    // Write the asset content to the local file
+    try {
+      await filePath.create();
+      await filePath.writeAsString(stats);
+      debugPrint("Saved stats in ${filePath.path}");
+    } catch (e) {
+      debugPrint("Error writing data to the file: $e");
+    }
   }
 }
