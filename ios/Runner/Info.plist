@@ -78,6 +78,10 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>UIFileSharingEnabled</key>
+		<true/>
+		<key>LSSupportsOpeningDocumentsInPlace</key>
+		<true/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Waterbus needs access to your photos so you can include them in your profile.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
