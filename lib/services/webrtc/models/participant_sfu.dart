@@ -20,12 +20,16 @@ class ParticipantSFU extends Equatable {
     this.isAudioEnabled = true,
     this.isSharingScreen = false,
     this.hasFirstFrameRendered = false,
-    required this.peerConnection,
     this.renderer,
+    required this.peerConnection,
     required this.onChanged,
+    bool enableStats = false,
   }) {
     _initialRenderer();
-    peerConnection.statistics();
+
+    if (enableStats) {
+      peerConnection.statistics();
+    }
   }
 
   ParticipantSFU copyWith({

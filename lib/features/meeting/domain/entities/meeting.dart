@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:equatable/equatable.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
@@ -174,5 +176,15 @@ extension MeetingX on Meeting {
 
   DateTime get latestJoinedTime {
     return latestJoinedAt ?? createdAt ?? DateTime.now();
+  }
+
+  bool get isHost {
+    final int indexOfHost = participants.indexWhere(
+      (participant) =>
+          participant.role == MeetingRole.host &&
+          participant.user.id == AppBloc.userBloc.user?.id,
+    );
+
+    return indexOfHost != -1;
   }
 }
