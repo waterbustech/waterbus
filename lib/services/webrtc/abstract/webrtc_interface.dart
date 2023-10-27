@@ -2,6 +2,7 @@
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 // Project imports:
+import 'package:waterbus/services/webrtc/models/call_setting.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 abstract class WaterbusWebRTCManager {
@@ -25,6 +26,7 @@ abstract class WaterbusWebRTCManager {
   Future<void> dispose();
 
   // MARK: control
+  Future<void> applyCallSettings(CallSetting setting);
   Future<void> toggleAudio();
   Future<void> toggleVideo();
   void setVideoEnabled({required String targetId, required bool isEnabled});

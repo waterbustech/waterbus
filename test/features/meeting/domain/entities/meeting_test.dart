@@ -362,9 +362,43 @@ void main() {
       test('latestJoinedAt is null, createdAt is also null', () {
         final Meeting meeting = testMeeting.copyWith();
 
-        expect(meeting.latestJoinedTime, DateTime.now());
         expect(meeting.latestJoinedAt, isNull);
         expect(meeting.createdAt, isNull);
+      });
+    });
+
+    group('isHost', () {
+      const testUser = User(
+        id: 1,
+        fullName: 'Alice',
+        userName: 'alice',
+      );
+
+      const testMeeting = Meeting(
+        title: '1',
+        participants: [
+          Participant(
+            id: 1,
+            role: MeetingRole.host,
+            user: testUser,
+          ),
+        ],
+      );
+
+      test('should return true', () {
+        // Arrange
+        when(mockUserBloc.user).thenAnswer((_) => testUser);
+
+        // Assert
+        expect(testMeeting.isHost, true);
+      });
+
+      test('should return false', () {
+        // Arrange
+        when(mockUserBloc.user).thenAnswer((_) => testUser.copyWith(id: 2));
+
+        // Assert
+        expect(testMeeting.isHost, false);
       });
     });
   });

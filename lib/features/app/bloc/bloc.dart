@@ -32,6 +32,7 @@ class AppBloc {
       create: (context) => userBloc,
     ),
     BlocProvider<MeetingBloc>(
+      lazy: false,
       create: (context) => meetingBloc,
     ),
     BlocProvider<MeetingListBloc>(

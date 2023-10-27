@@ -26,13 +26,16 @@ import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
+import 'package:waterbus/features/meeting/domain/usecases/get_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
+import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
+import 'package:waterbus/services/webrtc/models/call_setting.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 part 'meeting_event.dart';
@@ -46,12 +49,15 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetInfoMeeting _getInfoMeeting;
   final LeaveMeeting _leaveMeeting;
   final GetParticipant _getParticipant;
+  final GetCallSettings _getCallSettings;
+  final SaveCallSettings _saveCallSettings;
   // ignore: unused_field
   final WaterbusWebRTCManager _rtcManager;
 
   // MARK: private
   Meeting? _currentMeeting;
   Participant? _mParticipant;
+  CallSetting _callSetting = CallSetting();
 
   MeetingBloc(
     this._createMeeting,
@@ -61,7 +67,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._leaveMeeting,
     this._getParticipant,
     this._rtcManager,
+    this._getCallSettings,
+    this._saveCallSettings,
   ) : super(const MeetingInitial()) {
+    _getCallSettings.call(null).then(
+          (settings) => settings.fold((l) => null, (r) {
+            _callSetting = r;
+            _rtcManager.applyCallSettings(r);
+          }),
+        );
+
     on<MeetingEvent>(
       transformer: sequential(),
       (event, emit) async {
@@ -154,7 +169,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           } else {
             await _handleLeaveMeeting(event);
           }
-          emit(const MeetingInitial());
+          emit(_meetingInitial);
         }
 
         if (event is DisplayDialogMeetingEvent) {
@@ -185,6 +200,21 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           );
         }
 
+        if (event is SaveCallSettingsEvent) {
+          _saveCallSettings.call(event.setting);
+
+          _callSetting = event.setting;
+
+          _rtcManager.applyCallSettings(_callSetting);
+
+          if (state is JoinedMeeting) {
+            // Hot update settings
+            return;
+          }
+
+          emit(_meetingInitial);
+        }
+
         if (event is RefreshDisplayMeetingEvent) {
           if (state is MeetingInitial) return;
 
@@ -197,7 +227,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         if (event is DisposeMeetingEvent) {
           await _dispose();
-          emit(const MeetingInitial());
+          emit(_meetingInitial);
         }
 
         // Related to WebRTC
@@ -245,6 +275,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   // MARK: state
+  MeetingInitial get _meetingInitial => MeetingInitial(
+        callSetting: _callSetting,
+      );
+
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
         participant: _mParticipant,
@@ -509,4 +543,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _currentMeeting = null;
     _mParticipant = null;
   }
+
+  // MARK: export
+  CallSetting get callSetting => _callSetting;
 }
