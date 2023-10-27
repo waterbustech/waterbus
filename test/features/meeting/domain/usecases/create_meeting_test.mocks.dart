@@ -14,6 +14,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // Project imports:
 import 'package:waterbus/core/error/failures.dart' as _i5;
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i6;
+import 'package:waterbus/services/webrtc/models/call_setting.dart' as _i11;
 
 import 'package:waterbus/features/meeting/domain/entities/participant.dart'
     as _i10;
@@ -262,4 +263,51 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>);
+
+  @override
+  _i2.Either<_i5.Failure, _i11.CallSetting> saveCallSettings(
+          _i11.CallSetting? setting) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveCallSettings,
+          [setting],
+        ),
+        returnValue: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+          this,
+          Invocation.method(
+            #saveCallSettings,
+            [setting],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+          this,
+          Invocation.method(
+            #saveCallSettings,
+            [setting],
+          ),
+        ),
+      ) as _i2.Either<_i5.Failure, _i11.CallSetting>);
+
+  @override
+  _i2.Either<_i5.Failure, _i11.CallSetting> getCallSettings() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCallSettings,
+          [],
+        ),
+        returnValue: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+          this,
+          Invocation.method(
+            #getCallSettings,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+          this,
+          Invocation.method(
+            #getCallSettings,
+            [],
+          ),
+        ),
+      ) as _i2.Either<_i5.Failure, _i11.CallSetting>);
 }

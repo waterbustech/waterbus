@@ -25,19 +25,8 @@ import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 
-class MeetingScreen extends StatefulWidget {
+class MeetingScreen extends StatelessWidget {
   const MeetingScreen({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _MeetingScreenState();
-}
-
-class _MeetingScreenState extends State<MeetingScreen> {
-  @override
-  void dispose() {
-    AppBloc.meetingBloc.add(LeaveMeetingEvent());
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +50,6 @@ class _MeetingScreenState extends State<MeetingScreen> {
             '',
             titleWidget: Column(
               children: [
-                Text(
-                  meeting.code.toString(),
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 2.sp),
                 GestureWrapper(
                   onTap: () {
                     showModalBottomSheet(
@@ -91,10 +72,19 @@ class _MeetingScreenState extends State<MeetingScreen> {
                         'End-to-end encrypted',
                         style: TextStyle(
                           color: Colors.green,
-                          fontSize: 9.sp,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(height: 2.sp),
+                Text(
+                  meeting.code.toString(),
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],

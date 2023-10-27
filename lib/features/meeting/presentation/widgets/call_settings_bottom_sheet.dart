@@ -75,7 +75,11 @@ class CallSettingsBottomSheet extends StatelessWidget {
               CallSettingButton(
                 icon: PhosphorIcons.phone,
                 lable: 'Call Settings',
-                onTap: () {},
+                onTap: () {
+                  AppNavigator.pop();
+
+                  AppNavigator.push(Routes.settingsRoute);
+                },
               ),
               CallSettingButton(
                 icon: PhosphorIcons.users_three,

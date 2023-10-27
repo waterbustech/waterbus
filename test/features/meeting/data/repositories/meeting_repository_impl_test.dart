@@ -8,6 +8,7 @@ import 'package:mockito/mockito.dart';
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
+import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart';
 import 'package:waterbus/features/meeting/data/repositories/meeting_repository_impl.dart';
@@ -18,17 +19,20 @@ import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/services/webrtc/models/call_setting.dart';
 import 'meeting_repository_impl_test.mocks.dart';
 
 @GenerateNiceMocks([
   MockSpec<MeetingRemoteDataSource>(),
   MockSpec<MeetingLocalDataSource>(),
+  MockSpec<CallSettingsLocalDataSource>(),
   MockSpec<UserBloc>(),
 ])
 void main() {
   late MeetingRepositoryImpl repository;
   late MockMeetingRemoteDataSource mockRemoteDataSource;
   late MockMeetingLocalDataSource mockLocalDataSource;
+  late MockCallSettingsLocalDataSource mockCallSettingsLocalDataSource;
   late MockUserBloc mockUserBloc;
 
   setUpAll(() {
@@ -40,8 +44,12 @@ void main() {
   setUp(() {
     mockRemoteDataSource = MockMeetingRemoteDataSource();
     mockLocalDataSource = MockMeetingLocalDataSource();
-    repository =
-        MeetingRepositoryImpl(mockRemoteDataSource, mockLocalDataSource);
+    mockCallSettingsLocalDataSource = MockCallSettingsLocalDataSource();
+    repository = MeetingRepositoryImpl(
+      mockRemoteDataSource,
+      mockLocalDataSource,
+      mockCallSettingsLocalDataSource,
+    );
   });
 
   const testMeeting = Meeting(title: 'Meeting with Kai');
@@ -372,6 +380,41 @@ void main() {
       expect(result, Left(NullValue()));
       verify(mockRemoteDataSource.getParticipant(participantId));
       verifyNoMoreInteractions(mockRemoteDataSource);
+    });
+  });
+
+  group('get call settings', () {
+    test('has been executed local data source', () {
+      // Arrange
+      final CallSetting callSetting = CallSetting(isAudioMuted: true);
+      when(mockCallSettingsLocalDataSource.getSettings())
+          .thenAnswer((_) => callSetting);
+
+      // Actually
+      final callSettings = repository.getCallSettings();
+
+      // Assert
+      expect(callSettings, Right<Failure, CallSetting>(callSetting));
+      verify(mockCallSettingsLocalDataSource.getSettings());
+    });
+  });
+
+  group('save call settings', () {
+    test('should save call settings to local data source', () {
+      // Arrange
+      final CallSetting callSetting = CallSetting(
+        isAudioMuted: true,
+        isLowBandwidthMode: true,
+      );
+      when(mockCallSettingsLocalDataSource.saveSettings(callSetting))
+          .thenAnswer((realInvocation) {});
+
+      // Actually
+      final callSettings = repository.saveCallSettings(callSetting);
+
+      // Assert
+      expect(callSettings, Right<Failure, CallSetting>(callSetting));
+      verify(mockCallSettingsLocalDataSource.saveSettings(callSetting));
     });
   });
 

@@ -5,24 +5,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 // Dart imports:
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart' as _i9;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:mockito/src/dummies.dart' as _i10;
 
 // Project imports:
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i4;
+import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i5;
+import 'package:waterbus/services/webrtc/models/call_setting.dart' as _i2;
 
+import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart'
+    as _i8;
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart'
-    as _i6;
-import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart'
-    as _i2;
-import 'package:waterbus/features/meeting/domain/entities/participant.dart'
-    as _i5;
-import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart'
     as _i7;
+import 'package:waterbus/features/meeting/data/datasources/meeting_remote_datasource.dart'
+    as _i3;
+import 'package:waterbus/features/meeting/domain/entities/participant.dart'
+    as _i6;
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart'
+    as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,14 +38,24 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart'
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeCallSetting_0 extends _i1.SmartFake implements _i2.CallSetting {
+  _FakeCallSetting_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [MeetingRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMeetingRemoteDataSource extends _i1.Mock
-    implements _i2.MeetingRemoteDataSource {
+    implements _i3.MeetingRemoteDataSource {
   @override
-  _i3.Future<_i4.Meeting?> createMeeting({
-    required _i4.Meeting? meeting,
+  _i4.Future<_i5.Meeting?> createMeeting({
+    required _i5.Meeting? meeting,
     required String? password,
   }) =>
       (super.noSuchMethod(
@@ -54,13 +67,13 @@ class MockMeetingRemoteDataSource extends _i1.Mock
             #password: password,
           },
         ),
-        returnValue: _i3.Future<_i4.Meeting?>.value(),
-        returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
-      ) as _i3.Future<_i4.Meeting?>);
+        returnValue: _i4.Future<_i5.Meeting?>.value(),
+        returnValueForMissingStub: _i4.Future<_i5.Meeting?>.value(),
+      ) as _i4.Future<_i5.Meeting?>);
 
   @override
-  _i3.Future<bool> updateMeeting({
-    required _i4.Meeting? meeting,
+  _i4.Future<bool> updateMeeting({
+    required _i5.Meeting? meeting,
     required String? password,
   }) =>
       (super.noSuchMethod(
@@ -72,13 +85,13 @@ class MockMeetingRemoteDataSource extends _i1.Mock
             #password: password,
           },
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<_i4.Meeting?> joinMeeting({
-    required _i4.Meeting? meeting,
+  _i4.Future<_i5.Meeting?> joinMeeting({
+    required _i5.Meeting? meeting,
     required String? password,
   }) =>
       (super.noSuchMethod(
@@ -90,22 +103,22 @@ class MockMeetingRemoteDataSource extends _i1.Mock
             #password: password,
           },
         ),
-        returnValue: _i3.Future<_i4.Meeting?>.value(),
-        returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
-      ) as _i3.Future<_i4.Meeting?>);
+        returnValue: _i4.Future<_i5.Meeting?>.value(),
+        returnValueForMissingStub: _i4.Future<_i5.Meeting?>.value(),
+      ) as _i4.Future<_i5.Meeting?>);
 
   @override
-  _i3.Future<_i4.Meeting?> getInfoMeeting(int? code) => (super.noSuchMethod(
+  _i4.Future<_i5.Meeting?> getInfoMeeting(int? code) => (super.noSuchMethod(
         Invocation.method(
           #getInfoMeeting,
           [code],
         ),
-        returnValue: _i3.Future<_i4.Meeting?>.value(),
-        returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
-      ) as _i3.Future<_i4.Meeting?>);
+        returnValue: _i4.Future<_i5.Meeting?>.value(),
+        returnValueForMissingStub: _i4.Future<_i5.Meeting?>.value(),
+      ) as _i4.Future<_i5.Meeting?>);
 
   @override
-  _i3.Future<_i4.Meeting?> leaveMeeting({
+  _i4.Future<_i5.Meeting?> leaveMeeting({
     required int? code,
     required int? participantId,
   }) =>
@@ -118,36 +131,36 @@ class MockMeetingRemoteDataSource extends _i1.Mock
             #participantId: participantId,
           },
         ),
-        returnValue: _i3.Future<_i4.Meeting?>.value(),
-        returnValueForMissingStub: _i3.Future<_i4.Meeting?>.value(),
-      ) as _i3.Future<_i4.Meeting?>);
+        returnValue: _i4.Future<_i5.Meeting?>.value(),
+        returnValueForMissingStub: _i4.Future<_i5.Meeting?>.value(),
+      ) as _i4.Future<_i5.Meeting?>);
 
   @override
-  _i3.Future<_i5.Participant?> getParticipant(int? participantId) =>
+  _i4.Future<_i6.Participant?> getParticipant(int? participantId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getParticipant,
           [participantId],
         ),
-        returnValue: _i3.Future<_i5.Participant?>.value(),
-        returnValueForMissingStub: _i3.Future<_i5.Participant?>.value(),
-      ) as _i3.Future<_i5.Participant?>);
+        returnValue: _i4.Future<_i6.Participant?>.value(),
+        returnValueForMissingStub: _i4.Future<_i6.Participant?>.value(),
+      ) as _i4.Future<_i6.Participant?>);
 }
 
 /// A class which mocks [MeetingLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMeetingLocalDataSource extends _i1.Mock
-    implements _i6.MeetingLocalDataSource {
+    implements _i7.MeetingLocalDataSource {
   @override
-  List<_i4.Meeting> get meetings => (super.noSuchMethod(
+  List<_i5.Meeting> get meetings => (super.noSuchMethod(
         Invocation.getter(#meetings),
-        returnValue: <_i4.Meeting>[],
-        returnValueForMissingStub: <_i4.Meeting>[],
-      ) as List<_i4.Meeting>);
+        returnValue: <_i5.Meeting>[],
+        returnValueForMissingStub: <_i5.Meeting>[],
+      ) as List<_i5.Meeting>);
 
   @override
-  void insertOrUpdate(_i4.Meeting? meeting) => super.noSuchMethod(
+  void insertOrUpdate(_i5.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
           #insertOrUpdate,
           [meeting],
@@ -156,7 +169,7 @@ class MockMeetingLocalDataSource extends _i1.Mock
       );
 
   @override
-  void update(_i4.Meeting? meeting) => super.noSuchMethod(
+  void update(_i5.Meeting? meeting) => super.noSuchMethod(
         Invocation.method(
           #update,
           [meeting],
@@ -183,29 +196,66 @@ class MockMeetingLocalDataSource extends _i1.Mock
       );
 }
 
+/// A class which mocks [CallSettingsLocalDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCallSettingsLocalDataSource extends _i1.Mock
+    implements _i8.CallSettingsLocalDataSource {
+  @override
+  void saveSettings(_i2.CallSetting? setting) => super.noSuchMethod(
+        Invocation.method(
+          #saveSettings,
+          [setting],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i2.CallSetting getSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #getSettings,
+          [],
+        ),
+        returnValue: _FakeCallSetting_0(
+          this,
+          Invocation.method(
+            #getSettings,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeCallSetting_0(
+          this,
+          Invocation.method(
+            #getSettings,
+            [],
+          ),
+        ),
+      ) as _i2.CallSetting);
+}
+
 /// A class which mocks [UserBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
+class MockUserBloc extends _i1.Mock implements _i9.UserBloc {
   @override
-  _i7.UserState get state => (super.noSuchMethod(
+  _i9.UserState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _i8.dummyValue<_i7.UserState>(
+        returnValue: _i10.dummyValue<_i9.UserState>(
           this,
           Invocation.getter(#state),
         ),
-        returnValueForMissingStub: _i8.dummyValue<_i7.UserState>(
+        returnValueForMissingStub: _i10.dummyValue<_i9.UserState>(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i7.UserState);
+      ) as _i9.UserState);
 
   @override
-  _i3.Stream<_i7.UserState> get stream => (super.noSuchMethod(
+  _i4.Stream<_i9.UserState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i3.Stream<_i7.UserState>.empty(),
-        returnValueForMissingStub: _i3.Stream<_i7.UserState>.empty(),
-      ) as _i3.Stream<_i7.UserState>);
+        returnValue: _i4.Stream<_i9.UserState>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i9.UserState>.empty(),
+      ) as _i4.Stream<_i9.UserState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -215,7 +265,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       ) as bool);
 
   @override
-  void add(_i7.UserEvent? event) => super.noSuchMethod(
+  void add(_i9.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
           #add,
           [event],
@@ -224,7 +274,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       );
 
   @override
-  void onEvent(_i7.UserEvent? event) => super.noSuchMethod(
+  void onEvent(_i9.UserEvent? event) => super.noSuchMethod(
         Invocation.method(
           #onEvent,
           [event],
@@ -233,7 +283,7 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       );
 
   @override
-  void emit(_i7.UserState? state) => super.noSuchMethod(
+  void emit(_i9.UserState? state) => super.noSuchMethod(
         Invocation.method(
           #emit,
           [state],
@@ -242,9 +292,9 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       );
 
   @override
-  void on<E extends _i7.UserEvent>(
-    _i9.EventHandler<E, _i7.UserState>? handler, {
-    _i9.EventTransformer<E>? transformer,
+  void on<E extends _i9.UserEvent>(
+    _i11.EventHandler<E, _i9.UserState>? handler, {
+    _i11.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -256,7 +306,8 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       );
 
   @override
-  void onTransition(_i9.Transition<_i7.UserEvent, _i7.UserState>? transition) =>
+  void onTransition(
+          _i11.Transition<_i9.UserEvent, _i9.UserState>? transition) =>
       super.noSuchMethod(
         Invocation.method(
           #onTransition,
@@ -266,17 +317,17 @@ class MockUserBloc extends _i1.Mock implements _i7.UserBloc {
       );
 
   @override
-  _i3.Future<void> close() => (super.noSuchMethod(
+  _i4.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  void onChange(_i9.Change<_i7.UserState>? change) => super.noSuchMethod(
+  void onChange(_i11.Change<_i9.UserState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],

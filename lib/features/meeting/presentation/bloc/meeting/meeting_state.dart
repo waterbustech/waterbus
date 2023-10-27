@@ -5,23 +5,26 @@ abstract class MeetingState extends Equatable {
     this.meeting,
     this.participant,
     this.callState,
+    this.callSetting,
   });
 
   final Meeting? meeting;
   final Participant? participant;
   final CallState? callState;
+  final CallSetting? callSetting;
 
   @override
   List<Object?> get props => [
         meeting,
         participant,
         callState,
+        callSetting,
         identityHashCode(this),
       ];
 }
 
 class MeetingInitial extends MeetingState {
-  const MeetingInitial();
+  const MeetingInitial({super.callSetting});
 }
 
 class PreJoinMeeting extends MeetingState {

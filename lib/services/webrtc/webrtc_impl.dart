@@ -11,6 +11,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/services/socket.dart';
 import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
 import 'package:waterbus/services/webrtc/helpers/extensions/sdp_extensions.dart';
+import 'package:waterbus/services/webrtc/models/call_setting.dart';
 import 'package:waterbus/services/webrtc/models/call_state.dart';
 import 'package:waterbus/services/webrtc/models/description_type.dart';
 import 'package:waterbus/services/webrtc/models/participant_sfu.dart';
@@ -24,6 +25,7 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   MediaStream? _localStream;
   ParticipantSFU? _mParticipant;
   bool _flagPublisherCanAddCandidate = false;
+  CallSetting _callSetting = CallSetting();
   final Map<String, ParticipantSFU> _subscribers = {};
   final Map<String, List<RTCIceCandidate>> _queueRemoteSubCandidates = {};
   final List<RTCIceCandidate> _queuePublisherCandidates = [];
@@ -66,7 +68,9 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
 
       String sdp = await _createOffer(peerConnection);
 
-      sdp = sdp.enableAudioDTX().setPreferredCodec();
+      sdp = sdp.enableAudioDTX().setPreferredCodec(
+            codec: _callSetting.preferedCodec,
+          );
 
       final RTCSessionDescription description = RTCSessionDescription(
         sdp,
@@ -164,6 +168,20 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   }
 
   // MARK: Control Media
+  @override
+  Future<void> applyCallSettings(CallSetting setting) async {
+    _callSetting = setting;
+
+    if (_localStream == null || _mParticipant == null) return;
+
+    _localStream = await _getUserMedia();
+
+    await _replaceTrack(
+      _localStream!.getAudioTracks().first,
+      _localStream!.getAudioTracks().first,
+    );
+  }
+
   @override
   Future<void> toggleVideo() async {
     if (_mParticipant == null) return;
@@ -264,14 +282,22 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     _mParticipant?.setSrcObject(_localStream!);
   }
 
-  Future<MediaStream> _getUserMedia() async {
-    const Map<String, dynamic> mediaConstraints = defaultMediaConstraints;
-
+  Future<MediaStream> _getUserMedia({bool onlyStream = false}) async {
     final MediaStream stream = await navigator.mediaDevices.getUserMedia(
-      mediaConstraints,
+      _callSetting.mediaConstraints,
     );
 
+    if (onlyStream) return stream;
+
     await _toggleSpeakerPhone();
+
+    if (_callSetting.isAudioMuted) {
+      toggleAudio();
+    }
+
+    if (_callSetting.isVideoMuted) {
+      toggleVideo();
+    }
 
     return stream;
   }
@@ -357,6 +383,23 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     for (final candidate in candidates) {
       addSubscriberCandidate(targetId, candidate);
     }
+  }
+
+  Future<void> _replaceTrack(
+    MediaStreamTrack audioTrack,
+    MediaStreamTrack videoTrack,
+  ) async {
+    final senders = await _mParticipant!.peerConnection.getSenders();
+
+    for (final sender in senders) {
+      if (sender.track?.kind == 'audio') {
+        sender.replaceTrack(audioTrack);
+      } else if (sender.track?.kind == 'video') {
+        sender.replaceTrack(videoTrack);
+      }
+    }
+
+    _mParticipant?.setSrcObject(_localStream!);
   }
 
   Future<void> _toggleSpeakerPhone() async {

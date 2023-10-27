@@ -1,7 +1,7 @@
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 
-const User defaultUser = User(
+const User userDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',
@@ -25,39 +25,6 @@ const Map<String, dynamic> configurationWebRTC = {
   'bundlePolicy': 'max-bundle',
   'rtcpMuxPolicy': 'require',
   'sdpSemantics': 'unified-plan',
-};
-
-const Map<String, dynamic> defaultMediaConstraints = {
-  'audio': {
-    'sampleRate': '48000',
-    'sampleSize': '16',
-    'channelCount': '1',
-    'mandatory': {
-      'googEchoCancellation': 'true',
-      'googEchoCancellation2': 'true',
-      'googNoiseSuppression': 'true',
-      'googNoiseSuppression2': 'true',
-      'googAutoGainControl': 'true',
-      'googAutoGainControl2': 'true',
-      'googDAEchoCancellation': 'true',
-      'googTypingNoiseDetection': 'true',
-      'googAudioMirroring': 'false',
-      'googHighpassFilter': 'true',
-    },
-    'optional': [],
-  },
-  'video': {
-    'mandatory': {
-      'minHeight': '360',
-      'minWidth': '480',
-      'minFrameRate': '15',
-      'frameRate': '15',
-      'height': '360',
-      'width': '480',
-    },
-    'facingMode': 'user',
-    'optional': [],
-  },
 };
 
 const Map<String, dynamic> offerPublisherSdpConstraints = {

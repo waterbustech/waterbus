@@ -81,6 +81,11 @@ class SetSubscriberAudioEnabledEvent extends MeetingEvent {
   });
 }
 
+class SaveCallSettingsEvent extends MeetingEvent {
+  final CallSetting setting;
+  const SaveCallSettingsEvent({required this.setting});
+}
+
 class RefreshDisplayMeetingEvent extends MeetingEvent {}
 
 // MARK: related to WebRTC

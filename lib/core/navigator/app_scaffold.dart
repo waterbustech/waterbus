@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class AppScaffold extends StatefulWidget {
   final Widget child;
@@ -100,6 +103,10 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
   }
 
   Future<bool> _goBackward() async {
+    if (Routes.meetingRoute == AppNavigator.currentRoute()) {
+      AppBloc.meetingBloc.add(LeaveMeetingEvent());
+    }
+
     return true;
   }
 }

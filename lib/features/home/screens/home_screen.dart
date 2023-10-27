@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               titleWidget: BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
                   final User user =
-                      state is UserGetDone ? state.user : defaultUser;
+                      state is UserGetDone ? state.user : userDefault;
 
                   return Row(
                     children: [
