@@ -283,12 +283,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _rtcManager.callState(),
+        callSetting: _callSetting,
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _rtcManager.callState(),
+        callSetting: _callSetting,
       );
 
   // MARK: Private

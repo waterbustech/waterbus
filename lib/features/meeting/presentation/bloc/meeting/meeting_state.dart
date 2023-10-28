@@ -32,6 +32,7 @@ class PreJoinMeeting extends MeetingState {
     required super.meeting,
     required super.participant,
     required super.callState,
+    required super.callSetting,
   });
 }
 
@@ -40,5 +41,6 @@ class JoinedMeeting extends MeetingState {
     required super.meeting,
     required super.participant,
     required super.callState,
+    required super.callSetting,
   });
 }
