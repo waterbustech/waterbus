@@ -44,6 +44,8 @@ extension SdpX on String {
       capSel.setCapabilities(vcaps);
     }
 
+    if (codec == WebRTCCodec.vp8) return capSel.sdp();
+
     return capSel.sdp().useH264HighLevel();
   }
 

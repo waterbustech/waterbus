@@ -170,16 +170,15 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   // MARK: Control Media
   @override
   Future<void> applyCallSettings(CallSetting setting) async {
+    if (_callSetting.videoQuality == setting.videoQuality) return;
+
     _callSetting = setting;
 
     if (_localStream == null || _mParticipant == null) return;
 
-    _localStream = await _getUserMedia();
+    final MediaStream newStream = await _getUserMedia();
 
-    await _replaceTrack(
-      _localStream!.getAudioTracks().first,
-      _localStream!.getAudioTracks().first,
-    );
+    await _replaceMediaStream(newStream);
   }
 
   @override
@@ -385,21 +384,19 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     }
   }
 
-  Future<void> _replaceTrack(
-    MediaStreamTrack audioTrack,
-    MediaStreamTrack videoTrack,
-  ) async {
+  Future<void> _replaceMediaStream(MediaStream newStream) async {
     final senders = await _mParticipant!.peerConnection.getSenders();
 
     for (final sender in senders) {
       if (sender.track?.kind == 'audio') {
-        sender.replaceTrack(audioTrack);
+        sender.replaceTrack(newStream.getAudioTracks()[0]);
       } else if (sender.track?.kind == 'video') {
-        sender.replaceTrack(videoTrack);
+        sender.replaceTrack(newStream.getVideoTracks()[0]);
       }
     }
 
-    _mParticipant?.setSrcObject(_localStream!);
+    _mParticipant?.setSrcObject(newStream);
+    _localStream = newStream;
   }
 
   Future<void> _toggleSpeakerPhone() async {

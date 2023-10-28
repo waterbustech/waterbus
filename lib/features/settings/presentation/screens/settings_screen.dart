@@ -200,28 +200,19 @@ class _SettingScreenState extends State<SettingsScreen> {
               ),
               _buildLabel('Prefered Codec'),
               SizedBox(height: 4.sp),
-              SettingCheckboxCard(
-                label: 'VP8',
-                enabled: _settings.preferedCodec == WebRTCCodec.vp8,
-                onTap: () {
-                  setState(() {
-                    _settings = _settings.copyWith(
-                      preferedCodec: WebRTCCodec.vp8,
-                    );
-                  });
-                },
-              ),
-              SettingCheckboxCard(
-                label: 'H264',
-                enabled: _settings.preferedCodec == WebRTCCodec.h264,
-                hasDivider: false,
-                onTap: () {
-                  setState(() {
-                    _settings = _settings.copyWith(
-                      preferedCodec: WebRTCCodec.h264,
-                    );
-                  });
-                },
+              ...WebRTCCodec.values.map(
+                (codec) => SettingCheckboxCard(
+                  label: codec.codec.toUpperCase(),
+                  enabled: _settings.preferedCodec == codec,
+                  hasDivider: codec != WebRTCCodec.values.last,
+                  onTap: () {
+                    setState(() {
+                      _settings = _settings.copyWith(
+                        preferedCodec: codec,
+                      );
+                    });
+                  },
+                ),
               ),
               SizedBox(height: 10.h),
             ],
