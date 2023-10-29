@@ -1,23 +1,15 @@
 [![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-118.5993-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/5993)
 [![GitHub tag](https://img.shields.io/github/tag/webrtc-alive/webrtc-build.svg)](https://github.com/webrtc-alive/webrtc-build)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/app_name_logo.png?raw=true"/>
+<img src="./screenshots/banner.png" width="100%"/>
 
-# Waterbus: Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
+# [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
 <p align="justify">
 <img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/launcher_icon_rounded.png?raw=true" width="180px" height=auto align="right" alt="Computador"/>
 This is an Online Meeting App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
 
 The Waterbus concept has been used for physical transportation, but it can also be applied to online meeting platforms. A virtual Waterbus platform would allow users to travel along a virtual route and stop at designated locations to attend meetings. The platform could also incorporate gamification elements for increased engagement. This approach provides a unique and fun way for remote teams to collaborate while acknowledging the trend of using waterways for transportation.
-</p>
-
-## Screenshots
-<p>
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_1.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_2.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_3.jpeg?raw=true" width="200px"/>
-<img src="https://github.com/lambiengcode/waterbus/blob/main/screenshots/waterbus_4.jpeg?raw=true" width="200px"/>
 </p>
 
 ## Online Meeting Diagram

@@ -8,6 +8,8 @@ const User userDefault = User(
   avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
 
+const gridViewMinUsers = 4;
+
 const Map<String, dynamic> configurationWebRTC = {
   'iceServers': [
     {
