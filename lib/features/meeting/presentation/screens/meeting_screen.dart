@@ -10,6 +10,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/constants/constants.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/share_utils.dart';
@@ -18,6 +19,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
+import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
@@ -257,7 +259,8 @@ class MeetingScreen extends StatelessWidget {
     CallState? callState,
     CallSetting setting,
   ) {
-    return setting.videoLayout == VideoLayout.gridView
+    return setting.videoLayout == VideoLayout.gridView &&
+            meeting.users.length >= gridViewMinUsers
         ? GridView.custom(
             gridDelegate: SliverQuiltedGridDelegate(
               crossAxisCount: 4,
@@ -273,20 +276,10 @@ class MeetingScreen extends StatelessWidget {
               childCount: meeting.users.length,
               (context, index) => index >= meeting.users.length
                   ? const SizedBox()
-                  : Material(
-                      clipBehavior: Clip.hardEdge,
-                      shape: SuperellipseShape(
-                        side: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 1.sp,
-                        ),
-                        borderRadius: BorderRadius.circular(18.sp),
-                      ),
-                      child: MeetView(
-                        participant: meeting.users[index],
-                        avatarSize: 40.sp,
-                        callState: callState,
-                      ),
+                  : _buildVideoView(
+                      context,
+                      participant: meeting.users[index],
+                      callState: callState,
                     ),
             ),
           )
@@ -294,51 +287,77 @@ class MeetingScreen extends StatelessWidget {
             children: [
               Expanded(
                 flex: 3,
-                child: Material(
-                  shape: SuperellipseShape(
-                    side: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 1.sp,
-                    ),
-                    borderRadius: BorderRadius.circular(18.sp),
-                  ),
-                  child: MeetView(
-                    participant: meeting.users.first,
-                    callState: callState,
-                  ),
+                child: _buildVideoView(
+                  context,
+                  participant: meeting.users.first,
+                  callState: callState,
                 ),
               ),
               SizedBox(height: 6.sp),
               Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: meeting.users.length - 1,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: 6.sp),
-                      child: Material(
-                        clipBehavior: Clip.hardEdge,
-                        shape: SuperellipseShape(
-                          side: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                            width: 1.sp,
+                child: setting.videoLayout == VideoLayout.gridView
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: _buildVideoView(
+                              context,
+                              participant: meeting.users[1],
+                              callState: callState,
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(18.sp),
-                        ),
-                        child: SizedBox(
-                          width: 150.sp,
-                          child: MeetView(
-                            participant: meeting.users[index + 1],
-                            avatarSize: 35.sp,
-                            callState: callState,
+                          SizedBox(width: 4.sp),
+                          Expanded(
+                            child: _buildVideoView(
+                              context,
+                              participant: meeting.users[2],
+                              callState: callState,
+                            ),
                           ),
-                        ),
+                        ],
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: meeting.users.length - 1,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(right: 6.sp),
+                            child: _buildVideoView(
+                              context,
+                              participant: meeting.users[index + 1],
+                              callState: callState,
+                              width: 150.sp,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           );
+  }
+
+  Widget _buildVideoView(
+    BuildContext context, {
+    required Participant participant,
+    required CallState? callState,
+    double? width,
+  }) {
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      shape: SuperellipseShape(
+        side: BorderSide(
+          color: Theme.of(context).primaryColor,
+          width: 1.sp,
+        ),
+        borderRadius: BorderRadius.circular(18.sp),
+      ),
+      child: SizedBox(
+        width: width,
+        child: MeetView(
+          participant: participant,
+          avatarSize: 35.sp,
+          callState: callState,
+        ),
+      ),
+    );
   }
 }

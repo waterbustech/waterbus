@@ -7,10 +7,6 @@ import 'package:waterbus/services/webrtc/helpers/codec_selector.dart';
 import 'package:waterbus/services/webrtc/models/codec.dart';
 
 extension SdpX on String {
-  String removeRTCPMux() {
-    return replaceAll(RegExp(r'a=rtcp-mux.*\r\n'), '');
-  }
-
   String enableAudioDTX() {
     return replaceAll(
       'a=fmtp:111 minptime=10;useinbandfec=1',
@@ -44,9 +40,9 @@ extension SdpX on String {
       capSel.setCapabilities(vcaps);
     }
 
-    if (codec == WebRTCCodec.vp8) return capSel.sdp();
+    if (codec == WebRTCCodec.h264) return capSel.sdp().useH264HighLevel();
 
-    return capSel.sdp().useH264HighLevel();
+    return capSel.sdp();
   }
 
   String optimizeSdp() {

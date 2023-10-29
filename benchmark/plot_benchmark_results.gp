@@ -6,7 +6,7 @@ set output 'benchmark_plot.png'
 set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb "#1a1b26" behind
 
 # Set title and labels
-set title 'Benchmark Results' textcolor rgb "#f8f8f2"
+set title 'Benchmark Results (resolution: 1280x720, codec: AV1)' textcolor rgb "#f8f8f2"
 set xlabel 'Time (s)' textcolor rgb "#f8f8f2"
 set ylabel 'Avg Latency (µs)' textcolor rgb "#f8f8f2"
 

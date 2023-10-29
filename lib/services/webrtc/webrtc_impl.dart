@@ -170,7 +170,10 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
   // MARK: Control Media
   @override
   Future<void> applyCallSettings(CallSetting setting) async {
-    if (_callSetting.videoQuality == setting.videoQuality) return;
+    if (_callSetting.videoQuality == setting.videoQuality) {
+      _callSetting = setting;
+      return;
+    }
 
     _callSetting = setting;
 
@@ -179,53 +182,67 @@ class WaterbusWebRTCManagerIpml extends WaterbusWebRTCManager {
     final MediaStream newStream = await _getUserMedia();
 
     await _replaceMediaStream(newStream);
+
+    if (!(_mParticipant?.isVideoEnabled ?? true)) {
+      await toggleVideo(forceValue: _mParticipant?.isVideoEnabled);
+    }
+
+    if (!(_mParticipant?.isAudioEnabled ?? true)) {
+      await toggleAudio(forceValue: _mParticipant?.isAudioEnabled);
+    }
   }
 
   @override
-  Future<void> toggleVideo() async {
+  Future<void> toggleVideo({bool? forceValue}) async {
     if (_mParticipant == null) return;
 
     final tracks = _localStream?.getVideoTracks() ?? [];
 
     if (_mParticipant!.isVideoEnabled) {
       for (final track in tracks) {
-        track.enabled = false;
+        track.enabled = forceValue ?? false;
       }
     } else {
       for (final track in tracks) {
-        track.enabled = true;
+        track.enabled = forceValue ?? true;
       }
     }
 
-    _mParticipant!.isVideoEnabled = !_mParticipant!.isVideoEnabled;
+    _mParticipant!.isVideoEnabled =
+        forceValue ?? !_mParticipant!.isVideoEnabled;
     _notify();
 
     if (_roomId != null) {
-      _wsConnections.setVideoEnabled(_mParticipant!.isVideoEnabled);
+      _wsConnections.setVideoEnabled(
+        forceValue ?? _mParticipant!.isVideoEnabled,
+      );
     }
   }
 
   @override
-  Future<void> toggleAudio() async {
+  Future<void> toggleAudio({bool? forceValue}) async {
     if (_mParticipant == null) return;
 
     final tracks = _localStream?.getAudioTracks() ?? [];
 
     if (_mParticipant!.isAudioEnabled) {
       for (final track in tracks) {
-        track.enabled = false;
+        track.enabled = forceValue ?? false;
       }
     } else {
       for (final track in tracks) {
-        track.enabled = true;
+        track.enabled = forceValue ?? true;
       }
     }
 
-    _mParticipant!.isAudioEnabled = !_mParticipant!.isAudioEnabled;
+    _mParticipant!.isAudioEnabled =
+        forceValue ?? !_mParticipant!.isAudioEnabled;
     _notify();
 
     if (_roomId != null) {
-      _wsConnections.setAudioEnabled(_mParticipant!.isAudioEnabled);
+      _wsConnections.setAudioEnabled(
+        forceValue ?? _mParticipant!.isAudioEnabled,
+      );
     }
   }
 
