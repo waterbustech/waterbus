@@ -47,7 +47,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   cookie_jar: ^4.0.8
   dio: ^5.3.3
-  dio_smart_retry: ^5.0.0
+  dio_smart_retry: ^6.0.0
   dio_cookie_manager: ^3.1.1
   native_dio_adapter: ^1.0.0+2
   dio_http2_adapter: ^2.3.1+1
