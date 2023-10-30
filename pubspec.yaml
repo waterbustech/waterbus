@@ -47,7 +47,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   cookie_jar: ^4.0.8
   dio: ^5.3.3
-  dio_smart_retry: ^5.0.0
+  dio_smart_retry: ^6.0.0
   dio_cookie_manager: ^3.1.1
   native_dio_adapter: ^1.0.0+2
   dio_http2_adapter: ^2.3.1+1
@@ -73,7 +73,7 @@ dependencies:
 
   # Utils
   lottie: ^2.7.0
-  flutter_native_splash: ^2.3.4
+  flutter_native_splash: ^2.3.5
   superellipse_shape: ^0.2.0
   cached_network_image: ^3.3.0
   flutter_phosphor_icons: ^0.0.1+6
