@@ -1,5 +1,5 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-118.5993-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/5993)
-[![GitHub tag](https://img.shields.io/github/tag/webrtc-alive/webrtc-build.svg)](https://github.com/webrtc-alive/webrtc-build)[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-119.6045.03-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6045)
+[![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 <img src="./screenshots/banner.png" width="100%"/>
 
