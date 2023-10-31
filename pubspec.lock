@@ -801,7 +801,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_webrtc:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: "0.9.45+5"
@@ -890,7 +890,7 @@ packages:
     source: hosted
     version: "2.3.1"
   h264_profile_level_id:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: h264_profile_level_id
       sha256: "8854d223ba85da786ff6e3ade38dd447caaf1ba0094c0a5e03d368ae54a7249b"
@@ -1081,6 +1081,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "6bbb9d6f7056729537a4309bda2e74e18e5d9f14302489cc1e93f33b3fe32cac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2+1"
   logging:
     dependency: transitive
     description:
@@ -1386,7 +1394,7 @@ packages:
     source: hosted
     version: "0.27.7"
   sdp_transform:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sdp_transform
       sha256: "73e412a5279a5c2de74001535208e20fff88f225c9a4571af0f7146202755e45"
@@ -1717,6 +1725,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.10.0"
+  wakelock:
+    dependency: transitive
+    description:
+      name: wakelock
+      sha256: "769ecf42eb2d07128407b50cb93d7c10bd2ee48f0276ef0119db1d25cc2f87db"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.2"
+  wakelock_macos:
+    dependency: transitive
+    description:
+      name: wakelock_macos
+      sha256: "047c6be2f88cb6b76d02553bca5a3a3b95323b15d30867eca53a19a0a319d4cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
+  wakelock_platform_interface:
+    dependency: transitive
+    description:
+      name: wakelock_platform_interface
+      sha256: "1f4aeb81fb592b863da83d2d0f7b8196067451e4df91046c26b54a403f9de621"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
+  wakelock_web:
+    dependency: transitive
+    description:
+      name: wakelock_web
+      sha256: "1b256b811ee3f0834888efddfe03da8d18d0819317f20f6193e2922b41a501b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
+  wakelock_windows:
+    dependency: transitive
+    description:
+      name: wakelock_windows
+      sha256: "857f77b3fe6ae82dd045455baa626bc4b93cb9bb6c86bf3f27c182167c3a5567"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   watcher:
     dependency: "direct overridden"
     description:
@@ -1725,6 +1773,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  waterbus_sdk:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "0.0.1"
+      resolved-ref: "3a3397faece91645d14b868efac9fa08561392e9"
+      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
+    source: git
+    version: "0.0.1"
   web:
     dependency: transitive
     description:
@@ -1759,7 +1816,7 @@ packages:
     source: git
     version: "1.1.2+1"
   win32:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: win32
       sha256: "350a11abd2d1d97e0cc7a28a81b781c08002aa2864d9e3f192ca0ffa18b06ed3"
@@ -1791,5 +1848,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.1.3 <4.0.0"
+  dart: ">=3.1.5 <4.0.0"
   flutter: ">=3.13.7"

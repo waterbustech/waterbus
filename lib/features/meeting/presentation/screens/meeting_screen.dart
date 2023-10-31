@@ -10,6 +10,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -26,9 +27,6 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_action_butto
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
-import 'package:waterbus/services/webrtc/models/call_state.dart';
-import 'package:waterbus/services/webrtc/models/video_layout.dart';
 
 class MeetingScreen extends StatelessWidget {
   const MeetingScreen({super.key});

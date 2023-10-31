@@ -9,9 +9,9 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
@@ -34,9 +34,6 @@ import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
-import 'package:waterbus/services/webrtc/abstract/webrtc_interface.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
-import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
@@ -52,7 +49,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetCallSettings _getCallSettings;
   final SaveCallSettings _saveCallSettings;
   // ignore: unused_field
-  final WaterbusWebRTCManager _rtcManager;
+  final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   // MARK: private
   Meeting? _currentMeeting;
@@ -66,14 +63,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._getInfoMeeting,
     this._leaveMeeting,
     this._getParticipant,
-    this._rtcManager,
     this._getCallSettings,
     this._saveCallSettings,
   ) : super(const MeetingInitial()) {
     _getCallSettings.call(null).then(
           (settings) => settings.fold((l) => null, (r) {
             _callSetting = r;
-            _rtcManager.applyCallSettings(r);
+            _waterbusSdk.changeCallSetting(r);
           }),
         );
 
@@ -179,25 +175,23 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is ToggleVideoEvent) {
-          await _rtcManager.toggleVideo();
+          await _waterbusSdk.toggleVideo();
+
+          if (state is JoinedMeeting) {
+            emit(_joinedMeeting);
+          } else if (state is PreJoinMeeting) {
+            emit(_preJoinMeeting);
+          }
         }
 
         if (event is ToggleAudioEvent) {
-          await _rtcManager.toggleAudio();
-        }
+          await _waterbusSdk.toggleAudio();
 
-        if (event is SetSubscriberVideoEnabledEvent) {
-          _rtcManager.setVideoEnabled(
-            targetId: event.targetId,
-            isEnabled: event.isEnabled,
-          );
-        }
-
-        if (event is SetSubscriberAudioEnabledEvent) {
-          _rtcManager.setAudioEnabled(
-            targetId: event.targetId,
-            isEnabled: event.isEnabled,
-          );
+          if (state is JoinedMeeting) {
+            emit(_joinedMeeting);
+          } else if (state is PreJoinMeeting) {
+            emit(_preJoinMeeting);
+          }
         }
 
         if (event is SaveCallSettingsEvent) {
@@ -205,7 +199,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           _callSetting = event.setting;
 
-          _rtcManager.applyCallSettings(_callSetting);
+          _waterbusSdk.changeCallSetting(_callSetting);
 
           if (state is JoinedMeeting) {
             // Hot update settings
@@ -230,23 +224,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(_meetingInitial);
         }
 
-        // Related to WebRTC
-        if (event is EstablishBroadcastSuccessEvent) {
-          await _handleEstablishBroadcastSuccess(event);
-
-          if (_currentMeeting != null) {
-            emit(_joinedMeeting);
-          }
-        }
-
-        if (event is EstablishReceiverSuccessEvent) {
-          await _handleEstablishReceiverSuccess(event);
-
-          if (_currentMeeting != null) {
-            emit(_joinedMeeting);
-          }
-        }
-
         if (event is NewParticipantEvent) {
           await _handleNewParticipant(event);
 
@@ -262,14 +239,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
           }
         }
-
-        if (event is NewBroadcastCandidateEvent) {
-          _rtcManager.addPublisherCandidate(event.candidate);
-        }
-
-        if (event is NewReceiverCandidateEvent) {
-          _rtcManager.addSubscriberCandidate(event.targetId, event.candidate);
-        }
       },
     );
   }
@@ -282,14 +251,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
         meeting: _currentMeeting,
         participant: _mParticipant,
-        callState: _rtcManager.callState(),
+        callState: _waterbusSdk.callState,
         callSetting: _callSetting,
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
         meeting: _currentMeeting,
         participant: _mParticipant,
-        callState: _rtcManager.callState(),
+        callState: _waterbusSdk.callState,
         callSetting: _callSetting,
       );
 
@@ -394,34 +363,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
       _mParticipant = null;
-      _rtcManager.dispose();
+      _waterbusSdk.leaveRoom();
 
       AppNavigator.pop();
     });
   }
 
-  Future<void> _handleEstablishBroadcastSuccess(
-    EstablishBroadcastSuccessEvent event,
-  ) async {
-    await _rtcManager.setPublisherRemoteSdp(event.sdp);
-    await _rtcManager.subscribe(event.participants);
-  }
-
-  Future<void> _handleEstablishReceiverSuccess(
-    EstablishReceiverSuccessEvent event,
-  ) async {
-    await _rtcManager.setSubscriberRemoteSdp(
-      event.participantId,
-      event.sdp,
-      event.isVideoEnabled,
-      event.isAudioEnabled,
-    );
-  }
-
   Future<void> _handleNewParticipant(NewParticipantEvent event) async {
     if (_currentMeeting == null) return;
-
-    _rtcManager.newParticipant(event.participantId);
 
     final List<Participant> participants = _currentMeeting!.participants;
 
@@ -471,8 +420,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   ) async {
     if (_currentMeeting == null) return;
 
-    await _rtcManager.participantHasLeft(event.participantId);
-
     final List<Participant> participants = _currentMeeting!.participants;
 
     final int indexOfParticipant = participants.indexWhere(
@@ -499,23 +446,35 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     required String roomCode,
     required int participantId,
   }) async {
-    await _rtcManager.joinRoom(
+    await _waterbusSdk.joinRoom(
       roomId: roomCode,
       participantId: participantId,
-    );
+      onNewEvent: (event) {
+        switch (event.event) {
+          case CallbackEvents.shouldBeUpdateState:
+            add(RefreshDisplayMeetingEvent());
+            break;
+          case CallbackEvents.newParticipant:
+            final String? participantId = event.participantId;
+            if (participantId == null) return;
 
-    _rtcManager.notifyChanged.listen((state) {
-      add(RefreshDisplayMeetingEvent());
-    });
+            add(NewParticipantEvent(participantId: participantId));
+            break;
+          case CallbackEvents.participantHasLeft:
+            final String? participantId = event.participantId;
+            if (participantId == null) return;
+
+            add(ParticipantHasLeftEvent(participantId: participantId));
+            break;
+          default:
+            break;
+        }
+      },
+    );
   }
 
   Future<void> _displayDialogJoinMeeting(Meeting meeting) async {
-    final StreamSubscription<CallState> listener =
-        _rtcManager.notifyChanged.listen((state) {
-      add(RefreshDisplayMeetingEvent());
-    });
-
-    await _rtcManager.prepareMedia();
+    await _waterbusSdk.prepareMedia();
 
     bool isDismissWithoutJoin = true;
 
@@ -532,8 +491,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         },
       ),
     ).then((value) {
-      listener.cancel();
-
       if (isDismissWithoutJoin) {
         add(DisposeMeetingEvent());
       }
@@ -541,7 +498,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   Future<void> _dispose() async {
-    await _rtcManager.dispose();
+    await _waterbusSdk.leaveRoom();
     _currentMeeting = null;
     _mParticipant = null;
   }

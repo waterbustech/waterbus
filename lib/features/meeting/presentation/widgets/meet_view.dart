@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/services/webrtc/models/call_state.dart';
 
 class MeetView extends StatelessWidget {
   final EdgeInsets? margin;
@@ -75,13 +75,19 @@ class MeetView extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: !hasFirstFrameRendered,
+                    visible: !hasFirstFrameRendered || !isAudioEnabled,
                     child: Padding(
                       padding: EdgeInsets.only(left: 6.sp),
-                      child: CupertinoActivityIndicator(
-                        radius: 6.5,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                      child: !isAudioEnabled
+                          ? Icon(
+                              PhosphorIcons.microphone_slash_fill,
+                              color: Colors.redAccent,
+                              size: avatarSize / 5.25,
+                            )
+                          : CupertinoActivityIndicator(
+                              radius: 6.5,
+                              color: Theme.of(context).primaryColor,
+                            ),
                     ),
                   ),
                 ],
@@ -119,6 +125,16 @@ class MeetView extends StatelessWidget {
     } else {
       return callState
               ?.participants[participant.id.toString()]?.isVideoEnabled ??
+          false;
+    }
+  }
+
+  bool get isAudioEnabled {
+    if (participant.isMe) {
+      return callState?.mParticipant?.isAudioEnabled ?? false;
+    } else {
+      return callState
+              ?.participants[participant.id.toString()]?.isAudioEnabled ??
           false;
     }
   }

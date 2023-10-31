@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/device_utils.dart';
@@ -14,9 +15,6 @@ import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
-import 'package:waterbus/services/webrtc/models/codec.dart';
-import 'package:waterbus/services/webrtc/models/video_layout.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
