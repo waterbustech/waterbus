@@ -101,9 +101,9 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation platform('com.google.firebase:firebase-bom:32.4.1')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-messaging-directboot:23.2.1'
+    implementation 'com.google.firebase:firebase-messaging-directboot:23.3.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
     implementation 'com.android.support:multidex:1.0.3'
 }
