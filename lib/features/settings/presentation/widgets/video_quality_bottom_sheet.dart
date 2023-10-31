@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
-import 'package:waterbus/services/webrtc/models/video_quality.dart';
 
 class VideoQualityBottomSheet extends StatefulWidget {
   final VideoQuality quality;

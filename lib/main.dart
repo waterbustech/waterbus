@@ -9,9 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
+import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/features/app/app.dart';
 
 void main(List<String> args) async {
@@ -35,6 +37,8 @@ void main(List<String> args) async {
       Application.initialAppLication(),
       Firebase.initializeApp(),
     ]);
+
+    WaterbusSdk.instance.initial(waterbusUrl: ApiEndpoints.wsUrl);
 
     runApp(const App());
 

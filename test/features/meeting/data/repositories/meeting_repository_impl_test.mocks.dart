@@ -11,10 +11,10 @@ import 'dart:async' as _i4;
 import 'package:flutter_bloc/flutter_bloc.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i10;
+import 'package:waterbus_sdk/models/index.dart' as _i2;
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i5;
-import 'package:waterbus/services/webrtc/models/call_setting.dart' as _i2;
 
 import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart'
     as _i8;

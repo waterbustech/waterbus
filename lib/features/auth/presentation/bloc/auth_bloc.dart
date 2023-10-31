@@ -18,7 +18,6 @@ import 'package:waterbus/features/auth/domain/usecases/logout.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
-import 'package:waterbus/services/socket.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -28,7 +27,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckAuth _checkAuth;
   final LoginWithSocial _loginWithSocial;
   final LogOut _logOut;
-  final SocketConnection _socket;
 
   User? user;
 
@@ -36,7 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._checkAuth,
     this._loginWithSocial,
     this._logOut,
-    this._socket,
   ) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
@@ -73,7 +70,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   // MARK: state
   AuthSuccess get _authSuccess {
     AppBloc.instance.bootstrap();
-    _socket.establishConnection();
     return AuthSuccess();
   }
 

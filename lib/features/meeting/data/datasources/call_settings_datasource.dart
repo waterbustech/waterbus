@@ -1,10 +1,10 @@
 // Package imports:
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/storage_keys.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
 
 abstract class CallSettingsLocalDataSource {
   void saveSettings(CallSetting setting);

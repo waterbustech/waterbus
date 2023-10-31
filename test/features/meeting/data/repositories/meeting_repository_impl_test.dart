@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
@@ -19,7 +20,6 @@ import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
 import 'meeting_repository_impl_test.mocks.dart';
 
 @GenerateNiceMocks([

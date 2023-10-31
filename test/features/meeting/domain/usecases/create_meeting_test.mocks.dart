@@ -10,11 +10,11 @@ import 'dart:async' as _i4;
 // Package imports:
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:waterbus_sdk/models/index.dart' as _i11;
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart' as _i5;
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i6;
-import 'package:waterbus/services/webrtc/models/call_setting.dart' as _i11;
 
 import 'package:waterbus/features/meeting/domain/entities/participant.dart'
     as _i10;

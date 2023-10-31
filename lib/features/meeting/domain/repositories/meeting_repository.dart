@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
@@ -8,7 +9,6 @@ import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
-import 'package:waterbus/services/webrtc/models/call_setting.dart';
 
 abstract class MeetingRepository {
   Future<Either<Failure, List<Meeting>>> getRecentJoined();

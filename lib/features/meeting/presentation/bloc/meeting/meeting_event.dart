@@ -63,64 +63,9 @@ class ToggleAudioEvent extends MeetingEvent {}
 
 class ToggleVideoEvent extends MeetingEvent {}
 
-class SetSubscriberVideoEnabledEvent extends MeetingEvent {
-  final String targetId;
-  final bool isEnabled;
-  const SetSubscriberVideoEnabledEvent({
-    required this.targetId,
-    required this.isEnabled,
-  });
-}
-
-class SetSubscriberAudioEnabledEvent extends MeetingEvent {
-  final String targetId;
-  final bool isEnabled;
-  const SetSubscriberAudioEnabledEvent({
-    required this.targetId,
-    required this.isEnabled,
-  });
-}
-
 class SaveCallSettingsEvent extends MeetingEvent {
   final CallSetting setting;
   const SaveCallSettingsEvent({required this.setting});
 }
 
 class RefreshDisplayMeetingEvent extends MeetingEvent {}
-
-// MARK: related to WebRTC
-class EstablishBroadcastSuccessEvent extends MeetingEvent {
-  final String sdp;
-  final List<String> participants;
-  const EstablishBroadcastSuccessEvent({
-    required this.sdp,
-    required this.participants,
-  });
-}
-
-class EstablishReceiverSuccessEvent extends MeetingEvent {
-  final String sdp;
-  final String participantId;
-  final bool isVideoEnabled;
-  final bool isAudioEnabled;
-  const EstablishReceiverSuccessEvent({
-    required this.participantId,
-    required this.sdp,
-    required this.isAudioEnabled,
-    required this.isVideoEnabled,
-  });
-}
-
-class NewBroadcastCandidateEvent extends MeetingEvent {
-  final RTCIceCandidate candidate;
-  const NewBroadcastCandidateEvent({required this.candidate});
-}
-
-class NewReceiverCandidateEvent extends MeetingEvent {
-  final RTCIceCandidate candidate;
-  final String targetId;
-  const NewReceiverCandidateEvent({
-    required this.candidate,
-    required this.targetId,
-  });
-}
