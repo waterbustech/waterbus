@@ -3,6 +3,8 @@
 
 <img src="./screenshots/banner.png" width="100%"/>
 
+<img src="./screenshots/waterbus-demo.gif" width="100%"/>
+
 # [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
 <p align="justify">
@@ -96,6 +98,16 @@ Update the app configuration file with the necessary information
 3. Share the meeting link with other participants
 4. Start the meeting and utilize the available features
 
+## Selfhosted Waterbus
+
+- [Restful API](https://github.com/waterbustech/waterbus-restful-service)
+- [WebRTC SFU Server](https://github.com/waterbustech/waterbus-sfu-meeting)
+- [Waterbus Docs](https://docs.waterbus.tech)
+
+## Benchmark (iOS - 720p - AV1 codec)
+
+<img src="./screenshots/benchmark_plot.png" width="100%"/>
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date)
@@ -105,7 +117,7 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Contact Information
 
-If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.tech`.
+If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.tech` or `lambiengcode@gmail.com`.
 
 ## License
 
@@ -135,4 +147,4 @@ SOFTWARE.
 
 ## Keywords
 
-Online Meeting, Flutter, WebRTC, Audio Communication, Video Communication, Screen Sharing, Chat Functionality, File Sharing, Firebase, Virtual Meetings, Conferences, Webinars.
+Online Meeting, Flutter, WebRTC, Audio Communication, Video Communication, Screen Sharing, Chat Functionality, File Sharing, Firebase, Virtual Meetings, Conferences, Webinars, AV1 Codec, H264, VP8.
