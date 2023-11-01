@@ -1,4 +1,4 @@
-part of sizer;
+part of 'sizer.dart';
 
 class SizerUtil {
   /// Device's BoxConstraints

@@ -1,4 +1,4 @@
-part of sizer;
+part of 'sizer.dart';
 
 const int inchToDP = 160;
 
