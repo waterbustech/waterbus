@@ -27,7 +27,6 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter analyze
-      # - run: flutter test
 
   build_apk:
     needs: [test]
@@ -50,7 +49,7 @@ jobs:
           flutter-version: "3.13.9"
           cache: true
       - run: flutter pub get
-      - run: flutter build apk --target-platform android-arm,android-arm64 --dart-define="lambiengcode=PRODUCTION" --release -v
+      - run: flutter build apk --release
       - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
