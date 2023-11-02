@@ -1385,6 +1385,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  replay_kit_launcher:
+    dependency: transitive
+    description:
+      name: replay_kit_launcher
+      sha256: "8c7d641e32484eee13b99f3d51a4825f9fec8aec7784e005c97ca37bb591063b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   rxdart:
     dependency: transitive
     description:
@@ -1777,11 +1785,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.1"
-      resolved-ref: "3a3397faece91645d14b868efac9fa08561392e9"
+      ref: "feat/screen-sharing"
+      resolved-ref: a55b2bef86c9883bd756ae39f04bc9b4a65bb342
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   web:
     dependency: transitive
     description:

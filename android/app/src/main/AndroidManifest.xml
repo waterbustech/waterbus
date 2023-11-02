@@ -49,5 +49,21 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <service
+            android:name="com.waterbus.waterbus_sdk.Services.ShareScreenService"
+            android:enabled="true"
+            android:exported="true"
+            tools:targetApi="m"
+            android:foregroundServiceType="mediaProjection" />
+
+        <receiver
+            android:name="com.waterbus.waterbus_sdk.Services.ForegroundBootManager"
+            android:exported="true"
+            android:enabled="true"
+            tools:targetApi="m">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
