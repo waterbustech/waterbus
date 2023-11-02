@@ -37,8 +37,10 @@ class MeetView extends StatelessWidget {
                   key: videoRenderer!.textureId == null
                       ? null
                       : Key(videoRenderer!.textureId!.toString()),
-                  objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                  mirror: true,
+                  objectFit: isScreenSharing
+                      ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
+                      : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                  mirror: !isScreenSharing,
                   filterQuality: FilterQuality.none,
                 )
               : Container(
@@ -100,7 +102,9 @@ class MeetView extends StatelessWidget {
   }
 
   RTCVideoRenderer? get videoRenderer {
-    if (!hasFirstFrameRendered || !isCameraEnabled) return null;
+    if ((!hasFirstFrameRendered || !isCameraEnabled) && !isScreenSharing) {
+      return null;
+    }
 
     if (participant.isMe) {
       return callState?.mParticipant?.renderer;
@@ -135,6 +139,16 @@ class MeetView extends StatelessWidget {
     } else {
       return callState
               ?.participants[participant.id.toString()]?.isAudioEnabled ??
+          false;
+    }
+  }
+
+  bool get isScreenSharing {
+    if (participant.isMe) {
+      return callState?.mParticipant?.isSharingScreen ?? false;
+    } else {
+      return callState
+              ?.participants[participant.id.toString()]?.isSharingScreen ??
           false;
     }
   }

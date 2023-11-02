@@ -59,6 +59,10 @@ class ParticipantHasLeftEvent extends MeetingEvent {
   const ParticipantHasLeftEvent({required this.participantId});
 }
 
+class StartSharingScreenEvent extends MeetingEvent {}
+
+class StopSharingScreenEvent extends MeetingEvent {}
+
 class ToggleAudioEvent extends MeetingEvent {}
 
 class ToggleVideoEvent extends MeetingEvent {}

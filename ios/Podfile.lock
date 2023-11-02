@@ -202,6 +202,8 @@ PODS:
     - PromisesObjC (= 2.3.1)
   - ReachabilitySwift (5.0.0)
   - RecaptchaInterop (100.0.0)
+  - replay_kit_launcher (1.0.0):
+    - Flutter
   - SDWebImage (5.18.3):
     - SDWebImage/Core (= 5.18.3)
   - SDWebImage/Core (5.18.3)
@@ -236,6 +238,7 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - replay_kit_launcher (from `.symlinks/plugins/replay_kit_launcher/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -313,6 +316,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  replay_kit_launcher:
+    :path: ".symlinks/plugins/replay_kit_launcher/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   sign_in_with_apple:
@@ -372,6 +377,7 @@ SPEC CHECKSUMS:
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  replay_kit_launcher: 828739da18c9785d5e9aafd4f075ea11d6b61499
   SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
   SDWebImageWebPCoder: 3027af94522d94df79c21c070894c8a2128927ff
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
