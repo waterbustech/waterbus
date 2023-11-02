@@ -14,18 +14,22 @@ This is an Online Meeting App that utilizes Flutter and WebRTC technologies to p
 The Waterbus concept has been used for physical transportation, but it can also be applied to online meeting platforms. A virtual Waterbus platform would allow users to travel along a virtual route and stop at designated locations to attend meetings. The platform could also incorporate gamification elements for increased engagement. This approach provides a unique and fun way for remote teams to collaborate while acknowledging the trend of using waterways for transportation.
 </p>
 
+## Current supported features
+
+| Feature | Subscribe/Publish | AV1, VP8, H264 | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
+| :-----: | :---------------: | :-------: |  :-------: | :--------------: | :------------: | :-------------------: | :-------------------: |
+|   iOS   |        🟢         |    🟢     |    🟢    |        🟡        |       🔴       |       🟡               |          🟡          |
+| Android |        🟢         |    🟢     |    🟢|        🟡       |       🟡       |       🟡               |          🟡          |
+
+🟢 = Available
+
+🟡 = Coming soon (Work in progress)
+
+🔴 = Not currently available (Possibly in the future)
+
 ## Online Meeting Diagram
+
 <img src="./screenshots/waterbus-diagram.png" width="100%"/>
-
-## Meeting Features
-
-| Feature | Android | iOS |
-| :-------------: | :-------------:| :-----: |
-| Audio/Video | :heavy_check_mark: | :heavy_check_mark: |
-| Screen Sharing | [WIP] | [WIP] |  
-| Picture in Picture | [WIP] | [WIP] | 
-| Virtual Background | [WIP] | [WIP] | 
-| Recorder | [WIP] | [WIP] | 
 
 ## Directiory Structure
 
@@ -84,12 +88,6 @@ Android Studio / Xcode
 1. Clone the repository git clone https://github.com/lambiengcode/waterbus.git
 2. Run `flutter pub get` to install dependencies
 3. Run the app using `flutter run`
-
-## Configuration
-
-Create a Firebase project and add the necessary configuration files to the project
-Set up a WebRTC server for video and audio communication
-Update the app configuration file with the necessary information
 
 ## Usage
 
