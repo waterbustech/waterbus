@@ -174,6 +174,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(_preJoinMeeting);
         }
 
+        if (event is StartSharingScreenEvent) {
+          await _waterbusSdk.startScreenSharing();
+        }
+
+        if (event is StopSharingScreenEvent) {
+          await _waterbusSdk.stopScreenSharing();
+        }
+
         if (event is ToggleVideoEvent) {
           await _waterbusSdk.toggleVideo();
 

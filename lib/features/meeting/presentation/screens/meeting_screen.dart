@@ -161,7 +161,15 @@ class MeetingScreen extends StatelessWidget {
                     ),
                     CallActionButton(
                       icon: PhosphorIcons.screencast,
-                      onTap: () {},
+                      onTap: () {
+                        if (callState?.mParticipant == null) return;
+
+                        if (callState!.mParticipant!.isSharingScreen) {
+                          AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                        } else {
+                          AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                        }
+                      },
                     ),
                     CallActionButton(
                       icon: PhosphorIcons.gear_six,

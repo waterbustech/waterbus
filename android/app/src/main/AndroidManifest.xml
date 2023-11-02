@@ -17,6 +17,13 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+     <!-- Screen sharing permissions -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
    <application
         android:label="waterbus"
         android:name="${applicationName}"
@@ -49,5 +56,21 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <service
+            android:name="com.waterbus.waterbus_sdk.Services.ShareScreenService"
+            android:enabled="true"
+            android:exported="true"
+            tools:targetApi="m"
+            android:foregroundServiceType="mediaProjection" />
+
+        <receiver
+            android:name="com.waterbus.waterbus_sdk.Services.ForegroundBootManager"
+            android:exported="true"
+            android:enabled="true"
+            tools:targetApi="m">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
