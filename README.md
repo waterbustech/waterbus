@@ -18,8 +18,8 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 | Feature | Subscribe/Publish | AV1, VP8, H264 | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
 | :-----: | :---------------: | :-------: |  :-------: | :--------------: | :------------: | :-------------------: | :-------------------: |
-|   iOS   |        🟢         |    🟢     |    🟢    |        🟡        |       🔴       |       🟡               |          🟡          |
-| Android |        🟢         |    🟢     |    🟢|        🟡       |       🟡       |       🟡               |          🟡          |
+|   iOS   |        🟢         |    🟢     |    🟢    |        🟡        |       🔴       |       🟢               |          🟡          |
+| Android |        🟢         |    🟢     |    🟢|        🟡       |       🟡       |       🟢               |          🟡          |
 
 🟢 = Available
 
