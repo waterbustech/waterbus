@@ -1785,8 +1785,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.3"
-      resolved-ref: de8fac2ba579145a5243daecd2002e77f02676db
+      ref: "feat/e2ee"
+      resolved-ref: f3a850cc6843ca93f656448cd1581a9cb1c1ff19
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "0.0.3"
