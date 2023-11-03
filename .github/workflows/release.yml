@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    name: Analyze project
+    name: 🛠 Analyze project
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -30,7 +30,7 @@ jobs:
 
   build_apk:
     needs: [test]
-    name: Build & Release APK
+    name: 🔧 Build & 📦 Release APK
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -48,8 +48,14 @@ jobs:
         with:
           flutter-version: "3.13.9"
           cache: true
+      - run: flutter clean
       - run: flutter pub get
-      - run: flutter build apk --release
+      - name: 🔧 Build APK
+        env:
+          KEY_JKS: ${{ secrets.KEY_JKS }}
+          KEY_WATERBUS_PASSWORD: ${{ secrets.KEY_WATERBUS_PASSWORD }}
+          ALIAS_WATERBUS_PASSWORD: ${{ secrets.ALIAS_WATERBUS_PASSWORD }}
+        run: base64 -d <<< $KEY_JKS > ./android/app/waterbus.jks && flutter build apk --release -v
       - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
