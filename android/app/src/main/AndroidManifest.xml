@@ -29,7 +29,9 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:allowBackup="true"
+        tools:replace="android:label">
         <activity
             android:name=".MainActivity"
             android:exported="true"
