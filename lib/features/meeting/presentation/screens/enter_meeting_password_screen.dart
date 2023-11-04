@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -34,11 +35,20 @@ class _EnterMeetingPasswordScreenState
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
         'Enter password',
+        onBackPressed: () {
+          AppBloc.meetingBloc.add(DisposeMeetingEvent());
+          AppNavigator.pop();
+        },
         actions: [
           GestureWrapper(
             onTap: () {
