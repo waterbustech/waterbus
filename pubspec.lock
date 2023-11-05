@@ -1784,11 +1784,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.6"
-      resolved-ref: aecaf61e2e16ba3186eeea641be11860c03d73ab
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
+      path: "/Users/lambiengcode/Documents/flutter_waterbus_sdk"
+      relative: false
+    source: path
     version: "0.0.5"
   web:
     dependency: transitive
