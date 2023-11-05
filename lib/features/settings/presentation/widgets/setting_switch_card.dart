@@ -10,6 +10,7 @@ class SettingSwitchCard extends StatefulWidget {
   final Function(bool) onChanged;
   final bool hasDivider;
   final String? value;
+  final IconData? icon;
   const SettingSwitchCard({
     super.key,
     required this.label,
@@ -17,6 +18,7 @@ class SettingSwitchCard extends StatefulWidget {
     required this.onChanged,
     this.hasDivider = true,
     this.value,
+    this.icon,
   });
 
   @override
@@ -69,6 +71,18 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
               : Switch(
                   value: _isEnabled,
                   activeColor: Theme.of(context).primaryColor,
+                  thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+                    (states) {
+                      if (states.contains(MaterialState.selected)) {
+                        return Icon(
+                          widget.icon,
+                          color: Colors.grey.shade100,
+                        );
+                      }
+
+                      return null;
+                    },
+                  ),
                   onChanged: (value) {
                     setState(() {
                       _isEnabled = value;

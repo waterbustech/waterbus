@@ -38,6 +38,10 @@ class _AppState extends State<App> {
             onGenerateRoute: (settings) {
               return AppNavigator().getRoute(settings);
             },
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: child ?? const SizedBox(),
+            ),
           );
         },
       ),

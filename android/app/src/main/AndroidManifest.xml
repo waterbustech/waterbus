@@ -24,12 +24,57 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+        
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider"
+            android:exported="false" />
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+
+        <package android:name="com.facebook.katana" />
+    </queries>
+
    <application
+        android:largeHeap="true"
         android:label="Waterbus"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:allowBackup="true"
+        tools:replace="android:label">
+        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+           android:value="false"/>
+        <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
+           android:value="false"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:exported="true"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
