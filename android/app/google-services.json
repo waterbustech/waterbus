@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "727554668212-0atr2d89gbvglssrglqvnlfcesj4gp96.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterbus.wanted",
+            "certificate_hash": "4746a170a0a1820f23c88f49b353db39cb435fa7"
+          }
+        },
+        {
           "client_id": "727554668212-0sgec37ism3qdfocks8q0k24ruh3gh4d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

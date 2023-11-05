@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/models/index.dart';
 
@@ -170,6 +171,19 @@ class _SettingScreenState extends State<SettingsScreen> {
                   value: _settings.videoQuality.label,
                   onChanged: (isEnabled) {},
                 ),
+              ),
+              _buildLabel('Security'),
+              SettingSwitchCard(
+                label: 'End-to-end encryption',
+                enabled: _settings.e2eeEnabled,
+                icon: PhosphorIcons.shield_check_fill,
+                onChanged: (isEnabled) {
+                  setState(() {
+                    _settings = _settings.copyWith(
+                      e2eeEnabled: isEnabled,
+                    );
+                  });
+                },
               ),
               _buildLabel('Video Layout'),
               SizedBox(height: 4.sp),

@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-119.6045.03-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6045)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.01-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
 [![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 <img src="./screenshots/banner.png" width="100%"/>

@@ -17,7 +17,7 @@ AppBar appBarTitleBack(
   BuildContext context,
   String title, {
   List<Widget>? actions,
-  Function? onBackPressed,
+  Function()? onBackPressed,
   Color? backgroundColor,
   Brightness? brightness,
   double? paddingLeft,
