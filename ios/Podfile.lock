@@ -8,6 +8,7 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
+  - CryptoSwift (1.8.0)
   - cupertino_http (0.0.1):
     - Flutter
   - FBAEMKit (16.1.3):
@@ -118,6 +119,9 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.17.0)
   - Flutter (1.0.0)
+  - flutter_callkit_incoming (0.0.2):
+    - CryptoSwift
+    - Flutter
   - flutter_facebook_auth (6.0.1):
     - FBSDKLoginKit (~> 16.1.3)
     - Flutter
@@ -132,7 +136,7 @@ PODS:
     - Flutter
   - flutter_webrtc (0.9.36):
     - Flutter
-    - KaiRTC (= 120.6099.01)
+    - KaiRTC (= 120.6099.03)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -147,25 +151,25 @@ PODS:
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GoogleUtilities/AppDelegateSwizzler (7.11.6):
+  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.6):
+  - GoogleUtilities/Environment (7.12.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/ISASwizzler (7.11.6)
-  - GoogleUtilities/Logger (7.11.6):
+  - GoogleUtilities/ISASwizzler (7.12.0)
+  - GoogleUtilities/Logger (7.12.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.6):
+  - GoogleUtilities/MethodSwizzler (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.6):
+  - GoogleUtilities/Network (7.12.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.6)"
-  - GoogleUtilities/Reachability (7.11.6):
+  - "GoogleUtilities/NSData+zlib (7.12.0)"
+  - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.6):
+  - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
   - GTMAppAuth (1.3.1):
     - AppAuth/Core (~> 1.6)
@@ -173,7 +177,7 @@ PODS:
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - KaiRTC (120.6099.01)
+  - KaiRTC (120.6099.03)
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
     - libwebp/mux (= 1.3.2)
@@ -221,6 +225,9 @@ PODS:
     - FMDB (>= 2.7.5)
   - wakelock (0.0.1):
     - Flutter
+  - waterbus_sdk (0.0.1):
+    - Flutter
+    - flutter_callkit_incoming (= 0.0.2)
 
 DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -231,6 +238,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - Flutter (from `Flutter`)
+  - flutter_callkit_incoming (from `.symlinks/plugins/flutter_callkit_incoming/ios`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
@@ -245,10 +253,12 @@ DEPENDENCIES:
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - waterbus_sdk (from `.symlinks/plugins/waterbus_sdk/ios`)
 
 SPEC REPOS:
   trunk:
     - AppAuth
+    - CryptoSwift
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -301,6 +311,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_performance/ios"
   Flutter:
     :path: Flutter
+  flutter_callkit_incoming:
+    :path: ".symlinks/plugins/flutter_callkit_incoming/ios"
   flutter_facebook_auth:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_image_compress_common:
@@ -329,10 +341,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
+  waterbus_sdk:
+    :path: ".symlinks/plugins/waterbus_sdk/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
+  CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
   cupertino_http: 5f8b1161107fe6c8d94a0c618735a033d93fa7db
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
   FBSDKCoreKit: 19e2e18b3be578d7a51fed8fdd8c152bef0b9511
@@ -358,20 +373,21 @@ SPEC CHECKSUMS:
   FirebaseSessions: 49f39e5c10e3f9fdd38d01b748329bae2a2fa8ed
   FirebaseSharedSwift: e8fe8d63d434266a1b2c7f02807d5b64462e1851
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_callkit_incoming: e892dcdf513ec232a556b433ffe6bfe970d6a221
   flutter_facebook_auth: 47c7a8594f2d6864618e30b5a6d59dff0d2e59fe
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  flutter_webrtc: 09c70ea1a37f70b63ef167bba878cd45a5bdff7e
+  flutter_webrtc: 9fece421468a333d5d5b6a31067ccb161a3cc8b4
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GoogleUtilities: 202e7a9f5128accd11160fb9c19612de1911aa19
+  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
-  KaiRTC: 35df6096a784044ad13691c29129fc864f7e74cb
+  KaiRTC: 5b13827a2e6a911eb05f47cc06badce5919d02da
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
@@ -388,6 +404,7 @@ SPEC CHECKSUMS:
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  waterbus_sdk: d7f7cb542c3a9a04bea71cb6ac10221ff9811bee
 
 PODFILE CHECKSUM: 52fd15cec49abfb4d32261dcd9b7f149dbc0ed6b
 
