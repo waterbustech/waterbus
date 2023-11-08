@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/models/index.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/device_utils.dart';
@@ -212,19 +212,30 @@ class _SettingScreenState extends State<SettingsScreen> {
               ),
               _buildLabel('Prefered Codec'),
               SizedBox(height: 4.sp),
-              ...WebRTCCodec.values.map(
-                (codec) => SettingCheckboxCard(
-                  label: codec.codec.toUpperCase(),
-                  enabled: _settings.preferedCodec == codec,
-                  hasDivider: codec != WebRTCCodec.values.last,
-                  onTap: () {
-                    setState(() {
-                      _settings = _settings.copyWith(
-                        preferedCodec: codec,
-                      );
-                    });
-                  },
-                ),
+              FutureBuilder(
+                future: WaterbusSdk.instance.filterSupportedCodecs(),
+                builder: (_, data) {
+                  if (!data.hasData) return const SizedBox();
+
+                  return Column(
+                    children: [
+                      ...data.data!.map<Widget>(
+                        (codec) => SettingCheckboxCard(
+                          label: codec.codec.toUpperCase(),
+                          enabled: _settings.preferedCodec == codec,
+                          hasDivider: codec != WebRTCCodec.values.last,
+                          onTap: () {
+                            setState(() {
+                              _settings = _settings.copyWith(
+                                preferedCodec: codec,
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SizedBox(height: 10.h),
             ],

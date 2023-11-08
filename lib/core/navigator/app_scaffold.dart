@@ -104,7 +104,7 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
 
   Future<bool> _goBackward() async {
     if (Routes.meetingRoute == AppNavigator.currentRoute()) {
-      AppBloc.meetingBloc.add(LeaveMeetingEvent());
+      AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
 
     return true;
