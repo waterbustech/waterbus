@@ -70,6 +70,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           (settings) => settings.fold((l) => null, (r) {
             _callSetting = r;
             _waterbusSdk.changeCallSetting(r);
+            _waterbusSdk.onEventChangedRegister(_onEventChanged);
           }),
         );
 
@@ -371,7 +372,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     isLeaveSucceed.fold((l) => null, (r) {
       _currentMeeting = null;
       _mParticipant = null;
-      _waterbusSdk.leaveRoom();
+
+      if (!event.isReleasedWaterbusSdk) {
+        _waterbusSdk.leaveRoom();
+      }
 
       AppNavigator.pop();
     });
@@ -457,27 +461,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     await _waterbusSdk.joinRoom(
       roomId: roomCode,
       participantId: participantId,
-      onNewEvent: (event) {
-        switch (event.event) {
-          case CallbackEvents.shouldBeUpdateState:
-            add(RefreshDisplayMeetingEvent());
-            break;
-          case CallbackEvents.newParticipant:
-            final String? participantId = event.participantId;
-            if (participantId == null) return;
-
-            add(NewParticipantEvent(participantId: participantId));
-            break;
-          case CallbackEvents.participantHasLeft:
-            final String? participantId = event.participantId;
-            if (participantId == null) return;
-
-            add(ParticipantHasLeftEvent(participantId: participantId));
-            break;
-          default:
-            break;
-        }
-      },
     );
   }
 
@@ -503,6 +486,37 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         add(DisposeMeetingEvent());
       }
     });
+  }
+
+  void _onEventChanged(CallbackPayload event) {
+    switch (event.event) {
+      case CallbackEvents.shouldBeUpdateState:
+        add(RefreshDisplayMeetingEvent());
+        break;
+      case CallbackEvents.newParticipant:
+        final String? participantId = event.participantId;
+        if (participantId == null) return;
+
+        add(NewParticipantEvent(participantId: participantId));
+        break;
+      case CallbackEvents.participantHasLeft:
+        final String? participantId = event.participantId;
+        if (participantId == null) return;
+
+        add(ParticipantHasLeftEvent(participantId: participantId));
+        break;
+      case CallbackEvents.meetingEnded:
+        if (state is JoinedMeeting) {
+          displayLoadingLayer();
+          add(const LeaveMeetingEvent(isReleasedWaterbusSdk: true));
+        } else if (state is PreJoinMeeting) {
+          add(DisposeMeetingEvent());
+        }
+
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> _dispose() async {

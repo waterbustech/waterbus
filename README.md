@@ -12,14 +12,21 @@
 This is an Online Meeting App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
 
 The Waterbus concept has been used for physical transportation, but it can also be applied to online meeting platforms. A virtual Waterbus platform would allow users to travel along a virtual route and stop at designated locations to attend meetings. The platform could also incorporate gamification elements for increased engagement. This approach provides a unique and fun way for remote teams to collaborate while acknowledging the trend of using waterways for transportation.
+
 </p>
 
 ## Current supported features
 
-| Feature | Subscribe/Publish | AV1, VP8, H264 | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
-| :-----: | :---------------: | :-------: |  :-------: | :--------------: | :------------: | :-------------------: | :-------------------: |
-|   iOS   |        🟢         |    🟢     |    🟢    |        🟡        |       🔴       |       🟢               |          🟡          |
-| Android |        🟢         |    🟢     |    🟢|        🟡       |       🟡       |       🟢               |          🟡          |
+| Feature | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
+| :-----: | :---------------: | :------------: | :----------------: | :----------------: | :-------------------: | :----------: |
+|   iOS   |        🟢         |       🟢       |         🟡         |         🔴         |          🟢           |      🟡      |
+| Android |        🟢         |       🟢       |         🟡         |         🟡         |          🟢           |      🟡      |
+
+## Codec supported
+| Codec | VP8 | VP9 | H264 | H265 | AV1 |
+| :-----: | :---------------: | :------------: | :------------: | :----------------: | :--------------------------------: |
+|   iOS   |        🟢         |       🟢       |       🟢       |         🟢         |         🟢 (iOS 14+)        |
+| Android |        🟢         |       🟢       |       🟢       |         🟡         |         🟢 (Encode: Android 14+, Decode: Android 10+)         |
 
 🟢 = Available
 
@@ -31,63 +38,159 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 <img src="./screenshots/waterbus-diagram.png" width="100%"/>
 
-## Directiory Structure
+## 📂 Repository Structure
+
+```sh
+└── waterbus/
+    ├── .githooks/
+    │   ├── pre-commit
+    │   └── pre-push
+    ├── .github/
+    │   ├── FUNDING.yml
+    │   ├── ISSUE_TEMPLATE/
+    │   ├── dependabot.yml
+    │   └── workflows/
+    │       ├── ci.yml
+    │       └── release.yml
+    ├── .metadata
+    ├── analysis_options.yaml
+    ├── android/
+    │   ├── app/
+    │   │   ├── build.gradle
+    │   │   ├── google-services.json
+    │   │   ├── proguard-rules.pro
+    │   │   └── src/
+    │   ├── build.gradle
+    │   ├── gradle/
+    │   │   └── wrapper/
+    │   └── settings.gradle
+    ├── benchmark/
+    │   ├── benchmark.txt
+    │   └── plot_benchmark_results.gp
+    ├── codecov.yml
+    ├── ios/
+    │   ├── BroadcastAppGroup/
+    │   │   └── BroadcastAppGroupHandler.swift
+    │   ├── BroadcastWaterbus/
+    │   │   ├── Atomic.swift
+    │   │   ├── BroadcastWaterbus.entitlements
+    │   │   ├── DarwinNotificationCenter.swift
+    │   │   ├── Info.plist
+    │   │   ├── SampleHandler.swift
+    │   │   ├── SampleUploader.swift
+    │   │   └── SocketConnection.swift
+    │   ├── Flutter/
+    │   │   ├── AppFrameworkInfo.plist
+    │   │   ├── Debug.xcconfig
+    │   │   └── Release.xcconfig
+    │   ├── Podfile
+    │   ├── Podfile.lock
+    │   ├── Runner/
+    │   │   ├── AppDelegate.swift
+    │   │   ├── Assets.xcassets/
+    │   │   ├── Base.lproj/
+    │   │   ├── GoogleService-Info.plist
+    │   │   ├── Info.plist
+    │   │   ├── Runner-Bridging-Header.h
+    │   │   └── Runner.entitlements
+    │   ├── Runner.xcodeproj/
+    │   │   ├── project.pbxproj
+    │   │   ├── project.xcworkspace/
+    │   │   └── xcshareddata/
+    │   ├── Runner.xcworkspace/
+    │   │   ├── contents.xcworkspacedata
+    │   │   └── xcshareddata/
+    │   └── clean-pods.sh
+    ├── launcher_icon_setup.yaml
+    ├── lib/
+    │   ├── core/
+    │   │   ├── app/
+    │   │   ├── constants/
+    │   │   ├── error/
+    │   │   ├── helpers/
+    │   │   ├── injection/
+    │   │   ├── navigator/
+    │   │   ├── types/
+    │   │   ├── usecase/
+    │   │   └── utils/
+    │   ├── features/
+    │   │   ├── app/
+    │   │   ├── auth/
+    │   │   ├── chats/
+    │   │   ├── common/
+    │   │   ├── conversation/
+    │   │   ├── home/
+    │   │   ├── meeting/
+    │   │   ├── notifications/
+    │   │   ├── profile/
+    │   │   ├── schedule/
+    │   │   └── settings/
+    │   ├── gen/
+    │   │   ├── assets.gen.dart
+    │   │   └── fonts.gen.dart
+    │   └── main.dart
+    ├── packages/
+    │   ├── auth/
+    │   │   ├── .metadata
+    │   │   ├── analysis_options.yaml
+    │   │   ├── lib/
+    │   │   ├── pubspec.yaml
+    │   │   └── test/
+    │   └── sizer/
+    │       ├── .metadata
+    │       ├── analysis_options.yaml
+    │       ├── lib/
+    │       └── pubspec.yaml
+    ├── pubspec.lock
+    ├── pubspec.yaml
+    ├── run.sh
+    ├── screenshots/
+    ├── splash-setup.yaml
+    ├── test/
+    │   ├── constants/
+    │   │   └── sample_file_path.dart
+    │   ├── features/
+    │   │   ├── auth/
+    │   │   ├── meeting/
+    │   │   └── profile/
+    │   └── fixtures/
+    │       ├── auth/
+    │       ├── fixture_reader.dart
+    │       └── meeting/
 
 ```
-waterbus/
-├── README.md
-├── RELEASE.md
-├── analysis_options.yaml
-├── android/
-├── assets/
-├── build/
-├── codecov.yml
-├── coverage/
-├── ios/
-├── launcher_icon_setup.yaml
-├── lib/
-│   ├── core/
-│   ├── features/
-│   │   ├── app/
-│   │   ├── auth/
-│   │   ├── chats/
-│   │   ├── common/
-│   │   ├── conversation/
-│   │   ├── home/
-│   │   ├── meeting/
-│   │   │   ├── data/
-│   │   │   ├── domain/
-│   │   │   └── presentation/
-│   │   ├── notifications/
-│   │   ├── profile/
-│   │   ├── schedule/
-│   │   ├── settings/
-│   ├── gen/
-│   ├── main.dart
-│   ├── services/
-├── packages/
-├── pubspec.lock
-├── pubspec.yaml
-├── run.sh
-├── screenshots/
-├── splash-setup.yaml
-├── test/
-├── tools/
-└── waterbus.iml
+
+## 🚀 Getting Started
+
+### 🔧 Installation
+
+1. Clone the waterbus repository:
+```sh
+git clone https://github.com/lambiengcode/waterbus
 ```
 
-## Requirements
+2. Change to the project directory:
+```sh
+cd waterbus
+```
 
-Flutter
-WebRTC
-Firebase
-Android Studio / Xcode
+3. Install the dependencies:
+```sh
+flutter pub get
+```
 
-## Installation
+### 🤖 Running waterbus
 
-1. Clone the repository git clone https://github.com/lambiengcode/waterbus.git
-2. Run `flutter pub get` to install dependencies
-3. Run the app using `flutter run`
+```sh
+flutter run
+```
+
+### 🧪 Tests
+```sh
+flutter test
+```
+
+---
 
 ## Usage
 
@@ -111,6 +214,7 @@ Android Studio / Xcode
 [![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date)
 
 ## Contributing
+
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you encounter any problems or have suggestions for improvements.
 
 ## Contact Information

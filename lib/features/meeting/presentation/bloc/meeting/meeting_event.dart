@@ -40,7 +40,10 @@ class GetInfoMeetingEvent extends MeetingEvent {
   const GetInfoMeetingEvent({required this.roomCode});
 }
 
-class LeaveMeetingEvent extends MeetingEvent {}
+class LeaveMeetingEvent extends MeetingEvent {
+  final bool isReleasedWaterbusSdk;
+  const LeaveMeetingEvent({this.isReleasedWaterbusSdk = false});
+}
 
 class DisposeMeetingEvent extends MeetingEvent {}
 
