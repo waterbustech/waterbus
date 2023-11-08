@@ -78,9 +78,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       transformer: sequential(),
       (event, emit) async {
         if (event is CreateMeetingEvent) {
-          await _handleCreateMeeting(event);
+          final Meeting? meetingCreated = await _handleCreateMeeting(event);
 
-          if (_currentMeeting != null) {
+          if (meetingCreated != null) {
             emit(_joinedMeeting);
           }
         }
@@ -272,7 +272,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
   // MARK: Private
-  Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
+  Future<Meeting?> _handleCreateMeeting(CreateMeetingEvent event) async {
     final Either<Failure, Meeting> meeting = await _createMeeting.call(
       CreateMeetingParams(
         meeting: Meeting(title: event.roomName),
@@ -282,9 +282,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.pop();
 
-    meeting.fold((l) => null, (r) async {
-      AppNavigator.replaceWith(Routes.meetingRoute);
-      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
+    return meeting.fold((l) => null, (r) async {
       _mParticipant = r.participants.first;
 
       await _initialWebRTCManager(
@@ -292,7 +290,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         participantId: _mParticipant!.id,
       );
 
-      return _currentMeeting = r;
+      AppNavigator.replaceWith(Routes.meetingRoute);
+      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
+      _currentMeeting = r;
+
+      return r;
     });
   }
 
