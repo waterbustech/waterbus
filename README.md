@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.01-blue.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.03-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
 [![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 <img src="./screenshots/banner.png" width="100%"/>
@@ -23,10 +23,14 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Android |        🟢         |       🟢       |         🟡         |         🟡         |          🟢           |      🟡      |
 
 ## Codec supported
-| Codec | VP8 | VP9 | H264 | H265 | AV1 |
+| Codec | VP8 | VP9 | H264 | H265  ![Beta](https://img.shields.io/badge/beta-green) | AV1 |
 | :-----: | :---------------: | :------------: | :------------: | :----------------: | :--------------------------------: |
-|   iOS   |        🟢         |       🟢       |       🟢       |         🟢         |         🟢 (iOS 14+)        |
-| Android |        🟢         |       🟢       |       🟢       |         🟡         |         🟢 (Encode: Android 14+, Decode: Android 10+)         |
+|   iOS   |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
+| Android |        🟢         |       🟢       |       🟢       |         🟡         |         🟢         |
+
+### Notes:
+- `AV1` supported on iOS 14 and above, Android 14 and above.
+- [Video Codec Android Supported](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
 
 🟢 = Available
 
@@ -199,7 +203,7 @@ flutter test
 3. Share the meeting link with other participants
 4. Start the meeting and utilize the available features
 
-## Selfhosted Waterbus
+## 🛠 Selfhosted Waterbus
 
 - [Restful API](https://github.com/waterbustech/waterbus-restful-service)
 - [WebRTC SFU Server](https://github.com/waterbustech/waterbus-sfu-meeting)
@@ -208,6 +212,12 @@ flutter test
 ## Benchmark (iOS - 720p - AV1 codec)
 
 <img src="./screenshots/benchmark_plot.png" width="100%"/>
+
+## Support
+
+Don't forget to leave a star ⭐️.
+
+<img src="https://octodex.github.com/images/Fintechtocat.png" width=300 height=300/>
 
 ## Star History
 
