@@ -187,7 +187,7 @@ class MeetingScreen extends StatelessWidget {
                       backgroundColor: Colors.red,
                       onTap: () {
                         displayLoadingLayer();
-                        AppBloc.meetingBloc.add(LeaveMeetingEvent());
+                        AppBloc.meetingBloc.add(const LeaveMeetingEvent());
                       },
                     ),
                   ],
