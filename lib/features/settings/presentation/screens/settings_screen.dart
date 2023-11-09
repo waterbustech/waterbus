@@ -210,7 +210,7 @@ class _SettingScreenState extends State<SettingsScreen> {
                   });
                 },
               ),
-              _buildLabel('Prefered Codec'),
+              _buildLabel('Preferred Codec'),
               SizedBox(height: 4.sp),
               FutureBuilder(
                 future: WaterbusSdk.instance.filterSupportedCodecs(),

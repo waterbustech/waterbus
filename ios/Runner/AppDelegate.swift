@@ -35,7 +35,7 @@ import FirebaseCore
             let group=UserDefaults(suiteName: "group.waterbus.broadcastext")
             group!.set(true,forKey: "closeReplayKitFromFlutter")
             group!.set(false, forKey: "hasSampleBroadcast")
-            return result("OK")
+            return result(true)
         case "startReplayKit":
             self.hasEmittedFirstSample = false
             let group=UserDefaults(suiteName: "group.waterbus.broadcastext")
