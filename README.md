@@ -26,7 +26,7 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Codec | VP8 | VP9 | H264 | H265  ![Beta](https://img.shields.io/badge/beta-green) | AV1 |
 | :-----: | :---------------: | :------------: | :------------: | :----------------: | :--------------------------------: |
 |   iOS   |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
-| Android |        🟢         |       🟢       |       🟢       |         🟡         |         🟢         |
+| Android |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
 
 ### Notes:
 - `AV1` supported on iOS 14 and above, Android 14 and above.
