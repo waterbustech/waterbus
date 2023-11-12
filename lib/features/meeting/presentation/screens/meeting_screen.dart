@@ -10,11 +10,11 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/models/index.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/helpers/share_utils.dart';
+import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -52,61 +52,78 @@ class MeetingScreen extends StatelessWidget {
           appBar: appBarTitleBack(
             context,
             '',
-            titleWidget: Column(
-              children: [
-                GestureWrapper(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return const E2eeBottomSheet();
-                      },
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        PhosphorIcons.lock_fill,
-                        color: Colors.green,
-                        size: 9.sp,
-                      ),
-                      SizedBox(width: 4.sp),
-                      Text(
-                        'End-to-end encrypted',
-                        style: TextStyle(
+            titleWidget: Padding(
+              padding: EdgeInsets.only(left: 30.sp),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureWrapper(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const E2eeBottomSheet();
+                        },
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          PhosphorIcons.lock_fill,
                           color: Colors.green,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w600,
+                          size: 9.sp,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 4.sp),
+                        Text(
+                          'End-to-end encrypted',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 2.sp),
-                Text(
-                  meeting.code.toString(),
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w600,
+                  SizedBox(height: 2.sp),
+                  Text(
+                    meeting.code.toString(),
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             actions: [
               IconButton(
                 onPressed: () async {
-                  await ShareUtils().share(
-                    link: meeting.inviteLink,
-                    description: meeting.title,
-                  );
+                  WaterbusSdk.instance.switchCamera();
+                  DeviceUtils().lightImpact();
                 },
                 icon: Icon(
-                  PhosphorIcons.export,
-                  size: 18.sp,
+                  PhosphorIcons.camera_rotate,
+                  size: 21.25.sp,
                 ),
               ),
-              SizedBox(width: 10.sp),
+              IconButton(
+                alignment: Alignment.centerRight,
+                onPressed: () async {
+                  WaterbusSdk.instance.toggleSpeakerPhone();
+                  DeviceUtils().lightImpact();
+                },
+                icon: Icon(
+                  callState?.mParticipant == null ||
+                          callState!.mParticipant!.isSpeakerPhoneEnabled
+                      ? PhosphorIcons.speaker_high
+                      : PhosphorIcons.speaker_low,
+                  size: 20.sp,
+                ),
+              ),
+              SizedBox(width: 4.sp),
             ],
           ),
           bottomNavigationBar: ClipRRect(
