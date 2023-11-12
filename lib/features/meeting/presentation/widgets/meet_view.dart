@@ -40,7 +40,7 @@ class MeetView extends StatelessWidget {
                   objectFit: isScreenSharing
                       ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
                       : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                  mirror: !isScreenSharing,
+                  mirror: !isScreenSharing && cameraType == CameraType.front,
                   filterQuality: FilterQuality.none,
                 )
               : Container(
@@ -150,6 +150,15 @@ class MeetView extends StatelessWidget {
       return callState
               ?.participants[participant.id.toString()]?.isSharingScreen ??
           false;
+    }
+  }
+
+  CameraType get cameraType {
+    if (participant.isMe) {
+      return callState?.mParticipant?.cameraType ?? CameraType.front;
+    } else {
+      return callState?.participants[participant.id.toString()]?.cameraType ??
+          CameraType.front;
     }
   }
 }
