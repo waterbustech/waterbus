@@ -610,11 +610,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "2.0.0+3"
-      resolved-ref: "8a16cb6c25a02836c5375d5e2b4ef2153655cfff"
+      ref: "2.0.0+4"
+      resolved-ref: "8cc0017e9276b9b9f8a0ebd3afb560c8d3ad8918"
       url: "https://github.com/waterbustech/flutter_callkit_incoming.git"
     source: git
-    version: "2.0.0+3"
+    version: "2.0.0+4"
   flutter_facebook_auth:
     dependency: transitive
     description:
@@ -813,11 +813,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.9.46+9"
-      resolved-ref: ca1869576a19dbb9313ca90c76596444f673f8cd
+      ref: "0.9.46+12"
+      resolved-ref: "04abf8c58f49dc9a76533c975444d8ca754afeee"
       url: "https://github.com/waterbustech/flutter-webrtc.git"
     source: git
-    version: "0.9.46+9"
+    version: "0.9.46+12"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1810,11 +1810,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.2"
-      resolved-ref: b8abe5593cb7a401e4174873ab32b5c292bae8c2
+      ref: "1.0.3"
+      resolved-ref: "5b809018ce91b3c7fc5394ee914cdfff96f51045"
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.0.2"
+    version: "1.0.3"
   web:
     dependency: transitive
     description:
