@@ -47,12 +47,8 @@ dependencies:
   connectivity_plus: ^5.0.1
   http_parser: ^4.0.2
   socket_io_client: ^2.0.3+1
-  cookie_jar: ^4.0.8
   dio: ^5.3.3
   dio_smart_retry: ^6.0.0
-  dio_cookie_manager: ^3.1.1
-  native_dio_adapter: ^1.0.0+2
-  dio_http2_adapter: ^2.3.1+1
   dio_cache_interceptor: ^3.4.4
 
   # State management
@@ -100,7 +96,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.0.3
+      ref: 1.0.6
 
 dependency_overrides: 
   watcher: ^1.1.0
