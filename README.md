@@ -4,7 +4,7 @@
 [![Banner](./screenshots/banner-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
 [![Banner](./screenshots/banner.png)](https://docs.waterbus.tech#gh-light-mode-only)
 
-<!-- <img src="./screenshots/waterbus-demo.gif" width="100%"/> -->
+[![Demo](./screenshots/waterbus-demo.gif)](https://docs.waterbus.tech#gh-dark-mode-only)
 
 # [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
