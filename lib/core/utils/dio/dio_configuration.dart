@@ -2,14 +2,10 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
-import 'package:native_dio_adapter/native_dio_adapter.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
@@ -17,7 +13,6 @@ import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/core/utils/dio/completer_queue.dart';
-import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -35,19 +30,6 @@ class DioConfiguration {
 
   // MARK: public methods
   Future<Dio> configuration(Dio dioClient) async {
-    // Integration cookie
-    final String tempDir = await PathHelper.tempDirWaterbus;
-    final PersistCookieJar cookieJar = PersistCookieJar(
-      ignoreExpires: true,
-      storage: FileStorage("$tempDir/.cookies/"),
-    );
-    dioClient.interceptors.add(CookieManager(cookieJar));
-    dioClient.httpClientAdapter = Http2Adapter(
-      ConnectionManager(
-        idleTimeout: 10.seconds,
-      ),
-    );
-
     final MemCacheStore cacheStore = MemCacheStore(
       maxSize: 10485760,
       maxEntrySize: 1048576,
@@ -130,8 +112,6 @@ class DioConfiguration {
         onError: (error, handler) async {},
       ),
     );
-
-    dioClient.httpClientAdapter = NativeAdapter();
 
     return dioClient;
   }
