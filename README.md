@@ -1,9 +1,10 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.03-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.15-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
 [![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
-<img src="./screenshots/banner.png" width="100%"/>
+[![Banner](./screenshots/banner-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
+[![Banner](./screenshots/banner.png)](https://docs.waterbus.tech#gh-light-mode-only)
 
-<img src="./screenshots/waterbus-demo.gif" width="100%"/>
+<!-- <img src="./screenshots/waterbus-demo.gif" width="100%"/> -->
 
 # [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
@@ -23,14 +24,15 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Android |        🟢         |       🟢       |         🟡         |         🟡         |          🟢           |      🟡      |
 
 ## Codec supported
-| Codec | VP8 | VP9 | H264 | H265  ![Beta](https://img.shields.io/badge/beta-green) | AV1 |
+| Codec | VP8 | VP9 | H264 | H265 | AV1 |
 | :-----: | :---------------: | :------------: | :------------: | :----------------: | :--------------------------------: |
 |   iOS   |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
 | Android |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
 
 ### Notes:
 - `AV1` supported on iOS 14 and above, Android 14 and above.
-- [Video Codec Android Supported](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
+- `E2EE` only supported `H264`, `VP8` and `VP9`
+- Video codec Android supported: Check at [Google Site](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
 
 🟢 = Available
 
@@ -40,7 +42,8 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 ## Online Meeting Diagram
 
-<img src="./screenshots/waterbus-diagram.png" width="100%"/>
+[![Diagram](./screenshots/waterbus-diagram-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
+[![Diagram](./screenshots/waterbus-diagram.png)](https://docs.waterbus.tech#gh-light-mode-only)
 
 ## 📂 Repository Structure
 
@@ -209,9 +212,13 @@ flutter test
 - [WebRTC SFU Server](https://github.com/waterbustech/waterbus-sfu-meeting)
 - [Waterbus Docs](https://docs.waterbus.tech)
 
-## Benchmark (iOS - 720p - AV1 codec)
+## Benchmark [Update Later]()
 
-<img src="./screenshots/benchmark_plot.png" width="100%"/>
+<!-- <img src="./screenshots/benchmark_plot.png" width="100%"/> -->
+
+## Roadmap
+
+- Check at [Roadmap](./roadmap.md)
 
 ## Support
 
@@ -221,7 +228,8 @@ Don't forget to leave a star ⭐️.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date&theme=dark)](https://star-history.com/#lambiengcode/waterbus&Date#gh-dark-mode-only)
+[![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date#gh-light-mode-only)
 
 ## Contributing
 
