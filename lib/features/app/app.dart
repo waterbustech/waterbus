@@ -39,7 +39,9 @@ class _AppState extends State<App> {
               return AppNavigator().getRoute(settings);
             },
             builder: (context, child) => MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.noScaling,
+              ),
               child: child ?? const SizedBox(),
             ),
           );
