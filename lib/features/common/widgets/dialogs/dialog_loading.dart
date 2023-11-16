@@ -11,9 +11,9 @@ void displayLoadingLayer() {
     routeSettings: const RouteSettings(name: Routes.loadingRoute),
     context: AppNavigator.context!,
     builder: (context) {
-      return WillPopScope(
-        onWillPop: () async => false,
-        child: const Center(
+      return const PopScope(
+        canPop: false,
+        child: Center(
           child: CupertinoActivityIndicator(
             radius: 15,
           ),
