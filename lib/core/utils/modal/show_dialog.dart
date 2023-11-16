@@ -66,10 +66,8 @@ Future showDialogWaterbus({
         ),
         backgroundColor: backgroundColor ??
             Theme.of(AppNavigator.context!).scaffoldBackgroundColor,
-        child: WillPopScope(
-          onWillPop: () async {
-            return dismissible;
-          },
+        child: PopScope(
+          canPop: dismissible,
           child: Container(
             constraints: BoxConstraints(
               maxHeight: maxHeight ??

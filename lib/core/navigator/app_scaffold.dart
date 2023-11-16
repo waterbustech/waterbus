@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
@@ -58,8 +57,9 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
           bottom: false,
           child: Platform.isIOS
               ? _child
-              : WillPopScope(
-                  onWillPop: _goBackward,
+              : PopScope(
+                  canPop: _canPop(),
+                  onPopInvoked: _onPopInvoked,
                   child: _child,
                 ),
         );
@@ -90,7 +90,7 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
 
                 if (details.delta.dx > sensitivity) {
                   //SWIPE FROM RIGHT DETECTION
-                  final bool canBackward = await _goBackward();
+                  final bool canBackward = _canPop();
                   if (canBackward) {
                     AppNavigator.pop();
                   }
@@ -102,11 +102,11 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
     );
   }
 
-  Future<bool> _goBackward() async {
+  void _onPopInvoked(bool canPop) {
     if (Routes.meetingRoute == AppNavigator.currentRoute()) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
-
-    return true;
   }
+
+  bool _canPop() => true;
 }

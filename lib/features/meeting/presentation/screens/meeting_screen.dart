@@ -53,7 +53,7 @@ class MeetingScreen extends StatelessWidget {
             context,
             '',
             titleWidget: Padding(
-              padding: EdgeInsets.only(left: 30.sp),
+              padding: EdgeInsets.only(left: 32.sp),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -106,7 +106,7 @@ class MeetingScreen extends StatelessWidget {
                 },
                 icon: Icon(
                   PhosphorIcons.camera_rotate,
-                  size: 21.25.sp,
+                  size: 20.sp,
                 ),
               ),
               IconButton(
@@ -120,7 +120,7 @@ class MeetingScreen extends StatelessWidget {
                           callState!.mParticipant!.isSpeakerPhoneEnabled
                       ? PhosphorIcons.speaker_high
                       : PhosphorIcons.speaker_low,
-                  size: 20.sp,
+                  size: 18.5.sp,
                 ),
               ),
               SizedBox(width: 4.sp),
