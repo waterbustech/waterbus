@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/widgets.dart';
@@ -14,10 +15,12 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
@@ -67,8 +70,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._saveCallSettings,
   ) : super(const MeetingInitial()) {
     _getCallSettings.call(null).then(
-          (settings) => settings.fold((l) => null, (r) {
+          (settings) => settings.fold((l) => null, (r) async {
             _callSetting = r;
+
+            final Directory appDir = await PathHelper.appDir;
+            _waterbusSdk.initial(
+              waterbusUrl: ApiEndpoints.wsUrl,
+              recordBenchmarkPath: '${appDir.path}/benchmark.txt',
+            );
             _waterbusSdk.changeCallSetting(r);
             _waterbusSdk.onEventChangedRegister(_onEventChanged);
           }),
