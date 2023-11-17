@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.15-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.19-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
 [![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 [![Banner](./screenshots/banner-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
@@ -212,9 +212,69 @@ flutter test
 - [WebRTC SFU Server](https://github.com/waterbustech/waterbus-sfu-meeting)
 - [Waterbus Docs](https://docs.waterbus.tech)
 
-## Benchmark [Update Later]()
+## Benchmarking
 
-<!-- <img src="./screenshots/benchmark_plot.png" width="100%"/> -->
+- This part is benchmarking video codecs within a 60-second duration of an online meeting on an iPhone 13 running iOS 17.0.2. The codecs included in the benchmark are VP8, VP9, H.264, H.265, and AV1.
+- The benchmark aims to quickly compare the performance differences between these codecs during a short online meeting session.
+
+[![Benchmark](./benchmark/h265-benchmark-plot.png)](https://docs.waterbus.tech#gh-dark-mode-only)
+[![Benchmark](./benchmark/h265-benchmark-plot-light.png)](https://docs.waterbus.tech#gh-light-mode-only)
+
+### Device Specifications
+
+- **Model:** iPhone 13
+- **Operating System:** iOS 17.0.2
+
+### Results
+
+You can view the benchmark results in the generated plots and data files. Here's how you can interpret the results:
+
+<details open>
+  <summary>VP8</summary>
+  - Total encode time: 9325 (µs) in 60s call
+
+  <picture>
+    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/vp8-benchmark-plot.png">
+    <img width="100%" alt="lambiengcode" src="./benchmark/vp8-benchmark-plot-light.png">
+  </picture>
+</details>
+<details>
+  <summary>VP9</summary>
+  - Total encode time: 12091 (µs) in 60s call
+  
+  <picture>
+    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/vp9-benchmark-plot.png">
+    <img width="100%" alt="lambiengcode" src="./benchmark/vp9-benchmark-plot-light.png">
+  </picture>
+</details>
+<details>
+  <summary>H264</summary>
+  - Total encode time: 11127 (µs) in 60s call
+  
+  <picture>
+    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/h264-benchmark-plot.png">
+    <img width="100%" alt="lambiengcode" src="./benchmark/h264-benchmark-plot-light.png">
+  </picture>
+</details>
+<details>
+  <summary>H265</summary>
+  - Total encode time: 9264 (µs) in 60s call
+  
+  <picture>
+    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/h265-benchmark-plot.png">
+    <img width="100%" alt="lambiengcode" src="./benchmark/h265-benchmark-plot-light.png">
+  </picture>
+</details>
+<details>
+  <summary>AV1</summary>
+  - Total encode time: 13615 (µs) in 60s call
+  
+  <picture>
+    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/av1-benchmark-plot.png">
+    <img width="100%" alt="lambiengcode" src="./benchmark/av1-benchmark-plot-light.png">
+  </picture>
+</details>
+
 
 ## Roadmap
 
