@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/models/enums/audio_level.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
@@ -16,87 +18,109 @@ class MeetView extends StatelessWidget {
   final EdgeInsets? margin;
   final Participant participant;
   final double avatarSize;
+  final double? width;
   final CallState? callState;
+  final BorderRadius? radius;
   const MeetView({
     super.key,
     required this.participant,
+    required this.callState,
     this.avatarSize = 80.0,
     this.margin,
-    required this.callState,
+    this.width,
+    this.radius,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      child: Stack(
-        children: [
-          videoRenderer != null
-              ? RTCVideoView(
-                  videoRenderer!,
-                  key: videoRenderer!.textureId == null
-                      ? null
-                      : Key(videoRenderer!.textureId!.toString()),
-                  objectFit: isScreenSharing
-                      ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
-                      : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                  mirror: !isScreenSharing && cameraType == CameraType.front,
-                  filterQuality: FilterQuality.none,
-                )
-              : Container(
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      shape: SuperellipseShape(
+        side: BorderSide(
+          color: Theme.of(context).primaryColor,
+          width: audioLevel == AudioLevel.kAudioStrong
+              ? 6.sp
+              : audioLevel == AudioLevel.kAudioLight
+                  ? 4.5.sp
+                  : 1.sp,
+        ),
+        borderRadius: radius ?? BorderRadius.circular(18.sp),
+      ),
+      child: SizedBox(
+        width: width,
+        child: Container(
+          margin: margin,
+          child: Stack(
+            children: [
+              videoRenderer != null
+                  ? RTCVideoView(
+                      videoRenderer!,
+                      key: videoRenderer!.textureId == null
+                          ? null
+                          : Key(videoRenderer!.textureId!.toString()),
+                      objectFit: isScreenSharing
+                          ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
+                          : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                      mirror:
+                          !isScreenSharing && cameraType == CameraType.front,
+                      filterQuality: FilterQuality.none,
+                    )
+                  : Container(
+                      alignment: Alignment.center,
+                      child: AvatarCard(
+                        urlToImage: participant.user.avatar,
+                        size: avatarSize,
+                      ),
+                    ),
+              Positioned(
+                left: 10.sp,
+                bottom: 10.sp,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                    vertical: 8.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.sp),
+                    color: Colors.black.withOpacity(.3),
+                  ),
                   alignment: Alignment.center,
-                  child: AvatarCard(
-                    urlToImage: participant.user.avatar,
-                    size: avatarSize,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        participant.user.fullName,
+                        style: TextStyle(
+                          color: participant.role == MeetingRole.host
+                              ? Colors.yellow
+                              : Colors.white,
+                          fontSize: avatarSize / 6,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Visibility(
+                        visible: !hasFirstFrameRendered || !isAudioEnabled,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 6.sp),
+                          child: !isAudioEnabled
+                              ? Icon(
+                                  PhosphorIcons.microphone_slash_fill,
+                                  color: Colors.redAccent,
+                                  size: avatarSize / 5.25,
+                                )
+                              : CupertinoActivityIndicator(
+                                  radius: 6.5,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-          Positioned(
-            left: 10.sp,
-            bottom: 10.sp,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10.sp,
-                vertical: 8.sp,
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.sp),
-                color: Colors.black.withOpacity(.3),
-              ),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    participant.user.fullName,
-                    style: TextStyle(
-                      color: participant.role == MeetingRole.host
-                          ? Colors.yellow
-                          : Colors.white,
-                      fontSize: avatarSize / 6,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Visibility(
-                    visible: !hasFirstFrameRendered || !isAudioEnabled,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 6.sp),
-                      child: !isAudioEnabled
-                          ? Icon(
-                              PhosphorIcons.microphone_slash_fill,
-                              color: Colors.redAccent,
-                              size: avatarSize / 5.25,
-                            )
-                          : CupertinoActivityIndicator(
-                              radius: 6.5,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -159,6 +183,17 @@ class MeetView extends StatelessWidget {
     } else {
       return callState?.participants[participant.id.toString()]?.cameraType ??
           CameraType.front;
+    }
+  }
+
+  AudioLevel get audioLevel {
+    if (!isAudioEnabled) return AudioLevel.kSilence;
+
+    if (participant.isMe) {
+      return callState?.mParticipant?.audioLevel ?? AudioLevel.kSilence;
+    } else {
+      return callState?.participants[participant.id.toString()]?.audioLevel ??
+          AudioLevel.kSilence;
     }
   }
 }

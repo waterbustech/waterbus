@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:sizer/sizer.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -242,17 +241,7 @@ class MeetingScreen extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.sp),
         child: meeting.users.length > 2
             ? _buildLayoutMultipleUsers(context, meeting, callState, setting)
-            : Material(
-                clipBehavior: Clip.hardEdge,
-                shape: SuperellipseShape(
-                  side: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                    width: 1.sp,
-                  ),
-                  borderRadius: BorderRadius.circular(30.sp),
-                ),
-                child: _buildLayoutLess2Users(context, meeting, callState),
-              ),
+            : _buildLayoutLess2Users(context, meeting, callState),
       ),
     );
   }
@@ -263,16 +252,30 @@ class MeetingScreen extends StatelessWidget {
     CallState? callState,
   ) {
     return Column(
-      children: meeting.users
-          .map<Widget>(
-            (participant) => Expanded(
-              child: MeetView(
-                participant: participant,
-                callState: callState,
+      children: [
+        Expanded(
+          child: MeetView(
+            participant: meeting.users.first,
+            callState: callState,
+            radius: meeting.users.length == 1
+                ? BorderRadius.circular(30.sp)
+                : BorderRadius.vertical(
+                    top: Radius.circular(30.sp),
+                  ),
+          ),
+        ),
+        meeting.users.length == 1
+            ? const SizedBox()
+            : Expanded(
+                child: MeetView(
+                  participant: meeting.participants.last,
+                  callState: callState,
+                  radius: BorderRadius.vertical(
+                    bottom: Radius.circular(30.sp),
+                  ),
+                ),
               ),
-            ),
-          )
-          .toList(),
+      ],
     );
   }
 
@@ -363,24 +366,14 @@ class MeetingScreen extends StatelessWidget {
     required Participant participant,
     required CallState? callState,
     double? width,
+    BorderRadius? radius,
   }) {
-    return Material(
-      clipBehavior: Clip.hardEdge,
-      shape: SuperellipseShape(
-        side: BorderSide(
-          color: Theme.of(context).primaryColor,
-          width: 1.sp,
-        ),
-        borderRadius: BorderRadius.circular(18.sp),
-      ),
-      child: SizedBox(
-        width: width,
-        child: MeetView(
-          participant: participant,
-          avatarSize: 35.sp,
-          callState: callState,
-        ),
-      ),
+    return MeetView(
+      participant: participant,
+      callState: callState,
+      avatarSize: 35.sp,
+      width: width,
+      radius: radius,
     );
   }
 }
