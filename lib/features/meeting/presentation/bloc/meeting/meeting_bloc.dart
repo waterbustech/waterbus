@@ -11,12 +11,14 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -51,7 +53,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final GetParticipant _getParticipant;
   final GetCallSettings _getCallSettings;
   final SaveCallSettings _saveCallSettings;
-  // ignore: unused_field
+  final PipChannel _pipChannel;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   // MARK: private
@@ -68,6 +70,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._getParticipant,
     this._getCallSettings,
     this._saveCallSettings,
+    this._pipChannel,
   ) : super(const MeetingInitial()) {
     _getCallSettings.call(null).then(
           (settings) => settings.fold((l) => null, (r) async {
@@ -499,7 +502,49 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     });
   }
 
+  Future<void> startPiP() async {
+    if (_waterbusSdk.callState.participants.isEmpty) return;
+
+    if (Platform.isAndroid) {
+      SimplePip().setAutoPipMode();
+      return;
+    }
+
+    final List<MapEntry<String, ParticipantSFU>> participants =
+        _waterbusSdk.callState.participants.entries.toList();
+
+    participants.sort(
+      (a, b) =>
+          a.value.audioLevel.threshold.compareTo(b.value.audioLevel.threshold),
+    );
+
+    final ParticipantSFU participantSFU = participants.first.value;
+    final int indexOfParticipant = _currentMeeting?.participants.indexWhere(
+          (part) => part.id.toString() == participants.first.key,
+        ) ??
+        -1;
+
+    if (indexOfParticipant == -1) return;
+
+    final Participant participant =
+        _currentMeeting!.participants[indexOfParticipant];
+
+    _pipChannel.startPip(
+      remoteStreamId: participantSFU.renderer?.srcObject?.id ?? '',
+      peerConnectionId: participantSFU.peerConnection.peerConnectionId,
+      myAvatar: AppBloc.userBloc.user?.avatar ?? '',
+      remoteAvatar: participant.user.avatar ?? '',
+      remoteName: participant.user.fullName,
+      isRemoteCameraEnable: participantSFU.isVideoEnabled,
+    );
+  }
+
   void _onEventChanged(CallbackPayload event) {
+    if (event.event == CallbackEvents.meetingEnded) {
+      _pipChannel.stopPip();
+    } else {
+      startPiP();
+    }
     switch (event.event) {
       case CallbackEvents.shouldBeUpdateState:
         add(RefreshDisplayMeetingEvent());

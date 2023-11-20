@@ -15,31 +15,34 @@ import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/features/app/app.dart';
 
 void main(List<String> args) async {
-  await runZonedGuarded(() async {
-    final WidgetsBinding widgetsBinding =
-        WidgetsFlutterBinding.ensureInitialized();
-    FlutterNativeSplash.preserve(
-      widgetsBinding: widgetsBinding,
-    );
+  await runZonedGuarded(
+    () async {
+      final WidgetsBinding widgetsBinding =
+          WidgetsFlutterBinding.ensureInitialized();
+      FlutterNativeSplash.preserve(
+        widgetsBinding: widgetsBinding,
+      );
 
-    PaintingBinding.instance.imageCache.maximumSizeBytes =
-        1024 * 1024 * 300; // 300 MB
+      PaintingBinding.instance.imageCache.maximumSizeBytes =
+          1024 * 1024 * 300; // 300 MB
 
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-    );
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+        ),
+      );
 
-    await Future.wait([
-      Application.initialAppLication(),
-      Firebase.initializeApp(),
-    ]);
+      await Future.wait([
+        Application.initialAppLication(),
+        Firebase.initializeApp(),
+      ]);
 
-    runApp(const App());
+      runApp(const App());
 
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  }, (error, stackTrace) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace);
-  });
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    },
+    (error, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    },
+  );
 }
