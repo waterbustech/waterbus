@@ -23,6 +23,8 @@ class Sizer extends StatelessWidget {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizerUtil.setScreenSize(constraints, orientation);
+            context.rebuildAllChildren();
+            
             return builder(context, orientation, SizerUtil.deviceType);
           },
         );

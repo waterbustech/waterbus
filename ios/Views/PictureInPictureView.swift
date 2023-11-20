@@ -69,6 +69,7 @@ class PictureInPictureView: UIView {
     }
     
     func setRemoteInfo(peerConnectionId: String, remoteStreamId: String, isRemoteCameraEnable: Bool, remoteAvatar: String, remoteName: String) {
+        self.peerConnectionId = peerConnectionId
         self.remoteStreamId = remoteStreamId
         self.isRemoteCameraEnable = isRemoteCameraEnable
         self.remoteUserNameCard.setAvatar(avatar: remoteAvatar)
