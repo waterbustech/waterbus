@@ -79,7 +79,7 @@ class UserView: UIView {
         // MARK: avatar
         avatar = UIImageView()
         avatar.contentMode = .scaleAspectFit
-        avatar.image = UIImage(named: "avatar_default")
+        avatar.image = UIImage(named: "waterbus_logo")
         
         addSubview(avatar)
         addSubview(userName)
