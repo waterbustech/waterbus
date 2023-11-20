@@ -4,7 +4,7 @@ import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
-    lazy var flutterEngine = FlutterEngine(name: "FlutterEngine")
+    var flutterEngine = FlutterEngine(name: "FlutterEngine")
     var replayKitChannel: FlutterMethodChannel! = nil
     var observeTimer: Timer?
     var hasEmittedFirstSample = false;
@@ -15,10 +15,6 @@ import FirebaseCore
     ) -> Bool {
         
         flutterEngine.run();
-        
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
-        }
         
         let controller =
         FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
@@ -70,7 +66,7 @@ import FirebaseCore
         })
         
         FirebaseApp.configure()
-        GeneratedPluginRegistrant.register(with: self.flutterEngine)
+        GeneratedPluginRegistrant.register(with: flutterEngine)
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
