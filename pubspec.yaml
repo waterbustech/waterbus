@@ -81,6 +81,7 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.5
   share_plus: ^7.2.1
+  simple_pip_mode: ^0.8.0
   sizer: 
     path: ./packages/sizer
 

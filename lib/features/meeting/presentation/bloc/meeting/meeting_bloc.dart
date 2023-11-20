@@ -11,6 +11,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -54,6 +55,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final SaveCallSettings _saveCallSettings;
   final PipChannel _pipChannel;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
+  final SimplePip _simplePip;
 
   // MARK: private
   Meeting? _currentMeeting;
@@ -70,6 +72,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._getCallSettings,
     this._saveCallSettings,
     this._pipChannel,
+    this._simplePip,
   ) : super(const MeetingInitial()) {
     _getCallSettings.call(null).then(
           (settings) => settings.fold((l) => null, (r) async {
@@ -503,6 +506,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   Future<void> startPiP() async {
     if (_waterbusSdk.callState.participants.isEmpty) return;
+
+    if (Platform.isAndroid) {
+      // Ratio 16:9 and horizontal view
+      _simplePip.setAutoPipMode(aspectRatio: const [9, 16]);
+      return;
+    }
 
     final List<MapEntry<String, ParticipantSFU>> participants =
         _waterbusSdk.callState.participants.entries.toList();
