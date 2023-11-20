@@ -20,8 +20,8 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 | Feature | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
 | :-----: | :---------------: | :------------: | :----------------: | :----------------: | :-------------------: | :----------: |
-|   iOS   |        🟢         |       🟢       |         🟡         |         🔴         |          🟢           |      🟡      |
-| Android |        🟢         |       🟢       |         🟡         |         🟡         |          🟢           |      🟡      |
+|   iOS   |        🟢         |       🟢       |         🟢         |         🔴         |          🟢           |      🟡      |
+| Android |        🟢         |       🟢       |         🟢         |         🟡         |          🟢           |      🟡      |
 
 ## Codec supported
 | Codec | VP8 | VP9 | H264 | H265 | AV1 |
@@ -327,4 +327,4 @@ SOFTWARE.
 
 ## Keywords
 
-Online Meeting, Flutter, WebRTC, Audio Communication, Video Communication, Screen Sharing, Chat Functionality, File Sharing, Firebase, Virtual Meetings, Conferences, Webinars, AV1 Codec, H264, VP8.
+Online Meeting, Flutter, WebRTC, Audio Communication, Video Communication, Screen Sharing, Chat Functionality, File Sharing, Firebase, Virtual Meetings, Conferences, Webinars, AV1 Codec, H264, H265, VP9, VP8, Noise Suppresion.
