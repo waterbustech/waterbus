@@ -35,7 +35,6 @@ import FirebaseCore
                 let remoteName = arguments["remoteName"] as? String ?? ""
                 
                 WaterbusViewController.shared.configurationPictureInPicture(result: result, peerConnectionId: peerConnectionId, remoteStreamId: remoteStreamId, isRemoteCameraEnable: isRemoteCameraEnable, myAvatar: myAvatar, remoteAvatar: remoteAvatar, remoteName: remoteName)
-                break
             case "updatePictureInPicture":
                 let arguments = call.arguments as? [String: Any] ?? [String: Any]()
                 let peerConnectionId = arguments["peerConnectionId"] as? String ?? ""
@@ -44,19 +43,15 @@ import FirebaseCore
                 let remoteAvatar = arguments["remoteAvatar"] as? String ?? ""
                 let remoteName = arguments["remoteName"] as? String ?? ""
                 WaterbusViewController.shared.updatePictureInPictureView(result, peerConnectionId: peerConnectionId, remoteStreamId: remoteStreamId, isRemoteCameraEnable: isRemoteCameraEnable, remoteAvatar: remoteAvatar, remoteName: remoteName)
-                break
             case "updateState":
                 let arguments = call.arguments as? [String: Any] ?? [String: Any]()
                 let isRemoteCameraEnable = arguments["isRemoteCameraEnable"] as? Bool ?? false
                 WaterbusViewController.shared.updateStateUserView(result, isRemoteCameraEnable: isRemoteCameraEnable)
-                break
             case "stopPictureInPicture":
                 WaterbusViewController.shared.disposePictureInPicture()
                 result(true)
-                break
             default:
                 result(FlutterMethodNotImplemented)
-                break
             }
         })
         
