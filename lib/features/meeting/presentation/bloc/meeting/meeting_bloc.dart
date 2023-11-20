@@ -55,7 +55,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final SaveCallSettings _saveCallSettings;
   final PipChannel _pipChannel;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
-  final SimplePip _simplePip;
 
   // MARK: private
   Meeting? _currentMeeting;
@@ -72,7 +71,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._getCallSettings,
     this._saveCallSettings,
     this._pipChannel,
-    this._simplePip,
   ) : super(const MeetingInitial()) {
     _getCallSettings.call(null).then(
           (settings) => settings.fold((l) => null, (r) async {
@@ -508,8 +506,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     if (_waterbusSdk.callState.participants.isEmpty) return;
 
     if (Platform.isAndroid) {
-      // Ratio 16:9 and horizontal view
-      _simplePip.setAutoPipMode(aspectRatio: const [9, 16]);
+      SimplePip().setAutoPipMode();
       return;
     }
 
@@ -535,7 +532,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _pipChannel.startPip(
       remoteStreamId: participantSFU.renderer?.srcObject?.id ?? '',
       peerConnectionId: participantSFU.peerConnection.peerConnectionId,
-      myAvatar: AppBloc.userBloc.user?.fullName ?? '',
+      myAvatar: AppBloc.userBloc.user?.avatar ?? '',
       remoteAvatar: participant.user.avatar ?? '',
       remoteName: participant.user.fullName,
       isRemoteCameraEnable: participantSFU.isVideoEnabled,

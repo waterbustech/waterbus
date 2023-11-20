@@ -12,7 +12,6 @@
 // Package imports:
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:simple_pip_mode/simple_pip.dart' as _i36;
 
 // Project imports:
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i3;
@@ -20,7 +19,7 @@ import '../../features/auth/domain/repositories/auth_repository.dart' as _i20;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i22;
 import '../../features/auth/domain/usecases/login_with_social.dart' as _i34;
 import '../../features/auth/domain/usecases/logout.dart' as _i33;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i41;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i40;
 import '../../features/home/bloc/home/home_bloc.dart' as _i7;
 import '../../features/meeting/domain/usecases/create_meeting.dart' as _i24;
 import '../../features/meeting/domain/usecases/get_call_settings.dart' as _i25;
@@ -33,9 +32,9 @@ import '../../features/meeting/domain/usecases/save_call_settings.dart' as _i13;
 import '../../features/meeting/domain/usecases/update_meeting.dart' as _i15;
 import '../../features/profile/domain/usecases/get_presigned_url.dart' as _i28;
 import '../../features/profile/domain/usecases/get_profile.dart' as _i29;
-import '../../features/profile/domain/usecases/update_profile.dart' as _i38;
-import '../../features/profile/domain/usecases/upload_avatar.dart' as _i39;
-import '../../features/profile/presentation/bloc/user_bloc.dart' as _i40;
+import '../../features/profile/domain/usecases/update_profile.dart' as _i37;
+import '../../features/profile/domain/usecases/upload_avatar.dart' as _i38;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i39;
 import '../../features/schedule/blocs/schedule/schedule_bloc.dart' as _i14;
 import '../method_channels/pip_channel.dart' as _i12;
 import '../utils/datasources/base_remote_data.dart' as _i4;
@@ -60,7 +59,7 @@ import '../../features/meeting/domain/usecases/clean_all_recent_joined.dart'
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i35;
 import '../../features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart'
-    as _i37;
+    as _i36;
 import '../../features/profile/data/datasources/user_remote_datasource.dart'
     as _i16;
 import '../../features/profile/data/repositories/user_repository_impl.dart'
@@ -148,23 +147,22 @@ _i1.GetIt $initGetIt(
         gh<_i25.GetCallSettings>(),
         gh<_i13.SaveCallSettings>(),
         gh<_i12.PipChannel>(),
-        gh<_i36.SimplePip>(),
       ));
-  gh.factory<_i37.MeetingListBloc>(() => _i37.MeetingListBloc(
+  gh.factory<_i36.MeetingListBloc>(() => _i36.MeetingListBloc(
         gh<_i30.GetRecentJoined>(),
         gh<_i23.CleanAllRecentJoined>(),
       ));
-  gh.factory<_i38.UpdateProfile>(
-      () => _i38.UpdateProfile(gh<_i17.UserRepository>()));
-  gh.factory<_i39.UploadAvatar>(
-      () => _i39.UploadAvatar(gh<_i17.UserRepository>()));
-  gh.factory<_i40.UserBloc>(() => _i40.UserBloc(
-        gh<_i38.UpdateProfile>(),
+  gh.factory<_i37.UpdateProfile>(
+      () => _i37.UpdateProfile(gh<_i17.UserRepository>()));
+  gh.factory<_i38.UploadAvatar>(
+      () => _i38.UploadAvatar(gh<_i17.UserRepository>()));
+  gh.factory<_i39.UserBloc>(() => _i39.UserBloc(
+        gh<_i37.UpdateProfile>(),
         gh<_i28.GetPresignedUrl>(),
         gh<_i29.GetProfile>(),
-        gh<_i39.UploadAvatar>(),
+        gh<_i38.UploadAvatar>(),
       ));
-  gh.factory<_i41.AuthBloc>(() => _i41.AuthBloc(
+  gh.factory<_i40.AuthBloc>(() => _i40.AuthBloc(
         gh<_i22.CheckAuth>(),
         gh<_i34.LoginWithSocial>(),
         gh<_i33.LogOut>(),
