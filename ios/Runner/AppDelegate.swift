@@ -7,14 +7,14 @@ import FirebaseCore
     var flutterEngine = FlutterEngine(name: "FlutterEngine")
     var replayKitChannel: FlutterMethodChannel! = nil
     var observeTimer: Timer?
-    var hasEmittedFirstSample = false;
+    var hasEmittedFirstSample = false
     
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        flutterEngine.run();
+        flutterEngine.run()
         
         let controller =
         FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
@@ -96,7 +96,7 @@ import FirebaseCore
         }
         
         let group=UserDefaults(suiteName: "group.waterbus.broadcastext")
-        self.observeTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+        self.observeTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
             let closeReplayKitFromNative=group!.bool(forKey: "closeReplayKitFromNative")
             let closeReplayKitFromFlutter=group!.bool(forKey: "closeReplayKitFromFlutter")
             let hasSampleBroadcast=group!.bool(forKey: "hasSampleBroadcast")

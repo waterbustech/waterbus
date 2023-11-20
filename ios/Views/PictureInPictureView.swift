@@ -15,9 +15,9 @@ class PictureInPictureView: UIView {
     private var remoteUserNameCard: UserView = UserView()
     private var localView: UIView = UIView()
     private var remoteView: UIView = UIView()
-    private var remoteRenderer: RTCMTLVideoView? = nil
-    private var peerConnectionId: String? = nil
-    private var remoteStreamId: String? = nil
+    private var remoteRenderer: RTCMTLVideoView?
+    private var peerConnectionId: String?
+    private var remoteStreamId: String?
     private var isLocalCameraEnable: Bool = false
     private var isRemoteCameraEnable: Bool = false
     

@@ -16,9 +16,9 @@ class WaterbusViewController: FlutterViewController {
     static let shared = WaterbusViewController()
     
     // MARK: Public static variables
-    static var pipController: AVPictureInPictureController? = nil
-    static var pipContentSource: Any? = nil
-    static var pipVideoCallViewController: Any? = nil
+    static var pipController: AVPictureInPictureController?
+    static var pipContentSource: Any?
+    static var pipVideoCallViewController: Any?
     
     // MARK: Private variables
     private var pictureInPictureView: PictureInPictureView = PictureInPictureView()
