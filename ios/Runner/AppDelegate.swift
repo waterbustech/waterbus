@@ -4,6 +4,7 @@ import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
+    lazy var flutterEngine = FlutterEngine(name: "FlutterEngine")
     var replayKitChannel: FlutterMethodChannel! = nil
     var observeTimer: Timer?
     var hasEmittedFirstSample = false;
@@ -13,11 +14,55 @@ import FirebaseCore
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        guard let controller = window?.rootViewController as? FlutterViewController else {
-            return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        flutterEngine.run();
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
         }
         
+        let controller =
+        FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
+        
+        let pictureInPictureChannel = FlutterMethodChannel(name: "waterbus/picture-in-picture",binaryMessenger: controller.binaryMessenger)
         replayKitChannel = FlutterMethodChannel(name: "waterbus-sdk/replaykit-channel",binaryMessenger: controller.binaryMessenger)
+        
+        pictureInPictureChannel.setMethodCallHandler({
+            (call: FlutterMethodCall, result: @escaping  FlutterResult)  -> Void in
+            switch (call.method) {
+            case "startPictureInPicture":
+                let arguments = call.arguments as? [String: Any] ?? [String: Any]()
+                let remoteStreamId = arguments["remoteStreamId"] as? String ?? ""
+                let peerConnectionId = arguments["peerConnectionId"] as? String ?? ""
+                let isRemoteCameraEnable = arguments["isRemoteCameraEnable"] as? Bool ?? false
+                let myAvatar = arguments["myAvatar"] as? String ?? ""
+                let remoteAvatar = arguments["remoteAvatar"] as? String ?? ""
+                let remoteName = arguments["remoteName"] as? String ?? ""
+                
+                WaterbusViewController.shared.configurationPictureInPicture(result: result, peerConnectionId: peerConnectionId, remoteStreamId: remoteStreamId, isRemoteCameraEnable: isRemoteCameraEnable, myAvatar: myAvatar, remoteAvatar: remoteAvatar, remoteName: remoteName)
+                break
+            case "updatePictureInPicture":
+                let arguments = call.arguments as? [String: Any] ?? [String: Any]()
+                let peerConnectionId = arguments["peerConnectionId"] as? String ?? ""
+                let remoteStreamId = arguments["remoteStreamId"] as? String ?? ""
+                let isRemoteCameraEnable = arguments["isRemoteCameraEnable"] as? Bool ?? false
+                let remoteAvatar = arguments["remoteAvatar"] as? String ?? ""
+                let remoteName = arguments["remoteName"] as? String ?? ""
+                WaterbusViewController.shared.updatePictureInPictureView(result, peerConnectionId: peerConnectionId, remoteStreamId: remoteStreamId, isRemoteCameraEnable: isRemoteCameraEnable, remoteAvatar: remoteAvatar, remoteName: remoteName)
+                break
+            case "updateState":
+                let arguments = call.arguments as? [String: Any] ?? [String: Any]()
+                let isRemoteCameraEnable = arguments["isRemoteCameraEnable"] as? Bool ?? false
+                WaterbusViewController.shared.updateStateUserView(result, isRemoteCameraEnable: isRemoteCameraEnable)
+                break
+            case "stopPictureInPicture":
+                WaterbusViewController.shared.disposePictureInPicture()
+                result(true)
+                break
+            default:
+                result(FlutterMethodNotImplemented)
+                break
+            }
+        })
         
         replayKitChannel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping  FlutterResult)  -> Void in
@@ -25,7 +70,8 @@ import FirebaseCore
         })
         
         FirebaseApp.configure()
-        GeneratedPluginRegistrant.register(with: self)
+        GeneratedPluginRegistrant.register(with: self.flutterEngine)
+        
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
