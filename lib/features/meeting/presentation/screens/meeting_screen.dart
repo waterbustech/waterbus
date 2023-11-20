@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:simple_pip_mode/pip_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -46,183 +47,186 @@ class MeetingScreen extends StatelessWidget {
         final CallState? callState = state.callState;
         final CallSetting setting = state.callSetting ?? CallSetting();
 
-        return Scaffold(
-          backgroundColor: Colors.black,
-          appBar: appBarTitleBack(
-            context,
-            '',
-            titleWidget: Padding(
-              padding: EdgeInsets.only(left: 32.sp),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  GestureWrapper(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return const E2eeBottomSheet();
-                        },
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          PhosphorIcons.lock_fill,
-                          color: Colors.green,
-                          size: 9.sp,
-                        ),
-                        SizedBox(width: 4.sp),
-                        Text(
-                          'End-to-end encrypted',
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 2.sp),
-                  Text(
-                    meeting.code.toString(),
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () async {
-                  WaterbusSdk.instance.switchCamera();
-                  DeviceUtils().lightImpact();
-                },
-                icon: Icon(
-                  PhosphorIcons.camera_rotate,
-                  size: 20.sp,
-                ),
-              ),
-              IconButton(
-                alignment: Alignment.centerRight,
-                onPressed: () async {
-                  WaterbusSdk.instance.toggleSpeakerPhone();
-                  DeviceUtils().lightImpact();
-                },
-                icon: Icon(
-                  callState?.mParticipant == null ||
-                          callState!.mParticipant!.isSpeakerPhoneEnabled
-                      ? PhosphorIcons.speaker_high
-                      : PhosphorIcons.speaker_low,
-                  size: 18.5.sp,
-                ),
-              ),
-              SizedBox(width: 4.sp),
-            ],
-          ),
-          bottomNavigationBar: ClipRRect(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(12.sp),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 15,
-                sigmaY: 30,
-              ),
-              child: Container(
-                height: 80.sp,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .scaffoldBackgroundColor
-                      .withOpacity(0.7),
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(12.sp),
-                  ),
-                ),
-                alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.symmetric(horizontal: 12.sp).add(
-                  EdgeInsets.only(bottom: 12.sp),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        return PipWidget(
+          pipChild: _buildPipView(context, meeting, callState),
+          child: Scaffold(
+            backgroundColor: Colors.black,
+            appBar: appBarTitleBack(
+              context,
+              '',
+              titleWidget: Padding(
+                padding: EdgeInsets.only(left: 32.sp),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    CallActionButton(
-                      icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isAudioEnabled
-                          ? PhosphorIcons.microphone
-                          : PhosphorIcons.microphone_slash,
-                      onTap: () {
-                        if (callState?.mParticipant == null) return;
-
-                        AppBloc.meetingBloc.add(ToggleAudioEvent());
-                      },
-                    ),
-                    CallActionButton(
-                      icon: callState?.mParticipant == null ||
-                              callState!.mParticipant!.isVideoEnabled
-                          ? PhosphorIcons.camera
-                          : PhosphorIcons.camera_slash,
-                      onTap: () {
-                        if (callState?.mParticipant == null) return;
-
-                        AppBloc.meetingBloc.add(ToggleVideoEvent());
-                      },
-                    ),
-                    CallActionButton(
-                      icon: PhosphorIcons.screencast,
-                      onTap: () {
-                        if (callState?.mParticipant == null) return;
-
-                        if (callState!.mParticipant!.isSharingScreen) {
-                          AppBloc.meetingBloc.add(StopSharingScreenEvent());
-                        } else {
-                          AppBloc.meetingBloc.add(StartSharingScreenEvent());
-                        }
-                      },
-                    ),
-                    CallActionButton(
-                      icon: PhosphorIcons.gear_six,
+                    GestureWrapper(
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return const CallSettingsBottomSheet();
+                            return const E2eeBottomSheet();
                           },
                         );
                       },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            PhosphorIcons.lock_fill,
+                            color: Colors.green,
+                            size: 9.sp,
+                          ),
+                          SizedBox(width: 4.sp),
+                          Text(
+                            'End-to-end encrypted',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    CallActionButton(
-                      icon: PhosphorIcons.x,
-                      backgroundColor: Colors.red,
-                      onTap: () {
-                        displayLoadingLayer();
-                        AppBloc.meetingBloc.add(const LeaveMeetingEvent());
-                      },
+                    SizedBox(height: 2.sp),
+                    Text(
+                      meeting.code.toString(),
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          body: SafeArea(
-            bottom: false,
-            child: Column(
-              children: [
-                _buildMeetingView(
-                  context: context,
-                  meeting: meeting,
-                  callState: callState,
-                  setting: setting,
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    WaterbusSdk.instance.switchCamera();
+                    DeviceUtils().lightImpact();
+                  },
+                  icon: Icon(
+                    PhosphorIcons.camera_rotate,
+                    size: 20.sp,
+                  ),
                 ),
-                SizedBox(height: 12.sp),
+                IconButton(
+                  alignment: Alignment.centerRight,
+                  onPressed: () async {
+                    WaterbusSdk.instance.toggleSpeakerPhone();
+                    DeviceUtils().lightImpact();
+                  },
+                  icon: Icon(
+                    callState?.mParticipant == null ||
+                            callState!.mParticipant!.isSpeakerPhoneEnabled
+                        ? PhosphorIcons.speaker_high
+                        : PhosphorIcons.speaker_low,
+                    size: 18.5.sp,
+                  ),
+                ),
+                SizedBox(width: 4.sp),
               ],
+            ),
+            bottomNavigationBar: ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(12.sp),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 15,
+                  sigmaY: 30,
+                ),
+                child: Container(
+                  height: 80.sp,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .scaffoldBackgroundColor
+                        .withOpacity(0.7),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(12.sp),
+                    ),
+                  ),
+                  alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.symmetric(horizontal: 12.sp).add(
+                    EdgeInsets.only(bottom: 12.sp),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CallActionButton(
+                        icon: callState?.mParticipant == null ||
+                                callState!.mParticipant!.isAudioEnabled
+                            ? PhosphorIcons.microphone
+                            : PhosphorIcons.microphone_slash,
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
+
+                          AppBloc.meetingBloc.add(ToggleAudioEvent());
+                        },
+                      ),
+                      CallActionButton(
+                        icon: callState?.mParticipant == null ||
+                                callState!.mParticipant!.isVideoEnabled
+                            ? PhosphorIcons.camera
+                            : PhosphorIcons.camera_slash,
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
+
+                          AppBloc.meetingBloc.add(ToggleVideoEvent());
+                        },
+                      ),
+                      CallActionButton(
+                        icon: PhosphorIcons.screencast,
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
+
+                          if (callState!.mParticipant!.isSharingScreen) {
+                            AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                          } else {
+                            AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                          }
+                        },
+                      ),
+                      CallActionButton(
+                        icon: PhosphorIcons.gear_six,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return const CallSettingsBottomSheet();
+                            },
+                          );
+                        },
+                      ),
+                      CallActionButton(
+                        icon: PhosphorIcons.x,
+                        backgroundColor: Colors.red,
+                        onTap: () {
+                          displayLoadingLayer();
+                          AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            body: SafeArea(
+              bottom: false,
+              child: Column(
+                children: [
+                  _buildMeetingView(
+                    context: context,
+                    meeting: meeting,
+                    callState: callState,
+                    setting: setting,
+                  ),
+                  SizedBox(height: 12.sp),
+                ],
+              ),
             ),
           ),
         );
@@ -243,6 +247,39 @@ class MeetingScreen extends StatelessWidget {
             ? _buildLayoutMultipleUsers(context, meeting, callState, setting)
             : _buildLayoutLess2Users(context, meeting, callState),
       ),
+    );
+  }
+
+  Widget _buildPipView(
+    BuildContext context,
+    Meeting meeting,
+    CallState? callState,
+  ) {
+    if (meeting.users.length < 2) return const SizedBox();
+
+    return Row(
+      children: [
+        Expanded(
+          child: MeetView(
+            participant: meeting.users.first,
+            callState: callState,
+            avatarSize: 25.sp,
+            radius: BorderRadius.horizontal(
+              left: Radius.circular(18.sp),
+            ),
+          ),
+        ),
+        Expanded(
+          child: MeetView(
+            participant: meeting.users[1],
+            callState: callState,
+            avatarSize: 25.sp,
+            radius: BorderRadius.horizontal(
+              right: Radius.circular(18.sp),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
