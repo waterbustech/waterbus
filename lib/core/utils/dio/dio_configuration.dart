@@ -3,13 +3,11 @@ import 'dart:async';
 
 // Package imports:
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
-import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/types/http_status_code.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/core/utils/dio/completer_queue.dart';
@@ -30,29 +28,6 @@ class DioConfiguration {
 
   // MARK: public methods
   Future<Dio> configuration(Dio dioClient) async {
-    final MemCacheStore cacheStore = MemCacheStore(
-      maxSize: 10485760,
-      maxEntrySize: 1048576,
-    );
-
-    // Global options
-    final CacheOptions options = CacheOptions(
-      // A default store is required for interceptor.
-      store: cacheStore,
-      // Returns a cached response on error but for statuses 401 & 403.
-      // Also allows to return a cached response on network errors (e.g. offline usage).
-      // Defaults to [null].
-      hitCacheOnErrorExcept: [StatusCode.forbiden, StatusCode.badGateway],
-      // Overrides any HTTP directive to delete entry past this duration.
-      // Useful only when origin server has no cache config or custom behaviour is desired.
-      // Defaults to [null].
-      maxStale: 1.seconds,
-      priority: CachePriority.high,
-      // Default. Allows 3 cache sets and ease cleanup.
-    );
-
-    dioClient.interceptors.add(DioCacheInterceptor(options: options));
-
     // Integration retry
     dioClient.interceptors.add(
       RetryInterceptor(
