@@ -85,6 +85,10 @@ import FirebaseCore
         }
     }
     
+    override func applicationWillEnterForeground(_ application: UIApplication) {
+        WaterbusViewController.shared.stopPictureInPicture()
+    }
+    
     func observeReplayKitState(){
         if (self.observeTimer != nil) {
             return
