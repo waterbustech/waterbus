@@ -1,6 +1,8 @@
+// Package imports:
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 const User userDefault = User(
   id: 0,
