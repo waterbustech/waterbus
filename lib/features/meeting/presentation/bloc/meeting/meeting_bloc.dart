@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -200,6 +201,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           if (state is JoinedMeeting) {
             emit(_joinedMeeting);
+            Helper.applyFilter(filters['Pop Art']!);
           } else if (state is PreJoinMeeting) {
             emit(_preJoinMeeting);
           }
