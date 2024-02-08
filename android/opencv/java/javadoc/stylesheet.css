@@ -201,7 +201,7 @@ Page header and footer styles
 .header, .footer {
     clear:both;
     margin:0 20px;
-    padding:5px 0 0 0;
+    padding:5px 0 0;
 }
 .indexHeader {
     margin:10px;
@@ -218,14 +218,14 @@ Page header and footer styles
     margin:10px 0;
 }
 .subTitle {
-    margin:5px 0 0 0;
+    margin:5px 0 0;
 }
 .header ul {
-    margin:0 0 15px 0;
+    margin:0 0 15px;
     padding:0;
 }
 .footer ul {
-    margin:20px 0 5px 0;
+    margin:20px 0 5px;
 }
 .header ul li, .footer ul li {
     list-style:none;
@@ -251,7 +251,7 @@ ul.blockList ul.blockList li.blockList h3 {
     margin:15px 0;
 }
 ul.blockList li.blockList h2 {
-    padding:0px 0 20px 0;
+    padding:0px 0 20px;
 }
 /*
 Page layout container styles
@@ -268,7 +268,7 @@ Page layout container styles
 }
 .indexContainer h2 {
     font-size:13px;
-    padding:0 0 3px 0;
+    padding:0 0 3px;
 }
 .indexContainer ul {
     margin:0;
@@ -281,7 +281,7 @@ Page layout container styles
 .contentContainer .description dl dt, .contentContainer .details dl dt, .serializedFormContainer dl dt {
     font-size:12px;
     font-weight:bold;
-    margin:10px 0 0 0;
+    margin:10px 0 0;
     color:#4E4E4E;
 }
 .contentContainer .description dl dd, .contentContainer .details dl dd, .serializedFormContainer dl dd {
@@ -321,7 +321,7 @@ ul.inheritance li ul.inheritance {
     padding-top:1px;
 }
 ul.blockList, ul.blockListLast {
-    margin:10px 0 10px 0;
+    margin:10px 0;
     padding:0;
 }
 ul.blockList li.blockList, ul.blockListLast li.blockList {
