@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/lambiengcode/Documents/waterbus/android/opencv/libcxx_helper/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/lambiengcode/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/lambiengcode/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "opencv_jni_shared::@6890427a1f51a3e7e1df": {
+      "artifactName": "opencv_jni_shared",
+      "abi": "x86_64",
+      "output": "/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/x86_64/libopencv_jni_shared.a",
+      "runtimeFiles": []
+    }
+  }
+}
