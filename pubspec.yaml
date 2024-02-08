@@ -63,10 +63,10 @@ dependencies:
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.16.0
-  firebase_crashlytics: ^3.4.9
-  firebase_performance: ^0.9.3+8
+  firebase_core: ^2.25.3
+  firebase_auth: ^4.17.3
+  firebase_crashlytics: ^3.4.13
+  firebase_performance: ^0.9.3+12
 
   # Utils
   lottie: ^3.0.0
@@ -93,11 +93,11 @@ dependencies:
 
   # Video call
   waterbus_sdk:
-    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
-    # git:
-    #   url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-    #   path: '.'
-    #   ref: 1.0.9
+    # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 1.0.12
 
 dependency_overrides: 
   watcher: ^1.1.0
