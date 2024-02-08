@@ -95,7 +95,11 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 visible: Platform.isAndroid,
                 icon: PhosphorIcons.selection_background,
                 lable: 'Virtual Background',
-                onTap: () {},
+                onTap: () {
+                  AppNavigator.pop();
+
+                  AppNavigator.push(Routes.backgroundGallery);
+                },
               ),
               CallSettingButton(
                 icon: PhosphorIcons.chart_line,
