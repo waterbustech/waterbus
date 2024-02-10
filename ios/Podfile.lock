@@ -33,18 +33,18 @@ PODS:
   - Firebase/Performance (10.20.0):
     - Firebase/CoreOnly
     - FirebasePerformance (~> 10.20.0)
-  - firebase_auth (4.17.3):
+  - firebase_auth (4.17.4):
     - Firebase/Auth (= 10.20.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.25.3):
+  - firebase_core (2.25.4):
     - Firebase/CoreOnly (= 10.20.0)
     - Flutter
-  - firebase_crashlytics (3.4.13):
+  - firebase_crashlytics (3.4.14):
     - Firebase/Crashlytics (= 10.20.0)
     - firebase_core
     - Flutter
-  - firebase_performance (0.9.3-12):
+  - firebase_performance (0.9.3-13):
     - Firebase/Performance (= 10.20.0)
     - firebase_core
     - Flutter
@@ -366,10 +366,10 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   FBSDKLoginKit: 572cca0bc6c90067ef197187697cb3b584310c52
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
-  firebase_auth: 37eb4a237d7407336d9dc3b739e81153c5077d70
-  firebase_core: 96a734ae596de989b81a66f8a205f54485263555
-  firebase_crashlytics: daf6839ff459f660d9856cd73f4b6aa6f3435725
-  firebase_performance: 5ad5c1b25ca11586c8089bf6ccebc03823bdef0a
+  firebase_auth: 29a10d4129d53aa690c10dbd838ed1a059ef0c9b
+  firebase_core: a46c312d8bae4defa3d009b2aa7b5b413aeb394e
+  firebase_crashlytics: 3d12285fcbd865d576b9965bd4090cd8b68e11fd
+  firebase_performance: f090bad21e0318995827cbab40992952a8850fcb
   FirebaseABTesting: 40774deef367dcc7b736b6c26dd59ce0fab42f41
   FirebaseAnalytics: a2731bf3670747ce8f65368b118d18aa8e368246
   FirebaseAppCheckInterop: 69fc7d8f6a1cbfa973efb8d1723651de30d12525
