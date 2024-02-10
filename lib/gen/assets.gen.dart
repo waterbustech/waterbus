@@ -60,6 +60,26 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/background-1.jpg.webp
+  AssetGenImage get background1Jpg =>
+      const AssetGenImage('assets/images/background-1.jpg.webp');
+
+  /// File path: assets/images/background-2.jpg.webp
+  AssetGenImage get background2Jpg =>
+      const AssetGenImage('assets/images/background-2.jpg.webp');
+
+  /// File path: assets/images/background-3.jpg.webp
+  AssetGenImage get background3Jpg =>
+      const AssetGenImage('assets/images/background-3.jpg.webp');
+
+  /// File path: assets/images/background-4.jpg.webp
+  AssetGenImage get background4Jpg =>
+      const AssetGenImage('assets/images/background-4.jpg.webp');
+
+  /// File path: assets/images/background-5.jpg.webp
+  AssetGenImage get background5Jpg =>
+      const AssetGenImage('assets/images/background-5.jpg.webp');
+
   /// File path: assets/images/img_app_logo.png
   AssetGenImage get imgAppLogo =>
       const AssetGenImage('assets/images/img_app_logo.png');
@@ -69,7 +89,15 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/img_logo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [imgAppLogo, imgLogo];
+  List<AssetGenImage> get values => [
+        background1Jpg,
+        background2Jpg,
+        background3Jpg,
+        background4Jpg,
+        background5Jpg,
+        imgAppLogo,
+        imgLogo
+      ];
 }
 
 class $AssetsLottiesGen {

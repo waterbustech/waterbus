@@ -43,43 +43,4 @@ extension SizerExt on num {
   }
 
   double get sp => this * (width / 3) / 100;
-
-  int get itemCountGridViewCalendar {
-    return (100.w / (150.sp)).round();
-  }
-
-  int get itemCountGridViewMoney {
-    return (65.w / (100.sp)).round();
-  }
-
-  int get itemCountGridViewATMCard {
-    return (100.w / (100.sp)).round();
-  }
-
-  int get itemCountGridViewATMCardTablet {
-    return (100.w / (200.sp)).round();
-  }
-
-  int get itemCountGridViewSchedules {
-    return (100.w / 426).round();
-  }
-
-  int get itemCountGridViewPhoto {
-    // DEVICE INCH
-    final double deviceSize =
-        math.sqrt(100.h * 100.h + 100.w * 100.w) / inchToDP;
-    if (deviceSize > 7.5) {
-      return 5;
-    } else if (deviceSize > 6) {
-      return 4;
-      // } else if (deviceSize > 5.5) {
-      //   return 3;
-    } else {
-      return 3;
-    }
-  }
-
-  double get heightDialogListTablet {
-    return 52.h;
-  }
 }
