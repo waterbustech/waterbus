@@ -75,4 +75,9 @@ class SaveCallSettingsEvent extends MeetingEvent {
   const SaveCallSettingsEvent({required this.setting});
 }
 
+class ApplyVirtualBackgroundEvent extends MeetingEvent {
+  final String? backgroundPath;
+  const ApplyVirtualBackgroundEvent(this.backgroundPath);
+}
+
 class RefreshDisplayMeetingEvent extends MeetingEvent {}

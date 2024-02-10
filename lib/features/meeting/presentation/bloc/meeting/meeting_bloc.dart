@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -59,6 +60,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: private
   Meeting? _currentMeeting;
   Participant? _mParticipant;
+  String? _currentBackground;
   CallSetting _callSetting = CallSetting();
 
   MeetingBloc(
@@ -228,6 +230,21 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
 
           emit(_meetingInitial);
+        }
+
+        if (event is ApplyVirtualBackgroundEvent) {
+          _currentBackground = event.backgroundPath;
+
+          if (event.backgroundPath != null) {
+            final ByteData bytes = await rootBundle.load(event.backgroundPath!);
+            final Uint8List backgroundBuffer = bytes.buffer.asUint8List();
+
+            await _waterbusSdk.enableVirtualBackground(
+              backgroundImage: backgroundBuffer,
+            );
+          } else {
+            await _waterbusSdk.disableVirtualBackground();
+          }
         }
 
         if (event is RefreshDisplayMeetingEvent) {
@@ -583,4 +600,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: export
   CallSetting get callSetting => _callSetting;
+
+  String? get currentBackground => _currentBackground;
 }

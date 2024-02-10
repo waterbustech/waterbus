@@ -1,0 +1,3 @@
+/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/armeabi-v7a/CMakeFiles/opencv_jni_shared.dir
+/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/RelWithDebInfo/pe5l273d/armeabi-v7a/CMakeFiles/rebuild_cache.dir
