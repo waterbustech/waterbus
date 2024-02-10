@@ -106,7 +106,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
               ),
               child: Image.asset(
                 backgrounds[index - 1],
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
           );
