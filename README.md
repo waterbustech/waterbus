@@ -1,10 +1,10 @@
-[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![CodeFactor](https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge)](https://www.codefactor.io/repository/github/lambiengcode/waterbus)![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml)![GitHub issues](https://img.shields.io/github/issues/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.19-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
+[![codecov](https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ)](https://codecov.io/gh/lambiengcode/waterbus)[![CodeFactor](https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge)](https://www.codefactor.io/repository/github/lambiengcode/waterbus)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lambiengcode_waterbus&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lambiengcode_waterbus)![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml)![GitHub issues](https://img.shields.io/github/issues/lambiengcode/waterbus)[![libwebrtc](https://img.shields.io/badge/libwebrtc-120.6099.19-yellow.svg)](https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099)![Cocoapods Version](https://img.shields.io/cocoapods/v/KaiRTC)
 [![Twitter Follow](https://img.shields.io/twitter/follow/waterbus.tech?style=social)](https://twitter.com/lambiengcode)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/lambiengcode)
 
 [![Banner](./screenshots/banner-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
 [![Banner](./screenshots/banner.png)](https://docs.waterbus.tech#gh-light-mode-only)
 
-[![Demo](./screenshots/waterbus-demo.gif)](https://docs.waterbus.tech#gh-dark-mode-only)
+<!-- [![Demo](./screenshots/waterbus-demo.gif)](https://docs.waterbus.tech#gh-dark-mode-only) -->
 
 # [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
@@ -21,7 +21,7 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Feature | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
 | :-----: | :---------------: | :------------: | :----------------: | :----------------: | :-------------------: | :----------: |
 |   iOS   |        🟢         |       🟢       |         🟢         |         🔴         |          🟢           |      🟡      |
-| Android |        🟢         |       🟢       |         🟢         |         🟡         |          🟢           |      🟡      |
+| Android |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
 
 ## Codec supported
 | Codec | VP8 | VP9 | H264 | H265 | AV1 |
