@@ -1,3 +1,0 @@
-/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/Debug/1j4h3m3v/x86/CMakeFiles/opencv_jni_shared.dir
-/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/Debug/1j4h3m3v/x86/CMakeFiles/edit_cache.dir
-/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/Debug/1j4h3m3v/x86/CMakeFiles/rebuild_cache.dir
