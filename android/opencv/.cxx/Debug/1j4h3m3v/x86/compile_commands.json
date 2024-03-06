@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/lambiengcode/Documents/waterbus/android/opencv/.cxx/Debug/1j4h3m3v/x86",
-  "command": "/Users/lambiengcode/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android21 --sysroot=/Users/lambiengcode/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o -c /Users/lambiengcode/Documents/waterbus/android/opencv/libcxx_helper/dummy.cpp",
-  "file": "/Users/lambiengcode/Documents/waterbus/android/opencv/libcxx_helper/dummy.cpp"
-}
-]

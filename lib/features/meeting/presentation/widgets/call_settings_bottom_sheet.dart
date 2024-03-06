@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -92,7 +89,6 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {},
               ),
               CallSettingButton(
-                visible: Platform.isAndroid,
                 icon: PhosphorIcons.selection_background,
                 lable: 'Virtual Background',
                 onTap: () {
