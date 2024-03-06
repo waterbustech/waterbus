@@ -97,7 +97,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.0.12
+      ref: 1.0.13
 
 dependency_overrides: 
   watcher: ^1.1.0
