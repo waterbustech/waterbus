@@ -72,15 +72,6 @@ android {
        }
     }
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'x86', 'armeabi', 'armeabi-v7a', 'mips'
-            universalApk false
-        }
-    }
-
     buildTypes {
         debug {
             // TODO: Add your own signing config for the release build.
@@ -122,7 +113,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:32.4.1')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-messaging-directboot:23.4.0'
+    implementation 'com.google.firebase:firebase-messaging-directboot:23.4.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
 

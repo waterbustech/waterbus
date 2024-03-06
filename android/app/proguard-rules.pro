@@ -1,41 +1,32 @@
-# Keep class members in ConcurrentHashMap
--keepclassmembers class java.util.concurrent.ConcurrentHashMap$TreeBin {
-  <fields>;
-  <methods>;
+# Additional flags to pass to Proguard when processing a binary that uses
+# MediaPipe.
+
+# Keep public members of our public interfaces. This also prevents the
+# obfuscation of the corresponding methods in classes implementing them,
+# such as implementations of PacketCallback#process.
+-keep public interface com.google.mediapipe.framework.* {
+  public *;
 }
 
--keepclassmembers class java.util.concurrent.ConcurrentHashMap {
-  int sizeCtl;
-  int transferIndex;
-  long baseCount;
-  int cellsBusy;
+# This method is invoked by native code.
+-keep public class com.google.mediapipe.framework.Packet {
+  public static *** create(***);
+  public long getNativeHandle();
+  public void release();
 }
 
--keepclassmembers class java.util.concurrent.ConcurrentHashMap$CounterCell {
-  long value;
+# This method is invoked by native code.
+-keep public class com.google.mediapipe.framework.PacketCreator {
+  *** releaseWithSyncToken(...);
 }
 
-# Keep class members in IntSummaryStatistics, LongSummaryStatistics, DoubleSummaryStatistics
--keepclassmembers class java.util.IntSummaryStatistics {
-  long count;
-  long sum;
-  int min;
-  int max;
+# This method is invoked by native code.
+-keep public class com.google.mediapipe.framework.MediaPipeException {
+  <init>(int, byte[]);
 }
 
--keepclassmembers class java.util.LongSummaryStatistics {
-  long count;
-  long sum;
-  long min;
-  long max;
-}
-
--keepclassmembers class java.util.DoubleSummaryStatistics {
-  long count;
-  double sum;
-  double min;
-  double max;
-}
+# Required to use PacketCreator#createProto
+-keep class com.google.mediapipe.framework.ProtoUtil$SerializedMessage { *; }
 
 -dontwarn j$.util.concurrent.ConcurrentHashMap$TreeBin
 -dontwarn j$.util.concurrent.ConcurrentHashMap

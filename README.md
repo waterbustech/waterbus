@@ -20,7 +20,7 @@ The Waterbus concept has been used for physical transportation, but it can also 
 
 | Feature | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
 | :-----: | :---------------: | :------------: | :----------------: | :----------------: | :-------------------: | :----------: |
-|   iOS   |        🟢         |       🟢       |         🟢         |         🔴         |          🟢           |      🟡      |
+|   iOS   |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
 | Android |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
 
 ## Codec supported
@@ -30,9 +30,13 @@ The Waterbus concept has been used for physical transportation, but it can also 
 | Android |        🟢         |       🟢       |       🟢       |         🟢         |         🟢         |
 
 ### Notes:
-- `AV1` supported on iOS 14 and above, Android 14 and above.
-- `E2EE` only supported `H264`, `VP8` and `VP9`
-- Video codec Android supported: Check at [Google Site](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
+> [!NOTE]  
+> `AV1` supported on iOS 14 and above, Android 14 and above.
+> `E2EE` only supported `H264`, `VP8` and `VP9`
+> Video codec Android supported: Check at [Google Site](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
+
+> [!WARNING]  
+> `Virtual Background` is still in beta so it will not be stable. It is developed using [MediaPipe](https://developers.google.com/mediapipe) for `Android` and [VisionKit](https://developer.apple.com/documentation/vision/vngeneratepersoninstancemaskrequest) for `iOS`
 
 🟢 = Available
 

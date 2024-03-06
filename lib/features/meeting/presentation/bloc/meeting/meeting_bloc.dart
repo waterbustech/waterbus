@@ -236,12 +236,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           _currentBackground = event.backgroundPath;
 
           if (event.backgroundPath != null) {
-            final ByteData bytes = await rootBundle.load(event.backgroundPath!);
-            final Uint8List backgroundBuffer = bytes.buffer.asUint8List();
+            Future.microtask(() async {
+              final ByteData bytes = await rootBundle.load(
+                event.backgroundPath!,
+              );
+              final Uint8List backgroundBuffer = bytes.buffer.asUint8List();
 
-            await _waterbusSdk.enableVirtualBackground(
-              backgroundImage: backgroundBuffer,
-            );
+              _waterbusSdk.enableVirtualBackground(
+                backgroundImage: backgroundBuffer,
+              );
+            });
           } else {
             await _waterbusSdk.disableVirtualBackground();
           }
