@@ -291,7 +291,12 @@ You can view the benchmark results in the generated plots and data files. Here's
 
 Show your support by [starring](https://github.com/lambiengcode/waterbus/stargazers) and following [maintainers](https://github.com/lambiengcode) on GitHub for more awesome content! ⭐️🚀
 
-## Star History
+### Stargazers
+
+[![Stargazers repo roster for @lambiengcode/waterbus](https://reporoster.com/stars/notext/dark/lambiengcode/waterbus)](https://github.com/lambiengcode/waterbus/stargazers/#lambiengcode/waterbus&Date#gh-dark-mode-only)
+[![Stargazers repo roster for @lambiengcode/waterbus](https://reporoster.com/stars/notext/lambiengcode/waterbus)](https://github.com/lambiengcode/waterbus/stargazers/#gh-light-mode-only))
+
+### Stars History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date&theme=dark)](https://star-history.com/#lambiengcode/waterbus&Date#gh-dark-mode-only)
 [![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date#gh-light-mode-only)
