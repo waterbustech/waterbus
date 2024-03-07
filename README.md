@@ -4,8 +4,6 @@
 [![Banner](./screenshots/banner-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
 [![Banner](./screenshots/banner.png)](https://docs.waterbus.tech#gh-light-mode-only)
 
-<!-- [![Demo](./screenshots/waterbus-demo.gif)](https://docs.waterbus.tech#gh-dark-mode-only) -->
-
 # [Waterbus](https://docs.waterbus.tech): Online Meeting App using Flutter and WebRTC SFU (Selective Forwarding Unit)
 
 <p align="justify">
@@ -15,6 +13,11 @@ This is an Online Meeting App that utilizes Flutter and WebRTC technologies to p
 The Waterbus concept has been used for physical transportation, but it can also be applied to online meeting platforms. A virtual Waterbus platform would allow users to travel along a virtual route and stop at designated locations to attend meetings. The platform could also incorporate gamification elements for increased engagement. This approach provides a unique and fun way for remote teams to collaborate while acknowledging the trend of using waterways for transportation.
 
 </p>
+
+### 📺 Demo Video on Youtube
+
+[![Virtual Background on iOS (VisionKit for Person segment)](https://ytcards.demolab.com/?id=Ms4avix05uY&title=Virtual%20Background%20on%20iOS%20%28VisionKit%20for%20Person%20segment%29&lang=en&timestamp=1709774408&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&max_title_lines=2&width=250&border_radius=10&duration=21 "Virtual Background on iOS (VisionKit for Person segment")](https://youtube.com/shorts/Ms4avix05uY)
+[![Virtual Background on Android (Mediapipe for Image segment)](https://ytcards.demolab.com/?id=PDIDbVoHT5o&title=Virtual%20Background%20on%20Android%20%28Mediapipe%20for%20Image%20segment%29&lang=en&timestamp=1709774408&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&max_title_lines=2&width=250&border_radius=10&duration=27 "Virtual Background on Android (Mediapipe for Image segment")](https://youtube.com/shorts/PDIDbVoHT5o)
 
 ## Current supported features
 
