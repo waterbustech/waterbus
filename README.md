@@ -287,11 +287,9 @@ You can view the benchmark results in the generated plots and data files. Here's
 
 - Check at [Roadmap](./roadmap.md)
 
-## Support
+## Enjoying this project? 💙
 
-Don't forget to leave a star ⭐️.
-
-<img src="https://octodex.github.com/images/Fintechtocat.png" width=300 height=300/>
+Show your support by [starring](https://github.com/lambiengcode/waterbus/stargazers) and following [maintainers](https://github.com/lambiengcode) on GitHub for more awesome content! ⭐️🚀
 
 ## Star History
 
