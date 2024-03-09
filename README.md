@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/lambiengcode/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="3-" height=auto alt="Computador"/>
+  <img src="https://github.com/lambiengcode/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
 </p>
 
 <h1 align="center"><a href="https://docs.waterbus.tech">Waterbus</a></h1>
