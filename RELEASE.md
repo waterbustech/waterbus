@@ -1,3 +1,8 @@
+# v1.1.0+5
+
+- Bump WebRTC SDK to `M122.6261.01`
+- Fix crash on `iOS`
+
 # v1.1.0+4
 
 - Support Virtual Background on both Android and iOS
