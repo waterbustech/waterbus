@@ -35,6 +35,7 @@ class MeetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
+      type: MaterialType.card,
       shape: SuperellipseShape(
         side: BorderSide(
           color: Theme.of(context).primaryColor,

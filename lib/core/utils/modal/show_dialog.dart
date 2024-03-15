@@ -20,13 +20,22 @@ Future showDialogWaterbus({
   double borderRadius = 25.0,
   bool dismissible = true,
   Color? barrierColor,
-  int? timeForDismiss,
-  double? maxHeight,
+  int? dismissionDuration,
+  double maxHeight = double.infinity,
   double? maxWidth,
-  bool isBottomDialog = false,
+  bool onlyShowAsDialog = false,
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
+  if (!SizerUtil.isDesktop && !onlyShowAsDialog) {
+    return showModalBottomSheet(
+      context: AppNavigator.context!,
+      builder: (context) {
+        return child;
+      },
+    );
+  }
+
   var beginOffset = const Offset(-1, 0);
   switch (slideFrom) {
     case Slide.left:
@@ -51,8 +60,6 @@ Future showDialogWaterbus({
     transitionDuration: Duration(milliseconds: duration),
     context: AppNavigator.context!,
     pageBuilder: (context, __, ___) {
-      final double width = MediaQuery.of(context).size.width;
-      final double height = MediaQuery.of(context).size.height;
       return Dialog(
         alignment: alignment,
         shape: RoundedRectangleBorder(
@@ -70,11 +77,8 @@ Future showDialogWaterbus({
           canPop: dismissible,
           child: Container(
             constraints: BoxConstraints(
-              maxHeight: maxHeight ??
-                  (isBottomDialog
-                      ? (height > width ? .975 * width : .9 * height)
-                      : double.infinity),
-              maxWidth: maxWidth ?? (isBottomDialog ? .65 * width : 330.sp),
+              maxHeight: maxHeight,
+              maxWidth: maxWidth ?? 330.sp,
             ),
             child: child,
           ),

@@ -1,9 +1,9 @@
 PODS:
-  - AppAuth (1.7.1):
-    - AppAuth/Core (= 1.7.1)
-    - AppAuth/ExternalUserAgent (= 1.7.1)
-  - AppAuth/Core (1.7.1)
-  - AppAuth/ExternalUserAgent (1.7.1):
+  - AppAuth (1.7.3):
+    - AppAuth/Core (= 1.7.3)
+    - AppAuth/ExternalUserAgent (= 1.7.3)
+  - AppAuth/Core (1.7.3)
+  - AppAuth/ExternalUserAgent (1.7.3):
     - AppAuth/Core
   - connectivity_plus (0.0.1):
     - Flutter
@@ -368,7 +368,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/waterbus_sdk/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: e93b919be5dbcbba49555011ce94f7d716368574
+  AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   CryptoSwift: b9c701d6f5011df23794dbf7f2e480a77835d83d
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce

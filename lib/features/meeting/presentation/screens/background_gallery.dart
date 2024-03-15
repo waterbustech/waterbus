@@ -30,6 +30,9 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
     _currentBackground = AppBloc.meetingBloc.currentBackground;
   }
 
+  List<String> get backgroundAssets =>
+      SizerUtil.isDesktop ? desktopBackgrounds : backgrounds;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,12 +59,12 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: SizerUtil.isDesktop ? (100.w / 250.sp).round() : 3,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2.sp,
-          childAspectRatio: 0.66,
+          childAspectRatio: SizerUtil.isDesktop ? 1.78 : 0.66,
         ),
-        itemCount: backgrounds.length + 1,
+        itemCount: backgroundAssets.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
             return GestureWrapper(
@@ -92,20 +95,20 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
           return GestureWrapper(
             onTap: () {
               setState(() {
-                _currentBackground = backgrounds[index - 1];
+                _currentBackground = backgroundAssets[index - 1];
               });
             },
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  width: 0.5,
-                  color: _currentBackground == backgrounds[index - 1]
+                  width: 1.sp,
+                  color: _currentBackground == backgroundAssets[index - 1]
                       ? Theme.of(context).primaryColor
                       : Theme.of(context).dividerColor,
                 ),
               ),
               child: Image.asset(
-                backgrounds[index - 1],
+                backgroundAssets[index - 1],
                 fit: BoxFit.cover,
               ),
             ),

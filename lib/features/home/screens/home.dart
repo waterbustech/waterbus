@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                       Theme.of(context).scaffoldBackgroundColor.withOpacity(.8),
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    width: SizerUtil.isTablet ? 60.w : double.infinity,
+                    width: SizerUtil.isDesktop ? 60.w : double.infinity,
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
