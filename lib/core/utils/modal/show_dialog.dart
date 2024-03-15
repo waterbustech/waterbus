@@ -60,8 +60,6 @@ Future showDialogWaterbus({
     transitionDuration: Duration(milliseconds: duration),
     context: AppNavigator.context!,
     pageBuilder: (context, __, ___) {
-      final double width = MediaQuery.of(context).size.width;
-      final double height = MediaQuery.of(context).size.height;
       return Dialog(
         alignment: alignment,
         shape: RoundedRectangleBorder(
