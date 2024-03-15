@@ -24,9 +24,19 @@ Future showDialogWaterbus({
   double? maxHeight,
   double? maxWidth,
   bool isBottomDialog = false,
+  bool onlyShowAsDialog = false,
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
+  if (!SizerUtil.isDesktop && !onlyShowAsDialog) {
+    return showModalBottomSheet(
+      context: AppNavigator.context!,
+      builder: (context) {
+        return child;
+      },
+    );
+  }
+
   var beginOffset = const Offset(-1, 0);
   switch (slideFrom) {
     case Slide.left:

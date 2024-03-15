@@ -18,6 +18,7 @@ class EnterCodeBox extends StatefulWidget {
   final String hintTextContent;
   final TextEditingController? controller;
   final void Function(String)? onFieldSubmitted;
+  final Widget? suffixWidget;
   const EnterCodeBox({
     super.key,
     this.controller,
@@ -27,6 +28,7 @@ class EnterCodeBox extends StatefulWidget {
     this.onChanged,
     this.contentPadding = EdgeInsets.zero,
     this.hintTextContent = "Enter code to join meeting",
+    this.suffixWidget,
   });
 
   @override
@@ -38,62 +40,70 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
   Widget build(BuildContext context) {
     return Container(
       margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 10.sp),
-      child: Material(
-        clipBehavior: Clip.hardEdge,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(25.sp),
-        ),
-        child: SizedBox(
-          width: 100.w,
-          height: 36.sp,
-          child: TextFormField(
-            autofocus: widget.onTap == null,
-            readOnly: widget.onTap != null,
-            onTap: widget.onTap,
-            controller: widget.controller,
-            onFieldSubmitted: widget.onFieldSubmitted,
-            style: TextStyle(
-              color: mC,
-              fontSize: 11.sp,
-            ),
-            keyboardType: TextInputType.number,
-            minLines: 1,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(8),
-            ],
-            decoration: InputDecoration(
-              contentPadding: widget.contentPadding,
-              hintText: widget.hintTextContent,
-              hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: 12.sp,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: Material(
+              clipBehavior: Clip.hardEdge,
+              shape: SuperellipseShape(
+                borderRadius: BorderRadius.circular(25.sp),
+              ),
+              child: SizedBox(
+                width: 100.w,
+                height: 36.sp,
+                child: TextFormField(
+                  autofocus: widget.onTap == null,
+                  readOnly: widget.onTap != null,
+                  onTap: widget.onTap,
+                  controller: widget.controller,
+                  onFieldSubmitted: widget.onFieldSubmitted,
+                  style: TextStyle(
+                    color: mC,
+                    fontSize: 11.sp,
                   ),
-              filled: true,
-              fillColor: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.black.withOpacity(.2)
-                  : mC,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.sp),
-                borderSide: BorderSide.none,
+                  keyboardType: TextInputType.number,
+                  minLines: 1,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(8),
+                  ],
+                  decoration: InputDecoration(
+                    contentPadding: widget.contentPadding,
+                    hintText: widget.hintTextContent,
+                    hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontSize: 12.sp,
+                        ),
+                    filled: true,
+                    fillColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.black.withOpacity(.2)
+                        : mC,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6.sp),
+                      borderSide: BorderSide.none,
+                    ),
+                    prefixIconConstraints: BoxConstraints(
+                      maxHeight: 20.sp,
+                      maxWidth: 36.sp,
+                    ),
+                    prefixIcon: widget.onTap != null
+                        ? Container(
+                            height: 20.sp,
+                            width: 36.sp,
+                            alignment: Alignment.center,
+                            child: Icon(
+                              PhosphorIcons.magnifying_glass_bold,
+                              size: 14.sp,
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
               ),
-              prefixIconConstraints: BoxConstraints(
-                maxHeight: 20.sp,
-                maxWidth: 36.sp,
-              ),
-              prefixIcon: widget.onTap != null
-                  ? Container(
-                      height: 20.sp,
-                      width: 36.sp,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        PhosphorIcons.magnifying_glass_bold,
-                        size: 14.sp,
-                      ),
-                    )
-                  : null,
             ),
           ),
-        ),
+          widget.suffixWidget ?? const SizedBox(),
+        ],
       ),
     );
   }

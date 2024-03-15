@@ -7,6 +7,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 
 class E2eeTitleFooter extends StatelessWidget {
@@ -36,11 +37,9 @@ class E2eeTitleFooter extends StatelessWidget {
             TextSpan(
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return const E2eeBottomSheet();
-                    },
+                  showDialogWaterbus(
+                    alignment: Alignment.center,
+                    child: const E2eeBottomSheet(),
                   );
                 },
               text: 'end-to-end encrypted',

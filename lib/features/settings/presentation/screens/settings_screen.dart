@@ -11,6 +11,7 @@ import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
@@ -148,20 +149,18 @@ class _SettingScreenState extends State<SettingsScreen> {
               ),
               GestureWrapper(
                 onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return VideoQualityBottomSheet(
-                        quality: _settings.videoQuality,
-                        onChanged: (quality) {
-                          setState(() {
-                            _settings = _settings.copyWith(
-                              videoQuality: quality,
-                            );
-                          });
-                        },
-                      );
-                    },
+                  showDialogWaterbus(
+                    alignment: Alignment.center,
+                    child: VideoQualityBottomSheet(
+                      quality: _settings.videoQuality,
+                      onChanged: (quality) {
+                        setState(() {
+                          _settings = _settings.copyWith(
+                            videoQuality: quality,
+                          );
+                        });
+                      },
+                    ),
                   );
                 },
                 child: SettingSwitchCard(
@@ -212,30 +211,23 @@ class _SettingScreenState extends State<SettingsScreen> {
               ),
               _buildLabel('Preferred Codec'),
               SizedBox(height: 4.sp),
-              FutureBuilder(
-                future: WaterbusSdk.instance.filterSupportedCodecs(),
-                builder: (_, data) {
-                  if (!data.hasData) return const SizedBox();
-
-                  return Column(
-                    children: [
-                      ...data.data!.map<Widget>(
-                        (codec) => SettingCheckboxCard(
-                          label: codec.codec.toUpperCase(),
-                          enabled: _settings.preferedCodec == codec,
-                          hasDivider: codec != WebRTCCodec.values.last,
-                          onTap: () {
-                            setState(() {
-                              _settings = _settings.copyWith(
-                                preferedCodec: codec,
-                              );
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              Column(
+                children: [
+                  ...WebRTCCodec.values.map<Widget>(
+                    (codec) => SettingCheckboxCard(
+                      label: codec.codec.toUpperCase(),
+                      enabled: _settings.preferedCodec == codec,
+                      hasDivider: codec != WebRTCCodec.values.last,
+                      onTap: () {
+                        setState(() {
+                          _settings = _settings.copyWith(
+                            preferedCodec: codec,
+                          );
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10.h),
             ],

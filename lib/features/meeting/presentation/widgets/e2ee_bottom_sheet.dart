@@ -18,6 +18,7 @@ class E2eeBottomSheet extends StatelessWidget {
       width: 100.w,
       padding: EdgeInsets.symmetric(horizontal: 16.sp),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 40.sp),
           Image.asset(
@@ -54,6 +55,7 @@ class E2eeBottomSheet extends StatelessWidget {
             icon: PhosphorIcons.chats_teardrop,
             label: 'Text messages',
           ),
+          SizedBox(height: 40.sp),
         ],
       ),
     );

@@ -37,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
       GlobalKey<SlidingDrawerState>();
 
   void _toggleDrawer() {
+    if (SizerUtil.isDesktop) return;
+
     _sideMenuKey.toggle();
   }
 
@@ -50,128 +52,154 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return SlidingDrawer(
           key: _sideMenuKey,
-          drawerBuilder: (_) => ProfileDrawerLayout(
-            onTapItem: (item) {
-              _toggleDrawer();
-
-              Future.delayed(const Duration(milliseconds: 300), () {
-                switch (item.title) {
-                  case "Logout":
-                    AppBloc.authBloc.add(LogOutEvent());
-                    break;
-                  case "Profile":
-                    AppNavigator.push(Routes.profileRoute);
-                    break;
-                  case "Settings":
-                    AppNavigator.push(Routes.settingsRoute);
-                    break;
-                  case "Term & Privacy":
-                    AppNavigator.push(Routes.privacyRoute);
-                    break;
-                  default:
-                    break;
-                }
-              });
-            },
-          ),
+          ignorePointer: true,
+          drawerBuilder: (_) => _buildDrawable(context),
           contentBuilder: (_) => Scaffold(
-            appBar: appBarTitleBack(
-              context,
-              '',
-              centerTitle: false,
-              isVisibleBackButton: false,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              titleWidget: BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
-                  final User user =
-                      state is UserGetDone ? state.user : userDefault;
+            appBar: SizerUtil.isDesktop
+                ? null
+                : appBarTitleBack(
+                    context,
+                    '',
+                    centerTitle: false,
+                    isVisibleBackButton: false,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    titleWidget: BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
+                        final User user =
+                            state is UserGetDone ? state.user : userDefault;
 
-                  return Row(
-                    children: [
-                      SizedBox(width: 6.sp),
-                      GestureDetector(
-                        onTap: _toggleDrawer,
-                        child: AvatarCard(
-                          urlToImage: user.avatar,
-                          size: 30.sp,
-                        ),
-                      ),
-                      SizedBox(width: 10.sp),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            user.fullName,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          Text(
-                            '@${user.userName}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontSize: 10.sp,
+                        return Row(
+                          children: [
+                            SizedBox(width: 6.sp),
+                            GestureDetector(
+                              onTap: _toggleDrawer,
+                              child: AvatarCard(
+                                urlToImage: user.avatar,
+                                size: 30.sp,
+                              ),
+                            ),
+                            SizedBox(width: 10.sp),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  user.fullName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
-              actions: [
-                GestureWrapper(
-                  onTap: () async {
-                    await WaterbusPermissionHandler().checkGrantedForExecute(
-                      permissions: [Permission.camera, Permission.microphone],
-                      callBack: () async {
-                        AppNavigator.push(Routes.createMeetingRoute);
+                                Text(
+                                  '@${user.userName}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        fontSize: 10.sp,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
                       },
-                    );
-                  },
-                  child: Container(
-                    width: 36.sp,
-                    height: 36.sp,
-                    margin: EdgeInsets.only(right: 16.sp),
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
                     ),
-                    alignment: Alignment.centerRight,
-                    child: Image.asset(
-                      Assets.icons.icNewMeeting.path,
-                      height: 22.sp,
-                      fit: BoxFit.fitHeight,
+                    actions: [_buildCreateMeetingButton],
+                  ),
+            body: Row(
+              children: [
+                SizerUtil.isDesktop
+                    ? SizedBox(
+                        width: 30.w,
+                        child: _buildDrawable(context),
+                      )
+                    : const SizedBox(),
+                Expanded(
+                  child: ColoredBox(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.sp),
+                        EnterCodeBox(
+                          suffixWidget: SizerUtil.isDesktop
+                              ? _buildCreateMeetingButton
+                              : null,
+                          onTap: () {
+                            AppNavigator.push(Routes.enterCodeRoute);
+                          },
+                        ),
+                        SizedBox(height: 12.sp),
+                        const Expanded(
+                          child: MyMeetings(),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            body: ColoredBox(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Column(
-                children: [
-                  SizedBox(height: 10.sp),
-                  EnterCodeBox(
-                    onTap: () {
-                      AppNavigator.push(Routes.enterCodeRoute);
-                    },
-                  ),
-                  SizedBox(height: 12.sp),
-                  const Expanded(
-                    child: MyMeetings(),
-                  ),
-                ],
-              ),
-            ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildDrawable(BuildContext context) {
+    return ProfileDrawerLayout(
+      onTapItem: (item) {
+        _toggleDrawer();
+
+        Future.delayed(const Duration(milliseconds: 300), () {
+          switch (item.title) {
+            case "Logout":
+              AppBloc.authBloc.add(LogOutEvent());
+              break;
+            case "Profile":
+              AppNavigator.push(Routes.profileRoute);
+              break;
+            case "Settings":
+              AppNavigator.push(Routes.settingsRoute);
+              break;
+            case "Term & Privacy":
+              AppNavigator.push(Routes.privacyRoute);
+              break;
+            default:
+              break;
+          }
+        });
+      },
+    );
+  }
+
+  Widget get _buildCreateMeetingButton {
+    return GestureWrapper(
+      onTap: () async {
+        await WaterbusPermissionHandler().checkGrantedForExecute(
+          permissions: [Permission.camera, Permission.microphone],
+          callBack: () async {
+            AppNavigator.push(Routes.createMeetingRoute);
+          },
+        );
+      },
+      child: Container(
+        width: 36.sp,
+        height: 36.sp,
+        margin: EdgeInsets.only(right: 16.sp),
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.centerRight,
+        child: Image.asset(
+          Assets.icons.icNewMeeting.path,
+          height: 22.sp,
+          fit: BoxFit.fitHeight,
+        ),
+      ),
     );
   }
 }

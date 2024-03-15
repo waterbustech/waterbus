@@ -24,14 +24,16 @@ class ButtonLogin extends StatelessWidget {
     return GestureWrapper(
       onTap: onPressed,
       child: Container(
+        width: 300.sp,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.sp),
           color: mCL,
         ),
         padding: EdgeInsets.symmetric(vertical: 11.25.sp),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: 20.5.w),
+            SizedBox(width: 62.sp),
             Image.asset(
               iconAsset,
               height: 16.sp,
