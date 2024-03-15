@@ -20,9 +20,9 @@ Future showDialogWaterbus({
   double borderRadius = 25.0,
   bool dismissible = true,
   Color? barrierColor,
-  int? timeForDismiss,
+  int? dismissionDuration,
   double maxHeight = double.infinity,
-  double maxWidth = double.infinity,
+  double? maxWidth,
   bool onlyShowAsDialog = false,
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
@@ -78,7 +78,7 @@ Future showDialogWaterbus({
           child: Container(
             constraints: BoxConstraints(
               maxHeight: maxHeight,
-              maxWidth: maxWidth,
+              maxWidth: maxWidth ?? 330.sp,
             ),
             child: child,
           ),
