@@ -23,141 +23,164 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Row(
           children: [
-            SizedBox(height: 15.sp),
-            Image.asset(
-              Assets.images.imgAppLogo.path,
-              height: 100.sp,
-            ),
-            SizedBox(height: 12.sp),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.sp,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.w700,
-                          height: 1.46,
-                          color: mCL,
-                        ),
-                        children: const [
-                          TextSpan(
-                            text: 'Welcome to\n',
-                            style: TextStyle(
-                              color: Color(0xFFEFB7E9),
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Waterbus',
-                            style: TextStyle(
-                              color: colorPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.sp),
-                    Text(
-                      'Waterbus is a free, high-quality service for everyone to hold high-quality, '
-                      'secure video calls and meetings on any phone.',
-                      softWrap: true,
-                      strutStyle: StrutStyle.disabled,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w300,
-                            height: 1.4,
-                          ),
-                    ),
-                    const Spacer(),
-                    ButtonLogin(
-                      title: 'Continue with Google',
-                      iconAsset: Assets.icons.icGoogle.path,
-                      onPressed: () async {
-                        AppBloc.authBloc.add(LogInWithGoogleEvent());
-                      },
-                    ),
-                    SizedBox(height: 12.sp),
-                    ButtonLogin(
-                      title: 'Continue with Facebook',
-                      iconAsset: Assets.icons.icFacebook.path,
-                      onPressed: () async {
-                        AppBloc.authBloc.add(LogInWithFacebookEvent());
-                      },
-                    ),
-                    Padding(
+            SizedBox(
+              width: 300.sp,
+              child: Column(
+                children: [
+                  SizedBox(height: 15.sp),
+                  Image.asset(
+                    Assets.images.imgAppLogo.path,
+                    height: 100.sp,
+                  ),
+                  SizedBox(height: 12.sp),
+                  Expanded(
+                    child: Container(
                       padding: EdgeInsets.symmetric(
-                        vertical: 12.sp,
+                        horizontal: 20.sp,
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Expanded(
-                            child: Divider(
-                              height: .25,
-                              thickness: .25,
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 19.sp,
+                                fontWeight: FontWeight.w700,
+                                height: 1.46,
+                                color: mCL,
+                              ),
+                              children: const [
+                                TextSpan(
+                                  text: 'Welcome to\n',
+                                  style: TextStyle(
+                                    color: Color(0xFFEFB7E9),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Waterbus',
+                                  style: TextStyle(
+                                    color: colorPrimary,
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                          SizedBox(height: 16.sp),
+                          Text(
+                            'Waterbus is a free, high-quality service for everyone to hold high-quality, '
+                            'secure video calls and meetings on any phone.',
+                            softWrap: true,
+                            strutStyle: StrutStyle.disabled,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w300,
+                                      height: 1.4,
+                                    ),
+                          ),
+                          const Spacer(),
+                          ButtonLogin(
+                            title: 'Continue with Google',
+                            iconAsset: Assets.icons.icGoogle.path,
+                            onPressed: () async {
+                              AppBloc.authBloc.add(LogInWithGoogleEvent());
+                            },
+                          ),
+                          SizedBox(height: 12.sp),
+                          ButtonLogin(
+                            title: 'Continue with Facebook',
+                            iconAsset: Assets.icons.icFacebook.path,
+                            onPressed: () async {
+                              AppBloc.authBloc.add(LogInWithFacebookEvent());
+                            },
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.sp),
-                            child: Text(
-                              'or',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: colorGreyWhite,
-                              ),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12.sp,
                             ),
-                          ),
-                          const Expanded(
-                            child: Divider(
-                              height: .25,
-                              thickness: .25,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ButtonLogin(
-                      title: 'Continue with Apple',
-                      iconAsset: Assets.icons.icApple.path,
-                      onPressed: () async {
-                        AppBloc.authBloc.add(LogInWithAppleEvent());
-                      },
-                    ),
-                    SizedBox(height: 20.sp),
-                    RichText(
-                      text: TextSpan(
-                        style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  fontSize: 11.5.sp,
-                                  fontWeight: FontWeight.w300,
-                                  height: 1.5.sp,
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Divider(
+                                    height: .25,
+                                    thickness: .25,
+                                  ),
                                 ),
-                        children: const [
-                          TextSpan(
-                            text: 'By signing up, you agree to our ',
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.sp),
+                                  child: Text(
+                                    'or',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: colorGreyWhite,
+                                    ),
+                                  ),
+                                ),
+                                const Expanded(
+                                  child: Divider(
+                                    height: .25,
+                                    thickness: .25,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          TextSpan(
-                            text: 'Terms, Privacy Policy',
-                            style: TextStyle(color: colorPrimary),
+                          ButtonLogin(
+                            title: 'Continue with Apple',
+                            iconAsset: Assets.icons.icApple.path,
+                            onPressed: () async {
+                              AppBloc.authBloc.add(LogInWithAppleEvent());
+                            },
                           ),
-                          TextSpan(
-                            text: ' and ',
+                          SizedBox(height: 20.sp),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(
+                                    fontSize: 11.5.sp,
+                                    fontWeight: FontWeight.w300,
+                                    height: 1.5.sp,
+                                  ),
+                              children: const [
+                                TextSpan(
+                                  text: 'By signing up, you agree to our ',
+                                ),
+                                TextSpan(
+                                  text: 'Terms, Privacy Policy',
+                                  style: TextStyle(color: colorPrimary),
+                                ),
+                                TextSpan(
+                                  text: ' and ',
+                                ),
+                                TextSpan(
+                                  text: 'Cookie Use.',
+                                  style: TextStyle(color: colorPrimary),
+                                ),
+                              ],
+                            ),
                           ),
-                          TextSpan(
-                            text: 'Cookie Use.',
-                            style: TextStyle(color: colorPrimary),
-                          ),
+                          SizedBox(height: 30.sp),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30.sp),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Assets.images.loginBannerJpeg.path),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

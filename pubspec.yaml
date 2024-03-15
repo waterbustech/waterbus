@@ -1,5 +1,5 @@
 name: waterbus
-description: Built on WebRTC SDK M120. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Built on WebRTC SDK M122. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
 repository: https://github.com/lambiengcode/waterbus
 # The following line prevents the package from being accidentally published to
@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.0+3
+version: 1.1.0+5
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -97,7 +97,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.1.0
+      ref: 1.1.1
 
 dependency_overrides: 
   watcher: ^1.1.0

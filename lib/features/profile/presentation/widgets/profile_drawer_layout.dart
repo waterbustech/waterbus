@@ -17,7 +17,11 @@ class ProfileDrawerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20.sp, right: 8.sp),
+      padding: EdgeInsets.only(
+        left: 20.sp,
+        right: 8.sp,
+        top: SizerUtil.isDesktop ? 10.sp : 0,
+      ),
       color: Colors.black,
       child: SafeArea(
         child: Column(
@@ -34,6 +38,7 @@ class ProfileDrawerLayout extends StatelessWidget {
             ListMenuDrawer(onTapItem: onTapItem),
             const Spacer(),
             const VersionInfoFooter(),
+            SizedBox(height: 20.sp),
           ],
         ),
       ),

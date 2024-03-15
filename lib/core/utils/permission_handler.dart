@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:io';
+
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,6 +27,11 @@ class WaterbusPermissionHandler {
     required List<Permission> permissions,
     required Future<void> Function() callBack,
   }) async {
+    if (Platform.isMacOS) {
+      await callBack();
+      return;
+    }
+
     final List<bool> isGranteds = [];
 
     for (final permission in permissions) {
