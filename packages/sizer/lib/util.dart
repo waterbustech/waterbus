@@ -43,7 +43,12 @@ class SizerUtil {
         deviceType = DeviceType.tablet;
       }
     } else if (Platform.isMacOS) {
-      deviceType = DeviceType.mac;
+      if ((orientation == Orientation.portrait && width < 600) ||
+          (orientation == Orientation.landscape && width < 600)) {
+        deviceType = DeviceType.mobile;
+      } else {
+        deviceType = DeviceType.tablet;
+      }
     } else if (Platform.isWindows) {
       deviceType = DeviceType.windows;
     } else if (Platform.isLinux) {
@@ -62,7 +67,15 @@ class SizerUtil {
             : largeSize; //'desktop';
   }
 
-  static bool get isTablet => deviceType == DeviceType.tablet;
+  static bool get isDesktop =>
+      [DeviceType.tablet, DeviceType.mac].contains(deviceType);
+
+  static bool get isLandscape => orientation == Orientation.landscape;
+
+  static ScrollViewKeyboardDismissBehavior get getKeyboardDismissBehavior =>
+      isDesktop
+          ? ScrollViewKeyboardDismissBehavior.onDrag
+          : ScrollViewKeyboardDismissBehavior.manual;
 }
 
 /// Type of Device

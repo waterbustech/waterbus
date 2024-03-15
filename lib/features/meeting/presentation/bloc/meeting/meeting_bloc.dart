@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -40,6 +40,7 @@ import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
@@ -190,7 +191,17 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is StartSharingScreenEvent) {
-          await _waterbusSdk.startScreenSharing();
+          DesktopCapturerSource? source;
+          if (WebRTC.platformIsDesktop) {
+            source = await showDialog<DesktopCapturerSource>(
+              context: AppNavigator.context!,
+              builder: (context) => ScreenSelectDialog(),
+            );
+
+            if (source == null) return;
+          }
+
+          await _waterbusSdk.startScreenSharing(source: source);
         }
 
         if (event is StopSharingScreenEvent) {
@@ -507,6 +518,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     showDialogWaterbus(
       alignment: Alignment.bottomCenter,
       paddingBottom: 56.sp,
+      onlyShowAsDialog: true,
       child: DialogPrepareMeeting(
         meeting: meeting,
         handleJoinMeeting: () {
@@ -600,6 +612,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     await _waterbusSdk.leaveRoom();
     _currentMeeting = null;
     _mParticipant = null;
+    _currentBackground = null;
   }
 
   // MARK: export

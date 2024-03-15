@@ -1,9 +1,9 @@
 PODS:
-  - AppAuth (1.7.2):
-    - AppAuth/Core (= 1.7.2)
-    - AppAuth/ExternalUserAgent (= 1.7.2)
-  - AppAuth/Core (1.7.2)
-  - AppAuth/ExternalUserAgent (1.7.2):
+  - AppAuth (1.7.3):
+    - AppAuth/Core (= 1.7.3)
+    - AppAuth/ExternalUserAgent (= 1.7.3)
+  - AppAuth/Core (1.7.3)
+  - AppAuth/ExternalUserAgent (1.7.3):
     - AppAuth/Core
   - connectivity_plus (0.0.1):
     - FlutterMacOS
@@ -257,7 +257,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos
 
 SPEC CHECKSUMS:
-  AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
+  AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
   connectivity_plus: 18d3c32514c886e046de60e9c13895109866c747
   file_selector_macos: 468fb6b81fac7c0e88d71317f3eec34c3b008ff9
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
@@ -274,7 +274,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
   FirebaseSessions: cd97fb07674f3906619c871eefbd260a1546c9d3
   flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
-  flutter_webrtc: cf7dc44d26cbb5c5f1ae5f583dab545871f287f9
+  flutter_webrtc: c0a5a251799e356605ce823eabb171bb8e6c8824
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
@@ -294,6 +294,6 @@ SPEC CHECKSUMS:
   wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
   WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
-PODFILE CHECKSUM: 9c0c54ea850ff6b0db367704c5620362852312ab
+PODFILE CHECKSUM: 2f33378f6daed12f6173d0fec52dd0a4a9b0985e
 
 COCOAPODS: 1.15.2

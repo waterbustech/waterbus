@@ -82,3 +82,15 @@ final List<String> backgrounds = [
   Assets.images.background4Jpg.path,
   Assets.images.background5Jpg.path,
 ];
+
+final List<String> desktopBackgrounds = [
+  Assets.images.desktopBackground1Jpg.path,
+  Assets.images.desktopBackground2Jpg.path,
+  Assets.images.desktopBackground3Jpg.path,
+  Assets.images.desktopBackground4Jpg.path,
+  Assets.images.desktopBackground5Jpg.path,
+  Assets.images.desktopBackground6Jpg.path,
+  Assets.images.desktopBackground7Jpg.path,
+  Assets.images.desktopBackground8Jpg.path,
+  Assets.images.desktopBackground9Jpg.path,
+];

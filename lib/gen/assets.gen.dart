@@ -80,6 +80,46 @@ class $AssetsImagesGen {
   AssetGenImage get background5Jpg =>
       const AssetGenImage('assets/images/background-5.jpg.webp');
 
+  /// File path: assets/images/background-6.jpg.webp
+  AssetGenImage get background6Jpg =>
+      const AssetGenImage('assets/images/background-6.jpg.webp');
+
+  /// File path: assets/images/desktop-background-1.jpg.webp
+  AssetGenImage get desktopBackground1Jpg =>
+      const AssetGenImage('assets/images/desktop-background-1.jpg.webp');
+
+  /// File path: assets/images/desktop-background-2.jpg.webp
+  AssetGenImage get desktopBackground2Jpg =>
+      const AssetGenImage('assets/images/desktop-background-2.jpg.webp');
+
+  /// File path: assets/images/desktop-background-3.jpg.webp
+  AssetGenImage get desktopBackground3Jpg =>
+      const AssetGenImage('assets/images/desktop-background-3.jpg.webp');
+
+  /// File path: assets/images/desktop-background-4.jpg.webp
+  AssetGenImage get desktopBackground4Jpg =>
+      const AssetGenImage('assets/images/desktop-background-4.jpg.webp');
+
+  /// File path: assets/images/desktop-background-5.jpg.webp
+  AssetGenImage get desktopBackground5Jpg =>
+      const AssetGenImage('assets/images/desktop-background-5.jpg.webp');
+
+  /// File path: assets/images/desktop-background-6.jpg.webp
+  AssetGenImage get desktopBackground6Jpg =>
+      const AssetGenImage('assets/images/desktop-background-6.jpg.webp');
+
+  /// File path: assets/images/desktop-background-7.jpg.webp
+  AssetGenImage get desktopBackground7Jpg =>
+      const AssetGenImage('assets/images/desktop-background-7.jpg.webp');
+
+  /// File path: assets/images/desktop-background-8.jpg.webp
+  AssetGenImage get desktopBackground8Jpg =>
+      const AssetGenImage('assets/images/desktop-background-8.jpg.webp');
+
+  /// File path: assets/images/desktop-background-9.jpg.webp
+  AssetGenImage get desktopBackground9Jpg =>
+      const AssetGenImage('assets/images/desktop-background-9.jpg.webp');
+
   /// File path: assets/images/img_app_logo.png
   AssetGenImage get imgAppLogo =>
       const AssetGenImage('assets/images/img_app_logo.png');
@@ -88,6 +128,10 @@ class $AssetsImagesGen {
   AssetGenImage get imgLogo =>
       const AssetGenImage('assets/images/img_logo.png');
 
+  /// File path: assets/images/login-banner.jpeg.webp
+  AssetGenImage get loginBannerJpeg =>
+      const AssetGenImage('assets/images/login-banner.jpeg.webp');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         background1Jpg,
@@ -95,8 +139,19 @@ class $AssetsImagesGen {
         background3Jpg,
         background4Jpg,
         background5Jpg,
+        background6Jpg,
+        desktopBackground1Jpg,
+        desktopBackground2Jpg,
+        desktopBackground3Jpg,
+        desktopBackground4Jpg,
+        desktopBackground5Jpg,
+        desktopBackground6Jpg,
+        desktopBackground7Jpg,
+        desktopBackground8Jpg,
+        desktopBackground9Jpg,
         imgAppLogo,
-        imgLogo
+        imgLogo,
+        loginBannerJpeg
       ];
 }
 

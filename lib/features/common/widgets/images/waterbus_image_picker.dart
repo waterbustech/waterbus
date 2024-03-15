@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/helpers/image_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 
@@ -90,51 +91,50 @@ class WaterbusImagePicker {
     String text = 'Change your avatar',
     Function(File)? handleFinish,
   }) async {
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          width: double.infinity,
-          height: 170.sp,
-          padding: EdgeInsets.symmetric(horizontal: 16.sp),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 24.sp),
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).textTheme.bodyLarge?.color,
-                ),
+    return showDialogWaterbus(
+      alignment: Alignment.bottomCenter,
+      paddingBottom: 56.sp,
+      child: Container(
+        width: double.infinity,
+        height: 170.sp,
+        padding: EdgeInsets.symmetric(horizontal: 16.sp),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 24.sp),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
-              SizedBox(
-                height: 6.sp,
-              ),
-              _buildImageModalButton(
-                context,
-                icon: PhosphorIcons.file_image,
-                text: 'Choose photo from gallery',
-                source: ImageSource.gallery,
-                handleFinish: handleFinish,
-              ),
-              divider,
-              _buildImageModalButton(
-                context,
-                icon: PhosphorIcons.instagram_logo,
-                text: 'Take a photo',
-                source: ImageSource.camera,
-                handleFinish: handleFinish,
-              ),
-              SizedBox(
-                height: 8.sp,
-              ),
-            ],
-          ),
-        );
-      },
+            ),
+            SizedBox(
+              height: 6.sp,
+            ),
+            _buildImageModalButton(
+              context,
+              icon: PhosphorIcons.file_image,
+              text: 'Choose photo from gallery',
+              source: ImageSource.gallery,
+              handleFinish: handleFinish,
+            ),
+            divider,
+            _buildImageModalButton(
+              context,
+              icon: PhosphorIcons.instagram_logo,
+              text: 'Take a photo',
+              source: ImageSource.camera,
+              handleFinish: handleFinish,
+            ),
+            SizedBox(
+              height: 8.sp,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

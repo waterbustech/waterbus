@@ -1,7 +1,5 @@
 part of 'sizer.dart';
 
-const int inchToDP = 160;
-
 extension SizerExt on num {
   /// Calculates the height depending on the device's screen size
   ///
@@ -18,9 +16,8 @@ extension SizerExt on num {
 
   double get width {
     // DEVICE INCH
-    final double deviceSize =
-        math.sqrt(100.h * 100.h + 100.w * 100.w) / inchToDP;
-    if (SizerUtil.isTablet) {
+    final double deviceSize = math.sqrt(100.h * 100.h + 100.w * 100.w) / 160;
+    if (SizerUtil.isDesktop) {
       // Square device
       if ((100.h - 100.w).abs() < 100) {
         return 300 * math.max(1.h / 1.w, 1.w / 1.h);
@@ -32,7 +29,7 @@ extension SizerExt on num {
           ? math.min(1.h / 1.w, 1.w / 1.h)
           : 1.h / 1.w;
 
-      return 290 * math.max(math.min(1.35, aspectRatio), 1.15);
+      return 300 * math.max(math.min(1.35, aspectRatio), 1.125);
     } else if (deviceSize > 5.5) {
       return 100.w;
     } else if (deviceSize > 5.0) {
