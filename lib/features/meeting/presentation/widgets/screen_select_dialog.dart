@@ -14,9 +14,29 @@ import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/thumbnail_widget.dart';
 
-// ignore: must_be_immutable
-class ScreenSelectDialog extends Dialog {
-  ScreenSelectDialog({super.key}) {
+class ScreenSelectDialog extends StatefulWidget {
+  const ScreenSelectDialog({super.key});
+
+  @override
+  State<ScreenSelectDialog> createState() => _ScreenSelectDialogState();
+}
+
+class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
+  final Map<String, DesktopCapturerSource> _sources = {};
+
+  SourceType _sourceType = SourceType.Screen;
+
+  DesktopCapturerSource? _selectedSource;
+
+  final List<StreamSubscription<DesktopCapturerSource>> _subscriptions = [];
+
+  StateSetter? _stateSetter;
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
     Future.delayed(100.milliseconds, () {
       _getSources();
     });
@@ -40,12 +60,15 @@ class ScreenSelectDialog extends Dialog {
       }),
     );
   }
-  final Map<String, DesktopCapturerSource> _sources = {};
-  SourceType _sourceType = SourceType.Screen;
-  DesktopCapturerSource? _selectedSource;
-  final List<StreamSubscription<DesktopCapturerSource>> _subscriptions = [];
-  StateSetter? _stateSetter;
-  Timer? _timer;
+
+  @override
+  void dispose() {
+    for (final sub in _subscriptions) {
+      sub.cancel();
+    }
+    _timer?.cancel();
+    super.dispose();
+  }
 
   Future<void> _ok(context) async {
     _timer?.cancel();
@@ -92,169 +115,162 @@ class ScreenSelectDialog extends Dialog {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Center(
-        child: Container(
-          width: 600.sp,
-          height: 450.sp,
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(20.sp),
-                child: Stack(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Choose what to share',
-                        style: TextStyle(fontSize: 14.sp, color: mCL),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: InkWell(
-                        child: const Icon(Icons.close),
-                        onTap: () => _cancel(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(10.sp),
-                  child: StatefulBuilder(
-                    builder: (context, setState) {
-                      _stateSetter = setState;
-                      return DefaultTabController(
-                        length: 2,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              constraints:
-                                  const BoxConstraints.expand(height: 24),
-                              child: TabBar(
-                                indicatorColor: Theme.of(context).primaryColor,
-                                onTap: (value) =>
-                                    Future.delayed(Duration.zero, () {
-                                  _sourceType = value == 0
-                                      ? SourceType.Screen
-                                      : SourceType.Window;
-                                  _getSources();
-                                }),
-                                tabs: [
-                                  Tab(
-                                    child: Text(
-                                      'Entire Screen',
-                                      style: TextStyle(color: mCM),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Text(
-                                      'Window',
-                                      style: TextStyle(color: mCM),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Expanded(
-                              child: TabBarView(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: GridView.count(
-                                      crossAxisSpacing: 8,
-                                      crossAxisCount: 2,
-                                      children: _sources.entries
-                                          .where(
-                                            (element) =>
-                                                element.value.type ==
-                                                SourceType.Screen,
-                                          )
-                                          .map(
-                                            (e) => ThumbnailWidget(
-                                              onTap: (source) {
-                                                setState(() {
-                                                  _selectedSource = source;
-                                                });
-                                              },
-                                              source: e.value,
-                                              selected: _selectedSource?.id ==
-                                                  e.value.id,
-                                            ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ),
-                                  Align(
-                                    child: GridView.count(
-                                      padding: EdgeInsets.zero,
-                                      crossAxisSpacing: 8.sp,
-                                      crossAxisCount: 3,
-                                      children: _sources.entries
-                                          .where(
-                                            (element) =>
-                                                element.value.type ==
-                                                SourceType.Window,
-                                          )
-                                          .map(
-                                            (e) => ThumbnailWidget(
-                                              onTap: (source) {
-                                                setState(() {
-                                                  _selectedSource = source;
-                                                });
-                                              },
-                                              source: e.value,
-                                              selected: _selectedSource?.id ==
-                                                  e.value.id,
-                                            ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+    return Container(
+      width: 400.sp,
+      height: 450.sp,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(20.sp),
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Choose what to share',
+                    style: TextStyle(fontSize: 14.sp, color: mCL),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ButtonBar(
-                  children: <Widget>[
-                    MaterialButton(
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(color: mCM),
-                      ),
-                      onPressed: () {
-                        _cancel(context);
-                      },
-                    ),
-                    MaterialButton(
-                      color: Theme.of(context).primaryColor,
-                      child: const Text(
-                        'Share',
-                      ),
-                      onPressed: () {
-                        _ok(context);
-                      },
-                    ),
-                  ],
+                Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    child: const Icon(Icons.close),
+                    onTap: () => _cancel(context),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(10.sp),
+              child: StatefulBuilder(
+                builder: (context, setState) {
+                  _stateSetter = setState;
+                  return DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          constraints: const BoxConstraints.expand(height: 24),
+                          child: TabBar(
+                            indicatorColor: Theme.of(context).primaryColor,
+                            onTap: (value) => Future.delayed(Duration.zero, () {
+                              _sourceType = value == 0
+                                  ? SourceType.Screen
+                                  : SourceType.Window;
+                              _getSources();
+                            }),
+                            tabs: [
+                              Tab(
+                                child: Text(
+                                  'Entire Screen',
+                                  style: TextStyle(color: mCM),
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  'Window',
+                                  style: TextStyle(color: mCM),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Expanded(
+                          child: TabBarView(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: GridView.count(
+                                  crossAxisSpacing: 8,
+                                  crossAxisCount: 2,
+                                  children: _sources.entries
+                                      .where(
+                                        (element) =>
+                                            element.value.type ==
+                                            SourceType.Screen,
+                                      )
+                                      .map(
+                                        (e) => ThumbnailWidget(
+                                          onTap: (source) {
+                                            setState(() {
+                                              _selectedSource = source;
+                                            });
+                                          },
+                                          source: e.value,
+                                          selected:
+                                              _selectedSource?.id == e.value.id,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                              Align(
+                                child: GridView.count(
+                                  padding: EdgeInsets.zero,
+                                  crossAxisSpacing: 8.sp,
+                                  crossAxisCount: 3,
+                                  children: _sources.entries
+                                      .where(
+                                        (element) =>
+                                            element.value.type ==
+                                            SourceType.Window,
+                                      )
+                                      .map(
+                                        (e) => ThumbnailWidget(
+                                          onTap: (source) {
+                                            setState(() {
+                                              _selectedSource = source;
+                                            });
+                                          },
+                                          source: e.value,
+                                          selected:
+                                              _selectedSource?.id == e.value.id,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ButtonBar(
+              children: <Widget>[
+                MaterialButton(
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: mCM),
+                  ),
+                  onPressed: () {
+                    _cancel(context);
+                  },
+                ),
+                MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Share',
+                  ),
+                  onPressed: () {
+                    _ok(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

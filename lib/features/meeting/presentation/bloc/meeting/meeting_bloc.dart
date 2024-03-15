@@ -193,9 +193,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         if (event is StartSharingScreenEvent) {
           DesktopCapturerSource? source;
           if (WebRTC.platformIsDesktop) {
-            source = await showDialog<DesktopCapturerSource>(
-              context: AppNavigator.context!,
-              builder: (context) => ScreenSelectDialog(),
+            source = await showDialogWaterbus(
+              alignment: Alignment.center,
+              maxWidth: 400.sp,
+              maxHeight: 450.sp,
+              child: const ScreenSelectDialog(),
             );
 
             if (source == null) return;
