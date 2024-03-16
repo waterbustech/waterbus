@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,6 +16,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 class WaterbusImagePicker {
   final ImagePicker _picker = ImagePicker();
@@ -38,11 +40,11 @@ class WaterbusImagePicker {
           if (handleFinish != null && image != null) {
             displayLoadingLayer();
 
-            final File imageReduce = await ImageUtils().reduceSize(
+            final File resizedImage = await ImageUtils().reduceSize(
               File(image.path).path,
             );
 
-            handleFinish(imageReduce);
+            handleFinish(resizedImage);
 
             AppNavigator.pop();
           }
@@ -86,11 +88,23 @@ class WaterbusImagePicker {
     );
   }
 
-  Future openImagePicker({
+  Future<void> openImagePicker({
     required BuildContext context,
     String text = 'Change your avatar',
     Function(File)? handleFinish,
   }) async {
+    if (WebRTC.platformIsDesktop) {
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+
+      if (result?.files.first.path != null) {
+        handleFinish?.call(File(result!.files.first.path!));
+      }
+
+      return;
+    }
+
     return showDialogWaterbus(
       alignment: Alignment.bottomCenter,
       paddingBottom: 56.sp,
