@@ -1,5 +1,5 @@
 // Dart imports:
-import 'dart:io';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
@@ -49,7 +49,7 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, String>> uploadImageToS3({
     required String uploadUrl,
-    required File image,
+    required Uint8List image,
   }) async {
     final String? urlToImage = await _remoteDataSource.uploadImageToS3(
       uploadUrl: uploadUrl,

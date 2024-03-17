@@ -43,6 +43,7 @@ If you have suggestions or problems, please [open an issue](https://github.com/l
 |   Android   |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
 |   iOS |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
 |   MacOS |        🟢         |       🟢       |         🔴         |         🟢         |          🟢           |      🟡      |
+|   Web |        🟢         |       🟢       |         🔴         |         🟡         |          🟡           |      🟡      |
 
 🟢 = Available
 
@@ -103,6 +104,12 @@ flutter build ipa
 
 ```bash
 flutter build macos
+```
+
+### Web
+
+```bash
+flutter build web
 ```
 
 ## 🔥 Usage

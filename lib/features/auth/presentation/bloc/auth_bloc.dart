@@ -35,13 +35,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._loginWithSocial,
     this._logOut,
   ) : super(AuthInitial()) {
+    Auth().initialize((payload) async {
+      final Either<Failure, User> loginSucceed = await _loginWithSocial.call(
+        AuthParams(payloadModel: payload),
+      );
+
+      // Pop loading
+      AppNavigator.pop();
+
+      loginSucceed.fold((l) {}, (r) {
+        user = r;
+      });
+
+      add(OnAuthCheckEvent());
+    });
+
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
         final Either<Failure, User> hasLogined = await _checkAuth.call(null);
         FlutterNativeSplash.remove();
 
         hasLogined.fold(
-          (l) => emit(AuthFailure()),
+          (l) => emit(_authFailure),
           (r) {
             user = r;
             return emit(_authSuccess);
@@ -61,7 +76,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _handleLogOut();
 
         if (user == null) {
-          emit(AuthFailure());
+          emit(_authFailure);
         }
       }
     });
@@ -71,6 +86,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthSuccess get _authSuccess {
     AppBloc.instance.bootstrap();
     return AuthSuccess();
+  }
+
+  AuthFailure get _authFailure {
+    Auth().signInSilently();
+
+    return AuthFailure();
   }
 
   // MARK: Private methods

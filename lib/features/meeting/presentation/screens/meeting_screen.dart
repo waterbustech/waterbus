@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
@@ -49,7 +48,7 @@ class MeetingScreen extends StatelessWidget {
         final CallState? callState = state.callState;
         final CallSetting setting = state.callSetting ?? CallSetting();
 
-        if (Platform.isAndroid) {
+        if (WebRTC.platformIsAndroid) {
           return PipWidget(
             pipBuilder: (context) {
               return _buildPipView(context, meeting, callState);

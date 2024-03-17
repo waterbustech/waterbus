@@ -6,7 +6,7 @@
 
 // Dart imports:
 import 'dart:async' as _i3;
-import 'dart:io' as _i5;
+import 'dart:typed_data' as _i5;
 
 // Package imports:
 import 'package:mockito/mockito.dart' as _i1;
@@ -68,7 +68,7 @@ class MockUserRemoteDataSource extends _i1.Mock
   @override
   _i3.Future<String?> uploadImageToS3({
     required String? uploadUrl,
-    required _i5.File? image,
+    required _i5.Uint8List? image,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

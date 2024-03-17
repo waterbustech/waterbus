@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -55,7 +56,7 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
         return SafeArea(
           top: false,
           bottom: false,
-          child: Platform.isIOS
+          child: !kIsWeb && Platform.isIOS
               ? _child
               : PopScope(
                   canPop: _canPop(),
@@ -78,25 +79,27 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
 
   Widget get _getBody {
     return GestureDetector(
-      onHorizontalDragUpdate: Platform.isAndroid ||
-              [].contains(AppNavigator.currentRoute())
+      onHorizontalDragUpdate: kIsWeb
           ? null
-          : (details) async {
-              // Cannot back when at ROOT, EDIT_PHOTO and Connecting Call
-              if (Platform.isIOS && ![].contains(AppNavigator.currentRoute())) {
-                //set the sensitivity for your ios gesture anywhere between 10-50 is good
+          : Platform.isAndroid || [].contains(AppNavigator.currentRoute())
+              ? null
+              : (details) async {
+                  // Cannot back when at ROOT, EDIT_PHOTO and Connecting Call
+                  if (Platform.isIOS &&
+                      ![].contains(AppNavigator.currentRoute())) {
+                    //set the sensitivity for your ios gesture anywhere between 10-50 is good
 
-                const int sensitivity = 15;
+                    const int sensitivity = 15;
 
-                if (details.delta.dx > sensitivity) {
-                  //SWIPE FROM RIGHT DETECTION
-                  final bool canBackward = _canPop();
-                  if (canBackward) {
-                    AppNavigator.pop();
+                    if (details.delta.dx > sensitivity) {
+                      //SWIPE FROM RIGHT DETECTION
+                      final bool canBackward = _canPop();
+                      if (canBackward) {
+                        AppNavigator.pop();
+                      }
+                    }
                   }
-                }
-              }
-            },
+                },
       onTap: () => _hideKeyboard(),
       child: widget.child,
     );

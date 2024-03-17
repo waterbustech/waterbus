@@ -2,7 +2,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 // Dart imports:
-import 'dart:io';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:dio/dio.dart';
@@ -21,7 +21,7 @@ abstract class UserRemoteDataSource {
   Future<String?> getPresignedUrl();
   Future<String?> uploadImageToS3({
     required String uploadUrl,
-    required File image,
+    required Uint8List image,
   });
 }
 
@@ -47,14 +47,14 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   @override
   Future<String?> uploadImageToS3({
     required String uploadUrl,
-    required File image,
+    required Uint8List image,
   }) async {
     try {
       final Uri uri = Uri.parse(uploadUrl);
 
       final http.Response response = await http.put(
         uri,
-        body: image.readAsBytesSync(),
+        body: image,
         headers: const {"Content-Type": 'image/png'},
       );
 

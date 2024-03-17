@@ -1,5 +1,5 @@
 // Dart imports:
-import 'dart:io';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
@@ -28,7 +28,7 @@ class UploadAvatar implements UseCase<String, UploadAvatarParams> {
 
 class UploadAvatarParams extends Equatable {
   final String uploadUrl;
-  final File image;
+  final Uint8List image;
 
   const UploadAvatarParams({
     required this.uploadUrl,

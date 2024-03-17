@@ -15,7 +15,7 @@ class VersionInfoFooter extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Waterbus Mobile Version: 1.0.0',
+            'Waterbus Version: 1.1.1',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 9.25.sp,

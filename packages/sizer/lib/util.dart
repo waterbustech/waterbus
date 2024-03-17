@@ -33,16 +33,7 @@ class SizerUtil {
     height = boxConstraints.maxHeight;
 
     // Sets ScreenType
-    if (kIsWeb) {
-      deviceType = DeviceType.web;
-    } else if (Platform.isAndroid || Platform.isIOS) {
-      if ((orientation == Orientation.portrait && width < 600) ||
-          (orientation == Orientation.landscape && width < 600)) {
-        deviceType = DeviceType.mobile;
-      } else {
-        deviceType = DeviceType.tablet;
-      }
-    } else if (Platform.isMacOS) {
+    if (kIsWeb || Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
       if ((orientation == Orientation.portrait && width < 600) ||
           (orientation == Orientation.landscape && width < 600)) {
         deviceType = DeviceType.mobile;
@@ -67,8 +58,7 @@ class SizerUtil {
             : largeSize; //'desktop';
   }
 
-  static bool get isDesktop =>
-      [DeviceType.tablet, DeviceType.mac].contains(deviceType);
+  static bool get isDesktop => deviceType != DeviceType.mobile;
 
   static bool get isLandscape => orientation == Orientation.landscape;
 

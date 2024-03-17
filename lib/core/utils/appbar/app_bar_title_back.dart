@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,16 +31,10 @@ AppBar appBarTitleBack(
 }) {
   return AppBar(
     toolbarHeight: toolbarHeight,
-    systemOverlayStyle: SystemUiOverlayStyle(
+    systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarBrightness: (brightness ?? Theme.of(context).brightness) ==
-              (Platform.isAndroid ? Brightness.dark : Brightness.light)
-          ? Brightness.light
-          : Brightness.dark,
-      statusBarIconBrightness: (brightness ?? Theme.of(context).brightness) ==
-              (Platform.isAndroid ? Brightness.dark : Brightness.light)
-          ? Brightness.light
-          : Brightness.dark,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
     ),
     elevation: elevation ?? 0.0,
     backgroundColor: backgroundColor ?? Colors.transparent,

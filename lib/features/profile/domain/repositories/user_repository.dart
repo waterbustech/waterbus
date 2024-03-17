@@ -1,5 +1,5 @@
 // Dart imports:
-import 'dart:io';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
@@ -14,6 +14,6 @@ abstract class UserRepository {
   Future<Either<Failure, String>> getPresignedUrl();
   Future<Either<Failure, String>> uploadImageToS3({
     required String uploadUrl,
-    required File image,
+    required Uint8List image,
   });
 }

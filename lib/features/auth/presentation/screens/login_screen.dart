@@ -1,7 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auth/auth.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -81,60 +85,73 @@ class _LogInScreenState extends State<LogInScreen> {
                                     ),
                           ),
                           const Spacer(),
-                          ButtonLogin(
-                            title: 'Continue with Google',
-                            iconAsset: Assets.icons.icGoogle.path,
-                            onPressed: () async {
-                              AppBloc.authBloc.add(LogInWithGoogleEvent());
-                            },
-                          ),
-                          SizedBox(height: 12.sp),
-                          ButtonLogin(
-                            title: 'Continue with Facebook',
-                            iconAsset: Assets.icons.icFacebook.path,
-                            onPressed: () async {
-                              AppBloc.authBloc.add(LogInWithFacebookEvent());
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12.sp,
-                            ),
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                  child: Divider(
-                                    height: .25,
-                                    thickness: .25,
+                          ...(kIsWeb
+                              ? [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30.sp),
+                                    child: Auth().loginRenderWidget(),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.sp),
-                                  child: Text(
-                                    'or',
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: colorGreyWhite,
+                                ]
+                              : [
+                                  ButtonLogin(
+                                    title: 'Continue with Google',
+                                    iconAsset: Assets.icons.icGoogle.path,
+                                    onPressed: () async {
+                                      AppBloc.authBloc
+                                          .add(LogInWithGoogleEvent());
+                                    },
+                                  ),
+                                  SizedBox(height: 12.sp),
+                                  ButtonLogin(
+                                    title: 'Continue with Facebook',
+                                    iconAsset: Assets.icons.icFacebook.path,
+                                    onPressed: () async {
+                                      AppBloc.authBloc
+                                          .add(LogInWithFacebookEvent());
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 12.sp,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Expanded(
+                                          child: Divider(
+                                            height: .25,
+                                            thickness: .25,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 12.sp,
+                                          ),
+                                          child: Text(
+                                            'or',
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: colorGreyWhite,
+                                            ),
+                                          ),
+                                        ),
+                                        const Expanded(
+                                          child: Divider(
+                                            height: .25,
+                                            thickness: .25,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                const Expanded(
-                                  child: Divider(
-                                    height: .25,
-                                    thickness: .25,
+                                  ButtonLogin(
+                                    title: 'Continue with Apple',
+                                    iconAsset: Assets.icons.icApple.path,
+                                    onPressed: () async {
+                                      AppBloc.authBloc
+                                          .add(LogInWithAppleEvent());
+                                    },
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          ButtonLogin(
-                            title: 'Continue with Apple',
-                            iconAsset: Assets.icons.icApple.path,
-                            onPressed: () async {
-                              AppBloc.authBloc.add(LogInWithAppleEvent());
-                            },
-                          ),
+                                ]),
                           SizedBox(height: 20.sp),
                           RichText(
                             text: TextSpan(

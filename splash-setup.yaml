@@ -1,5 +1,5 @@
 flutter_native_splash:
-  web: false
+  web: true
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
   # Customize the parameters below, and run the following command in the terminal:

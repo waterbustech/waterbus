@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -39,39 +40,61 @@ class CustomNetworkImage extends StatelessWidget {
   }) : assert(height != null || width != null);
   @override
   Widget build(BuildContext context) {
-    return urlToImage == null || urlToImage!.isEmpty
-        ? placeHolderWidget ?? _defaultImage
-        : CachedNetworkImage(
-            cacheKey: urlToImage,
-            memCacheHeight: 1024 * 200,
-            memCacheWidth: 1024 * 200,
-            maxWidthDiskCache: 1024 * 1024,
-            maxHeightDiskCache: 1024 * 1024,
-            imageUrl: urlToImage!,
-            imageBuilder: (context, imageProvider) {
-              return Container(
-                height: height ?? width!,
-                width: width ?? height!,
-                margin: margin,
-                decoration: BoxDecoration(
-                  shape: shape,
-                  border: border,
-                  borderRadius: borderRadius,
-                  image: DecorationImage(
-                    colorFilter: colorFilter,
-                    image: imageProvider,
-                    fit: fit,
-                  ),
-                  boxShadow: boxShadow,
-                ),
-                alignment: Alignment.bottomRight,
-                child: childInAvatar,
-              );
-            },
-            placeholder: (context, url) => placeHolderWidget ?? _placeHolder,
-            errorWidget: (context, url, error) =>
-                placeHolderWidget ?? _defaultImage,
-          );
+    if (urlToImage == null || urlToImage!.isEmpty) {
+      return placeHolderWidget ?? _defaultImage;
+    }
+
+    if (kIsWeb) {
+      return Container(
+        height: height ?? width!,
+        width: width ?? height!,
+        margin: margin,
+        decoration: BoxDecoration(
+          shape: shape,
+          border: border,
+          borderRadius: borderRadius,
+          image: DecorationImage(
+            colorFilter: colorFilter,
+            image: NetworkImage(urlToImage!),
+            fit: fit,
+          ),
+          boxShadow: boxShadow,
+        ),
+        alignment: Alignment.bottomRight,
+        child: childInAvatar,
+      );
+    }
+
+    return CachedNetworkImage(
+      cacheKey: urlToImage,
+      memCacheHeight: 1024 * 200,
+      memCacheWidth: 1024 * 200,
+      maxWidthDiskCache: 1024 * 1024,
+      maxHeightDiskCache: 1024 * 1024,
+      imageUrl: urlToImage!,
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          height: height ?? width!,
+          width: width ?? height!,
+          margin: margin,
+          decoration: BoxDecoration(
+            shape: shape,
+            border: border,
+            borderRadius: borderRadius,
+            image: DecorationImage(
+              colorFilter: colorFilter,
+              image: imageProvider,
+              fit: fit,
+            ),
+            boxShadow: boxShadow,
+          ),
+          alignment: Alignment.bottomRight,
+          child: childInAvatar,
+        );
+      },
+      placeholder: (context, url) => placeHolderWidget ?? _placeHolder,
+      errorWidget: (context, url, error) => placeHolderWidget ?? _defaultImage,
+    );
   }
 
   Widget get _defaultImage => DefaultImage(

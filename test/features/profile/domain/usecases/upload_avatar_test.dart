@@ -1,5 +1,5 @@
 // Dart imports:
-import 'dart:io';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
@@ -21,7 +21,7 @@ void main() {
   });
 
   const testUploadUrl = 'https://example.com/upload';
-  final testImage = File('path_to_image.png');
+  final testImage = Uint8List(69);
   const testImageUrl = 'https://example.com/image.png';
 
   test('should return the uploaded image URL from the repository', () async {
