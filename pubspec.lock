@@ -450,13 +450,12 @@ packages:
     source: hosted
     version: "7.1.9"
   firebase_auth_web:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "packages/firebase_auth/firebase_auth_web"
-      ref: master
-      resolved-ref: "04280a31310dbbe51a8e619f031f5190d02e695d"
-      url: "git@github.com:firebase/flutterfire.git"
-    source: git
+      name: firebase_auth_web
+      sha256: "57262c987e4f4e30c3e9a31f41171348c7dfbcdb8c84faa4cf841cea33e0e499"
+      url: "https://pub.dev"
+    source: hosted
     version: "5.10.0"
   firebase_core:
     dependency: "direct main"

@@ -105,11 +105,6 @@ dependency_overrides:
   watcher: ^1.1.0
   win32: ^5.0.5 
   web: ^0.5.1
-  firebase_auth_web:
-    git:
-      url: git@github.com:firebase/flutterfire.git
-      ref: master
-      path: packages/firebase_auth/firebase_auth_web
 
 dev_dependencies:
   # Test
