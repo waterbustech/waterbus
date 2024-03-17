@@ -14,8 +14,6 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-    <base href="/" />
-
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
     <meta name="description" content="A new Flutter project." />
@@ -30,7 +28,7 @@
 
     <meta
       name="google-signin-client_id"
-      content="727554668212-b4qpqkcl5792g0gkqng85kugh5c5r51e.apps.googleusercontent.com"
+      content="727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com"
     />
 
     <!-- Favicon -->
@@ -41,7 +39,7 @@
 
     <script>
       // The value below is injected by flutter build, do not touch.
-      const serviceWorkerVersion = "49763636";
+      const serviceWorkerVersion = "1740782660";
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer=""></script>
@@ -151,18 +149,24 @@
         alt=""
       />
     </picture>
-    <script src="./firebase-config.js"></script>
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-      import { firebaseConfig } from './firebase-config.js';
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      
+      const firebaseConfig = {
+        apiKey: "AIzaSyCg0POxwRZjYzVd4u571rkyObRdOHC3rvw",
+        authDomain: "waterbus-71cf5.firebaseapp.com",
+        projectId: "waterbus-71cf5",
+        storageBucket: "waterbus-71cf5.appspot.com",
+        messagingSenderId: "727554668212",
+        appId: "1:727554668212:web:6624269d0494b187b989e1",
+        measurementId: "G-3RWKDX1N14",
+      };
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
