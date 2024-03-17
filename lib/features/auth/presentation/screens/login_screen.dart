@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:google_sign_in_web/web_only.dart' as web;
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -13,7 +14,6 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
 import 'package:waterbus/gen/assets.gen.dart';
-import 'package:google_sign_in_web/web_only.dart' as web;
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
