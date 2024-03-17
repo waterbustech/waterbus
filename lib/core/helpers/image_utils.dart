@@ -11,7 +11,7 @@ import 'package:waterbus/core/utils/path_helper.dart';
 class ImageUtils {
   Future<File> reduceSize(String pathImage, {int quality = 80}) async {
     if (isNeedReduce(pathImage)) {
-      final String tempPath = await PathHelper.tempDirWaterbus;
+      final String? tempPath = await PathHelper.tempDirWaterbus;
       final XFile? result = await FlutterImageCompress.compressAndGetFile(
         pathImage,
         '$tempPath/${DateTime.now().microsecondsSinceEpoch}.jpeg',

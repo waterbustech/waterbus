@@ -79,11 +79,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           (settings) => settings.fold((l) => null, (r) async {
             _callSetting = r;
 
-            final Directory appDir = await PathHelper.appDir;
+            final Directory? appDir = await PathHelper.appDir;
+
             _waterbusSdk.initial(
               waterbusUrl: ApiEndpoints.wsUrl,
-              recordBenchmarkPath: '${appDir.path}/benchmark.txt',
+              recordBenchmarkPath:
+                  appDir == null ? '' : '${appDir.path}/benchmark.txt',
             );
+
             _waterbusSdk.changeCallSetting(r);
             _waterbusSdk.onEventChangedRegister(_onEventChanged);
           }),

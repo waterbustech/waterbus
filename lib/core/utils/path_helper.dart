@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -18,11 +19,14 @@ class PathHelper {
   }
 
   static Future<void> createDirWaterbus() async {
-    final String tempWaterbusDir = await tempDirWaterbus;
-    final String localStoreWaterbusDir = await localStoreDirWaterbus;
+    final String? tempWaterbusDir = await tempDirWaterbus;
+    final String? localStoreWaterbusDir = await localStoreDirWaterbus;
+
+    if (tempWaterbusDir == null || localStoreWaterbusDir == null) return;
     final Directory myDir = Directory(tempWaterbusDir);
     final Directory localDir = Directory(localStoreWaterbusDir);
-    final Directory appDirectory = await appDir;
+    final Directory? appDirectory = await appDir;
+
     if (!myDir.existsSync()) {
       await myDir.create();
     }
@@ -31,19 +35,28 @@ class PathHelper {
       await localDir.create();
     }
 
-    if (!appDirectory.existsSync()) {
+    if (appDirectory != null && !appDirectory.existsSync()) {
       await appDirectory.create();
     }
   }
 
-  static Future<String> get tempDirWaterbus async =>
-      '${(await getTemporaryDirectory()).path}/Waterbus';
+  static Future<String?> get tempDirWaterbus async {
+    if (kIsWeb) return null;
 
-  static Future<String> get localStoreDirWaterbus async =>
-      '${(await getTemporaryDirectory()).path}/hive';
+    return '${(await getTemporaryDirectory()).path}/Waterbus';
+  }
 
-  static Future<Directory> get appDir async =>
-      await getApplicationDocumentsDirectory();
+  static Future<String?> get localStoreDirWaterbus async {
+    if (kIsWeb) return null;
+
+    return '${(await getTemporaryDirectory()).path}/hive';
+  }
+
+  static Future<Directory?> get appDir async {
+    if (kIsWeb) return null;
+
+    return await getApplicationDocumentsDirectory();
+  }
 
   static Future<Directory?> get downloadsDir async {
     Directory downloadsDirectory;
@@ -61,7 +74,10 @@ class PathHelper {
   }
 
   static Future<int> getTempSize() async {
-    final String tempWaterbusDir = await tempDirWaterbus;
+    final String? tempWaterbusDir = await tempDirWaterbus;
+
+    if (tempWaterbusDir == null) return 0;
+
     final Directory myDir = Directory(tempWaterbusDir);
 
     if (!myDir.existsSync()) return 0;
@@ -70,7 +86,10 @@ class PathHelper {
   }
 
   static Future<void> clearTempDir() async {
-    final String tempWaterbusDir = await tempDirWaterbus;
+    final String? tempWaterbusDir = await tempDirWaterbus;
+
+    if (tempWaterbusDir == null) return;
+
     final Directory myDir = Directory(tempWaterbusDir);
 
     if (!myDir.existsSync()) return;

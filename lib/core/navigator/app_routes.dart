@@ -11,14 +11,14 @@ class Routes {
 
   // Meeting
   static const String meetingRoute = '/meeting';
-  static const String createMeetingRoute = '/createMeeting';
-  static const String enterCodeRoute = '/enterCodeRoute';
-  static const String backgroundGallery = '/backgroundGallery';
+  static const String createMeetingRoute = '/create-meeting';
+  static const String enterCodeRoute = '/enter-code';
+  static const String backgroundGallery = '/background-gallery';
 
   // Chat
   static const String conversationRoute = '/conversation';
 
   // Others
   static const String dialogRoute = '/dialog';
-  static const String loadingRoute = '/loadingRoute';
+  static const String loadingRoute = '/loading';
 }

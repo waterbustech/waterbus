@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:auth/models/auth_payload_model.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -26,12 +27,29 @@ class AuthService {
   Future<AuthPayloadModel?> signInWithGoogle() async {
     try {
       await _googleSignIn.signOut();
+
+      if (kIsWeb) {
+        if (kIsWeb) {
+          final GoogleAuthProvider provider = GoogleAuthProvider()
+              .setCustomParameters({'prompt': 'select_account'});
+          final user = await _firebaseAuth.signInWithPopup(provider);
+
+          if (user.user == null) return null;
+
+          return AuthPayloadModel(
+            fullName: user.user?.displayName ?? 'google.user',
+            googleId: user.user?.uid,
+            email: user.user?.email,
+          );
+        }
+      }
+
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
       final GoogleSignInAuthentication googleAuth =
           await googleUser!.authentication;
       final OAuthCredential googleCredential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
       );
       final UserCredential firebaseUserCredential =
           await _firebaseAuth.signInWithCredential(googleCredential);

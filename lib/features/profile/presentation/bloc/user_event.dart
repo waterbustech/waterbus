@@ -16,7 +16,7 @@ class UpdateProfileEvent extends UserEvent {
 }
 
 class UpdateAvatarEvent extends UserEvent {
-  final File image;
+  final Uint8List image;
   const UpdateAvatarEvent({required this.image});
 }
 

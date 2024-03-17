@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -55,7 +56,7 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
         return SafeArea(
           top: false,
           bottom: false,
-          child: Platform.isIOS
+          child: !kIsWeb && Platform.isIOS
               ? _child
               : PopScope(
                   canPop: _canPop(),
@@ -78,7 +79,7 @@ class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
 
   Widget get _getBody {
     return GestureDetector(
-      onHorizontalDragUpdate: Platform.isAndroid ||
+      onHorizontalDragUpdate: kIsWeb ? null : Platform.isAndroid ||
               [].contains(AppNavigator.currentRoute())
           ? null
           : (details) async {

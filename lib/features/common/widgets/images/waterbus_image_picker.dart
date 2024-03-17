@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,7 +27,7 @@ class WaterbusImagePicker {
     required IconData icon,
     required String text,
     required ImageSource source,
-    Function(File)? handleFinish,
+    Function(Uint8List)? handleFinish,
   }) {
     return TextButton(
       onPressed: () async {
@@ -44,7 +45,7 @@ class WaterbusImagePicker {
               File(image.path).path,
             );
 
-            handleFinish(resizedImage);
+            handleFinish(resizedImage.readAsBytesSync());
 
             AppNavigator.pop();
           }
@@ -91,15 +92,22 @@ class WaterbusImagePicker {
   Future<void> openImagePicker({
     required BuildContext context,
     String text = 'Change your avatar',
-    Function(File)? handleFinish,
+    Function(Uint8List)? handleFinish,
   }) async {
-    if (WebRTC.platformIsDesktop) {
+    if (WebRTC.platformIsDesktop || WebRTC.platformIsWeb) {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
       );
 
-      if (result?.files.first.path != null) {
-        handleFinish?.call(File(result!.files.first.path!));
+      if (kIsWeb) {
+        if (result?.files.first.bytes != null) {
+          handleFinish?.call(result!.files.first.bytes!);
+        }
+      } else {
+        if (result?.files.first.path != null) {
+          final File imageFile = File(result!.files.first.path!);
+          handleFinish?.call(imageFile.readAsBytesSync());
+        }
       }
 
       return;

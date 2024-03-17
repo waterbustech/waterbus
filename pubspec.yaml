@@ -83,6 +83,7 @@ dependencies:
   share_plus: ^7.2.1
   simple_pip_mode: ^0.8.0
   file_picker: ^6.2.0
+  universal_io: ^2.2.2
   sizer: 
     path: ./packages/sizer
 
@@ -98,11 +99,17 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.1.1
+      ref: 1.1.2
 
 dependency_overrides: 
   watcher: ^1.1.0
   win32: ^5.0.5 
+  web: ^0.5.1
+  firebase_auth_web:
+    git:
+      url: git@github.com:firebase/flutterfire.git
+      ref: master
+      path: packages/firebase_auth/firebase_auth_web
 
 dev_dependencies:
   # Test

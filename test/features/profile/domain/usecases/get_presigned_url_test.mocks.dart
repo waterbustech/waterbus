@@ -6,7 +6,7 @@
 
 // Dart imports:
 import 'dart:async' as _i4;
-import 'dart:io' as _i7;
+import 'dart:typed_data' as _i7;
 
 // Package imports:
 import 'package:dartz/dartz.dart' as _i2;
@@ -128,7 +128,7 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
   @override
   _i4.Future<_i2.Either<_i5.Failure, String>> uploadImageToS3({
     required String? uploadUrl,
-    required _i7.File? image,
+    required _i7.Uint8List? image,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

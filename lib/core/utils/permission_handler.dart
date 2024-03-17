@@ -1,8 +1,6 @@
-// Dart imports:
-import 'dart:io';
-
 // Package imports:
 import 'package:permission_handler/permission_handler.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 class WaterbusPermissionHandler {
   void handleStatusPermission({
@@ -27,7 +25,7 @@ class WaterbusPermissionHandler {
     required List<Permission> permissions,
     required Future<void> Function() callBack,
   }) async {
-    if (Platform.isMacOS) {
+    if (!WebRTC.platformIsMobile) {
       await callBack();
       return;
     }

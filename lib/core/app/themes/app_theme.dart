@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,23 +11,16 @@ class AppTheme {
     required this.data,
   });
 
-  factory AppTheme.light({bool isChild = false}) {
+  factory AppTheme.light() {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       useMaterial3: true,
-      pageTransitionsTheme: isChild
-          ? const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-              },
-            )
-          : const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              },
-            ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       brightness: Brightness.light,
       primaryColor: appColors.primary,
       primaryColorLight: appColors.primaryLight,
@@ -55,16 +45,10 @@ class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: appColors.background,
         backgroundColor: appColors.background,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.light ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
-          statusBarIconBrightness: Brightness.light ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.dark,
         ),
         iconTheme: IconThemeData(
           color: appColors.contentText1,
@@ -97,23 +81,16 @@ class AppTheme {
     );
   }
 
-  factory AppTheme.dark({bool isChild = false}) {
+  factory AppTheme.dark() {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       useMaterial3: true,
-      pageTransitionsTheme: isChild
-          ? const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-              },
-            )
-          : const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              },
-            ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       brightness: Brightness.dark,
       primaryColor: appColors.primary,
       primaryColorLight: appColors.primaryLight,
@@ -138,16 +115,10 @@ class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: appColors.background,
         backgroundColor: appColors.background,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
-          statusBarIconBrightness: Brightness.dark ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.light,
         ),
         iconTheme: IconThemeData(
           color: appColors.contentText1,
