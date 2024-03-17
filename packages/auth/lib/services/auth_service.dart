@@ -62,6 +62,8 @@ class AuthService {
   }
 
   Future<void> signInSilently() async {
+    if (!kIsWeb) return;
+
     _googleSignIn.signInSilently();
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:google_sign_in_web/web_only.dart' as web;
+import 'package:auth/auth.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -89,16 +89,7 @@ class _LogInScreenState extends State<LogInScreen> {
                               ? [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(30.sp),
-                                    child: web.renderButton(
-                                      configuration: web.GSIButtonConfiguration(
-                                        minimumWidth: 330.sp,
-                                        size: web.GSIButtonSize.large,
-                                        shape: web.GSIButtonShape.rectangular,
-                                        logoAlignment:
-                                            web.GSIButtonLogoAlignment.center,
-                                        theme: web.GSIButtonTheme.outline,
-                                      ),
-                                    ),
+                                    child: Auth().loginRenderWidget(),
                                   ),
                                 ]
                               : [
