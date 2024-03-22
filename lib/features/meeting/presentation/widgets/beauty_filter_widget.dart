@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+
+// Project imports:
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 class BeautyFilterWidget extends StatefulWidget {
   final Participant participant;
