@@ -6,13 +6,15 @@
 <p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/lambiengcode/waterbus"><img src="https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/lambiengcode/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-122.6261.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
 </div>
 <div align="center">
-<a href="https://twitter.com/waterbustech"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><img alt="Discord" src="https://img.shields.io/discord/1220616225521143818">
+<a href="https://twitter.com/waterbustech"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><a href="https://discord.gg/mfrWVefU"><img alt="Discord" src="https://img.shields.io/discord/1220616225521143818"></a>
 </div>
 <p align="center">
   <a href="https://docs.waterbus.tech">Website</a> &bull;
   <a href="https://github.com/lambiengcode/waterbus/wiki">Wiki</a> &bull;
   <a href="https://github.com/lambiengcode/waterbus/blob/main/LICENSE">License</a>
 </p>
+
+![WaterbusAwesome](./screenshots/waterbus-awesome.gif)
 
 ## 🌤️ About
 
@@ -62,9 +64,6 @@ If you have suggestions or problems, please [open an issue](https://github.com/l
 > - `AV1` supported on iOS 14 and above, Android 14 and above.
 > - `E2EE` only supported `H264`, `VP8` and `VP9`
 > - `Video codec Android supported`: Check at [Google Site](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
-
-> [!WARNING]  
-> `Virtual Background` is still in beta so it will not be stable. It is developed using [MediaPipe](https://developers.google.com/mediapipe) for `Android` and [VisionKit](https://developer.apple.com/documentation/vision/vngeneratepersoninstancemaskrequest) for `iOS` and `MacOS`
 
 <details>
 <summary> 🖼️ Online Meeting Diagram</summary>
@@ -231,4 +230,5 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## 📧 Contact Information
 
-If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@waterbus.tech` or `lambiengcode@gmail.com`.
+If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@gmail.com`.
+
