@@ -26,8 +26,9 @@ class AuthService {
     FirebaseAuth? firebaseAuth,
   })  : _googleSignIn = GoogleSignIn(
           scopes: scopes,
-          clientId:
-              '727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com',
+          clientId: kIsWeb
+              ? '727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com'
+              : null,
         ),
         _facebookAuth = facebookAuth ?? FacebookAuth.instance,
         _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;

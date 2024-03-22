@@ -54,7 +54,7 @@ PODS:
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - FirebaseAppCheckInterop (10.22.0)
+  - FirebaseAppCheckInterop (10.23.0)
   - FirebaseAuth (10.22.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
@@ -66,9 +66,9 @@ PODS:
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreExtension (10.22.0):
+  - FirebaseCoreExtension (10.23.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.22.0):
+  - FirebaseCoreInternal (10.23.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseCrashlytics (10.22.0):
     - FirebaseCore (~> 10.5)
@@ -78,12 +78,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.22.0):
+  - FirebaseInstallations (10.23.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseSessions (10.22.0):
+  - FirebaseSessions (10.23.0):
     - FirebaseCore (~> 10.5)
     - FirebaseCoreExtension (~> 10.0)
     - FirebaseInstallations (~> 10.0)
@@ -93,7 +93,7 @@ PODS:
     - PromisesSwift (~> 2.1)
   - flutter_image_compress_macos (1.0.0):
     - FlutterMacOS
-  - flutter_webrtc (0.9.36):
+  - flutter_webrtc_plus (0.9.36):
     - FlutterMacOS
     - WebRTC-SDK (= 114.5735.08)
   - FlutterMacOS (1.0.0)
@@ -160,7 +160,7 @@ PODS:
   - GTMAppAuth (2.0.0):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
-  - GTMSessionFetcher/Core (3.3.1)
+  - GTMSessionFetcher/Core (3.3.2)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -192,7 +192,7 @@ DEPENDENCIES:
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - firebase_crashlytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos`)
   - flutter_image_compress_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos`)
-  - flutter_webrtc (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos`)
+  - flutter_webrtc_plus (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc_plus/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
@@ -239,8 +239,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos
   flutter_image_compress_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos
-  flutter_webrtc:
-    :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos
+  flutter_webrtc_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc_plus/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   google_sign_in_ios:
@@ -265,16 +265,16 @@ SPEC CHECKSUMS:
   firebase_core: cb81862138b1b98a890bcf3ee59ec820dad075b9
   firebase_crashlytics: bd0869353cdb875ce4831a07377000315bcc978f
   FirebaseAnalytics: 8d0ff929c63b7f72260f332b86ccf569776b75d3
-  FirebaseAppCheckInterop: 58db3e9494751399cf3e7b7e3e705cff71099153
+  FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
   FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
-  FirebaseCoreExtension: 6394c00b887d0bebadbc7049c464aa0cbddc5d41
-  FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
+  FirebaseCoreExtension: cb88851781a24e031d1b58e0bd01eb1f46b044b5
+  FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseCrashlytics: e568d68ce89117c80cddb04073ab9018725fbb8c
-  FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
-  FirebaseSessions: cd97fb07674f3906619c871eefbd260a1546c9d3
+  FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
+  FirebaseSessions: f06853e30f99fe42aa511014d7ee6c8c319f08a3
   flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
-  flutter_webrtc: c0a5a251799e356605ce823eabb171bb8e6c8824
+  flutter_webrtc_plus: cdbbcbbd75347796537c6f49f1b8c52fce374d31
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
@@ -282,7 +282,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
-  GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
+  GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -294,6 +294,6 @@ SPEC CHECKSUMS:
   wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
   WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
-PODFILE CHECKSUM: 2f33378f6daed12f6173d0fec52dd0a4a9b0985e
+PODFILE CHECKSUM: d8c5769e09a406b658adb2753afe054489dda367
 
 COCOAPODS: 1.15.2

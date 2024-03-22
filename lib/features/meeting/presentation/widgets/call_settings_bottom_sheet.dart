@@ -14,8 +14,10 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
   const CallSettingsBottomSheet({super.key});
@@ -24,7 +26,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
-        final Meeting? meeting = state.meeting;
+        final Meeting meeting = state.meeting!;
+        final CallState? callState = state.callState;
 
         return Container(
           padding: EdgeInsets.symmetric(
@@ -56,12 +59,10 @@ class CallSettingsBottomSheet extends StatelessWidget {
               SizedBox(height: 12.sp),
               const Divider(),
               CallSettingButton(
-                visible: meeting?.isHost ?? false,
+                visible: meeting.isHost,
                 icon: PhosphorIcons.sliders_horizontal,
                 lable: 'Edit Room',
                 onTap: () {
-                  if (meeting == null) return;
-
                   AppNavigator.push(
                     Routes.createMeetingRoute,
                     arguments: {
@@ -81,13 +82,36 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.users_three,
-                lable: 'Participant (${meeting?.users.length ?? 1})',
+                lable: 'Participant (${meeting.users.length})',
                 onTap: () {},
               ),
               CallSettingButton(
                 icon: PhosphorIcons.chat_teardrop_text,
                 lable: 'Discussion',
                 onTap: () {},
+              ),
+              CallSettingButton(
+                visible: WebRTC.platformIsIOS,
+                icon: PhosphorIcons.magic_wand,
+                lable: 'Beauty Filters',
+                onTap: () {
+                  AppNavigator.pop();
+
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SizedBox(
+                      width: double.infinity,
+                      height: 92.h,
+                      child: BeautyFilterWidget(
+                        participant: meeting.participants.firstWhere(
+                          (participant) => participant.isMe,
+                        ),
+                        callState: callState,
+                      ),
+                    ),
+                  );
+                },
               ),
               CallSettingButton(
                 visible: !kIsWeb,
@@ -110,8 +134,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 lable: 'Share room',
                 onTap: () async {
                   await ShareUtils().share(
-                    link: meeting?.inviteLink ?? '',
-                    description: meeting?.title,
+                    link: meeting.inviteLink,
+                    description: meeting.title,
                   );
                 },
               ),

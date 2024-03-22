@@ -10,6 +10,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:simple_pip_mode/pip_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -29,8 +30,15 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bot
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
-class MeetingScreen extends StatelessWidget {
+class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});
+
+  @override
+  State<MeetingScreen> createState() => _MeetingScreenState();
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +87,18 @@ class MeetingScreen extends StatelessWidget {
     required CallSetting setting,
   }) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.black,
+      endDrawer: WebRTC.platformIsMacOS
+          ? Drawer(
+              width: 40.w,
+              child: BeautyFilterWidget(
+                participant: meeting.participants
+                    .firstWhere((participant) => participant.isMe),
+                callState: callState,
+              ),
+            )
+          : null,
       appBar: appBarTitleBack(
         context,
         '',
@@ -138,6 +157,21 @@ class MeetingScreen extends StatelessWidget {
               icon: Icon(
                 PhosphorIcons.camera_rotate,
                 size: 20.sp,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: WebRTC.platformIsMacOS,
+            child: IconButton(
+              alignment: Alignment.centerRight,
+              onPressed: () {
+                if (WebRTC.platformIsMacOS) {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                }
+              },
+              icon: Icon(
+                PhosphorIcons.magic_wand,
+                size: 22.sp,
               ),
             ),
           ),

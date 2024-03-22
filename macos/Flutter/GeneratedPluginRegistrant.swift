@@ -11,7 +11,7 @@ import firebase_auth
 import firebase_core
 import firebase_crashlytics
 import flutter_image_compress_macos
-import flutter_webrtc
+import flutter_webrtc_plus
 import google_sign_in_ios
 import path_provider_foundation
 import share_plus
