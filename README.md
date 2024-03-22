@@ -14,7 +14,7 @@
   <a href="https://github.com/lambiengcode/waterbus/blob/main/LICENSE">License</a>
 </p>
 
-![WaterbusAwesome](./screenshots/waterbus-awesome.gif)
+<img src="./screenshots/waterbus-awesome.gif" width="100%"/>
 
 ## 🌤️ About
 
