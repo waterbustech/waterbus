@@ -6,7 +6,10 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
 class BeautyFilterWidget extends StatefulWidget {
@@ -23,12 +26,14 @@ class BeautyFilterWidget extends StatefulWidget {
 }
 
 class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
-  double _thinFaceValue = 0;
-  double _smoothFaceValue = 0;
-  double _bigEyesValue = 0;
-  double _lipstickValue = 0;
-  double _whiteFaceValue = 0;
-  double _blusherValue = 0;
+  late final BeautyFilters _beautyFilters;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _beautyFilters = AppBloc.beautyFiltersBloc.filters.copyWith();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,68 +54,56 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
           SizedBox(height: 12.sp),
           _buildSliderButton(
             "Smooth",
-            _smoothFaceValue,
+            _beautyFilters.smoothValue,
             (value) {
               setState(() {
-                _smoothFaceValue = value;
+                _beautyFilters.smoothValue = value;
               });
-
-              Helper.setSmoothValue(value / 10);
             },
           ),
           _buildSliderButton(
             "White",
-            _whiteFaceValue,
+            _beautyFilters.whiteValue,
             (value) {
               setState(() {
-                _whiteFaceValue = value;
+                _beautyFilters.whiteValue = value;
               });
-
-              Helper.setWhiteValue(value / 10);
             },
           ),
           _buildSliderButton(
             "Thin Face",
-            _thinFaceValue,
+            _beautyFilters.thinFaceValue * 10,
             (value) {
               setState(() {
-                _thinFaceValue = value;
+                _beautyFilters.thinFaceValue = value / 10;
               });
-
-              Helper.setThinFaceValue(value / 100);
             },
           ),
           _buildSliderButton(
             "Big Eyes",
-            _bigEyesValue,
+            _beautyFilters.bigEyeValue * 5,
             (value) {
               setState(() {
-                _bigEyesValue = value;
+                _beautyFilters.bigEyeValue = value / 5;
               });
-
-              Helper.setBigEyeValue(value / 50);
             },
           ),
           _buildSliderButton(
             "Lipstick",
-            _lipstickValue,
+            _beautyFilters.lipstickValue,
             (value) {
               setState(() {
-                _lipstickValue = value;
+                _beautyFilters.lipstickValue = value;
               });
-
-              Helper.setLipstickValue(value / 10);
             },
           ),
           _buildSliderButton(
             "Blusher",
-            _blusherValue,
+            _beautyFilters.blusherValue,
             (value) {
               setState(() {
-                _blusherValue = value;
+                _beautyFilters.blusherValue = value;
               });
-
-              Helper.setBlusherValue(value / 10);
             },
           ),
         ],
@@ -133,11 +126,19 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
         ),
         Slider(
           value: value,
-          max: 10.0,
           activeColor: Theme.of(context).primaryColor,
-          onChanged: onChanged,
+          onChanged: (val) {
+            onChanged(val);
+            _update();
+          },
         ),
       ],
+    );
+  }
+
+  void _update() {
+    AppBloc.beautyFiltersBloc.add(
+      UpdateFiltersValueEvent(filters: _beautyFilters),
     );
   }
 }
