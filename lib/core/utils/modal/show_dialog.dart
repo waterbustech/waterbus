@@ -30,6 +30,7 @@ Future showDialogWaterbus({
   if (!SizerUtil.isDesktop && !onlyShowAsDialog) {
     return showModalBottomSheet(
       context: AppNavigator.context!,
+      isScrollControlled: true,
       builder: (context) {
         return child;
       },

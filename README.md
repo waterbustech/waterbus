@@ -1,8 +1,12 @@
-![Banner](./screenshots/waterbus-macos.gif)
+<p align="center">
+  <img src="https://github.com/lambiengcode/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
+</p>
 
 <div class="badges" align="center">
-<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/lambiengcode/waterbus"><img src="https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge" alt="CodeFactor"></a><a href="https://sonarcloud.io/summary/new_code?id=lambiengcode_waterbus"><img src="https://sonarcloud.io/api/project_badges/measure?project=lambiengcode_waterbus&amp;metric=alert_status" alt="Quality Gate Status"></a><img src="https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/lambiengcode/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-122.6261.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version">
-<a href="https://twitter.com/lambiengcode"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
+<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/lambiengcode/waterbus"><img src="https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/lambiengcode/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-122.6261.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
+</div>
+<div align="center">
+<a href="https://twitter.com/waterbustech"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><img alt="Discord" src="https://img.shields.io/discord/1220616225521143818">
 </div>
 <p align="center">
   <a href="https://docs.waterbus.tech">Website</a> &bull;
@@ -22,28 +26,31 @@
 * 🌌 **Virtual Background**: Enhance your meetings with professional virtual backgrounds.
 * 🖼️ **Picture-in-Picture**: Increase productivity with picture-in-picture multitasking.
 * 🔒 **End-to-End Encryption**: Ensure secure meetings with end-to-end encryption.
+* 💋 **Beauty Filter**: Using [GPUPixel](https://github.com/pixpark/gpupixel) to implement Beauty Filters
 
 ## 🎯 Goal
 
-My project isn't intended to replace standard video conferencing platforms like Google Meet. Instead, it focuses on facilitating code sharing. I've noticed that features such as Virtual Background or Picture in Picture aren't widely implemented in existing solutions, and there's a lack of reference code for them. Many developers resort to third-party solutions for video calls but often miss out on these features. My goal is to provide a reference project that includes these functionalities, offering developers a starting point for integrating them into their own products.
+My project isn't intended to replace standard video conferencing platforms like `Google Meet`. Instead, it focuses on facilitating code sharing. I've noticed that features such as `Virtual Background` or `Picture in Picture` aren't widely implemented in existing solutions, and there's a lack of reference code for them. Many developers resort to third-party solutions for video calls but often miss out on these features. My goal is to provide a reference project that includes these functionalities, offering developers a starting point for integrating them into their own products.
 
 If you have suggestions or problems, please [open an issue](https://github.com/lambiengcode/waterbus/issues) or contribute directly 🤓
 
-<h3 align="center">👉 The Virtual Background feature supports both Android and iOS</h3>
+<h3 align="center">👉 The Virtual Background feature supports on Android, iOS and MacOS</h3>
 <br/>
 <div align="center">
-<p><a href="https://youtube.com/shorts/Ms4avix05uY"><img src="https://ytcards.demolab.com/?id=Ms4avix05uY&amp;title=Virtual%20Background%20on%20iOS%20%28VisionKit%20for%20Person%20segment%29&amp;lang=en&amp;timestamp=1709774408&amp;background_color=%230d1117&amp;title_color=%23ffffff&amp;stats_color=%23dedede&amp;max_title_lines=2&amp;width=250&amp;border_radius=10&amp;duration=21" alt="Virtual Background on iOS (VisionKit for Person segment)" title="Virtual Background on iOS (VisionKit for Person segment"></a>
-<a href="https://youtube.com/shorts/PDIDbVoHT5o"><img src="https://ytcards.demolab.com/?id=PDIDbVoHT5o&amp;title=Virtual%20Background%20on%20Android%20%28Mediapipe%20for%20Image%20segment%29&amp;lang=en&amp;timestamp=1709774408&amp;background_color=%230d1117&amp;title_color=%23ffffff&amp;stats_color=%23dedede&amp;max_title_lines=2&amp;width=250&amp;border_radius=10&amp;duration=27" alt="Virtual Background on Android (Mediapipe for Image segment)" title="Virtual Background on Android (Mediapipe for Image segment"></a></p>
+<p><a href="https://youtube.com/shorts/Ms4avix05uY"><img src="https://ytcards.demolab.com/?id=Ms4avix05uY&amp;title=Virtual%20Background%20on%20iOS%20%28VisionKit%20for%20Person%20segment%29&amp;lang=en&amp;timestamp=1709774408&amp;background_color=%230d1117&amp;title_color=%23ffffff&amp;stats_color=%23dedede&amp;max_title_lines=2&amp;width=250&amp;border_radius=10&amp;duration=21" alt="Virtual Background on iOS (VisionKit for Person segment)" title="Virtual Background on iOS (VisionKit for Person segment)"></a>
+<a href="https://youtube.com/shorts/PDIDbVoHT5o"><img src="https://ytcards.demolab.com/?id=PDIDbVoHT5o&amp;title=Virtual%20Background%20on%20Android%20%28Mediapipe%20for%20Image%20segment%29&amp;lang=en&amp;timestamp=1709774408&amp;background_color=%230d1117&amp;title_color=%23ffffff&amp;stats_color=%23dedede&amp;max_title_lines=2&amp;width=250&amp;border_radius=10&amp;duration=27" alt="Virtual Background on Android (Mediapipe for Image segment)" title="Virtual Background on Android (Mediapipe for Image segment)"></a>
+<a href="https://youtu.be/VIIxOZJlmj4"><img src="https://ytcards.demolab.com/?id=VIIxOZJlmj4&amp;title=Virtual%20Background%20on%20MacOS%20%28VisionKit%20for%20Person%20segment%29&amp;lang=en&amp;timestamp=1711089181&amp;background_color=%230d1117&amp;title_color=%23ffffff&amp;stats_color=%23dedede&amp;max_title_lines=2&amp;width=250&amp;border_radius=10&amp;duration=58" alt="Virtual Background on MacOS (VisionKit for Person segment)" title="Virtual Background on MacOS (VisionKit for Person segment)"></a></p>
 </div>
 
 ## ⚡ Current supported features
 
-| Feature | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | End to End Encryption | Record Media |
-| :-----: | :---------------: | :------------: | :----------------: | :----------------: | :-------------------: | :----------: |
-|   Android   |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
-|   iOS |        🟢         |       🟢       |         🟢         |         🟢         |          🟢           |      🟡      |
-|   MacOS |        🟢         |       🟢       |         🔴         |         🟢         |          🟢           |      🟡      |
-|   Web |        🟢         |       🟢       |         🔴         |         🟡         |          🟡           |      🟡      |
+| Feature            | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | Beauty Filters | End to End Encryption |
+| ------------------ | ----------------- | -------------- | ------------------ | ------------------ | -------------- | --------------------- |
+| Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟡        |           🟢          | 
+| iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
+| MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
+| Web                |         🟢         |        🟢      |          🟡         |          🟡         |       🟡       |           🟢          |    
+
 
 🟢 = Available
 
@@ -82,6 +89,13 @@ These commands are intended for maintainers only.
 
 ### Android
 
+Set keystore if you use jks in this repo, or create your own
+
+```bash
+export KEY_WATERBUS_PASSWORD=banhcuon
+export ALIAS_WATERBUS_PASSWORD=banhcuon
+```
+
 Traditional APK
 
 ```bash
@@ -96,11 +110,25 @@ flutter build appbundle
 
 ### iOS
 
+Pod install
+
+```bash
+cd ios
+bash clean-pods.sh
+```
+
 ```bash
 flutter build ipa
 ```
 
 ### macOS
+
+Pod install
+
+```bash
+cd macos
+bash clean-pods.sh
+```
 
 ```bash
 flutter build macos

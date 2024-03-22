@@ -82,7 +82,7 @@ PODS:
     - Firebase/Performance (= 10.22.0)
     - firebase_core
     - Flutter
-  - FirebaseABTesting (10.22.0):
+  - FirebaseABTesting (10.23.0):
     - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.22.0):
     - FirebaseAnalytics/AdIdSupport (= 10.22.0)
@@ -102,7 +102,7 @@ PODS:
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - FirebaseAppCheckInterop (10.22.0)
+  - FirebaseAppCheckInterop (10.23.0)
   - FirebaseAuth (10.22.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
@@ -114,9 +114,9 @@ PODS:
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreExtension (10.22.0):
+  - FirebaseCoreExtension (10.23.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.22.0):
+  - FirebaseCoreInternal (10.23.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseCrashlytics (10.22.0):
     - FirebaseCore (~> 10.5)
@@ -126,7 +126,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.22.0):
+  - FirebaseInstallations (10.23.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -141,14 +141,16 @@ PODS:
     - GoogleUtilities/ISASwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - FirebaseRemoteConfig (10.22.0):
+  - FirebaseRemoteConfig (10.23.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
+    - FirebaseRemoteConfigInterop (~> 10.23)
     - FirebaseSharedSwift (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseSessions (10.22.0):
+  - FirebaseRemoteConfigInterop (10.23.0)
+  - FirebaseSessions (10.23.0):
     - FirebaseCore (~> 10.5)
     - FirebaseCoreExtension (~> 10.0)
     - FirebaseInstallations (~> 10.0)
@@ -156,7 +158,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.10)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
-  - FirebaseSharedSwift (10.22.0)
+  - FirebaseSharedSwift (10.23.0)
   - Flutter (1.0.0)
   - flutter_callkit_incoming (0.0.2):
     - CryptoSwift
@@ -171,7 +173,7 @@ PODS:
     - SDWebImageWebPCoder
   - flutter_native_splash (0.0.1):
     - Flutter
-  - flutter_webrtc (0.9.36):
+  - flutter_webrtc_plus (0.9.36):
     - Flutter
     - KaiRTC (= 122.6261.01)
   - google_sign_in_ios (0.0.1):
@@ -239,7 +241,7 @@ PODS:
   - GTMAppAuth (2.0.0):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
-  - GTMSessionFetcher/Core (3.3.1)
+  - GTMSessionFetcher/Core (3.3.2)
   - image_picker_ios (0.0.1):
     - Flutter
   - KaiRTC (122.6261.01)
@@ -308,7 +310,7 @@ DEPENDENCIES:
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
-  - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
+  - flutter_webrtc_plus (from `.symlinks/plugins/flutter_webrtc_plus/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -342,6 +344,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebasePerformance
     - FirebaseRemoteConfig
+    - FirebaseRemoteConfigInterop
     - FirebaseSessions
     - FirebaseSharedSwift
     - GoogleAppMeasurement
@@ -385,8 +388,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
-  flutter_webrtc:
-    :path: ".symlinks/plugins/flutter_webrtc/ios"
+  flutter_webrtc_plus:
+    :path: ".symlinks/plugins/flutter_webrtc_plus/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
@@ -424,32 +427,33 @@ SPEC CHECKSUMS:
   firebase_core: d6dfb4cb86a9ebd92464bb8736075fe967211c97
   firebase_crashlytics: 95854fd6f1d1e926844b908e01ba525de1722a96
   firebase_performance: 2973f03bab61fbdcc0a3ac9566d3a626c01d72b2
-  FirebaseABTesting: 66d2594b36d4ff6e7d3c8719802100990de05857
+  FirebaseABTesting: aec61ed9a34d85a95e2013a3fdf051426a2419df
   FirebaseAnalytics: 8d0ff929c63b7f72260f332b86ccf569776b75d3
-  FirebaseAppCheckInterop: 58db3e9494751399cf3e7b7e3e705cff71099153
+  FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
   FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
-  FirebaseCoreExtension: 6394c00b887d0bebadbc7049c464aa0cbddc5d41
-  FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
+  FirebaseCoreExtension: cb88851781a24e031d1b58e0bd01eb1f46b044b5
+  FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseCrashlytics: e568d68ce89117c80cddb04073ab9018725fbb8c
-  FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
+  FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
   FirebasePerformance: 095debad1fc8d7d73148a835fcaec9e528946166
-  FirebaseRemoteConfig: e1b992a94d3674dddbcaf5d0d31a0312156ceb1c
-  FirebaseSessions: cd97fb07674f3906619c871eefbd260a1546c9d3
-  FirebaseSharedSwift: 48076404e6e52372290d15a07d2ed1d2f1754023
+  FirebaseRemoteConfig: 70ebe9542cf5242d762d1c0b4d53bfc472e0a4ce
+  FirebaseRemoteConfigInterop: cbc87ffa4932719a7911a08e94510f18f026f5a7
+  FirebaseSessions: f06853e30f99fe42aa511014d7ee6c8c319f08a3
+  FirebaseSharedSwift: c92645b392db3c41a83a0aa967de16f8bad25568
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_callkit_incoming: e892dcdf513ec232a556b433ffe6bfe970d6a221
   flutter_facebook_auth: c8700ab1770f3d8e5e7456220e4f3bbcdb831454
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
-  flutter_webrtc: 46210bff0ae6940f9cbc76f5905c1a41f62ba802
+  flutter_webrtc_plus: 021868e46b85a1ce9900bf8e7414020a7b9d187d
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
-  GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
+  GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
   KaiRTC: 984d9ea8a5fbccbfc1161004f92f884d9f463f6d
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009

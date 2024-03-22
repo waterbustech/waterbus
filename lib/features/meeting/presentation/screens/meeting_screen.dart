@@ -24,13 +24,21 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
-class MeetingScreen extends StatelessWidget {
+class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});
+
+  @override
+  State<MeetingScreen> createState() => _MeetingScreenState();
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +87,18 @@ class MeetingScreen extends StatelessWidget {
     required CallSetting setting,
   }) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.black,
+      endDrawer: WebRTC.platformIsMacOS
+          ? Drawer(
+              width: 40.w,
+              child: BeautyFilterWidget(
+                participant: meeting.participants
+                    .firstWhere((participant) => participant.isMe),
+                callState: callState,
+              ),
+            )
+          : null,
       appBar: appBarTitleBack(
         context,
         '',
@@ -138,6 +157,21 @@ class MeetingScreen extends StatelessWidget {
               icon: Icon(
                 PhosphorIcons.camera_rotate,
                 size: 20.sp,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: WebRTC.platformIsMacOS,
+            child: IconButton(
+              alignment: Alignment.centerRight,
+              onPressed: () {
+                if (WebRTC.platformIsMacOS) {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                }
+              },
+              icon: Icon(
+                PhosphorIcons.magic_wand,
+                size: 22.sp,
               ),
             ),
           ),
