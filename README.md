@@ -88,7 +88,7 @@ These commands are intended for maintainers only.
 
 ### Android
 
-Set keystore if you use jks in this repo, or create your own
+Set keystore password if you use jks in this repo, or create your own
 
 ```bash
 export KEY_WATERBUS_PASSWORD=banhcuon

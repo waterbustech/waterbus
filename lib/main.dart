@@ -35,12 +35,11 @@ void main(List<String> args) async {
         ),
       );
 
-      await Future.wait([
-        Application.initialAppLication(),
-        Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-      ]);
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      await Application.initialAppLication();
 
       if (kIsWeb) {
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);

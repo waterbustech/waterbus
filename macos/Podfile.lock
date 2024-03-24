@@ -95,7 +95,7 @@ PODS:
     - FlutterMacOS
   - flutter_webrtc_plus (0.9.36):
     - FlutterMacOS
-    - WebRTC-SDK (= 114.5735.08)
+    - KaiRTC (= 122.6261.03)
   - FlutterMacOS (1.0.0)
   - google_sign_in_ios (0.0.1):
     - Flutter
@@ -161,6 +161,7 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.3.2)
+  - KaiRTC (122.6261.03)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -182,7 +183,6 @@ PODS:
     - FlutterMacOS
   - wakelock_macos (0.0.1):
     - FlutterMacOS
-  - WebRTC-SDK (114.5735.08)
 
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos`)
@@ -220,11 +220,11 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - KaiRTC
     - nanopb
     - PromisesObjC
     - PromisesSwift
     - ReachabilitySwift
-    - WebRTC-SDK
 
 EXTERNAL SOURCES:
   connectivity_plus:
@@ -274,7 +274,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
   FirebaseSessions: f06853e30f99fe42aa511014d7ee6c8c319f08a3
   flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
-  flutter_webrtc_plus: cdbbcbbd75347796537c6f49f1b8c52fce374d31
+  flutter_webrtc_plus: e969be046849b156f708583cb88c5c81fbd70b94
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
@@ -283,6 +283,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
+  KaiRTC: 0a81e7366484f635234ddec6e04fa712020dbcdc
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -292,7 +293,6 @@ SPEC CHECKSUMS:
   sign_in_with_apple: a9e97e744e8edc36aefc2723111f652102a7a727
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
-  WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
 PODFILE CHECKSUM: d8c5769e09a406b658adb2753afe054489dda367
 

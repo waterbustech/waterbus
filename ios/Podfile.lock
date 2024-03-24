@@ -67,18 +67,18 @@ PODS:
   - Firebase/Performance (10.22.0):
     - Firebase/CoreOnly
     - FirebasePerformance (~> 10.22.0)
-  - firebase_auth (4.17.4):
+  - firebase_auth (4.17.9):
     - Firebase/Auth (= 10.22.0)
     - firebase_core
     - Flutter
   - firebase_core (2.27.1):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_crashlytics (3.4.14):
+  - firebase_crashlytics (3.4.19):
     - Firebase/Crashlytics (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_performance (0.9.3-13):
+  - firebase_performance (0.9.3-18):
     - Firebase/Performance (= 10.22.0)
     - firebase_core
     - Flutter
@@ -268,7 +268,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
@@ -423,10 +423,10 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 572cca0bc6c90067ef197187697cb3b584310c52
   file_picker: 15fd9539e4eb735dc54bae8c0534a7a9511a03de
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_auth: 88d3a927c2b7b2ecd93c9f049698acf743f76496
+  firebase_auth: 610184b4f624545f81e0416bca60642b6818f27f
   firebase_core: d6dfb4cb86a9ebd92464bb8736075fe967211c97
-  firebase_crashlytics: 95854fd6f1d1e926844b908e01ba525de1722a96
-  firebase_performance: 2973f03bab61fbdcc0a3ac9566d3a626c01d72b2
+  firebase_crashlytics: 0be8c89a6b91fd964a7a8fe574109fd528d310bb
+  firebase_performance: e664b27462836c2cbbcbb3bfca8d5598987fce81
   FirebaseABTesting: aec61ed9a34d85a95e2013a3fdf051426a2419df
   FirebaseAnalytics: 8d0ff929c63b7f72260f332b86ccf569776b75d3
   FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
@@ -445,7 +445,7 @@ SPEC CHECKSUMS:
   flutter_callkit_incoming: e892dcdf513ec232a556b433ffe6bfe970d6a221
   flutter_facebook_auth: c8700ab1770f3d8e5e7456220e4f3bbcdb831454
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
-  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
   flutter_webrtc_plus: 021868e46b85a1ce9900bf8e7414020a7b9d187d
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
@@ -460,7 +460,7 @@ SPEC CHECKSUMS:
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
