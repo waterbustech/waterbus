@@ -7,7 +7,7 @@
 
 import UIKit
 import AVKit
-import flutter_webrtc
+import flutter_webrtc_plus
 
 class PictureInPictureView: UIView {
     // MARK: Private

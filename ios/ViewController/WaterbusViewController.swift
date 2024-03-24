@@ -8,7 +8,7 @@
 import AVKit
 import UIKit
 import Flutter
-import flutter_webrtc
+import flutter_webrtc_plus
 
 class WaterbusViewController: FlutterViewController {
     

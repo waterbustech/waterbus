@@ -41,11 +41,16 @@ class WaterbusImagePicker {
           if (handleFinish != null && image != null) {
             displayLoadingLayer();
 
-            final File resizedImage = await ImageUtils().reduceSize(
-              File(image.path).path,
-            );
+            if (WebRTC.platformIsAndroid) {
+              final File resizedImage = await ImageUtils().reduceSize(
+                File(image.path).path,
+              );
 
-            handleFinish(resizedImage.readAsBytesSync());
+              handleFinish(resizedImage.readAsBytesSync());
+            } else {
+              final Uint8List imageBytes = await image.readAsBytes();
+              handleFinish(imageBytes);
+            }
 
             AppNavigator.pop();
           }

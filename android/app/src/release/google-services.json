@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "727554668212",
+    "project_id": "waterbus-71cf5",
+    "storage_bucket": "waterbus-71cf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727554668212:android:0253247dd933811eb989e1",
+        "android_client_info": {
+          "package_name": "com.waterbus.wanted"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727554668212-0atr2d89gbvglssrglqvnlfcesj4gp96.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterbus.wanted",
+            "certificate_hash": "4746a170a0a1820f23c88f49b353db39cb435fa7"
+          }
+        },
+        {
+          "client_id": "727554668212-0sgec37ism3qdfocks8q0k24ruh3gh4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterbus.wanted",
+            "certificate_hash": "4f81c0ba7a1cf5f5f078941c1db2d5a16a81ca04"
+          }
+        },
+        {
+          "client_id": "727554668212-sjrh1p70hcovd41cp9oua764e6kaina4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterbus.wanted",
+            "certificate_hash": "7ab29f21ff06f2d9dd6a8720128dbfea28553626"
+          }
+        },
+        {
+          "client_id": "727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-yqTO2eRZkIGarZaMK_sAriwr6uVeftc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "727554668212-b4qpqkcl5792g0gkqng85kugh5c5r51e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.waterbus.wanted"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
