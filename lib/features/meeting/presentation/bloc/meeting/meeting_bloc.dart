@@ -39,6 +39,7 @@ import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
 
@@ -615,9 +616,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   Future<void> _dispose() async {
     await _waterbusSdk.leaveRoom();
+
     _currentMeeting = null;
     _mParticipant = null;
     _currentBackground = null;
+
+    AppBloc.beautyFiltersBloc.add(ResetFiltersValueEvent());
   }
 
   // MARK: export

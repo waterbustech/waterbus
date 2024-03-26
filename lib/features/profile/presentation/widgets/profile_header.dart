@@ -19,7 +19,7 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        final User user = state is UserGetDone ? state.user : userDefault;
+        final User user = state is UserGetDone ? state.user : kUserDefault;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -391,7 +391,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
     CallSetting setting,
   ) {
     return setting.videoLayout == VideoLayout.gridView &&
-            meeting.users.length >= gridViewMinUsers
+            meeting.users.length >= kGridViewMinUsers
         ? GridView.custom(
             gridDelegate: SliverQuiltedGridDelegate(
               crossAxisCount: 4,

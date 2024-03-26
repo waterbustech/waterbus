@@ -84,6 +84,7 @@ dependencies:
   simple_pip_mode: ^0.8.0
   file_picker: ^6.2.0
   universal_io: ^2.2.2
+  url_launcher: ^6.2.5
   sizer: 
     path: ./packages/sizer
 
@@ -99,7 +100,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.2.1
+      ref: 1.2.2
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -177,11 +178,23 @@ flutter:
   fonts:
     - family: Helvetica
       fonts:
-        - asset: assets/fonts/helvetica-neue-light.ttf
+        - asset: assets/fonts/helvetica/helvetica-neue-light.ttf
           weight: 300
-        - asset: assets/fonts/helvetica-neue-regular.ttf
+        - asset: assets/fonts/helvetica/helvetica-neue-regular.ttf
           weight: 400
-        - asset: assets/fonts/helvetica-neue-regular.ttf
+        - asset: assets/fonts/helvetica/helvetica-neue-regular.ttf
           weight: 600
-        - asset: assets/fonts/helvetica-neue-medium.ttf
+        - asset: assets/fonts/helvetica/helvetica-neue-medium.ttf
           weight: 700
+    - family: Pixelify
+      fonts:
+        - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/pixelify/PixelifySans-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/pixelify/PixelifySans-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/pixelify/PixelifySans-Bold.ttf
+          weight: 800

@@ -1,8 +1,7 @@
 // Dart imports:
-import 'dart:io';
+import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -11,7 +10,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
-class AppScaffold extends StatefulWidget {
+class AppScaffold extends StatelessWidget {
   final Widget child;
 
   const AppScaffold({
@@ -19,97 +18,75 @@ class AppScaffold extends StatefulWidget {
     required this.child,
   });
 
-  @override
-  State<StatefulWidget> createState() => _AppScaffoldState();
-}
-
-class _AppScaffoldState extends State<AppScaffold> with WidgetsBindingObserver {
-  final List<String> _ignoreRotateEvent = [];
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    if (_ignoreRotateEvent.contains(AppNavigator.currentRoute())) return;
-  }
-
-  _hideKeyboard() {
-    if (FocusScope.of(context).hasFocus) {
-      FocusScope.of(context).unfocus();
+  void _hideKeyboard(BuildContext context) {
+    if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        return SafeArea(
-          top: false,
-          bottom: false,
-          child: !kIsWeb && Platform.isIOS
-              ? _child
-              : PopScope(
-                  canPop: _canPop(),
-                  onPopInvoked: _onPopInvoked,
-                  child: _child,
-                ),
-        );
-      },
-    );
-  }
-
-  Widget get _child {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
+      appBar: _appBar(context),
+      bottomNavigationBar: _bottomNavigationBar,
+      resizeToAvoidBottomInset:
+          _getChildScaffold?.resizeToAvoidBottomInset ?? false,
+      extendBodyBehindAppBar: _getChildScaffold?.extendBodyBehindAppBar ?? true,
       extendBody: true,
-      body: _getBody,
+      body: PopScope(
+        canPop: _canBackward,
+        onPopInvoked: _onPopInvoked,
+        child: _child(context),
+      ),
     );
   }
 
-  Widget get _getBody {
+  PreferredSizeWidget? _appBar(BuildContext context) {
+    return _getChildScaffold?.appBar;
+  }
+
+  Widget? get _bottomNavigationBar {
+    return _getChildScaffold?.bottomNavigationBar;
+  }
+
+  Scaffold? get _getChildScaffold =>
+      child is Scaffold ? child as Scaffold : null;
+
+  Widget _child(BuildContext context) {
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: _getBody(context),
+    );
+  }
+
+  Widget _getBody(BuildContext context) {
+    if (child is Scaffold) {
+      final Scaffold childScaffold = child as Scaffold;
+
+      if (childScaffold.body != null) {
+        return GestureDetector(
+          onTap: () {
+            _hideKeyboard(context);
+          },
+          child: childScaffold.body,
+        );
+      }
+    }
+
     return GestureDetector(
-      onHorizontalDragUpdate: kIsWeb
-          ? null
-          : Platform.isAndroid || [].contains(AppNavigator.currentRoute())
-              ? null
-              : (details) async {
-                  // Cannot back when at ROOT, EDIT_PHOTO and Connecting Call
-                  if (Platform.isIOS &&
-                      ![].contains(AppNavigator.currentRoute())) {
-                    //set the sensitivity for your ios gesture anywhere between 10-50 is good
-
-                    const int sensitivity = 15;
-
-                    if (details.delta.dx > sensitivity) {
-                      //SWIPE FROM RIGHT DETECTION
-                      final bool canBackward = _canPop();
-                      if (canBackward) {
-                        AppNavigator.pop();
-                      }
-                    }
-                  }
-                },
-      onTap: () => _hideKeyboard(),
-      child: widget.child,
+      onTap: () {
+        _hideKeyboard(context);
+      },
+      child: child,
     );
   }
 
-  void _onPopInvoked(bool canPop) {
+  bool get _canBackward => AppNavigator.canPop;
+
+  Future<void> _onPopInvoked(bool canPop) async {
     if (Routes.meetingRoute == AppNavigator.currentRoute()) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
   }
-
-  bool _canPop() => true;
 }

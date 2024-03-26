@@ -13,14 +13,14 @@ class MenuItemModel {
   });
 }
 
-final List<MenuItemModel> fakeMenuItems = [
+final List<MenuItemModel> menuItems = [
   const MenuItemModel(title: 'Profile', iconData: PhosphorIcons.user_circle),
   const MenuItemModel(
     title: 'Settings',
     iconData: PhosphorIcons.sliders_horizontal,
   ),
   const MenuItemModel(
-    title: 'Term & Privacy',
+    title: 'Licenses',
     iconData: PhosphorIcons.shield_check,
   ),
   const MenuItemModel(

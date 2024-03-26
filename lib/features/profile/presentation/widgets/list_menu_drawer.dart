@@ -17,13 +17,13 @@ class ListMenuDrawer extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      itemCount: fakeMenuItems.length,
+      itemCount: menuItems.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            onTapItem(fakeMenuItems[index]);
+            onTapItem(menuItems[index]);
           },
-          child: MenuDrawerCard(item: fakeMenuItems[index]),
+          child: MenuDrawerCard(item: menuItems[index]),
         );
       },
     );

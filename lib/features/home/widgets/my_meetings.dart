@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
 import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
+import 'package:waterbus/features/home/widgets/empty_meet_view.dart';
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
@@ -24,6 +25,10 @@ class MyMeetings extends StatelessWidget {
         if (state is MeetingInitial) return const SizedBox();
 
         final List<Meeting> recentMeetings = state.recentMeetings;
+
+        if (recentMeetings.isEmpty) {
+          return const EmptyMeetView();
+        }
 
         return ListView.builder(
           physics: const BouncingScrollPhysics(),

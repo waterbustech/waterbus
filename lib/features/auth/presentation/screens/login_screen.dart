@@ -14,6 +14,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
 import 'package:waterbus/gen/assets.gen.dart';
+import 'package:waterbus/gen/fonts.gen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -50,9 +51,10 @@ class _LogInScreenState extends State<LogInScreen> {
                           RichText(
                             text: TextSpan(
                               style: TextStyle(
-                                fontSize: 19.sp,
-                                fontWeight: FontWeight.w700,
-                                height: 1.46,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: FontFamily.pixelify,
+                                height: 1.2,
                                 color: mCL,
                               ),
                               children: const [
@@ -72,17 +74,22 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                           ),
                           SizedBox(height: 16.sp),
-                          Text(
-                            'Waterbus is a free, high-quality service for everyone to hold high-quality, '
-                            'secure video calls and meetings on any phone.',
-                            softWrap: true,
-                            strutStyle: StrutStyle.disabled,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w300,
-                                      height: 1.4,
-                                    ),
+                          SizedBox(
+                            width: 250.sp,
+                            child: Text(
+                              'Cutting Edge Video Conferencing built on latest WebRTC SDK. Multi-attendee calls built on SFU. Your meeting will be more professional with Virtual Background and multitasking is better with Picture in Picture.',
+                              softWrap: true,
+                              strutStyle: StrutStyle.disabled,
+                              textAlign: TextAlign.justify,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w300,
+                                    height: 1.4,
+                                  ),
+                            ),
                           ),
                           const Spacer(),
                           kIsWeb

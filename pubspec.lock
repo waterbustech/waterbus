@@ -708,11 +708,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.9.48+7"
-      resolved-ref: "187bdc44cb0eb805cad953f2f317e8f3e91ad51b"
+      ref: "0.9.48+8"
+      resolved-ref: "617ef69c5dfd90e388639b4f003718f99c0d024b"
       url: "https://github.com/waterbustech/flutter-webrtc.git"
     source: git
-    version: "0.9.48+7"
+    version: "0.9.48+8"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1597,6 +1597,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  url_launcher:
+    dependency: "direct main"
+    description:
+      name: url_launcher
+      sha256: "0ecc004c62fd3ed36a2ffcbe0dd9700aee63bd7532d0b642a488b1ec310f492e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.5"
+  url_launcher_android:
+    dependency: transitive
+    description:
+      name: url_launcher_android
+      sha256: d4ed0711849dd8e33eb2dd69c25db0d0d3fdc37e0a62e629fe32f57a22db2745
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.0"
+  url_launcher_ios:
+    dependency: transitive
+    description:
+      name: url_launcher_ios
+      sha256: "9149d493b075ed740901f3ee844a38a00b33116c7c5c10d7fb27df8987fb51d5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.5"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1605,6 +1629,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  url_launcher_macos:
+    dependency: transitive
+    description:
+      name: url_launcher_macos
+      sha256: b7244901ea3cf489c5335bdacda07264a6e960b1c1b1a9f91e4bc371d9e68234
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   url_launcher_platform_interface:
     dependency: transitive
     description:
@@ -1705,11 +1737,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.2.1"
-      resolved-ref: "4346248b6b7d19c5533d93374b4139eaca31d2ef"
+      ref: "1.2.2"
+      resolved-ref: a0db58cfc30a70999e083d4b24957afbd1ed69aa
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.2.1"
+    version: "1.2.2"
   web:
     dependency: "direct overridden"
     description:
