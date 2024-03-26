@@ -84,6 +84,9 @@ class $AssetsImagesGen {
   AssetGenImage get background6Jpg =>
       const AssetGenImage('assets/images/background-6.jpg.webp');
 
+  /// File path: assets/images/dash.gif
+  AssetGenImage get dash => const AssetGenImage('assets/images/dash.gif');
+
   /// File path: assets/images/desktop-background-1.jpg.webp
   AssetGenImage get desktopBackground1Jpg =>
       const AssetGenImage('assets/images/desktop-background-1.jpg.webp');
@@ -140,6 +143,7 @@ class $AssetsImagesGen {
         background4Jpg,
         background5Jpg,
         background6Jpg,
+        dash,
         desktopBackground1Jpg,
         desktopBackground2Jpg,
         desktopBackground3Jpg,

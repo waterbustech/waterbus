@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return SlidingDrawer(
           key: _sideMenuKey,
-          ignorePointer: true,
           drawerBuilder: (_) => _buildDrawable(context),
           contentBuilder: (_) => Scaffold(
             appBar: SizerUtil.isDesktop
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     titleWidget: BlocBuilder<UserBloc, UserState>(
                       builder: (context, state) {
                         final User user =
-                            state is UserGetDone ? state.user : userDefault;
+                            state is UserGetDone ? state.user : kUserDefault;
 
                         return Row(
                           children: [
@@ -164,8 +163,15 @@ class _HomeScreenState extends State<HomeScreen> {
             case "Settings":
               AppNavigator.push(Routes.settingsRoute);
               break;
-            case "Term & Privacy":
-              AppNavigator.push(Routes.privacyRoute);
+            case "Licenses":
+              showLicensePage(
+                context: context,
+                applicationIcon: Image.asset(
+                  Assets.images.imgLogo.path,
+                  height: 35.sp,
+                ),
+                applicationVersion: '1.1.1',
+              );
               break;
             default:
               break;

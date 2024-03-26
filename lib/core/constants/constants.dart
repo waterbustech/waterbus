@@ -2,14 +2,17 @@
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
-const User userDefault = User(
+const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
+const String kWaterbusDocs = 'https://docs.waterbus.tech';
+
+const User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',
   avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
 
-const gridViewMinUsers = 4;
+const kGridViewMinUsers = 4;
 
 final List<String> backgrounds = [
   Assets.images.background1Jpg.path,

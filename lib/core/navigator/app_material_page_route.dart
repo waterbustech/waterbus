@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import 'package:waterbus/core/navigator/app_navigator.dart';
+
 class AppMaterialPageRoute<T> extends MaterialPageRoute<T> {
   AppMaterialPageRoute({
     required super.builder,
@@ -10,23 +13,6 @@ class AppMaterialPageRoute<T> extends MaterialPageRoute<T> {
   @override
   @protected
   bool get hasScopedWillPopCallback {
-    return true;
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
-    return theme.buildTransitions<T>(
-      this,
-      context,
-      animation,
-      secondaryAnimation,
-      child,
-    );
+    return AppNavigator.canPop;
   }
 }

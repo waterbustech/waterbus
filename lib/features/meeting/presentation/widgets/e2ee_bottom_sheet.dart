@@ -1,5 +1,7 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -16,7 +18,7 @@ class E2eeBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      padding: EdgeInsets.symmetric(horizontal: 16.sp),
+      padding: EdgeInsets.symmetric(horizontal: 20.sp),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -37,7 +39,7 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 12.sp),
           Text(
-            'E2E encryption keeps your personal meetings between you and the other people. Not event Waterbus can listen to them. This includes your:',
+            'End to end encryption keeps your personal meetings between you and the other people. Not event Waterbus can listen to them. This includes your:',
             textAlign: TextAlign.justify,
             strutStyle: StrutStyle.disabled,
             style: TextStyle(

@@ -12,4 +12,7 @@ class FontFamily {
 
   /// Font family: Helvetica
   static const String helvetica = 'Helvetica';
+
+  /// Font family: Pixelify
+  static const String pixelify = 'Pixelify';
 }

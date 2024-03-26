@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 class VersionInfoFooter extends StatelessWidget {
   const VersionInfoFooter({super.key});
@@ -23,12 +28,17 @@ class VersionInfoFooter extends StatelessWidget {
             ),
           ),
           SizedBox(height: 4.sp),
-          Text(
-            '@Waterbus.tech',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 9.25.sp,
-              color: Theme.of(context).primaryColor,
+          GestureWrapper(
+            onTap: () async {
+              await launchUrl(Uri.parse(kWaterbusDocs));
+            },
+            child: Text(
+              '@Waterbus.tech',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 9.25.sp,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ),
         ],
