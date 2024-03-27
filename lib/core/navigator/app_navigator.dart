@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:waterbus/core/navigator/app_material_page_route.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
@@ -103,7 +102,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     RouteSettings routeSettings,
     Widget builder,
   ) {
-    return AppMaterialPageRoute(
+    return MaterialPageRoute(
       builder: (context) => AppScaffold(
         child: builder,
       ),

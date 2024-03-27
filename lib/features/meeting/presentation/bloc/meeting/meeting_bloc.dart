@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -542,9 +543,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   Future<void> startPiP() async {
+    if (WebRTC.platformIsDesktop || kIsWeb) return;
+
     if (_waterbusSdk.callState.participants.isEmpty) return;
 
-    if (Platform.isAndroid) {
+    if (WebRTC.platformIsAndroid) {
       SimplePip().setAutoPipMode();
       return;
     }
