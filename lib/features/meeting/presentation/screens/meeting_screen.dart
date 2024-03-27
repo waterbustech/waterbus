@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -29,6 +30,7 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_action_butto
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
+import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 
 class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});
@@ -178,14 +180,23 @@ class _MeetingScreenState extends State<MeetingScreen> {
           IconButton(
             alignment: Alignment.centerRight,
             onPressed: () async {
-              WaterbusSdk.instance.toggleSpeakerPhone();
-              DeviceUtils().lightImpact();
+              if (WebRTC.platformIsDesktop) {
+                showDialogWaterbus(
+                  alignment: Alignment.center,
+                  child: const E2eeBottomSheet(),
+                );
+              } else {
+                WaterbusSdk.instance.toggleSpeakerPhone();
+                DeviceUtils().lightImpact();
+              }
             },
             icon: Icon(
-              callState?.mParticipant == null ||
-                      callState!.mParticipant!.isSpeakerPhoneEnabled
-                  ? PhosphorIcons.speaker_high
-                  : PhosphorIcons.speaker_low,
+              WebRTC.platformIsDesktop || kIsWeb
+                  ? PhosphorIcons.lock
+                  : callState?.mParticipant == null ||
+                          callState!.mParticipant!.isSpeakerPhoneEnabled
+                      ? PhosphorIcons.speaker_high
+                      : PhosphorIcons.speaker_low,
               size: SizerUtil.isDesktop ? 22.sp : 18.5.sp,
             ),
           ),
@@ -302,7 +313,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
   }) {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+        margin: EdgeInsets.symmetric(
+          horizontal: SizerUtil.isDesktop ? 16.sp : 10.sp,
+        ),
         child: meeting.users.length > 2
             ? _buildLayoutMultipleUsers(context, meeting, callState, setting)
             : _buildLayoutLess2Users(context, meeting, callState),
@@ -348,11 +361,24 @@ class _MeetingScreenState extends State<MeetingScreen> {
     Meeting meeting,
     CallState? callState,
   ) {
+    final EdgeInsets devicePadding = MediaQuery.of(context).padding;
+    final double notchHeight = devicePadding.top;
+    final double width = 100.w - 32.sp;
+    final double height = 100.h - notchHeight - kToolbarHeight - 100.sp;
     final List<Widget> childrens = [
-      Expanded(
+      AnimatedContainer(
+        duration: 300.milliseconds,
+        width: SizerUtil.isDesktop
+            ? (meeting.users.length > 1 ? width / 2 : width)
+            : double.infinity,
+        height: SizerUtil.isDesktop
+            ? double.infinity
+            : (meeting.users.length > 1 ? height / 2 : height),
+        curve: Curves.easeInOut,
         child: MeetView(
           participant: meeting.users.first,
           callState: callState,
+          borderEnabled: meeting.users.length > 1 || !SizerUtil.isDesktop,
           radius: meeting.users.length == 1
               ? BorderRadius.circular(20.sp)
               : SizerUtil.isDesktop

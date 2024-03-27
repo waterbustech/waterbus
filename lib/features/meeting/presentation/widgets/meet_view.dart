@@ -21,11 +21,13 @@ class MeetView extends StatelessWidget {
   final double? width;
   final CallState? callState;
   final BorderRadius? radius;
+  final bool borderEnabled;
   const MeetView({
     super.key,
     required this.participant,
     required this.callState,
     this.avatarSize = 80.0,
+    this.borderEnabled = true,
     this.margin,
     this.width,
     this.radius,
@@ -37,14 +39,16 @@ class MeetView extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       type: MaterialType.card,
       shape: SuperellipseShape(
-        side: BorderSide(
-          color: Theme.of(context).primaryColor,
-          width: audioLevel == AudioLevel.kAudioStrong
-              ? 6.sp
-              : audioLevel == AudioLevel.kAudioLight
-                  ? 4.5.sp
-                  : 1.sp,
-        ),
+        side: !borderEnabled
+            ? BorderSide.none
+            : BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: audioLevel == AudioLevel.kAudioStrong
+                    ? 8.sp
+                    : audioLevel == AudioLevel.kAudioLight
+                        ? 6.sp
+                        : 4.sp,
+              ),
         borderRadius: radius ?? BorderRadius.circular(18.sp),
       ),
       child: SizedBox(
@@ -59,7 +63,7 @@ class MeetView extends StatelessWidget {
                       key: videoRenderer!.textureId == null
                           ? null
                           : Key(videoRenderer!.textureId!.toString()),
-                      objectFit: isScreenSharing
+                      objectFit: isScreenSharing || !borderEnabled
                           ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
                           : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                       mirror:
