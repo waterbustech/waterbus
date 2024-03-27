@@ -12,6 +12,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:simple_pip_mode/pip_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -30,7 +31,6 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_action_butto
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
-import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 
 class MeetingScreen extends StatefulWidget {
   const MeetingScreen({super.key});
