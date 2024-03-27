@@ -96,11 +96,11 @@ dependencies:
 
   # Video call
   waterbus_sdk:
-    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
-    # git:
-    #   url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-    #   path: '.'
-    #   ref: 1.2.2
+    # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 1.2.3
 
 dependency_overrides: 
   watcher: ^1.1.0

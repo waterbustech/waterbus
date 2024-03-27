@@ -1736,10 +1736,12 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/Users/lambiengcode/Documents/flutter_waterbus_sdk"
-      relative: false
-    source: path
-    version: "1.2.2"
+      path: "."
+      ref: "1.2.3"
+      resolved-ref: "9f1abe0a0a601e943552e459754d78f06be38fe7"
+      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
+    source: git
+    version: "1.2.3"
   web:
     dependency: "direct overridden"
     description:
