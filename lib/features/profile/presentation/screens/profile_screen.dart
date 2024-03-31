@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Profile',
+        title: 'Profile',
         actions: [
           GestureWrapper(
             onTap: () {
@@ -106,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   );
                                 },
-                                child: user!.avatar == null
+                                child: user?.avatar == null
                                     ? CircleAvatar(
                                         radius: 40.sp,
                                         backgroundColor: Colors.black,
@@ -115,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       )
                                     : AvatarCard(
-                                        urlToImage: user.avatar,
+                                        urlToImage: user?.avatar,
                                         size: 80.sp,
                                       ),
                               ),

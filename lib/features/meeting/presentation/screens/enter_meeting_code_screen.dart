@@ -38,7 +38,7 @@ class _EnterMeetingCardState extends State {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Join a meeting',
+        title: 'Join a meeting',
         actions: [
           GestureWrapper(
             onTap: () {

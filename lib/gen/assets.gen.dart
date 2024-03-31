@@ -13,6 +13,9 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/code.png
+  AssetGenImage get code => const AssetGenImage('assets/icons/code.png');
+
   /// File path: assets/icons/ic_apple.png
   AssetGenImage get icApple => const AssetGenImage('assets/icons/ic_apple.png');
 
@@ -44,8 +47,20 @@ class $AssetsIconsGen {
   AssetGenImage get launcherIconAndroid12 =>
       const AssetGenImage('assets/icons/launcher_icon_android12.png');
 
+  /// File path: assets/icons/paint-board.png
+  AssetGenImage get paintBoard =>
+      const AssetGenImage('assets/icons/paint-board.png');
+
+  /// File path: assets/icons/shield.png
+  AssetGenImage get shield => const AssetGenImage('assets/icons/shield.png');
+
+  /// File path: assets/icons/sparkling.png
+  AssetGenImage get sparkling =>
+      const AssetGenImage('assets/icons/sparkling.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
+        code,
         icApple,
         icCameraVideo,
         icEndCall,
@@ -53,7 +68,10 @@ class $AssetsIconsGen {
         icGoogle,
         icNewMeeting,
         launcherIcon,
-        launcherIconAndroid12
+        launcherIconAndroid12,
+        paintBoard,
+        shield,
+        sparkling
       ];
 }
 
@@ -135,6 +153,10 @@ class $AssetsImagesGen {
   AssetGenImage get loginBannerJpeg =>
       const AssetGenImage('assets/images/login-banner.jpeg.webp');
 
+  /// File path: assets/images/logo_rounded.png
+  AssetGenImage get logoRounded =>
+      const AssetGenImage('assets/images/logo_rounded.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         background1Jpg,
@@ -155,7 +177,8 @@ class $AssetsImagesGen {
         desktopBackground9Jpg,
         imgAppLogo,
         imgLogo,
-        loginBannerJpeg
+        loginBannerJpeg,
+        logoRounded
       ];
 }
 

@@ -1281,6 +1281,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  re_editor:
+    dependency: "direct main"
+    description:
+      name: re_editor
+      sha256: "5933029ab831ceb165b90e7daf475e3e92ffca8aeb784a3a30369b9677ba6a60"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
+  re_highlight:
+    dependency: "direct main"
+    description:
+      name: re_highlight
+      sha256: "6c4ac3f76f939fb7ca9df013df98526634e17d8f7460e028bd23a035870024f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   recase:
     dependency: transitive
     description:
@@ -1737,11 +1753,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.2.3"
-      resolved-ref: "9f1abe0a0a601e943552e459754d78f06be38fe7"
+      ref: "1.2.4"
+      resolved-ref: dca6f1340e1503e07bea2b3ab1321cb2e3486f1f
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.2.3"
+    version: "1.2.4"
   web:
     dependency: "direct overridden"
     description:

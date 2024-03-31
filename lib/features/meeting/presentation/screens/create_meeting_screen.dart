@@ -46,7 +46,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        _isEditing ? 'Edit Meeting' : 'Create Meeting',
+        title: _isEditing ? 'Edit Meeting' : 'Create Meeting',
         actions: [
           IconButton(
             onPressed: () {

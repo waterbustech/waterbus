@@ -87,6 +87,10 @@ dependencies:
   url_launcher: ^6.2.5
   sizer: 
     path: ./packages/sizer
+  
+  # Code Editor
+  re_editor: ^0.1.0
+  re_highlight: ^0.0.3
 
   # Media
   image_picker: ^1.0.7
@@ -100,7 +104,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 1.2.3
+      ref: 1.2.4
 
 dependency_overrides: 
   watcher: ^1.1.0

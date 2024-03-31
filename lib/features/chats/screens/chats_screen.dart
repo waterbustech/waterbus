@@ -24,7 +24,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Chats',
+        title: 'Chats',
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: Container(
           alignment: Alignment.centerRight,

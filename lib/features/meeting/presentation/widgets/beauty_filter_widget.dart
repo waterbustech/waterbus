@@ -10,16 +10,11 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
 class BeautyFilterWidget extends StatefulWidget {
-  final Participant participant;
+  final Participant? participant;
   final CallState? callState;
-  const BeautyFilterWidget({
-    super.key,
-    required this.callState,
-    required this.participant,
-  });
+  const BeautyFilterWidget({super.key, this.callState, this.participant});
 
   @override
   State<StatefulWidget> createState() => _BeautyFilterWidgetState();
@@ -41,17 +36,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 32.sp),
-          Container(
-            height: SizerUtil.isDesktop ? 40.w * (1 / 2.5) : 100.w * (9 / 16),
-            margin: EdgeInsets.symmetric(horizontal: 12.sp),
-            child: MeetView(
-              participant: widget.participant,
-              callState: widget.callState,
-              radius: BorderRadius.circular(20.sp),
-            ),
-          ),
-          SizedBox(height: 12.sp),
+          SizedBox(height: 26.sp),
           _buildSliderButton(
             "Smooth",
             _beautyFilters.smoothValue,

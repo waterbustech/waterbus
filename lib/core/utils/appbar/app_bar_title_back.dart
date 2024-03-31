@@ -11,8 +11,8 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 AppBar appBarTitleBack(
-  BuildContext context,
-  String title, {
+  BuildContext context, {
+  String title = '',
   List<Widget>? actions,
   Function()? onBackPressed,
   Color? backgroundColor,

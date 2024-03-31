@@ -26,7 +26,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       extendBody: true,
       appBar: appBarTitleBack(
         context,
-        "Schedule",
+        title: "Schedule",
         titleTextSize: 16.sp,
         isVisibleBackButton: false,
         centerTitle: false,

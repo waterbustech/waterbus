@@ -39,7 +39,7 @@ class _SettingScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Settings',
+        title: 'Settings',
         actions: [
           GestureWrapper(
             onTap: () {

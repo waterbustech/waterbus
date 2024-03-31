@@ -44,7 +44,7 @@ class _EnterMeetingPasswordScreenState
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Enter password',
+        title: 'Enter password',
         onBackPressed: () {
           AppBloc.meetingBloc.add(DisposeMeetingEvent());
           AppNavigator.pop();

@@ -22,7 +22,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Notifications',
+        title: 'Notifications',
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: Container(
           alignment: Alignment.centerRight,
