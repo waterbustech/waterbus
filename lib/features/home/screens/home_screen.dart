@@ -18,6 +18,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/my_meetings.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -154,6 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Future.delayed(const Duration(milliseconds: 300), () {
           switch (item.title) {
             case "Logout":
+              displayLoadingLayer();
               AppBloc.authBloc.add(LogOutEvent());
               break;
             case "Profile":

@@ -146,12 +146,9 @@ class _LogInScreenState extends State<LogInScreen> {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(Assets.images.loginBannerJpeg.path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                color: Colors.black,
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Assets.images.worldMap.image(),
               ),
             ),
           ],

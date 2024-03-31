@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -18,32 +19,48 @@ class EmptyMeetView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          Assets.images.dash.path,
-          height: 200.sp,
-          width: 200.sp,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          child: Assets.images.worldMap.image(),
         ),
         SizedBox(height: 20.sp),
         GestureWrapper(
           onTap: () async {
             await launchUrl(Uri.parse(kGithubRepo));
           },
-          child: Container(
-            width: 120.sp,
-            padding: EdgeInsets.symmetric(vertical: 5.sp),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(30.sp),
+          child: Material(
+            shape: SuperellipseShape(
+              borderRadius: BorderRadius.circular(20.sp),
             ),
-            alignment: Alignment.center,
-            child: Text(
-              "Give us star ⭐",
-              style: TextStyle(
-                fontSize: 12.sp,
+            clipBehavior: Clip.hardEdge,
+            color: Colors.yellow,
+            child: Container(
+              width: 120.sp,
+              padding: EdgeInsets.symmetric(vertical: 5.sp),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Assets.icons.icGithub.image(
+                    width: 20.sp,
+                    height: 20.sp,
+                  ),
+                  SizedBox(width: 6.sp),
+                  Text(
+                    "Give us star",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 2.sp),
+                ],
               ),
             ),
           ),
         ),
+        SizedBox(height: 20.sp),
       ],
     );
   }
