@@ -102,7 +102,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     isScrollControlled: true,
                     builder: (context) => SizedBox(
                       width: double.infinity,
-                      height: 92.h,
+                      height: 80.h,
                       child: BeautyFilterWidget(
                         participant: meeting.participants.firstWhere(
                           (participant) => participant.isMe,

@@ -20,7 +20,7 @@ class _SettingScreenState extends State<PrivacyScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Term & Privacy',
+        title: 'Licenses',
       ),
       body: Container(
         padding: EdgeInsets.all(16.sp),

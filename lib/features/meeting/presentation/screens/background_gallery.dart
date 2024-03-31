@@ -38,7 +38,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        'Virtual Background',
+        title: 'Virtual Background',
         actions: [
           IconButton(
             onPressed: () {

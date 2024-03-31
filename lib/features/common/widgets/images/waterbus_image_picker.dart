@@ -41,16 +41,11 @@ class WaterbusImagePicker {
           if (handleFinish != null && image != null) {
             displayLoadingLayer();
 
-            if (WebRTC.platformIsAndroid) {
-              final File resizedImage = await ImageUtils().reduceSize(
-                File(image.path).path,
-              );
+            final File resizedImage = await ImageUtils().reduceSize(
+              File(image.path).path,
+            );
 
-              handleFinish(resizedImage.readAsBytesSync());
-            } else {
-              final Uint8List imageBytes = await image.readAsBytes();
-              handleFinish(imageBytes);
-            }
+            handleFinish(resizedImage.readAsBytesSync());
 
             AppNavigator.pop();
           }
@@ -104,15 +99,11 @@ class WaterbusImagePicker {
         type: FileType.image,
       );
 
-      if (kIsWeb) {
-        if (result?.files.first.bytes != null) {
-          handleFinish?.call(result!.files.first.bytes!);
-        }
-      } else {
-        if (result?.files.first.path != null) {
-          final File imageFile = File(result!.files.first.path!);
-          handleFinish?.call(imageFile.readAsBytesSync());
-        }
+      if (result?.files.first.path != null) {
+        final File resizedImage = await ImageUtils().reduceSize(
+          File(result!.files.first.path!).path,
+        );
+        handleFinish?.call(resizedImage.readAsBytesSync());
       }
 
       return;

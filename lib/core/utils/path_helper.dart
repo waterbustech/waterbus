@@ -21,8 +21,8 @@ class PathHelper {
   static Future<void> createDirWaterbus() async {
     final String? tempWaterbusDir = await tempDirWaterbus;
     final String? localStoreWaterbusDir = await localStoreDirWaterbus;
-
     if (tempWaterbusDir == null || localStoreWaterbusDir == null) return;
+
     final Directory myDir = Directory(tempWaterbusDir);
     final Directory localDir = Directory(localStoreWaterbusDir);
     final Directory? appDirectory = await appDir;

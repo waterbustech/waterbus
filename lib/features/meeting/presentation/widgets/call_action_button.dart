@@ -12,12 +12,14 @@ class CallActionButton extends StatelessWidget {
   final IconData icon;
   final Function() onTap;
   final Color? backgroundColor;
+  final Color? iconColor;
   final double? iconSize;
   const CallActionButton({
     super.key,
     required this.icon,
     required this.onTap,
     this.backgroundColor,
+    this.iconColor,
     this.iconSize,
   });
 
@@ -34,7 +36,7 @@ class CallActionButton extends StatelessWidget {
         alignment: Alignment.center,
         child: Icon(
           icon,
-          color: mCL,
+          color: iconColor ?? mCL,
           size: iconSize ?? 18.sp,
         ),
       ),

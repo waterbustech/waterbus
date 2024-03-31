@@ -58,7 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? null
                 : appBarTitleBack(
                     context,
-                    '',
                     centerTitle: false,
                     isVisibleBackButton: false,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
