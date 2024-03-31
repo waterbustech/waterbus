@@ -4,28 +4,25 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:re_editor/re_editor.dart';
 
-class ContextMenuItemWidget extends PopupMenuItem<void> implements PreferredSizeWidget {
-
+class ContextMenuItemWidget extends PopupMenuItem<void>
+    implements PreferredSizeWidget {
   ContextMenuItemWidget({
     super.key,
     required String text,
     required VoidCallback super.onTap,
   }) : super(
-    child: Text(text),
-  );
+          child: Text(text),
+        );
 
   @override
   Size get preferredSize => const Size(150, 25);
-
 }
 
 class ContextMenuControllerImpl implements SelectionToolbarController {
-
   const ContextMenuControllerImpl();
 
   @override
-  void hide(BuildContext context) {
-  }
+  void hide(BuildContext context) {}
 
   @override
   void show({
@@ -38,8 +35,10 @@ class ContextMenuControllerImpl implements SelectionToolbarController {
   }) {
     showMenu(
       context: context,
-      position: RelativeRect.fromSize(anchors.primaryAnchor & const Size(150, double.infinity),
-        MediaQuery.of(context).size,),
+      position: RelativeRect.fromSize(
+        anchors.primaryAnchor & const Size(150, double.infinity),
+        MediaQuery.of(context).size,
+      ),
       items: [
         ContextMenuItemWidget(
           text: 'Cut',
@@ -62,5 +61,4 @@ class ContextMenuControllerImpl implements SelectionToolbarController {
       ],
     );
   }
-
 }
