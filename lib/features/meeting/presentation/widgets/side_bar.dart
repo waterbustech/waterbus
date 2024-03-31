@@ -9,7 +9,6 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/code_editor.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 enum SideBarOptions {
   code,
@@ -119,9 +118,10 @@ class _SideBarState extends State<SideBar> {
           height: 32.sp,
           alignment: Alignment.center,
           child: Image.asset(
-            option == SideBarOptions.code
-                ? Assets.icons.code.path
-                : Assets.icons.paintBoard.path,
+            '',
+            // option == SideBarOptions.code
+            //     ? Assets.icons.code.path
+            //     : Assets.icons.paintBoard.path,
             height: 20.sp,
             width: 20.sp,
             color: mC,

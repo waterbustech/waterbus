@@ -134,12 +134,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _handleLogOut() async {
-    final Either<Failure, bool> logOutSucceed = await _logOut.call(NoParams());
+    await _logOut.call(NoParams());
 
-    if (logOutSucceed.isRight()) {
-      user = null;
-      AppBloc.userBloc.add(CleanProfileEvent());
-      AppBloc.meetingListBloc.add(CleanAllRecentJoinedEvent());
-    }
+    AppNavigator.pop();
+
+    user = null;
+    AppBloc.userBloc.add(CleanProfileEvent());
+    AppBloc.meetingListBloc.add(CleanAllRecentJoinedEvent());
   }
 }

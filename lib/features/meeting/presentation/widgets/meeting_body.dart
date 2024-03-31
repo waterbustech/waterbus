@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -146,7 +147,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                       }
                     },
                   ),
-                  if (Helper.platformIsDarwin && SizerUtil.isDesktop)
+                  if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
                     CallActionButton(
                       icon: PhosphorIcons.sparkle,
                       iconColor: Colors.yellow,

@@ -13,9 +13,6 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/code.png
-  AssetGenImage get code => const AssetGenImage('assets/icons/code.png');
-
   /// File path: assets/icons/ic_apple.png
   AssetGenImage get icApple => const AssetGenImage('assets/icons/ic_apple.png');
 
@@ -30,6 +27,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_facebook.png
   AssetGenImage get icFacebook =>
       const AssetGenImage('assets/icons/ic_facebook.png');
+
+  /// File path: assets/icons/ic_github.png
+  AssetGenImage get icGithub =>
+      const AssetGenImage('assets/icons/ic_github.png');
 
   /// File path: assets/icons/ic_google.png
   AssetGenImage get icGoogle =>
@@ -47,30 +48,21 @@ class $AssetsIconsGen {
   AssetGenImage get launcherIconAndroid12 =>
       const AssetGenImage('assets/icons/launcher_icon_android12.png');
 
-  /// File path: assets/icons/paint-board.png
-  AssetGenImage get paintBoard =>
-      const AssetGenImage('assets/icons/paint-board.png');
-
-  /// File path: assets/icons/shield.png
-  AssetGenImage get shield => const AssetGenImage('assets/icons/shield.png');
-
   /// File path: assets/icons/sparkling.png
   AssetGenImage get sparkling =>
       const AssetGenImage('assets/icons/sparkling.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        code,
         icApple,
         icCameraVideo,
         icEndCall,
         icFacebook,
+        icGithub,
         icGoogle,
         icNewMeeting,
         launcherIcon,
         launcherIconAndroid12,
-        paintBoard,
-        shield,
         sparkling
       ];
 }
@@ -157,6 +149,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoRounded =>
       const AssetGenImage('assets/images/logo_rounded.png');
 
+  /// File path: assets/images/world-map.png
+  AssetGenImage get worldMap =>
+      const AssetGenImage('assets/images/world-map.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         background1Jpg,
@@ -178,7 +174,8 @@ class $AssetsImagesGen {
         imgAppLogo,
         imgLogo,
         loginBannerJpeg,
-        logoRounded
+        logoRounded,
+        worldMap
       ];
 }
 
