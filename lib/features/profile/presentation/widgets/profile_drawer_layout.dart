@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
+import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
 import 'package:waterbus/features/profile/presentation/widgets/list_menu_drawer.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_header.dart';
 import 'package:waterbus/features/profile/presentation/widgets/version_info_footer.dart';
@@ -31,8 +31,8 @@ class ProfileDrawerLayout extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 20.sp, bottom: 8.sp),
               child: const Divider(
-                height: .5,
-                thickness: .5,
+                height: 1,
+                thickness: 1,
               ),
             ),
             ListMenuDrawer(onTapItem: onTapItem),

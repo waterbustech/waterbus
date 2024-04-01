@@ -98,7 +98,9 @@ class MeetView extends StatelessWidget {
                         style: TextStyle(
                           color: participant.role == MeetingRole.host
                               ? Colors.yellow
-                              : Colors.white,
+                              : participant.isMe
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.white,
                           fontSize: avatarSize / 6,
                           fontWeight: FontWeight.bold,
                         ),

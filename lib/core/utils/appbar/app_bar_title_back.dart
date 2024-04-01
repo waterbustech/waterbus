@@ -61,13 +61,16 @@ AppBar appBarTitleBack(
                   AppNavigator.pop();
                 }
               },
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
-                child: Icon(
-                  PhosphorIcons.arrow_left,
-                  size: 20.sp,
-                  color: colorChild,
+              child: Tooltip(
+                message: 'Back',
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
+                  child: Icon(
+                    PhosphorIcons.arrow_left,
+                    size: 20.sp,
+                    color: colorChild,
+                  ),
                 ),
               ),
             ),

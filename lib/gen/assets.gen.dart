@@ -16,9 +16,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_apple.png
   AssetGenImage get icApple => const AssetGenImage('assets/icons/ic_apple.png');
 
+  /// File path: assets/icons/ic_archive.png
+  AssetGenImage get icArchive =>
+      const AssetGenImage('assets/icons/ic_archive.png');
+
   /// File path: assets/icons/ic_camera_video.png
   AssetGenImage get icCameraVideo =>
       const AssetGenImage('assets/icons/ic_camera_video.png');
+
+  /// File path: assets/icons/ic_code.png
+  AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
 
   /// File path: assets/icons/ic_end_call.png
   AssetGenImage get icEndCall =>
@@ -28,6 +35,10 @@ class $AssetsIconsGen {
   AssetGenImage get icFacebook =>
       const AssetGenImage('assets/icons/ic_facebook.png');
 
+  /// File path: assets/icons/ic_folder.png
+  AssetGenImage get icFolder =>
+      const AssetGenImage('assets/icons/ic_folder.png');
+
   /// File path: assets/icons/ic_github.png
   AssetGenImage get icGithub =>
       const AssetGenImage('assets/icons/ic_github.png');
@@ -36,9 +47,31 @@ class $AssetsIconsGen {
   AssetGenImage get icGoogle =>
       const AssetGenImage('assets/icons/ic_google.png');
 
+  /// File path: assets/icons/ic_log_out.png
+  AssetGenImage get icLogOut =>
+      const AssetGenImage('assets/icons/ic_log_out.png');
+
   /// File path: assets/icons/ic_new_meeting.png
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
+
+  /// File path: assets/icons/ic_notes.png
+  AssetGenImage get icNotes => const AssetGenImage('assets/icons/ic_notes.png');
+
+  /// File path: assets/icons/ic_paint.png
+  AssetGenImage get icPaint => const AssetGenImage('assets/icons/ic_paint.png');
+
+  /// File path: assets/icons/ic_profile.png
+  AssetGenImage get icProfile =>
+      const AssetGenImage('assets/icons/ic_profile.png');
+
+  /// File path: assets/icons/ic_settings.png
+  AssetGenImage get icSettings =>
+      const AssetGenImage('assets/icons/ic_settings.png');
+
+  /// File path: assets/icons/ic_shield.png
+  AssetGenImage get icShield =>
+      const AssetGenImage('assets/icons/ic_shield.png');
 
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
@@ -55,12 +88,21 @@ class $AssetsIconsGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         icApple,
+        icArchive,
         icCameraVideo,
+        icCode,
         icEndCall,
         icFacebook,
+        icFolder,
         icGithub,
         icGoogle,
+        icLogOut,
         icNewMeeting,
+        icNotes,
+        icPaint,
+        icProfile,
+        icSettings,
+        icShield,
         launcherIcon,
         launcherIconAndroid12,
         sparkling
@@ -198,6 +240,10 @@ class Assets {
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
+  static const String welcome = 'assets/welcome.java';
+
+  /// List of all assets
+  static List<String> get values => [welcome];
 }
 
 class AssetGenImage {

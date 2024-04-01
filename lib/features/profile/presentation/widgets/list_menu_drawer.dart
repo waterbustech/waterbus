@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
+import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
 import 'package:waterbus/features/profile/presentation/widgets/menu_drawer_card.dart';
 
 class ListMenuDrawer extends StatelessWidget {
@@ -15,6 +15,7 @@ class ListMenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemCount: menuItems.length,

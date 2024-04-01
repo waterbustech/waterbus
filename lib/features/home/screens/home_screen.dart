@@ -53,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return SlidingDrawer(
           key: _sideMenuKey,
-          drawerBuilder: (_) => _buildDrawable(context),
+          ignorePointer: SizerUtil.isDesktop,
+          drawerBuilder: (_) =>
+              SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(context),
           contentBuilder: (_) => Scaffold(
             appBar: SizerUtil.isDesktop
                 ? null
@@ -113,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizerUtil.isDesktop
                     ? SizedBox(
-                        width: 30.w,
+                        width: 26.w,
                         child: _buildDrawable(context),
                       )
                     : const SizedBox(),

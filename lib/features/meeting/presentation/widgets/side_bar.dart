@@ -7,15 +7,9 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/types/enums/side_bar_options.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/code_editor.dart';
-
-enum SideBarOptions {
-  code,
-  paint;
-
-  const SideBarOptions();
-}
 
 class SideBar extends StatefulWidget {
   final bool isExpand;
@@ -40,21 +34,20 @@ class _SideBarState extends State<SideBar> {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 4.sp),
-          child: Material(
-            shape: SuperellipseShape(
-              borderRadius: BorderRadius.circular(14.sp),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 16.sp),
+            width: 40.sp,
+            decoration: BoxDecoration(
+              color: mGD,
+              borderRadius: BorderRadius.circular(30.sp),
             ),
-            color: Colors.grey.shade900,
-            child: SizedBox(
-              width: 40.sp,
-              child: Column(
-                children: [
-                  SizedBox(height: 12.sp),
-                  ...SideBarOptions.values.map(
-                    (option) => _buildButton(option: option),
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...SideBarOptions.values.map(
+                  (option) => _buildButton(option: option),
+                ),
+              ],
             ),
           ),
         ),
@@ -64,7 +57,7 @@ class _SideBarState extends State<SideBar> {
                   shape: SuperellipseShape(
                     borderRadius: BorderRadius.circular(20.sp),
                   ),
-                  color: Colors.grey.shade900,
+                  color: mGD,
                   clipBehavior: Clip.hardEdge,
                   child: _option == SideBarOptions.code
                       ? const CodeEditorPad()
@@ -106,25 +99,19 @@ class _SideBarState extends State<SideBar> {
       onTap: () {
         _toggleSideBar(option: option);
       },
-      child: Material(
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(16.sp),
-        ),
-        color: _option == option
-            ? Theme.of(context).primaryColor
-            : Colors.transparent,
+      child: Tooltip(
+        message: option.label,
         child: Container(
-          width: 32.sp,
-          height: 32.sp,
+          width: 36.sp,
+          height: 36.sp,
+          margin: EdgeInsets.only(
+            bottom: option == SideBarOptions.values.last ? 0 : 8.sp,
+          ),
           alignment: Alignment.center,
           child: Image.asset(
-            '',
-            // option == SideBarOptions.code
-            //     ? Assets.icons.code.path
-            //     : Assets.icons.paintBoard.path,
-            height: 20.sp,
-            width: 20.sp,
-            color: mC,
+            option.iconAssetPath,
+            height: 25.sp,
+            width: 25.sp,
           ),
         ),
       ),

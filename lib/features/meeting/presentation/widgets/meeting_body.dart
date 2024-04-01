@@ -24,6 +24,7 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_action_butto
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_layout.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/side_bar.dart';
 
 class MeetingBody extends StatefulWidget {
   final Meeting meeting;
@@ -42,7 +43,7 @@ class MeetingBody extends StatefulWidget {
 
 class _MeetingBodyState extends State<MeetingBody> {
   bool _isFilterSettingsOpened = false;
-  final bool _isExtensionOpened = false;
+  bool _isExtensionOpened = false;
 
   @override
   Widget build(BuildContext context) {
@@ -182,77 +183,76 @@ class _MeetingBodyState extends State<MeetingBody> {
       ),
       body: SafeArea(
         bottom: false,
-        child: Row(
-          children: [
-            // Flexible(
-            //   flex: _isFilterSettingsOpened || !SizerUtil.isDesktop
-            //       ? 0
-            //       : _isExtensionOpened
-            //           ? 7
-            //           : 1,
-            //   child: _isFilterSettingsOpened || !SizerUtil.isDesktop
-            //       ? const SizedBox()
-            //       : SideBar(
-            //           isExpand: _isExtensionOpened,
-            //           onExpandChanged: (isExpand) {
-            //             if (_isExtensionOpened == isExpand) return;
-
-            //             setState(() {
-            //               _isExtensionOpened = isExpand;
-            //             });
-            //           },
-            //         ),
-            // ),
-            Flexible(
-              flex: _isFilterSettingsOpened
-                  ? 6
-                  : _isExtensionOpened
-                      ? 3
-                      : 1,
-              child: AnimatedContainer(
-                duration: 300.milliseconds,
-                width: _isFilterSettingsOpened
-                    ? 60.w
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 12.sp),
+          child: Row(
+            children: [
+              Flexible(
+                flex: _isFilterSettingsOpened || !SizerUtil.isDesktop
+                    ? 0
                     : _isExtensionOpened
-                        ? 30.w
-                        : 100.w,
-                // : SizerUtil.isDesktop
-                //     ? 91.w
-                //     : 100.w,
-                child: _isFilterSettingsOpened
-                    ? Container(
-                        margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                        child: MeetView(
-                          participant: widget.meeting.participants
-                              .firstWhere((participant) => participant.isMe),
-                          callState: widget.callState,
-                          radius: BorderRadius.circular(20.sp),
-                        ),
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(
-                          bottom: SizerUtil.isDesktop ? 0 : 12.sp,
-                        ),
-                        child: MeetingLayout(
+                        ? 7
+                        : 1,
+                child: _isFilterSettingsOpened || !SizerUtil.isDesktop
+                    ? const SizedBox()
+                    : SideBar(
+                        isExpand: _isExtensionOpened,
+                        onExpandChanged: (isExpand) {
+                          if (_isExtensionOpened == isExpand) return;
+
+                          setState(() {
+                            _isExtensionOpened = isExpand;
+                          });
+                        },
+                      ),
+              ),
+              Flexible(
+                flex: _isFilterSettingsOpened
+                    ? 6
+                    : _isExtensionOpened
+                        ? 3
+                        : 11,
+                child: AnimatedContainer(
+                  duration: 300.milliseconds,
+                  width: _isFilterSettingsOpened
+                      ? 60.w
+                      : _isExtensionOpened
+                          ? 30.w
+                          // : 100.w,
+                          : SizerUtil.isDesktop
+                              ? 91.w
+                              : 100.w,
+                  child: _isFilterSettingsOpened
+                      ? Container(
+                          margin: EdgeInsets.symmetric(horizontal: 12.sp),
+                          child: MeetView(
+                            participant: widget.meeting.participants
+                                .firstWhere((participant) => participant.isMe),
+                            callState: widget.callState,
+                            radius: BorderRadius.zero,
+                            borderEnabled: false,
+                          ),
+                        )
+                      : MeetingLayout(
                           meeting: widget.meeting,
                           callState: widget.callState,
                           callSetting: widget.callSetting,
                         ),
-                      ),
+                ),
               ),
-            ),
-            Flexible(
-              flex: _isFilterSettingsOpened ? 4 : 0,
-              child: AnimatedContainer(
-                duration: 300.milliseconds,
-                curve: Curves.easeIn,
-                width: _isFilterSettingsOpened ? 40.w : 0,
-                child: _isFilterSettingsOpened
-                    ? const BeautyFilterWidget()
-                    : const SizedBox(),
+              Flexible(
+                flex: _isFilterSettingsOpened ? 4 : 0,
+                child: AnimatedContainer(
+                  duration: 300.milliseconds,
+                  curve: Curves.easeIn,
+                  width: _isFilterSettingsOpened ? 40.w : 0,
+                  child: _isFilterSettingsOpened
+                      ? const BeautyFilterWidget()
+                      : const SizedBox(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

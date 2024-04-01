@@ -3,17 +3,20 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:re_editor/re_editor.dart';
 import 'package:re_highlight/languages/dart.dart';
-import 'package:re_highlight/styles/base16/dracula.dart';
+import 'package:re_highlight/styles/atom-one-dark.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/find.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/menu.dart';
+import 'package:waterbus/gen/assets.gen.dart';
+import 'package:waterbus/gen/fonts.gen.dart';
 
 class CodeEditorPad extends StatefulWidget {
   const CodeEditorPad({super.key});
@@ -28,6 +31,9 @@ class _CodeEditorPadState extends State<CodeEditorPad> {
 
   @override
   void initState() {
+    rootBundle.loadString(Assets.welcome).then((value) {
+      _controller.text = value;
+    });
     super.initState();
   }
 
@@ -58,10 +64,11 @@ class _CodeEditorPadState extends State<CodeEditorPad> {
           chunkAnalyzer: const DefaultCodeChunkAnalyzer(),
           style: CodeEditorStyle(
             fontSize: 12.sp,
+            fontFamily: FontFamily.jetbrainsMono,
             cursorColor: Colors.green,
             codeTheme: CodeHighlightTheme(
               languages: {'dart': CodeHighlightThemeMode(mode: langDart)},
-              theme: draculaTheme,
+              theme: atomOneDarkTheme,
             ),
           ),
           controller: _controller,
@@ -137,21 +144,22 @@ class _DefaultCodeAutocompleteListViewState
     return Container(
       constraints: BoxConstraints.loose(widget.preferredSize),
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Colors.grey.shade800,
         borderRadius: BorderRadius.circular(6),
       ),
       child: ListView.builder(
+        padding: EdgeInsets.zero,
         itemCount: widget.notifier.value.prompts.length,
         itemBuilder: (context, index) {
           final CodePrompt prompt = widget.notifier.value.prompts[index];
           final BorderRadius radius = BorderRadius.only(
-            topLeft: index == 0 ? const Radius.circular(5) : Radius.zero,
-            topRight: index == 0 ? const Radius.circular(5) : Radius.zero,
+            topLeft: index == 0 ? const Radius.circular(6) : Radius.zero,
+            topRight: index == 0 ? const Radius.circular(6) : Radius.zero,
             bottomLeft: index == widget.notifier.value.prompts.length - 1
-                ? const Radius.circular(5)
+                ? const Radius.circular(6)
                 : Radius.zero,
             bottomRight: index == widget.notifier.value.prompts.length - 1
-                ? const Radius.circular(5)
+                ? const Radius.circular(6)
                 : Radius.zero,
           );
           return InkWell(
@@ -168,7 +176,7 @@ class _DefaultCodeAutocompleteListViewState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: index == widget.notifier.value.index
-                    ? Colors.black54
+                    ? Colors.indigo.shade300
                     : null,
                 borderRadius: radius,
               ),
@@ -195,7 +203,7 @@ extension _CodePromptExtension on CodePrompt {
     final InlineSpan span = style.createSpan(
       value: word,
       anchor: input,
-      color: Colors.blue,
+      color: Colors.amber,
       fontWeight: FontWeight.bold,
     );
     final CodePrompt prompt = this;
