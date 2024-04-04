@@ -41,11 +41,11 @@ class WaterbusImagePicker {
           if (handleFinish != null && image != null) {
             displayLoadingLayer();
 
-            final File resizedImage = await ImageUtils().reduceSize(
+            final Uint8List resizedImage = await ImageUtils().reduceSize(
               File(image.path).path,
             );
 
-            handleFinish(resizedImage.readAsBytesSync());
+            handleFinish(resizedImage);
 
             AppNavigator.pop();
           }
@@ -100,10 +100,10 @@ class WaterbusImagePicker {
       );
 
       if (result?.files.first.path != null) {
-        final File resizedImage = await ImageUtils().reduceSize(
+        final Uint8List resizedImage = await ImageUtils().reduceSize(
           File(result!.files.first.path!).path,
         );
-        handleFinish?.call(resizedImage.readAsBytesSync());
+        handleFinish?.call(resizedImage);
       }
 
       return;

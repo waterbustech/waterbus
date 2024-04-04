@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -17,7 +18,7 @@ Future showDialogWaterbus({
   double paddingBottom = 0.0,
   Color? backgroundColor,
   double paddingHorizontal = 15.0,
-  double borderRadius = 25.0,
+  double borderRadius = 40.0,
   bool dismissible = true,
   Color? barrierColor,
   int? dismissionDuration,
@@ -63,7 +64,7 @@ Future showDialogWaterbus({
     pageBuilder: (context, __, ___) {
       return Dialog(
         alignment: alignment,
-        shape: RoundedRectangleBorder(
+        shape: SuperellipseShape(
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         insetPadding: EdgeInsets.only(

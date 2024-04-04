@@ -211,16 +211,15 @@ class _MeetingBodyState extends State<MeetingBody> {
                     ? 6
                     : _isExtensionOpened
                         ? 3
-                        : 11,
+                        : 20,
                 child: AnimatedContainer(
                   duration: 300.milliseconds,
                   width: _isFilterSettingsOpened
                       ? 60.w
                       : _isExtensionOpened
                           ? 30.w
-                          // : 100.w,
                           : SizerUtil.isDesktop
-                              ? 91.w
+                              ? 95.w
                               : 100.w,
                   child: _isFilterSettingsOpened
                       ? Container(
@@ -244,7 +243,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                 flex: _isFilterSettingsOpened ? 4 : 0,
                 child: AnimatedContainer(
                   duration: 300.milliseconds,
-                  curve: Curves.easeIn,
+                  curve: Curves.fastLinearToSlowEaseIn,
                   width: _isFilterSettingsOpened ? 40.w : 0,
                   child: _isFilterSettingsOpened
                       ? const BeautyFilterWidget()

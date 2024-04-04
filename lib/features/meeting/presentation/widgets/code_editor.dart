@@ -13,6 +13,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/code_toolbox.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/find.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/menu.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -45,58 +46,68 @@ class _CodeEditorPadState extends State<CodeEditorPad> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureWrapper(
-      onTap: () {
-        _focusNode.requestFocus();
-      },
-      child: CodeAutocomplete(
-        viewBuilder: (context, notifier, onSelected) {
-          return _DefaultCodeAutocompleteListView(
-            notifier: notifier,
-            onSelected: onSelected,
-          );
-        },
-        promptsBuilder: DefaultCodeAutocompletePromptsBuilder(
-          language: langDart,
-        ),
-        child: CodeEditor(
-          focusNode: _focusNode,
-          chunkAnalyzer: const DefaultCodeChunkAnalyzer(),
-          style: CodeEditorStyle(
-            fontSize: 12.sp,
-            fontFamily: FontFamily.jetbrainsMono,
-            cursorColor: Colors.green,
-            codeTheme: CodeHighlightTheme(
-              languages: {'dart': CodeHighlightThemeMode(mode: langDart)},
-              theme: atomOneDarkTheme,
+    return Column(
+      children: [
+        const CodeToolbox(),
+        Expanded(
+          child: GestureWrapper(
+            onTap: () {
+              if (_focusNode.hasFocus) return;
+
+              _focusNode.requestFocus();
+            },
+            child: CodeAutocomplete(
+              viewBuilder: (context, notifier, onSelected) {
+                return _DefaultCodeAutocompleteListView(
+                  notifier: notifier,
+                  onSelected: onSelected,
+                );
+              },
+              promptsBuilder: DefaultCodeAutocompletePromptsBuilder(
+                language: langDart,
+              ),
+              child: CodeEditor(
+                focusNode: _focusNode,
+                chunkAnalyzer: const DefaultCodeChunkAnalyzer(),
+                style: CodeEditorStyle(
+                  fontSize: 12.sp,
+                  fontFamily: FontFamily.jetbrainsMono,
+                  cursorColor: Colors.green,
+                  codeTheme: CodeHighlightTheme(
+                    languages: {'dart': CodeHighlightThemeMode(mode: langDart)},
+                    theme: atomOneDarkTheme,
+                  ),
+                ),
+                controller: _controller,
+                wordWrap: true,
+                indicatorBuilder:
+                    (context, editingController, chunkController, notifier) {
+                  return Row(
+                    children: [
+                      DefaultCodeLineNumber(
+                        controller: editingController,
+                        notifier: notifier,
+                      ),
+                      DefaultCodeChunkIndicator(
+                        width: 20,
+                        controller: chunkController,
+                        notifier: notifier,
+                      ),
+                    ],
+                  );
+                },
+                findBuilder: (context, controller, readOnly) =>
+                    CodeFindPanelView(
+                  controller: controller,
+                  readOnly: readOnly,
+                ),
+                toolbarController: const ContextMenuControllerImpl(),
+                sperator: Container(width: 0.5, color: Colors.greenAccent),
+              ),
             ),
           ),
-          controller: _controller,
-          wordWrap: true,
-          indicatorBuilder:
-              (context, editingController, chunkController, notifier) {
-            return Row(
-              children: [
-                DefaultCodeLineNumber(
-                  controller: editingController,
-                  notifier: notifier,
-                ),
-                DefaultCodeChunkIndicator(
-                  width: 20,
-                  controller: chunkController,
-                  notifier: notifier,
-                ),
-              ],
-            );
-          },
-          findBuilder: (context, controller, readOnly) => CodeFindPanelView(
-            controller: controller,
-            readOnly: readOnly,
-          ),
-          toolbarController: const ContextMenuControllerImpl(),
-          sperator: Container(width: 0.5, color: Colors.greenAccent),
         ),
-      ),
+      ],
     );
   }
 }

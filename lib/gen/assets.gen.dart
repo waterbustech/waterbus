@@ -224,6 +224,9 @@ class $AssetsImagesGen {
 class $AssetsLottiesGen {
   const $AssetsLottiesGen();
 
+  /// File path: assets/lotties/beauty-filters-lottie.json
+  String get beautyFiltersLottie => 'assets/lotties/beauty-filters-lottie.json';
+
   /// File path: assets/lotties/broadcast-lottie.json
   String get broadcastLottie => 'assets/lotties/broadcast-lottie.json';
 
@@ -231,7 +234,8 @@ class $AssetsLottiesGen {
   String get unlockLottie => 'assets/lotties/unlock-lottie.json';
 
   /// List of all assets
-  List<String> get values => [broadcastLottie, unlockLottie];
+  List<String> get values =>
+      [beautyFiltersLottie, broadcastLottie, unlockLottie];
 }
 
 class Assets {

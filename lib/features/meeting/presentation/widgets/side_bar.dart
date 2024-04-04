@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:math';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -30,44 +33,48 @@ class _SideBarState extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.sp),
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16.sp),
-            width: 40.sp,
-            decoration: BoxDecoration(
-              color: mGD,
-              borderRadius: BorderRadius.circular(30.sp),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...SideBarOptions.values.map(
-                  (option) => _buildButton(option: option),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: widget.isExpand
-              ? Material(
-                  shape: SuperellipseShape(
-                    borderRadius: BorderRadius.circular(20.sp),
-                  ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.sp),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 16.sp),
+                width: min(constraints.maxWidth, 48.sp) - 8.sp,
+                decoration: BoxDecoration(
                   color: mGD,
-                  clipBehavior: Clip.hardEdge,
-                  child: _option == SideBarOptions.code
-                      ? const CodeEditorPad()
-                      : Container(
-                          color: Colors.transparent,
-                        ),
-                )
-              : const SizedBox(),
-        ),
-      ],
+                  borderRadius: BorderRadius.circular(30.sp),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...SideBarOptions.values.map(
+                      (option) => _buildButton(option: option),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: widget.isExpand
+                  ? Material(
+                      shape: SuperellipseShape(
+                        borderRadius: BorderRadius.circular(20.sp),
+                      ),
+                      color: mGD,
+                      clipBehavior: Clip.hardEdge,
+                      child: _option == SideBarOptions.code
+                          ? const CodeEditorPad()
+                          : Container(
+                              color: Colors.transparent,
+                            ),
+                    )
+                  : const SizedBox(),
+            ),
+          ],
+        );
+      },
     );
   }
 

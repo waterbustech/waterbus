@@ -23,8 +23,8 @@ class MenuDrawerCard extends StatelessWidget {
         children: [
           Image.asset(
             item.iconAssetPath,
-            width: 22.sp,
-            height: 22.sp,
+            width: SizerUtil.isDesktop ? 22.sp : 18.5.sp,
+            height: SizerUtil.isDesktop ? 22.sp : 18.5.sp,
           ),
           SizedBox(width: 10.sp),
           Text(

@@ -9,6 +9,7 @@ import 'package:waterbus_sdk/models/call_state.dart';
 
 // Project imports:
 import 'package:waterbus/core/types/extensions/duration_x.dart';
+import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
@@ -129,21 +130,24 @@ class MeetingLayout extends StatelessWidget {
     BoxConstraints constraints,
   ) {
     return GridView.builder(
-      physics: const BouncingScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: SizerUtil.isDesktop
-            ? gridCount(meeting.users.length, constraints.maxWidth)
-            : 2,
-        crossAxisSpacing: 4.sp,
-        mainAxisSpacing: 4.sp,
-        childAspectRatio: SizerUtil.isDesktop ? (16 / 9) : 1,
-      ),
       itemCount: meeting.users.length,
-      itemBuilder: (context, index) => _buildVideoView(
+      itemBuilder: (_, index) => _buildVideoView(
         context,
-        participant: meeting.users[index],
+        participant: meeting.users.first,
         callState: callState,
         avatarSize: SizerUtil.isDesktop ? 50.sp : 35.sp,
+      ),
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
+        itemCount: _gridCount(meeting.users.length, constraints.maxWidth) < 2
+            ? 2
+            : meeting.users.length,
+        crossAxisCount: SizerUtil.isDesktop
+            ? _gridCount(meeting.users.length, constraints.maxWidth)
+            : 2,
+        mainAxisSpacing: 6.sp,
+        crossAxisSpacing: 6.sp,
+        childAspectRatio: SizerUtil.isDesktop ? (16 / 9) : 0.95,
       ),
     );
   }
@@ -165,7 +169,7 @@ class MeetingLayout extends StatelessWidget {
     );
   }
 
-  int gridCount(int number, double width) {
+  int _gridCount(int number, double width) {
     if (width / 300.sp < 2) return 1;
 
     if (number <= 4) return 2;

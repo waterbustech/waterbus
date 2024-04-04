@@ -141,9 +141,9 @@ flutter build web
 
 ## 🔥 Usage
 
-1. Sign up for an account
+1. Sign in with Google
 2. Create a new meeting
-3. Share the meeting link with other participants
+3. Share the meeting code & password with other participants
 4. Start the meeting and utilize the available features
 
 ## 🛠 Selfhosted Waterbus
