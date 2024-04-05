@@ -15,8 +15,8 @@ import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 
-class MyMeetings extends StatelessWidget {
-  const MyMeetings({super.key});
+class RecentMeetings extends StatelessWidget {
+  const RecentMeetings({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/features/chats/widgets/button_icon.dart';
 
 class InputSendMessage extends StatelessWidget {
   const InputSendMessage({super.key});
@@ -16,32 +15,21 @@ class InputSendMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 12.sp),
+      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(width: 0.3.sp, color: colorGreyWhite),
         ),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.sp),
+        padding: EdgeInsets.only(left: 24.sp, right: 2.75.sp),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: colorTitle,
+          color: Colors.grey.shade800,
           borderRadius: BorderRadius.circular(30.sp),
         ),
         child: Row(
           children: [
-            ButtonIcon(
-              margin: EdgeInsets.only(right: 10.sp, left: 5.sp),
-              icon: PhosphorIcons.smiley_light,
-              sizeIcon: 22.sp,
-              colorIcon: colorGray2,
-            ),
-            Container(
-              height: 22.sp,
-              width: 1.sp,
-              color: colorGray2,
-            ),
             Expanded(
               child: TextFormField(
                 style: TextStyle(
@@ -55,30 +43,24 @@ class InputSendMessage extends StatelessWidget {
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 10.sp,
                   ),
-                  hintText: 'Type something...',
+                  hintText: 'Leave a message...',
                   hintStyle: TextStyle(
-                    color: colorGreyWhite,
+                    color: mC,
                     fontSize: 12.sp,
                   ),
                   filled: true,
-                  fillColor: colorTitle,
-                  border: const OutlineInputBorder(
+                  fillColor: Colors.grey.shade800,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40.sp),
                     borderSide: BorderSide.none,
-                    gapPadding: 0,
                   ),
                 ),
                 onChanged: (val) {},
               ),
             ),
-            ButtonIcon(
-              icon: PhosphorIcons.microphone_light,
-              sizeIcon: 22.sp,
-              colorIcon: colorGray2,
-              margin: EdgeInsets.only(right: 10.sp),
-            ),
             Container(
-              decoration: const BoxDecoration(
-                color: colorPrimary,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
                 shape: BoxShape.circle,
               ),
               padding: EdgeInsets.all(7.sp),

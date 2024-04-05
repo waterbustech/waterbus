@@ -11,7 +11,12 @@ import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 
 class AvatarChat extends StatelessWidget {
   final ChatModel chatModel;
-  const AvatarChat({super.key, required this.chatModel});
+  final double size;
+  const AvatarChat({
+    super.key,
+    required this.chatModel,
+    this.size = 48.0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +31,8 @@ class AvatarChat extends StatelessWidget {
         color: mGD,
       ),
       child: CustomNetworkImage(
-        height: 45.5.sp,
-        width: 45.5.sp,
+        height: size,
+        width: size,
         urlToImage: chatModel.urlImage.first,
       ),
     );
@@ -35,8 +40,8 @@ class AvatarChat extends StatelessWidget {
 
   Widget groupChat() {
     return SizedBox(
-      height: 48.sp,
-      width: 48.sp,
+      height: size,
+      width: size,
       child: Stack(
         children: [
           Positioned(
@@ -49,8 +54,8 @@ class AvatarChat extends StatelessWidget {
                 color: mGD,
               ),
               child: CustomNetworkImage(
-                height: 30.5.sp,
-                width: 30.5.sp,
+                height: size * 0.7,
+                width: size * 0.7,
                 urlToImage: chatModel.urlImage.first,
               ),
             ),
@@ -65,8 +70,8 @@ class AvatarChat extends StatelessWidget {
                 color: mCL,
               ),
               child: CustomNetworkImage(
-                height: 30.5.sp,
-                width: 30.5.sp,
+                height: size * 0.7,
+                width: size * 0.7,
                 urlToImage: chatModel.urlImage[1],
               ),
             ),

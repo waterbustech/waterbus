@@ -22,7 +22,6 @@ class ProfileDrawerLayout extends StatelessWidget {
         right: 8.sp,
         top: SizerUtil.isDesktop ? 10.sp : 0,
       ),
-      color: Colors.black,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

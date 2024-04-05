@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 
-class ButtonIcon extends StatelessWidget {
+class IconButtonCustom extends StatelessWidget {
   final IconData icon;
   final Color? colorBackground;
   final EdgeInsetsGeometry? margin;
@@ -15,7 +15,7 @@ class ButtonIcon extends StatelessWidget {
   final double? sizeIcon;
   final EdgeInsetsGeometry? padding;
   final Color? colorIcon;
-  const ButtonIcon({
+  const IconButtonCustom({
     super.key,
     required this.icon,
     this.colorBackground,

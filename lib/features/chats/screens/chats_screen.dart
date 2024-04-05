@@ -2,14 +2,22 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/chats/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
+import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -19,66 +27,98 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  ChatModel? _currentChat;
+
+  void _handleTapChatItem(ChatModel chatModel) {
+    if (SizerUtil.isDesktop) {
+      setState(() {
+        _currentChat = chatModel;
+      });
+    } else {
+      AppNavigator.push(
+        Routes.conversationRoute,
+        arguments: {
+          'chatModel': chatModel,
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarTitleBack(
-        context,
-        title: 'Chats',
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        leading: Container(
-          alignment: Alignment.centerRight,
-          child: CustomNetworkImage(
-            height: 24.sp,
-            urlToImage: 'https://avatars.githubusercontent.com/u/60530946?v=4',
-          ),
-        ),
-        actions: [
-          Container(
-            color: Colors.transparent,
-            padding: EdgeInsets.symmetric(
-              vertical: 12.sp,
-              horizontal: 16.sp,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              "Edit",
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: ColoredBox(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Column(
-          children: [
-            SizedBox(height: 10.sp),
-            EnterCodeBox(
-              hintTextContent: 'Search your chat',
-              onTap: () {},
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: listFakeChat.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.sp,
-                  vertical: 20.sp,
-                ),
-                itemBuilder: (context, index) {
-                  return ChatCard(
-                    chatModel: listFakeChat[index],
+    return Row(
+      children: [
+        SizedBox(
+          width: SizerUtil.isDesktop ? 30.w : 100.w,
+          child: Scaffold(
+            appBar: appBarTitleBack(
+              context,
+              title: 'Chats',
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              leading: BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  final User user =
+                      state is UserGetDone ? state.user : kUserDefault;
+
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: AvatarCard(
+                      urlToImage: user.avatar,
+                      size: 24.sp,
+                    ),
                   );
                 },
               ),
             ),
-          ],
+            body: Column(
+              children: [
+                SizedBox(height: 10.sp),
+                EnterCodeBox(
+                  hintTextContent: 'Search',
+                  onTap: () {},
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: listFakeChat.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(bottom: 60.sp, top: 8.sp),
+                    itemBuilder: (context, index) {
+                      return GestureWrapper(
+                        onTap: () {
+                          _handleTapChatItem(listFakeChat[index]);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.sp,
+                            vertical: 4.sp,
+                          ),
+                          color: SizerUtil.isDesktop &&
+                                  _currentChat == listFakeChat[index]
+                              ? Colors.black87
+                              : Colors.transparent,
+                          child: ChatCard(
+                            chatModel: listFakeChat[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (SizerUtil.isDesktop)
+          VerticalDivider(
+            width: 1.sp,
+            thickness: 1.sp,
+          ),
+        Expanded(
+          child: _currentChat != null
+              ? ConversationScreen(chatModel: _currentChat!)
+              : const SizedBox(),
+        ),
+      ],
     );
   }
 }
