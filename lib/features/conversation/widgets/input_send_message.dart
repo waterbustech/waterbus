@@ -54,6 +54,7 @@ class InputSendMessage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(40.sp),
                     borderSide: BorderSide.none,
                   ),
+                  hoverColor: Colors.transparent,
                 ),
                 onChanged: (val) {},
               ),

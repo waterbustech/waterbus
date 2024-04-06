@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -69,6 +70,20 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   );
                 },
               ),
+              actions: [
+                Tooltip(
+                  message: 'Create Room',
+                  child: IconButton(
+                    onPressed: () {
+                      AppNavigator.push(Routes.createMeetingRoute);
+                    },
+                    icon: Icon(
+                      PhosphorIcons.plus,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
             body: Column(
               children: [
