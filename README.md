@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="https://github.com/lambiengcode/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
+  <img src="https://github.com/waterbustech/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
 </p>
 
 <div class="badges" align="center">
-<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/lambiengcode/waterbus"><img src="https://www.codefactor.io/repository/github/lambiengcode/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/lambiengcode/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/lambiengcode/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-122.6261.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
+<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/waterbustech/waterbus"><img src="https://www.codefactor.io/repository/github/waterbustech/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/waterbustech/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/waterbustech/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-122.6261.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
 </div>
 <div align="center">
 <a href="https://twitter.com/waterbustech"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><a href="https://discord.gg/mfrWVefU"><img alt="Discord" src="https://img.shields.io/discord/1220616225521143818"></a>
 </div>
 <p align="center">
   <a href="https://docs.waterbus.tech">Website</a> &bull;
-  <a href="https://github.com/lambiengcode/waterbus/wiki">Wiki</a> &bull;
-  <a href="https://github.com/lambiengcode/waterbus/blob/main/LICENSE">License</a>
+  <a href="https://github.com/waterbustech/waterbus/wiki">Wiki</a> &bull;
+  <a href="https://github.com/waterbustech/waterbus/blob/main/LICENSE">License</a>
 </p>
 
 <img src="./screenshots/waterbus-awesome.gif" width="100%"/>
@@ -34,7 +34,7 @@
 
 My project isn't intended to replace standard video conferencing platforms like `Google Meet`. Instead, it focuses on facilitating code sharing. I've noticed that features such as `Virtual Background` or `Picture in Picture` aren't widely implemented in existing solutions, and there's a lack of reference code for them. Many developers resort to third-party solutions for video calls but often miss out on these features. My goal is to provide a reference project that includes these functionalities, offering developers a starting point for integrating them into their own products.
 
-If you have suggestions or problems, please [open an issue](https://github.com/lambiengcode/waterbus/issues) or contribute directly 🤓
+If you have suggestions or problems, please [open an issue](https://github.com/waterbustech/waterbus/issues) or contribute directly 🤓
 
 <h3 align="center">👉 The Virtual Background feature supports on Android, iOS and MacOS</h3>
 <br/>
@@ -214,15 +214,15 @@ You can view the benchmark results in the generated plots and data files. Here's
 
 ## 💙 Supports
 
-Support it by joining [stargazers](https://github.com/lambiengcode/waterbus/stargazers) for this repository. ⭐
+Support it by joining [stargazers](https://github.com/waterbustech/waterbus/stargazers) for this repository. ⭐
 
 Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our next creations!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date&theme=dark)](https://star-history.com/#lambiengcode/waterbus&Date#gh-dark-mode-only)
-[![Star History Chart](https://api.star-history.com/svg?repos=lambiengcode/waterbus&type=Date)](https://star-history.com/#lambiengcode/waterbus&Date#gh-light-mode-only)
+[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date&theme=dark)](https://star-history.com/#waterbustech/waterbus&Date#gh-dark-mode-only)
+[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date)](https://star-history.com/#waterbustech/waterbus&Date#gh-light-mode-only)
 
-[![Stargazers repo roster for @lambiengcode/waterbus](https://reporoster.com/stars/notext/dark/lambiengcode/waterbus)](https://github.com/lambiengcode/waterbus/stargazers/#lambiengcode/waterbus&Date#gh-dark-mode-only)
-[![Stargazers repo roster for @lambiengcode/waterbus](https://reporoster.com/stars/notext/lambiengcode/waterbus)](https://github.com/lambiengcode/waterbus/stargazers/#gh-light-mode-only)
+[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/dark/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#waterbustech/waterbus&Date#gh-dark-mode-only)
+[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#gh-light-mode-only)
 
 ## 🤝 Contributing
 
