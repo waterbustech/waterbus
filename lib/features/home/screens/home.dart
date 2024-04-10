@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -72,24 +73,24 @@ class _HomeState extends State<Home> {
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.house_light,
                           iconDataSelected: PhosphorIcons.house_fill,
-                          label: 'Home',
+                          label: Strings.home.i18n,
                         ),
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.calendar_light,
                           iconDataSelected: PhosphorIcons.calendar_fill,
-                          label: 'Schedule',
+                          label: Strings.schedule.i18n,
                           index: 1,
                         ),
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.chats_teardrop_light,
                           iconDataSelected: PhosphorIcons.chats_teardrop_fill,
-                          label: 'Chats',
+                          label: Strings.chat.i18n,
                           index: 2,
                         ),
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.bell_simple_light,
                           iconDataSelected: PhosphorIcons.bell_simple_fill,
-                          label: 'Notifications',
+                          label: Strings.notifications.i18n,
                           index: 3,
                         ),
                       ],

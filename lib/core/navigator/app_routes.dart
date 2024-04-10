@@ -8,6 +8,7 @@ class Routes {
   static const String profileRoute = '/profile';
   static const String settingsRoute = '/settings';
   static const String privacyRoute = '/privacy';
+  static const String changeLanguage = '/languages';
 
   // Meeting
   static const String meetingRoute = '/meeting';

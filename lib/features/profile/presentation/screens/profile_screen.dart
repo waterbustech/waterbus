@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -45,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Profile',
+        title: Strings.profile.i18n,
         actions: [
           GestureWrapper(
             onTap: () {

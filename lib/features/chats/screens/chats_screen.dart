@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -58,7 +59,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           children: [
             SizedBox(height: 10.sp),
             EnterCodeBox(
-              hintTextContent: 'Search your chat',
+              hintTextContent: Strings.searchYourChat.i18n,
               onTap: () {},
             ),
             Expanded(

@@ -13,6 +13,7 @@ import 'package:waterbus/features/meeting/presentation/screens/create_meeting_sc
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
+import 'package:waterbus/features/profile/presentation/widgets/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 
@@ -59,7 +60,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           const PrivacyScreen(),
         );
-
+      case Routes.changeLanguage:
+        return _buildRoute(
+          settings,
+          const LanguageScreenState(),
+        );
       // Meeting
       case Routes.meetingRoute:
         return _buildRoute(

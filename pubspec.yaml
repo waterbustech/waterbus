@@ -87,7 +87,10 @@ dependencies:
   url_launcher: ^6.2.5
   sizer: 
     path: ./packages/sizer
-  
+  flutter_localizations:
+    sdk: flutter
+  i18n_extension: ^11.0.12
+
   # Code Editor
   re_editor: ^0.1.0
   re_highlight: ^0.0.3
@@ -143,6 +146,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
@@ -150,6 +154,8 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lotties/
+    - assets/country_flags/
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/permission_handler.dart';
@@ -46,7 +47,7 @@ class MeetingCard extends StatelessWidget {
                   .titleMedium
                   ?.copyWith(fontSize: 11.sp),
               children: [
-                const TextSpan(text: 'Room code: '),
+                TextSpan(text: Strings.roomCode.i18n),
                 TextSpan(
                   text: meeting.code.toString(),
                   style: TextStyle(
@@ -64,7 +65,7 @@ class MeetingCard extends StatelessWidget {
               Expanded(
                 child: meeting.isNoOneElse
                     ? Text(
-                        "No participants yet",
+                        Strings.noParticipantsYet.i18n,
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall

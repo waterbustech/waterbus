@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:re_editor/re_editor.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 class ContextMenuItemWidget extends PopupMenuItem<void>
     implements PreferredSizeWidget {
@@ -41,19 +42,19 @@ class ContextMenuControllerImpl implements SelectionToolbarController {
       ),
       items: [
         ContextMenuItemWidget(
-          text: 'Cut',
+          text: Strings.cut.i18n,
           onTap: () {
             controller.cut();
           },
         ),
         ContextMenuItemWidget(
-          text: 'Copy',
+          text: Strings.copy.i18n,
           onTap: () {
             controller.copy();
           },
         ),
         ContextMenuItemWidget(
-          text: 'Paste',
+          text: Strings.paste.i18n,
           onTap: () {
             controller.paste();
           },

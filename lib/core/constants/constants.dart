@@ -33,3 +33,8 @@ final List<String> desktopBackgrounds = [
   Assets.images.desktopBackground8Jpg.path,
   Assets.images.desktopBackground9Jpg.path,
 ];
+
+class ThemeList {
+  static const String dark = "darkMode";
+  static const String light = "lightMode";
+}

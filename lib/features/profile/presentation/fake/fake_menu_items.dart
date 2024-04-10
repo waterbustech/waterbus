@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 class MenuItemModel {
   final String title;
@@ -14,17 +15,20 @@ class MenuItemModel {
 }
 
 final List<MenuItemModel> menuItems = [
-  const MenuItemModel(title: 'Profile', iconData: PhosphorIcons.user_circle),
   const MenuItemModel(
-    title: 'Settings',
+    title: Strings.profile,
+    iconData: PhosphorIcons.user_circle,
+  ),
+  const MenuItemModel(
+    title: Strings.settings,
     iconData: PhosphorIcons.sliders_horizontal,
   ),
   const MenuItemModel(
-    title: 'Licenses',
+    title: Strings.licenses,
     iconData: PhosphorIcons.shield_check,
   ),
   const MenuItemModel(
-    title: 'Logout',
+    title: Strings.logout,
     iconData: PhosphorIcons.sign_out,
   ),
 ];

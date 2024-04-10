@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -124,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SizedBox(height: 10.sp),
                         EnterCodeBox(
+                          hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
                           suffixWidget: SizerUtil.isDesktop
                               ? _buildCreateMeetingButton
                               : null,
