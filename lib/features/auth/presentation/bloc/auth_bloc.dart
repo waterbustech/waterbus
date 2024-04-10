@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart';
+import 'package:waterbus/core/lang/language_service.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -54,6 +55,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (event is OnAuthCheckEvent) {
         final Either<Failure, User> hasLogined = await _checkAuth.call(null);
         FlutterNativeSplash.remove();
+
+        // Initial language
+        LanguageService().initialLanguage();
 
         hasLogined.fold(
           (l) => emit(_authFailure),

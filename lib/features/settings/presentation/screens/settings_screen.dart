@@ -2,21 +2,31 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/themes/theme_services.dart';
+import 'package:waterbus/core/lang/language_service.dart';
+import 'package:waterbus/core/lang/localization.dart';
+import 'package:waterbus/features/systems/data/datasources/systems_local_datasource.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
+import 'package:waterbus/features/systems/bloc/themes/theme_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -27,11 +37,25 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingsScreen> {
   CallSetting _settings = CallSetting();
+  String _currentLanguage = 'vi';
+  bool isDarkTheme = true;
 
   @override
   void initState() {
     super.initState();
     _settings = AppBloc.meetingBloc.callSetting.copyWith();
+    _currentLanguage = SystemLocalDataSourceImpl().getLocale;
+    isDarkTheme = ThemeService().getThemeMode() == ThemeMode.dark;
+  }
+
+  void _handleSaveLanguage({required String language}) {
+    if (LanguageService().getIsLanguage(language)) return;
+
+    setState(() {
+      _currentLanguage = language;
+    });
+
+    LanguageService().changeLanguage(isEnglish: _currentLanguage == 'en');
   }
 
   @override
@@ -39,7 +63,20 @@ class _SettingScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Settings',
+        title: Strings.settings.i18n,
+        leading: BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            final User user = state is UserGetDone ? state.user : kUserDefault;
+
+            return Align(
+              alignment: Alignment.centerRight,
+              child: AvatarCard(
+                urlToImage: user.avatar,
+                size: 24.sp,
+              ),
+            );
+          },
+        ),
         actions: [
           GestureWrapper(
             onTap: () {
@@ -77,6 +114,43 @@ class _SettingScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 8.sp),
+              _buildTitle('Displays'),
+              _buildLabel('Themes'),
+              SettingSwitchCard(
+                label: 'Dark Theme',
+                enabled: Theme.of(context).brightness == Brightness.dark,
+                icon: PhosphorIcons.moon_stars_fill,
+                onChanged: (isEnabled) {
+                  AppBloc.themeBloc.add(
+                    OnChangeTheme(
+                      themeMode: Theme.of(context).brightness == Brightness.dark
+                          ? ThemeMode.light
+                          : ThemeMode.dark,
+                    ),
+                  );
+                },
+              ),
+              _buildLabel('Languages'),
+              SettingCheckboxCard(
+                label: 'Vietnamese',
+                enabled: _currentLanguage == 'vi',
+                onTap: () {
+                  if (_currentLanguage == 'vi') return;
+
+                  _handleSaveLanguage(language: 'vi');
+                },
+              ),
+              SettingCheckboxCard(
+                label: 'English',
+                enabled: _currentLanguage == 'en',
+                hasDivider: false,
+                onTap: () {
+                  if (_currentLanguage == 'en') return;
+
+                  _handleSaveLanguage(language: 'en');
+                },
+              ),
+              _buildTitle('Call Settings'),
               _buildLabel('General'),
               SettingSwitchCard(
                 label: 'Low-Bandwidth Mode',
@@ -233,6 +307,19 @@ class _SettingScreenState extends State<SettingsScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTitle(String label) {
+    return Padding(
+      padding: EdgeInsets.only(top: 12.sp),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w700,
+            ),
       ),
     );
   }

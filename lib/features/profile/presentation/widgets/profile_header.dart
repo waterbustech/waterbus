@@ -8,9 +8,11 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/systems/bloc/themes/theme_bloc.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -32,12 +34,29 @@ class ProfileHeader extends StatelessWidget {
                   urlToImage: user.avatar,
                   size: 26.sp,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    PhosphorIcons.moon_stars_fill,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (context, state) {
+                    return IconButton(
+                      onPressed: () {
+                        AppBloc.themeBloc.add(
+                          OnChangeTheme(
+                            themeMode:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? ThemeMode.light
+                                    : ThemeMode.dark,
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Theme.of(context).brightness == Brightness.dark
+                            ? PhosphorIcons.moon_stars_fill
+                            : PhosphorIcons.sun_dim_fill,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).primaryColor
+                            : Colors.orangeAccent,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

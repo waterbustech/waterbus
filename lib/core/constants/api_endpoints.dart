@@ -1,6 +1,6 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://localhost:5980/busapi/v1/';
-  static const String wsUrl = 'http://localhost:5985';
+  static const String baseUrl = 'https://service.waterbus.tech/busapi/v1/';
+  static const String wsUrl = 'https://sfu.waterbus.tech';
 
   // Auth
   static const String signIn = 'auth/login';

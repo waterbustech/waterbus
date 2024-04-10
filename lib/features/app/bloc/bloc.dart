@@ -9,11 +9,13 @@ import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/systems/bloc/themes/theme_bloc.dart';
 
 class AppBloc {
   static final HomeBloc homeBloc = getIt<HomeBloc>();
   static final AuthBloc authBloc = getIt<AuthBloc>();
   static final UserBloc userBloc = getIt<UserBloc>();
+  static final ThemeBloc themeBloc = getIt<ThemeBloc>();
   static final MeetingBloc meetingBloc = getIt<MeetingBloc>();
   static final MeetingListBloc meetingListBloc = getIt<MeetingListBloc>();
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
@@ -37,6 +39,9 @@ class AppBloc {
     ),
     BlocProvider<BeautyFiltersBloc>(
       create: (context) => beautyFiltersBloc,
+    ),
+    BlocProvider<ThemeBloc>(
+      create: (context) => themeBloc,
     ),
   ];
 

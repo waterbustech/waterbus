@@ -1,5 +1,9 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,103 +48,116 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SlidingDrawer(
-      key: _sideMenuKey,
-      ignorePointer: SizerUtil.isDesktop,
-      drawerBuilder: (_) =>
-          SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(context),
-      contentBuilder: (_) => Scaffold(
-        appBar: SizerUtil.isDesktop
-            ? null
-            : appBarTitleBack(
-                context,
-                centerTitle: false,
-                isVisibleBackButton: false,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                titleWidget: BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    final User user =
-                        state is UserGetDone ? state.user : kUserDefault;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Theme.of(context).brightness ==
+                (Platform.isAndroid ? Brightness.dark : Brightness.light)
+            ? Brightness.light
+            : Brightness.dark,
+        statusBarIconBrightness: Theme.of(context).brightness ==
+                (Platform.isAndroid ? Brightness.dark : Brightness.light)
+            ? Brightness.light
+            : Brightness.dark,
+      ),
+      child: SlidingDrawer(
+        key: _sideMenuKey,
+        ignorePointer: SizerUtil.isDesktop,
+        drawerBuilder: (_) =>
+            SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(context),
+        contentBuilder: (_) => Scaffold(
+          appBar: SizerUtil.isDesktop
+              ? null
+              : appBarTitleBack(
+                  context,
+                  centerTitle: false,
+                  isVisibleBackButton: false,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  titleWidget: BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      final User user =
+                          state is UserGetDone ? state.user : kUserDefault;
 
-                    return Row(
-                      children: [
-                        SizedBox(width: 6.sp),
-                        GestureDetector(
-                          onTap: _toggleDrawer,
-                          child: AvatarCard(
-                            urlToImage: user.avatar,
-                            size: 30.sp,
+                      return Row(
+                        children: [
+                          SizedBox(width: 6.sp),
+                          GestureDetector(
+                            onTap: _toggleDrawer,
+                            child: AvatarCard(
+                              urlToImage: user.avatar,
+                              size: 30.sp,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10.sp),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              user.fullName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Text(
-                              '@${user.userName}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontSize: 10.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
+                          SizedBox(width: 10.sp),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Text(
+                                '@${user.userName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 10.sp,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  actions: [_buildCreateMeetingButton],
                 ),
-                actions: [_buildCreateMeetingButton],
-              ),
-        body: Row(
-          children: [
-            ...(SizerUtil.isDesktop
-                ? [
-                    SizedBox(
-                      width: 26.w,
-                      child: _buildDrawable(context),
-                    ),
-                    VerticalDivider(
-                      width: 1.sp,
-                      thickness: 1.sp,
-                    ),
-                  ]
-                : []),
-            Expanded(
-              child: ColoredBox(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Column(
-                  children: [
-                    SizedBox(height: 10.sp),
-                    EnterCodeBox(
-                      suffixWidget: SizerUtil.isDesktop
-                          ? _buildCreateMeetingButton
-                          : null,
-                      onTap: () {
-                        AppNavigator.push(Routes.enterCodeRoute);
-                      },
-                    ),
-                    SizedBox(height: 12.sp),
-                    const Expanded(
-                      child: RecentMeetings(),
-                    ),
-                  ],
+          body: Row(
+            children: [
+              ...(SizerUtil.isDesktop
+                  ? [
+                      SizedBox(
+                        width: 26.w,
+                        child: _buildDrawable(context),
+                      ),
+                      VerticalDivider(
+                        width: 1.sp,
+                        thickness: 1.sp,
+                      ),
+                    ]
+                  : []),
+              Expanded(
+                child: ColoredBox(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.sp),
+                      EnterCodeBox(
+                        suffixWidget: SizerUtil.isDesktop
+                            ? _buildCreateMeetingButton
+                            : null,
+                        onTap: () {
+                          AppNavigator.push(Routes.enterCodeRoute);
+                        },
+                      ),
+                      SizedBox(height: 12.sp),
+                      const Expanded(
+                        child: RecentMeetings(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

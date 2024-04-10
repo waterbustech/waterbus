@@ -7,6 +7,7 @@ import 'package:waterbus/core/utils/datasources/base_local_data.dart';
 import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:waterbus/features/systems/bloc/themes/theme_bloc.dart';
 
 class Application {
   /// [Production - Dev]
@@ -21,6 +22,10 @@ class Application {
       // Config dio helpers
       await getIt<BaseRemoteData>().initialize();
 
+      // Get theme mode
+      AppBloc.themeBloc.add(InitialTheme());
+
+      // Check authentication
       AppBloc.authBloc.add(OnAuthCheckEvent());
     } catch (error) {
       debugPrint(error.toString());
