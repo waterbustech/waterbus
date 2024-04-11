@@ -10,21 +10,17 @@ import 'dart:async' as _i4;
 // Package imports:
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:waterbus_sdk/models/index.dart' as _i11;
+import 'package:waterbus_sdk/models/index.dart' as _i9;
 
 // Project imports:
 import 'package:waterbus/core/error/failures.dart' as _i5;
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart' as _i6;
 
-import 'package:waterbus/features/meeting/domain/entities/participant.dart'
-    as _i10;
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart'
     as _i3;
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart'
     as _i7;
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart'
-    as _i9;
-import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart'
     as _i8;
 
 // ignore_for_file: type=lint
@@ -136,18 +132,18 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> joinMeeting(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> joinMeetingWithPassword(
           _i7.CreateMeetingParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
-          #joinMeeting,
+          #joinMeetingWithPassword,
           [params],
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
             _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
-            #joinMeeting,
+            #joinMeetingWithPassword,
             [params],
           ),
         )),
@@ -156,25 +152,25 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
                 _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
-            #joinMeeting,
+            #joinMeetingWithPassword,
             [params],
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> leaveMeeting(
-          _i8.LeaveMeetingParams? params) =>
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> joinMeetingWithoutPassword(
+          _i7.CreateMeetingParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
-          #leaveMeeting,
+          #joinMeetingWithoutPassword,
           [params],
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>.value(
             _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
-            #leaveMeeting,
+            #joinMeetingWithoutPassword,
             [params],
           ),
         )),
@@ -183,7 +179,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
                 _FakeEither_0<_i5.Failure, _i6.Meeting>(
           this,
           Invocation.method(
-            #leaveMeeting,
+            #joinMeetingWithoutPassword,
             [params],
           ),
         )),
@@ -191,7 +187,7 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>> getInfoMeeting(
-          _i9.GetMeetingParams? params) =>
+          _i8.GetMeetingParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #getInfoMeeting,
@@ -217,6 +213,29 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Meeting>>);
 
   @override
+  _i2.Either<_i5.Failure, bool> removeRecentJoined(int? code) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeRecentJoined,
+          [code],
+        ),
+        returnValue: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #removeRecentJoined,
+            [code],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #removeRecentJoined,
+            [code],
+          ),
+        ),
+      ) as _i2.Either<_i5.Failure, bool>);
+
+  @override
   _i2.Either<_i5.Failure, bool> cleanAllRecentJoined() => (super.noSuchMethod(
         Invocation.method(
           #cleanAllRecentJoined,
@@ -239,77 +258,49 @@ class MockMeetingRepository extends _i1.Mock implements _i3.MeetingRepository {
       ) as _i2.Either<_i5.Failure, bool>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>> getParticipantById(
-          int? participantId) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getParticipantById,
-          [participantId],
-        ),
-        returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>.value(
-                _FakeEither_0<_i5.Failure, _i10.Participant>(
-          this,
-          Invocation.method(
-            #getParticipantById,
-            [participantId],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>.value(
-                _FakeEither_0<_i5.Failure, _i10.Participant>(
-          this,
-          Invocation.method(
-            #getParticipantById,
-            [participantId],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i10.Participant>>);
-
-  @override
-  _i2.Either<_i5.Failure, _i11.CallSetting> saveCallSettings(
-          _i11.CallSetting? setting) =>
+  _i2.Either<_i5.Failure, _i9.CallSetting> saveCallSettings(
+          _i9.CallSetting? setting) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveCallSettings,
           [setting],
         ),
-        returnValue: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+        returnValue: _FakeEither_0<_i5.Failure, _i9.CallSetting>(
           this,
           Invocation.method(
             #saveCallSettings,
             [setting],
           ),
         ),
-        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i9.CallSetting>(
           this,
           Invocation.method(
             #saveCallSettings,
             [setting],
           ),
         ),
-      ) as _i2.Either<_i5.Failure, _i11.CallSetting>);
+      ) as _i2.Either<_i5.Failure, _i9.CallSetting>);
 
   @override
-  _i2.Either<_i5.Failure, _i11.CallSetting> getCallSettings() =>
+  _i2.Either<_i5.Failure, _i9.CallSetting> getCallSettings() =>
       (super.noSuchMethod(
         Invocation.method(
           #getCallSettings,
           [],
         ),
-        returnValue: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+        returnValue: _FakeEither_0<_i5.Failure, _i9.CallSetting>(
           this,
           Invocation.method(
             #getCallSettings,
             [],
           ),
         ),
-        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i11.CallSetting>(
+        returnValueForMissingStub: _FakeEither_0<_i5.Failure, _i9.CallSetting>(
           this,
           Invocation.method(
             #getCallSettings,
             [],
           ),
         ),
-      ) as _i2.Either<_i5.Failure, _i11.CallSetting>);
+      ) as _i2.Either<_i5.Failure, _i9.CallSetting>);
 }

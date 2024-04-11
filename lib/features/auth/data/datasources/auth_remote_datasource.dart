@@ -26,7 +26,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   Future<UserModel?> signInWithSocial(AuthPayloadModel authPayload) async {
     final Map<String, dynamic> body = authPayload.toMap();
     final Response response = await _baseRemoteData.postRoute(
-      ApiEndpoints.signIn,
+      ApiEndpoints.auth,
       body: body,
     );
 
@@ -39,8 +39,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<(String, String)> refreshToken() async {
-    final Response response = await _baseRemoteData.dio.post(
-      ApiEndpoints.refreshToken,
+    final Response response = await _baseRemoteData.dio.get(
+      ApiEndpoints.auth,
       options: _baseRemoteData.getOptionsRefreshToken,
     );
 
@@ -54,8 +54,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<bool> logOut() async {
-    final Response response = await _baseRemoteData.postRoute(
-      ApiEndpoints.signOut,
+    final Response response = await _baseRemoteData.deleteRoute(
+      ApiEndpoints.auth,
     );
 
     if (response.statusCode == StatusCode.noContent) {

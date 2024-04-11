@@ -7,15 +7,17 @@ import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 void main() {
   group('StatusEnum tests', () {
     test('StatusEnum.fromValue returns correct enum value', () {
-      const activeValue = 0;
-      const inactiveValue = 1;
+      const inviting = 0;
+      const invisibleValue = 1;
+      const joinedValue = 2;
 
-      expect(StatusX.fromValue(activeValue), equals(StatusEnum.active));
-      expect(StatusX.fromValue(inactiveValue), equals(StatusEnum.inactive));
+      expect(StatusX.fromValue(inviting), equals(StatusEnum.inviting));
+      expect(StatusX.fromValue(invisibleValue), equals(StatusEnum.invisible));
+      expect(StatusX.fromValue(joinedValue), equals(StatusEnum.joined));
     });
 
     test('StatusEnum.fromValue throws exception for unknown value', () {
-      const unknownValue = 2;
+      const unknownValue = 3;
 
       expect(() => StatusX.fromValue(unknownValue), throwsException);
     });

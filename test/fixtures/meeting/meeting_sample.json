@@ -1,9 +1,11 @@
 {
     "title": "Meeting with Kai 1",
-    "users": [
+    "participants": [],
+    "members": [
       {
         "id": 2,
         "role": 0,
+        "status": 2,
         "createdAt": "2023-09-17T14:44:01.137Z",
         "deletedAt": null,
         "user": {

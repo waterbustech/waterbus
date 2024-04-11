@@ -47,9 +47,8 @@ class DioConfiguration {
       InterceptorsWrapper(
         onResponse: (response, handler) async {
           final bool isRefreshingToken =
-              [ApiEndpoints.refreshToken, ApiEndpoints.signOut].contains(
-            response.requestOptions.path,
-          );
+              response.requestOptions.path == ApiEndpoints.auth &&
+                  response.requestOptions.method == 'GET';
 
           if (response.statusCode == StatusCode.unauthorized) {
             if (isRefreshingToken) {
@@ -133,8 +132,8 @@ class DioConfiguration {
       return ("", "");
     }
 
-    final Response response = await _remoteData.dio.post(
-      ApiEndpoints.refreshToken,
+    final Response response = await _remoteData.dio.get(
+      ApiEndpoints.auth,
       options: _remoteData.getOptionsRefreshToken,
     );
 

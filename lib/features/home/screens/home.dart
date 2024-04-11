@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
@@ -9,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -52,10 +52,10 @@ class _HomeState extends State<Home> {
                   sigmaY: 25,
                 ),
                 child: Container(
-                  height: Platform.isIOS ? 64.sp : 60.sp,
+                  height: WebRTC.platformIsIOS ? 64.sp : 60.sp,
                   padding: EdgeInsets.symmetric(horizontal: 8.sp).add(
                     EdgeInsets.only(
-                      bottom: Platform.isIOS ? 0 : 12.sp,
+                      bottom: WebRTC.platformIsIOS ? 0 : 12.sp,
                       top: 10.sp,
                     ),
                   ),
@@ -69,8 +69,8 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _buildItemBottomBar(
-                          iconData: PhosphorIcons.house,
-                          iconDataSelected: PhosphorIcons.house_fill,
+                          iconData: PhosphorIcons.presentation,
+                          iconDataSelected: PhosphorIcons.presentation_fill,
                           label: 'Home',
                         ),
                         _buildItemBottomBar(
@@ -80,8 +80,8 @@ class _HomeState extends State<Home> {
                           index: 1,
                         ),
                         _buildItemBottomBar(
-                          iconData: PhosphorIcons.bell_simple,
-                          iconDataSelected: PhosphorIcons.bell_simple_fill,
+                          iconData: PhosphorIcons.gear,
+                          iconDataSelected: PhosphorIcons.gear_fill,
                           label: 'Notifications',
                           index: 2,
                         ),

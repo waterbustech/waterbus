@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
@@ -45,7 +46,7 @@ class ConversationScreen extends StatelessWidget {
               ),
             ),
             const InputSendMessage(),
-            SizedBox(height: 10.sp),
+            SizedBox(height: WebRTC.platformIsMobile ? 10.sp : 0),
           ],
         ),
       ),

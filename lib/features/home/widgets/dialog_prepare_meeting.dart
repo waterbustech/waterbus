@@ -48,7 +48,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                           ?.copyWith(fontSize: 11.sp),
                     )
                   : StackAvatar(
-                      images: meeting.getUniqueUsers
+                      images: meeting.members
                           .map(
                             (user) => user.user.avatar,
                           )

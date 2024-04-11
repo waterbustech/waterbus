@@ -14,7 +14,6 @@ import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/repositories/meeting_repository.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 
 @LazySingleton(as: MeetingRepository)
 class MeetingRepositoryImpl extends MeetingRepository {
@@ -61,12 +60,28 @@ class MeetingRepositoryImpl extends MeetingRepository {
   }
 
   @override
-  Future<Either<Failure, Meeting>> joinMeeting(
+  Future<Either<Failure, Meeting>> joinMeetingWithPassword(
     CreateMeetingParams params,
   ) async {
-    Meeting? meeting = await _remoteDataSource.joinMeeting(
+    Meeting? meeting = await _remoteDataSource.joinMeetingWithPassword(
       meeting: params.meeting,
       password: params.password,
+    );
+
+    if (meeting == null) return Left(NullValue());
+
+    meeting = findMyParticipantObject(meeting);
+    _localDataSource.insertOrUpdate(meeting);
+
+    return Right(meeting);
+  }
+
+  @override
+  Future<Either<Failure, Meeting>> joinMeetingWithoutPassword(
+    CreateMeetingParams params,
+  ) async {
+    Meeting? meeting = await _remoteDataSource.joinMeetingWithoutPassword(
+      meeting: params.meeting,
     );
 
     if (meeting == null) return Left(NullValue());
@@ -94,27 +109,6 @@ class MeetingRepositoryImpl extends MeetingRepository {
   }
 
   @override
-  Future<Either<Failure, Meeting>> leaveMeeting(
-    LeaveMeetingParams params,
-  ) async {
-    Meeting? meeting = await _remoteDataSource.leaveMeeting(
-      code: params.code,
-      participantId: params.participantId,
-    );
-
-    if (meeting == null) return Left(NullValue());
-
-    meeting = findMyParticipantObject(
-      meeting,
-      participantId: params.participantId,
-    );
-
-    _localDataSource.update(meeting);
-
-    return Right(meeting);
-  }
-
-  @override
   Future<Either<Failure, List<Meeting>>> getRecentJoined() async {
     final List<Meeting> meetings = _localDataSource.meetings;
 
@@ -122,22 +116,15 @@ class MeetingRepositoryImpl extends MeetingRepository {
   }
 
   @override
-  Either<Failure, bool> cleanAllRecentJoined() {
-    _localDataSource.removeAll();
+  Either<Failure, bool> removeRecentJoined(int code) {
+    _localDataSource.removeMeeting(code);
     return const Right(true);
   }
 
   @override
-  Future<Either<Failure, Participant>> getParticipantById(
-    int participantId,
-  ) async {
-    final Participant? participant = await _remoteDataSource.getParticipant(
-      participantId,
-    );
-
-    if (participant == null) return Left(NullValue());
-
-    return Right(participant);
+  Either<Failure, bool> cleanAllRecentJoined() {
+    _localDataSource.removeAll();
+    return const Right(true);
   }
 
   @override

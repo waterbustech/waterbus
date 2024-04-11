@@ -28,7 +28,7 @@ void main() {
   test('should call joinMeeting on the repository with the given parameters',
       () async {
     // Arrange
-    when(mockRepository.joinMeeting(createMeetingParams))
+    when(mockRepository.joinMeetingWithPassword(createMeetingParams))
         .thenAnswer((_) async => const Right(testMeeting));
 
     // Act
@@ -36,7 +36,7 @@ void main() {
 
     // Assert
     expect(result, const Right(testMeeting));
-    verify(mockRepository.joinMeeting(createMeetingParams));
+    verify(mockRepository.joinMeetingWithPassword(createMeetingParams));
     verifyNoMoreInteractions(mockRepository);
   });
 }

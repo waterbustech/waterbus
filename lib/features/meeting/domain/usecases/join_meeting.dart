@@ -16,7 +16,13 @@ class JoinMeeting implements UseCase<Meeting, CreateMeetingParams> {
   JoinMeeting(this.repository);
 
   @override
-  Future<Either<Failure, Meeting>> call(CreateMeetingParams params) async {
-    return await repository.joinMeeting(params);
+  Future<Either<Failure, Meeting>> call(
+    CreateMeetingParams params,
+  ) async {
+    if (params.password.isEmpty) {
+      return await repository.joinMeetingWithoutPassword(params);
+    }
+
+    return await repository.joinMeetingWithPassword(params);
   }
 }

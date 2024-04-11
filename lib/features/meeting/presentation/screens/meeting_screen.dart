@@ -60,13 +60,13 @@ class MeetingScreen extends StatelessWidget {
     Meeting meeting,
     CallState? callState,
   ) {
-    if (meeting.users.length < 2) return const SizedBox();
+    if (meeting.participants.length < 2) return const SizedBox();
 
     return Row(
       children: [
         Expanded(
           child: MeetView(
-            participant: meeting.users.first,
+            participant: meeting.participants.first,
             callState: callState,
             avatarSize: 25.sp,
             radius: BorderRadius.horizontal(
@@ -76,7 +76,7 @@ class MeetingScreen extends StatelessWidget {
         ),
         Expanded(
           child: MeetView(
-            participant: meeting.users[1],
+            participant: meeting.participants[1],
             callState: callState,
             avatarSize: 25.sp,
             radius: BorderRadius.horizontal(

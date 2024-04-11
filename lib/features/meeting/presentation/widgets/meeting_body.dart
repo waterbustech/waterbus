@@ -16,7 +16,6 @@ import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
@@ -171,7 +170,6 @@ class _MeetingBodyState extends State<MeetingBody> {
                     icon: PhosphorIcons.x,
                     backgroundColor: Colors.red,
                     onTap: () {
-                      displayLoadingLayer();
                       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
                     },
                   ),

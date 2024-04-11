@@ -1,4 +1,4 @@
-part of 'meeting_list_bloc.dart';
+part of 'recent_joined_bloc.dart';
 
 abstract class MeetingListState extends Equatable {
   const MeetingListState({
