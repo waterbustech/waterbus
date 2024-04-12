@@ -11,8 +11,8 @@ import 'package:mockito/mockito.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
+import 'package:waterbus/features/meeting/domain/entities/member.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
-import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
@@ -42,12 +42,10 @@ void main() {
       );
       const participant1 = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
       const participant2 = Participant(
         id: 2,
-        role: MeetingRole.host,
         user: userModel,
       );
 
@@ -184,16 +182,9 @@ void main() {
     const user2 = User(id: 2, fullName: '1', userName: '1');
     const user3 = User(id: 3, fullName: '1', userName: '1');
 
-    const participant1 =
-        Participant(user: user1, id: 1, role: MeetingRole.attendee);
-    const participant2 =
-        Participant(user: user2, id: 2, role: MeetingRole.attendee);
-    const participant3 = Participant(
-      user: user3,
-      id: 3,
-      role: MeetingRole.attendee,
-      status: StatusEnum.inactive,
-    );
+    const participant1 = Participant(user: user1, id: 1);
+    const participant2 = Participant(user: user2, id: 2);
+    const participant3 = Participant(user: user3, id: 3);
 
     const meetingWithParticipants = Meeting(
       title: "Meeting with Kai",
@@ -205,7 +196,10 @@ void main() {
     );
 
     test('should return active users', () {
-      expect(meetingWithParticipants.users, [participant1, participant2]);
+      expect(
+        meetingWithParticipants.participants,
+        [participant1, participant2, participant3],
+      );
     });
 
     test('should return true for isNoOneElse when no users', () {
@@ -236,7 +230,6 @@ void main() {
         participants: [
           Participant(
             id: 1,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Alice',
@@ -256,7 +249,6 @@ void main() {
         participants: [
           Participant(
             id: 1,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Alice',
@@ -265,7 +257,6 @@ void main() {
           ),
           Participant(
             id: 2,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Bob',
@@ -285,7 +276,6 @@ void main() {
         participants: [
           Participant(
             id: 1,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Alice',
@@ -294,7 +284,6 @@ void main() {
           ),
           Participant(
             id: 2,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Bob',
@@ -303,7 +292,6 @@ void main() {
           ),
           Participant(
             id: 3,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Kai',
@@ -312,7 +300,6 @@ void main() {
           ),
           Participant(
             id: 4,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'lambiengcode',
@@ -333,7 +320,6 @@ void main() {
         participants: [
           Participant(
             id: 1,
-            role: MeetingRole.attendee,
             user: User(
               id: 1,
               fullName: 'Alice',
@@ -376,11 +362,11 @@ void main() {
 
       const testMeeting = Meeting(
         title: '1',
-        participants: [
-          Participant(
+        members: [
+          Member(
             id: 1,
-            role: MeetingRole.host,
             user: testUser,
+            role: MeetingRole.host,
           ),
         ],
       );
@@ -410,7 +396,6 @@ void main() {
       participants: [
         Participant(
           id: 1,
-          role: MeetingRole.attendee,
           user: User(
             id: 1,
             fullName: 'Alice',
@@ -424,7 +409,6 @@ void main() {
       participants: [
         Participant(
           id: 2,
-          role: MeetingRole.host,
           user: User(
             id: 1,
             fullName: 'Bob',
@@ -438,6 +422,7 @@ void main() {
     expect(meeting1.props, [
       meeting1.id,
       meeting1.participants,
+      meeting1.members,
       meeting1.code,
       meeting1.createdAt,
       meeting1.title,

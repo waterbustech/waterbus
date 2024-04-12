@@ -1,13 +1,11 @@
 {
     "id": 1,
-    "role": 1,
     "user": {
         "id": 1,
         "fullName": "Kai",
         "userName": "lambiengcode",
         "avatar": null
     },
-    "isMe": false,
-    "status": 0
+    "isMe": false
   }
   

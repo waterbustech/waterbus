@@ -3,9 +3,7 @@ class ApiEndpoints {
   static const String wsUrl = 'https://sfu.waterbus.tech';
 
   // Auth
-  static const String signIn = 'auth/login';
-  static const String refreshToken = 'auth/refresh';
-  static const String signOut = 'auth/logout';
+  static const String auth = 'auth';
   static const String presignedUrlS3 = 'auth/presigned-url';
 
   // Users
@@ -13,5 +11,9 @@ class ApiEndpoints {
 
   // Meetings
   static const String meetings = 'meetings';
-  static const String participants = 'meetings/participants';
+  static const String joinWithPassword = 'meetings/join/password';
+  static const String joinWithoutPassword = 'meetings/join';
+
+  // Chats
+  static const String chats = 'chats';
 }

@@ -26,22 +26,20 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/get_participant.dart';
 import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/leave_meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
 import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
 
 part 'meeting_event.dart';
@@ -53,8 +51,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final JoinMeeting _joinMeeting;
   final UpdateMeeting _updateMeeting;
   final GetInfoMeeting _getInfoMeeting;
-  final LeaveMeeting _leaveMeeting;
-  final GetParticipant _getParticipant;
   final GetCallSettings _getCallSettings;
   final SaveCallSettings _saveCallSettings;
   final PipChannel _pipChannel;
@@ -71,8 +67,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._joinMeeting,
     this._updateMeeting,
     this._getInfoMeeting,
-    this._leaveMeeting,
-    this._getParticipant,
     this._getCallSettings,
     this._saveCallSettings,
     this._pipChannel,
@@ -98,11 +92,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       transformer: sequential(),
       (event, emit) async {
         if (event is CreateMeetingEvent) {
-          final Meeting? meetingCreated = await _handleCreateMeeting(event);
-
-          if (meetingCreated != null) {
-            emit(_joinedMeeting);
-          }
+          await _handleCreateMeeting(event);
         }
 
         if (event is UpdateMeetingEvent) {
@@ -117,29 +107,18 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           // Will be take the meeting object in recent joined
           _currentMeeting = event.meeting;
 
-          final int indexOfParticipant =
-              _currentMeeting!.participants.indexWhere(
-            (participant) =>
-                participant.user.id == AppBloc.userBloc.user?.id &&
-                participant.role == MeetingRole.host,
+          final int indexOfMember = _currentMeeting!.members.indexWhere(
+            (member) =>
+                member.user.id == AppBloc.userBloc.user?.id &&
+                member.status.value > StatusEnum.inviting.value,
           );
 
-          final bool isHost = indexOfParticipant != -1;
+          final bool isMember = indexOfMember != -1;
 
-          // Will join directly if the participant is the host of room
-          if (isHost) {
-            if (_currentMeeting!.participants[indexOfParticipant].isMe) {
-              _mParticipant = _currentMeeting!.participants[indexOfParticipant];
-            }
-
+          // Will join directly if the participant is room member
+          if (isMember) {
             displayLoadingLayer();
-
-            add(
-              const JoinMeetingWithPasswordEvent(
-                password: '',
-                isHost: true,
-              ),
-            );
+            add(const JoinMeetingWithPasswordEvent(isMember: true));
             return;
           }
 
@@ -157,6 +136,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
               roomCode: _currentMeeting!.code.toString(),
               participantId: _mParticipant!.id,
             );
+
+            final List<String> targetIds = _currentMeeting!.participants
+                .where((participant) => !participant.isMe)
+                .map((participant) => participant.id.toString())
+                .toList();
+
+            _waterbusSdk.subscribe(targetIds);
           }
 
           AppNavigator.pop();
@@ -164,7 +150,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           if (isJoinSucceed) {
             emit(_joinedMeeting);
 
-            if (event.isHost) {
+            if (event.isMember) {
               AppNavigator.push(Routes.meetingRoute);
             }
           }
@@ -323,7 +309,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
   // MARK: Private
-  Future<Meeting?> _handleCreateMeeting(CreateMeetingEvent event) async {
+  Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
     final Either<Failure, Meeting> meeting = await _createMeeting.call(
       CreateMeetingParams(
         meeting: Meeting(title: event.roomName),
@@ -331,21 +317,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       ),
     );
 
-    AppNavigator.pop();
+    AppNavigator.popUntil(Routes.rootRoute);
 
     return meeting.fold((l) => null, (r) async {
-      _mParticipant = r.participants.first;
-
-      await _initialWebRTCManager(
-        roomCode: r.code.toString(),
-        participantId: _mParticipant!.id,
-      );
-
-      AppNavigator.replaceWith(Routes.meetingRoute);
-      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
-      _currentMeeting = r;
-
-      return r;
+      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
     });
   }
 
@@ -362,8 +337,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     return meeting.fold((l) => false, (r) {
       _currentMeeting = r;
 
-      AppBloc.meetingListBloc.add(
-        InsertRecentJoinEvent(meeting: r),
+      AppBloc.recentJoinedBloc.add(
+        InsertRecentJoinedEvent(meeting: r),
       );
 
       final int indexOfMyParticipant = r.participants.lastIndexWhere(
@@ -404,7 +379,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     meeting.fold((l) => null, (r) {
       AppNavigator.popUntil(Routes.meetingRoute);
-      AppBloc.meetingListBloc.add(InsertRecentJoinEvent(meeting: r));
+      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
 
       return _currentMeeting = r;
     });
@@ -413,25 +388,24 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
     if (_currentMeeting == null || _mParticipant == null) return;
 
-    final Either<Failure, Meeting> isLeaveSucceed = await _leaveMeeting.call(
-      LeaveMeetingParams(
-        code: _currentMeeting!.code,
-        participantId: _mParticipant!.id,
-      ),
+    final List<Participant> participants = _currentMeeting!.participants
+        .where((participant) => !participant.isMe)
+        .toList();
+
+    _currentMeeting = _currentMeeting!.copyWith(participants: participants);
+
+    AppBloc.recentJoinedBloc.add(
+      UpdateRecentJoinedEvent(meeting: _currentMeeting!),
     );
 
+    _currentMeeting = null;
+    _mParticipant = null;
+
+    if (!event.isReleasedWaterbusSdk) {
+      _waterbusSdk.leaveRoom();
+    }
+
     AppNavigator.pop();
-
-    isLeaveSucceed.fold((l) => null, (r) {
-      _currentMeeting = null;
-      _mParticipant = null;
-
-      if (!event.isReleasedWaterbusSdk) {
-        _waterbusSdk.leaveRoom();
-      }
-
-      AppNavigator.pop();
-    });
   }
 
   Future<void> _handleNewParticipant(NewParticipantEvent event) async {
@@ -440,44 +414,30 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     final List<Participant> participants = _currentMeeting!.participants;
 
     final int indexOfParticipant = participants.indexWhere(
-      (participant) => participant.id == int.parse(event.participantId),
+      (participant) => participant.id == event.participant.id,
     );
 
-    if (indexOfParticipant != -1) {
-      participants[indexOfParticipant] =
-          participants[indexOfParticipant].copyWith(
-        status: StatusEnum.active,
-      );
+    if (indexOfParticipant != -1) return;
 
-      _currentMeeting = _currentMeeting!.copyWith(
-        participants: participants,
-      );
-
-      AppBloc.meetingListBloc.add(
-        UpdateRecentJoinEvent(meeting: _currentMeeting!),
-      );
-
-      return;
-    }
-
-    final Either<Failure, Participant> participant = await _getParticipant.call(
-      GetPariticipantParams(
-        participantId: int.parse(event.participantId),
+    participants.add(
+      Participant(
+        id: event.participant.id,
+        user: User(
+          id: event.participant.user.id,
+          fullName: event.participant.user.fullName,
+          userName: event.participant.user.userName,
+          avatar: event.participant.user.avatar,
+        ),
       ),
     );
 
-    participant.fold((l) => null, (r) {
-      participants.add(r);
-      _currentMeeting = _currentMeeting!.copyWith(
-        participants: participants,
-      );
+    _currentMeeting = _currentMeeting!.copyWith(
+      participants: participants,
+    );
 
-      AppBloc.meetingListBloc.add(
-        UpdateRecentJoinEvent(meeting: _currentMeeting!),
-      );
-
-      return r;
-    });
+    AppBloc.recentJoinedBloc.add(
+      UpdateRecentJoinedEvent(meeting: _currentMeeting!),
+    );
   }
 
   Future<void> _handleParticipantHasLeft(
@@ -492,17 +452,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     );
 
     if (indexOfParticipant != -1) {
-      participants[indexOfParticipant] =
-          participants[indexOfParticipant].copyWith(
-        status: StatusEnum.inactive,
-      );
+      participants.removeAt(indexOfParticipant);
 
       _currentMeeting = _currentMeeting!.copyWith(
         participants: participants,
       );
 
-      AppBloc.meetingListBloc.add(
-        UpdateRecentJoinEvent(meeting: _currentMeeting!),
+      AppBloc.recentJoinedBloc.add(
+        UpdateRecentJoinedEvent(meeting: _currentMeeting!),
       );
     }
   }
@@ -592,10 +549,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         add(RefreshDisplayMeetingEvent());
         break;
       case CallbackEvents.newParticipant:
-        final String? participantId = event.participantId;
-        if (participantId == null) return;
+        if (event.newParticipant == null) return;
 
-        add(NewParticipantEvent(participantId: participantId));
+        add(NewParticipantEvent(participant: event.newParticipant!));
         break;
       case CallbackEvents.participantHasLeft:
         final String? participantId = event.participantId;
@@ -605,7 +561,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         break;
       case CallbackEvents.meetingEnded:
         if (state is JoinedMeeting) {
-          displayLoadingLayer();
           add(const LeaveMeetingEvent(isReleasedWaterbusSdk: true));
         } else if (state is PreJoinMeeting) {
           add(DisposeMeetingEvent());

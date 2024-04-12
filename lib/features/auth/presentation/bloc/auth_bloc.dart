@@ -17,7 +17,7 @@ import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
 import 'package:waterbus/features/auth/domain/usecases/logout.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting_list/bloc/meeting_list_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 
 part 'auth_event.dart';
@@ -144,6 +144,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     user = null;
     AppBloc.userBloc.add(CleanProfileEvent());
-    AppBloc.meetingListBloc.add(CleanAllRecentJoinedEvent());
+    AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
   }
 }

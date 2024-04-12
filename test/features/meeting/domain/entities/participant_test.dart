@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import '../../../../constants/sample_file_path.dart';
 import '../../../../fixtures/fixture_reader.dart';
@@ -28,13 +27,11 @@ void main() {
     test('Should create a Participant instance', () {
       const participant = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       expect(participant, isA<Participant>());
       expect(participant.id, 1);
-      expect(participant.role, MeetingRole.attendee);
       expect(participant.user, userModel);
     });
 
@@ -53,13 +50,11 @@ void main() {
 
       const participant = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       final updatedParticipant1 = participant.copyWith(
         id: 2,
-        role: MeetingRole.host,
         user: updatedUserModel,
       );
       final updatedParticipant2 = participant.copyWith();
@@ -67,21 +62,18 @@ void main() {
       expect(participant == updatedParticipant2, true);
       expect(updatedParticipant1, isA<Participant>());
       expect(updatedParticipant1.id, 2);
-      expect(updatedParticipant1.role, MeetingRole.host);
       expect(updatedParticipant1.user, updatedUserModel);
     });
 
     test('Should convert Participant to Map', () {
       const participant = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       final participantMap = participant.toMap();
       expect(participantMap, isA<Map<String, dynamic>>());
       expect(participantMap['id'], 1);
-      expect(participantMap['role'], 1);
       expect(participantMap['user'], isA<Map<String, dynamic>>());
     });
 
@@ -91,14 +83,12 @@ void main() {
 
       expect(participant, isA<Participant>());
       expect(participant.id, 1);
-      expect(participant.role, MeetingRole.attendee);
       expect(participant.user, userModel);
     });
 
     test('Should convert Participant to JSON', () {
       const participant = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
@@ -112,26 +102,22 @@ void main() {
 
       expect(participant, isA<Participant>());
       expect(participant.id, 1);
-      expect(participant.role, MeetingRole.attendee);
       expect(participant.user, userModel);
     });
 
     test('Should check equality of Participant instances', () {
       const participant1 = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       const participant2 = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       const participant3 = Participant(
         id: 2,
-        role: MeetingRole.host,
         user: hostModel,
       );
 
@@ -146,7 +132,6 @@ void main() {
         () {
       const participant = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
@@ -160,21 +145,17 @@ void main() {
       // Arrange
       const participant1 = Participant(
         id: 1,
-        role: MeetingRole.attendee,
         user: userModel,
       );
 
       const participant2 = Participant(
         id: 2,
-        role: MeetingRole.host,
         user: userModel,
       );
 
       // Act & Assert
       expect(participant1.props, [
         participant1.id,
-        participant1.role,
-        participant1.status,
         participant1.user,
         participant1.isMe,
       ]);

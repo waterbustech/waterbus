@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 class ButtonLogin extends StatelessWidget {
@@ -26,27 +25,36 @@ class ButtonLogin extends StatelessWidget {
       child: Container(
         width: 300.sp,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.sp),
-          color: mCL,
+          borderRadius: BorderRadius.circular(4.sp),
+          color: Colors.transparent,
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+            width: 1.sp,
+          ),
         ),
-        padding: EdgeInsets.symmetric(vertical: 11.25.sp),
+        padding: EdgeInsets.symmetric(
+          vertical: 11.25.sp,
+          horizontal: 12.sp,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: 62.sp),
             Image.asset(
               iconAsset,
               height: 16.sp,
               width: 16.sp,
               fit: BoxFit.contain,
+              color: Theme.of(context).primaryColor,
             ),
-            SizedBox(width: 10.sp),
-            Text(
-              title,
-              style: TextStyle(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                fontWeight: FontWeight.w700,
-                fontSize: 11.5.sp,
+            Expanded(
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.5.sp,
+                  ),
+                ),
               ),
             ),
           ],

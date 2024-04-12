@@ -82,7 +82,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.users_three,
-                lable: 'Participant (${meeting.users.length})',
+                lable: 'Participant (${meeting.participants.length})',
                 onTap: () {},
               ),
               CallSettingButton(

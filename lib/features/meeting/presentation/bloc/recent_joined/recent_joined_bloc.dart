@@ -9,19 +9,22 @@ import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
 import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
+import 'package:waterbus/features/meeting/domain/usecases/remove_recent_joined.dart';
 
-part 'meeting_list_event.dart';
-part 'meeting_list_state.dart';
+part 'recent_joined_event.dart';
+part 'recent_joined_state.dart';
 
 @injectable
-class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
+class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
   final GetRecentJoined _recentJoined;
+  final RemoveRecentJoined _removeRecentJoined;
   final CleanAllRecentJoined _cleanAllRecentJoined;
 
   final List<Meeting> _recentMeetings = [];
 
-  MeetingListBloc(
+  RecentJoinedBloc(
     this._recentJoined,
+    this._removeRecentJoined,
     this._cleanAllRecentJoined,
   ) : super(MeetingListInitial()) {
     on<MeetingListEvent>(
@@ -32,14 +35,20 @@ class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
           emit(_getDoneMeetings);
         }
 
-        if (event is InsertRecentJoinEvent) {
+        if (event is InsertRecentJoinedEvent) {
           _insertMeeting(event.meeting);
 
           emit(_getDoneMeetings);
         }
 
-        if (event is UpdateRecentJoinEvent) {
+        if (event is UpdateRecentJoinedEvent) {
           _findAndModifyRecent(event.meeting);
+
+          emit(_getDoneMeetings);
+        }
+
+        if (event is RemoveRecentJoinedEvent) {
+          _removeMeeting(event.meetingId);
 
           emit(_getDoneMeetings);
         }
@@ -96,6 +105,17 @@ class MeetingListBloc extends Bloc<MeetingListEvent, MeetingListState> {
     }
 
     _recentMeetings.insert(0, meet);
+  }
+
+  void _removeMeeting(int meetingId) {
+    final int indexOfMeeting = _recentMeetings.indexWhere(
+      (meeting) => meeting.id == meetingId,
+    );
+
+    if (indexOfMeeting > -1) {
+      _removeRecentJoined.call(_recentMeetings[indexOfMeeting].code);
+      _recentMeetings.removeAt(indexOfMeeting);
+    }
   }
 
   void _findAndModifyRecent(Meeting meeting) {

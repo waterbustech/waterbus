@@ -17,6 +17,7 @@ import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart'
 class MeetView extends StatelessWidget {
   final EdgeInsets? margin;
   final Participant participant;
+  final MeetingRole role;
   final double avatarSize;
   final double? width;
   final CallState? callState;
@@ -28,6 +29,7 @@ class MeetView extends StatelessWidget {
     required this.callState,
     this.avatarSize = 80.0,
     this.borderEnabled = true,
+    this.role = MeetingRole.attendee,
     this.margin,
     this.width,
     this.radius,
@@ -96,7 +98,7 @@ class MeetView extends StatelessWidget {
                       Text(
                         participant.user.fullName,
                         style: TextStyle(
-                          color: participant.role == MeetingRole.host
+                          color: role == MeetingRole.host
                               ? Colors.yellow
                               : participant.isMe
                                   ? Theme.of(context).primaryColor

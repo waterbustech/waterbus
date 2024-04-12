@@ -10,13 +10,14 @@ import 'package:equatable/equatable.dart';
 // Project imports:
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
+import 'package:waterbus/features/meeting/domain/entities/member.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';
-import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
 
 class Meeting extends Equatable {
   final int id;
   final String title;
   final List<Participant> participants;
+  final List<Member> members;
   final int code;
   final DateTime? createdAt;
   final DateTime? latestJoinedAt;
@@ -24,6 +25,7 @@ class Meeting extends Equatable {
     this.id = -1,
     required this.title,
     this.participants = const [],
+    this.members = const [],
     this.code = -1,
     this.createdAt,
     this.latestJoinedAt,
@@ -33,6 +35,7 @@ class Meeting extends Equatable {
     int? id,
     String? title,
     List<Participant>? participants,
+    List<Member>? members,
     int? code,
     DateTime? createdAt,
     DateTime? latestJoinedAt,
@@ -41,6 +44,7 @@ class Meeting extends Equatable {
       id: id ?? this.id,
       title: title ?? this.title,
       participants: participants ?? this.participants,
+      members: members ?? this.members,
       code: code ?? this.code,
       createdAt: createdAt ?? this.createdAt,
       latestJoinedAt: latestJoinedAt ?? this.latestJoinedAt,
@@ -51,7 +55,8 @@ class Meeting extends Equatable {
     return <String, dynamic>{
       'id': id,
       'title': title,
-      'users': participants.map((x) => x.toMap()).toList(),
+      'participants': participants.map((x) => x.toMap()).toList(),
+      'members': members.map((x) => x.toMap()).toList(),
       'code': code,
       'createdAt': createdAt.toString(),
       'latestJoinedAt': latestJoinedAt.toString(),
@@ -71,8 +76,13 @@ class Meeting extends Equatable {
       id: map['id'] as int,
       title: map['title'] as String,
       participants: List<Participant>.from(
-        (map['users'] as List).map<Participant>(
+        (map['participants'] as List).map<Participant>(
           (x) => Participant.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      members: List<Member>.from(
+        (map['members'] as List).map<Member>(
+          (x) => Member.fromMap(x as Map<String, dynamic>),
         ),
       ),
       code: map['code'],
@@ -97,6 +107,7 @@ class Meeting extends Equatable {
         other.createdAt == createdAt &&
         other.latestJoinedAt == latestJoinedAt &&
         listEquals(other.participants, participants) &&
+        listEquals(other.members, members) &&
         other.code == code;
   }
 
@@ -105,6 +116,7 @@ class Meeting extends Equatable {
     return id.hashCode ^
         title.hashCode ^
         participants.hashCode ^
+        members.hashCode ^
         code.hashCode ^
         createdAt.hashCode ^
         latestJoinedAt.hashCode;
@@ -114,6 +126,7 @@ class Meeting extends Equatable {
   List<Object?> get props => [
         id,
         participants,
+        members,
         code,
         createdAt,
         title,
@@ -125,40 +138,14 @@ class Meeting extends Equatable {
 }
 
 extension MeetingX on Meeting {
-  List<Participant> get users => participants
-      .where((participant) => participant.status == StatusEnum.active)
-      .toList();
-
-  List<Participant> get getUniqueUsers {
-    final Set<int> uniqueUserIds = <int>{};
-    final List<Participant> uniqueParticipants = [];
-
-    for (final Participant participant in participants) {
-      if (!uniqueUserIds.contains(participant.user.id)) {
-        uniqueUserIds.add(participant.user.id);
-        uniqueParticipants.add(participant);
-      }
-    }
-
-    return uniqueParticipants;
-  }
-
-  bool get isNoOneElse {
-    if (getUniqueUsers.isEmpty) return true;
-
-    if (getUniqueUsers.length == 1 && getUniqueUsers.first.isMe) {
-      return true;
-    }
-
-    return false;
-  }
+  bool get isNoOneElse => participants.length < 2;
 
   String get inviteLink => 'https:/waterbus.tech/meeting/$code';
 
   String? get participantsOnlineTile {
-    if (users.isEmpty) return null;
+    if (participants.isEmpty) return null;
 
-    final n = users.length;
+    final n = participants.length;
 
     if (n == 1) {
       return '${participants[0].user.fullName} is in the room';
@@ -179,10 +166,10 @@ extension MeetingX on Meeting {
   }
 
   bool get isHost {
-    final int indexOfHost = participants.indexWhere(
-      (participant) =>
-          participant.role == MeetingRole.host &&
-          participant.user.id == AppBloc.userBloc.user?.id,
+    final int indexOfHost = members.indexWhere(
+      (member) =>
+          member.role == MeetingRole.host &&
+          member.user.id == AppBloc.userBloc.user?.id,
     );
 
     return indexOfHost != -1;

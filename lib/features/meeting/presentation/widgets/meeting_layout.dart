@@ -36,7 +36,7 @@ class MeetingLayout extends StatelessWidget {
           final bool isCollapsed =
               constraints.maxWidth < 30.w && SizerUtil.isDesktop;
 
-          return meeting.users.length > 2 || isCollapsed
+          return meeting.participants.length > 2 || isCollapsed
               ? _buildLayoutMultipleUsers(
                   context,
                   meeting,
@@ -66,21 +66,22 @@ class MeetingLayout extends StatelessWidget {
 
     final List<Widget> childrens = [
       Expanded(
-        flex: meeting.users.length > 1 ? 1 : 2,
+        flex: meeting.participants.length > 1 ? 1 : 2,
         child: AnimatedContainer(
           duration: 300.milliseconds,
           width: SizerUtil.isDesktop
-              ? (meeting.users.length > 1 ? width / 2 : width)
+              ? (meeting.participants.length > 1 ? width / 2 : width)
               : double.infinity,
           height: SizerUtil.isDesktop
               ? double.infinity
-              : (meeting.users.length > 1 ? height / 2 : height),
+              : (meeting.participants.length > 1 ? height / 2 : height),
           curve: Curves.easeInOut,
           child: MeetView(
-            participant: meeting.users.first,
+            participant: meeting.participants.first,
             callState: callState,
-            borderEnabled: meeting.users.length > 1 || !SizerUtil.isDesktop,
-            radius: meeting.users.length == 1
+            borderEnabled:
+                meeting.participants.length > 1 || !SizerUtil.isDesktop,
+            radius: meeting.participants.length == 1
                 ? BorderRadius.circular(20.sp)
                 : SizerUtil.isDesktop
                     ? BorderRadius.only(
@@ -91,17 +92,17 @@ class MeetingLayout extends StatelessWidget {
           ),
         ),
       ),
-      meeting.users.length == 1
+      meeting.participants.length == 1
           ? const SizedBox()
           : Expanded(
               child: AnimatedContainer(
                 duration: 300.milliseconds,
                 width: SizerUtil.isDesktop
-                    ? (meeting.users.length > 1 ? width / 2 : width)
+                    ? (meeting.participants.length > 1 ? width / 2 : width)
                     : double.infinity,
                 height: SizerUtil.isDesktop
                     ? double.infinity
-                    : (meeting.users.length > 1 ? height / 2 : height),
+                    : (meeting.participants.length > 1 ? height / 2 : height),
                 curve: Curves.easeInOut,
                 child: MeetView(
                   participant: meeting.participants.last,
@@ -130,20 +131,21 @@ class MeetingLayout extends StatelessWidget {
     BoxConstraints constraints,
   ) {
     return GridView.builder(
-      itemCount: meeting.users.length,
+      itemCount: meeting.participants.length,
       itemBuilder: (_, index) => _buildVideoView(
         context,
-        participant: meeting.users.first,
+        participant: meeting.participants[index],
         callState: callState,
         avatarSize: SizerUtil.isDesktop ? 50.sp : 35.sp,
       ),
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
-        itemCount: _gridCount(meeting.users.length, constraints.maxWidth) < 2
-            ? 2
-            : meeting.users.length,
+        itemCount:
+            _gridCount(meeting.participants.length, constraints.maxWidth) < 2
+                ? 2
+                : meeting.participants.length,
         crossAxisCount: SizerUtil.isDesktop
-            ? _gridCount(meeting.users.length, constraints.maxWidth)
+            ? _gridCount(meeting.participants.length, constraints.maxWidth)
             : 2,
         mainAxisSpacing: 6.sp,
         crossAxisSpacing: 6.sp,
