@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/themes/theme_services.dart';
-import 'package:waterbus/core/lang/language_service.dart';
-import 'package:waterbus/core/lang/localization.dart';
-import 'package:waterbus/features/systems/data/datasources/systems_local_datasource.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/themes/theme_services.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
+import 'package:waterbus/core/lang/language_service.dart';
+import 'package:waterbus/core/lang/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -27,6 +26,7 @@ import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
 import 'package:waterbus/features/systems/bloc/themes/theme_bloc.dart';
+import 'package:waterbus/features/systems/data/datasources/systems_local_datasource.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
