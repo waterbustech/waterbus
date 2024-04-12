@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/lang/localization.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -46,7 +47,8 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: _isEditing ? 'Edit Meeting' : 'Create Meeting',
+        title:
+            _isEditing ? Strings.editMeeting.i18n : Strings.createMeeting.i18n,
         actions: [
           IconButton(
             onPressed: () {
@@ -91,28 +93,31 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 16.sp),
-                      const LabelText(label: 'Room name'),
+                      LabelText(label: Strings.roomName.i18n),
                       TextFieldInput(
                         validatorForm: (val) {
-                          if (val?.isEmpty ?? true) return "Invalid name";
-
-                          return null;
-                        },
-                        hintText: 'Meeting label',
-                        controller: _roomNameController,
-                      ),
-                      SizedBox(height: 8.sp),
-                      const LabelText(label: 'Password'),
-                      TextFieldInput(
-                        obscureText: true,
-                        validatorForm: (val) {
-                          if (val == null || val.length < 6) {
-                            return "Password must be at least 6 characters";
+                          if (val?.isEmpty ?? true) {
+                            return Strings.invalidName.i18n;
                           }
 
                           return null;
                         },
-                        hintText: 'Password',
+                        hintText: Strings.meetingLabel.i18n,
+                        controller: _roomNameController,
+                      ),
+                      SizedBox(height: 8.sp),
+                      LabelText(label: Strings.password.i18n),
+                      TextFieldInput(
+                        obscureText: true,
+                        validatorForm: (val) {
+                          if (val == null || val.length < 6) {
+                            return Strings
+                                .passwordMustBeAtLeast6Characters.i18n;
+                          }
+
+                          return null;
+                        },
+                        hintText: Strings.password.i18n,
                         controller: _passwordController,
                       ),
                     ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/lang/localization.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -44,7 +45,7 @@ class _EnterMeetingPasswordScreenState
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Enter password',
+        title: Strings.enterPassword.i18n,
         onBackPressed: () {
           AppBloc.meetingBloc.add(DisposeMeetingEvent());
           AppNavigator.pop();
@@ -68,7 +69,7 @@ class _EnterMeetingPasswordScreenState
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -113,7 +114,7 @@ class _EnterMeetingPasswordScreenState
                       SizedBox(height: 12.sp),
                       widget.meeting.isNoOneElse
                           ? Text(
-                              "No participants yet",
+                              Strings.noParticipantsYet.i18n,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall
@@ -139,21 +140,22 @@ class _EnterMeetingPasswordScreenState
                               ),
                             )
                           : SizedBox(height: 12.sp),
-                      const Align(
+                      Align(
                         alignment: Alignment.topLeft,
-                        child: LabelText(label: 'Password'),
+                        child: LabelText(label: Strings.password.i18n),
                       ),
                       TextFieldInput(
                         autofocus: true,
                         obscureText: true,
                         validatorForm: (val) {
                           if (val == null || val.length < 6) {
-                            return "Password must be at least 6 characters";
+                            return Strings
+                                .passwordMustBeAtLeast6Characters.i18n;
                           }
 
                           return null;
                         },
-                        hintText: 'Password',
+                        hintText: Strings.password.i18n,
                         controller: _passwordController,
                       ),
                     ],
