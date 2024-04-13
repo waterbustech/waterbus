@@ -82,6 +82,29 @@ class _MeetingBodyState extends State<MeetingBody> {
               ),
             ),
           ),
+          Visibility(
+            visible: SizerUtil.isDesktop,
+            child: Row(
+              children: [
+                IconButton(
+                  alignment: Alignment.centerRight,
+                  onPressed: () async {},
+                  icon: Icon(
+                    PhosphorIcons.users,
+                    size: 20.sp,
+                  ),
+                ),
+                Text(
+                  widget.meeting.participants.length.toString(),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(width: 8.sp),
+              ],
+            ),
+          ),
           SizedBox(width: 4.sp),
         ],
       ),

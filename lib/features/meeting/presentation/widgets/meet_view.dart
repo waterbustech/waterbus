@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:ui';
+
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,58 +75,81 @@ class MeetView extends StatelessWidget {
                           !isScreenSharing && cameraType == CameraType.front,
                       filterQuality: FilterQuality.none,
                     )
-                  : Container(
-                      alignment: Alignment.center,
-                      child: AvatarCard(
-                        urlToImage: participant.user.avatar,
-                        size: avatarSize,
+                  : BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 20,
+                        sigmaY: 20,
+                        tileMode: TileMode.mirror,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.blueAccent.withOpacity(.4),
+                              Colors.blueGrey.shade900.withOpacity(.4),
+                            ],
+                            stops: const [0.1, 0.9],
+                          ),
+                        ),
+                        child: AvatarCard(
+                          urlToImage: participant.user.avatar,
+                          size: avatarSize,
+                        ),
                       ),
                     ),
               Positioned(
                 left: 10.sp,
                 bottom: 10.sp,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.sp,
-                    vertical: 8.sp,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.sp),
-                    color: Colors.black.withOpacity(.3),
-                  ),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        participant.user.fullName,
-                        style: TextStyle(
-                          color: role == MeetingRole.host
-                              ? Colors.yellow
-                              : participant.isMe
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
-                          fontSize: avatarSize / 6,
-                          fontWeight: FontWeight.bold,
-                        ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6.sp),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.sp,
+                        vertical: 8.sp,
                       ),
-                      Visibility(
-                        visible: !hasFirstFrameRendered || !isAudioEnabled,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 6.sp),
-                          child: !isAudioEnabled
-                              ? Icon(
-                                  PhosphorIcons.microphone_slash_fill,
-                                  color: Colors.redAccent,
-                                  size: avatarSize / 5.25,
-                                )
-                              : CupertinoActivityIndicator(
-                                  radius: 6.5,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                        ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.2),
                       ),
-                    ],
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            participant.user.fullName,
+                            style: TextStyle(
+                              color: role == MeetingRole.host
+                                  ? Colors.yellow
+                                  : participant.isMe
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
+                              fontSize: avatarSize / 6,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Visibility(
+                            visible: !hasFirstFrameRendered || !isAudioEnabled,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 6.sp),
+                              child: !isAudioEnabled
+                                  ? Icon(
+                                      PhosphorIcons.microphone_slash_fill,
+                                      color: Colors.redAccent,
+                                      size: avatarSize / 5.25,
+                                    )
+                                  : CupertinoActivityIndicator(
+                                      radius: 6.5,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
