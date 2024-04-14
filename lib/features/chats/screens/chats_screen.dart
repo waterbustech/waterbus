@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -54,7 +55,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           child: Scaffold(
             appBar: appBarTitleBack(
               context,
-              title: 'Chats',
+              title: Strings.chat.i18n,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               leading: BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
@@ -72,7 +73,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
               actions: [
                 Tooltip(
-                  message: 'Create Room',
+                  message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
                       AppNavigator.push(Routes.createMeetingRoute);
@@ -89,7 +90,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               children: [
                 SizedBox(height: 10.sp),
                 EnterCodeBox(
-                  hintTextContent: 'Search',
+                  hintTextContent: Strings.search.i18n,
                   onTap: () {},
                 ),
                 Expanded(

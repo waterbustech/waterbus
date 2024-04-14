@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -38,7 +39,7 @@ class _EnterMeetingCardState extends State {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Join a meeting',
+        title: Strings.joinAMeeting.i18n,
         actions: [
           GestureWrapper(
             onTap: () {
@@ -52,7 +53,7 @@ class _EnterMeetingCardState extends State {
               color: Colors.transparent,
               alignment: Alignment.bottomRight,
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 11.sp,

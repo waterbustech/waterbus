@@ -15,6 +15,7 @@ import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.da
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
+import 'package:waterbus/features/settings/presentation/widgets/language_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -91,7 +92,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
             chatModel: arguments!['chatModel'],
           ),
         );
-
+      case Routes.langRoute:
+        return _buildRoute(
+          settings,
+          LanguageScreen(),
+        );
       default:
         return _buildRoute(
           const RouteSettings(name: Routes.rootRoute),

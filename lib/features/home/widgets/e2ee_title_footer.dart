@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -33,7 +34,7 @@ class E2eeTitleFooter extends StatelessWidget {
                 ),
               ),
             ),
-            const TextSpan(text: 'Your personal meetings are '),
+            TextSpan(text: Strings.yourPersonalMeetingsAre.i18n),
             TextSpan(
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
@@ -42,7 +43,7 @@ class E2eeTitleFooter extends StatelessWidget {
                     child: const E2eeBottomSheet(),
                   );
                 },
-              text: 'end-to-end encrypted',
+              text: Strings.endToEndEncrypted.i18n,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
