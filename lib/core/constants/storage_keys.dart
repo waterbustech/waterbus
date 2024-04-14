@@ -3,7 +3,9 @@ class StorageKeys {
   static const String boxAuth = 'boxAuth';
   static const String boxMeeting = 'boxMeeting';
   static const String boxCallSettings = 'boxCallSettings';
-
+    static const String boxAppSettings = 'boxAppSettings';
+  static const String boxLanguage = 'boxLanguage';
+  static const String boxTheme = 'boxTheme';
   // In Box - Auth
   static const String userModel = 'userModel';
 

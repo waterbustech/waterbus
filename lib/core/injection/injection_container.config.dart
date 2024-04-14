@@ -67,6 +67,10 @@ import '../../features/profile/data/repositories/user_repository_impl.dart'
     as _i15;
 import '../../features/profile/domain/repositories/user_repository.dart'
     as _i14;
+import 'package:waterbus/features/settings/themes/data/themes_datasource.dart'
+    as _40;
+import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart'
+    as _41;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -165,5 +169,10 @@ _i1.GetIt $initGetIt(
         gh<_i36.SaveCallSettings>(),
         gh<_i5.PipChannel>(),
       ));
+
+  gh.lazySingleton<_40.ThemesDatasource>(() => _40.ThemesDatasourceImpl());
+
+  gh.factory<_41.ThemesBloc>(
+      () => _41.ThemesBloc(gh<_40.ThemesDatasource>()));
   return getIt;
 }

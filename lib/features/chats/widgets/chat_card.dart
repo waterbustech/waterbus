@@ -58,7 +58,7 @@ class ChatCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         style: TextStyle(
-                          color: mCL,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -121,9 +121,7 @@ class ChatCard extends StatelessWidget {
                                 : chatModel.isGroup
                                     ? 'Jerry: '
                                     : '',
-                            style: TextStyle(
-                              color: mCL,
-                            ),
+                            style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                           ),
                           TextSpan(
                             text: chatModel.typing
@@ -131,6 +129,7 @@ class ChatCard extends StatelessWidget {
                                 : chatModel.statusMessage == StatusMessage.none
                                     ? chatModel.lastestMessage
                                     : '6m : 32sec',
+                                    style: TextStyle(color: Theme.of(context).textTheme.titleMedium?.color,),
                           ),
                         ],
                       ),

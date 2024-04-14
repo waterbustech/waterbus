@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/settings/presentation/widgets/setting_themes.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -76,6 +77,9 @@ class _SettingScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _buildLabel('Themes'),
+
+              SettingThemes(),
               SizedBox(height: 8.sp),
               _buildLabel('General'),
               SettingSwitchCard(

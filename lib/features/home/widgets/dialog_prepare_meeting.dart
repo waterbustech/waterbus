@@ -117,6 +117,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontSize: 9.sp,
+                                    color: Theme.of(context).primaryColorLight,
                                   ),
                         ),
                         SizedBox(width: 4.sp),

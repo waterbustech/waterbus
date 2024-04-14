@@ -10,6 +10,7 @@ import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -25,25 +26,27 @@ class _AppState extends State<App> {
       providers: AppBloc.providers,
       child: Sizer(
         builder: (context, orientation, deviceType) {
-          return MaterialApp(
-            navigatorKey: AppNavigator.navigatorKey,
-            debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.dark,
-            theme: AppTheme.light().data,
-            darkTheme: AppTheme.dark().data,
-            initialRoute: Routes.rootRoute,
-            navigatorObservers: [
-              NavigatorObserver(),
-            ],
-            onGenerateRoute: (settings) {
-              return AppNavigator().getRoute(settings);
+          return BlocBuilder<ThemesBloc, ThemesState>(
+            builder: (context, stateThemes) {
+              return MaterialApp(
+                navigatorKey: AppNavigator.navigatorKey,
+                debugShowCheckedModeBanner: false,
+                theme: stateThemes.props[0].data,
+                initialRoute: Routes.rootRoute,
+                navigatorObservers: [
+                  NavigatorObserver(),
+                ],
+                onGenerateRoute: (settings) {
+                  return AppNavigator().getRoute(settings);
+                },
+                builder: (context, child) => MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: TextScaler.noScaling,
+                  ),
+                  child: child ?? const SizedBox(),
+                ),
+              );
             },
-            builder: (context, child) => MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaler: TextScaler.noScaling,
-              ),
-              child: child ?? const SizedBox(),
-            ),
           );
         },
       ),

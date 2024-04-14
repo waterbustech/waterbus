@@ -8,12 +8,16 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
+import 'package:waterbus/features/settings/themes/data/themes_datasource.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+  ProfileHeader({super.key});
+  final String? appTheme = ThemesDatasourceImpl().getTheme();
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +37,18 @@ class ProfileHeader extends StatelessWidget {
                   size: 26.sp,
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    PhosphorIcons.moon_stars_fill,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  onPressed: () {
+                    AppBloc.themesBloc.add(OnChangeTheme(appTheme: appTheme));
+                  },
+                  icon: appTheme == ThemeList.dark
+                      ? Icon(
+                          PhosphorIcons.moon_stars_fill,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      : Icon(
+                          PhosphorIcons.sun_fill,
+                          color: Theme.of(context).primaryColor,
+                        ),
                 ),
               ],
             ),

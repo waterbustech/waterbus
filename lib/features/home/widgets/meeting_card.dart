@@ -104,10 +104,11 @@ class MeetingCard extends StatelessWidget {
                       children: [
                         SizedBox(width: 4.sp),
                         Text(
-                          "Join",
+                          'Join',
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontSize: 10.sp,
+                                    color: Theme.of(context).primaryColorLight,
                                   ),
                         ),
                         SizedBox(width: 4.sp),

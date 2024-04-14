@@ -18,5 +18,6 @@ class BaseLocalData {
     await Hive.openBox(StorageKeys.boxAuth);
     await Hive.openBox(StorageKeys.boxMeeting);
     await Hive.openBox(StorageKeys.boxCallSettings);
+    await Hive.openBox(StorageKeys.boxAppSettings);
   }
 }
