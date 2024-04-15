@@ -29,9 +29,18 @@ class ThemesBloc extends Bloc<ThemesEvent, ThemesState> {
       ThemesStateInitial(appTheme: _themesDatasource.getAppTheme());
 
   void _handleChangeThemes(OnChangeTheme event) {
-    _themesDatasource.setTheme(
-      appTheme:
-          event.appTheme == ThemeList.dark ? ThemeList.light : ThemeList.dark,
-    );
+    late String appTheme;
+    switch (event.appTheme) {
+      case ThemeList.dark:
+        appTheme = ThemeList.light;
+        break;
+      case ThemeList.light:
+        appTheme = ThemeList.dark;
+        break;
+      default:
+        appTheme = ThemeList.dark;
+        break;
+    }
+    _themesDatasource.setTheme(appTheme: appTheme);
   }
 }
