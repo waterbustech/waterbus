@@ -79,7 +79,7 @@ class _SettingScreenState extends State<SettingsScreen> {
             children: [
               _buildLabel('Themes'),
 
-              SettingThemes(),
+              const SettingThemes(),
               SizedBox(height: 8.sp),
               _buildLabel('General'),
               SettingSwitchCard(

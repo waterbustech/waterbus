@@ -26,7 +26,7 @@ class ProfileDrawerLayout extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileHeader(),
+            const ProfileHeader(),
             Padding(
               padding: EdgeInsets.only(top: 20.sp, bottom: 8.sp),
               child: const Divider(

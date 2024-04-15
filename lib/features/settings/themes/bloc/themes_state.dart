@@ -5,7 +5,7 @@ abstract class ThemesState {
 }
 
 class ThemesStateInitial extends ThemesState {
-  final AppTheme appTheme;
+  final String appTheme;
   ThemesStateInitial({required this.appTheme});
 
   @override

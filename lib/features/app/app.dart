@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/themes/app_theme.dart';
+import 'package:waterbus/core/constants/constants.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -30,7 +32,9 @@ class _AppState extends State<App> {
               return MaterialApp(
                 navigatorKey: AppNavigator.navigatorKey,
                 debugShowCheckedModeBanner: false,
-                theme: stateThemes.props[0].data,
+                theme: stateThemes.props[0] == ThemeList.dark
+                    ? AppTheme.dark().data
+                    : AppTheme.light().data,
                 initialRoute: Routes.rootRoute,
                 navigatorObservers: [
                   NavigatorObserver(),

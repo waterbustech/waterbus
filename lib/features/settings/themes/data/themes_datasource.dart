@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/constants/constants.dart';
 
 import 'package:waterbus/core/constants/storage_keys.dart';
@@ -8,8 +7,7 @@ import 'package:waterbus/core/constants/storage_keys.dart';
 abstract class ThemesDatasource {
   //Themes
   void setTheme({required String appTheme});
-  String? getTheme();
-  AppTheme getAppTheme();
+  String getTheme();
 }
 
 @LazySingleton(as: ThemesDatasource)
@@ -25,20 +23,10 @@ class ThemesDatasourceImpl extends ThemesDatasource {
   }
 
   @override
-  String? getTheme() {
-    return hiveBox.get(StorageKeys.boxTheme);
+  String getTheme() {
+    final String? themeString = hiveBox.get(StorageKeys.boxTheme);
+    return themeString?? ThemeList.dark; // Default is Dark Theme
   }
 
-  @override
-  AppTheme getAppTheme() {
-    final String? theme = hiveBox.get(StorageKeys.boxTheme);
-    switch (theme) {
-      case ThemeList.light:
-        return AppTheme.light();
-      case ThemeList.dark:
-        return AppTheme.dark();
-      default:
-        return AppTheme.dark(); // default theme
-    }
-  }
+
 }

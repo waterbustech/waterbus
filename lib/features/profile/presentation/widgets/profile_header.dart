@@ -13,60 +13,63 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
-import 'package:waterbus/features/settings/themes/data/themes_datasource.dart';
 
 class ProfileHeader extends StatelessWidget {
-  ProfileHeader({super.key});
-  final String? appTheme = ThemesDatasourceImpl().getTheme();
+  const ProfileHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-      builder: (context, state) {
-        final User user = state is UserGetDone ? state.user : kUserDefault;
+    return BlocBuilder<ThemesBloc, ThemesState>(
+      builder: (context, stateTheme) {
+        return BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            final User user = state is UserGetDone ? state.user : kUserDefault;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AvatarCard(
-                  urlToImage: user.avatar,
-                  size: 26.sp,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AvatarCard(
+                      urlToImage: user.avatar,
+                      size: 26.sp,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        AppBloc.themesBloc
+                            .add(OnChangeTheme(appTheme: stateTheme.props[0]));
+                      },
+                      icon: stateTheme.props[0] == ThemeList.dark
+                          ? Icon(
+                              PhosphorIcons.moon_stars_fill,
+                              color: Theme.of(context).primaryColor,
+                            )
+                          : Icon(
+                              PhosphorIcons.sun_fill,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {
-                    AppBloc.themesBloc.add(OnChangeTheme(appTheme: appTheme));
-                  },
-                  icon: appTheme == ThemeList.dark
-                      ? Icon(
-                          PhosphorIcons.moon_stars_fill,
-                          color: Theme.of(context).primaryColor,
-                        )
-                      : Icon(
-                          PhosphorIcons.sun_fill,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                SizedBox(height: 12.sp),
+                Text(
+                  user.fullName,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                Text(
+                  '@${user.userName}',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 10.sp,
+                      ),
                 ),
               ],
-            ),
-            SizedBox(height: 12.sp),
-            Text(
-              user.fullName,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            Text(
-              '@${user.userName}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 10.sp,
-                  ),
-            ),
-          ],
+            );
+          },
         );
       },
     );
