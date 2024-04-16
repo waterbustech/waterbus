@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus/core/constants/constants.dart';
@@ -27,18 +28,15 @@ class ThemesBloc extends Bloc<ThemesEvent, ThemesState> {
       ThemesStateInitial(appTheme: _themesDatasource.getTheme());
 
   void _handleChangeThemes(OnChangeTheme event) {
-    late String appTheme;
+    late final String themeString;
     switch (event.appTheme) {
-      case ThemeList.dark:
-        appTheme = ThemeList.light;
-        break;
-      case ThemeList.light:
-        appTheme = ThemeList.dark;
-        break;
+      case ThemeMode.dark:
+        themeString = ThemeList.dark;
+      case ThemeMode.light:
+        themeString = ThemeList.light;
       default:
-        appTheme = ThemeList.dark;
-        break;
+        themeString = ThemeList.system;
     }
-    _themesDatasource.setTheme(appTheme: appTheme);
+    _themesDatasource.setTheme(appTheme: themeString);
   }
 }

@@ -4,7 +4,6 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,11 +28,11 @@ void main(List<String> args) async {
       PaintingBinding.instance.imageCache.maximumSizeBytes =
           1024 * 1024 * 300; // 300 MB
 
-      SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-        ),
-      );
+      // SystemChrome.setSystemUIOverlayStyle(
+      //   const SystemUiOverlayStyle(
+      //     statusBarColor: Colors.transparent,
+      //   ),
+      // );
 
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,

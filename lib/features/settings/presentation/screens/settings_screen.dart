@@ -78,7 +78,6 @@ class _SettingScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLabel('Themes'),
-
               const SettingThemes(),
               SizedBox(height: 8.sp),
               _buildLabel('General'),

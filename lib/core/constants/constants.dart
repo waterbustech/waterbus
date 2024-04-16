@@ -35,6 +35,8 @@ final List<String> desktopBackgrounds = [
 ];
 
 class ThemeList {
-  static const String dark = "darkMode";
-  static const String light = "lightMode";
+  static const String dark = "Dark Mode";
+  static const String light = "Light Mode";
+    static const String system = "System";
+
 }

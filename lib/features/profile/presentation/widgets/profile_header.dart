@@ -16,7 +16,6 @@ import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemesBloc, ThemesState>(
@@ -38,10 +37,12 @@ class ProfileHeader extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        AppBloc.themesBloc
-                            .add(OnChangeTheme(appTheme: stateTheme.props[0]));
+                        AppBloc.themesBloc.add(OnChangeTheme(
+                            appTheme: stateTheme.props[0] == ThemeMode.light
+                                ? ThemeMode.dark
+                                : ThemeMode.light,),);
                       },
-                      icon: stateTheme.props[0] == ThemeList.dark
+                      icon: stateTheme.props[0] == ThemeMode.dark
                           ? Icon(
                               PhosphorIcons.moon_stars_fill,
                               color: Theme.of(context).primaryColor,
