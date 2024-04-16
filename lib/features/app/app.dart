@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,12 +42,21 @@ class _AppState extends State<App> {
                 onGenerateRoute: (settings) {
                   return AppNavigator().getRoute(settings);
                 },
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: TextScaler.noScaling,
-                  ),
-                  child: child ?? const SizedBox(),
-                ),
+                builder: (context, child) {
+                  return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaler: TextScaler.noScaling,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        SystemChrome.setSystemUIOverlayStyle(
+                          Theme.of(context).appBarTheme.systemOverlayStyle!,
+                        );
+                        return child ?? const SizedBox();
+                      },
+                    ),
+                  );
+                },
               );
             },
           );
