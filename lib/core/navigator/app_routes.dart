@@ -6,7 +6,9 @@ class Routes {
 
   // Users
   static const String profileRoute = '/profile';
+  static const String usernameRoute = '/username';
   static const String settingsRoute = '/settings';
+  static const String settingsCallRoute = '/settings-call';
   static const String privacyRoute = '/privacy';
 
   // Meeting

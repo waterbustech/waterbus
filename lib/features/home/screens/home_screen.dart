@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               AppNavigator.push(Routes.profileRoute);
               break;
             case "Settings":
-              AppNavigator.push(Routes.settingsRoute);
+              AppNavigator.push(Routes.settingsCallRoute);
               break;
             case "Licenses":
               showLicensePage(
