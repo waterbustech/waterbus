@@ -139,6 +139,14 @@ class SettingsScreen extends StatelessWidget {
             ),
             SettingRowButton(
               onTap: () {},
+              title: 'Notifications and Sounds',
+              isLast: false,
+              isFirst: false,
+              icon: Icons.notifications,
+              iconBackground: colorRedOrange,
+            ),
+            SettingRowButton(
+              onTap: () {},
               isLast: false,
               isFirst: false,
               title: 'Appearance',
