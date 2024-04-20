@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -45,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Profile',
+        title: Strings.profile.i18n,
         actions: [
           GestureWrapper(
             onTap: () {
@@ -63,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Save',
+                Strings.save.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -123,16 +124,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                         SizedBox(height: 20.sp),
-                        const LabelText(label: 'Full name'),
+                        LabelText(label: Strings.fullName.i18n),
                         TextFieldInput(
                           validatorForm: (val) {
                             if (val?.isEmpty ?? true) {
-                              return "Invalid full name";
+                              return Strings.invalidFullName.i18n;
                             }
 
                             return null;
                           },
-                          hintText: 'Your full name',
+                          hintText: Strings.yourFullName.i18n,
                           controller: _fullNameController,
                         ),
                       ],
