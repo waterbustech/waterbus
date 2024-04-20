@@ -88,7 +88,9 @@ dependencies:
   flutter_advanced_segment: ^3.0.2
   sizer: 
     path: ./packages/sizer
-  
+  flutter_localizations:
+    sdk: flutter
+  i18n_extension: ^11.0.12
   # Code Editor
   re_editor: ^0.1.0
   re_highlight: ^0.0.3

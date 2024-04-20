@@ -67,6 +67,8 @@ import '../../features/profile/data/repositories/user_repository_impl.dart'
     as _i15;
 import '../../features/profile/domain/repositories/user_repository.dart'
     as _i14;
+import 'package:waterbus/features/settings/lang/datasource/lang_datasource.dart'
+    as _42;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
@@ -166,5 +168,8 @@ _i1.GetIt $initGetIt(
         gh<_i36.SaveCallSettings>(),
         gh<_i5.PipChannel>(),
       ));
+  gh.lazySingleton<_42.LanguagesDatasource>(
+      () => _42.LanguagesDatasourceImpl());
+
   return getIt;
 }

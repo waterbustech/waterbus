@@ -11,11 +11,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:i18n_extension/i18n_extension.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/features/app/app.dart';
+import 'package:waterbus/features/settings/lang/language_service.dart';
 
 void main(List<String> args) async {
   await runZonedGuarded(
@@ -45,8 +47,12 @@ void main(List<String> args) async {
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
       }
 
-      runApp(const App());
-
+      runApp(
+        I18n(
+          initialLocale: LanguageService().getLocale().locale,
+          child: const App(),
+        ),
+      );
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     },
     (error, stackTrace) {

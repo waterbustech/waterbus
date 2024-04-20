@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -47,7 +48,7 @@ class EmptyMeetView extends StatelessWidget {
                   ),
                   SizedBox(width: 6.sp),
                   Text(
-                    "Give us star",
+                    Strings.giveUsStar.i18n,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.black87,
