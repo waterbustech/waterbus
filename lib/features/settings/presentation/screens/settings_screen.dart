@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -48,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Edit',
+                Strings.edit.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -125,22 +126,14 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 AppNavigator().push(Routes.profileRoute);
               },
-              title: 'My Profile',
+              title: Strings.myProfile.i18n,
               icon: Icons.account_circle_rounded,
               iconBackground: colorRedCustom,
             ),
             SizedBox(height: 18.sp),
             SettingRowButton(
               onTap: () {},
-              isLast: false,
-              title: 'Saved Messages',
-              icon: Icons.bookmark,
-              iconBackground: colorBlue,
-            ),
-            SettingRowButton(
-              onTap: () {},
-              title: 'Notifications and Sounds',
-              isLast: false,
+              title: Strings.notificationsAndSound.i18n,
               isFirst: false,
               icon: Icons.notifications,
               iconBackground: colorRedOrange,
@@ -149,13 +142,13 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {},
               isLast: false,
               isFirst: false,
-              title: 'Appearance',
+              title: Strings.appearance.i18n,
               icon: Icons.contrast_outlined,
               iconBackground: colorCyan,
             ),
             SettingRowButton(
               onTap: () {},
-              title: 'Languages',
+              title: Strings.language.i18n,
               isFirst: false,
               icon: Icons.language_outlined,
               iconBackground: colorPurple,
@@ -165,7 +158,7 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 AppNavigator().push(Routes.settingsCallRoute);
               },
-              title: 'Call & Meeting',
+              title: Strings.callAndMeeting,
               icon: Icons.video_call_outlined,
               iconBackground: colorActive,
             ),

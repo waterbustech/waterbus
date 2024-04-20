@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -78,7 +79,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Smooth",
+            Strings.smooth.i18n,
             _beautyFilters.smoothValue,
             (value) {
               setState(() {
@@ -87,7 +88,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "White",
+            Strings.white.i18n,
             _beautyFilters.whiteValue,
             (value) {
               setState(() {
@@ -96,7 +97,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Thin Face",
+            Strings.thinFace.i18n,
             _beautyFilters.thinFaceValue * 10,
             (value) {
               setState(() {
@@ -105,7 +106,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Big Eyes",
+            Strings.bigEyes.i18n,
             _beautyFilters.bigEyeValue * 5,
             (value) {
               setState(() {
@@ -114,7 +115,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Lipstick",
+            Strings.lipstick.i18n,
             _beautyFilters.lipstickValue,
             (value) {
               setState(() {
@@ -123,7 +124,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Blusher",
+            Strings.blusher.i18n,
             _beautyFilters.blusherValue,
             (value) {
               setState(() {

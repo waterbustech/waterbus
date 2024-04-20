@@ -141,7 +141,8 @@ class MeetingLayout extends StatelessWidget {
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
         itemCount:
-            _gridCount(meeting.participants.length, constraints.maxWidth) < 2
+            _gridCount(meeting.participants.length, constraints.maxWidth) < 2 &&
+                    SizerUtil.isDesktop
                 ? 2
                 : meeting.participants.length,
         crossAxisCount: SizerUtil.isDesktop
@@ -149,7 +150,9 @@ class MeetingLayout extends StatelessWidget {
             : 2,
         mainAxisSpacing: 6.sp,
         crossAxisSpacing: 6.sp,
-        childAspectRatio: SizerUtil.isDesktop ? (16 / 9) : 0.95,
+        childAspectRatio: SizerUtil.isDesktop
+            ? (16 / 9)
+            : (meeting.participants.length < 6 ? 0.6 : 1),
       ),
     );
   }

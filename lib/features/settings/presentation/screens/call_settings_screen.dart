@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -54,7 +55,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
               left: 12.sp,
             ),
             child: Text(
-              'Cancel',
+              Strings.cancel.i18n,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 12.sp,
@@ -100,9 +101,9 @@ class _SettingScreenState extends State<CallSettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 8.sp),
-              _buildLabel('General'),
+              _buildLabel(Strings.general.i18n),
               SettingSwitchCard(
-                label: 'Low-Bandwidth Mode',
+                label: Strings.lowBandwidthMode.i18n,
                 enabled: _settings.isLowBandwidthMode,
                 hasDivider: false,
                 onChanged: (isEnabled) {
@@ -112,9 +113,9 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   });
                 },
               ),
-              _buildLabel('Audio'),
+              _buildLabel(Strings.audio.i18n),
               SettingSwitchCard(
-                label: 'Start with audio muted',
+                label: Strings.startWithAudioMuted.i18n,
                 enabled: _settings.isAudioMuted,
                 onChanged: (isEnabled) {
                   setState(() {
@@ -125,7 +126,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 },
               ),
               SettingSwitchCard(
-                label: 'Echo cancellation',
+                label: Strings.echoCancellation.i18n,
                 enabled: _settings.echoCancellationEnabled,
                 onChanged: (isEnabled) {
                   setState(() {
@@ -136,7 +137,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 },
               ),
               SettingSwitchCard(
-                label: 'Noise suppression',
+                label: Strings.noiseSuppression.i18n,
                 enabled: _settings.noiseSuppressionEnabled,
                 onChanged: (isEnabled) {
                   setState(() {
@@ -147,7 +148,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 },
               ),
               SettingSwitchCard(
-                label: 'Automatic gain control',
+                label: Strings.automaticGainControl.i18n,
                 enabled: _settings.agcEnabled,
                 hasDivider: false,
                 onChanged: (isEnabled) {
@@ -158,9 +159,9 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   });
                 },
               ),
-              _buildLabel('Video'),
+              _buildLabel(Strings.video.i18n),
               SettingSwitchCard(
-                label: 'Start with video muted',
+                label: Strings.startWithVideoMuted.i18n,
                 enabled: _settings.isVideoMuted,
                 onChanged: (isEnabled) {
                   setState(() {
@@ -187,16 +188,16 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   );
                 },
                 child: SettingSwitchCard(
-                  label: 'Video quality',
+                  label: Strings.videoQuality.i18n,
                   enabled: true,
                   hasDivider: false,
                   value: _settings.videoQuality.label,
                   onChanged: (isEnabled) {},
                 ),
               ),
-              _buildLabel('Security'),
+              _buildLabel(Strings.security.i18n),
               SettingSwitchCard(
-                label: 'End-to-end encryption',
+                label: Strings.endToEndEncrypted.i18n,
                 enabled: _settings.e2eeEnabled,
                 icon: PhosphorIcons.shield_check_fill,
                 onChanged: (isEnabled) {
@@ -207,10 +208,10 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   });
                 },
               ),
-              _buildLabel('Video Layout'),
+              _buildLabel(Strings.videoLayout.i18n),
               SizedBox(height: 4.sp),
               SettingCheckboxCard(
-                label: 'Grid view',
+                label: Strings.gridView.i18n,
                 enabled: _settings.videoLayout == VideoLayout.gridView,
                 onTap: () {
                   setState(() {
@@ -221,7 +222,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 },
               ),
               SettingCheckboxCard(
-                label: 'List view',
+                label: Strings.listView.i18n,
                 enabled: _settings.videoLayout == VideoLayout.listView,
                 hasDivider: false,
                 onTap: () {
@@ -232,7 +233,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   });
                 },
               ),
-              _buildLabel('Preferred Codec'),
+              _buildLabel(Strings.preferredCodec.i18n),
               SizedBox(height: 4.sp),
               Column(
                 children: [

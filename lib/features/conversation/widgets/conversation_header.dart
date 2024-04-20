@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/chats/widgets/avatar_chat.dart';
@@ -58,7 +59,7 @@ class ConversationHeader extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    'Online',
+                    Strings.online.i18n,
                     style: TextStyle(
                       color: colorGreenLight,
                       fontSize: 10.sp,

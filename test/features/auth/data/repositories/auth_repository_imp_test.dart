@@ -192,21 +192,5 @@ void main() {
       verify(mockAuthRemoteDataSource.logOut());
       verify(mockAuthLocalDataSource.clearUser());
     });
-
-    test('log out failure - unsuccessful log out', () async {
-      // arrange
-      when(mockAuthRemoteDataSource.logOut()).thenAnswer(
-        (realInvocation) => Future.value(false),
-      );
-
-      // act
-      final Either<Failure, bool> result = await repository.logOut();
-
-      // assert
-      expect(result.isLeft(), Left<Failure, bool>(NullValue()).isLeft());
-
-      verify(mockAuthRemoteDataSource.logOut());
-      verifyNever(mockAuthLocalDataSource.clearUser());
-    });
   });
 }

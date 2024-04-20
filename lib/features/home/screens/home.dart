@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -72,18 +73,18 @@ class _HomeState extends State<Home> {
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.presentation,
                           iconDataSelected: PhosphorIcons.presentation_fill,
-                          label: 'Home',
+                          label: Strings.home.i18n,
                         ),
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.chats_teardrop,
                           iconDataSelected: PhosphorIcons.chats_teardrop_fill,
-                          label: 'Chats',
+                          label: Strings.chat.i18n,
                           index: 1,
                         ),
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.gear,
                           iconDataSelected: PhosphorIcons.gear_fill,
-                          label: 'Setting',
+                          label: Strings.settings.i18n,
                           index: 2,
                         ),
                       ],

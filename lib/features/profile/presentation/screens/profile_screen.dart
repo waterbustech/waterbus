@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -52,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       resizeToAvoidBottomInset: false,
       appBar: appBarTitleBack(
         context,
-        title: 'Profile',
+        title: Strings.profile.i18n,
         leadingWidth: 60.sp,
         leading: GestureWrapper(
           onTap: () {
@@ -67,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               left: 12.sp,
             ),
             child: Text(
-              'Cancel',
+              Strings.cancel.i18n,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 12.sp,
@@ -93,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Save',
+                Strings.save.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -163,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 ProfileTextField(
                                   controller: _firstNameController,
-                                  hintText: 'First name',
+                                  hintText: Strings.firstname.i18n,
                                   margin: EdgeInsets.zero,
                                 ),
                                 Padding(
@@ -173,23 +174,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 ProfileTextField(
                                   controller: _lastNameController,
-                                  hintText: 'Last name',
+                                  hintText: Strings.lastname.i18n,
                                   margin: EdgeInsets.zero,
                                 ),
                               ],
                             ),
                           ),
-                          const _TextFieldNote(
-                            note:
-                                "Enter your name and add an optional profile photo.",
+                          _TextFieldNote(
+                            note: Strings
+                                .enterYourNameAndAddAnOptionalProfilePhoto.i18n,
                           ),
                           ProfileTextField(
                             controller: _bioController,
-                            hintText: 'Bio',
+                            hintText: Strings.bio.i18n,
                             margin: EdgeInsets.only(top: 16.sp),
                           ),
-                          const _TextFieldNote(
-                            note: "You can add a few lines about yourself.",
+                          _TextFieldNote(
+                            note: Strings.youCanAddFewLinesAboutYourself.i18n,
                           ),
                           GestureWrapper(
                             onTap: () {
@@ -209,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Username',
+                                      Strings.username.i18n,
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         color: Theme.of(context)
@@ -276,7 +277,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Log Out",
+                                  Strings.logout.i18n,
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     color: Theme.of(context).colorScheme.error,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 
@@ -128,7 +129,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Choose what to share',
+                    Strings.chooseWhatToShare.i18n,
                     style: TextStyle(fontSize: 14.sp, color: mCL),
                   ),
                 ),
@@ -166,13 +167,13 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                             tabs: [
                               Tab(
                                 child: Text(
-                                  'Entire Screen',
+                                  Strings.entireScreen.i18n,
                                   style: TextStyle(color: mCM),
                                 ),
                               ),
                               Tab(
                                 child: Text(
-                                  'Window',
+                                  Strings.window.i18n,
                                   style: TextStyle(color: mCM),
                                 ),
                               ),
@@ -251,7 +252,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
               children: <Widget>[
                 MaterialButton(
                   child: Text(
-                    'Cancel',
+                    Strings.cancel.i18n,
                     style: TextStyle(color: mCM),
                   ),
                   onPressed: () {
@@ -260,8 +261,8 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                 ),
                 MaterialButton(
                   color: Theme.of(context).primaryColor,
-                  child: const Text(
-                    'Share',
+                  child: Text(
+                    Strings.share.i18n,
                   ),
                   onPressed: () {
                     _ok(context);

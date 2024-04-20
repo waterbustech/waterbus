@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/share_utils.dart';
@@ -41,7 +42,7 @@ class DialogPrepareMeeting extends StatelessWidget {
               SizedBox(height: 16.sp),
               meeting.isNoOneElse
                   ? Text(
-                      "No participants yet",
+                      Strings.noParticipantsYet.i18n,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
@@ -84,8 +85,8 @@ class DialogPrepareMeeting extends StatelessWidget {
                         description: meeting.title,
                       );
                     },
-                    child: const TimeCard(
-                      text: "Share link",
+                    child: TimeCard(
+                      text: Strings.shareLink.i18n,
                       iconData: PhosphorIcons.export,
                       backgroundColor: Colors.blueGrey,
                     ),
@@ -113,7 +114,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                       children: [
                         SizedBox(width: 4.sp),
                         Text(
-                          "Start",
+                          Strings.start.i18n,
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontSize: 9.sp,
