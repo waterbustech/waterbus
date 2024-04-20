@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           GestureWrapper(
                             onTap: () {
-                              AppNavigator.push(Routes.usernameRoute);
+                              AppNavigator().push(Routes.usernameRoute);
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 16.sp),
@@ -219,9 +219,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                     ),
                                   ),
-                                  const Icon(
+                                  BlocBuilder<UserBloc, UserState>(
+                                    builder: (context, state) {
+                                      final User? user = state is UserGetDone
+                                          ? state.user
+                                          : null;
+
+                                      return user?.userName == null
+                                          ? const SizedBox()
+                                          : Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  right: SizerUtil.isDesktop
+                                                      ? 4.sp
+                                                      : 2.sp,
+                                                ),
+                                                child: Text(
+                                                  "@${user?.userName ?? ""}",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: 12.sp,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .color,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                    },
+                                  ),
+                                  Icon(
                                     Icons.keyboard_arrow_right_rounded,
                                     color: colorGray3,
+                                    size: 18.sp,
                                   ),
                                 ],
                               ),

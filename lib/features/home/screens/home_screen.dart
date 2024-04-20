@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? _buildCreateMeetingButton
                           : null,
                       onTap: () {
-                        AppNavigator.push(Routes.enterCodeRoute);
+                        AppNavigator().push(Routes.enterCodeRoute);
                       },
                     ),
                     SizedBox(height: 12.sp),
@@ -158,10 +158,10 @@ class _HomeScreenState extends State<HomeScreen> {
               AppBloc.authBloc.add(LogOutEvent());
               break;
             case "Profile":
-              AppNavigator.push(Routes.profileRoute);
+              AppNavigator().push(Routes.profileRoute);
               break;
             case "Settings":
-              AppNavigator.push(Routes.settingsCallRoute);
+              AppNavigator().push(Routes.settingsCallRoute);
               break;
             case "Licenses":
               showLicensePage(
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await WaterbusPermissionHandler().checkGrantedForExecute(
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
-            AppNavigator.push(Routes.createMeetingRoute);
+            AppNavigator().push(Routes.createMeetingRoute);
           },
         );
       },

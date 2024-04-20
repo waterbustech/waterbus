@@ -40,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
         actions: [
           GestureWrapper(
             onTap: () {
-              AppNavigator.push(Routes.profileRoute);
+              AppNavigator().push(Routes.profileRoute);
             },
             child: Container(
               decoration: const BoxDecoration(
@@ -123,7 +123,7 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 32.sp),
             SettingRowButton(
               onTap: () {
-                AppNavigator.push(Routes.profileRoute);
+                AppNavigator().push(Routes.profileRoute);
               },
               title: 'My Profile',
               icon: Icons.account_circle_rounded,
@@ -155,7 +155,7 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 18.sp),
             SettingRowButton(
               onTap: () {
-                AppNavigator.push(Routes.settingsCallRoute);
+                AppNavigator().push(Routes.settingsCallRoute);
               },
               title: 'Call & Meeting',
               icon: Icons.video_call_outlined,

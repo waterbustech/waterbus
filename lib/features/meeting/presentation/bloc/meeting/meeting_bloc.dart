@@ -123,7 +123,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
 
           emit(_preJoinMeeting);
-          AppNavigator.push(Routes.meetingRoute);
+          AppNavigator().push(Routes.meetingRoute);
         }
 
         if (event is JoinMeetingWithPasswordEvent) {
@@ -151,7 +151,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
 
             if (event.isMember) {
-              AppNavigator.push(Routes.meetingRoute);
+              AppNavigator().push(Routes.meetingRoute);
             }
           }
         }
