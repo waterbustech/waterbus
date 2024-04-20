@@ -117468,7 +117468,7 @@ $.aeX()
 p=q==null?"":q.gd6(q)+"/benchmark.txt"
 o=$.dC()
 A.biH(o)
-$.b9U="wss://sfu.waterbus.tech"
+$.b9U="https://sfu.waterbus.tech"
 $.bs8=p
 o.$1$0(t.C9).a6l(a)
 return A.o(null,r)}})
