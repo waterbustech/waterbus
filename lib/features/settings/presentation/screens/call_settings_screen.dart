@@ -40,7 +40,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Call Settings',
+        title: Strings.callSettings.i18n,
         leadingWidth: 60.sp,
         leading: GestureWrapper(
           onTap: () {
