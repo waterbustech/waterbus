@@ -81,7 +81,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Save',
+                Strings.save.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -191,7 +191,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   label: Strings.videoQuality.i18n,
                   enabled: true,
                   hasDivider: false,
-                  value: _settings.videoQuality.label,
+                  value: _settings.videoQuality.label.i18n,
                   onChanged: (isEnabled) {},
                 ),
               ),

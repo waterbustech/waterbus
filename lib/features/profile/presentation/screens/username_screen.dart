@@ -30,7 +30,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
       resizeToAvoidBottomInset: false,
       appBar: appBarTitleBack(
         context,
-        title: 'Username',
+        title: Strings.username.i18n,
         leadingWidth: 60.sp,
         leading: GestureWrapper(
           onTap: () {
@@ -63,7 +63,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Done',
+                Strings.done.i18n,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 12.sp,
@@ -83,7 +83,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             Padding(
               padding: EdgeInsets.only(left: 10.sp),
               child: Text(
-                "USERNAME",
+                Strings.username.i18n.toUpperCase(),
                 style: TextStyle(
                   fontSize: 9.5.sp,
                   color: mGB,
@@ -92,7 +92,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             ),
             ProfileTextField(
               controller: _usernameController,
-              hintText: 'Username',
+              hintText: Strings.username.i18n,
               margin: EdgeInsets.only(top: 5.sp),
             ),
             Padding(
@@ -105,46 +105,45 @@ class _UserNameScreenState extends State<UserNameScreen> {
                     color: mGB,
                     height: 1.sp,
                   ),
-                  children: const [
+                  children: [
                     TextSpan(
-                      text: "You can choose a username an ",
+                      text: Strings.usernameNote1.i18n,
                     ),
-                    TextSpan(
-                      text: "Waterbus",
+                    const TextSpan(
+                      text: " Waterbus",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     TextSpan(
-                      text:
-                          ". If you do, people will be able to find you by this username and contact your.\n\nYou can use ",
+                      text: Strings.usernameNote2.i18n,
                     ),
-                    TextSpan(
-                      text: "a-z",
+                    const TextSpan(
+                      text: " a-z",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const TextSpan(
+                      text: ",",
+                    ),
+                    const TextSpan(
+                      text: " 0-9 ",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     TextSpan(
-                      text: ", ",
+                      text: Strings.usernameNote3.i18n,
                     ),
-                    TextSpan(
-                      text: "0-9",
+                    const TextSpan(
+                      text: " 5 ",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     TextSpan(
-                      text: " and underscores. Minium length is ",
-                    ),
-                    TextSpan(
-                      text: "5",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: " characters.",
+                      text: Strings.usernameNote4.i18n,
                     ),
                   ],
                 ),

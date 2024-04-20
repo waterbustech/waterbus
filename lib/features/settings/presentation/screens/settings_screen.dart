@@ -134,7 +134,7 @@ class SettingsScreen extends StatelessWidget {
             SettingRowButton(
               onTap: () {},
               title: Strings.notificationsAndSound.i18n,
-              isFirst: false,
+              isLast: false,
               icon: Icons.notifications,
               iconBackground: colorRedOrange,
             ),
@@ -147,7 +147,9 @@ class SettingsScreen extends StatelessWidget {
               iconBackground: colorCyan,
             ),
             SettingRowButton(
-              onTap: () {},
+              onTap: () {
+                AppNavigator().push(Routes.langRoute);
+              },
               title: Strings.language.i18n,
               isFirst: false,
               icon: Icons.language_outlined,
@@ -158,7 +160,7 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 AppNavigator().push(Routes.settingsCallRoute);
               },
-              title: Strings.callAndMeeting,
+              title: Strings.callAndMeeting.i18n,
               icon: Icons.video_call_outlined,
               iconBackground: colorActive,
             ),

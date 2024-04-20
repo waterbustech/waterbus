@@ -92,6 +92,11 @@ class Strings {
       'enterYourNameAndAddAnOptionalProfilePhoto';
   static const String youCanAddFewLinesAboutYourself =
       'youCanAddFewLinesAboutYourself';
+  static const String usernameNote1 = 'usernameNote1';
+  static const String usernameNote2 = 'usernameNote2';
+  static const String usernameNote3 = 'usernameNote3';
+  static const String usernameNote4 = 'usernameNote4';
+  static const String done = 'done';
 
   // Settings screen
   static const String myProfile = 'myProfile';

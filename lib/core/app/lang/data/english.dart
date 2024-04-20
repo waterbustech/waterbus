@@ -88,6 +88,12 @@ Map<String, String> english = {
       "Enter your name and add an optional profile photo.",
   Strings.youCanAddFewLinesAboutYourself:
       "You can add a few lines about yourself.",
+  Strings.usernameNote1: "You can choose a username an",
+  Strings.usernameNote2:
+      ". If you do, people will be able to find you by this username and contact your.\n\nYou can use",
+  Strings.usernameNote3: "and underscores. Minimum length is",
+  Strings.usernameNote4: "characters.",
+  Strings.done: "Done",
 
   // Settings screen
   Strings.myProfile: "My Profile",
