@@ -99,7 +99,7 @@ class BaseRemoteData {
       }
       final Response response = await dio.post(
         gateway,
-        data: body == null ? null : convert.jsonEncode(body),
+        data: body == null ? {} : convert.jsonEncode(body),
         options: getOptions(),
         queryParameters: query == null ? null : paramsObject,
       );
@@ -232,6 +232,7 @@ class BaseRemoteData {
       },
       headers: {
         'Authorization': 'Bearer ${_authLocalDataSource.refreshToken}',
+        'api_key': 'waterbus@2024',
         'Content-Type': 'application/json; charset=UTF-8',
         'Connection': 'keep-alive',
         'Accept': '*/*',
@@ -252,6 +253,7 @@ class BaseRemoteData {
   getHeaders() {
     return {
       'Authorization': 'Bearer ${_authLocalDataSource.accessToken ?? ''}',
+      'api_key': 'waterbus@2024',
       'Content-Type': 'application/json; charset=UTF-8',
       'Connection': 'keep-alive',
       'Accept': '*/*',

@@ -19,7 +19,7 @@ import '../../features/auth/domain/repositories/auth_repository.dart' as _i22;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i26;
 import '../../features/auth/domain/usecases/login_with_social.dart' as _i25;
 import '../../features/auth/domain/usecases/logout.dart' as _i27;
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i38;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i37;
 import '../../features/home/bloc/home/home_bloc.dart' as _i3;
 import '../../features/meeting/domain/usecases/create_meeting.dart' as _i28;
 import '../../features/meeting/domain/usecases/get_call_settings.dart' as _i30;
@@ -60,7 +60,7 @@ import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_b
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i39;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
-    as _i37;
+    as _i38;
 import '../../features/profile/data/datasources/user_remote_datasource.dart'
     as _i13;
 import '../../features/profile/data/repositories/user_repository_impl.dart'
@@ -146,15 +146,16 @@ _i1.GetIt $initGetIt(
       () => _i35.GetRecentJoined(gh<_i16.MeetingRepository>()));
   gh.factory<_i36.SaveCallSettings>(
       () => _i36.SaveCallSettings(gh<_i16.MeetingRepository>()));
-  gh.factory<_i37.RecentJoinedBloc>(() => _i37.RecentJoinedBloc(
-        gh<_i35.GetRecentJoined>(),
-        gh<_i33.RemoveRecentJoined>(),
-        gh<_i34.CleanAllRecentJoined>(),
-      ));
-  gh.factory<_i38.AuthBloc>(() => _i38.AuthBloc(
+  gh.factory<_i37.AuthBloc>(() => _i37.AuthBloc(
         gh<_i26.CheckAuth>(),
         gh<_i25.LoginWithSocial>(),
         gh<_i27.LogOut>(),
+        gh<_i6.AuthLocalDataSource>(),
+      ));
+  gh.factory<_i38.RecentJoinedBloc>(() => _i38.RecentJoinedBloc(
+        gh<_i35.GetRecentJoined>(),
+        gh<_i33.RemoveRecentJoined>(),
+        gh<_i34.CleanAllRecentJoined>(),
       ));
   gh.factory<_i39.MeetingBloc>(() => _i39.MeetingBloc(
         gh<_i28.CreateMeeting>(),

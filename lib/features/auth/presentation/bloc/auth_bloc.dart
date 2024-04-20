@@ -11,6 +11,7 @@ import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
 import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
@@ -27,6 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckAuth _checkAuth;
   final LoginWithSocial _loginWithSocial;
   final LogOut _logOut;
+  final AuthLocalDataSource _authLocal;
 
   User? user;
 
@@ -34,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._checkAuth,
     this._loginWithSocial,
     this._logOut,
+    this._authLocal,
   ) : super(AuthInitial()) {
     Auth().initialize((payload) async {
       final Either<Failure, User> loginSucceed = await _loginWithSocial.call(
@@ -84,7 +87,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // MARK: state
   AuthSuccess get _authSuccess {
-    AppBloc.instance.bootstrap();
+    AppBloc.instance.bootstrap(_authLocal.accessToken!);
+
     return AuthSuccess();
   }
 
