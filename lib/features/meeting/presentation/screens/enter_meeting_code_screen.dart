@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';

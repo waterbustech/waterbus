@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 Map<String, String> english = {

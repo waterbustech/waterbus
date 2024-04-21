@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_label_line.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -40,7 +40,9 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 12.sp),
           Text(
-            Strings.endToEndEncryptionKeepsYourPersonalMeetingsBetweenYouAndTheOtherPeopleNotEvenWaterbusCanListenToThemThisIncludesYour.i18n,
+            Strings
+                .endToEndEncryptionKeepsYourPersonalMeetingsBetweenYouAndTheOtherPeopleNotEvenWaterbusCanListenToThemThisIncludesYour
+                .i18n,
             textAlign: TextAlign.justify,
             strutStyle: StrutStyle.disabled,
             style: TextStyle(
@@ -49,7 +51,7 @@ class E2eeBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.sp),
-           E2eeLabelLine(
+          E2eeLabelLine(
             icon: PhosphorIcons.video_camera,
             label: Strings.audioAndVideoCalls.i18n,
           ),

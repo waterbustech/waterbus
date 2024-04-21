@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 
 class DateTitleCard extends StatelessWidget {

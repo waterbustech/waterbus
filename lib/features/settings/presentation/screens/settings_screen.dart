@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
-import 'package:waterbus/features/settings/presentation/widgets/setting_switch_languages.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -18,6 +17,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
+import 'package:waterbus/features/settings/presentation/widgets/setting_switch_languages.dart';
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -175,7 +175,9 @@ class _SettingScreenState extends State<SettingsScreen> {
                   onChanged: (isEnabled) {},
                 ),
               ),
-              _buildLabel(Strings.security.i18n,),
+              _buildLabel(
+                Strings.security.i18n,
+              ),
               SettingSwitchCard(
                 label: Strings.endToEndEncryption.i18n,
                 enabled: _settings.e2eeEnabled,
@@ -188,7 +190,9 @@ class _SettingScreenState extends State<SettingsScreen> {
                   });
                 },
               ),
-              _buildLabel(Strings.videoLayout.i18n,),
+              _buildLabel(
+                Strings.videoLayout.i18n,
+              ),
               SizedBox(height: 4.sp),
               SettingCheckboxCard(
                 label: Strings.gridView.i18n,
@@ -213,7 +217,9 @@ class _SettingScreenState extends State<SettingsScreen> {
                   });
                 },
               ),
-              _buildLabel(Strings.preferredCodec.i18n,),
+              _buildLabel(
+                Strings.preferredCodec.i18n,
+              ),
               SizedBox(height: 4.sp),
               Column(
                 children: [
