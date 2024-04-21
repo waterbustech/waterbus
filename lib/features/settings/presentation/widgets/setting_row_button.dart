@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -30,32 +31,34 @@ class SettingRowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureWrapper(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
+      child: Material(
+        shape: SuperellipseShape(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(isFirst ? 7.sp : 0),
-            bottom: Radius.circular(isLast ? 7.sp : 0),
+            top: Radius.circular(isFirst ? 16.sp : 0),
+            bottom: Radius.circular(isLast ? 16.sp : 0),
           ),
-          color: colorBlueGreyDark,
         ),
+        color: colorBlueGreyDark,
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 6.sp),
+              padding: EdgeInsets.symmetric(vertical: 8.sp),
               child: Row(
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 12.sp),
-                    decoration: BoxDecoration(
+                    child: Material(
+                      shape: SuperellipseShape(
+                        borderRadius: BorderRadius.circular(12.sp),
+                      ),
                       color: iconBackground,
-                      borderRadius: BorderRadius.circular(4.sp),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(1.5.sp),
-                      child: Icon(
-                        icon,
-                        color: mCL,
-                        size: 20.sp,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.sp),
+                        child: Icon(
+                          icon,
+                          color: mCL,
+                          size: 20.sp,
+                        ),
                       ),
                     ),
                   ),

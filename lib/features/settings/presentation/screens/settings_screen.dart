@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -30,19 +30,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        leading: BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
-            final User user = state is UserGetDone ? state.user : kUserDefault;
-
-            return Align(
-              alignment: Alignment.centerRight,
-              child: AvatarCard(
-                urlToImage: user.avatar,
-                size: 24.sp,
-              ),
-            );
-          },
-        ),
+        leading: const SizedBox(),
         actions: [
           GestureWrapper(
             onTap: () {
@@ -132,7 +120,7 @@ class SettingsScreen extends StatelessWidget {
                 AppNavigator().push(Routes.profileRoute);
               },
               title: Strings.myProfile.i18n,
-              icon: Icons.account_circle_rounded,
+              icon: PhosphorIcons.user_circle_fill,
               iconBackground: colorRedCustom,
             ),
             SizedBox(height: 18.sp),
@@ -140,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {},
               title: Strings.notificationsAndSound.i18n,
               isLast: false,
-              icon: Icons.notifications,
+              icon: PhosphorIcons.bell_fill,
               iconBackground: colorRedOrange,
             ),
             SettingRowButton(
@@ -148,7 +136,7 @@ class SettingsScreen extends StatelessWidget {
               isLast: false,
               isFirst: false,
               title: Strings.appearance.i18n,
-              icon: Icons.contrast_outlined,
+              icon: PhosphorIcons.circle_half_fill,
               iconBackground: colorCyan,
             ),
             SettingRowButton(
@@ -157,7 +145,7 @@ class SettingsScreen extends StatelessWidget {
               },
               title: Strings.language.i18n,
               isFirst: false,
-              icon: Icons.language_outlined,
+              icon: PhosphorIcons.globe,
               iconBackground: colorPurple,
             ),
             SizedBox(height: 18.sp),
@@ -166,7 +154,7 @@ class SettingsScreen extends StatelessWidget {
                 AppNavigator().push(Routes.settingsCallRoute);
               },
               title: Strings.callAndMeeting.i18n,
-              icon: Icons.video_call_outlined,
+              icon: PhosphorIcons.video_camera_fill,
               iconBackground: colorActive,
             ),
           ],

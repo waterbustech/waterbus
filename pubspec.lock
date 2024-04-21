@@ -1790,11 +1790,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.3.2"
-      resolved-ref: "0a8a8a9fca0d70ec9829aa79d3258dc68c570b28"
+      ref: "1.3.3"
+      resolved-ref: fa62df663e50765cf0904d88017e3d7d088507cc
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.3.2"
+    version: "1.3.3"
   web:
     dependency: "direct overridden"
     description:
