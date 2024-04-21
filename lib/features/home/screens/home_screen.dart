@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -125,11 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(height: 10.sp),
                     EnterCodeBox(
+                      hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
                       suffixWidget: SizerUtil.isDesktop
                           ? _buildCreateMeetingButton
                           : null,
                       onTap: () {
-                        AppNavigator.push(Routes.enterCodeRoute);
+                        AppNavigator().push(Routes.enterCodeRoute);
                       },
                     ),
                     SizedBox(height: 12.sp),
@@ -153,17 +155,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
         Future.delayed(const Duration(milliseconds: 300), () {
           switch (item.title) {
-            case "Logout":
+            case Strings.logout:
               displayLoadingLayer();
               AppBloc.authBloc.add(LogOutEvent());
               break;
-            case "Profile":
-              AppNavigator.push(Routes.profileRoute);
+            case Strings.profile:
+              AppNavigator().push(Routes.profileRoute);
               break;
-            case "Settings":
-              AppNavigator.push(Routes.settingsRoute);
+            case Strings.settings:
+              AppNavigator().push(Routes.settingsCallRoute);
               break;
-            case "Licenses":
+            case Strings.licenses:
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
@@ -187,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await WaterbusPermissionHandler().checkGrantedForExecute(
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
-            AppNavigator.push(Routes.createMeetingRoute);
+            AppNavigator().push(Routes.createMeetingRoute);
           },
         );
       },

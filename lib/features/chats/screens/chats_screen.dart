@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -37,7 +38,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         _currentChat = chatModel;
       });
     } else {
-      AppNavigator.push(
+      AppNavigator().push(
         Routes.conversationRoute,
         arguments: {
           'chatModel': chatModel,
@@ -55,7 +56,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           child: Scaffold(
             appBar: appBarTitleBack(
               context,
-              title: 'Chats',
+              title: Strings.chat.i18n,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               leading: BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
@@ -73,10 +74,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
               actions: [
                 Tooltip(
-                  message: 'Create Room',
+                  message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
-                      AppNavigator.push(Routes.createMeetingRoute);
+                      AppNavigator().push(Routes.createMeetingRoute);
                     },
                     icon: Icon(
                       PhosphorIcons.plus,
@@ -90,7 +91,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               children: [
                 SizedBox(height: 10.sp),
                 EnterCodeBox(
-                  hintTextContent: 'Search',
+                  hintTextContent: Strings.search.i18n,
                   onTap: () {},
                 ),
                 Expanded(

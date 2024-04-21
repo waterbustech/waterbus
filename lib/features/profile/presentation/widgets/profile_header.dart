@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/themes/theme_model.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/constants.dart';
@@ -38,18 +40,18 @@ class ProfileHeader extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         AppBloc.themesBloc.add(OnChangeTheme(
-                            appTheme: stateTheme.props[0] == ThemeMode.light
-                                ? ThemeMode.dark
-                                : ThemeMode.light,),);
+                            appTheme: stateTheme.props[0].theme == ThemeList.light
+                                ? ThemeList.dark
+                                : ThemeList.light,),);
                       },
                       icon: stateTheme.props[0] == ThemeMode.dark
                           ? Icon(
                               PhosphorIcons.moon_stars_fill,
                               color: Theme.of(context).primaryColor,
                             )
-                          : Icon(
+                          : const Icon(
                               PhosphorIcons.sun_fill,
-                              color: Theme.of(context).primaryColor,
+                              color: sun,
                             ),
                     ),
                   ],

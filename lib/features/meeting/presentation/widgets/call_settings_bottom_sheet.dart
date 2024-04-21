@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -63,7 +64,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 icon: PhosphorIcons.sliders_horizontal,
                 lable: 'Edit Room',
                 onTap: () {
-                  AppNavigator.push(
+                  AppNavigator().push(
                     Routes.createMeetingRoute,
                     arguments: {
                       'meeting': meeting,
@@ -73,11 +74,11 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.phone,
-                lable: 'Call Settings',
+                lable: Strings.callSettings.i18n,
                 onTap: () {
                   AppNavigator.pop();
 
-                  AppNavigator.push(Routes.settingsRoute);
+                  AppNavigator().push(Routes.settingsRoute);
                 },
               ),
               CallSettingButton(
@@ -115,7 +116,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {
                   AppNavigator.pop();
 
-                  AppNavigator.push(Routes.backgroundGallery);
+                  AppNavigator().push(Routes.backgroundGallery);
                 },
               ),
               CallSettingButton(

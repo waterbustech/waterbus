@@ -34,7 +34,7 @@ class _AppState extends State<App> {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.light().data,
                 darkTheme: AppTheme.dark().data,
-                themeMode: stateThemes.props[0],
+                themeMode: stateThemes.props[0].theme,
                 initialRoute: Routes.rootRoute,
                 navigatorObservers: [
                   NavigatorObserver(),

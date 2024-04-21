@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -38,7 +39,7 @@ class _EnterMeetingCardState extends State {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Join a meeting',
+        title: Strings.joinAMeeting.i18n,
         actions: [
           GestureWrapper(
             onTap: () {
@@ -52,7 +53,7 @@ class _EnterMeetingCardState extends State {
               color: Colors.transparent,
               alignment: Alignment.bottomRight,
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium?.color,
                   fontSize: 11.sp,

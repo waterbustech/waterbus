@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/models/index.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 
 class VideoQualityBottomSheet extends StatefulWidget {
@@ -37,7 +38,7 @@ class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Video Quality',
+            Strings.videoQuality.i18n,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -47,7 +48,7 @@ class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
           ...List.generate(
             VideoQuality.values.length,
             (index) => SettingCheckboxCard(
-              label: VideoQuality.values[index].label,
+              label: VideoQuality.values[index].label.i18n,
               enabled: _quality == VideoQuality.values[index],
               hasDivider: index < VideoQuality.values.length - 1,
               onTap: () {

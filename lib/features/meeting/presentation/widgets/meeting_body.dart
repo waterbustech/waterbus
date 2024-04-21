@@ -12,6 +12,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/device_utils.dart';
+import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -50,7 +51,7 @@ class _MeetingBodyState extends State<MeetingBody> {
       backgroundColor: Colors.black,
       appBar: appBarTitleBack(
         context,
-        title: widget.meeting.code.toString(),
+        title: widget.meeting.code.toString().formatRoomCode,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
@@ -28,7 +29,7 @@ class MenuDrawerCard extends StatelessWidget {
           ),
           SizedBox(width: 10.sp),
           Text(
-            item.title,
+            item.title.i18n,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,

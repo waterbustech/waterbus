@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class MenuItemModel {
@@ -13,27 +14,27 @@ class MenuItemModel {
 
 final List<MenuItemModel> menuItems = [
   MenuItemModel(
-    title: 'Profile',
+    title: Strings.profile,
     iconAssetPath: Assets.icons.icProfile.path,
   ),
   MenuItemModel(
-    title: 'Storage',
+    title: Strings.storage,
     iconAssetPath: Assets.icons.icFolder.path,
   ),
   MenuItemModel(
-    title: 'Archived chats',
+    title: Strings.archivedChats,
     iconAssetPath: Assets.icons.icArchive.path,
   ),
   MenuItemModel(
-    title: 'Settings',
+    title: Strings.settings,
     iconAssetPath: Assets.icons.icSettings.path,
   ),
   MenuItemModel(
-    title: 'Licenses',
+    title: Strings.licenses,
     iconAssetPath: Assets.icons.icShield.path,
   ),
   MenuItemModel(
-    title: 'Logout',
+    title: Strings.logout,
     iconAssetPath: Assets.icons.icLogOut.path,
   ),
 ];

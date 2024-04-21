@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -44,7 +45,7 @@ class _EnterMeetingPasswordScreenState
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Enter password',
+        title: Strings.enterPassword.i18n,
         onBackPressed: () {
           AppBloc.meetingBloc.add(DisposeMeetingEvent());
           AppNavigator.pop();
@@ -68,7 +69,7 @@ class _EnterMeetingPasswordScreenState
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
                   color:Theme.of(context).textTheme.bodyMedium?.color,
                   fontSize: 12.sp,
@@ -113,7 +114,7 @@ class _EnterMeetingPasswordScreenState
                       SizedBox(height: 12.sp),
                       widget.meeting.isNoOneElse
                           ? Text(
-                              "No participants yet",
+                              Strings.noParticipantsYet.i18n,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall

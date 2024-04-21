@@ -22,6 +22,7 @@ AppBar appBarTitleBack(
   Widget? titleWidget,
   Widget? leading,
   double? elevation,
+  double? leadingWidth,
   bool centerTitle = true,
   bool isVisibleBackButton = true,
   double? titleSpacing,
@@ -35,7 +36,7 @@ AppBar appBarTitleBack(
     backgroundColor: backgroundColor ?? Colors.transparent,
     automaticallyImplyLeading: false,
     centerTitle: centerTitle,
-    leadingWidth: 40.sp,
+    leadingWidth: leadingWidth ?? 40.sp,
     titleSpacing: titleSpacing,
     title: titleWidget ??
         Text(

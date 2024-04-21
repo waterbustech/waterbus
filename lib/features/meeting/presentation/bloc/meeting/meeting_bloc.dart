@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -18,13 +17,11 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
-import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
@@ -75,14 +72,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           (settings) => settings.fold((l) => null, (r) async {
             _callSetting = r;
 
-            final Directory? appDir = await PathHelper.appDir;
-
-            _waterbusSdk.initial(
-              waterbusUrl: ApiEndpoints.wsUrl,
-              recordBenchmarkPath:
-                  appDir == null ? '' : '${appDir.path}/benchmark.txt',
-            );
-
             _waterbusSdk.changeCallSetting(r);
             _waterbusSdk.onEventChangedRegister(_onEventChanged);
           }),
@@ -123,7 +112,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
 
           emit(_preJoinMeeting);
-          AppNavigator.push(Routes.meetingRoute);
+          AppNavigator().push(Routes.meetingRoute);
         }
 
         if (event is JoinMeetingWithPasswordEvent) {
@@ -151,7 +140,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
 
             if (event.isMember) {
-              AppNavigator.push(Routes.meetingRoute);
+              AppNavigator().push(Routes.meetingRoute);
             }
           }
         }
