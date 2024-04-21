@@ -13,10 +13,7 @@ Map<String, String> vietnamese = {
   Strings.share: "Chia sẻ",
   Strings.notifications: "Thông báo",
   Strings.save: "Lưu",
-  Strings.fullName: "Tên đầy đủ",
   Strings.invalidFullName: "Tên đầy đủ không hợp lệ",
-  Strings.yourFullName: "Tên đầy đủ của bạn",
-  Strings.profile: "Hồ sơ",
   Strings.storage: "Bộ nhớ",
   Strings.archivedChats: "Lưu trữ",
   Strings.settings: "Cài đặt",
@@ -61,7 +58,7 @@ Map<String, String> vietnamese = {
   Strings.roomCode: "Mã phòng: ",
   Strings.noParticipantsYet: "Chưa có người tham gia",
   Strings.yourPersonalMeetingsAre: "Các cuộc họp cá nhân của bạn đều ",
-  Strings.endToEndEncrypted: "được mã hóa đầu cuối",
+  Strings.endToEndEncrypted: "Được mã hóa đầu cuối",
   Strings.join: "Vào",
   Strings.joinAMeeting: "Vào phòng",
   Strings.search: "Tìm kiếm",
@@ -79,4 +76,28 @@ Map<String, String> vietnamese = {
   Strings.dataSaver: "Tiết kiệm",
   Strings.balance: "Cân bằng",
   Strings.highQuality: "Chất lượng cao",
+
+  // Profile screen
+  Strings.profile: "Hồ sơ",
+  Strings.firstname: "Tên",
+  Strings.lastname: "Họ",
+  Strings.username: "Tên tài khoản",
+  Strings.bio: "Tiểu sử",
+  Strings.enterYourNameAndAddAnOptionalProfilePhoto:
+      "Nhập tên của bạn và thêm ảnh hồ sơ tùy chọn.",
+  Strings.youCanAddFewLinesAboutYourself:
+      "Bạn có thể thêm một vài dòng về bản thân.",
+  Strings.usernameNote1: "Bạn có thể chọn tên người dùng",
+  Strings.usernameNote2:
+      ". Nếu bạn làm vậy, mọi người sẽ có thể tìm thấy bạn bằng tên người dùng này và liên hệ với bạn.\n\nBạn có thể sử dụng",
+  Strings.usernameNote3: "và dấu gạch dưới. Độ dài tối thiểu là",
+  Strings.usernameNote4: "ký tự.",
+  Strings.done: "Xong",
+
+  // Settings screen
+  Strings.myProfile: "Thông tin cá nhân",
+  Strings.edit: "Chỉnh sửa",
+  Strings.notificationsAndSound: "Thông báo và Âm lượng",
+  Strings.appearance: "Giao diện",
+  Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
 };

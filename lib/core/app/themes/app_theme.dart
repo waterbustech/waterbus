@@ -74,6 +74,7 @@ class AppTheme {
       fontFamily: FontFamily.helvetica,
       colorScheme: const ColorScheme.light().copyWith(
         background: appColors.dividerBackgroundColor,
+        error: appColors.error,
       ),
     );
     return AppTheme(
@@ -144,6 +145,7 @@ class AppTheme {
       fontFamily: FontFamily.helvetica,
       colorScheme: const ColorScheme.dark().copyWith(
         background: appColors.dividerBackgroundColor,
+        error: appColors.error,
       ),
     );
     return AppTheme(

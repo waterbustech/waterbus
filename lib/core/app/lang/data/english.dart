@@ -13,10 +13,7 @@ Map<String, String> english = {
   Strings.share: "Share",
   Strings.notifications: "Notifications",
   Strings.save: "Save",
-  Strings.fullName: "Full name",
   Strings.invalidFullName: "Invalid full name",
-  Strings.yourFullName: "Your full name",
-  Strings.profile: "Profile",
   Strings.storage: "Storage",
   Strings.archivedChats: "Archived chats",
   Strings.settings: "Settings",
@@ -80,4 +77,28 @@ Map<String, String> english = {
   Strings.dataSaver: "Data Saver",
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
+
+  // Profile screen
+  Strings.profile: "Profile",
+  Strings.firstname: "First name",
+  Strings.lastname: "Last name",
+  Strings.username: "Username",
+  Strings.bio: "Bio",
+  Strings.enterYourNameAndAddAnOptionalProfilePhoto:
+      "Enter your name and add an optional profile photo.",
+  Strings.youCanAddFewLinesAboutYourself:
+      "You can add a few lines about yourself.",
+  Strings.usernameNote1: "You can choose a username an",
+  Strings.usernameNote2:
+      ". If you do, people will be able to find you by this username and contact your.\n\nYou can use",
+  Strings.usernameNote3: "and underscores. Minimum length is",
+  Strings.usernameNote4: "characters.",
+  Strings.done: "Done",
+
+  // Settings screen
+  Strings.myProfile: "My Profile",
+  Strings.edit: "Edit",
+  Strings.notificationsAndSound: "Notifications and Sound",
+  Strings.appearance: "Appearance",
+  Strings.callAndMeeting: "Call and Meeting",
 };

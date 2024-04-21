@@ -16,10 +16,8 @@ class Strings {
   static const String notifications = 'notifications';
   static const String home = 'home';
   static const String save = 'save';
-  static const String fullName = 'fullName';
   static const String invalidFullName = 'invalidFullName';
-  static const String yourFullName = 'yourFullName';
-  static const String profile = 'profile';
+
   static const String storage = 'storage';
   static const String archivedChats = 'archivedChats';
   static const String settings = 'settings';
@@ -83,6 +81,29 @@ class Strings {
   static const String dataSaver = 'Data Saver';
   static const String balance = 'Balance';
   static const String highQuality = 'High Quality';
+
+  // Profile screen
+  static const String profile = 'profile';
+  static const String firstname = 'firstname';
+  static const String lastname = 'lastname';
+  static const String bio = 'bio';
+  static const String username = 'username';
+  static const String enterYourNameAndAddAnOptionalProfilePhoto =
+      'enterYourNameAndAddAnOptionalProfilePhoto';
+  static const String youCanAddFewLinesAboutYourself =
+      'youCanAddFewLinesAboutYourself';
+  static const String usernameNote1 = 'usernameNote1';
+  static const String usernameNote2 = 'usernameNote2';
+  static const String usernameNote3 = 'usernameNote3';
+  static const String usernameNote4 = 'usernameNote4';
+  static const String done = 'done';
+
+  // Settings screen
+  static const String myProfile = 'myProfile';
+  static const String edit = 'edit';
+  static const String notificationsAndSound = 'notificationsAndSound';
+  static const String appearance = 'appearance';
+  static const String callAndMeeting = 'callAndMeeting';
 }
 
 class MyI18n {

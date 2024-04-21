@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const ChatsScreen(),
-    const SizedBox(),
+    const SettingsScreen(),
   ];
 
   @override
@@ -83,7 +84,7 @@ class _HomeState extends State<Home> {
                         _buildItemBottomBar(
                           iconData: PhosphorIcons.gear,
                           iconDataSelected: PhosphorIcons.gear_fill,
-                          label: Strings.notifications.i18n,
+                          label: Strings.settings.i18n,
                           index: 2,
                         ),
                       ],

@@ -9,6 +9,7 @@ class TextFieldInput extends StatelessWidget {
   final String? Function(String?)? validatorForm;
   final void Function(String)? onChanged;
   final String hintText;
+  final TextStyle? hintStyle;
   final int maxLines;
   final int? maxLength;
   final bool isAvailable;
@@ -29,10 +30,14 @@ class TextFieldInput extends StatelessWidget {
   final InputBorder? errorBorder;
   final BorderSide? borderSide;
   final bool obscureText;
+  final InputBorder? border;
+  final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? margin;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
     required this.hintText,
+    this.hintStyle,
     this.textInputType,
     this.maxLines = 1,
     this.maxLength,
@@ -54,14 +59,18 @@ class TextFieldInput extends StatelessWidget {
     this.errorBorder,
     this.borderSide,
     this.obscureText = false,
+    this.border,
+    this.contentPadding,
+    this.margin,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        top: maxLength != null ? 0.0 : 4.sp,
-        bottom: maxLength != null ? 4.sp : 0.0,
-      ),
+      margin: margin ??
+          EdgeInsets.only(
+            top: maxLength != null ? 0.0 : 4.sp,
+            bottom: maxLength != null ? 4.sp : 0.0,
+          ),
       width: double.infinity,
       child: TextFormField(
         autofocus: autofocus,
@@ -99,30 +108,33 @@ class TextFieldInput extends StatelessWidget {
           focusedErrorBorder: errorBorder,
           focusedBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           border: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           enabledBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           disabledBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
-          hintStyle: TextStyle(
-            color: Theme.of(context).textTheme.labelSmall?.color,
-            fontSize: 12.sp,
-          ),
+              : border ?? _outlineInputBorder(context),
+          hintStyle: hintStyle ??
+              TextStyle(
+                color: Theme.of(context).textTheme.labelSmall?.color,
+                fontSize: 12.sp,
+              ),
           isDense: maxLines == 1,
-          contentPadding: maxLines == 1
-              ? EdgeInsets.symmetric(
-                  vertical: 11.sp,
-                  horizontal: 10.sp,
-                )
-              : EdgeInsets.symmetric(
-                  vertical: 8.sp,
-                  horizontal: 10.sp,
-                ),
+          contentPadding: contentPadding ??
+              (maxLines == 1
+                  ? contentPadding ??
+                      EdgeInsets.symmetric(
+                        vertical: 11.sp,
+                        horizontal: 10.sp,
+                      )
+                  : EdgeInsets.symmetric(
+                      vertical: 8.sp,
+                      horizontal: 10.sp,
+                    )),
           suffix: suffixIcon == null
               ? null
               : Padding(

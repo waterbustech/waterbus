@@ -14,6 +14,8 @@ const User kUserDefault = User(
 
 const kGridViewMinUsers = 4;
 
+const delay200ms = 200;
+
 final List<String> backgrounds = [
   Assets.images.background1Jpg.path,
   Assets.images.background2Jpg.path,

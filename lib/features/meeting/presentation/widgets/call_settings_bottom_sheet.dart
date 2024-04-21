@@ -64,7 +64,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 icon: PhosphorIcons.sliders_horizontal,
                 lable: 'Edit Room',
                 onTap: () {
-                  AppNavigator.push(
+                  AppNavigator().push(
                     Routes.createMeetingRoute,
                     arguments: {
                       'meeting': meeting,
@@ -78,7 +78,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {
                   AppNavigator.pop();
 
-                  AppNavigator.push(Routes.settingsRoute);
+                  AppNavigator().push(Routes.settingsRoute);
                 },
               ),
               CallSettingButton(
@@ -116,7 +116,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {
                   AppNavigator.pop();
 
-                  AppNavigator.push(Routes.backgroundGallery);
+                  AppNavigator().push(Routes.backgroundGallery);
                 },
               ),
               CallSettingButton(

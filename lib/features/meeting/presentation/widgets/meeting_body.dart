@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -50,7 +51,7 @@ class _MeetingBodyState extends State<MeetingBody> {
       backgroundColor: Colors.black,
       appBar: appBarTitleBack(
         context,
-        title: widget.meeting.code.toString(),
+        title: widget.meeting.code.toString().formatRoomCode,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
