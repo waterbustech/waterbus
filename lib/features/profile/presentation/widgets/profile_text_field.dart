@@ -25,7 +25,7 @@ class ProfileTextField extends StatelessWidget {
     return TextFieldInput(
       margin: margin,
       contentPadding: EdgeInsets.symmetric(
-        vertical: SizerUtil.isDesktop ? 12.sp : 6.sp,
+        vertical: SizerUtil.isDesktop ? 12.sp : 10.sp,
         horizontal: 12.sp,
       ),
       validatorForm: (val) => null,

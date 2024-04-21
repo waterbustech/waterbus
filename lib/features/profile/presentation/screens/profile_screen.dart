@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
@@ -140,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                   child: user?.avatar == null
                                       ? CircleAvatar(
-                                          radius: 40.sp,
+                                          radius: 35.sp,
                                           backgroundColor: Colors.black,
                                           backgroundImage: AssetImage(
                                             Assets.images.imgAppLogo.path,
@@ -148,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         )
                                       : AvatarCard(
                                           urlToImage: user?.avatar,
-                                          size: 80.sp,
+                                          size: 70.sp,
                                         ),
                                 ),
                               );
@@ -200,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               margin: EdgeInsets.only(top: 16.sp),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 10.sp,
-                                vertical: 7.sp,
+                                vertical: SizerUtil.isDesktop ? 8.sp : 10.sp,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(7.sp),
@@ -252,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   ),
                                   Icon(
-                                    Icons.keyboard_arrow_right_rounded,
+                                    PhosphorIcons.caret_right,
                                     color: colorGray3,
                                     size: 18.sp,
                                   ),
@@ -269,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               margin: EdgeInsets.only(top: 20.sp),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 10.sp,
-                                vertical: 7.sp,
+                                vertical: SizerUtil.isDesktop ? 8.sp : 10.sp,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(7.sp),
