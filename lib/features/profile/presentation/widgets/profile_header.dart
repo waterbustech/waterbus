@@ -40,11 +40,11 @@ class ProfileHeader extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         AppBloc.themesBloc.add(OnChangeTheme(
-                            appTheme: stateTheme.props[0].theme == ThemeList.light
+                            appTheme: stateTheme.props[0].theme == ThemeList.light.theme
                                 ? ThemeList.dark
                                 : ThemeList.light,),);
                       },
-                      icon: stateTheme.props[0] == ThemeMode.dark
+                      icon: stateTheme.props[0].text == ThemeList.dark.text
                           ? Icon(
                               PhosphorIcons.moon_stars_fill,
                               color: Theme.of(context).primaryColor,
