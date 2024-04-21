@@ -254,6 +254,8 @@ extension AppNavigatorX on AppNavigator {
         Routes.profileRoute,
         Routes.usernameRoute,
         Routes.settingsCallRoute,
+        Routes.langRoute,
+        Routes.themeRoute,
       ];
 
   Widget getWidgetByRoute({
@@ -267,6 +269,10 @@ extension AppNavigatorX on AppNavigator {
         return const UserNameScreen();
       case Routes.settingsCallRoute:
         return const CallSettingsScreen();
+      case Routes.langRoute:
+        return const LanguageScreen();
+      case Routes.themeRoute:
+        return const ThemeScreen();
       default:
         return const SizedBox();
     }
