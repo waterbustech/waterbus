@@ -37,7 +37,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         _currentChat = chatModel;
       });
     } else {
-      AppNavigator.push(
+      AppNavigator().push(
         Routes.conversationRoute,
         arguments: {
           'chatModel': chatModel,
@@ -76,7 +76,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
-                      AppNavigator.push(Routes.createMeetingRoute);
+                      AppNavigator().push(Routes.createMeetingRoute);
                     },
                     icon: Icon(
                       PhosphorIcons.plus,

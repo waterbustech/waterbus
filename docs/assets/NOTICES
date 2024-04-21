@@ -16420,6 +16420,114 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
+i18n_extension
+
+i18n_extension Package License (22 Oct 2019):
+https://github.com/marcglasberg/i18n_extension/blob/master/LICENSE
+
+    Copyright 2019 by Marcelo Glasberg
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted
+    provided that the following conditions are met:
+
+    1. Redistribution and use of the software, in source and binary forms, with or without
+    modification, are permitted provided that such use does not include the provision of translation
+    services, including but not limited to the creation or provision of translation services,
+    platforms, or applications.
+
+    2. Entities, including individuals, companies and other organizations, that provide translation
+    services, or those that offer software or services aiding in the preparation, organization, or
+    execution of translations in any capacity, are not permitted to copy, use, fork, or create any
+    derivatives of the source code, compiled code, or documentation.
+
+    3. Competitors of MyText.ai are expressly forbidden from using, copying, forking, or otherwise
+    creating derivatives of this software, in whole or in part. This includes, but is not limited
+    to, using the software to develop similar software, to provide translation services, or to
+    offer any services that compete with MyText.ai.
+
+    4. Notwithstanding any other provision of this license, all individuals or entities that modify
+    and/or redistribute this software, or any derivative works thereof, agree to grant MyText.ai
+    and the copyright author, a perpetual, irrevocable, non-exclusive, royalty-free, worldwide
+    license to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+    any such modifications or derivative works, without compensation to the modifier/creator of
+    such derivative works, provided such modifications or derivative works are the ones to the
+    software itself and not the ones to to separate, independent software used in conjunction
+    with this software. For clarity, this license does not extend to or imply any rights to use,
+    copy, modify, or distribute any independent software that is used in conjunction with the
+    original software, but only to modifications, adaptations, or derivative works of the original
+    software provided under this license.
+
+    5. Redistributions of source code must retain the above copyright notice, this list of
+    conditions and the following disclaimer.
+
+    6. Redistributions in binary form must reproduce the above copyright notice, this list of
+    conditions and the following disclaimer in the documentation and/or other materials provided
+    with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--------------------------------------------------------------------------------
+i18n_extension_core
+
+i18n_extension Package License (11 Feb 2024):
+https://github.com/marcglasberg/i18n_extension_core/blob/master/LICENSE
+
+    Copyright 2024 by Marcelo Glasberg
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted
+    provided that the following conditions are met:
+
+    1. Redistribution and use of the software, in source and binary forms, with or without
+    modification, are permitted provided that such use does not include the provision of translation
+    services, including but not limited to the creation or provision of translation services,
+    platforms, or applications.
+
+    2. Entities, including individuals, companies and other organizations, that provide translation
+    services, or those that offer software or services aiding in the preparation, organization, or
+    execution of translations in any capacity, are not permitted to copy, use, fork, or create any
+    derivatives of the source code, compiled code, or documentation.
+
+    3. Competitors of MyText.ai are expressly forbidden from using, copying, forking, or otherwise
+    creating derivatives of this software, in whole or in part. This includes, but is not limited
+    to, using the software to develop similar software, to provide translation services, or to
+    offer any services that compete with MyText.ai.
+
+    4. Notwithstanding any other provision of this license, all individuals or entities that modify
+    and/or redistribute this software, or any derivative works thereof, agree to grant MyText.ai
+    and the copyright author, a perpetual, irrevocable, non-exclusive, royalty-free, worldwide
+    license to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+    any such modifications or derivative works, without compensation to the modifier/creator of
+    such derivative works, provided such modifications or derivative works are the ones to the
+    software itself and not the ones to to separate, independent software used in conjunction
+    with this software. For clarity, this license does not extend to or imply any rights to use,
+    copy, modify, or distribute any independent software that is used in conjunction with the
+    original software, but only to modifications, adaptations, or derivative works of the original
+    software provided under this license.
+
+    5. Redistributions of source code must retain the above copyright notice, this list of
+    conditions and the following disclaimer.
+
+    6. Redistributions in binary form must reproduce the above copyright notice, this list of
+    conditions and the following disclaimer in the documentation and/or other materials provided
+    with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--------------------------------------------------------------------------------
 icu
 
 #      Copyright (c) 2006-2015 International Business Machines Corporation,

@@ -26,7 +26,7 @@ class SettingLanguage extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            AppNavigator.push(Routes.langRoute);
+            AppNavigator().push(Routes.langRoute);
           },
           child: Text(
             LanguageService().getLocale().text,

@@ -17,8 +17,16 @@ const Color colorGreenLight = Color(0xFF009E60);
 const Color colorAttendance = Color(0xFF0CCF4C);
 
 const Color colorBlueGrey = Color(0xFF455A64);
+const Color colorBlueGreyDark = Color(0xFF1E2224);
 const Color colorBlueGreyIos = Color(0xFF1C1F2E);
 const Color colorGray2 = Color(0xFFACACB9);
+const Color colorGray3 = Color(0xFF6B6B74);
+const Color colorGray4 = Color(0xFF9595A4);
+const Color colorCyan = Color(0xFF00B3FF);
+const Color colorBlue = Color(0xFF0080FF);
+const Color colorPurple = Color(0xFFC848FF);
+const Color colorRedCustom = Color(0xFFFF1D61);
+const Color colorRedOrange = Color(0xFFEF4704);
 
 const Color colorGreyWhite = Color(0x4dE3E3E3);
 const Color colorGreyWhite2 = Color(0xFFE3E3E3);
@@ -93,7 +101,7 @@ class AppColor {
       unFocusColor: Colors.grey.shade700,
       accent: const Color(0xFF17c063),
       disabled: Colors.black12,
-      error: const Color(0xFFFF7466),
+      error: const Color(0xFFB31D1D),
       divider: Colors.black26,
       dividerBackgroundColor: colorBlack,
       button: const Color(0xFF657786),
@@ -116,7 +124,7 @@ class AppColor {
       unFocusColor: mCH,
       accent: const Color(0xFF17c063),
       disabled: mCL,
-      error: const Color(0xFFFF7466),
+      error: const Color(0xFFe66565),
       divider: Colors.white12,
       dividerBackgroundColor: colorBlack,
       button: const Color(0xFF657786),
