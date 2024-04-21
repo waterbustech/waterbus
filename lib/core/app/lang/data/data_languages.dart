@@ -8,6 +8,8 @@ import 'package:waterbus/core/app/themes/theme_model.dart';
 
 class Strings {
   static const String language = 'language';
+  static const String vietnamese = 'vietnamese';
+  static const String english = 'english';
   static const String selectLanguage = 'selectLanguage';
   static const String selectTheme = 'selectTheme';
   static String darkMode = ThemeList.dark.text;

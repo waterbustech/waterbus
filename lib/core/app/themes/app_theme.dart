@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -45,10 +47,16 @@ class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: appColors.background,
         backgroundColor: appColors.background,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light ==
+                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+              ? Brightness.light
+              : Brightness.dark,
+          statusBarIconBrightness: Brightness.light ==
+                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+              ? Brightness.light
+              : Brightness.dark,
         ),
         iconTheme: IconThemeData(
           color: appColors.contentText1,
@@ -117,10 +125,16 @@ class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: appColors.background,
         backgroundColor: appColors.background,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark ==
+                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+              ? Brightness.light
+              : Brightness.dark,
+          statusBarIconBrightness: Brightness.dark ==
+                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+              ? Brightness.light
+              : Brightness.dark,
         ),
         iconTheme: IconThemeData(
           color: appColors.contentText1,

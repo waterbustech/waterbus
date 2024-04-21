@@ -1,16 +1,18 @@
 // Dart imports:
 import 'dart:ui';
 
+import 'package:waterbus/core/app/lang/data/data_languages.dart';
+
 enum Language {
-  english(
-    Locale('en', 'US'),
-    'English',
-    'en',
-  ),
   vietnam(
     Locale('vi', 'VN'),
-    'Việt Nam',
+    Strings.vietnamese,
     'vi',
+  ),
+  english(
+    Locale('en', 'US'),
+    Strings.english,
+    'en',
   );
 
   const Language(

@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 
 enum ThemeList {
+  system(
+    ThemeMode.system,
+    'System',
+  ),
   light(
     ThemeMode.light,
     'Light',
@@ -9,10 +13,6 @@ enum ThemeList {
   dark(
     ThemeMode.dark,
     'Dark',
-  ),
-  system(
-    ThemeMode.system,
-    'System',
   );
 
   const ThemeList(

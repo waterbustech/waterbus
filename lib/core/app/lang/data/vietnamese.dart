@@ -3,6 +3,8 @@ import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 Map<String, String> vietnamese = {
   Strings.language: "Ngôn ngữ",
+  Strings.vietnamese: "Tiếng Việt",
+  Strings.english: "Tiếng Anh",
   Strings.selectLanguage: "Chọn ngôn ngữ",
   Strings.selectTheme: "Chọn giao diện",
   Strings.darkMode: "Tối",

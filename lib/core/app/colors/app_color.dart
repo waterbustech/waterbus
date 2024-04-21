@@ -35,7 +35,6 @@ const Color colorBlack1 = Color(0xFF0d0d0d);
 
 final Color colorRedTitle = Colors.red.shade800;
 final Color bgNotifyFail = Colors.red.shade100;
-const Color sun = Color.fromARGB(255, 251, 255, 0);
 
 Color mC = Colors.grey.shade100;
 Color mCL = Colors.white;
@@ -94,13 +93,13 @@ class AppColor {
 
   factory AppColor.light() {
     return AppColor(
-      activeColor: colorBlack,
+      activeColor: colorPrimary,
       header: colorBlack,
-      primary: colorBlack,
+      primary: colorPrimary,
       primaryLight: mCL,
       primaryDark: colorBlack,
       background: mCL,
-      focusColor: colorBlack,
+      focusColor: colorPrimary,
       unFocusColor: Colors.grey.shade700,
       accent: const Color(0xFF17c063),
       disabled: Colors.black12,
