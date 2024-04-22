@@ -60,18 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: () {
             AppNavigator.pop();
           },
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Center(
-              child: Text(
-                Strings.cancel.i18n,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+          child: Center(
+            child: Text(
+              Strings.cancel.i18n,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -91,7 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
-              padding: EdgeInsets.all(12.sp).add(EdgeInsets.only(right: 12.sp)),
+              padding: EdgeInsets.all(12.sp)
+                  .add(EdgeInsets.only(right: SizerUtil.isDesktop ? 12.sp : 0)),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(
