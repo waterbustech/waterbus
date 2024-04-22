@@ -106,7 +106,6 @@ Map<String, String> english = {
   // Settings screen
   Strings.myProfile: "My Profile",
   Strings.edit: "Edit",
-  Strings.notificationsAndSound: "Notifications and Sound",
   Strings.appearance: "Appearance",
   Strings.callAndMeeting: "Call and Meeting",
 };

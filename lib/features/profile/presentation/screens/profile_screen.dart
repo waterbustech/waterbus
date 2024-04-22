@@ -64,16 +64,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            padding: EdgeInsets.only(
-              top: 12.sp,
-              left: 12.sp,
-            ),
-            child: Text(
-              Strings.cancel.i18n,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
+            child: Center(
+              child: Text(
+                Strings.cancel.i18n,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -93,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
-              padding: EdgeInsets.all(12.sp),
+              padding: EdgeInsets.all(12.sp).add(EdgeInsets.only(right: 12.sp)),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(

@@ -104,7 +104,6 @@ Map<String, String> vietnamese = {
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
   Strings.edit: "Sửa",
-  Strings.notificationsAndSound: "Thông báo và Âm lượng",
   Strings.appearance: "Giao diện",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
 };

@@ -128,7 +128,7 @@ class AppColor {
       accent: const Color(0xFF17c063),
       disabled: mCL,
       error: const Color(0xFFe66565),
-      divider: Colors.white12,
+      divider: colorGreyWhite,
       dividerBackgroundColor: colorBlack,
       button: const Color(0xFF657786),
       contentText1: mC,

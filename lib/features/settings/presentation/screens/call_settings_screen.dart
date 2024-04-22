@@ -78,7 +78,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
-              padding: EdgeInsets.all(12.sp),
+              padding: EdgeInsets.all(12.sp).add(EdgeInsets.only(right: 12.sp)),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(

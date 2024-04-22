@@ -55,7 +55,7 @@ class CustomRowButton extends StatelessWidget {
         ),
         if (showDivider)
           Padding(
-            padding: EdgeInsets.only(left: 40.sp),
+            padding: EdgeInsets.only(left: 36.sp),
             child: divider,
           ),
       ],

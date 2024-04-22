@@ -111,7 +111,6 @@ class Strings {
   // Settings screen
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
-  static const String notificationsAndSound = 'notificationsAndSound';
   static const String appearance = 'appearance';
   static const String callAndMeeting = 'callAndMeeting';
 }

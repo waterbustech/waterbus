@@ -134,7 +134,7 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 18.sp),
             SettingRowButton(
               onTap: () {},
-              title: Strings.notificationsAndSound.i18n,
+              title: Strings.notifications.i18n,
               isLast: false,
               icon: PhosphorIcons.bell_fill,
               iconBackground: colorRedOrange,
