@@ -160,7 +160,7 @@ PODS:
   - GTMAppAuth (4.1.1):
     - AppAuth/Core (~> 1.7)
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
-  - GTMSessionFetcher/Core (3.3.2)
+  - GTMSessionFetcher/Core (3.4.1)
   - KaiRTC (122.6261.06)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
@@ -285,7 +285,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
-  GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
+  GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   KaiRTC: 5db5e9b8e19964da211c6a9dee5a4378df5332d8
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
