@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
@@ -77,7 +78,7 @@ class SettingRowButton extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 6.sp),
                     child: const Icon(
-                      Icons.keyboard_arrow_right_rounded,
+                      PhosphorIcons.caret_right,
                       color: colorGray3,
                     ),
                   ),

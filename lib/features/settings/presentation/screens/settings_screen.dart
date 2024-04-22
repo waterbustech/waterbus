@@ -30,7 +30,15 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        leading: const SizedBox(),
+        leading: IconButton(
+          onPressed: () {
+            AppNavigator().push(Routes.createMeetingRoute);
+          },
+          icon: Icon(
+            PhosphorIcons.user_circle_plus,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
         actions: [
           GestureWrapper(
             onTap: () {
