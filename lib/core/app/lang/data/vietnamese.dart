@@ -65,7 +65,7 @@ Map<String, String> vietnamese = {
   Strings.roomCode: "Mã phòng: ",
   Strings.noParticipantsYet: "Chưa có người tham gia",
   Strings.yourPersonalMeetingsAre: "Các cuộc họp cá nhân của bạn đều ",
-  Strings.endToEndEncrypted: "Được mã hóa đầu cuối",
+  Strings.endToEndEncrypted: "được mã hóa đầu cuối",
   Strings.join: "Vào",
   Strings.joinAMeeting: "Vào phòng",
   Strings.search: "Tìm kiếm",
@@ -103,7 +103,7 @@ Map<String, String> vietnamese = {
 
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
-  Strings.edit: "Chỉnh sửa",
+  Strings.edit: "Sửa",
   Strings.notificationsAndSound: "Thông báo và Âm lượng",
   Strings.appearance: "Giao diện",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
