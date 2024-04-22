@@ -19,6 +19,7 @@ import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_row_button.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -155,6 +156,7 @@ class SettingsScreen extends StatelessWidget {
               },
               title: Strings.language.i18n,
               isFirst: false,
+              value: LanguageService().getLocale().base,
               icon: PhosphorIcons.globe,
               iconBackground: colorPurple,
             ),

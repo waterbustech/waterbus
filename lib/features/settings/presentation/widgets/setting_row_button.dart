@@ -18,6 +18,7 @@ class SettingRowButton extends StatelessWidget {
   final Color iconBackground;
   final bool isLast;
   final bool isFirst;
+  final String? value;
   const SettingRowButton({
     super.key,
     required this.title,
@@ -26,6 +27,7 @@ class SettingRowButton extends StatelessWidget {
     required this.iconBackground,
     this.isLast = true,
     this.isFirst = true,
+    this.value,
   });
 
   @override
@@ -75,6 +77,19 @@ class SettingRowButton extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (value != null)
+                    Padding(
+                      padding: EdgeInsets.only(right: 3.sp),
+                      child: Text(
+                        value ?? "",
+                        style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.titleSmall!.color
+                              : colorGray3,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
                   Padding(
                     padding: EdgeInsets.only(right: 6.sp),
                     child: const Icon(
