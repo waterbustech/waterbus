@@ -172,6 +172,6 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_40.ThemesDatasource>(() => _40.ThemesDatasourceImpl());
 
   gh.factory<_41.ThemesBloc>(() => _41.ThemesBloc(gh<_40.ThemesDatasource>()));
-  
+
   return getIt;
 }
