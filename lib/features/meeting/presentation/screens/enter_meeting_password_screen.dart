@@ -71,7 +71,7 @@ class _EnterMeetingPasswordScreenState
               child: Text(
                 Strings.join.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color:Theme.of(context).textTheme.bodyMedium?.color,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),

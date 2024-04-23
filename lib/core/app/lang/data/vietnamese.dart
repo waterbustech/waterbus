@@ -3,7 +3,13 @@ import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 Map<String, String> vietnamese = {
   Strings.language: "Ngôn ngữ",
+  Strings.vietnamese: "Tiếng Việt",
+  Strings.english: "Tiếng Anh",
   Strings.selectLanguage: "Chọn ngôn ngữ",
+  Strings.selectTheme: "Chọn giao diện",
+  Strings.darkMode: "Tối",
+  Strings.lightMode: "Sáng",
+  Strings.system: "Hệ thống",
   Strings.today: "Hôm nay",
   Strings.cut: "Cắt",
   Strings.copy: "Sao chép",
@@ -59,7 +65,7 @@ Map<String, String> vietnamese = {
   Strings.roomCode: "Mã phòng: ",
   Strings.noParticipantsYet: "Chưa có người tham gia",
   Strings.yourPersonalMeetingsAre: "Các cuộc họp cá nhân của bạn đều ",
-  Strings.endToEndEncrypted: "Được mã hóa đầu cuối",
+  Strings.endToEndEncrypted: "được mã hóa đầu cuối",
   Strings.join: "Vào",
   Strings.joinAMeeting: "Vào phòng",
   Strings.search: "Tìm kiếm",
@@ -97,8 +103,7 @@ Map<String, String> vietnamese = {
 
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
-  Strings.edit: "Chỉnh sửa",
-  Strings.notificationsAndSound: "Thông báo và Âm lượng",
+  Strings.edit: "Sửa",
   Strings.appearance: "Giao diện",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
 };

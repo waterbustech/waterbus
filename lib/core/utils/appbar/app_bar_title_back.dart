@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -32,11 +31,7 @@ AppBar appBarTitleBack(
 }) {
   return AppBar(
     toolbarHeight: toolbarHeight,
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ),
+    systemOverlayStyle: Theme.of(context).appBarTheme.systemOverlayStyle,
     elevation: elevation ?? 0.0,
     backgroundColor: backgroundColor ?? Colors.transparent,
     automaticallyImplyLeading: false,

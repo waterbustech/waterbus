@@ -4,10 +4,17 @@ import 'package:i18n_extension/i18n_extension.dart';
 // Project imports:
 import 'package:waterbus/core/app/lang/data/english.dart';
 import 'package:waterbus/core/app/lang/data/vietnamese.dart';
+import 'package:waterbus/core/app/themes/theme_model.dart';
 
 class Strings {
   static const String language = 'language';
+  static const String vietnamese = 'vietnamese';
+  static const String english = 'english';
   static const String selectLanguage = 'selectLanguage';
+  static const String selectTheme = 'selectTheme';
+  static String darkMode = ThemeList.dark.text;
+  static String lightMode = ThemeList.light.text;
+  static String system = ThemeList.system.text;
   static const String today = 'today';
   static const String cut = 'cut';
   static const String copy = 'copy';
@@ -104,7 +111,6 @@ class Strings {
   // Settings screen
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
-  static const String notificationsAndSound = 'notificationsAndSound';
   static const String appearance = 'appearance';
   static const String callAndMeeting = 'callAndMeeting';
 }

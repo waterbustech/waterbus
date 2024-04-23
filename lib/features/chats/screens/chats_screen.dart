@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/colors/app_color.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
@@ -110,7 +111,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           ),
                           color: SizerUtil.isDesktop &&
                                   _currentChat == listFakeChat[index]
-                              ? Colors.black87
+                              ? colorPrimary
                               : Colors.transparent,
                           child: ChatCard(
                             chatModel: listFakeChat[index],
