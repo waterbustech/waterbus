@@ -1,9 +1,16 @@
 // Project imports:
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/themes/theme_model.dart';
 
 Map<String, String> english = {
   Strings.language: "Languages",
+  Strings.vietnamese: "Vietnamese",
+  Strings.english: "English",
   Strings.selectLanguage: "Select language",
+  Strings.selectTheme: "Select theme",
+  Strings.darkMode: ThemeList.dark.text,
+  Strings.lightMode: ThemeList.light.text,
+  Strings.system: ThemeList.system.text,
   Strings.today: "Today",
   Strings.cut: "Cut",
   Strings.copy: "Copy",
@@ -99,7 +106,6 @@ Map<String, String> english = {
   // Settings screen
   Strings.myProfile: "My Profile",
   Strings.edit: "Edit",
-  Strings.notificationsAndSound: "Notifications and Sound",
   Strings.appearance: "Appearance",
   Strings.callAndMeeting: "Call and Meeting",
 };

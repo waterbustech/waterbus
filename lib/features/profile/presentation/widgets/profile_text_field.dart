@@ -39,7 +39,7 @@ class ProfileTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(7.sp),
         borderSide: BorderSide.none,
       ),
-      fillColor: colorBlueGreyDark,
+      fillColor: Theme.of(context).cardColor,
       controller: controller,
     );
   }

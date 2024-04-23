@@ -60,14 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: () {
             AppNavigator.pop();
           },
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            padding: EdgeInsets.only(
-              top: 12.sp,
-              left: 12.sp,
-            ),
+          child: Center(
             child: Text(
               Strings.cancel.i18n,
               style: TextStyle(
@@ -93,7 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
-              padding: EdgeInsets.all(12.sp),
+              padding: EdgeInsets.all(12.sp)
+                  .add(EdgeInsets.only(right: SizerUtil.isDesktop ? 12.sp : 0)),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(
@@ -159,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.sp),
-                              color: colorBlueGreyDark,
+                              color: Theme.of(context).cardColor,
                             ),
                             child: Column(
                               children: [
@@ -205,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(7.sp),
-                                color: colorBlueGreyDark,
+                                color: Theme.of(context).cardColor,
                               ),
                               child: Row(
                                 children: [
@@ -274,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(7.sp),
-                                color: colorBlueGreyDark,
+                                color: Theme.of(context).cardColor,
                               ),
                               child: Center(
                                 child: Text(

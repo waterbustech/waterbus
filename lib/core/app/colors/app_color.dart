@@ -67,6 +67,7 @@ class AppColor {
   final Color contentText2;
   final Color subText1;
   final Color subText2;
+  final Color card;
 
   const AppColor({
     required this.activeColor,
@@ -87,17 +88,18 @@ class AppColor {
     required this.contentText2,
     required this.subText1,
     required this.subText2,
+    required this.card,
   });
 
   factory AppColor.light() {
     return AppColor(
-      activeColor: colorBlack,
+      activeColor: colorPrimary,
       header: colorBlack,
-      primary: colorBlack,
+      primary: colorPrimary,
       primaryLight: mCL,
       primaryDark: colorBlack,
       background: mCL,
-      focusColor: colorBlack,
+      focusColor: colorPrimary,
       unFocusColor: Colors.grey.shade700,
       accent: const Color(0xFF17c063),
       disabled: Colors.black12,
@@ -109,6 +111,7 @@ class AppColor {
       contentText2: colorBlack,
       subText1: colorBlack,
       subText2: mGB,
+      card: mCM,
     );
   }
 
@@ -125,13 +128,14 @@ class AppColor {
       accent: const Color(0xFF17c063),
       disabled: mCL,
       error: const Color(0xFFe66565),
-      divider: Colors.white12,
+      divider: colorGreyWhite,
       dividerBackgroundColor: colorBlack,
       button: const Color(0xFF657786),
       contentText1: mC,
       contentText2: mCM,
       subText1: mCM,
       subText2: mGB,
+      card: colorBlueGreyDark,
     );
   }
 }

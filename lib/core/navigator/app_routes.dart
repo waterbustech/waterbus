@@ -11,6 +11,7 @@ class Routes {
   static const String settingsCallRoute = '/call-setting';
   static const String privacyRoute = '/privacy';
   static const String langRoute = '/lang';
+  static const String themeRoute = '/theme';
 
   // Meeting
   static const String meetingRoute = '/meeting';
