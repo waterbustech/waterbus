@@ -20,9 +20,9 @@ import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.da
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 
@@ -21,7 +22,11 @@ class DateTitleCard extends StatelessWidget {
         vertical: 4.sp,
         horizontal: 10.sp,
       ),
-      decoration: BoxDecoration(color: Colors.blueGrey.shade900),
+      decoration: BoxDecoration(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.blueGrey.shade900
+            : mCU,
+      ),
       alignment: Alignment.centerLeft,
       child: Text(
         DateTimeHelper().isEqualTwoDate(lastJoinedAt, DateTime.now())

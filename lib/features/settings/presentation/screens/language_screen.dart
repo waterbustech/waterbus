@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
 // Package imports:
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:sizer/sizer.dart';
 

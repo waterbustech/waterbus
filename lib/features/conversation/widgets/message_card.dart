@@ -60,7 +60,7 @@ class MessageCard extends StatelessWidget {
             ),
             color: message.isMe
                 ? Theme.of(context).primaryColor
-                : Colors.grey.shade800,
+                : Theme.of(context).cardColor,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 15.sp,
@@ -69,7 +69,10 @@ class MessageCard extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 65.w),
               child: Text(
                 message.description,
-                style: TextStyle(color: mCL, fontSize: 12.sp),
+                style: TextStyle(
+                  color: message.isMe ? mCL : null,
+                  fontSize: 12.sp,
+                ),
               ),
             ),
           ),

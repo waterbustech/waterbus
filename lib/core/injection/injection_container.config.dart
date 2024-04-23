@@ -14,6 +14,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 // Project imports:
+import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart' as _41;
 import '../../features/auth/data/datasources/auth_local_datasource.dart' as _i6;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i22;
 import '../../features/auth/domain/usecases/check_auth.dart' as _i26;
@@ -69,7 +70,6 @@ import '../../features/profile/domain/repositories/user_repository.dart'
     as _i14;
 import 'package:waterbus/features/settings/themes/data/themes_datasource.dart'
     as _40;
-import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart' as _41;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(

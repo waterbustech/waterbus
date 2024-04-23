@@ -1,8 +1,9 @@
 // Flutter imports:
-import 'package:universal_io/io.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -85,6 +86,11 @@ class AppTheme {
         error: appColors.error,
       ),
       cardColor: appColors.card,
+      dialogTheme: DialogTheme(
+        backgroundColor: appColors.background,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+      ),
     );
     return AppTheme(
       data: themeData,
@@ -163,6 +169,11 @@ class AppTheme {
         error: appColors.error,
       ),
       cardColor: appColors.card,
+      dialogTheme: DialogTheme(
+        backgroundColor: appColors.background,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+      ),
     );
     return AppTheme(
       data: themeData,

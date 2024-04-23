@@ -29,9 +29,9 @@ class ChatCard extends StatelessWidget {
                 top: 2.sp,
                 child: Container(
                   padding: EdgeInsets.all(1.2.sp),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: colorPrimaryBlack,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   child: Container(
                     height: 7.sp,
@@ -121,7 +121,10 @@ class ChatCard extends StatelessWidget {
                                 : chatModel.isGroup
                                     ? 'Jerry: '
                                     : '',
-                            style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
                           ),
                           TextSpan(
                             text: chatModel.typing
@@ -129,7 +132,12 @@ class ChatCard extends StatelessWidget {
                                 : chatModel.statusMessage == StatusMessage.none
                                     ? chatModel.lastestMessage
                                     : '6m : 32sec',
-                                    style: TextStyle(color: Theme.of(context).textTheme.titleMedium?.color,),
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.color,
+                            ),
                           ),
                         ],
                       ),

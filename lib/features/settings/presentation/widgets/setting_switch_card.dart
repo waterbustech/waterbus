@@ -47,7 +47,10 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
               )
             : null,
       ),
-      padding: EdgeInsets.symmetric(vertical: 4.sp),
+      padding: EdgeInsets.symmetric(
+        vertical: 4.sp,
+        horizontal: 12.sp,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

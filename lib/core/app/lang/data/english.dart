@@ -108,4 +108,7 @@ Map<String, String> english = {
   Strings.edit: "Edit",
   Strings.appearance: "Appearance",
   Strings.callAndMeeting: "Call and Meeting",
+  Strings.serverConfiguration: "Server Configuration",
+  Strings.clearCache: "Clear cache",
+  Strings.version: "version",
 };

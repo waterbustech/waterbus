@@ -49,6 +49,9 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
               shape: SuperellipseShape(
                 borderRadius: BorderRadius.circular(25.sp),
               ),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black.withOpacity(.2)
+                  : mC,
               child: SizedBox(
                 width: 100.w,
                 height: 36.sp,

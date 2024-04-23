@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/themes/app_theme.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';

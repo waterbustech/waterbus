@@ -48,7 +48,6 @@ class _MeetingBodyState extends State<MeetingBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: appBarTitleBack(
         context,
         title: widget.meeting.code.toString().formatRoomCode,

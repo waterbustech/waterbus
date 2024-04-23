@@ -40,7 +40,6 @@ class InputSendMessage extends StatelessWidget {
             Expanded(
               child: TextFormField(
                 style: TextStyle(
-                  color: mCL,
                   fontSize: 12.sp,
                 ),
                 keyboardType: TextInputType.multiline,
@@ -52,7 +51,6 @@ class InputSendMessage extends StatelessWidget {
                   ),
                   hintText: 'Leave a message...',
                   hintStyle: TextStyle(
-                    color: mC,
                     fontSize: 12.sp,
                   ),
                   filled: true,

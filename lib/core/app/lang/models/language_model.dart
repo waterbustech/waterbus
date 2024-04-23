@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:ui';
 
+// Project imports:
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
 
 enum Language {

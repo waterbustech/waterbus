@@ -32,9 +32,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: appBarTitleBack(
         context,
         leading: IconButton(
-          onPressed: () {
-            AppNavigator().push(Routes.createMeetingRoute);
-          },
+          onPressed: () {},
           icon: Icon(
             PhosphorIcons.user_circle_plus,
             color: Theme.of(context).primaryColor,
@@ -123,7 +121,7 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 32.sp),
+            SizedBox(height: 20.sp),
             SettingRowButton(
               onTap: () {
                 AppNavigator().push(Routes.profileRoute);
@@ -168,6 +166,30 @@ class SettingsScreen extends StatelessWidget {
               title: Strings.callAndMeeting.i18n,
               icon: PhosphorIcons.video_camera_fill,
               iconBackground: colorActive,
+            ),
+            SizedBox(height: 18.sp),
+            SettingRowButton(
+              onTap: () {},
+              isLast: false,
+              title: Strings.serverConfiguration.i18n,
+              icon: PhosphorIcons.hard_drives_fill,
+              iconBackground: Colors.deepOrange,
+            ),
+            SettingRowButton(
+              onTap: () {},
+              isFirst: false,
+              isLast: false,
+              title: Strings.clearCache.i18n,
+              icon: PhosphorIcons.database_fill,
+              iconBackground: Colors.indigoAccent,
+            ),
+            SettingRowButton(
+              onTap: () {},
+              isFirst: false,
+              title: 'Waterbus ${Strings.version.i18n}',
+              value: 'v1.1.3',
+              icon: PhosphorIcons.desktop_fill,
+              iconBackground: colorCyan,
             ),
           ],
         ),

@@ -58,7 +58,7 @@ Future showDialogWaterbus({
     routeSettings: RouteSettings(name: routeName),
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
-    barrierColor: barrierColor ?? Colors.black.withOpacity(0.5),
+    barrierColor: Colors.blueGrey.shade800.withOpacity(.35),
     transitionDuration: Duration(milliseconds: duration),
     context: AppNavigator.context!,
     pageBuilder: (context, __, ___) {
@@ -74,7 +74,7 @@ Future showDialogWaterbus({
           bottom: paddingBottom,
         ),
         backgroundColor: backgroundColor ??
-            Theme.of(AppNavigator.context!).scaffoldBackgroundColor,
+            Theme.of(AppNavigator.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
           child: Container(

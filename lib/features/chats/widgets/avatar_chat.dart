@@ -20,15 +20,15 @@ class AvatarChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return chatModel.isGroup ? groupChat() : singleChat();
+    return chatModel.isGroup ? groupChat(context) : singleChat(context);
   }
 
-  Widget singleChat() {
+  Widget singleChat(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(2.5.sp),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: mGD,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       child: CustomNetworkImage(
         height: size,
@@ -38,7 +38,7 @@ class AvatarChat extends StatelessWidget {
     );
   }
 
-  Widget groupChat() {
+  Widget groupChat(BuildContext context) {
     return SizedBox(
       height: size,
       width: size,
@@ -49,10 +49,6 @@ class AvatarChat extends StatelessWidget {
             left: 0,
             child: Container(
               padding: EdgeInsets.all(1.sp),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: mGD,
-              ),
               child: CustomNetworkImage(
                 height: size * 0.7,
                 width: size * 0.7,

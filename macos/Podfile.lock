@@ -1,9 +1,9 @@
 PODS:
-  - AppAuth (1.7.4):
-    - AppAuth/Core (= 1.7.4)
-    - AppAuth/ExternalUserAgent (= 1.7.4)
-  - AppAuth/Core (1.7.4)
-  - AppAuth/ExternalUserAgent (1.7.4):
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
   - connectivity_plus (0.0.1):
     - Flutter
@@ -260,7 +260,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos
 
 SPEC CHECKSUMS:
-  AppAuth: 182c5b88630569df5acb672720534756c29b3358
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
   file_selector_macos: 468fb6b81fac7c0e88d71317f3eec34c3b008ff9
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71

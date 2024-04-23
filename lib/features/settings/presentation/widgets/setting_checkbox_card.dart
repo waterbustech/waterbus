@@ -37,7 +37,10 @@ class SettingCheckboxCard extends StatelessWidget {
                 )
               : null,
         ),
-        padding: EdgeInsets.symmetric(vertical: 10.sp),
+        padding: EdgeInsets.symmetric(
+          vertical: 10.sp,
+          horizontal: 12.sp,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

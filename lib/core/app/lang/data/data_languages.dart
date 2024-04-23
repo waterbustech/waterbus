@@ -113,6 +113,9 @@ class Strings {
   static const String edit = 'edit';
   static const String appearance = 'appearance';
   static const String callAndMeeting = 'callAndMeeting';
+  static const String serverConfiguration = 'serverConfiguration';
+  static const String clearCache = 'clearCache';
+  static const String version = 'version';
 }
 
 class MyI18n {

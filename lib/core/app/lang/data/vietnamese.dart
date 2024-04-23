@@ -106,4 +106,7 @@ Map<String, String> vietnamese = {
   Strings.edit: "Sửa",
   Strings.appearance: "Giao diện",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
+  Strings.serverConfiguration: "Cấu hình máy chủ",
+  Strings.clearCache: "Xoá bộ nhớ tạm",
+  Strings.version: "phiên bản",
 };
