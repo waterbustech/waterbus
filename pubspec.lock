@@ -990,6 +990,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  isolate_contactor:
+    dependency: transitive
+    description:
+      name: isolate_contactor
+      sha256: "6ba8434ceb58238a1389d6365111a3efe7baa1c68a66f4db6d63d351cf6c3a0f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  isolate_manager:
+    dependency: transitive
+    description:
+      name: isolate_manager
+      sha256: "63b64b23c0bddfd6dbd1571ff38418ebe98d3c5f6d49f564ca94610bb53b5455"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   js:
     dependency: transitive
     description:
@@ -1322,10 +1338,10 @@ packages:
     dependency: "direct main"
     description:
       name: re_editor
-      sha256: "5933029ab831ceb165b90e7daf475e3e92ffca8aeb784a3a30369b9677ba6a60"
+      sha256: bbe54f2b3778b2b350876d59cb43734e60ffc6c22483643b5b38e0b854f4d2e6
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.0"
   re_highlight:
     dependency: "direct main"
     description:
