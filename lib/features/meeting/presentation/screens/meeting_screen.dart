@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_pip_mode/pip_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_password_screen.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_body.dart';
 
 class MeetingScreen extends StatelessWidget {
@@ -60,14 +60,16 @@ class MeetingScreen extends StatelessWidget {
     Meeting meeting,
     CallState? callState,
   ) {
-    if (meeting.participants.length < 2) return const SizedBox();
+    if ((callState?.participants.values.length ?? 0) < 2) {
+      return const SizedBox();
+    }
 
     return Row(
       children: [
         Expanded(
           child: MeetView(
-            participant: meeting.participants.first,
-            callState: callState,
+            participantSFU: callState!.participants.values.first,
+            participants: meeting.participants,
             avatarSize: 25.sp,
             radius: BorderRadius.horizontal(
               left: Radius.circular(10.sp),
@@ -76,8 +78,8 @@ class MeetingScreen extends StatelessWidget {
         ),
         Expanded(
           child: MeetView(
-            participant: meeting.participants[1],
-            callState: callState,
+            participantSFU: callState.participants.values.elementAt(1),
+            participants: meeting.participants,
             avatarSize: 25.sp,
             radius: BorderRadius.horizontal(
               right: Radius.circular(10.sp),

@@ -36,7 +36,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: Strings.selectLanguage.i18n,
+        title: Strings.language.i18n,
       ),
       body: Padding(
         padding: EdgeInsets.all(20.sp),

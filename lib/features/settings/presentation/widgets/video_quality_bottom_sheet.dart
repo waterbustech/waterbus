@@ -30,19 +30,22 @@ class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 16.sp,
         vertical: 25.sp,
+        horizontal: 4.sp,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            Strings.videoQuality.i18n,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+          Padding(
+            padding: EdgeInsets.only(left: 12.sp),
+            child: Text(
+              Strings.videoQuality.i18n,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ),
           SizedBox(height: 12.sp),
           ...List.generate(

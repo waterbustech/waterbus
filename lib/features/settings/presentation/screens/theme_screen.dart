@@ -21,7 +21,7 @@ class ThemeScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: Strings.selectTheme.i18n,
+        title: Strings.appearance.i18n,
       ),
       body: Padding(
         padding: EdgeInsets.all(20.sp),

@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:ui';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +9,6 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/helpers/device_utils.dart';
-import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -50,7 +46,7 @@ class _MeetingBodyState extends State<MeetingBody> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: widget.meeting.code.toString().formatRoomCode,
+        title: widget.meeting.title,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
@@ -108,96 +104,87 @@ class _MeetingBodyState extends State<MeetingBody> {
           SizedBox(width: 4.sp),
         ],
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(12.sp),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 15,
-            sigmaY: 30,
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          height: 58.sp,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(12.sp),
+            ),
           ),
-          child: Container(
-            height: 80.sp,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(12.sp),
-              ),
-            ),
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.symmetric(horizontal: 12.sp).add(
-              EdgeInsets.only(bottom: 12.sp),
-            ),
-            child: SizedBox(
-              width: SizerUtil.isDesktop ? 350.sp : double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CallActionButton(
-                    icon: widget.callState?.mParticipant == null ||
-                            widget.callState!.mParticipant!.isAudioEnabled
-                        ? PhosphorIcons.microphone
-                        : PhosphorIcons.microphone_slash,
-                    onTap: () {
-                      if (widget.callState?.mParticipant == null) return;
+          alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.symmetric(horizontal: 12.sp).add(
+            EdgeInsets.only(bottom: 12.sp),
+          ),
+          child: SizedBox(
+            width: SizerUtil.isDesktop ? 350.sp : double.infinity,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CallActionButton(
+                  icon: widget.callState?.mParticipant == null ||
+                          widget.callState!.mParticipant!.isAudioEnabled
+                      ? PhosphorIcons.microphone
+                      : PhosphorIcons.microphone_slash,
+                  onTap: () {
+                    if (widget.callState?.mParticipant == null) return;
 
-                      AppBloc.meetingBloc.add(ToggleAudioEvent());
-                    },
-                  ),
-                  CallActionButton(
-                    icon: widget.callState?.mParticipant == null ||
-                            widget.callState!.mParticipant!.isVideoEnabled
-                        ? PhosphorIcons.camera
-                        : PhosphorIcons.camera_slash,
-                    onTap: () {
-                      if (widget.callState?.mParticipant == null) return;
+                    AppBloc.meetingBloc.add(ToggleAudioEvent());
+                  },
+                ),
+                CallActionButton(
+                  icon: widget.callState?.mParticipant == null ||
+                          widget.callState!.mParticipant!.isVideoEnabled
+                      ? PhosphorIcons.camera
+                      : PhosphorIcons.camera_slash,
+                  onTap: () {
+                    if (widget.callState?.mParticipant == null) return;
 
-                      AppBloc.meetingBloc.add(ToggleVideoEvent());
-                    },
-                  ),
-                  CallActionButton(
-                    icon: PhosphorIcons.screencast,
-                    onTap: () {
-                      if (widget.callState?.mParticipant == null) return;
+                    AppBloc.meetingBloc.add(ToggleVideoEvent());
+                  },
+                ),
+                CallActionButton(
+                  icon: PhosphorIcons.screencast,
+                  onTap: () {
+                    if (widget.callState?.mParticipant == null) return;
 
-                      if (widget.callState!.mParticipant!.isSharingScreen) {
-                        AppBloc.meetingBloc.add(StopSharingScreenEvent());
-                      } else {
-                        AppBloc.meetingBloc.add(StartSharingScreenEvent());
-                      }
-                    },
-                  ),
-                  if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
-                    CallActionButton(
-                      icon: PhosphorIcons.sparkle,
-                      iconColor: Colors.yellow,
-                      onTap: () {
-                        setState(() {
-                          _isFilterSettingsOpened = !_isFilterSettingsOpened;
-                        });
-                      },
-                    ),
+                    if (widget.callState!.mParticipant!.isSharingScreen) {
+                      AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                    } else {
+                      AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                    }
+                  },
+                ),
+                if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
                   CallActionButton(
-                    icon: PhosphorIcons.gear_six,
+                    icon: PhosphorIcons.sparkle,
+                    iconColor: Colors.deepOrangeAccent,
                     onTap: () {
-                      showDialogWaterbus(
-                        alignment: Alignment.center,
-                        child: const CallSettingsBottomSheet(),
-                      );
+                      setState(() {
+                        _isFilterSettingsOpened = !_isFilterSettingsOpened;
+                      });
                     },
                   ),
-                  CallActionButton(
-                    icon: PhosphorIcons.x,
-                    backgroundColor: Colors.red,
-                    onTap: () {
-                      AppBloc.meetingBloc.add(const LeaveMeetingEvent());
-                    },
-                  ),
-                ],
-              ),
+                CallActionButton(
+                  icon: PhosphorIcons.gear_six,
+                  onTap: () {
+                    showDialogWaterbus(
+                      alignment: Alignment.center,
+                      child: const CallSettingsBottomSheet(),
+                    );
+                  },
+                ),
+                CallActionButton(
+                  icon: PhosphorIcons.x,
+                  backgroundColor: Colors.red,
+                  onTap: () {
+                    AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -246,9 +233,9 @@ class _MeetingBodyState extends State<MeetingBody> {
                       ? Container(
                           margin: EdgeInsets.symmetric(horizontal: 12.sp),
                           child: MeetView(
-                            participant: widget.meeting.participants
-                                .firstWhere((participant) => participant.isMe),
-                            callState: widget.callState,
+                            participants: widget.meeting.participants,
+                            participantSFU: widget.callState!.mParticipant!
+                                .copyWith(isSharingScreen: false),
                             radius: BorderRadius.zero,
                             borderEnabled: false,
                           ),
