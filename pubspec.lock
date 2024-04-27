@@ -308,10 +308,10 @@ packages:
     dependency: transitive
     description:
       name: dart_webrtc_plus
-      sha256: e21a16bf3d882e881aeb3d014f2454a5e265ced4148967bfa790a5e330740f08
+      sha256: "6510ee3d1eebc0d80fd560e3bb0b893ea2ffaaf8e74c814beaf6d942b285d7ca"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.3+1"
+    version: "1.4.4+2"
   dartx:
     dependency: transitive
     description:
@@ -721,7 +721,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_web_plugins:
-    dependency: transitive
+    dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -729,11 +729,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.9.48+8"
-      resolved-ref: "617ef69c5dfd90e388639b4f003718f99c0d024b"
+      ref: "0.10.3+1"
+      resolved-ref: db357a2e3164f414c2e35c2e6582cc056de2880d
       url: "https://github.com/waterbustech/flutter-webrtc.git"
     source: git
-    version: "0.9.48+8"
+    version: "0.10.3+1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -990,6 +990,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  isolate_contactor:
+    dependency: transitive
+    description:
+      name: isolate_contactor
+      sha256: "6ba8434ceb58238a1389d6365111a3efe7baa1c68a66f4db6d63d351cf6c3a0f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  isolate_manager:
+    dependency: transitive
+    description:
+      name: isolate_manager
+      sha256: "63b64b23c0bddfd6dbd1571ff38418ebe98d3c5f6d49f564ca94610bb53b5455"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   js:
     dependency: transitive
     description:
@@ -1322,10 +1338,10 @@ packages:
     dependency: "direct main"
     description:
       name: re_editor
-      sha256: "5933029ab831ceb165b90e7daf475e3e92ffca8aeb784a3a30369b9677ba6a60"
+      sha256: bbe54f2b3778b2b350876d59cb43734e60ffc6c22483643b5b38e0b854f4d2e6
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.0"
   re_highlight:
     dependency: "direct main"
     description:
@@ -1790,11 +1806,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.3.4"
-      resolved-ref: "86c92500356ac75ee6730d6bac345b1c741d43ed"
+      ref: "1.3.6"
+      resolved-ref: b0c32b8bc51db22fba8d65c56d714d17ad822059
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.3.4"
+    version: "1.3.6"
   web:
     dependency: "direct overridden"
     description:
@@ -1823,10 +1839,10 @@ packages:
     dependency: transitive
     description:
       name: webrtc_interface_plus
-      sha256: "2a5b0b3bb5809b4574e3020f6cbc38fffc5a248414e6cf3e8ecfe1c118d83420"
+      sha256: "8beb2f0dee4fcf04e6680dcd5c3f4374856ed312784abdb0d749edc3d9993c82"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2+1"
+    version: "1.2.0+1"
   win32:
     dependency: "direct overridden"
     description:

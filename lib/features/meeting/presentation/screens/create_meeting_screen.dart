@@ -38,7 +38,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
 
     if (AppBloc.userBloc.user?.fullName != null) {
       _roomNameController.text = widget.meeting?.title ??
-          '${Strings.meetingWith.i18n} + ${AppBloc.userBloc.user!.fullName}';
+          '${Strings.meetingWith.i18n} ${AppBloc.userBloc.user!.fullName}';
     }
   }
 

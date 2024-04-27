@@ -9,6 +9,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 
 class EnterCodeBox extends StatefulWidget {
   final Function()? onTap;
@@ -51,7 +52,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
               ),
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.black.withOpacity(.2)
-                  : mC,
+                  : mCU,
               child: SizedBox(
                 width: 100.w,
                 height: 36.sp,
@@ -70,6 +71,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(9),
+                    RoomCodeFormatter(),
                   ],
                   decoration: InputDecoration(
                     contentPadding: widget.contentPadding,
@@ -80,7 +82,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                     filled: true,
                     fillColor: Theme.of(context).brightness == Brightness.dark
                         ? Colors.black.withOpacity(.2)
-                        : mC,
+                        : mCU,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6.sp),
                       borderSide: BorderSide.none,

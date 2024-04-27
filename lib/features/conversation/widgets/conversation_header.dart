@@ -38,7 +38,6 @@ class ConversationHeader extends StatelessWidget {
                 child: Icon(
                   PhosphorIcons.caret_left_light,
                   size: 18.sp,
-                  color: mCL,
                 ),
               ),
             ),
