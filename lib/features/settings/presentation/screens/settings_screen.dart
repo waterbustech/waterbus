@@ -75,7 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _handlePressedOption({required String key}) {
-    AppNavigator().navigatorAccountPopToRoot();
+    AppNavigator().navigatorSettingPopToRoot();
     setState(() {
       _currentTabKey = key;
     });

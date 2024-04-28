@@ -27,7 +27,7 @@ import 'package:waterbus/features/settings/presentation/screens/theme_screen.dar
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  static GlobalKey<NavigatorState> navigatorAccountKey = GlobalKey();
+  static GlobalKey<NavigatorState> navigatorSettingKey = GlobalKey();
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
@@ -150,8 +150,8 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
     late NavigatorState stateByContext;
 
-    if (SizerUtil.isDesktop && accountState != null) {
-      stateByContext = accountState!;
+    if (SizerUtil.isDesktop && settingState != null) {
+      stateByContext = settingState!;
     } else {
       stateByContext = state;
     }
@@ -199,8 +199,8 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     return settings.arguments;
   }
 
-  void navigatorAccountPopToRoot() {
-    accountState?.popUntil((route) => route.isFirst);
+  void navigatorSettingPopToRoot() {
+    settingState?.popUntil((route) => route.isFirst);
   }
 
   static bool get canPop => state.canPop();
@@ -209,13 +209,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
   static BuildContext? get context => navigatorKey.currentContext;
 
-  static BuildContext? get accountContext =>
-      AppNavigator.navigatorAccountKey.currentContext;
+  static BuildContext? get settingContext =>
+      AppNavigator.navigatorSettingKey.currentContext;
 
   static NavigatorState get state => navigatorKey.currentState!;
 
-  static NavigatorState? get accountState =>
-      AppNavigator.navigatorAccountKey.currentState;
+  static NavigatorState? get settingState =>
+      AppNavigator.navigatorSettingKey.currentState;
 }
 
 extension AppNavigatorX on AppNavigator {

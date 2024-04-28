@@ -27,7 +27,7 @@ class _AppSettingsState extends State<AppSettings> {
     return BlocBuilder<ThemesBloc, ThemesState>(
       builder: (context, theme) {
         return MaterialApp(
-          navigatorKey: AppNavigator.navigatorAccountKey,
+          navigatorKey: AppNavigator.navigatorSettingKey,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light().data,
           darkTheme: AppTheme.dark().data,
