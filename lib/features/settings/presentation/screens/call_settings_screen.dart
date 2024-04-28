@@ -21,7 +21,8 @@ import 'package:waterbus/features/settings/presentation/widgets/setting_switch_c
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
 
 class CallSettingsScreen extends StatefulWidget {
-  const CallSettingsScreen({super.key});
+  final bool isSettingDesktop;
+  const CallSettingsScreen({super.key, this.isSettingDesktop = false});
 
   @override
   State<StatefulWidget> createState() => _SettingScreenState();
@@ -43,21 +44,23 @@ class _SettingScreenState extends State<CallSettingsScreen> {
         context,
         title: Strings.callSettings.i18n,
         leadingWidth: 60.sp,
-        leading: GestureWrapper(
-          onTap: () {
-            AppNavigator.pop();
-          },
-          child: Center(
-            child: Text(
-              Strings.cancel.i18n,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
+        leading: widget.isSettingDesktop
+            ? const SizedBox()
+            : GestureWrapper(
+                onTap: () {
+                  AppNavigator.pop();
+                },
+                child: Center(
+                  child: Text(
+                    Strings.cancel.i18n,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         actions: [
           GestureWrapper(
             onTap: () {

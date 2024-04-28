@@ -25,7 +25,8 @@ import 'package:waterbus/features/profile/presentation/widgets/profile_text_fiel
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final bool isSettingDesktop;
+  const ProfileScreen({super.key, this.isSettingDesktop = false});
 
   @override
   State<StatefulWidget> createState() => _ProfileScreenState();
@@ -56,21 +57,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context,
         title: Strings.profile.i18n,
         leadingWidth: 60.sp,
-        leading: GestureWrapper(
-          onTap: () {
-            AppNavigator.pop();
-          },
-          child: Center(
-            child: Text(
-              Strings.cancel.i18n,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
+        leading: widget.isSettingDesktop
+            ? const SizedBox()
+            : GestureWrapper(
+                onTap: () {
+                  AppNavigator.pop();
+                },
+                child: Center(
+                  child: Text(
+                    Strings.cancel.i18n,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         actions: [
           GestureWrapper(
             onTap: () {
@@ -206,6 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Expanded(
                                     child: Text(
                                       Strings.username.i18n,
+                                      maxLines: 1,
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         color: Theme.of(context)
@@ -223,24 +227,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                       return user?.userName == null
                                           ? const SizedBox()
-                                          : Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  right: SizerUtil.isDesktop
-                                                      ? 4.sp
-                                                      : 2.sp,
-                                                ),
-                                                child: Text(
-                                                  "@${user?.userName ?? ""}",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: 12.sp,
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall!
-                                                        .color,
-                                                  ),
+                                          : Container(
+                                              width: SizerUtil.isDesktop
+                                                  ? null
+                                                  : 45.w,
+                                              padding: EdgeInsets.only(
+                                                right: SizerUtil.isDesktop
+                                                    ? 4.sp
+                                                    : 2.sp,
+                                              ),
+                                              child: Text(
+                                                "@${user?.userName ?? ""}",
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .color,
                                                 ),
                                               ),
                                             );

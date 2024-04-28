@@ -45,55 +45,60 @@ class _HomeState extends State<Home> {
 
         return Scaffold(
           extendBody: true,
-          bottomNavigationBar: SafeArea(
-            bottom: false,
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 15,
-                  sigmaY: 25,
-                ),
-                child: Container(
-                  height: WebRTC.platformIsIOS ? 64.sp : 60.sp,
-                  padding: EdgeInsets.symmetric(horizontal: 8.sp).add(
-                    EdgeInsets.only(
-                      bottom: WebRTC.platformIsIOS ? 0 : 12.sp,
-                      top: 10.sp,
+          bottomNavigationBar: SizerUtil.isDesktop
+              ? const SizedBox()
+              : SafeArea(
+                  bottom: false,
+                  child: ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 15,
+                        sigmaY: 25,
+                      ),
+                      child: Container(
+                        height: WebRTC.platformIsIOS ? 64.sp : 60.sp,
+                        padding: EdgeInsets.symmetric(horizontal: 8.sp).add(
+                          EdgeInsets.only(
+                            bottom: WebRTC.platformIsIOS ? 0 : 12.sp,
+                            top: 10.sp,
+                          ),
+                        ),
+                        color: Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(.8),
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          width: SizerUtil.isDesktop ? 50.w : double.infinity,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildItemBottomBar(
+                                iconData: PhosphorIcons.presentation,
+                                iconDataSelected:
+                                    PhosphorIcons.presentation_fill,
+                                label: Strings.home.i18n,
+                              ),
+                              _buildItemBottomBar(
+                                iconData: PhosphorIcons.chats_teardrop,
+                                iconDataSelected:
+                                    PhosphorIcons.chats_teardrop_fill,
+                                label: Strings.chat.i18n,
+                                index: 1,
+                              ),
+                              _buildItemBottomBar(
+                                iconData: PhosphorIcons.gear,
+                                iconDataSelected: PhosphorIcons.gear_fill,
+                                label: Strings.settings.i18n,
+                                index: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  color:
-                      Theme.of(context).scaffoldBackgroundColor.withOpacity(.8),
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: SizerUtil.isDesktop ? 50.w : double.infinity,
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildItemBottomBar(
-                          iconData: PhosphorIcons.presentation,
-                          iconDataSelected: PhosphorIcons.presentation_fill,
-                          label: Strings.home.i18n,
-                        ),
-                        _buildItemBottomBar(
-                          iconData: PhosphorIcons.chats_teardrop,
-                          iconDataSelected: PhosphorIcons.chats_teardrop_fill,
-                          label: Strings.chat.i18n,
-                          index: 1,
-                        ),
-                        _buildItemBottomBar(
-                          iconData: PhosphorIcons.gear,
-                          iconDataSelected: PhosphorIcons.gear_fill,
-                          label: Strings.settings.i18n,
-                          index: 2,
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
-              ),
-            ),
-          ),
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return _tabs[state.props[0]];

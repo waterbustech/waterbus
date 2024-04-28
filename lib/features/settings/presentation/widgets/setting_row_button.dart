@@ -72,14 +72,17 @@ class SettingRowButton extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
+                        fontWeight:
+                            SizerUtil.isDesktop ? null : FontWeight.w500,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                     ),
                   ),
                   if (value != null)
                     Padding(
-                      padding: EdgeInsets.only(right: 3.sp),
+                      padding: EdgeInsets.only(
+                        right: SizerUtil.isDesktop ? 6.sp : 3.sp,
+                      ),
                       child: Text(
                         value ?? "",
                         style: TextStyle(
@@ -92,9 +95,10 @@ class SettingRowButton extends StatelessWidget {
                     ),
                   Padding(
                     padding: EdgeInsets.only(right: 6.sp),
-                    child: const Icon(
+                    child: Icon(
                       PhosphorIcons.caret_right,
                       color: colorGray3,
+                      size: SizerUtil.isDesktop ? 14.sp : null,
                     ),
                   ),
                 ],

@@ -150,7 +150,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
     late NavigatorState stateByContext;
 
-    stateByContext = state;
+    if (SizerUtil.isDesktop && accountState != null) {
+      stateByContext = accountState!;
+    } else {
+      stateByContext = state;
+    }
 
     return stateByContext.pushNamed(route, arguments: arguments);
   }
@@ -195,13 +199,23 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     return settings.arguments;
   }
 
+  void navigatorAccountPopToRoot() {
+    accountState?.popUntil((route) => route.isFirst);
+  }
+
   static bool get canPop => state.canPop();
 
   static String? currentRoute() => AppNavigatorObserver.currentRouteName;
 
   static BuildContext? get context => navigatorKey.currentContext;
 
+  static BuildContext? get accountContext =>
+      AppNavigator.navigatorAccountKey.currentContext;
+
   static NavigatorState get state => navigatorKey.currentState!;
+
+  static NavigatorState? get accountState =>
+      AppNavigator.navigatorAccountKey.currentState;
 }
 
 extension AppNavigatorX on AppNavigator {
