@@ -98,7 +98,7 @@ class AppColor {
       primary: colorPrimary,
       primaryLight: mCL,
       primaryDark: colorBlack,
-      background: mCL,
+      background: mC,
       focusColor: colorPrimary,
       unFocusColor: Colors.grey.shade700,
       accent: const Color(0xFF17c063),

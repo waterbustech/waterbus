@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -29,15 +31,17 @@ class ThumbnailWidget extends StatelessWidget {
         return Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: selected
-                    ? BoxDecoration(
-                        border: Border.all(
+              child: Material(
+                clipBehavior: Clip.hardEdge,
+                shape: SuperellipseShape(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  side: selected
+                      ? BorderSide(
                           width: 2,
                           color: Theme.of(context).primaryColor,
-                        ),
-                      )
-                    : null,
+                        )
+                      : BorderSide.none,
+                ),
                 child: InkWell(
                   onTap: () {
                     if (kDebugMode) {

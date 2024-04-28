@@ -149,7 +149,7 @@ class BodySettingScreens extends StatelessWidget {
                               },
                               child: user?.avatar == null
                                   ? CircleAvatar(
-                                      radius: 40.sp,
+                                      radius: 35.sp,
                                       backgroundColor: Colors.black,
                                       backgroundImage: AssetImage(
                                         Assets.images.imgAppLogo.path,
@@ -157,7 +157,7 @@ class BodySettingScreens extends StatelessWidget {
                                     )
                                   : AvatarCard(
                                       urlToImage: user?.avatar,
-                                      size: 80.sp,
+                                      size: 70.sp,
                                     ),
                             ),
                           ),

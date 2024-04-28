@@ -30,7 +30,9 @@ class _EnterMeetingCardState extends State {
     displayLoadingLayer();
 
     AppBloc.meetingBloc.add(
-      GetInfoMeetingEvent(roomCode: int.parse(_codeController.text)),
+      GetInfoMeetingEvent(
+        roomCode: int.parse(_codeController.text.replaceAll('-', '')),
+      ),
     );
   }
 

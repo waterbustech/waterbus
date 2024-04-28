@@ -78,7 +78,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {
                   AppNavigator.pop();
 
-                  AppNavigator().push(Routes.settingsRoute);
+                  AppNavigator().push(Routes.settingsCallRoute);
                 },
               ),
               CallSettingButton(

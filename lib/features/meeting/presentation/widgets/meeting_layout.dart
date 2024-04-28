@@ -4,14 +4,12 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/models/call_setting.dart';
-import 'package:waterbus_sdk/models/call_state.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
 class MeetingLayout extends StatelessWidget {
@@ -25,6 +23,34 @@ class MeetingLayout extends StatelessWidget {
     required this.callSetting,
   });
 
+  List<ParticipantSFU> get _participants {
+    final List<ParticipantSFU> participants = [];
+    if (callState?.mParticipant != null) {
+      final ParticipantSFU participant = callState!.mParticipant!;
+
+      participants.add(
+        participant.copyWith(isSharingScreen: false),
+      );
+
+      if (participant.isSharingScreen) {
+        participants.add(participant);
+      }
+    }
+
+    for (final ParticipantSFU participant
+        in callState?.participants.values.toList() ?? []) {
+      participants.add(
+        participant.copyWith(isSharingScreen: false),
+      );
+
+      if (participant.isSharingScreen) {
+        participants.add(participant);
+      }
+    }
+
+    return participants;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +62,7 @@ class MeetingLayout extends StatelessWidget {
           final bool isCollapsed =
               constraints.maxWidth < 30.w && SizerUtil.isDesktop;
 
-          return meeting.participants.length > 2 || isCollapsed
+          return _participants.length > 2 || isCollapsed
               ? _buildLayoutMultipleUsers(
                   context,
                   meeting,
@@ -66,52 +92,44 @@ class MeetingLayout extends StatelessWidget {
 
     final List<Widget> childrens = [
       Expanded(
-        flex: meeting.participants.length > 1 ? 1 : 2,
+        flex: _participants.length > 1 ? 1 : 2,
         child: AnimatedContainer(
           duration: 300.milliseconds,
           width: SizerUtil.isDesktop
-              ? (meeting.participants.length > 1 ? width / 2 : width)
+              ? (_participants.length > 1 ? width / 2 : width)
               : double.infinity,
           height: SizerUtil.isDesktop
               ? double.infinity
-              : (meeting.participants.length > 1 ? height / 2 : height),
+              : (_participants.length > 1 ? height / 2 : height),
           curve: Curves.easeInOut,
           child: MeetView(
-            participant: meeting.participants.first,
-            callState: callState,
-            borderEnabled:
-                meeting.participants.length > 1 || !SizerUtil.isDesktop,
-            radius: meeting.participants.length == 1
+            participants: meeting.participants,
+            participantSFU: _participants.first,
+            borderEnabled: _participants.length > 1 || !SizerUtil.isDesktop,
+            radius: _participants.length == 1 || SizerUtil.isDesktop
                 ? BorderRadius.circular(20.sp)
-                : SizerUtil.isDesktop
-                    ? BorderRadius.only(
-                        bottomRight: Radius.circular(30.sp),
-                        topLeft: Radius.circular(30.sp),
-                      )
-                    : BorderRadius.vertical(top: Radius.circular(30.sp)),
+                : BorderRadius.vertical(top: Radius.circular(30.sp)),
           ),
         ),
       ),
-      meeting.participants.length == 1
+      if (SizerUtil.isDesktop) SizedBox(width: 12.sp),
+      _participants.length == 1
           ? const SizedBox()
           : Expanded(
               child: AnimatedContainer(
                 duration: 300.milliseconds,
                 width: SizerUtil.isDesktop
-                    ? (meeting.participants.length > 1 ? width / 2 : width)
+                    ? (_participants.length > 1 ? width / 2 : width)
                     : double.infinity,
                 height: SizerUtil.isDesktop
                     ? double.infinity
-                    : (meeting.participants.length > 1 ? height / 2 : height),
+                    : (_participants.length > 1 ? height / 2 : height),
                 curve: Curves.easeInOut,
                 child: MeetView(
-                  participant: meeting.participants.last,
-                  callState: callState,
+                  participants: meeting.participants,
+                  participantSFU: _participants.last,
                   radius: SizerUtil.isDesktop
-                      ? BorderRadius.only(
-                          bottomLeft: Radius.circular(30.sp),
-                          topRight: Radius.circular(30.sp),
-                        )
+                      ? BorderRadius.circular(20.sp)
                       : BorderRadius.vertical(bottom: Radius.circular(30.sp)),
                 ),
               ),
@@ -119,7 +137,14 @@ class MeetingLayout extends StatelessWidget {
     ];
 
     return SizerUtil.isDesktop
-        ? Row(children: childrens)
+        ? Center(
+            child: SizedBox(
+              height: _participants.length == 1
+                  ? constraints.maxHeight
+                  : constraints.maxHeight * 0.5,
+              child: Row(children: childrens),
+            ),
+          )
         : Column(children: childrens);
   }
 
@@ -131,43 +156,43 @@ class MeetingLayout extends StatelessWidget {
     BoxConstraints constraints,
   ) {
     return GridView.builder(
-      itemCount: meeting.participants.length,
+      itemCount: _participants.length,
       itemBuilder: (_, index) => _buildVideoView(
         context,
-        participant: meeting.participants[index],
+        participant: _participants[index],
         callState: callState,
         avatarSize: SizerUtil.isDesktop ? 50.sp : 35.sp,
       ),
+      padding: EdgeInsets.only(right: SizerUtil.isDesktop ? 20.sp : 0),
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
-        itemCount:
-            _gridCount(meeting.participants.length, constraints.maxWidth) < 2 &&
-                    SizerUtil.isDesktop
-                ? 2
-                : meeting.participants.length,
+        itemCount: _gridCount(_participants.length, constraints.maxWidth) < 2 &&
+                SizerUtil.isDesktop
+            ? 2
+            : _participants.length,
         crossAxisCount: SizerUtil.isDesktop
-            ? _gridCount(meeting.participants.length, constraints.maxWidth)
+            ? _gridCount(_participants.length, constraints.maxWidth)
             : 2,
-        mainAxisSpacing: 6.sp,
-        crossAxisSpacing: 6.sp,
+        mainAxisSpacing: 12.sp,
+        crossAxisSpacing: 12.sp,
         childAspectRatio: SizerUtil.isDesktop
             ? (16 / 9)
-            : (meeting.participants.length < 6 ? 0.6 : 1),
+            : (_participants.length < 6 ? 0.6 : 1),
       ),
     );
   }
 
   Widget _buildVideoView(
     BuildContext context, {
-    required Participant participant,
+    required ParticipantSFU participant,
     required CallState? callState,
     double? width,
     double avatarSize = 35,
     BorderRadius? radius,
   }) {
     return MeetView(
-      participant: participant,
-      callState: callState,
+      participants: meeting.participants,
+      participantSFU: participant,
       avatarSize: avatarSize,
       width: width,
       radius: radius,

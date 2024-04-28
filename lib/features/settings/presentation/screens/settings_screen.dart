@@ -95,6 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onPressed: () {},
                 icon: Icon(
                   PhosphorIcons.user_circle_plus,
+                  size: 22.sp,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
