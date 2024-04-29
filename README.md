@@ -51,7 +51,7 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 | Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟡        |           🟢          | 
 | iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
 | MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
-| Web                |         🟢         |        🟢      |          🟡         |          🟡         |       🟡       |           🟢          |    
+| Web                |         🟢         |        🟢      |          🟡         |          🟢         |       🟡       |           🟢          |    
 
 
 🟢 = Available

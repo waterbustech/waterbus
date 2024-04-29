@@ -15,6 +15,7 @@ class InputSendMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: SizerUtil.isDesktop ? 48.sp : null,
       width: 100.w,
       padding: WebRTC.platformIsMobile
           ? EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp)

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -101,12 +102,14 @@ class AppTheme {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       useMaterial3: true,
-      pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-        },
-      ),
+      pageTransitionsTheme: kIsWeb
+          ? null
+          : const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+              },
+            ),
       brightness: Brightness.dark,
       primaryColor: appColors.primary,
       primaryColorLight: appColors.primaryLight,

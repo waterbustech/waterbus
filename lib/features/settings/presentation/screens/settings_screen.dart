@@ -12,7 +12,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/home/widgets/tap_options_desktop_widget.dart';
+import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/app_settings.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
@@ -90,37 +90,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Scaffold(
             appBar: appBarTitleBack(
               context,
-              title: SizerUtil.isDesktop ? 'Settings' : '',
+              title: SizerUtil.isDesktop ? Strings.settings.i18n : '',
               leading: IconButton(
+                padding: EdgeInsets.only(left: 12.sp),
                 onPressed: () {},
                 icon: Icon(
                   PhosphorIcons.user_circle_plus,
-                  size: 22.sp,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
               actions: [
-                SizerUtil.isDesktop
-                    ? const SizedBox()
-                    : GestureWrapper(
-                        onTap: () {
-                          AppNavigator().push(Routes.profileRoute);
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                          ),
-                          padding: EdgeInsets.all(12.sp),
-                          child: Text(
-                            Strings.edit.i18n,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                GestureWrapper(
+                  onTap: () {
+                    AppNavigator().push(Routes.profileRoute);
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    padding: EdgeInsets.only(
+                      right: SizerUtil.isDesktop ? 20.sp : 12.sp,
+                    ),
+                    child: Text(
+                      Strings.edit.i18n,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
+                  ),
+                ),
               ],
             ),
             body: SizerUtil.isDesktop
@@ -135,9 +135,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
         if (SizerUtil.isDesktop)
-          VerticalDivider(
-            width: 1.sp,
-            thickness: 1.sp,
+          const VerticalDivider(
+            width: .5,
+            thickness: .5,
           ),
         Expanded(
           child: AppSettings(

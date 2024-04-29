@@ -3,7 +3,7 @@ import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 
 Map<String, String> english = {
-  Strings.language: "Languages",
+  Strings.language: "Language",
   Strings.vietnamese: "Vietnamese",
   Strings.english: "English",
   Strings.darkMode: ThemeList.dark.text,
