@@ -21,6 +21,7 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
+import 'package:waterbus/features/home/widgets/tap_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
@@ -109,8 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             ...(SizerUtil.isDesktop
                 ? [
-                    SizedBox(
-                      width: 26.w,
+                    TabOptionsDesktopWidget(
                       child: _buildDrawable(context),
                     ),
                     VerticalDivider(
