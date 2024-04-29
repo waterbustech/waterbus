@@ -1,5 +1,5 @@
 name: waterbus
-description: Built on WebRTC SDK M122. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Built on WebRTC SDK M124. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
 repository: https://github.com/lambiengcode/waterbus
 # The following line prevents the package from being accidentally published to
@@ -105,11 +105,11 @@ dependencies:
 
   # Video call
   waterbus_sdk:
-    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
-    # git:
-    #   url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-    #   path: '.'
-    #   ref: 1.3.7
+    # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 1.3.8
 
 dependency_overrides: 
   watcher: ^1.1.0
