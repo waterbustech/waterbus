@@ -33,3 +33,9 @@ final List<String> desktopBackgrounds = [
   Assets.images.desktopBackground8Jpg.path,
   Assets.images.desktopBackground9Jpg.path,
 ];
+
+// Tab Option Setting Screen
+const String profileTab = '/myProfile';
+const String appearanceTab = '/appearance';
+const String languageTab = '/language';
+const String callAndMeetingTab = '/callAndMeeting';

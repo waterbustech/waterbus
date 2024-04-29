@@ -27,7 +27,7 @@ import 'package:waterbus/features/settings/presentation/screens/theme_screen.dar
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  static GlobalKey<NavigatorState> navigatorAccountKey = GlobalKey();
+  static GlobalKey<NavigatorState> navigatorSettingKey = GlobalKey();
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
@@ -150,7 +150,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
     late NavigatorState stateByContext;
 
-    stateByContext = state;
+    if (SizerUtil.isDesktop && settingState != null) {
+      stateByContext = settingState!;
+    } else {
+      stateByContext = state;
+    }
 
     return stateByContext.pushNamed(route, arguments: arguments);
   }
@@ -195,13 +199,23 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     return settings.arguments;
   }
 
+  void navigatorSettingPopToRoot() {
+    settingState?.popUntil((route) => route.isFirst);
+  }
+
   static bool get canPop => state.canPop();
 
   static String? currentRoute() => AppNavigatorObserver.currentRouteName;
 
   static BuildContext? get context => navigatorKey.currentContext;
 
+  static BuildContext? get settingContext =>
+      AppNavigator.navigatorSettingKey.currentContext;
+
   static NavigatorState get state => navigatorKey.currentState!;
+
+  static NavigatorState? get settingState =>
+      AppNavigator.navigatorSettingKey.currentState;
 }
 
 extension AppNavigatorX on AppNavigator {

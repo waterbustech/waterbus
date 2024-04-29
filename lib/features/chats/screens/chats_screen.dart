@@ -7,18 +7,16 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/data_languages.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/features/chats/widgets/chat_card.dart';
+import 'package:waterbus/features/chats/screens/all_conversation_screen.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
-import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/tap_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
@@ -87,42 +85,21 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ],
             ),
-            body: Column(
-              children: [
-                SizedBox(height: 10.sp),
-                EnterCodeBox(
-                  hintTextContent: Strings.search.i18n,
-                  onTap: () {},
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: listFakeChat.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 60.sp, top: 8.sp),
-                    itemBuilder: (context, index) {
-                      return GestureWrapper(
-                        onTap: () {
-                          _handleTapChatItem(listFakeChat[index]);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.sp,
-                            vertical: 4.sp,
-                          ),
-                          color: SizerUtil.isDesktop &&
-                                  _currentChat == listFakeChat[index]
-                              ? colorPrimary.withOpacity(.2)
-                              : Colors.transparent,
-                          child: ChatCard(
-                            chatModel: listFakeChat[index],
-                          ),
-                        ),
-                      );
+            body: SizerUtil.isDesktop
+                ? TabOptionsDesktopWidget(
+                    child: AllConversationScreen(
+                      currentChat: _currentChat,
+                      onTap: (index) {
+                        _handleTapChatItem(listFakeChat[index]);
+                      },
+                    ),
+                  )
+                : AllConversationScreen(
+                    currentChat: _currentChat,
+                    onTap: (index) {
+                      _handleTapChatItem(listFakeChat[index]);
                     },
                   ),
-                ),
-              ],
-            ),
           ),
         ),
         if (SizerUtil.isDesktop)
