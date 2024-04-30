@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -61,7 +61,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
               CallSettingButton(
                 visible: meeting.isHost,
                 icon: PhosphorIcons.sliders_horizontal,
-                lable: 'Edit Room',
+                lable: Strings.editMeeting.i18n,
                 onTap: () {
                   AppNavigator().push(
                     Routes.createMeetingRoute,
@@ -82,13 +82,13 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.chat_teardrop_text,
-                lable: 'Discussion',
+                lable: Strings.chat.i18n,
                 onTap: () {},
               ),
               CallSettingButton(
                 visible: WebRTC.platformIsIOS,
                 icon: PhosphorIcons.magic_wand,
-                lable: 'Beauty Filters',
+                lable: Strings.beautyFilters.i18n,
                 onTap: () {
                   AppNavigator.pop();
 
@@ -110,7 +110,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.selection_background,
-                lable: 'Virtual Background',
+                lable: Strings.virtualBackground.i18n,
                 onTap: () {
                   AppNavigator.pop();
 
@@ -119,13 +119,13 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 icon: PhosphorIcons.chart_line,
-                lable: 'Speaker Stats',
+                lable: Strings.callStats.i18n,
                 onTap: () {},
               ),
               CallSettingButton(
                 hasDivider: false,
                 icon: PhosphorIcons.export,
-                lable: 'Share room',
+                lable: Strings.shareLink.i18n,
                 onTap: () async {
                   await ShareUtils().share(
                     link: meeting.inviteLink,

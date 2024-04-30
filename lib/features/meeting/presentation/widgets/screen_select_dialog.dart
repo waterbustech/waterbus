@@ -12,7 +12,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/thumbnail_widget.dart';
 
 class ScreenSelectDialog extends StatefulWidget {

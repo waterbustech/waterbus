@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 // Project imports:
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
@@ -38,6 +39,7 @@ class _AppState extends State<App> {
                 themeMode: stateThemes.props[0].theme,
                 initialRoute: Routes.rootRoute,
                 navigatorObservers: [
+                  AppNavigatorObserver(),
                   NavigatorObserver(),
                 ],
                 onGenerateRoute: (settings) {

@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
 import 'package:waterbus/features/meeting/domain/entities/participant.dart';

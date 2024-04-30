@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class MenuItemModel {

@@ -9,7 +9,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';

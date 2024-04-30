@@ -7,7 +7,7 @@ import 'package:i18n_extension/i18n_extension.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/lang/models/language_model.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';

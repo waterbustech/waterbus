@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';

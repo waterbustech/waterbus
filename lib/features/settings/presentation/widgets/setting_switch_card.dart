@@ -6,17 +6,19 @@ import 'package:sizer/sizer.dart';
 
 class SettingSwitchCard extends StatefulWidget {
   final String label;
-  final bool enabled;
   final Function(bool) onChanged;
-  final bool hasDivider;
   final String? value;
   final IconData? icon;
+  final bool enabled;
+  final bool hasDivider;
+  final bool readonly;
   const SettingSwitchCard({
     super.key,
     required this.label,
     required this.enabled,
     required this.onChanged,
     this.hasDivider = true,
+    this.readonly = false,
     this.value,
     this.icon,
   });
@@ -89,6 +91,8 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
                     },
                   ),
                   onChanged: (value) {
+                    if (widget.readonly) return;
+
                     setState(() {
                       _isEnabled = value;
                     });

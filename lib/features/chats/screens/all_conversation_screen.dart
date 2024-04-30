@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/chats/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';

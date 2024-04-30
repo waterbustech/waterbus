@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -38,7 +39,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Virtual Background',
+        title: Strings.virtualBackground.i18n,
         actions: [
           IconButton(
             onPressed: () {

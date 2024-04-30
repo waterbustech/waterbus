@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 
 class DateTitleCard extends StatelessWidget {
