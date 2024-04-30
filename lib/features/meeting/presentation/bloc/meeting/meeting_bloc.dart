@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -68,18 +71,29 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     this._saveCallSettings,
     this._pipChannel,
   ) : super(const MeetingInitial()) {
-    _getCallSettings.call(null).then(
-          (settings) => settings.fold((l) => null, (r) async {
-            _callSetting = r;
-
-            _waterbusSdk.changeCallSetting(r);
-            _waterbusSdk.onEventChangedRegister(_onEventChanged);
-          }),
-        );
-
     on<MeetingEvent>(
       transformer: sequential(),
       (event, emit) async {
+        if (event is InitializeMeetingEvent) {
+          final Directory? appDir = await PathHelper.appDir;
+
+          WaterbusSdk.instance.initial(
+            accessToken: event.accessToken,
+            waterbusUrl: ApiEndpoints.wsUrl,
+            recordBenchmarkPath:
+                appDir == null ? '' : '${appDir.path}/benchmark.txt',
+          );
+
+          _getCallSettings.call(null).then(
+                (settings) => settings.fold((l) => null, (r) async {
+                  _callSetting = r;
+
+                  _waterbusSdk.changeCallSetting(r);
+                  _waterbusSdk.onEventChangedRegister(_onEventChanged);
+                }),
+              );
+        }
+
         if (event is CreateMeetingEvent) {
           await _handleCreateMeeting(event);
         }

@@ -121,7 +121,7 @@ class LogInScreen extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                color: Colors.black,
+                color: Theme.of(context).cardColor,
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Assets.images.worldMap.image(),
               ),

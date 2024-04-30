@@ -7,6 +7,11 @@ sealed class MeetingEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitializeMeetingEvent extends MeetingEvent {
+  final String accessToken;
+  const InitializeMeetingEvent({required this.accessToken});
+}
+
 class PrepareMediaStreamEvent extends MeetingEvent {}
 
 class CreateMeetingEvent extends MeetingEvent {
