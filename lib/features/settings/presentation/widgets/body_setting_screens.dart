@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -53,81 +54,92 @@ class BodySettingScreens extends StatelessWidget {
                             AppNavigator().push(Routes.profileRoute);
                           }
                         },
-                        child: ColoredBox(
-                          color: Colors.transparent,
-                          child: Row(
-                            children: [
-                              Align(
-                                child: GestureWrapper(
-                                  onTap: () {
-                                    WaterbusImagePicker().openImagePicker(
-                                      context: context,
-                                      handleFinish: (image) {
-                                        displayLoadingLayer();
+                        child: Material(
+                          clipBehavior: Clip.hardEdge,
+                          shape: SuperellipseShape(
+                            borderRadius: BorderRadius.circular(25.sp),
+                          ),
+                          color: Theme.of(context).cardColor,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.sp,
+                              vertical: 10.sp,
+                            ),
+                            child: Row(
+                              children: [
+                                Align(
+                                  child: GestureWrapper(
+                                    onTap: () {
+                                      WaterbusImagePicker().openImagePicker(
+                                        context: context,
+                                        handleFinish: (image) {
+                                          displayLoadingLayer();
 
-                                        AppBloc.userBloc.add(
-                                          UpdateAvatarEvent(image: image),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: user?.avatar == null
-                                      ? CircleAvatar(
-                                          radius: 30.sp,
-                                          backgroundColor: Colors.black,
-                                          backgroundImage: AssetImage(
-                                            Assets.images.imgAppLogo.path,
+                                          AppBloc.userBloc.add(
+                                            UpdateAvatarEvent(image: image),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: user?.avatar == null
+                                        ? CircleAvatar(
+                                            radius: 30.sp,
+                                            backgroundColor: Colors.black,
+                                            backgroundImage: AssetImage(
+                                              Assets.images.imgAppLogo.path,
+                                            ),
+                                          )
+                                        : AvatarCard(
+                                            urlToImage: user?.avatar,
+                                            size: 50.sp,
                                           ),
-                                        )
-                                      : AvatarCard(
-                                          urlToImage: user?.avatar,
-                                          size: 50.sp,
-                                        ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 8.sp),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 6.sp),
-                                      child: Text(
-                                        user?.fullName ?? "",
+                                SizedBox(width: 8.sp),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 6.sp),
+                                        child: Text(
+                                          user?.fullName ?? "",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .color,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "@${user?.userName ?? ""}",
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 11.sp,
+                                          fontWeight: FontWeight.w700,
                                           color: Theme.of(context)
                                               .textTheme
-                                              .bodyMedium!
+                                              .titleSmall!
                                               .color,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      "@${user?.userName ?? ""}",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .color,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 6.sp),
-                                child: Icon(
-                                  PhosphorIcons.caret_right,
-                                  color: colorGray3,
-                                  size: SizerUtil.isDesktop ? 14.sp : null,
+                                Padding(
+                                  padding: EdgeInsets.only(right: 6.sp),
+                                  child: Icon(
+                                    PhosphorIcons.caret_right,
+                                    color: colorGray3,
+                                    size: SizerUtil.isDesktop ? 14.sp : null,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       )
@@ -189,19 +201,17 @@ class BodySettingScreens extends StatelessWidget {
               },
             ),
             SizedBox(height: 20.sp),
-            SettingRowButton(
-              onTap: () {
-                if (SizerUtil.isDesktop) {
-                  onTap?.call(profileTab);
-                } else {
+            if (!SizerUtil.isDesktop) ...[
+              SettingRowButton(
+                onTap: () {
                   AppNavigator().push(Routes.profileRoute);
-                }
-              },
-              title: Strings.myProfile.i18n,
-              icon: PhosphorIcons.user_circle_fill,
-              iconBackground: colorRedCustom,
-            ),
-            SizedBox(height: 18.sp),
+                },
+                title: Strings.myProfile.i18n,
+                icon: PhosphorIcons.user_circle_fill,
+                iconBackground: colorRedCustom,
+              ),
+              SizedBox(height: 18.sp),
+            ],
             SettingRowButton(
               onTap: () {},
               title: Strings.notifications.i18n,

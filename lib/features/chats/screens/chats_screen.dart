@@ -16,7 +16,7 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/chats/screens/all_conversation_screen.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
-import 'package:waterbus/features/home/widgets/tap_options_desktop_widget.dart';
+import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
@@ -103,9 +103,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ),
         if (SizerUtil.isDesktop)
-          VerticalDivider(
-            width: 1.sp,
-            thickness: 1.sp,
+          const VerticalDivider(
+            width: .5,
+            thickness: .5,
           ),
         Expanded(
           child: _currentChat != null

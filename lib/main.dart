@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 
 // Project imports:
@@ -19,6 +20,7 @@ import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 
 void main(List<String> args) async {
+  usePathUrlStrategy();
   await runZonedGuarded(
     () async {
       final WidgetsBinding widgetsBinding =
