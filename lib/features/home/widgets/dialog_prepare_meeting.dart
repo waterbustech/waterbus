@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';

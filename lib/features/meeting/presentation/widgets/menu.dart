@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:re_editor/re_editor.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 
 class ContextMenuItemWidget extends PopupMenuItem<void>
     implements PreferredSizeWidget {

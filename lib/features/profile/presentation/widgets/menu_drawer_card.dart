@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {

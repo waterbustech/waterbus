@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 
 Map<String, String> vietnamese = {
   Strings.language: "Ngôn ngữ",
@@ -59,13 +59,14 @@ Map<String, String> vietnamese = {
   Strings.audioAndVideoCalls: "Cuộc gọi thoại và video",
   Strings.textMessages: "Tin nhắn văn bản",
   Strings.chooseWhatToShare: "Chọn để chia sẻ",
-  Strings.enterCodeToJoinMeeting: "Nhập code để vào phòng",
+  Strings.enterCodeToJoinMeeting: "Nhập mã để vào phòng",
   Strings.roomCode: "Mã phòng: ",
   Strings.noParticipantsYet: "Chưa có người tham gia",
   Strings.yourPersonalMeetingsAre: "Các cuộc họp cá nhân của bạn đều ",
   Strings.endToEndEncrypted: "được mã hóa đầu cuối",
-  Strings.join: "Vào",
-  Strings.joinAMeeting: "Vào phòng",
+  Strings.join: "Tham gia",
+  Strings.joinAMeeting: "Tham gia phòng",
+  Strings.participationInstructions: "Nhập mã cuộc họp để tham gia cuộc họp và bạn cần cung cấp mật khẩu phòng nếu bạn không phải là thành viên của phòng họp.",
   Strings.search: "Tìm kiếm",
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
@@ -81,6 +82,9 @@ Map<String, String> vietnamese = {
   Strings.dataSaver: "Tiết kiệm",
   Strings.balance: "Cân bằng",
   Strings.highQuality: "Chất lượng cao",
+  Strings.beautyFilters: "Bộ lọc làm đẹp",
+  Strings.virtualBackground: "Nền ảo",
+  Strings.callStats: "Thống kê cuộc gọi",
 
   // Profile screen
   Strings.profile: "Hồ sơ",

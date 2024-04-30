@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 
 Map<String, String> english = {
@@ -68,6 +68,8 @@ Map<String, String> english = {
   Strings.endToEndEncrypted: "end-to-end encrypted",
   Strings.join: "Join",
   Strings.joinAMeeting: "Join a meeting",
+  Strings.participationInstructions:
+      "Enter the meeting code to join the meeting and you need to provide the room password if you are not a member of the meeting room.",
   Strings.search: "Search",
   Strings.createRoom: "Create Room",
   Strings.chat: "Chats",
@@ -100,6 +102,9 @@ Map<String, String> english = {
   Strings.usernameNote3: "and underscores. Minimum length is",
   Strings.usernameNote4: "characters.",
   Strings.done: "Done",
+  Strings.beautyFilters: "Beauty filters",
+  Strings.virtualBackground: "Virtual background",
+  Strings.callStats: "Call stats",
 
   // Settings screen
   Strings.myProfile: "My Profile",

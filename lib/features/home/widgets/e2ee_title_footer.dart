@@ -7,7 +7,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 

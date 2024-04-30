@@ -7,9 +7,11 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/lang/data/data_languages.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_navigator_observer.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -22,7 +24,10 @@ import 'package:waterbus/features/settings/presentation/widgets/video_quality_bo
 
 class CallSettingsScreen extends StatefulWidget {
   final bool isSettingDesktop;
-  const CallSettingsScreen({super.key, this.isSettingDesktop = false});
+  const CallSettingsScreen({
+    super.key,
+    this.isSettingDesktop = false,
+  });
 
   @override
   State<StatefulWidget> createState() => _SettingScreenState();
@@ -198,36 +203,14 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   SettingSwitchCard(
                     label: Strings.endToEndEncryption.i18n,
                     enabled: _settings.e2eeEnabled,
+                    readonly: AppNavigatorObserver.routeNames.contains(
+                      Routes.meetingRoute,
+                    ),
                     icon: PhosphorIcons.shield_check_fill,
                     onChanged: (isEnabled) {
                       setState(() {
                         _settings = _settings.copyWith(
                           e2eeEnabled: isEnabled,
-                        );
-                      });
-                    },
-                  ),
-                  _buildLabel(Strings.videoLayout.i18n),
-                  SizedBox(height: 4.sp),
-                  SettingCheckboxCard(
-                    label: Strings.gridView.i18n,
-                    enabled: _settings.videoLayout == VideoLayout.gridView,
-                    onTap: () {
-                      setState(() {
-                        _settings = _settings.copyWith(
-                          videoLayout: VideoLayout.gridView,
-                        );
-                      });
-                    },
-                  ),
-                  SettingCheckboxCard(
-                    label: Strings.listView.i18n,
-                    enabled: _settings.videoLayout == VideoLayout.listView,
-                    hasDivider: false,
-                    onTap: () {
-                      setState(() {
-                        _settings = _settings.copyWith(
-                          videoLayout: VideoLayout.listView,
                         );
                       });
                     },

@@ -74,6 +74,7 @@ class Strings {
   static const String endToEndEncrypted = 'endToEndEncrypted';
   static const String join = 'join';
   static const String joinAMeeting = 'joinAMeeting';
+  static const String participationInstructions = 'participationInstructions';
   static const String search = 'search';
   static const String createRoom = 'createRoom';
   static const String chat = 'chats';
@@ -89,6 +90,9 @@ class Strings {
   static const String dataSaver = 'Data Saver';
   static const String balance = 'Balance';
   static const String highQuality = 'High Quality';
+  static const String beautyFilters = 'beautyFilters';
+  static const String virtualBackground = 'virtualBackground';
+  static const String callStats = 'callStats';
 
   // Profile screen
   static const String profile = 'profile';

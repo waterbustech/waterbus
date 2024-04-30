@@ -19,12 +19,14 @@ class AppTheme {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       useMaterial3: true,
-      pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-        },
-      ),
+      pageTransitionsTheme: kIsWeb
+          ? null
+          : const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+              },
+            ),
       brightness: Brightness.light,
       primaryColor: appColors.primary,
       primaryColorLight: appColors.primaryLight,
