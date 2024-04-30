@@ -34,8 +34,11 @@ class SizeNotSupportedWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.sp),
-              child: Text(Strings.sizeNotSupported.i18n),
+              padding: EdgeInsets.all(20.sp),
+              child: Text(
+                Strings.sizeNotSupported.i18n,
+                textAlign: TextAlign.center,
+              ),
             ),
             GestureWrapper(
               onTap: () async {
