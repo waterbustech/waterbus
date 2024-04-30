@@ -66,7 +66,8 @@ Map<String, String> vietnamese = {
   Strings.endToEndEncrypted: "được mã hóa đầu cuối",
   Strings.join: "Tham gia",
   Strings.joinAMeeting: "Tham gia phòng",
-  Strings.participationInstructions: "Nhập mã cuộc họp để tham gia cuộc họp và bạn cần cung cấp mật khẩu phòng nếu bạn không phải là thành viên của phòng họp.",
+  Strings.participationInstructions:
+      "Nhập mã cuộc họp để tham gia cuộc họp và bạn cần cung cấp mật khẩu phòng nếu bạn không phải là thành viên của phòng họp.",
   Strings.search: "Tìm kiếm",
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
