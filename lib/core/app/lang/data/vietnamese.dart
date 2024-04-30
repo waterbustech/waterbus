@@ -112,4 +112,6 @@ Map<String, String> vietnamese = {
   Strings.serverConfiguration: "Cấu hình máy chủ",
   Strings.clearCache: "Xoá bộ nhớ tạm",
   Strings.version: "phiên bản",
+  Strings.sizeNotSupported:
+      "Hiện tại chúng tôi chỉ hỗ trợ trình duyệt có kích thước nhỏ nhất là 800x600.",
 };

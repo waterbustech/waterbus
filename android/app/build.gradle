@@ -54,7 +54,7 @@ android {
         applicationId "com.waterbus.wanted"
 
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 

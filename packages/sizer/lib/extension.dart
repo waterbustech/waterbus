@@ -17,7 +17,7 @@ extension SizerExt on num {
   double get width {
     // DEVICE INCH
     final double deviceSize = math.sqrt(100.h * 100.h + 100.w * 100.w) / 160;
-    if (SizerUtil.isDesktop) {
+    if (SizerUtil.isDesktop || kIsWeb) {
       // Square device
       if ((100.h - 100.w).abs() < 100) {
         return 300 * math.max(1.h / 1.w, 1.w / 1.h);
