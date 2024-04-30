@@ -60,6 +60,9 @@ class SizerUtil {
 
   static bool get isDesktop => deviceType != DeviceType.mobile;
 
+  static bool get isMinimunSizeSupport =>
+      kIsWeb && (width < 800 || height < 600);
+
   static bool get isLandscape => orientation == Orientation.landscape;
 
   static ScrollViewKeyboardDismissBehavior get getKeyboardDismissBehavior =>

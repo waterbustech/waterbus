@@ -118,6 +118,7 @@ class Strings {
   static const String serverConfiguration = 'serverConfiguration';
   static const String clearCache = 'clearCache';
   static const String version = 'version';
+  static const String sizeNotSupported = 'sizeNotSupported';
 }
 
 class MyI18n {

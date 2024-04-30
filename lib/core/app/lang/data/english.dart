@@ -114,4 +114,6 @@ Map<String, String> english = {
   Strings.serverConfiguration: "Server Configuration",
   Strings.clearCache: "Clear cache",
   Strings.version: "version",
+  Strings.sizeNotSupported:
+      "Currently we only support browsers with a minimum size of 800x600.",
 };

@@ -38,25 +38,47 @@
     />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" href="icons/Icon-192.png" />
 
     <title>Waterbus</title>
     <link rel="manifest" href="manifest.json" />
-
+    <meta
+      property="og:description"
+      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
+    />
+    <meta
+      property="og:image"
+      content="https://docs.waterbus.tech/img/banner-dark.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Waterbus Open Source" />
+    <meta
+      name="twitter:description"
+      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
+    />
+    <meta
+      name="twitter:image"
+      content="https://docs.waterbus.tech/img/banner-dark.png"
+    />
     <script>
       // The value below is injected by flutter build, do not touch.
-      const serviceWorkerVersion = "4172928636";
+      const serviceWorkerVersion = "514520569";
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer=""></script>
     <style id="splash-screen-style">
       html {
         height: 100%;
+        min-width: 1000px; /* Suppose you want minimum width of 1000px */
+        width: auto !important; /* Firefox will set width as auto */
+        width: 1000px;
       }
 
       body {
         margin: 0;
-        min-height: 100%;
+        min-width: 1000px; /* Suppose you want minimum width of 1000px */
+        width: auto !important; /* Firefox will set width as auto */
+        width: 1000px;
         background-color: #ffffff;
         background-size: 100% 100%;
       }
@@ -124,7 +146,7 @@
       }
     </script>
     <meta
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
       name="viewport"
     />
   </head>
