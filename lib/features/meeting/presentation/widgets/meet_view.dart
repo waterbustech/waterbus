@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -87,6 +88,24 @@ class MeetView extends StatelessWidget {
                         size: avatarSize,
                       ),
                     ),
+              if (kIsWeb)
+                Positioned(
+                  right: 10.sp,
+                  bottom: 10.sp,
+                  child: IconButton(
+                    onPressed: () {
+                      if (videoRenderer?.textureId == null) return;
+
+                      WaterbusSdk.instance.setPiPEnabled(
+                        textureId: videoRenderer!.textureId.toString(),
+                      );
+                    },
+                    icon: Icon(
+                      PhosphorIcons.picture_in_picture,
+                      size: 18.sp,
+                    ),
+                  ),
+                ),
               Positioned(
                 left: 10.sp,
                 bottom: 10.sp,

@@ -1,3 +1,4 @@
+const prefixVideoId = "video_RTCVideoRenderer-";
 let segmentStream;
 
 function enableVirtualBackground(backgroundImage, textureId) {
@@ -6,9 +7,7 @@ function enableVirtualBackground(backgroundImage, textureId) {
     return;
   }
 
-  const videoElement = document.getElementById(
-    "video_RTCVideoRenderer-" + textureId
-  );
+  const videoElement = document.getElementById(prefixVideoId + textureId);
 
   if (videoElement) {
     const originalStream = videoElement.srcObject;
@@ -46,6 +45,24 @@ function enableVirtualBackground(backgroundImage, textureId) {
 function disableVirtualBackground() {
   segmentStream = null;
   window.setBackgroundImage(null);
+  stopPictureInPicture();
+}
+
+function startPictureInPicture(textureId, enabled) {
+  const videoId = prefixVideoId + textureId;
+  const videoElement = document.getElementById(videoId);
+
+  stopPictureInPicture();
+
+  if (videoElement && videoElement instanceof HTMLVideoElement && enabled) {
+    videoElement.requestPictureInPicture();
+  }
+}
+
+function stopPictureInPicture() {
+  if (document.pictureInPictureElement) {
+    document.exitPictureInPicture();
+  }
 }
 
 window.addEventListener("load", function () {
