@@ -26,55 +26,62 @@ class ProfileHeader extends StatelessWidget {
           builder: (context, state) {
             final User user = state is UserGetDone ? state.user : kUserDefault;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AvatarCard(
-                      urlToImage: user.avatar,
-                      size: 26.sp,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        AppBloc.themesBloc.add(
-                          OnChangeTheme(
-                            appTheme:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? ThemeList.dark
-                                    : ThemeList.light,
-                          ),
-                        );
-                      },
-                      icon: Theme.of(context).brightness == Brightness.dark
-                          ? Icon(
-                              PhosphorIcons.moon_stars_fill,
-                              color: Theme.of(context).primaryColor,
-                            )
-                          : Icon(
-                              PhosphorIcons.sun_fill,
-                              color: colorMedium,
+            return Container(
+              padding: EdgeInsets.only(
+                left: 20.sp,
+                top: SizerUtil.isDesktop ? 20.sp : 0,
+                bottom: 16.sp,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AvatarCard(
+                        urlToImage: user.avatar,
+                        size: SizerUtil.isDesktop ? 40.sp : 26.sp,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          AppBloc.themesBloc.add(
+                            OnChangeTheme(
+                              appTheme: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? ThemeList.dark
+                                  : ThemeList.light,
                             ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12.sp),
-                Text(
-                  user.fullName,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
+                          );
+                        },
+                        icon: Theme.of(context).brightness == Brightness.dark
+                            ? Icon(
+                                PhosphorIcons.moon_stars_fill,
+                                color: Theme.of(context).primaryColor,
+                              )
+                            : Icon(
+                                PhosphorIcons.sun_fill,
+                                color: colorMedium,
+                              ),
                       ),
-                ),
-                Text(
-                  '@${user.userName}',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 10.sp,
-                      ),
-                ),
-              ],
+                    ],
+                  ),
+                  SizedBox(height: 12.sp),
+                  Text(
+                    user.fullName,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  Text(
+                    '@${user.userName}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 10.sp,
+                        ),
+                  ),
+                ],
+              ),
             );
           },
         );

@@ -15,28 +15,27 @@ class ProfileDrawerLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 20.sp,
-        right: 8.sp,
-        top: SizerUtil.isDesktop ? 10.sp : 0,
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ProfileHeader(),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const ProfileHeader(),
+          if (!SizerUtil.isDesktop)
             Padding(
-              padding: EdgeInsets.only(top: 20.sp, bottom: 8.sp),
-              child: const Divider(
-                height: 1,
-                thickness: 1,
+              padding: EdgeInsets.only(bottom: 8.sp),
+              child: Divider(
+                height: 0.5,
+                thickness: 0.5,
+                indent: 20.sp,
+                endIndent: 8.sp,
               ),
             ),
-            ListMenuDrawer(onTapItem: onTapItem),
-            const Spacer(),
-          ],
-        ),
+          Padding(
+            padding: EdgeInsets.only(left: 20.sp),
+            child: ListMenuDrawer(onTapItem: onTapItem),
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }

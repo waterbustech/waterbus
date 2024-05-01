@@ -728,11 +728,9 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      path: "."
-      ref: "0.10.3+3"
-      resolved-ref: "3f0600b1a4ce48dc639d78fdede626e32b8c666e"
-      url: "https://github.com/waterbustech/flutter-webrtc.git"
-    source: git
+      path: "/Users/lambiengcode/Documents/webrtc/flutter-webrtc"
+      relative: false
+    source: path
     version: "0.10.3+3"
   frontend_server_client:
     dependency: transitive
@@ -1806,11 +1804,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.3.10"
-      resolved-ref: a59aae10284016c6d59ae6333053639dbb081086
+      ref: "1.3.11"
+      resolved-ref: "845e15c412ab7eab2e5fb56a4ec34f7c851244eb"
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.3.10"
+    version: "1.3.11"
   web:
     dependency: "direct overridden"
     description:

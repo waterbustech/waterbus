@@ -2317,7 +2317,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 auth
 sizer
-waterbus_sdk
 
 TODO: Add your license here.
 
@@ -6838,6 +6837,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --------------------------------------------------------------------------------
 dio_cache_interceptor
+waterbus_sdk
 
                                  Apache License
                            Version 2.0, January 2004

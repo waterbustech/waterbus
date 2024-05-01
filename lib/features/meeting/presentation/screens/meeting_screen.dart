@@ -35,9 +35,11 @@ class MeetingScreen extends StatelessWidget {
 
         if (WebRTC.platformIsAndroid) {
           return PipWidget(
-            pipBuilder: (context) {
-              return _buildPipView(context, meeting, callState);
-            },
+            pipBuilder: callState == null
+                ? null
+                : (context) {
+                    return _buildPipView(context, meeting, callState);
+                  },
             child: MeetingBody(
               meeting: meeting,
               callState: callState,
@@ -58,17 +60,13 @@ class MeetingScreen extends StatelessWidget {
   Widget _buildPipView(
     BuildContext context,
     Meeting meeting,
-    CallState? callState,
+    CallState callState,
   ) {
-    if ((callState?.participants.values.length ?? 0) < 2) {
-      return const SizedBox();
-    }
-
     return Row(
       children: [
         Expanded(
           child: MeetView(
-            participantSFU: callState!.participants.values.first,
+            participantSFU: callState.mParticipant!,
             participants: meeting.participants,
             avatarSize: 25.sp,
             radius: BorderRadius.horizontal(
@@ -76,16 +74,17 @@ class MeetingScreen extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: MeetView(
-            participantSFU: callState.participants.values.elementAt(1),
-            participants: meeting.participants,
-            avatarSize: 25.sp,
-            radius: BorderRadius.horizontal(
-              right: Radius.circular(10.sp),
+        if (callState.participants.values.isNotEmpty)
+          Expanded(
+            child: MeetView(
+              participantSFU: callState.participants.values.first,
+              participants: meeting.participants,
+              avatarSize: 25.sp,
+              radius: BorderRadius.horizontal(
+                right: Radius.circular(10.sp),
+              ),
             ),
           ),
-        ),
       ],
     );
   }

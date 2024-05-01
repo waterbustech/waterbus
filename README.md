@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> Waterbus is an open source video conferencing app built on latest WebRTC SDK. Currently, Waterbus is an early release that is subject to the following limitations: it may have limited support, changes may not be compatible with other pre-general availability versions, and availability may change without notice.
+
 <p align="center">
   <img src="https://github.com/waterbustech/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
 </p>
@@ -51,7 +54,7 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 | Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟡        |           🟢          | 
 | iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
 | MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
-| Web                |         🟢         |        🟢      |          🟡         |          🟢         |       🟡       |           🟢          |    
+| Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |    
 
 
 🟢 = Available
@@ -218,11 +221,11 @@ Support it by joining [stargazers](https://github.com/waterbustech/waterbus/star
 
 Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our next creations!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date&theme=dark)](https://star-history.com/#waterbustech/waterbus&Date#gh-dark-mode-only)
-[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date)](https://star-history.com/#waterbustech/waterbus&Date#gh-light-mode-only)
+<!-- [![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date&theme=dark)](https://star-history.com/#waterbustech/waterbus&Date#gh-dark-mode-only)
+[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date)](https://star-history.com/#waterbustech/waterbus&Date#gh-light-mode-only) -->
 
-[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/dark/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#waterbustech/waterbus&Date#gh-dark-mode-only)
-[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#gh-light-mode-only)
+<!-- [![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/dark/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#waterbustech/waterbus&Date#gh-dark-mode-only)
+[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#gh-light-mode-only) -->
 
 ## 🤝 Contributing
 
