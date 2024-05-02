@@ -7,7 +7,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -37,6 +36,7 @@ class ProfileHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AvatarCard(
@@ -54,15 +54,12 @@ class ProfileHeader extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: Theme.of(context).brightness == Brightness.dark
-                            ? Icon(
-                                PhosphorIcons.moon_stars_fill,
-                                color: Theme.of(context).primaryColor,
-                              )
-                            : Icon(
-                                PhosphorIcons.sun_fill,
-                                color: colorMedium,
-                              ),
+                        icon: Icon(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? PhosphorIcons.sun_fill
+                              : PhosphorIcons.moon_stars_fill,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),

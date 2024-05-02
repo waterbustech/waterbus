@@ -46,7 +46,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             child: Text(
               Strings.cancel.i18n,
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -65,7 +65,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
               child: Text(
                 Strings.done.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),

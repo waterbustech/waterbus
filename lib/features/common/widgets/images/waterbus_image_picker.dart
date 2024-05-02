@@ -10,6 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
@@ -91,7 +92,6 @@ class WaterbusImagePicker {
 
   Future<void> openImagePicker({
     required BuildContext context,
-    String text = 'Change your avatar',
     Function(Uint8List)? handleFinish,
   }) async {
     if (WebRTC.platformIsDesktop || WebRTC.platformIsWeb) {
@@ -122,7 +122,7 @@ class WaterbusImagePicker {
           children: [
             SizedBox(height: 24.sp),
             Text(
-              text,
+              Strings.changeYourAvatar.i18n,
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w600,
@@ -134,16 +134,16 @@ class WaterbusImagePicker {
             ),
             _buildImageModalButton(
               context,
-              icon: PhosphorIcons.file_image,
-              text: 'Choose photo from gallery',
+              icon: PhosphorIcons.folder_open,
+              text: Strings.chooseFromGallery.i18n,
               source: ImageSource.gallery,
               handleFinish: handleFinish,
             ),
             divider,
             _buildImageModalButton(
               context,
-              icon: PhosphorIcons.instagram_logo,
-              text: 'Take a photo',
+              icon: PhosphorIcons.camera,
+              text: Strings.takeAPhoto.i18n,
               source: ImageSource.camera,
               handleFinish: handleFinish,
             ),

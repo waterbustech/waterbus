@@ -37,8 +37,12 @@ class BodySettingScreens extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.sp)
-            .add(EdgeInsets.only(bottom: SizerUtil.isDesktop ? 20.sp : 75.sp)),
+        padding: EdgeInsets.symmetric(horizontal: 16.sp).add(
+          EdgeInsets.only(
+            top: SizerUtil.isDesktop ? 12.sp : 0,
+            bottom: SizerUtil.isDesktop ? 20.sp : 75.sp,
+          ),
+        ),
         child: Column(
           children: [
             BlocBuilder<UserBloc, UserState>(
@@ -59,7 +63,7 @@ class BodySettingScreens extends StatelessWidget {
                           shape: SuperellipseShape(
                             borderRadius: BorderRadius.circular(25.sp),
                           ),
-                          color: Theme.of(context).cardColor,
+                          color: Theme.of(context).colorScheme.onInverseSurface,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 12.sp,
@@ -67,33 +71,31 @@ class BodySettingScreens extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                Align(
-                                  child: GestureWrapper(
-                                    onTap: () {
-                                      WaterbusImagePicker().openImagePicker(
-                                        context: context,
-                                        handleFinish: (image) {
-                                          displayLoadingLayer();
+                                GestureWrapper(
+                                  onTap: () {
+                                    WaterbusImagePicker().openImagePicker(
+                                      context: context,
+                                      handleFinish: (image) {
+                                        displayLoadingLayer();
 
-                                          AppBloc.userBloc.add(
-                                            UpdateAvatarEvent(image: image),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: user?.avatar == null
-                                        ? CircleAvatar(
-                                            radius: 30.sp,
-                                            backgroundColor: Colors.black,
-                                            backgroundImage: AssetImage(
-                                              Assets.images.imgAppLogo.path,
-                                            ),
-                                          )
-                                        : AvatarCard(
-                                            urlToImage: user?.avatar,
-                                            size: 50.sp,
+                                        AppBloc.userBloc.add(
+                                          UpdateAvatarEvent(image: image),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: user?.avatar == null
+                                      ? CircleAvatar(
+                                          radius: 30.sp,
+                                          backgroundColor: Colors.black,
+                                          backgroundImage: AssetImage(
+                                            Assets.images.imgAppLogo.path,
                                           ),
-                                  ),
+                                        )
+                                      : AvatarCard(
+                                          urlToImage: user?.avatar,
+                                          size: 50.sp,
+                                        ),
                                 ),
                                 SizedBox(width: 8.sp),
                                 Expanded(

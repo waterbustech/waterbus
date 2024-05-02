@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/chats/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 
-class AllConversationScreen extends StatelessWidget {
+class ConversationList extends StatelessWidget {
   final ChatModel? currentChat;
   final Function(int) onTap;
-  const AllConversationScreen({
+  const ConversationList({
     super.key,
     required this.currentChat,
     required this.onTap,
@@ -48,10 +47,10 @@ class AllConversationScreen extends StatelessWidget {
                     horizontal: 16.sp,
                     vertical: 4.sp,
                   ),
-                  color:
-                      SizerUtil.isDesktop && currentChat == listFakeChat[index]
-                          ? colorPrimary.withOpacity(.2)
-                          : Colors.transparent,
+                  color: SizerUtil.isDesktop &&
+                          currentChat == listFakeChat[index]
+                      ? Theme.of(context).colorScheme.primary.withOpacity(.2)
+                      : Colors.transparent,
                   child: ChatCard(
                     chatModel: listFakeChat[index],
                   ),

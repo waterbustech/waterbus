@@ -13,7 +13,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/features/chats/screens/all_conversation_screen.dart';
+import 'package:waterbus/features/chats/screens/conversation_list.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
@@ -50,7 +50,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     return Row(
       children: [
         SizedBox(
-          width: SizerUtil.isDesktop ? 30.w : 100.w,
+          width: SizerUtil.isDesktop ? 300.sp : 100.w,
           child: Scaffold(
             appBar: appBarTitleBack(
               context,
@@ -79,7 +79,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                     },
                     icon: Icon(
                       PhosphorIcons.plus,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -87,14 +87,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
             body: SizerUtil.isDesktop
                 ? TabOptionsDesktopWidget(
-                    child: AllConversationScreen(
+                    child: ConversationList(
                       currentChat: _currentChat,
                       onTap: (index) {
                         _handleTapChatItem(listFakeChat[index]);
                       },
                     ),
                   )
-                : AllConversationScreen(
+                : ConversationList(
                     currentChat: _currentChat,
                     onTap: (index) {
                       _handleTapChatItem(listFakeChat[index]);

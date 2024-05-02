@@ -163,7 +163,7 @@ class ChatCard extends StatelessWidget {
                             shape: chatModel.countUnreadMessage > 9
                                 ? BoxShape.rectangle
                                 : BoxShape.circle,
-                            color: colorPrimary,
+                            color: Theme.of(context).colorScheme.primary,
                             borderRadius: chatModel.countUnreadMessage > 9
                                 ? BorderRadius.circular(15.sp)
                                 : null,
@@ -171,7 +171,7 @@ class ChatCard extends StatelessWidget {
                           child: Text(
                             chatModel.countUnreadMessage.toString(),
                             style: TextStyle(
-                              color: mCL,
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 9.sp,
                               fontWeight: FontWeight.w600,
                             ),

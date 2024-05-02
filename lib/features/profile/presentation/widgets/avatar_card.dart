@@ -30,14 +30,20 @@ class AvatarCard extends StatelessWidget {
               shape: isCircleShape
                   ? CircleBorder(
                       side: BorderSide(
-                        color: Theme.of(context).primaryColor.withOpacity(.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(.5),
                         width: .5,
                       ),
                     )
                   : SuperellipseShape(
                       borderRadius: BorderRadius.circular(size * 0.55),
                       side: BorderSide(
-                        color: Theme.of(context).primaryColor.withOpacity(.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(.5),
                         width: .5,
                       ),
                     ),

@@ -35,7 +35,7 @@ class CustomRowButton extends StatelessWidget {
             child: Row(
               children: [
                 Radio(
-                  activeColor: Theme.of(context).primaryColor,
+                  activeColor: Theme.of(context).colorScheme.primary,
                   groupValue: groupValue,
                   value: value,
                   onChanged: (value) => onTap.call(),

@@ -42,12 +42,12 @@ class _SelectProgramingLanguagesDialogState
                 style: TextStyle(
                   color: widget.languague.keys.first ==
                           programmingLanguages[index].keys.first
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).colorScheme.primary
                       : null,
                   fontSize: 14.sp,
                   decorationColor: widget.languague.keys.first ==
                           programmingLanguages[index].keys.first
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).colorScheme.primary
                       : null,
                   decoration: widget.languague.keys.first ==
                           programmingLanguages[index].keys.first

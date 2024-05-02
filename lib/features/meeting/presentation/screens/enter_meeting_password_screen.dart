@@ -71,7 +71,7 @@ class _EnterMeetingPasswordScreenState
               child: Text(
                 Strings.join.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -135,7 +135,7 @@ class _EnterMeetingPasswordScreenState
                                 widget.meeting.participantsOnlineTile!,
                                 style: TextStyle(
                                   fontSize: 11.sp,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             )

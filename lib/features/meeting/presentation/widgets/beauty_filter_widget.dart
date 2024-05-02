@@ -68,8 +68,9 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
                         ),
                         TextSpan(
                           text: '\t\tFilters',
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -152,7 +153,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
         ),
         Slider(
           value: value,
-          activeColor: Theme.of(context).primaryColor,
+          activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (val) {
             onChanged(val);
             _update();

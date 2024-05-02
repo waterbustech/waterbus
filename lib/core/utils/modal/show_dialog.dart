@@ -58,7 +58,6 @@ Future showDialogWaterbus({
     routeSettings: RouteSettings(name: routeName),
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
-    barrierColor: Colors.blueGrey.shade800.withOpacity(.35),
     transitionDuration: Duration(milliseconds: duration),
     context: AppNavigator.context!,
     pageBuilder: (context, __, ___) {

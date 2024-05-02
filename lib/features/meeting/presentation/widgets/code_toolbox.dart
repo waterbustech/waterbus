@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/colors/app_color.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/programing_languages.dart';
@@ -67,13 +68,14 @@ class _CodeToolboxState extends State<CodeToolbox> {
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontFamily.jetbrainsMono,
+                  color: mC,
                 ),
                 children: [
                   TextSpan(text: '$title: '),
                   TextSpan(
                     text: value,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],

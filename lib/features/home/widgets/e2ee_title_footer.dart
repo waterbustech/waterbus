@@ -29,7 +29,7 @@ class E2eeTitleFooter extends StatelessWidget {
                 padding: EdgeInsets.only(right: 4.sp),
                 child: Icon(
                   PhosphorIcons.lock_fill,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   size: 10.sp,
                 ),
               ),
@@ -45,7 +45,7 @@ class E2eeTitleFooter extends StatelessWidget {
                 },
               text: Strings.endToEndEncrypted.i18n,
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ],

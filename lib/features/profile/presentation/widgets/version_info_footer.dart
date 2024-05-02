@@ -37,7 +37,7 @@ class VersionInfoFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 9.25.sp,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),

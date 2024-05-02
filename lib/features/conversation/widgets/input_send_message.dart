@@ -17,12 +17,15 @@ class InputSendMessage extends StatelessWidget {
     return Container(
       height: SizerUtil.isDesktop ? 48.sp : null,
       width: 100.w,
-      padding: WebRTC.platformIsMobile
-          ? EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp)
-          : EdgeInsets.zero,
+      padding: SizerUtil.isDesktop
+          ? EdgeInsets.zero
+          : EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(width: 0.3.sp, color: colorGreyWhite),
+          top: BorderSide(
+            width: 0.4,
+            color: Theme.of(context).dividerColor,
+          ),
         ),
       ),
       child: Container(
@@ -30,7 +33,7 @@ class InputSendMessage extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: WebRTC.platformIsMobile
-              ? Theme.of(context).cardColor
+              ? Theme.of(context).colorScheme.surfaceVariant
               : Colors.transparent,
           borderRadius: WebRTC.platformIsMobile
               ? BorderRadius.circular(30.sp)
@@ -56,7 +59,7 @@ class InputSendMessage extends StatelessWidget {
                   ),
                   filled: true,
                   fillColor: WebRTC.platformIsMobile
-                      ? Theme.of(context).cardColor
+                      ? Theme.of(context).colorScheme.surfaceVariant
                       : Colors.transparent,
                   border: OutlineInputBorder(
                     borderRadius: WebRTC.platformIsMobile
@@ -72,7 +75,7 @@ class InputSendMessage extends StatelessWidget {
             Container(
               decoration: WebRTC.platformIsMobile
                   ? BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       shape: BoxShape.circle,
                     )
                   : null,
@@ -81,7 +84,7 @@ class InputSendMessage extends StatelessWidget {
                 PhosphorIcons.paper_plane_right_fill,
                 color: WebRTC.platformIsMobile
                     ? mCL
-                    : Theme.of(context).primaryColor,
+                    : Theme.of(context).colorScheme.primary,
                 size: SizerUtil.isDesktop ? 22.sp : 18.sp,
               ),
             ),

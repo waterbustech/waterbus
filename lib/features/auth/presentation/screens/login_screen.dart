@@ -44,7 +44,7 @@ class LogInScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                       ),
                     ),
@@ -94,20 +94,24 @@ class LogInScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w300,
                                   height: 1.5.sp,
                                 ),
-                        children: const [
-                          TextSpan(
+                        children: [
+                          const TextSpan(
                             text: 'By signing up, you agree to our ',
                           ),
                           TextSpan(
                             text: 'Terms, Privacy Policy',
-                            style: TextStyle(color: colorPrimary),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: ' and ',
                           ),
                           TextSpan(
                             text: 'Cookie Use.',
-                            style: TextStyle(color: colorPrimary),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ],
                       ),
@@ -121,9 +125,11 @@ class LogInScreen extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).colorScheme.surfaceVariant,
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
-                child: Assets.images.worldMap.image(),
+                child: Assets.images.worldMap.image(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ],
