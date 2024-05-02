@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/colors/app_color.dart';
 
 // Project imports:
+import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/programing_languages.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
