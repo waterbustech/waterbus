@@ -7,9 +7,9 @@ import 'package:waterbus/features/auth/data/models/user_model.dart';
 class User {
   final int id;
   final String fullName;
-  final String userName;
+  String userName;
   final String? avatar;
-  const User({
+  User({
     required this.id,
     required this.fullName,
     required this.userName,

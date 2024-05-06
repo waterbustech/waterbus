@@ -20,4 +20,14 @@ class UpdateAvatarEvent extends UserEvent {
   const UpdateAvatarEvent({required this.image});
 }
 
+class CheckUsernameEvent extends UserEvent {
+  final String username;
+  const CheckUsernameEvent({required this.username});
+}
+
+class UpdateUsernameEvent extends UserEvent {
+  final String username;
+  const UpdateUsernameEvent({required this.username});
+}
+
 class CleanProfileEvent extends UserEvent {}

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:sizer/sizer.dart';
@@ -12,22 +13,31 @@ class ProfileTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final EdgeInsetsGeometry? margin;
+  final Function()? onEditingComplete;
+  final void Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const ProfileTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.margin,
+    this.onEditingComplete,
+    this.onChanged,
+    this.inputFormatters,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFieldInput(
+      onEditingComplete: onEditingComplete,
       margin: margin,
       contentPadding: EdgeInsets.symmetric(
         vertical: SizerUtil.isDesktop ? 12.sp : 10.sp,
         horizontal: 12.sp,
       ),
+      inputFormatters: inputFormatters,
+      onChanged: onChanged,
       validatorForm: (val) => null,
       hintText: hintText,
       hintStyle: TextStyle(

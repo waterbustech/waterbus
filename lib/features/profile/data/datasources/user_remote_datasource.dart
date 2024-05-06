@@ -18,6 +18,8 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 abstract class UserRemoteDataSource {
   Future<User?> getUserProfile();
   Future<bool> updateUserProfile(User user);
+  Future<bool> updateUsername(String username);
+  Future<bool?> checkUsername(String username);
   Future<String?> getPresignedUrl();
   Future<String?> uploadImageToS3({
     required String uploadUrl,
@@ -92,5 +94,32 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     }
 
     return false;
+  }
+
+  @override
+  Future<bool> updateUsername(String username) async {
+    final Response response = await _remoteData.putRoute(
+      "${ApiEndpoints.username}/$username",
+      {},
+    );
+
+    if (response.statusCode == StatusCode.ok) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  Future<bool?> checkUsername(String username) async {
+    final Response response = await _remoteData.getRoute(
+      "${ApiEndpoints.username}/$username",
+    );
+
+    if (response.statusCode == StatusCode.ok) {
+      return response.data['isRegistered'] ?? false;
+    }
+
+    return null;
   }
 }

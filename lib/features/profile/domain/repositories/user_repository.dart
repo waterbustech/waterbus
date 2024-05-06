@@ -11,6 +11,8 @@ import 'package:waterbus/features/auth/domain/entities/user.dart';
 abstract class UserRepository {
   Future<Either<Failure, User>> getUserProfile();
   Future<Either<Failure, User>> updateUserProfile(User user);
+  Future<Either<Failure, bool>> updateUsername(String username);
+  Future<Either<Failure, bool>> checkUsername(String username);
   Future<Either<Failure, String>> getPresignedUrl();
   Future<Either<Failure, String>> uploadImageToS3({
     required String uploadUrl,

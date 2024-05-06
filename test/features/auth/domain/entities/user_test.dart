@@ -17,12 +17,12 @@ void main() {
       () {},
     );
     test('operator ==', () {
-      const User userModel1 = User(
+      final User userModel1 = User(
         id: 1,
         userName: "lambiengcode",
         fullName: "Kai Dao",
       );
-      const User userModel2 = User(
+      final User userModel2 = User(
         id: 2,
         userName: "lambiengcode",
         fullName: "Kai Dao",

@@ -35,8 +35,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late User? _user;
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
 
   @override
@@ -45,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _user = AppBloc.userBloc.user;
 
     if (_user != null) {
-      _firstNameController.text = _user!.fullName;
+      _fullNameController.text = _user!.fullName;
     }
   }
 
@@ -82,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               displayLoadingLayer();
 
               AppBloc.userBloc.add(
-                UpdateProfileEvent(fullName: _firstNameController.text),
+                UpdateProfileEvent(fullName: _fullNameController.text),
               );
             },
             child: Container(
@@ -119,8 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 24.sp),
                           BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) {
-                              final User? user =
-                                  state is UserGetDone ? state.user : null;
+                              _user = state is UserGetDone ? state.user : null;
 
                               return Align(
                                 child: GestureWrapper(
@@ -136,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       },
                                     );
                                   },
-                                  child: user?.avatar == null
+                                  child: _user?.avatar == null
                                       ? CircleAvatar(
                                           radius: 35.sp,
                                           backgroundColor: Colors.black,
@@ -145,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         )
                                       : AvatarCard(
-                                          urlToImage: user?.avatar,
+                                          urlToImage: _user?.avatar,
                                           size: 70.sp,
                                         ),
                                 ),
@@ -161,8 +159,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Column(
                               children: [
                                 ProfileTextField(
-                                  controller: _firstNameController,
-                                  hintText: Strings.firstname.i18n,
+                                  controller: _fullNameController,
+                                  hintText: Strings.fullname.i18n,
                                   margin: EdgeInsets.zero,
                                 ),
                                 Padding(
@@ -170,10 +168,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       EdgeInsets.symmetric(horizontal: 10.sp),
                                   child: divider,
                                 ),
-                                ProfileTextField(
-                                  controller: _lastNameController,
-                                  hintText: Strings.lastname.i18n,
-                                  margin: EdgeInsets.zero,
+                                GestureWrapper(
+                                  onTap: () {
+                                    AppNavigator().push(Routes.usernameRoute);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.sp,
+                                      vertical:
+                                          SizerUtil.isDesktop ? 8.sp : 10.sp,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7.sp),
+                                      color: Theme.of(context).cardColor,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            Strings.username.i18n,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .color,
+                                            ),
+                                          ),
+                                        ),
+                                        BlocBuilder<UserBloc, UserState>(
+                                          builder: (context, state) {
+                                            _user = state is UserGetDone
+                                                ? state.user
+                                                : null;
+
+                                            return _user?.userName == null
+                                                ? const SizedBox()
+                                                : Container(
+                                                    width: SizerUtil.isDesktop
+                                                        ? null
+                                                        : 45.w,
+                                                    padding: EdgeInsets.only(
+                                                      right: SizerUtil.isDesktop
+                                                          ? 4.sp
+                                                          : 2.sp,
+                                                    ),
+                                                    child: Text(
+                                                      "@${_user?.userName ?? ""}",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                        fontSize: 12.sp,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .color,
+                                                      ),
+                                                    ),
+                                                  );
+                                          },
+                                        ),
+                                        Icon(
+                                          PhosphorIcons.caret_right,
+                                          color: colorGray3,
+                                          size: 18.sp,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -189,76 +253,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           _TextFieldNote(
                             note: Strings.youCanAddFewLinesAboutYourself.i18n,
-                          ),
-                          GestureWrapper(
-                            onTap: () {
-                              AppNavigator().push(Routes.usernameRoute);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 16.sp),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10.sp,
-                                vertical: SizerUtil.isDesktop ? 8.sp : 10.sp,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.sp),
-                                color: Theme.of(context).cardColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      Strings.username.i18n,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .color,
-                                      ),
-                                    ),
-                                  ),
-                                  BlocBuilder<UserBloc, UserState>(
-                                    builder: (context, state) {
-                                      final User? user = state is UserGetDone
-                                          ? state.user
-                                          : null;
-
-                                      return user?.userName == null
-                                          ? const SizedBox()
-                                          : Container(
-                                              width: SizerUtil.isDesktop
-                                                  ? null
-                                                  : 45.w,
-                                              padding: EdgeInsets.only(
-                                                right: SizerUtil.isDesktop
-                                                    ? 4.sp
-                                                    : 2.sp,
-                                              ),
-                                              child: Text(
-                                                "@${user?.userName ?? ""}",
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  fontSize: 12.sp,
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .color,
-                                                ),
-                                              ),
-                                            );
-                                    },
-                                  ),
-                                  Icon(
-                                    PhosphorIcons.caret_right,
-                                    color: colorGray3,
-                                    size: 18.sp,
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                           GestureWrapper(
                             onTap: () {

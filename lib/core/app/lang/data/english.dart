@@ -88,8 +88,7 @@ Map<String, String> english = {
 
   // Profile screen
   Strings.profile: "Profile",
-  Strings.firstname: "First name",
-  Strings.lastname: "Last name",
+  Strings.fullname: "Full name",
   Strings.username: "Username",
   Strings.bio: "Bio",
   Strings.enterYourNameAndAddAnOptionalProfilePhoto:
@@ -105,6 +104,9 @@ Map<String, String> english = {
   Strings.beautyFilters: "Beauty filters",
   Strings.virtualBackground: "Virtual background",
   Strings.callStats: "Call stats",
+  Strings.canUseUsername: "You can use this username",
+  Strings.usernameUsed: "This username is already in use",
+  Strings.checking: "Checking",
 
   // Settings screen
   Strings.myProfile: "My Profile",

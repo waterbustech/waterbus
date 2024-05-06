@@ -13,19 +13,19 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   group('Participant', () {
     final String participantJson = fixture(participantSample);
-    const User userModel = User(
+    final User userModel = User(
       id: 1,
       userName: 'lambiengcode',
       fullName: 'Kai',
     );
-    const User hostModel = User(
+    final User hostModel = User(
       id: 2,
       userName: 'lambiencode1',
       fullName: 'KaiDao',
     );
 
     test('Should create a Participant instance', () {
-      const participant = Participant(
+      final participant = Participant(
         id: 1,
         user: userModel,
       );
@@ -36,19 +36,19 @@ void main() {
     });
 
     test('Should create a new Participant instance with updated values', () {
-      const User userModel = User(
+      final User userModel = User(
         id: 1,
         userName: 'lambiengcode',
         fullName: 'Kai',
       );
 
-      const User updatedUserModel = User(
+      final User updatedUserModel = User(
         id: 2,
         userName: 'updatedUserName',
         fullName: 'UpdatedName',
       );
 
-      const participant = Participant(
+      final participant = Participant(
         id: 1,
         user: userModel,
       );
@@ -66,7 +66,7 @@ void main() {
     });
 
     test('Should convert Participant to Map', () {
-      const participant = Participant(
+      final participant = Participant(
         id: 1,
         user: userModel,
       );
@@ -87,7 +87,7 @@ void main() {
     });
 
     test('Should convert Participant to JSON', () {
-      const participant = Participant(
+      final participant = Participant(
         id: 1,
         user: userModel,
       );
@@ -106,17 +106,17 @@ void main() {
     });
 
     test('Should check equality of Participant instances', () {
-      const participant1 = Participant(
+      final participant1 = Participant(
         id: 1,
         user: userModel,
       );
 
-      const participant2 = Participant(
+      final participant2 = Participant(
         id: 1,
         user: userModel,
       );
 
-      const participant3 = Participant(
+      final participant3 = Participant(
         id: 2,
         user: hostModel,
       );
@@ -130,7 +130,7 @@ void main() {
 
     test('toString - should return a string representation of the Participant',
         () {
-      const participant = Participant(
+      final participant = Participant(
         id: 1,
         user: userModel,
       );
@@ -143,12 +143,12 @@ void main() {
 
     test('should have correct props', () {
       // Arrange
-      const participant1 = Participant(
+      final participant1 = Participant(
         id: 1,
         user: userModel,
       );
 
-      const participant2 = Participant(
+      final participant2 = Participant(
         id: 2,
         user: userModel,
       );

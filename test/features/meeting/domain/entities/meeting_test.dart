@@ -35,27 +35,27 @@ void main() {
     );
 
     test('operator ==', () {
-      const User userModel = User(
+      final User userModel = User(
         id: 1,
         userName: 'lambiengcode',
         fullName: 'Kai',
       );
-      const participant1 = Participant(
+      final participant1 = Participant(
         id: 1,
         user: userModel,
       );
-      const participant2 = Participant(
+      final participant2 = Participant(
         id: 2,
         user: userModel,
       );
 
-      const Meeting meeting1 = Meeting(
+      final Meeting meeting1 = Meeting(
         title: 'Meeting with Kai 1',
         id: 1,
         participants: [participant1],
         code: 1,
       );
-      const Meeting meeting2 = Meeting(
+      final Meeting meeting2 = Meeting(
         title: 'Meeting with Kai 2',
         id: 2,
         participants: [participant2],
@@ -178,15 +178,15 @@ void main() {
   });
 
   group('MeetingX', () {
-    const user1 = User(id: 1, fullName: '1', userName: '1');
-    const user2 = User(id: 2, fullName: '1', userName: '1');
-    const user3 = User(id: 3, fullName: '1', userName: '1');
+    final user1 = User(id: 1, fullName: '1', userName: '1');
+    final user2 = User(id: 2, fullName: '1', userName: '1');
+    final user3 = User(id: 3, fullName: '1', userName: '1');
 
-    const participant1 = Participant(user: user1, id: 1);
-    const participant2 = Participant(user: user2, id: 2);
-    const participant3 = Participant(user: user3, id: 3);
+    final participant1 = Participant(user: user1, id: 1);
+    final participant2 = Participant(user: user2, id: 2);
+    final participant3 = Participant(user: user3, id: 3);
 
-    const meetingWithParticipants = Meeting(
+    final meetingWithParticipants = Meeting(
       title: "Meeting with Kai",
       participants: [participant1, participant2, participant3],
     );
@@ -225,7 +225,7 @@ void main() {
 
     test('participantsOnlineTile - should return the appropriate text', () {
       // Test with 1 participant
-      const meeting1Participant = Meeting(
+      final meeting1Participant = Meeting(
         title: '1',
         participants: [
           Participant(
@@ -244,7 +244,7 @@ void main() {
       );
 
       // Test with 2 participants
-      const meeting2Participants = Meeting(
+      final meeting2Participants = Meeting(
         title: '1',
         participants: [
           Participant(
@@ -271,7 +271,7 @@ void main() {
       );
 
       // Test with 3 or more participants
-      const meeting3Participants = Meeting(
+      final meeting3Participants = Meeting(
         title: '1',
         participants: [
           Participant(
@@ -315,7 +315,7 @@ void main() {
     });
 
     group('latestJoinedTime', () {
-      const testMeeting = Meeting(
+      final testMeeting = Meeting(
         title: '1',
         participants: [
           Participant(
@@ -354,13 +354,13 @@ void main() {
     });
 
     group('isHost', () {
-      const testUser = User(
+      final testUser = User(
         id: 1,
         fullName: 'Alice',
         userName: 'alice',
       );
 
-      const testMeeting = Meeting(
+      final testMeeting = Meeting(
         title: '1',
         members: [
           Member(
@@ -391,7 +391,7 @@ void main() {
 
   test('should have correct props', () {
     // Arrange
-    const meeting1 = Meeting(
+    final meeting1 = Meeting(
       title: '1',
       participants: [
         Participant(
@@ -404,7 +404,7 @@ void main() {
         ),
       ],
     );
-    const meeting2 = Meeting(
+    final meeting2 = Meeting(
       title: '2',
       participants: [
         Participant(

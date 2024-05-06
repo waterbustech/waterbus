@@ -10,6 +10,7 @@ class ApiEndpoints {
 
   // Users
   static const String users = 'users';
+  static const String username = 'users/username';
 
   // Meetings
   static const String meetings = 'meetings';

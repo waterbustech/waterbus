@@ -100,6 +100,58 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.User>>);
 
   @override
+  _i4.Future<_i2.Either<_i5.Failure, bool>> updateUsername(String? username) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateUsername,
+          [username],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
+            _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #updateUsername,
+            [username],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
+                _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #updateUsername,
+            [username],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, bool>> checkUsername(String? username) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkUsername,
+          [username],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
+            _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #checkUsername,
+            [username],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
+                _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #checkUsername,
+            [username],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+
+  @override
   _i4.Future<_i2.Either<_i5.Failure, String>> getPresignedUrl() =>
       (super.noSuchMethod(
         Invocation.method(

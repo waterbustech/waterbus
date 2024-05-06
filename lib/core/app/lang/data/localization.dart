@@ -96,8 +96,7 @@ class Strings {
 
   // Profile screen
   static const String profile = 'profile';
-  static const String firstname = 'firstname';
-  static const String lastname = 'lastname';
+  static const String fullname = 'fullname';
   static const String bio = 'bio';
   static const String username = 'username';
   static const String enterYourNameAndAddAnOptionalProfilePhoto =
@@ -109,6 +108,9 @@ class Strings {
   static const String usernameNote3 = 'usernameNote3';
   static const String usernameNote4 = 'usernameNote4';
   static const String done = 'done';
+  static const String canUseUsername = 'canUseUsername';
+  static const String usernameUsed = 'usernameUsed';
+  static const String checking = 'checking';
 
   // Settings screen
   static const String myProfile = 'myProfile';
