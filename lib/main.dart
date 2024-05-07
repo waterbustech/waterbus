@@ -12,13 +12,13 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();

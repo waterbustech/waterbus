@@ -1,5 +1,7 @@
-// Project imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 
 class MenuItemModel {
