@@ -18,6 +18,7 @@ import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();
@@ -48,10 +49,15 @@ void main(List<String> args) async {
           child: const App(),
         ),
       );
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+      if (WebRTC.platformIsMobile) {
+        FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      }
     },
     (error, stackTrace) {
       debugPrint(error.toString());
+
+      if (!WebRTC.platformIsMobile) return;
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
     },
   );

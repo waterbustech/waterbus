@@ -41,7 +41,7 @@ class ProfileHeader extends StatelessWidget {
                     children: [
                       AvatarCard(
                         urlToImage: user.avatar,
-                        size: SizerUtil.isDesktop ? 40.sp : 26.sp,
+                        size: SizerUtil.isDesktop ? 40.sp : 30.sp,
                       ),
                       IconButton(
                         onPressed: () {
@@ -67,14 +67,15 @@ class ProfileHeader extends StatelessWidget {
                   Text(
                     user.fullName,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 13.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                         ),
                   ),
                   Text(
                     '@${user.userName}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 10.sp,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 12.sp,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                   ),
                 ],

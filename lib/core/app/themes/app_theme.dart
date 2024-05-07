@@ -18,7 +18,7 @@ class AppTheme {
   factory AppTheme.light() {
     final appColors = AppColor.light();
     final themeData = ThemeData(
-      colorSchemeSeed: Colors.green,
+      colorSchemeSeed: const Color(0xff6750a4),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -77,7 +77,7 @@ class AppTheme {
   factory AppTheme.dark() {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
-      colorSchemeSeed: Colors.green,
+      colorSchemeSeed: const Color(0xff6750a4),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(

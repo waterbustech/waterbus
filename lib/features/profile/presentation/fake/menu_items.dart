@@ -1,40 +1,40 @@
 // Project imports:
+import 'package:flutter/material.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class MenuItemModel {
   final String title;
-  final String iconAssetPath;
+  final IconData icon;
 
   const MenuItemModel({
     required this.title,
-    required this.iconAssetPath,
+    required this.icon,
   });
 }
 
 final List<MenuItemModel> menuItems = [
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.profile,
-    iconAssetPath: Assets.icons.icProfile.path,
+    icon: Icons.person_3_outlined,
   ),
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.storage,
-    iconAssetPath: Assets.icons.icFolder.path,
+    icon: Icons.folder_open_outlined,
   ),
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.archivedChats,
-    iconAssetPath: Assets.icons.icArchive.path,
+    icon: Icons.bookmark_outline,
   ),
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.settings,
-    iconAssetPath: Assets.icons.icSettings.path,
+    icon: Icons.widgets_outlined,
   ),
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.licenses,
-    iconAssetPath: Assets.icons.icShield.path,
+    icon: Icons.local_police_outlined,
   ),
-  MenuItemModel(
+  const MenuItemModel(
     title: Strings.logout,
-    iconAssetPath: Assets.icons.icLogOut.path,
+    icon: Icons.logout_outlined,
   ),
 ];
