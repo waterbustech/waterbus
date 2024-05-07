@@ -145,6 +145,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         user: _user!.copyWith(
           fullName: event.fullName,
           avatar: event.avatar,
+          bio: event.bio ?? "",
         ),
       ),
     );

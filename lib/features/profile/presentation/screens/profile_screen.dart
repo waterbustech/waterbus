@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (_user != null) {
       _fullNameController.text = _user!.fullName;
+      _bioController.text = _user?.bio ?? "";
     }
   }
 
@@ -81,7 +82,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               displayLoadingLayer();
 
               AppBloc.userBloc.add(
-                UpdateProfileEvent(fullName: _fullNameController.text),
+                UpdateProfileEvent(
+                  fullName: _fullNameController.text,
+                  bio: _bioController.text,
+                ),
               );
             },
             child: Container(

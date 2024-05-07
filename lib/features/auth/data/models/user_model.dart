@@ -7,6 +7,7 @@ class UserModel {
   final int id;
   final String userName;
   final String fullName;
+  final String? bio;
   final String accessToken;
   final String refreshToken;
   final String? avatar;
@@ -17,6 +18,7 @@ class UserModel {
     required this.accessToken,
     required this.refreshToken,
     required this.avatar,
+    required this.bio,
   });
 
   UserModel copyWith({
@@ -26,6 +28,7 @@ class UserModel {
     String? accessToken,
     String? refreshToken,
     String? avatar,
+    String? bio,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class UserModel {
       accessToken: accessToken ?? this.accessToken,
       refreshToken: refreshToken ?? this.refreshToken,
       avatar: avatar ?? this.avatar,
+      bio: bio ?? this.bio,
     );
   }
 
@@ -45,6 +49,7 @@ class UserModel {
       'accessToken': accessToken,
       'refreshToken': refreshToken,
       'avatar': avatar,
+      'bio': bio,
     };
   }
 
@@ -52,6 +57,7 @@ class UserModel {
     return UserModel(
       id: map['id'] ?? 0,
       userName: map['userName'] ?? '',
+      bio: map['bio'] ?? '',
       fullName: map['fullName'] ?? '',
       accessToken: map['accessToken'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
@@ -67,6 +73,7 @@ class UserModel {
       accessToken: map['token'] ?? '',
       refreshToken: map['refreshToken'] ?? '',
       avatar: map['user']['avatar'],
+      bio: map['user']['bio'],
     );
   }
 
@@ -77,7 +84,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $userName, fullName: $fullName, accessToken: $accessToken, refreshToken: $refreshToken, avatar: $avatar)';
+    return 'UserModel(id: $id, username: $userName, bio: $bio, fullName: $fullName, accessToken: $accessToken, refreshToken: $refreshToken, avatar: $avatar)';
   }
 
   @override
@@ -87,6 +94,7 @@ class UserModel {
     return other.id == id &&
         other.userName == userName &&
         other.fullName == fullName &&
+        other.bio == bio &&
         other.accessToken == accessToken &&
         other.refreshToken == refreshToken &&
         other.avatar == avatar;
@@ -96,6 +104,7 @@ class UserModel {
   int get hashCode {
     return id.hashCode ^
         userName.hashCode ^
+        bio.hashCode ^
         fullName.hashCode ^
         accessToken.hashCode ^
         refreshToken.hashCode ^

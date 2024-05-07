@@ -97,6 +97,7 @@ void main() {
           fullName: 'Kai',
           accessToken: 'a',
           refreshToken: '',
+          bio: "Flutter dev",
           avatar: null,
         );
 

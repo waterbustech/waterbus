@@ -21,10 +21,10 @@ void main() {
   test('should have correct props', () {
     // Arrange
     final user1 = UpdateUserParams(
-      user: User(id: 1, userName: 'user1', fullName: 'User One'),
+      user: User(id: 1, userName: 'user1', fullName: 'User One', bio: 'bio1'),
     );
     final user2 = UpdateUserParams(
-      user: User(id: 2, userName: 'user2', fullName: 'User Two'),
+      user: User(id: 2, userName: 'user2', fullName: 'User Two', bio: 'bio2'),
     );
 
     // Act & Assert
@@ -35,7 +35,13 @@ void main() {
 
   test('should call updateUserProfile method from the repository', () async {
     // Arrange
-    final user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
+    final user = User(
+      id: 1,
+      userName: 'lambiengcode',
+      fullName: 'Kai',
+      bio: 'Flutter dev',
+    );
+
     final updateUserParams = UpdateUserParams(user: user);
     when(mockUserRepository.updateUserProfile(user))
         .thenAnswer((_) async => Right(user));
@@ -53,7 +59,13 @@ void main() {
       'should return a failure when updateUserProfile method from the repository fails',
       () async {
     // Arrange
-    final user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
+    final user = User(
+      id: 1,
+      userName: 'lambiengcode',
+      fullName: 'Kai',
+      bio: 'Flutter dev',
+    );
+
     final updateUserParams = UpdateUserParams(user: user);
     when(mockUserRepository.updateUserProfile(user))
         .thenAnswer((_) async => Left(ServerFailure()));
