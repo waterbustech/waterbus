@@ -7,12 +7,14 @@ import 'package:waterbus/features/auth/data/models/user_model.dart';
 class User {
   final int id;
   final String fullName;
-  final String userName;
+  String userName;
+  final String? bio;
   final String? avatar;
-  const User({
+  User({
     required this.id,
     required this.fullName,
     required this.userName,
+    this.bio,
     this.avatar,
   });
 
@@ -21,12 +23,14 @@ class User {
     String? fullName,
     String? userName,
     String? avatar,
+    String? bio,
   }) {
     return User(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       userName: userName ?? this.userName,
       avatar: avatar ?? this.avatar,
+      bio: bio ?? this.bio,
     );
   }
 
@@ -36,6 +40,7 @@ class User {
       'fullName': fullName,
       'userName': userName,
       'avatar': avatar,
+      'bio': bio,
     };
   }
 
@@ -44,6 +49,7 @@ class User {
       id: map['id'] ?? 0,
       fullName: map['fullName'] ?? '',
       userName: map['userName'] ?? '',
+      bio: map['bio'] ?? '',
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
@@ -54,6 +60,7 @@ class User {
       fullName: userModel.fullName,
       userName: userModel.userName,
       avatar: userModel.avatar,
+      bio: userModel.bio,
     );
   }
 
@@ -64,7 +71,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, fullName: $fullName, userName: $userName, avatar: $avatar)';
+    return 'User(id: $id, fullName: $fullName, bio: $bio, userName: $userName, avatar: $avatar)';
   }
 
   @override
@@ -73,6 +80,7 @@ class User {
 
     return other.id == id &&
         other.fullName == fullName &&
+        other.bio == bio &&
         other.userName == userName &&
         other.avatar == avatar;
   }
@@ -81,6 +89,7 @@ class User {
   int get hashCode {
     return id.hashCode ^
         fullName.hashCode ^
+        bio.hashCode ^
         userName.hashCode ^
         avatar.hashCode;
   }

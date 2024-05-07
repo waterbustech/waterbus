@@ -17,15 +17,17 @@ void main() {
       () {},
     );
     test('operator ==', () {
-      const User userModel1 = User(
+      final User userModel1 = User(
         id: 1,
         userName: "lambiengcode",
         fullName: "Kai Dao",
+        bio: "bio1",
       );
-      const User userModel2 = User(
+      final User userModel2 = User(
         id: 2,
         userName: "lambiengcode",
         fullName: "Kai Dao",
+        bio: "bio2",
       );
 
       // arrange
@@ -97,6 +99,7 @@ void main() {
           fullName: 'Kai',
           accessToken: 'a',
           refreshToken: '',
+          bio: "bio1",
           avatar: null,
         );
 
@@ -108,6 +111,7 @@ void main() {
         expect(userActual.id, userModel.id);
         expect(userActual.userName, userModel.userName);
         expect(userActual.fullName, userModel.fullName);
+        expect(userActual.bio, userModel.bio);
       },
     );
   });

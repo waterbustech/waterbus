@@ -11,9 +11,12 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/auth/domain/entities/user.dart';
+import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
+import 'package:waterbus/features/profile/domain/usecases/check_username.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_presigned_url.dart';
 import 'package:waterbus/features/profile/domain/usecases/get_profile.dart';
 import 'package:waterbus/features/profile/domain/usecases/update_profile.dart';
+import 'package:waterbus/features/profile/domain/usecases/update_username.dart';
 import 'package:waterbus/features/profile/domain/usecases/upload_avatar.dart';
 
 part 'user_event.dart';
@@ -23,14 +26,19 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetProfile _getProfile;
   final UpdateProfile _updateProfile;
+  final UpdateUsername _updateUsername;
+  final CheckUsername _checkUsername;
   final GetPresignedUrl _getPresignedUrl;
   final UploadAvatar _uploadAvatar;
 
   // MARK: private
   User? _user;
+  CheckUsernameStatus _checkUsernameStatus = CheckUsernameStatus.none;
 
   UserBloc(
     this._updateProfile,
+    this._updateUsername,
+    this._checkUsername,
     this._getPresignedUrl,
     this._getProfile,
     this._uploadAvatar,
@@ -68,12 +76,30 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
           emit(UserInitial());
         }
+
+        if (event is CheckUsernameEvent) {
+          _checkUsernameStatus = CheckUsernameStatus.checking;
+          emit(_userGetDone);
+
+          await _handleCheckUsername(event.username);
+          emit(_userGetDone);
+        }
+
+        if (event is UpdateUsernameEvent) {
+          if (event.username == _user?.userName) return;
+
+          await _handleUpdateUsername(event.username);
+          emit(_userGetDone);
+        }
       },
     );
   }
 
   // MARK: state
-  UserGetDone get _userGetDone => UserGetDone(user: _user!);
+  UserGetDone get _userGetDone => UserGetDone(
+        user: _user!,
+        checkUsernameStatus: _checkUsernameStatus,
+      );
 
   // MARK: private methods
   Future<void> _getUserProfile() async {
@@ -82,6 +108,29 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     user.fold(
       (l) => {},
       (r) => _user = r,
+    );
+  }
+
+  Future<void> _handleUpdateUsername(String username) async {
+    final Either<Failure, bool> result =
+        await _updateUsername.call(UpdateUsernameParams(username: username));
+
+    result.fold((l) => {}, (r) {
+      if (r) {
+        _user = _user?.copyWith(userName: username);
+        _checkUsernameStatus = CheckUsernameStatus.none;
+      }
+    });
+  }
+
+  Future<void> _handleCheckUsername(String username) async {
+    final Either<Failure, bool> result =
+        await _checkUsername.call(CheckUsernameParams(username: username));
+
+    result.fold(
+      (l) => {},
+      (r) => _checkUsernameStatus =
+          r ? CheckUsernameStatus.registered : CheckUsernameStatus.valid,
     );
   }
 
@@ -96,6 +145,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         user: _user!.copyWith(
           fullName: event.fullName,
           avatar: event.avatar,
+          bio: event.bio ?? "",
         ),
       ),
     );
@@ -148,4 +198,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   // MARK: export getter
   User? get user => _user;
+  CheckUsernameStatus get checkUsernameStatus => _checkUsernameStatus;
 }

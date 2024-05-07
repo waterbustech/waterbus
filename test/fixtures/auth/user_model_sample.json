@@ -4,5 +4,6 @@
     "fullName": "Kai Dao",
     "accessToken": "token_1",
     "refreshToken": "token_2",
-    "avatar": "https://lambiengcode.png"
+    "avatar": "https://lambiengcode.png",
+    "bio": "bio1"
 }

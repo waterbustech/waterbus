@@ -33,6 +33,7 @@ void main() {
         accessToken: "token_1",
         refreshToken: "token_2",
         avatar: "https://lambiengcode.png",
+        bio: "bio1",
       );
       final UserModel userModel2 = UserModel(
         id: 2,
@@ -41,6 +42,7 @@ void main() {
         accessToken: "token_1",
         refreshToken: "token_2",
         avatar: null,
+        bio: "bio2",
       );
 
       // arrange

@@ -24,7 +24,7 @@ void main() {
     repository = UserRepositoryImpl(mockDataSource);
   });
 
-  const testUser = User(id: 1, userName: 'testuser', fullName: 'Test User');
+  final testUser = User(id: 1, userName: 'testuser', fullName: 'Test User');
 
   group('getUserProfile', () {
     test('should return user from remote data source', () async {
@@ -35,7 +35,7 @@ void main() {
       final result = await repository.getUserProfile();
 
       // Assert
-      expect(result, const Right(testUser));
+      expect(result, Right(testUser));
       verify(mockDataSource.getUserProfile());
       verifyNoMoreInteractions(mockDataSource);
     });
@@ -65,7 +65,7 @@ void main() {
       final result = await repository.updateUserProfile(testUser);
 
       // Assert
-      expect(result, const Right(testUser));
+      expect(result, Right(testUser));
       verify(mockDataSource.updateUserProfile(testUser));
       verifyNoMoreInteractions(mockDataSource);
     });
@@ -81,6 +81,80 @@ void main() {
       // Assert
       expect(result, Left(NullValue()));
       verify(mockDataSource.updateUserProfile(testUser));
+      verifyNoMoreInteractions(mockDataSource);
+    });
+  });
+
+  group('updateUsername', () {
+    test('should return true from remote data source', () async {
+      // Arrange
+      when(mockDataSource.updateUsername(testUser.userName))
+          .thenAnswer((_) async => true);
+
+      // Act
+      final result = await repository.updateUsername(testUser.userName);
+
+      // Assert
+      expect(result, const Right(true));
+      verify(mockDataSource.updateUsername(testUser.userName));
+      verifyNoMoreInteractions(mockDataSource);
+    });
+
+    test('should return a failure from remote data source', () async {
+      // Arrange
+      when(mockDataSource.updateUsername(testUser.userName))
+          .thenAnswer((_) async => false);
+
+      // Act
+      final result = await repository.updateUsername(testUser.userName);
+
+      // Assert
+      expect(result, Left(NullValue()));
+      verify(mockDataSource.updateUsername(testUser.userName));
+      verifyNoMoreInteractions(mockDataSource);
+    });
+  });
+
+  group('checkUsername', () {
+    test('should return true from remote data source', () async {
+      // Arrange
+      when(mockDataSource.checkUsername(testUser.userName))
+          .thenAnswer((_) async => true);
+
+      // Act
+      final result = await repository.checkUsername(testUser.userName);
+
+      // Assert
+      expect(result, const Right(true));
+      verify(mockDataSource.checkUsername(testUser.userName));
+      verifyNoMoreInteractions(mockDataSource);
+    });
+
+    test('should return false from remote data source', () async {
+      // Arrange
+      when(mockDataSource.checkUsername(testUser.userName))
+          .thenAnswer((_) async => false);
+
+      // Act
+      final result = await repository.checkUsername(testUser.userName);
+
+      // Assert
+      expect(result, const Right(false));
+      verify(mockDataSource.checkUsername(testUser.userName));
+      verifyNoMoreInteractions(mockDataSource);
+    });
+
+    test('should return null from remote data source', () async {
+      // Arrange
+      when(mockDataSource.checkUsername(testUser.userName))
+          .thenAnswer((_) async => null);
+
+      // Act
+      final result = await repository.checkUsername(testUser.userName);
+
+      // Assert
+      expect(result, Left(NullValue()));
+      verify(mockDataSource.checkUsername(testUser.userName));
       verifyNoMoreInteractions(mockDataSource);
     });
   });

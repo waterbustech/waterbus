@@ -5,13 +5,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 // Dart imports:
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart' as _i5;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i3;
+import 'package:mockito/src/dummies.dart' as _i4;
 
+import 'package:waterbus/features/profile/domain/entities/check_username_status.dart'
+    as _i3;
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart'
     as _i2;
 
@@ -33,24 +35,31 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart'
 /// See the documentation for Mockito's code generation for more information.
 class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
   @override
+  _i3.CheckUsernameStatus get checkUsernameStatus => (super.noSuchMethod(
+        Invocation.getter(#checkUsernameStatus),
+        returnValue: _i3.CheckUsernameStatus.none,
+        returnValueForMissingStub: _i3.CheckUsernameStatus.none,
+      ) as _i3.CheckUsernameStatus);
+
+  @override
   _i2.UserState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _i3.dummyValue<_i2.UserState>(
+        returnValue: _i4.dummyValue<_i2.UserState>(
           this,
           Invocation.getter(#state),
         ),
-        returnValueForMissingStub: _i3.dummyValue<_i2.UserState>(
+        returnValueForMissingStub: _i4.dummyValue<_i2.UserState>(
           this,
           Invocation.getter(#state),
         ),
       ) as _i2.UserState);
 
   @override
-  _i4.Stream<_i2.UserState> get stream => (super.noSuchMethod(
+  _i5.Stream<_i2.UserState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i4.Stream<_i2.UserState>.empty(),
-        returnValueForMissingStub: _i4.Stream<_i2.UserState>.empty(),
-      ) as _i4.Stream<_i2.UserState>);
+        returnValue: _i5.Stream<_i2.UserState>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i2.UserState>.empty(),
+      ) as _i5.Stream<_i2.UserState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -88,8 +97,8 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
 
   @override
   void on<E extends _i2.UserEvent>(
-    _i5.EventHandler<E, _i2.UserState>? handler, {
-    _i5.EventTransformer<E>? transformer,
+    _i6.EventHandler<E, _i2.UserState>? handler, {
+    _i6.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -101,7 +110,7 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
       );
 
   @override
-  void onTransition(_i5.Transition<_i2.UserEvent, _i2.UserState>? transition) =>
+  void onTransition(_i6.Transition<_i2.UserEvent, _i2.UserState>? transition) =>
       super.noSuchMethod(
         Invocation.method(
           #onTransition,
@@ -111,17 +120,17 @@ class MockUserBloc extends _i1.Mock implements _i2.UserBloc {
       );
 
   @override
-  _i4.Future<void> close() => (super.noSuchMethod(
+  _i5.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  void onChange(_i5.Change<_i2.UserState>? change) => super.noSuchMethod(
+  void onChange(_i6.Change<_i2.UserState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
