@@ -51,7 +51,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
             icon: Icon(
               PhosphorIcons.check,
               size: 18.sp,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],
@@ -79,7 +79,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
                   border: Border.all(
                     width: 0.5,
                     color: _currentBackground == null
-                        ? Theme.of(context).primaryColor
+                        ? Theme.of(context).colorScheme.primary
                         : Theme.of(context).dividerColor,
                   ),
                 ),
@@ -104,7 +104,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
                 border: Border.all(
                   width: 1.sp,
                   color: _currentBackground == backgroundAssets[index - 1]
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).dividerColor,
                 ),
               ),

@@ -57,7 +57,7 @@ class _EnterMeetingCardState extends State {
               child: Text(
                 Strings.join.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w700,
                 ),

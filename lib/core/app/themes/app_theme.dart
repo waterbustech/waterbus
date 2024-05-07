@@ -18,7 +18,7 @@ class AppTheme {
   factory AppTheme.light() {
     final appColors = AppColor.light();
     final themeData = ThemeData(
-      useMaterial3: true,
+      colorSchemeSeed: const Color(0xff6750a4),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -28,19 +28,9 @@ class AppTheme {
               },
             ),
       brightness: Brightness.light,
-      primaryColor: appColors.primary,
-      primaryColorLight: appColors.primaryLight,
-      primaryColorDark: appColors.primaryDark,
-      focusColor: appColors.focusColor,
-      disabledColor: appColors.unFocusColor,
-      scaffoldBackgroundColor: appColors.background,
       snackBarTheme: SnackBarThemeData(
         backgroundColor: appColors.error,
         behavior: SnackBarBehavior.floating,
-      ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: appColors.background,
-        selectedItemColor: appColors.activeColor,
       ),
       bottomSheetTheme: ThemeData.dark().bottomSheetTheme.copyWith(
             elevation: 0,
@@ -66,34 +56,18 @@ class AppTheme {
           color: appColors.contentText1,
         ),
       ),
-      textTheme: TextTheme(
-        displayLarge: TextStyle(color: appColors.header),
-        displayMedium: TextStyle(color: appColors.header),
-        bodyLarge: TextStyle(color: appColors.contentText1),
-        bodyMedium: TextStyle(color: appColors.contentText2),
-        titleMedium: TextStyle(color: appColors.subText1),
-        titleSmall: TextStyle(color: appColors.subText2),
-      ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: appColors.focusColor,
-      ),
       dividerColor: appColors.divider,
       dividerTheme: DividerThemeData(
         color: appColors.divider,
         space: 0,
         thickness: .4,
       ),
-      fontFamily: FontFamily.helvetica,
-      colorScheme: const ColorScheme.light().copyWith(
-        background: appColors.dividerBackgroundColor,
-        error: appColors.error,
-      ),
-      cardColor: appColors.card,
       dialogTheme: DialogTheme(
         backgroundColor: appColors.background,
         elevation: 0,
         shadowColor: Colors.transparent,
       ),
+      fontFamily: FontFamily.helvetica,
     );
     return AppTheme(
       data: themeData,
@@ -103,7 +77,7 @@ class AppTheme {
   factory AppTheme.dark() {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
-      useMaterial3: true,
+      colorSchemeSeed: const Color(0xff6750a4),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -113,24 +87,13 @@ class AppTheme {
               },
             ),
       brightness: Brightness.dark,
-      primaryColor: appColors.primary,
-      primaryColorLight: appColors.primaryLight,
-      primaryColorDark: appColors.primaryDark,
-      focusColor: appColors.focusColor,
-      disabledColor: appColors.unFocusColor,
-      scaffoldBackgroundColor: appColors.background,
       snackBarTheme: SnackBarThemeData(
         backgroundColor: appColors.error,
         behavior: SnackBarBehavior.floating,
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: appColors.background,
-        selectedItemColor: appColors.activeColor,
-      ),
       bottomSheetTheme: ThemeData.dark().bottomSheetTheme.copyWith(
             elevation: 0,
             modalElevation: 0,
-            modalBarrierColor: Colors.blueGrey.withOpacity(.2),
           ),
       appBarTheme: AppBarTheme(
         scrolledUnderElevation: 0,
@@ -151,34 +114,17 @@ class AppTheme {
           color: appColors.contentText1,
         ),
       ),
-      textTheme: TextTheme(
-        displayLarge: TextStyle(color: appColors.header),
-        displayMedium: TextStyle(color: appColors.header),
-        bodyLarge: TextStyle(color: appColors.contentText1),
-        bodyMedium: TextStyle(color: appColors.contentText2),
-        titleMedium: TextStyle(color: appColors.subText1),
-        titleSmall: TextStyle(color: appColors.subText2),
-      ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: appColors.focusColor,
-      ),
       dividerColor: appColors.divider,
       dividerTheme: DividerThemeData(
         color: appColors.divider,
         space: 0,
         thickness: .4,
       ),
-      fontFamily: FontFamily.helvetica,
-      colorScheme: const ColorScheme.dark().copyWith(
-        background: appColors.dividerBackgroundColor,
-        error: appColors.error,
-      ),
-      cardColor: appColors.card,
-      dialogTheme: DialogTheme(
-        backgroundColor: appColors.background,
+      dialogTheme: const DialogTheme(
         elevation: 0,
         shadowColor: Colors.transparent,
       ),
+      fontFamily: FontFamily.helvetica,
     );
     return AppTheme(
       data: themeData,

@@ -30,10 +30,8 @@ class CallActionButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-          color: backgroundColor ??
-              (Theme.of(context).brightness == Brightness.dark
-                  ? mGD.withOpacity(.7)
-                  : mCU),
+          color:
+              backgroundColor ?? Theme.of(context).colorScheme.onInverseSurface,
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,

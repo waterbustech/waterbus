@@ -22,17 +22,18 @@ class MenuDrawerCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 12.sp),
       child: Row(
         children: [
-          Image.asset(
-            item.iconAssetPath,
-            width: SizerUtil.isDesktop ? 22.sp : 18.5.sp,
-            height: SizerUtil.isDesktop ? 22.sp : 18.5.sp,
+          Icon(
+            item.icon,
+            size: SizerUtil.isDesktop ? 21.sp : 18.sp,
+            color: Theme.of(context).colorScheme.secondary,
           ),
-          SizedBox(width: 10.sp),
+          SizedBox(width: 12.sp),
           Text(
             item.title.i18n,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ],

@@ -113,9 +113,12 @@ Map<String, String> english = {
   Strings.edit: "Edit",
   Strings.appearance: "Appearance",
   Strings.callAndMeeting: "Call and Meeting",
-  Strings.serverConfiguration: "Server Configuration",
+  Strings.serverConfiguration: "Server configuration",
   Strings.clearCache: "Clear cache",
   Strings.version: "version",
   Strings.sizeNotSupported:
       "Currently we only support browsers with a minimum size of 800x600.",
+  Strings.changeYourAvatar: 'Change your avatar',
+  Strings.chooseFromGallery: 'Choose photo from gallery',
+  Strings.takeAPhoto: 'Take a photo',
 };

@@ -75,7 +75,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                         .format(meeting.latestJoinedTime),
                     iconData: PhosphorIcons.clock,
                     backgroundColor:
-                        Theme.of(context).primaryColor.withOpacity(.2),
+                        Theme.of(context).colorScheme.primary.withOpacity(.2),
                   ),
                   SizedBox(width: 4.sp),
                   GestureWrapper(
@@ -101,7 +101,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                   shape: SuperellipseShape(
                     borderRadius: BorderRadius.circular(30.sp),
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   child: Container(
                     width: 80.sp,
                     padding: EdgeInsets.symmetric(
@@ -115,16 +115,18 @@ class DialogPrepareMeeting extends StatelessWidget {
                         SizedBox(width: 4.sp),
                         Text(
                           Strings.start.i18n,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 9.sp,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                fontSize: 9.sp,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
                           PhosphorIcons.arrow_right_bold,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           size: 12.sp,
                         ),
                       ],

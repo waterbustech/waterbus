@@ -48,7 +48,20 @@ class PreviewCameraCard extends StatelessWidget {
               child: Container(
                 width: 265.sp,
                 height: 200.sp,
-                color: Colors.black,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context).colorScheme.primary.withOpacity(.5),
+                      Theme.of(context)
+                          .colorScheme
+                          .surfaceVariant
+                          .withOpacity(.5),
+                    ],
+                    stops: const [0.1, 0.9],
+                  ),
+                ),
                 child: participant.isVideoEnabled
                     ? RTCVideoView(
                         participant.renderer!,

@@ -86,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Row(
       children: [
         SizedBox(
-          width: SizerUtil.isDesktop ? 30.w : 100.w,
+          width: SizerUtil.isDesktop ? 300.sp : 100.w,
           child: Scaffold(
             appBar: appBarTitleBack(
               context,
@@ -96,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onPressed: () {},
                 icon: Icon(
                   PhosphorIcons.user_circle_plus,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               actions: [
@@ -114,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Text(
                       Strings.edit.i18n,
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
                       ),

@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     Strings.cancel.i18n,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -158,7 +158,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.sp),
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onInverseSurface,
                             ),
                             child: Column(
                               children: [
@@ -271,7 +273,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(7.sp),
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onInverseSurface,
                               ),
                               child: Center(
                                 child: Text(

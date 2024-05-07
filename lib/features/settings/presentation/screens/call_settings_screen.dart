@@ -59,7 +59,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   child: Text(
                     Strings.cancel.i18n,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -86,7 +86,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),

@@ -31,7 +31,7 @@ class _AppState extends State<App> {
           return BlocBuilder<ThemesBloc, ThemesState>(
             builder: (context, stateThemes) {
               return MaterialApp(
-                title: 'Waterbus: Online Meetings',
+                title: 'Waterbus',
                 navigatorKey: AppNavigator.navigatorKey,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.light().data,

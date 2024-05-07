@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
-
 class IconButtonCustom extends StatelessWidget {
   final IconData icon;
   final Color? colorBackground;
@@ -41,7 +38,7 @@ class IconButtonCustom extends StatelessWidget {
       child: Icon(
         icon,
         size: sizeIcon ?? (colorBackground != null ? 15.sp : 20.sp),
-        color: colorIcon ?? mCL,
+        color: Theme.of(context).colorScheme.primary,
       ),
     );
   }

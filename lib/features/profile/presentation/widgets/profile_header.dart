@@ -7,7 +7,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -37,11 +36,12 @@ class ProfileHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AvatarCard(
                         urlToImage: user.avatar,
-                        size: SizerUtil.isDesktop ? 40.sp : 26.sp,
+                        size: SizerUtil.isDesktop ? 40.sp : 30.sp,
                       ),
                       IconButton(
                         onPressed: () {
@@ -54,15 +54,12 @@ class ProfileHeader extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: Theme.of(context).brightness == Brightness.dark
-                            ? Icon(
-                                PhosphorIcons.moon_stars_fill,
-                                color: Theme.of(context).primaryColor,
-                              )
-                            : Icon(
-                                PhosphorIcons.sun_fill,
-                                color: colorMedium,
-                              ),
+                        icon: Icon(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? PhosphorIcons.sun_fill
+                              : PhosphorIcons.moon_stars_fill,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -70,14 +67,15 @@ class ProfileHeader extends StatelessWidget {
                   Text(
                     user.fullName,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 13.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                         ),
                   ),
                   Text(
                     '@${user.userName}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 10.sp,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 12.sp,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                   ),
                 ],

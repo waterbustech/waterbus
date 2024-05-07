@@ -91,7 +91,7 @@ class TextFieldInput extends StatelessWidget {
               : Theme.of(context).textTheme.titleMedium?.color,
           height: height,
         ),
-        cursorColor: Theme.of(context).primaryColor,
+        cursorColor: Theme.of(context).colorScheme.primary,
         keyboardType: textInputType ?? TextInputType.multiline,
         onChanged: onChanged,
         maxLines: obscureText ? 1 : maxLines,

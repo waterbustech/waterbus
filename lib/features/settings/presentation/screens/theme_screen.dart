@@ -34,7 +34,7 @@ class ThemeScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).colorScheme.onInverseSurface,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,

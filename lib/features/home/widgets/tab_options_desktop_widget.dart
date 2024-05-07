@@ -44,9 +44,7 @@ class TabOptionsDesktopWidget extends StatelessWidget {
                 currentIndex == index ? iconDataSelected : iconData,
                 size: 20.sp,
                 color: currentIndex == index
-                    ? Theme.of(context)
-                        .bottomNavigationBarTheme
-                        .selectedItemColor
+                    ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).disabledColor,
               ),
             );
@@ -59,7 +57,7 @@ class TabOptionsDesktopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 30.w,
+      width: 300.sp,
       child: Column(
         children: [
           Expanded(child: child),
