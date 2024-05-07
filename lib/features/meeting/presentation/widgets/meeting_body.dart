@@ -161,7 +161,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                 if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
                   CallActionButton(
                     icon: PhosphorIcons.sparkle,
-                    iconColor: Colors.deepOrangeAccent,
+                    iconColor: Theme.of(context).colorScheme.primary,
                     onTap: () {
                       setState(() {
                         _isFilterSettingsOpened = !_isFilterSettingsOpened;

@@ -64,7 +64,7 @@ Map<String, String> vietnamese = {
   Strings.noParticipantsYet: "Chưa có người tham gia",
   Strings.yourPersonalMeetingsAre: "Các cuộc họp cá nhân của bạn đều ",
   Strings.endToEndEncrypted: "được mã hóa đầu cuối",
-  Strings.join: "Tham gia",
+  Strings.join: "Vào",
   Strings.joinAMeeting: "Tham gia phòng",
   Strings.participationInstructions:
       "Nhập mã cuộc họp để tham gia cuộc họp và bạn cần cung cấp mật khẩu phòng nếu bạn không phải là thành viên của phòng họp.",
@@ -114,4 +114,7 @@ Map<String, String> vietnamese = {
   Strings.version: "phiên bản",
   Strings.sizeNotSupported:
       "Hiện tại chúng tôi chỉ hỗ trợ trình duyệt có kích thước nhỏ nhất là 800x600.",
+  Strings.changeYourAvatar: 'Đổi ảnh đại diện',
+  Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
+  Strings.takeAPhoto: 'Chụp ảnh mới',
 };

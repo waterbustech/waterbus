@@ -119,6 +119,9 @@ class Strings {
   static const String clearCache = 'clearCache';
   static const String version = 'version';
   static const String sizeNotSupported = 'sizeNotSupported';
+  static const String changeYourAvatar = 'changeYourAvatar';
+  static const String chooseFromGallery = 'chooseFromGallery';
+  static const String takeAPhoto = 'takeAPhoto';
 }
 
 class MyI18n {

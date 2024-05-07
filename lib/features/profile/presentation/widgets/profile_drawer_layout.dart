@@ -20,16 +20,6 @@ class ProfileDrawerLayout extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const ProfileHeader(),
-          if (!SizerUtil.isDesktop)
-            Padding(
-              padding: EdgeInsets.only(bottom: 8.sp),
-              child: Divider(
-                height: 0.5,
-                thickness: 0.5,
-                indent: 20.sp,
-                endIndent: 8.sp,
-              ),
-            ),
           Padding(
             padding: EdgeInsets.only(left: 20.sp),
             child: ListMenuDrawer(onTapItem: onTapItem),

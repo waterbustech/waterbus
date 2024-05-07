@@ -133,9 +133,7 @@ class _HomeState extends State<Home> {
                     currentIndex == index ? iconDataSelected : iconData,
                     size: 20.sp,
                     color: currentIndex == index
-                        ? Theme.of(context)
-                            .bottomNavigationBarTheme
-                            .selectedItemColor
+                        ? Theme.of(context).colorScheme.primary
                         : Theme.of(context).disabledColor,
                   ),
                 ],

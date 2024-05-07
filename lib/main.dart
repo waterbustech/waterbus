@@ -12,6 +12,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/application.dart';
@@ -48,10 +49,15 @@ void main(List<String> args) async {
           child: const App(),
         ),
       );
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+      if (WebRTC.platformIsMobile) {
+        FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      }
     },
     (error, stackTrace) {
       debugPrint(error.toString());
+
+      if (!WebRTC.platformIsMobile) return;
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
     },
   );

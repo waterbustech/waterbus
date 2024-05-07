@@ -187,7 +187,7 @@ class _DefaultCodeAutocompleteListViewState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: index == widget.notifier.value.index
-                    ? Colors.indigo.shade300
+                    ? Colors.indigo.shade300.withOpacity(.5)
                     : null,
                 borderRadius: radius,
               ),
@@ -214,7 +214,7 @@ extension _CodePromptExtension on CodePrompt {
     final InlineSpan span = style.createSpan(
       value: word,
       anchor: input,
-      color: Colors.amber,
+      color: Colors.blueAccent,
       fontWeight: FontWeight.bold,
     );
     final CodePrompt prompt = this;

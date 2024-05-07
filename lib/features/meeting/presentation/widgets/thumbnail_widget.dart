@@ -38,7 +38,7 @@ class ThumbnailWidget extends StatelessWidget {
                   side: selected
                       ? BorderSide(
                           width: 2,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         )
                       : BorderSide.none,
                 ),

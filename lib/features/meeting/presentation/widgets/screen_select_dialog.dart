@@ -163,8 +163,9 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                             constraints:
                                 const BoxConstraints.expand(height: 24),
                             child: TabBar(
-                              labelColor: Theme.of(context).primaryColor,
-                              indicatorColor: Theme.of(context).primaryColor,
+                              labelColor: Theme.of(context).colorScheme.primary,
+                              indicatorColor:
+                                  Theme.of(context).colorScheme.primary,
                               onTap: (value) =>
                                   Future.delayed(Duration.zero, () {
                                 _sourceType = value == 0
@@ -273,7 +274,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                     shape: SuperellipseShape(
                       borderRadius: BorderRadius.circular(12.sp),
                     ),
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     child: Text(
                       Strings.share.i18n,
                     ),

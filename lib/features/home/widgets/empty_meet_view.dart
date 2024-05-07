@@ -22,7 +22,9 @@ class EmptyMeetView extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 4.w),
-          child: Assets.images.worldMap.image(),
+          child: Assets.images.worldMap.image(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
         SizedBox(height: 20.sp),
         GestureWrapper(

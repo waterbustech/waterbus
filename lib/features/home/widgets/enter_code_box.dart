@@ -8,7 +8,6 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 
 class EnterCodeBox extends StatefulWidget {
@@ -50,9 +49,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
               shape: SuperellipseShape(
                 borderRadius: BorderRadius.circular(25.sp),
               ),
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.black.withOpacity(.2)
-                  : mCU,
+              color: Theme.of(context).colorScheme.surfaceVariant,
               child: SizedBox(
                 width: 100.w,
                 height: 36.sp,
@@ -63,8 +60,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   controller: widget.controller,
                   onFieldSubmitted: widget.onFieldSubmitted,
                   style: TextStyle(
-                    color: mC,
-                    fontSize: 11.sp,
+                    fontSize: 12.sp,
                   ),
                   keyboardType: TextInputType.number,
                   minLines: 1,
@@ -76,13 +72,11 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   decoration: InputDecoration(
                     contentPadding: widget.contentPadding,
                     hintText: widget.hintTextContent,
-                    hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontSize: 12.sp,
-                        ),
+                    hintStyle: TextStyle(
+                      fontSize: 12.sp,
+                    ),
                     filled: true,
-                    fillColor: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black.withOpacity(.2)
-                        : mCU,
+                    fillColor: Theme.of(context).colorScheme.surfaceVariant,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6.sp),
                       borderSide: BorderSide.none,

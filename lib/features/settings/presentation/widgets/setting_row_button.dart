@@ -41,7 +41,7 @@ class SettingRowButton extends StatelessWidget {
             bottom: Radius.circular(isLast ? 16.sp : 0),
           ),
         ),
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).colorScheme.onInverseSurface,
         child: Column(
           children: [
             Padding(

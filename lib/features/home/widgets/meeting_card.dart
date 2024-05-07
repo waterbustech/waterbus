@@ -52,9 +52,9 @@ class MeetingCard extends StatelessWidget {
                 TextSpan(
                   text: meeting.code.toString().formatRoomCode,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     decoration: TextDecoration.underline,
-                    decorationColor: Theme.of(context).primaryColor,
+                    decorationColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ],
@@ -96,7 +96,7 @@ class MeetingCard extends StatelessWidget {
                   shape: SuperellipseShape(
                     borderRadius: BorderRadius.circular(25.sp),
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
@@ -106,18 +106,20 @@ class MeetingCard extends StatelessWidget {
                       children: [
                         SizedBox(width: 4.sp),
                         Text(
-                          "Join",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 10.sp,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ),
+                          Strings.join.i18n,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                fontSize: 10.sp,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
                           PhosphorIcons.arrow_right_bold,
-                          color: Colors.white,
                           size: 12.sp,
+                          color: Theme.of(context).colorScheme.surface,
                         ),
                       ],
                     ),

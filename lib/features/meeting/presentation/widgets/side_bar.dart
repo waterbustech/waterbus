@@ -43,9 +43,7 @@ class _SideBarState extends State<SideBar> {
                 padding: EdgeInsets.symmetric(vertical: 16.sp),
                 width: min(constraints.maxWidth, 48.sp) - 8.sp,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? mGD
-                      : mC,
+                  color: Theme.of(context).colorScheme.onInverseSurface,
                   borderRadius: BorderRadius.circular(30.sp),
                 ),
                 child: Column(

@@ -6,7 +6,6 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 // Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/conversation/xmodels/message_model.dart';
@@ -59,8 +58,8 @@ class MessageCard extends StatelessWidget {
               ),
             ),
             color: message.isMe
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).cardColor,
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.surfaceVariant,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 15.sp,
@@ -70,7 +69,9 @@ class MessageCard extends StatelessWidget {
               child: Text(
                 message.description,
                 style: TextStyle(
-                  color: message.isMe ? mCL : null,
+                  color: message.isMe
+                      ? Theme.of(context).colorScheme.surface
+                      : null,
                   fontSize: 12.sp,
                 ),
               ),

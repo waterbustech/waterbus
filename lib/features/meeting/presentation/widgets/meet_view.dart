@@ -38,11 +38,12 @@ class MeetView extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       type: MaterialType.card,
+      color: Theme.of(context).colorScheme.onInverseSurface,
       shape: SuperellipseShape(
         side: !borderEnabled || isScreenSharing
             ? BorderSide.none
             : BorderSide(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 width: audioLevel == AudioLevel.kAudioStrong
                     ? 8.sp
                     : audioLevel == AudioLevel.kAudioLight
@@ -77,8 +78,14 @@ class MeetView extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.blueAccent.withOpacity(.4),
-                            Colors.blueGrey.shade900.withOpacity(.4),
+                            Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(.5),
+                            Theme.of(context)
+                                .colorScheme
+                                .surfaceVariant
+                                .withOpacity(.5),
                           ],
                           stops: const [0.1, 0.9],
                         ),
@@ -114,7 +121,10 @@ class MeetView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.sp),
                   ),
                   clipBehavior: Clip.hardEdge,
-                  color: Colors.black.withOpacity(.3),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .surfaceVariant
+                      .withOpacity(.6),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
@@ -143,13 +153,14 @@ class MeetView extends StatelessWidget {
                                         ? PhosphorIcons.screencast_bold
                                         : PhosphorIcons.microphone_slash_fill,
                                     color: isScreenSharing
-                                        ? Theme.of(context).primaryColor
+                                        ? Theme.of(context).colorScheme.primary
                                         : Colors.redAccent,
                                     size: avatarSize / 5.25,
                                   )
                                 : CupertinoActivityIndicator(
                                     radius: 6.5,
-                                    color: Theme.of(context).primaryColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                           ),
                         ),

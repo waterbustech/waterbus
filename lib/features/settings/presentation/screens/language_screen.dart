@@ -48,7 +48,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.sp),
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).colorScheme.onInverseSurface,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -104,7 +104,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                         Language.values[index].langCode
                                     ? Icon(
                                         PhosphorIcons.check,
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       )
                                     : const SizedBox(),
                               ],

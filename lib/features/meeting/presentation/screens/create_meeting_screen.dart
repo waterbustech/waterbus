@@ -75,7 +75,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
             icon: Icon(
               PhosphorIcons.check,
               size: 18.sp,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],

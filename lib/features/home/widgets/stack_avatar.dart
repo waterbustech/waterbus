@@ -35,9 +35,8 @@ class StackAvatar extends StatelessWidget {
                 height: size,
                 width: size,
                 margin: EdgeInsets.only(left: maxImages * (size * 0.8)),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColorDark,
                 ),
                 alignment: Alignment.center,
                 child: Text(
