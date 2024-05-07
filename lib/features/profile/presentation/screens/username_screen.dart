@@ -95,7 +95,9 @@ class _UserNameScreenState extends State<UserNameScreen> {
                     child: Text(
                       Strings.done.i18n,
                       style: TextStyle(
-                        color: _isActive ? Theme.of(context).primaryColor : mGB,
+                        color: _isActive
+                            ? Theme.of(context).colorScheme.primary
+                            : mGB,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
                       ),

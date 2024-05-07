@@ -4,8 +4,8 @@
         "id": 1,
         "fullName": "Kai",
         "userName": "lambiengcode",
-        "avatar": null
+        "avatar": null,
+        "bio": ""
     },
     "isMe": false
-  }
-  
+}

@@ -186,7 +186,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(7.sp),
-                                      color: Theme.of(context).cardColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onInverseSurface,
                                     ),
                                     child: Row(
                                       children: [

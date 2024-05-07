@@ -99,7 +99,7 @@ void main() {
           fullName: 'Kai',
           accessToken: 'a',
           refreshToken: '',
-          bio: "Flutter dev",
+          bio: "bio1",
           avatar: null,
         );
 
@@ -111,6 +111,7 @@ void main() {
         expect(userActual.id, userModel.id);
         expect(userActual.userName, userModel.userName);
         expect(userActual.fullName, userModel.fullName);
+        expect(userActual.bio, userModel.bio);
       },
     );
   });

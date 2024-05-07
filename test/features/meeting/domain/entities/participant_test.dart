@@ -17,11 +17,13 @@ void main() {
       id: 1,
       userName: 'lambiengcode',
       fullName: 'Kai',
+      bio: "",
     );
     final User hostModel = User(
       id: 2,
       userName: 'lambiencode1',
       fullName: 'KaiDao',
+      bio: "",
     );
 
     test('Should create a Participant instance', () {

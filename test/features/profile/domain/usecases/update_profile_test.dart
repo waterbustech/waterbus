@@ -39,7 +39,7 @@ void main() {
       id: 1,
       userName: 'lambiengcode',
       fullName: 'Kai',
-      bio: 'Flutter dev',
+      bio: 'bio1',
     );
 
     final updateUserParams = UpdateUserParams(user: user);
@@ -63,7 +63,7 @@ void main() {
       id: 1,
       userName: 'lambiengcode',
       fullName: 'Kai',
-      bio: 'Flutter dev',
+      bio: 'bio1',
     );
 
     final updateUserParams = UpdateUserParams(user: user);

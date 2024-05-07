@@ -38,6 +38,7 @@ class User {
     return <String, dynamic>{
       'id': id,
       'fullName': fullName,
+      'userName': userName,
       'avatar': avatar,
       'bio': bio,
     };
