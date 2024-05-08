@@ -60,4 +60,23 @@ class UserRepositoryImpl extends UserRepository {
 
     return Right(urlToImage);
   }
+
+  @override
+  Future<Either<Failure, bool>> updateUsername(String username) async {
+    final bool isUpdateSucceed =
+        await _remoteDataSource.updateUsername(username);
+
+    if (!isUpdateSucceed) return Left(NullValue());
+
+    return Right(isUpdateSucceed);
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkUsername(String username) async {
+    final bool? isRegistered = await _remoteDataSource.checkUsername(username);
+
+    if (isRegistered == null) return Left(NullValue());
+
+    return Right(isRegistered);
+  }
 }

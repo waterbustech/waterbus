@@ -20,11 +20,11 @@ void main() {
 
   test('should have correct props', () {
     // Arrange
-    const user1 = UpdateUserParams(
-      user: User(id: 1, userName: 'user1', fullName: 'User One'),
+    final user1 = UpdateUserParams(
+      user: User(id: 1, userName: 'user1', fullName: 'User One', bio: 'bio1'),
     );
-    const user2 = UpdateUserParams(
-      user: User(id: 2, userName: 'user2', fullName: 'User Two'),
+    final user2 = UpdateUserParams(
+      user: User(id: 2, userName: 'user2', fullName: 'User Two', bio: 'bio2'),
     );
 
     // Act & Assert
@@ -35,16 +35,22 @@ void main() {
 
   test('should call updateUserProfile method from the repository', () async {
     // Arrange
-    const user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
-    const updateUserParams = UpdateUserParams(user: user);
+    final user = User(
+      id: 1,
+      userName: 'lambiengcode',
+      fullName: 'Kai',
+      bio: 'bio1',
+    );
+
+    final updateUserParams = UpdateUserParams(user: user);
     when(mockUserRepository.updateUserProfile(user))
-        .thenAnswer((_) async => const Right(user));
+        .thenAnswer((_) async => Right(user));
 
     // Act
     final result = await usecase(updateUserParams);
 
     // Assert
-    expect(result, const Right(user));
+    expect(result, Right(user));
     verify(mockUserRepository.updateUserProfile(user));
     verifyNoMoreInteractions(mockUserRepository);
   });
@@ -53,8 +59,14 @@ void main() {
       'should return a failure when updateUserProfile method from the repository fails',
       () async {
     // Arrange
-    const user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
-    const updateUserParams = UpdateUserParams(user: user);
+    final user = User(
+      id: 1,
+      userName: 'lambiengcode',
+      fullName: 'Kai',
+      bio: 'bio1',
+    );
+
+    final updateUserParams = UpdateUserParams(user: user);
     when(mockUserRepository.updateUserProfile(user))
         .thenAnswer((_) async => Left(ServerFailure()));
 

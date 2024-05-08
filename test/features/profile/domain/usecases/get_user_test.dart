@@ -21,15 +21,15 @@ void main() {
 
   test('should call getUserProfile method from the repository', () async {
     // Arrange
-    const user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
+    final user = User(id: 1, userName: 'lambiengcode', fullName: 'Kai');
     when(mockUserRepository.getUserProfile())
-        .thenAnswer((_) async => const Right(user));
+        .thenAnswer((_) async => Right(user));
 
     // Act
     final result = await usecase(NoParams());
 
     // Assert
-    expect(result, const Right(user));
+    expect(result, Right(user));
     verify(mockUserRepository.getUserProfile());
     verifyNoMoreInteractions(mockUserRepository);
   });

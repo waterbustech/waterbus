@@ -6,7 +6,7 @@ const String kAppTitle = 'Waterbus';
 const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
 const String kWaterbusDocs = 'https://docs.waterbus.tech';
 
-const User kUserDefault = User(
+final User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',

@@ -33,6 +33,7 @@ class TextFieldInput extends StatelessWidget {
   final InputBorder? border;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? margin;
+  final Function()? onEditingComplete;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
@@ -62,6 +63,7 @@ class TextFieldInput extends StatelessWidget {
     this.border,
     this.contentPadding,
     this.margin,
+    this.onEditingComplete,
   });
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class TextFieldInput extends StatelessWidget {
           ),
       width: double.infinity,
       child: TextFormField(
+        onEditingComplete: onEditingComplete,
         autofocus: autofocus,
         obscureText: obscureText,
         onTap: onTap ?? () {},

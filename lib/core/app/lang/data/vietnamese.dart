@@ -89,8 +89,7 @@ Map<String, String> vietnamese = {
 
   // Profile screen
   Strings.profile: "Hồ sơ",
-  Strings.firstname: "Tên",
-  Strings.lastname: "Họ",
+  Strings.fullname: "Tên",
   Strings.username: "Tên tài khoản",
   Strings.bio: "Tiểu sử",
   Strings.enterYourNameAndAddAnOptionalProfilePhoto:
@@ -103,6 +102,9 @@ Map<String, String> vietnamese = {
   Strings.usernameNote3: "và dấu gạch dưới. Độ dài tối thiểu là",
   Strings.usernameNote4: "ký tự.",
   Strings.done: "Xong",
+  Strings.canUseUsername: "Bạn có thể sử dụng tên tài khoản này",
+  Strings.usernameUsed: "Tên này đã được sử dụng",
+  Strings.checking: "Đang kiểm tra",
 
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
