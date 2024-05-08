@@ -99,10 +99,15 @@ class WaterbusImagePicker {
         type: FileType.image,
       );
 
-      if (result?.files.first.path != null) {
-        final Uint8List resizedImage = await ImageUtils().reduceSize(
-          File(result!.files.first.path!).path,
-        );
+      if (result?.files.isNotEmpty ?? false) {
+        final Uint8List? resizedImage = kIsWeb
+            ? result?.files.first.bytes
+            : await ImageUtils().reduceSize(
+                File(result!.files.first.path!).path,
+              );
+
+        if (resizedImage == null) return;
+
         handleFinish?.call(resizedImage);
       }
 

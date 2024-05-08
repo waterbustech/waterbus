@@ -68,13 +68,26 @@ class SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement
     );
     final childCrossAxisExtent = usableCrossAxisExtent / crossAxisCount;
     final childMainAxisExtent = childCrossAxisExtent / childAspectRatio;
+
+    final rowCount = (itemCount / crossAxisCount).ceil();
+    final double alignIndex =
+        itemCount % crossAxisCount == 1 && crossAxisCount.isOdd ? 1.0 : 0.5;
+
     return SliverGridWithCustomGeometryLayout(
       geometryBuilder: (index, layout) {
+        final rowIndex = index ~/ crossAxisCount;
+
+        final isLastRow =
+            itemCount % crossAxisCount != 0 && rowIndex == rowCount - 1;
+
+        final crossAxisOffset = _getOffsetFromStartInCrossAxis(
+          (index % crossAxisCount) + (isLastRow ? alignIndex : 0),
+          layout,
+        );
+
         return SliverGridGeometry(
-          scrollOffset: (index ~/ crossAxisCount) * layout.mainAxisStride,
-          crossAxisOffset: itemCount.isOdd && index == itemCount - 1
-              ? layout.crossAxisStride / 2
-              : _getOffsetFromStartInCrossAxis(index, layout),
+          scrollOffset: rowIndex * layout.mainAxisStride,
+          crossAxisOffset: crossAxisOffset,
           mainAxisExtent: childMainAxisExtent,
           crossAxisExtent: childCrossAxisExtent,
         );
@@ -89,7 +102,7 @@ class SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement
   }
 
   double _getOffsetFromStartInCrossAxis(
-    int index,
+    double index,
     SliverGridRegularTileLayout layout,
   ) {
     final crossAxisStart = (index % crossAxisCount) * layout.crossAxisStride;

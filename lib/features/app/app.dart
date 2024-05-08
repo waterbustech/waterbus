@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/themes/app_theme.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -31,7 +32,7 @@ class _AppState extends State<App> {
           return BlocBuilder<ThemesBloc, ThemesState>(
             builder: (context, stateThemes) {
               return MaterialApp(
-                title: 'Waterbus',
+                title: kAppTitle,
                 navigatorKey: AppNavigator.navigatorKey,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.light().data,

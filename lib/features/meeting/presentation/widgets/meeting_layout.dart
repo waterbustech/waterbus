@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 // Project imports:
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
@@ -28,9 +29,7 @@ class MeetingLayout extends StatelessWidget {
     if (callState?.mParticipant != null) {
       final ParticipantSFU participant = callState!.mParticipant!;
 
-      participants.add(
-        participant.copyWith(isSharingScreen: false),
-      );
+      participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
         participants.add(participant);
@@ -39,9 +38,7 @@ class MeetingLayout extends StatelessWidget {
 
     for (final ParticipantSFU participant
         in callState?.participants.values.toList() ?? []) {
-      participants.add(
-        participant.copyWith(isSharingScreen: false),
-      );
+      participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
         participants.add(participant);
@@ -155,6 +152,9 @@ class MeetingLayout extends StatelessWidget {
     CallSetting setting,
     BoxConstraints constraints,
   ) {
+    final crossAxisCount =
+        _gridCount(_participants.length, constraints.maxWidth);
+
     return GridView.builder(
       itemCount: _participants.length,
       itemBuilder: (_, index) => _buildVideoView(
@@ -166,18 +166,15 @@ class MeetingLayout extends StatelessWidget {
       padding: EdgeInsets.only(right: SizerUtil.isDesktop ? 20.sp : 0),
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
-        itemCount: _gridCount(_participants.length, constraints.maxWidth) < 2 &&
-                SizerUtil.isDesktop
+        itemCount: crossAxisCount < 2 && SizerUtil.isDesktop
             ? 2
             : _participants.length,
-        crossAxisCount: SizerUtil.isDesktop
-            ? _gridCount(_participants.length, constraints.maxWidth)
-            : 2,
-        mainAxisSpacing: 12.sp,
-        crossAxisSpacing: 12.sp,
+        crossAxisCount: SizerUtil.isDesktop ? crossAxisCount : 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
         childAspectRatio: SizerUtil.isDesktop
-            ? (16 / 9)
-            : (_participants.length < 6 ? 0.6 : 1),
+            ? (_participants.length <= 6 && crossAxisCount == 3 ? k43 : k169)
+            : (_participants.length < 6 ? k35 : k11),
       ),
     );
   }
