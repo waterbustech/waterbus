@@ -6,14 +6,18 @@ const String kAppTitle = 'Waterbus';
 const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
 const String kWaterbusDocs = 'https://docs.waterbus.tech';
 
+// Aspect ratio meet view
+const double k35 = 3 / 5;
+const double k43 = 4 / 3;
+const double k169 = 16 / 9;
+const double k11 = 1;
+
 final User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',
   avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
 );
-
-const kGridViewMinUsers = 4;
 
 final List<String> backgrounds = [
   Assets.images.background1Jpg.path,
