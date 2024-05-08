@@ -221,12 +221,6 @@ Support it by joining [stargazers](https://github.com/waterbustech/waterbus/star
 
 Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our next creations!
 
-<!-- [![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date&theme=dark)](https://star-history.com/#waterbustech/waterbus&Date#gh-dark-mode-only)
-[![Star History Chart](https://api.star-history.com/svg?repos=waterbustech/waterbus&type=Date)](https://star-history.com/#waterbustech/waterbus&Date#gh-light-mode-only) -->
-
-<!-- [![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/dark/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#waterbustech/waterbus&Date#gh-dark-mode-only)
-[![Stargazers repo roster for @waterbustech/waterbus](https://reporoster.com/stars/notext/waterbustech/waterbus)](https://github.com/waterbustech/waterbus/stargazers/#gh-light-mode-only) -->
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you encounter any problems or have suggestions for improvements.

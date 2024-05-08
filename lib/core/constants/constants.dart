@@ -2,6 +2,7 @@
 import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
+const String kAppTitle = 'Waterbus';
 const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
 const String kWaterbusDocs = 'https://docs.waterbus.tech';
 

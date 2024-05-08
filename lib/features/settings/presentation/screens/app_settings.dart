@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/themes/app_theme.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
@@ -27,6 +28,7 @@ class _AppSettingsState extends State<AppSettings> {
     return BlocBuilder<ThemesBloc, ThemesState>(
       builder: (context, theme) {
         return MaterialApp(
+          title: kAppTitle,
           navigatorKey: AppNavigator.navigatorSettingKey,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light().data,
