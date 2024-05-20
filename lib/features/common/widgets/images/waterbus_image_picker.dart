@@ -56,15 +56,15 @@ class WaterbusImagePicker {
       },
       style: ButtonStyle(
         animationDuration: Duration.zero,
-        foregroundColor: MaterialStateProperty.resolveWith<Color>(
+        foregroundColor: WidgetStateProperty.resolveWith<Color>(
           (states) {
-            if (states.contains(MaterialState.pressed)) {
+            if (states.contains(WidgetState.pressed)) {
               return Colors.black.withOpacity(0.5);
             }
             return Colors.black;
           },
         ),
-        overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+        overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
       ),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10.sp),

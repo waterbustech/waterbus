@@ -83,7 +83,7 @@ class MeetView extends StatelessWidget {
                                 .withOpacity(.5),
                             Theme.of(context)
                                 .colorScheme
-                                .surfaceVariant
+                                .surfaceContainerHighest
                                 .withOpacity(.5),
                           ],
                           stops: const [0.1, 0.9],
@@ -122,7 +122,7 @@ class MeetView extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   color: Theme.of(context)
                       .colorScheme
-                      .surfaceVariant
+                      .surfaceContainerHighest
                       .withOpacity(.6),
                   child: Container(
                     padding: EdgeInsets.symmetric(

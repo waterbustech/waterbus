@@ -78,9 +78,9 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
               : Switch(
                   value: _isEnabled,
                   activeColor: Theme.of(context).colorScheme.primary,
-                  thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+                  thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
                     (states) {
-                      if (states.contains(MaterialState.selected)) {
+                      if (states.contains(WidgetState.selected)) {
                         return Icon(
                           widget.icon,
                           color: Colors.grey.shade100,

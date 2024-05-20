@@ -33,7 +33,7 @@ class InputSendMessage extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: WebRTC.platformIsMobile
-              ? Theme.of(context).colorScheme.surfaceVariant
+              ? Theme.of(context).colorScheme.surfaceContainerHighest
               : Colors.transparent,
           borderRadius: WebRTC.platformIsMobile
               ? BorderRadius.circular(30.sp)
@@ -59,7 +59,7 @@ class InputSendMessage extends StatelessWidget {
                   ),
                   filled: true,
                   fillColor: WebRTC.platformIsMobile
-                      ? Theme.of(context).colorScheme.surfaceVariant
+                      ? Theme.of(context).colorScheme.surfaceContainerHighest
                       : Colors.transparent,
                   border: OutlineInputBorder(
                     borderRadius: WebRTC.platformIsMobile

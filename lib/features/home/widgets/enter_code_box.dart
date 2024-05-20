@@ -49,7 +49,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
               shape: SuperellipseShape(
                 borderRadius: BorderRadius.circular(25.sp),
               ),
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               child: SizedBox(
                 width: 100.w,
                 height: 36.sp,
@@ -76,7 +76,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                       fontSize: 12.sp,
                     ),
                     filled: true,
-                    fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6.sp),
                       borderSide: BorderSide.none,

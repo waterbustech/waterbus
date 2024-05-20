@@ -25,9 +25,9 @@ class Application {
 
       await WaterbusSdk.instance.initial(
         waterbusUrl: ApiEndpoints.wsUrl,
+        apiWaterbusUrl: ApiEndpoints.baseUrl,
         recordBenchmarkPath:
             appDir == null ? '' : '${appDir.path}/benchmark.txt',
-        apiWaterbusUrl: ApiEndpoints.baseUrl,
       );
 
       configureDependencies();

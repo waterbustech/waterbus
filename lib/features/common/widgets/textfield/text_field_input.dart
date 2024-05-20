@@ -104,7 +104,7 @@ class TextFieldInput extends StatelessWidget {
           fillColor: fillColor ??
               (isAvailable
                   ? Theme.of(context).scaffoldBackgroundColor
-                  : Theme.of(context).colorScheme.background),
+                  : Theme.of(context).colorScheme.surface),
           hintText: hintText,
           errorStyle: errorStyle,
           errorBorder: errorBorder,

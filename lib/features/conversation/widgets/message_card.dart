@@ -59,7 +59,7 @@ class MessageCard extends StatelessWidget {
             ),
             color: message.isMe
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.surfaceVariant,
+                : Theme.of(context).colorScheme.surfaceContainerHighest,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 15.sp,
