@@ -2,12 +2,10 @@
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/failures.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -83,37 +81,29 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   // MARK: private methods
   Future<void> _getUserProfile() async {
-    final Either<Failure, User> user = await WaterbusSdk.instance.getProfile();
+    final User? user = await WaterbusSdk.instance.getProfile();
 
-    user.fold(
-      (l) => {},
-      (r) => _user = r,
-    );
+    _user = user;
   }
 
   Future<void> _handleUpdateUsername(String username) async {
-    final Either<Failure, bool> result =
+    final bool? result =
         await WaterbusSdk.instance.updateUsername(username: username);
 
-    result.fold((l) => {}, (r) {
-      if (r) {
-        _user = _user?.copyWith(userName: username);
-        _checkUsernameStatus = CheckUsernameStatus.none;
+    if (result ?? false) {
+      _user = _user?.copyWith(userName: username);
+      _checkUsernameStatus = CheckUsernameStatus.none;
 
-        AppNavigator.pop();
-      }
-    });
+      AppNavigator.pop();
+    }
   }
 
   Future<void> _handleCheckUsername(String username) async {
-    final Either<Failure, bool> result =
+    final bool result =
         await WaterbusSdk.instance.checkUsername(username: username);
 
-    result.fold(
-      (l) => {},
-      (r) => _checkUsernameStatus =
-          r ? CheckUsernameStatus.registered : CheckUsernameStatus.valid,
-    );
+    _checkUsernameStatus =
+        result ? CheckUsernameStatus.registered : CheckUsernameStatus.valid;
   }
 
   Future<void> _updateUserProfile(
@@ -122,7 +112,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }) async {
     if (_user == null) return;
 
-    final Either<Failure, User> user = await WaterbusSdk.instance.updateProfile(
+    final User? user = await WaterbusSdk.instance.updateProfile(
       user: _user!.copyWith(
         fullName: event.fullName,
         avatar: event.avatar,
@@ -132,47 +122,32 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     AppNavigator.pop();
 
-    user.fold(
-      (l) => {},
-      (r) {
-        if (!ignorePop) {
-          AppNavigator.pop();
-        }
+    if (user != null) {
+      if (!ignorePop) {
+        AppNavigator.pop();
+      }
 
-        return _user = r;
-      },
-    );
+      _user = user;
+    }
   }
 
   Future<void> _handleChangeAvatar(UpdateAvatarEvent event) async {
-    final String? presignedUrl = await _getPresignedUrlS3();
+    final String? presignedUrl = await WaterbusSdk.instance.getPresignedUrl();
 
     if (presignedUrl == null) return;
 
-    final Either<Failure, String> uploadAvatar = await WaterbusSdk.instance
+    final String? uploadAvatar = await WaterbusSdk.instance
         .uploadAvatar(uploadUrl: presignedUrl, image: event.image);
 
-    final String? urlToImage = uploadAvatar.fold((l) => null, (r) => r);
-
-    if (urlToImage == null) return;
+    if (uploadAvatar == null) return;
 
     await _updateUserProfile(
       UpdateProfileEvent(
         fullName: _user!.fullName,
-        avatar: urlToImage,
+        avatar: uploadAvatar,
         bio: _user?.bio,
       ),
       ignorePop: true,
-    );
-  }
-
-  Future<String?> _getPresignedUrlS3() async {
-    final Either<Failure, String> presignedUrl =
-        await WaterbusSdk.instance.getPresignedUrl();
-
-    return presignedUrl.fold(
-      (failure) => null,
-      (url) => url,
     );
   }
 
