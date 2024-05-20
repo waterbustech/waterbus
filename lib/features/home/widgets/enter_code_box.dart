@@ -76,7 +76,8 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                       fontSize: 12.sp,
                     ),
                     filled: true,
-                    fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    fillColor:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6.sp),
                       borderSide: BorderSide.none,
