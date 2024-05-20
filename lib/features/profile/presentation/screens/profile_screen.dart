@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -14,7 +15,6 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
@@ -227,6 +227,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,
+                                                      textAlign:
+                                                          TextAlign.right,
                                                       style: TextStyle(
                                                         fontSize: 12.sp,
                                                         color: Theme.of(context)

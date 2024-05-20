@@ -1,5 +1,7 @@
+// Package imports:
+import 'package:waterbus_sdk/types/index.dart';
+
 // Project imports:
-import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 const String kAppTitle = 'Waterbus';

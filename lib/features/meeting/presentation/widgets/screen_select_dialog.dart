@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 // Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';

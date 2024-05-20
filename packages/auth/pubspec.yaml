@@ -21,6 +21,13 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
+  waterbus_sdk:
+    # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+    git:
+      url: git@github.com:waterbustech/waterbus-flutter-sdk.git
+      ref: refactor/separate-api-call-function
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -13,7 +13,6 @@ import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';

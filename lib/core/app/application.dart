@@ -1,10 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:universal_io/io.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/path_helper.dart';
+
 // Project imports:
+import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/injection/injection_container.dart';
 import 'package:waterbus/core/utils/datasources/base_local_data.dart';
-import 'package:waterbus/core/utils/datasources/base_remote_data.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -16,10 +21,16 @@ class Application {
       await BaseLocalData.initialBox();
 
       // Init dependency injection
-      configureDependencies();
+      final Directory? appDir = await PathHelper.appDir;
 
-      // Config dio helpers
-      await getIt<BaseRemoteData>().initialize();
+      await WaterbusSdk.instance.initial(
+        waterbusUrl: ApiEndpoints.wsUrl,
+        recordBenchmarkPath:
+            appDir == null ? '' : '${appDir.path}/benchmark.txt',
+        apiWaterbusUrl: ApiEndpoints.baseUrl,
+      );
+
+      configureDependencies();
 
       AppBloc.authBloc.add(OnAuthCheckEvent());
     } catch (error) {

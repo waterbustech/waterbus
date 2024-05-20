@@ -1,36 +1,27 @@
 // Package imports:
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 // Project imports:
-import 'package:waterbus/core/error/failures.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/clean_all_recent_joined.dart';
-import 'package:waterbus/features/meeting/domain/usecases/get_recent_joined.dart';
-import 'package:waterbus/features/meeting/domain/usecases/remove_recent_joined.dart';
+import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 
 part 'recent_joined_event.dart';
 part 'recent_joined_state.dart';
 
 @injectable
 class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
-  final GetRecentJoined _recentJoined;
-  final RemoveRecentJoined _removeRecentJoined;
-  final CleanAllRecentJoined _cleanAllRecentJoined;
-
   final List<Meeting> _recentMeetings = [];
+  final MeetingLocalDataSource _localDataSource;
 
   RecentJoinedBloc(
-    this._recentJoined,
-    this._removeRecentJoined,
-    this._cleanAllRecentJoined,
+    this._localDataSource,
   ) : super(MeetingListInitial()) {
     on<MeetingListEvent>(
       (event, emit) async {
         if (event is GetRecentJoinedEvent) {
-          await _handleGetRecentJoined();
+          _handleGetRecentJoined();
 
           emit(_getDoneMeetings);
         }
@@ -54,7 +45,7 @@ class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
         }
 
         if (event is CleanAllRecentJoinedEvent) {
-          await _handleCleanAllRecentJoined();
+          _handleCleanAllRecentJoined();
 
           emit(_getDoneMeetings);
         }
@@ -76,23 +67,18 @@ class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
   }
 
   // MARK: private functions
-  Future<void> _handleGetRecentJoined() async {
-    final Either<Failure, List<Meeting>> meetings =
-        await _recentJoined.call(null);
+  void _handleGetRecentJoined() {
+    final List<Meeting> meetings = _localDataSource.meetings;
 
-    meetings.fold((l) => null, (r) {
+    if (meetings.isNotEmpty) {
       _recentMeetings.clear();
-      return _recentMeetings.addAll(r);
-    });
+      _recentMeetings.addAll(meetings);
+    }
   }
 
-  Future<void> _handleCleanAllRecentJoined() async {
-    final Either<Failure, bool> isCleanSucceed =
-        await _cleanAllRecentJoined.call(null);
-
-    if (isCleanSucceed.isRight()) {
-      _recentMeetings.clear();
-    }
+  void _handleCleanAllRecentJoined() {
+    _localDataSource.removeAll();
+    _recentMeetings.clear();
   }
 
   void _insertMeeting(Meeting meet) {
@@ -113,7 +99,7 @@ class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
     );
 
     if (indexOfMeeting > -1) {
-      _removeRecentJoined.call(_recentMeetings[indexOfMeeting].code);
+      _localDataSource.removeMeeting(_recentMeetings[indexOfMeeting].code);
       _recentMeetings.removeAt(indexOfMeeting);
     }
   }

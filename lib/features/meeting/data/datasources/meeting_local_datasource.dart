@@ -1,10 +1,10 @@
 // Package imports:
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 // Project imports:
 import 'package:waterbus/core/constants/storage_keys.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 
 abstract class MeetingLocalDataSource {
   void insertOrUpdate(Meeting meeting);

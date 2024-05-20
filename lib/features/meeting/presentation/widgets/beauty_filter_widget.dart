@@ -9,8 +9,6 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 // Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 import 'package:waterbus/gen/fonts.gen.dart';

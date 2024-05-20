@@ -8,8 +8,7 @@ sealed class MeetingEvent extends Equatable {
 }
 
 class InitializeMeetingEvent extends MeetingEvent {
-  final String accessToken;
-  const InitializeMeetingEvent({required this.accessToken});
+  const InitializeMeetingEvent();
 }
 
 class PrepareMediaStreamEvent extends MeetingEvent {}
@@ -58,7 +57,7 @@ class DisplayDialogMeetingEvent extends MeetingEvent {
 }
 
 class NewParticipantEvent extends MeetingEvent {
-  final NewParticipant participant;
+  final Participant participant;
   const NewParticipantEvent({required this.participant});
 }
 

@@ -47,7 +47,7 @@ class AppBloc {
   Future<void> bootstrap(String accessToken) async {
     userBloc.add(GetProfileEvent());
     recentJoinedBloc.add(GetRecentJoinedEvent());
-    meetingBloc.add(InitializeMeetingEvent(accessToken: accessToken));
+    meetingBloc.add(const InitializeMeetingEvent());
   }
 
   ///Singleton factory
