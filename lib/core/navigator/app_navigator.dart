@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
+import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';

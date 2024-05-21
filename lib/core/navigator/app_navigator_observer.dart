@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:waterbus/core/navigator/app_routes.dart';
 
 class AppNavigatorObserver extends NavigatorObserver {
