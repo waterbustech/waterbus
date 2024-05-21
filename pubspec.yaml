@@ -106,8 +106,9 @@ dependencies:
   waterbus_sdk:
     # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
     git:
-      url: git@github.com:waterbustech/waterbus-flutter-sdk.git
-      ref: refactor/separate-api-call-function
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 1.3.13
 
 dependency_overrides: 
   watcher: ^1.1.0

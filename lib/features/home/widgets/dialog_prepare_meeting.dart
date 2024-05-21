@@ -71,7 +71,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TimeCard(
-                    text: DateFormat('EEEEE dd', 'en_US')
+                    text: DateFormat('MMMM dd', 'en_US')
                         .format(meeting.latestJoinedTime),
                     iconData: PhosphorIcons.clock,
                     backgroundColor:

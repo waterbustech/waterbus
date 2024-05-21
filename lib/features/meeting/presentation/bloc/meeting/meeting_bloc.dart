@@ -57,7 +57,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           _callSetting = _callSettingsLocalDataSource.getSettings();
 
           _waterbusSdk.changeCallSetting(_callSetting);
-          _waterbusSdk.onEventChangedRegister(_onEventChanged);
+          _waterbusSdk.onEventChangedRegister = _onEventChanged;
         }
 
         if (event is CreateMeetingEvent) {
@@ -98,21 +98,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         if (event is JoinMeetingWithPasswordEvent) {
           if (_currentMeeting == null) return;
 
-          final bool isJoinSucceed = await _handleJoinWithPassword(event);
-
-          if (isJoinSucceed) {
-            await _initialWebRTCManager(
-              roomCode: _currentMeeting!.code.toString(),
-              participantId: _mParticipant!.id,
-            );
-
-            final List<String> targetIds = _currentMeeting!.participants
-                .where((participant) => !participant.isMe)
-                .map((participant) => participant.id.toString())
-                .toList();
-
-            _waterbusSdk.subscribe(targetIds);
-          }
+          final bool isJoinSucceed = await _handleJoinRoom(event);
 
           AppNavigator.pop();
 
@@ -280,7 +266,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: Private
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
-    final Meeting? meeting = await _waterbusSdk.createMeeting(
+    final Meeting? meeting = await _waterbusSdk.createRoom(
       meeting: Meeting(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -294,10 +280,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
   }
 
-  Future<bool> _handleJoinWithPassword(
+  Future<bool> _handleJoinRoom(
     JoinMeetingWithPasswordEvent event,
   ) async {
-    final Meeting? meeting = await _waterbusSdk.joinMeeting(
+    final Meeting? meeting = await _waterbusSdk.joinRoom(
       meeting: _currentMeeting!,
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -326,7 +312,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   Future<Meeting?> _handleGetInfoMeeting(GetInfoMeetingEvent event) async {
     final Meeting? meeting =
-        await _waterbusSdk.getInfoMeeting(code: event.roomCode);
+        await _waterbusSdk.getRoomInfo(code: event.roomCode);
 
     AppNavigator.pop();
 
@@ -336,7 +322,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
     if (_currentMeeting == null) return;
 
-    final Meeting? meeting = await _waterbusSdk.updateMeeting(
+    final Meeting? meeting = await _waterbusSdk.updateRoom(
       meeting: _currentMeeting!.copyWith(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -431,16 +417,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         UpdateRecentJoinedEvent(meeting: _currentMeeting!),
       );
     }
-  }
-
-  Future<void> _initialWebRTCManager({
-    required String roomCode,
-    required int participantId,
-  }) async {
-    await _waterbusSdk.joinRoom(
-      roomId: roomCode,
-      participantId: participantId,
-    );
   }
 
   Future<void> _displayDialogJoinMeeting(Meeting meeting) async {

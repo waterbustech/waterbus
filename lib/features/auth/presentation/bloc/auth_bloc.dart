@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
 
 // Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -27,8 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._userLocal,
   ) : super(AuthInitial()) {
     Auth().initialize((payload) async {
-      final User? user =
-          await WaterbusSdk.instance.loginWithSocial(payloadModel: payload);
+      final User? user = await WaterbusSdk.instance.createToken(payload);
 
       // Pop loading
       AppNavigator.pop();
@@ -69,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (user != null) {
       _user = user;
-      await WaterbusSdk.instance.handleRefreshToken();
+      await WaterbusSdk.instance.renewToken();
     }
 
     FlutterNativeSplash.remove();
@@ -116,8 +114,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-    final User? user =
-        await WaterbusSdk.instance.loginWithSocial(payloadModel: payload);
+    final User? user = await WaterbusSdk.instance.createToken(payload);
 
     // Pop loading
     AppNavigator.pop();
@@ -130,7 +127,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _handleLogOut() async {
     _userLocal.clearUser();
-    await WaterbusSdk.instance.logOut();
+    await WaterbusSdk.instance.deleteToken();
 
     AppNavigator.pop();
 

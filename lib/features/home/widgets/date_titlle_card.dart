@@ -28,7 +28,7 @@ class DateTitleCard extends StatelessWidget {
       child: Text(
         DateTimeHelper().isEqualTwoDate(lastJoinedAt, DateTime.now())
             ? Strings.today.i18n
-            : DateFormat('EEEEE dd', 'en_US').format(lastJoinedAt),
+            : DateFormat('MMMM dd', 'en_US').format(lastJoinedAt),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontSize: 9.25.sp,
             ),
