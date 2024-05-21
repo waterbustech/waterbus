@@ -1,11 +1,9 @@
 // Package imports:
 import 'package:auth/auth.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/failures.dart';
 import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
 
 // Project imports:
@@ -29,16 +27,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._userLocal,
   ) : super(AuthInitial()) {
     Auth().initialize((payload) async {
-      final loginSucceed =
+      final User? user =
           await WaterbusSdk.instance.loginWithSocial(payloadModel: payload);
 
       // Pop loading
       AppNavigator.pop();
 
-      loginSucceed.fold((l) {}, (r) {
-        _userLocal.saveUser(r);
-        _user = r;
-      });
+      if (user != null) {
+        _userLocal.saveUser(user);
+        _user = user;
+      }
 
       add(OnAuthCheckEvent());
     });
@@ -118,16 +116,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-    final Either<Failure, User> loginSucceed =
+    final User? user =
         await WaterbusSdk.instance.loginWithSocial(payloadModel: payload);
 
     // Pop loading
     AppNavigator.pop();
 
-    loginSucceed.fold((l) {}, (r) {
-      _userLocal.saveUser(r);
-      _user = r;
-    });
+    if (user != null) {
+      _userLocal.saveUser(user);
+      _user = user;
+    }
   }
 
   Future<void> _handleLogOut() async {

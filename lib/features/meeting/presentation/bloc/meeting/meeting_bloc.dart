@@ -8,14 +8,12 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/failures.dart';
 
 // Project imports:
 import 'package:waterbus/core/method_channels/pip_channel.dart';
@@ -282,8 +280,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: Private
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
-    final Either<Failure, Meeting> meeting =
-        await WaterbusSdk.instance.createMeeting(
+    final Meeting? meeting = await _waterbusSdk.createMeeting(
       meeting: Meeting(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -291,59 +288,55 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.popUntil(Routes.rootRoute);
 
-    return meeting.fold((l) => null, (r) async {
-      _localDataSource.insertOrUpdate(r);
-      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
-    });
+    if (meeting == null) return;
+
+    _localDataSource.insertOrUpdate(meeting);
+    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
   }
 
   Future<bool> _handleJoinWithPassword(
     JoinMeetingWithPasswordEvent event,
   ) async {
-    final Either<Failure, Meeting> meeting =
-        await WaterbusSdk.instance.joinMeeting(
+    final Meeting? meeting = await _waterbusSdk.joinMeeting(
       meeting: _currentMeeting!,
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
 
-    return meeting.fold((l) => false, (r) {
-      _localDataSource.insertOrUpdate(r);
+    if (meeting == null) return false;
 
-      _currentMeeting = r;
+    _localDataSource.insertOrUpdate(meeting);
 
-      AppBloc.recentJoinedBloc.add(
-        InsertRecentJoinedEvent(meeting: r),
-      );
+    _currentMeeting = meeting;
 
-      final int indexOfMyParticipant = r.participants.lastIndexWhere(
-        (participant) => participant.isMe,
-      );
+    AppBloc.recentJoinedBloc.add(
+      InsertRecentJoinedEvent(meeting: meeting),
+    );
 
-      if (indexOfMyParticipant != -1) {
-        _mParticipant = r.participants[indexOfMyParticipant];
-      }
+    final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
+      (participant) => participant.isMe,
+    );
 
-      return true;
-    });
+    if (indexOfMyParticipant != -1) {
+      _mParticipant = meeting.participants[indexOfMyParticipant];
+    }
+
+    return true;
   }
 
   Future<Meeting?> _handleGetInfoMeeting(GetInfoMeetingEvent event) async {
-    final Either<Failure, Meeting> meeting =
-        await WaterbusSdk.instance.getInfoMeeting(code: event.roomCode);
+    final Meeting? meeting =
+        await _waterbusSdk.getInfoMeeting(code: event.roomCode);
 
     AppNavigator.pop();
 
-    return meeting.fold((l) => null, (r) {
-      return r;
-    });
+    return meeting;
   }
 
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
     if (_currentMeeting == null) return;
 
-    final Either<Failure, Meeting> meeting =
-        await WaterbusSdk.instance.updateMeeting(
+    final Meeting? meeting = await _waterbusSdk.updateMeeting(
       meeting: _currentMeeting!.copyWith(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -351,12 +344,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.pop();
 
-    meeting.fold((l) => null, (r) {
-      AppNavigator.popUntil(Routes.meetingRoute);
-      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
+    if (meeting == null) return;
 
-      return _currentMeeting = r;
-    });
+    _localDataSource.insertOrUpdate(meeting);
+
+    AppNavigator.popUntil(Routes.meetingRoute);
+    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+
+    _currentMeeting = meeting;
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
