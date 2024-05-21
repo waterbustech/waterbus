@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:universal_io/io.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/gen/fonts.gen.dart';
 

@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/chats/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/xmodels/chat_model.dart';

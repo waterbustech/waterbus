@@ -1,7 +1,5 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/rendering.dart';
 
 /// A [SliverGridLayout] that provide a way to customize the children geometry.

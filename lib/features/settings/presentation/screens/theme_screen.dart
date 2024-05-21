@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';

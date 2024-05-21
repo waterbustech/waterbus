@@ -1,4 +1,3 @@
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
 

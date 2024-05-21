@@ -1,13 +1,9 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class StackAvatar extends StatelessWidget {

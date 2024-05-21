@@ -1,8 +1,6 @@
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/themes/theme_model.dart';
 import 'package:waterbus/features/settings/themes/data/themes_datasource.dart';
 

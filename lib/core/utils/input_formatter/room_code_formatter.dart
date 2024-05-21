@@ -1,4 +1,3 @@
-// Flutter imports:
 import 'package:flutter/services.dart';
 
 class RoomCodeFormatter extends TextInputFormatter {

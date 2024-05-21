@@ -1,8 +1,6 @@
-// Package imports:
 import 'package:hive/hive.dart';
 import 'package:waterbus_sdk/utils/path_helper.dart';
 
-// Project imports:
 import 'package:waterbus/core/constants/storage_keys.dart';
 
 class BaseLocalData {

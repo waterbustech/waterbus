@@ -1,16 +1,13 @@
-// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/enums/audio_level.dart';
 
-// Project imports:
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class MeetView extends StatelessWidget {

@@ -237,3 +237,6 @@ flutter:
           weight: 400
         - asset: assets/fonts/source-code-pro/static/SourceCodePro-Bold.ttf
           weight: 700
+
+import_sorter:
+  comments: false

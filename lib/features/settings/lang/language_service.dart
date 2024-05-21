@@ -1,7 +1,5 @@
-// Dart imports:
 import 'dart:ui';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/models/language_model.dart';
 import 'package:waterbus/features/settings/lang/datasource/lang_datasource.dart';
 

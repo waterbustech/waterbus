@@ -1,8 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
 class TextFieldInput extends StatelessWidget {

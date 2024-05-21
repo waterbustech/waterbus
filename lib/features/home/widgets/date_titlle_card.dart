@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 

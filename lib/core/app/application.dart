@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:universal_io/io.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/path_helper.dart';
 
-// Project imports:
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/injection/injection_container.dart';
 import 'package:waterbus/core/utils/datasources/base_local_data.dart';

@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 

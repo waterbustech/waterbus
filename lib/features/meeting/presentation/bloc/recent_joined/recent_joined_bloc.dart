@@ -1,10 +1,8 @@
-// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
-// Project imports:
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 
 part 'recent_joined_event.dart';

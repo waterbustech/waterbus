@@ -9,11 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-// Package imports:
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-// Project imports:
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i13;
 import '../../features/home/bloc/home/home_bloc.dart' as _i3;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i5;

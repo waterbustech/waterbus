@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/lang/models/language_model.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';

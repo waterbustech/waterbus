@@ -1,4 +1,3 @@
-// Package imports:
 import 'package:re_editor/re_editor.dart';
 import 'package:re_highlight/languages/ada.dart';
 import 'package:re_highlight/languages/awk.dart';

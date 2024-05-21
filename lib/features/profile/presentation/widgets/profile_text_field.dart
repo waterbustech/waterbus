@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 

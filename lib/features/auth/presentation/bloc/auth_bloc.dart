@@ -1,11 +1,9 @@
-// Package imports:
 import 'package:auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/xmodels/datasources/user_local_datasource.dart';

@@ -1,13 +1,10 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-// Project imports:
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 
 class EnterCodeBox extends StatefulWidget {

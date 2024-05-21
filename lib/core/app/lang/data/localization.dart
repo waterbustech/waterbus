@@ -1,7 +1,5 @@
-// Package imports:
 import 'package:i18n_extension/i18n_extension.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/data/english.dart';
 import 'package:waterbus/core/app/lang/data/vietnamese.dart';
 import 'package:waterbus/core/app/themes/theme_model.dart';
