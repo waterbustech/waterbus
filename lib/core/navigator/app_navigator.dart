@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
@@ -79,7 +80,10 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       // Meeting
       case Routes.meetingRoute:
         return _buildRoute(
-          settings,
+          RouteSettings(
+            name: '${Routes.meetingRoute}'
+                '${arguments?['meeting'].code.toString().formatRoomCode}',
+          ),
           const MeetingScreen(),
         );
       case Routes.createMeetingRoute:

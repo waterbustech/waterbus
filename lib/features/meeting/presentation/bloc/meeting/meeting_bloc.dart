@@ -88,7 +88,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
 
           emit(_preJoinMeeting);
-          AppNavigator().push(Routes.meetingRoute);
+          AppNavigator().push(
+            Routes.meetingRoute,
+            arguments: {'meeting': _currentMeeting},
+          );
         }
 
         if (event is JoinMeetingWithPasswordEvent) {
@@ -102,7 +105,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
 
             if (event.isMember) {
-              AppNavigator().push(Routes.meetingRoute);
+              AppNavigator().push(
+                Routes.meetingRoute,
+                arguments: {'meeting': _currentMeeting},
+              );
             }
           }
         }
@@ -330,7 +336,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     _localDataSource.insertOrUpdate(meeting);
 
-    AppNavigator.popUntil(Routes.meetingRoute);
+    AppNavigator.pop();
     AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
 
     _currentMeeting = meeting;

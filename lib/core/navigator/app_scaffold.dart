@@ -88,7 +88,7 @@ class AppScaffold extends StatelessWidget {
   bool get _canBackward => AppNavigator.canPop;
 
   Future<void> _onPopInvoked(bool canPop) async {
-    if (Routes.meetingRoute == AppNavigator.currentRoute()) {
+    if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
   }

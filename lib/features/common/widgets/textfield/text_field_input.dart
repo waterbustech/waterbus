@@ -85,7 +85,7 @@ class TextFieldInput extends StatelessWidget {
         style: TextStyle(
           fontSize: 12.sp,
           color: isAvailable
-              ? Theme.of(context).textTheme.bodyMedium!.color
+              ? Theme.of(context).textTheme.bodyMedium?.color
               : Theme.of(context).textTheme.titleMedium?.color,
           height: height,
         ),
