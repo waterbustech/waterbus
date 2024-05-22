@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:re_editor/re_editor.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/constants/programing_languages.dart';
 
 class SelectProgramingLanguagesDialog extends StatefulWidget {

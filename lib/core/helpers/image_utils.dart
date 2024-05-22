@@ -1,15 +1,10 @@
-// Dart imports:
 import 'dart:io';
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// Package imports:
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-
-// Project imports:
-import 'package:waterbus/core/utils/path_helper.dart';
+import 'package:waterbus_sdk/utils/path_helper.dart';
 
 class ImageUtils {
   Future<Uint8List> reduceSize(String pathImage, {int quality = 80}) async {

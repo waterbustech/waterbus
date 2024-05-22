@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Project imports:
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 

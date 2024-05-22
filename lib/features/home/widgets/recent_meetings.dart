@@ -1,18 +1,15 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-// Project imports:
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
 import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
 import 'package:waterbus/features/home/widgets/empty_meet_view.dart';
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 

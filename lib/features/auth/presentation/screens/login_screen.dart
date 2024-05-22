@@ -1,14 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
 
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:auth/auth.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -125,7 +122,7 @@ class LogInScreen extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Assets.images.worldMap.image(
                   color: Theme.of(context).colorScheme.primary,

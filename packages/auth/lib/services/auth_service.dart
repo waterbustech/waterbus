@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'dart:math';
 
 // Package imports:
-import 'package:auth/models/auth_payload_model.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
 
 const List<String> scopes = <String>[
   'email',

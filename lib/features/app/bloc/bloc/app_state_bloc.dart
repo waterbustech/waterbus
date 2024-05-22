@@ -1,4 +1,3 @@
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_state_event.dart';

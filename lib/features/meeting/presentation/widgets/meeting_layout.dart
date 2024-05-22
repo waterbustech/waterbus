@@ -1,16 +1,12 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
-// Project imports:
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 
 class MeetingLayout extends StatelessWidget {

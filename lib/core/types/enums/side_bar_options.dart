@@ -1,4 +1,3 @@
-// Project imports:
 import 'package:waterbus/gen/assets.gen.dart';
 
 enum SideBarOptions {

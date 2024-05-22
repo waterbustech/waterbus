@@ -1,8 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
 class TextFieldInput extends StatelessWidget {
@@ -87,7 +85,7 @@ class TextFieldInput extends StatelessWidget {
         style: TextStyle(
           fontSize: 12.sp,
           color: isAvailable
-              ? Theme.of(context).textTheme.bodyMedium!.color
+              ? Theme.of(context).textTheme.bodyMedium?.color
               : Theme.of(context).textTheme.titleMedium?.color,
           height: height,
         ),
@@ -104,7 +102,7 @@ class TextFieldInput extends StatelessWidget {
           fillColor: fillColor ??
               (isAvailable
                   ? Theme.of(context).scaffoldBackgroundColor
-                  : Theme.of(context).colorScheme.background),
+                  : Theme.of(context).colorScheme.surface),
           hintText: hintText,
           errorStyle: errorStyle,
           errorBorder: errorBorder,

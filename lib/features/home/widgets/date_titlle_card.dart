@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 
@@ -28,7 +25,7 @@ class DateTitleCard extends StatelessWidget {
       child: Text(
         DateTimeHelper().isEqualTwoDate(lastJoinedAt, DateTime.now())
             ? Strings.today.i18n
-            : DateFormat('EEEEE dd', 'en_US').format(lastJoinedAt),
+            : DateFormat('MMMM dd', 'en_US').format(lastJoinedAt),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontSize: 9.25.sp,
             ),

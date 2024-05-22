@@ -1,4 +1,3 @@
-// Project imports:
 import 'package:waterbus/core/app/lang/data/localization.dart';
 
 Map<String, String> vietnamese = {

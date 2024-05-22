@@ -1,5 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
+
+import 'package:waterbus/core/navigator/app_routes.dart';
 
 class AppNavigatorObserver extends NavigatorObserver {
   static List<String?> routeNames = [];
@@ -7,9 +8,13 @@ class AppNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     super.didPush(route, previousRoute);
-    routeNames.add(route.settings.name);
 
-    updateCurrentRouteToBloc(route.settings.name ?? '');
+    final String? name =
+        route.settings.name?.startsWith(Routes.meetingRoute) ?? false
+            ? Routes.meetingRoute
+            : route.settings.name;
+
+    routeNames.add(name);
   }
 
   @override
@@ -18,16 +23,12 @@ class AppNavigatorObserver extends NavigatorObserver {
     if (routeNames.length > 1) {
       routeNames.removeLast();
     }
-
-    updateCurrentRouteToBloc(route.settings.name ?? '');
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
     super.didReplace();
     routeNames[routeNames.length - 1] = newRoute?.settings.name ?? '';
-
-    updateCurrentRouteToBloc(newRoute?.settings.name ?? '');
   }
 
   @override
@@ -38,11 +39,7 @@ class AppNavigatorObserver extends NavigatorObserver {
     if (indexOfRoute != -1) {
       routeNames.removeRange(indexOfRoute, routeNames.length);
     }
-
-    updateCurrentRouteToBloc(route.settings.name ?? '');
   }
-
-  void updateCurrentRouteToBloc(String routeName) {}
 
   // Static
   static String? get currentRouteName => routeNames.lastWhere(

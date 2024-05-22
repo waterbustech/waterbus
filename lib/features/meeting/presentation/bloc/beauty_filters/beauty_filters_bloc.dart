@@ -1,11 +1,7 @@
-// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-
-// Project imports:
-import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
 
 part 'beauty_filters_event.dart';
 part 'beauty_filters_state.dart';

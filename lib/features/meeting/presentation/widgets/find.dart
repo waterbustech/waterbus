@@ -1,10 +1,7 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:re_editor/re_editor.dart';
 
 const EdgeInsetsGeometry _kDefaultFindMargin = EdgeInsets.only(

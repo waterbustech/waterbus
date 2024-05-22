@@ -1,13 +1,9 @@
-// Dart imports:
 import 'dart:async';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -92,7 +88,7 @@ class AppScaffold extends StatelessWidget {
   bool get _canBackward => AppNavigator.canPop;
 
   Future<void> _onPopInvoked(bool canPop) async {
-    if (Routes.meetingRoute == AppNavigator.currentRoute()) {
+    if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
   }

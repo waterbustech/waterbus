@@ -1,14 +1,12 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
-// Project imports:
+import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
-import 'package:waterbus/core/types/extensions/duration_x.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
@@ -82,7 +80,10 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       // Meeting
       case Routes.meetingRoute:
         return _buildRoute(
-          settings,
+          RouteSettings(
+            name: '${Routes.meetingRoute}'
+                '${arguments?['meeting'].code.toString().formatRoomCode}',
+          ),
           const MeetingScreen(),
         );
       case Routes.createMeetingRoute:

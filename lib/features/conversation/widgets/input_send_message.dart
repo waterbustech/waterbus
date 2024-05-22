@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 
 class InputSendMessage extends StatelessWidget {
@@ -33,7 +30,7 @@ class InputSendMessage extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: WebRTC.platformIsMobile
-              ? Theme.of(context).colorScheme.surfaceVariant
+              ? Theme.of(context).colorScheme.surfaceContainerHighest
               : Colors.transparent,
           borderRadius: WebRTC.platformIsMobile
               ? BorderRadius.circular(30.sp)
@@ -59,7 +56,7 @@ class InputSendMessage extends StatelessWidget {
                   ),
                   filled: true,
                   fillColor: WebRTC.platformIsMobile
-                      ? Theme.of(context).colorScheme.surfaceVariant
+                      ? Theme.of(context).colorScheme.surfaceContainerHighest
                       : Colors.transparent,
                   border: OutlineInputBorder(
                     borderRadius: WebRTC.platformIsMobile

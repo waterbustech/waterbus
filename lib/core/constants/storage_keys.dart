@@ -8,7 +8,7 @@ class StorageKeys {
   static const String boxTheme = 'boxTheme';
 
   // In Box - Auth
-  static const String userModel = 'userModel';
+  static const String user = 'user';
 
   // In Box - Meeting
   static const String meetings = 'meetings';

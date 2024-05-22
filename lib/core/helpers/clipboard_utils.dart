@@ -1,7 +1,5 @@
-// Flutter imports:
 import 'package:flutter/services.dart';
 
-// Project imports:
 import 'package:waterbus/core/helpers/device_utils.dart';
 
 /// A Flutter Clipboard Plugin.

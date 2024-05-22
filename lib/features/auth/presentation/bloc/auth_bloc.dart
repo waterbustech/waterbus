@@ -1,21 +1,12 @@
-// Package imports:
 import 'package:auth/auth.dart';
-import 'package:auth/models/auth_payload_model.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
-import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/usecase/usecase.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:waterbus/features/auth/domain/entities/user.dart';
-import 'package:waterbus/features/auth/domain/usecases/check_auth.dart';
-import 'package:waterbus/features/auth/domain/usecases/login_with_social.dart';
-import 'package:waterbus/features/auth/domain/usecases/logout.dart';
+import 'package:waterbus/features/chats/xmodels/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -25,46 +16,30 @@ part 'auth_state.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final CheckAuth _checkAuth;
-  final LoginWithSocial _loginWithSocial;
-  final LogOut _logOut;
-  final AuthLocalDataSource _authLocal;
+  final UserLocalDataSource _userLocal;
 
-  User? user;
+  User? _user;
 
   AuthBloc(
-    this._checkAuth,
-    this._loginWithSocial,
-    this._logOut,
-    this._authLocal,
+    this._userLocal,
   ) : super(AuthInitial()) {
     Auth().initialize((payload) async {
-      final Either<Failure, User> loginSucceed = await _loginWithSocial.call(
-        AuthParams(payloadModel: payload),
-      );
+      final User? user = await WaterbusSdk.instance.createToken(payload);
 
       // Pop loading
       AppNavigator.pop();
 
-      loginSucceed.fold((l) {}, (r) {
-        user = r;
-      });
+      if (user != null) {
+        _userLocal.saveUser(user);
+        _user = user;
+      }
 
       add(OnAuthCheckEvent());
     });
 
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
-        final Either<Failure, User> hasLogined = await _checkAuth.call(null);
-        FlutterNativeSplash.remove();
-
-        hasLogined.fold(
-          (l) => emit(_authFailure),
-          (r) {
-            user = r;
-            return emit(_authSuccess);
-          },
-        );
+        await _onAuthCheck(emit);
       }
 
       if (event is LogInWithGoogleEvent ||
@@ -72,22 +47,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event is LogInWithAppleEvent) {
         await _handleLogin(event);
 
-        if (user != null) emit(_authSuccess);
+        if (_user != null) emit(_authSuccess);
       }
 
       if (event is LogOutEvent) {
         await _handleLogOut();
 
-        if (user == null) {
+        if (_user == null) {
           emit(_authFailure);
         }
       }
     });
   }
 
+  Future<void> _onAuthCheck(Emitter<AuthState> emit) async {
+    final User? user = _userLocal.getUser();
+
+    if (user != null) {
+      _user = user;
+      await WaterbusSdk.instance.renewToken();
+    }
+
+    FlutterNativeSplash.remove();
+
+    emit(_user == null ? _authFailure : _authSuccess);
+  }
+
   // MARK: state
   AuthSuccess get _authSuccess {
-    AppBloc.instance.bootstrap(_authLocal.accessToken!);
+    AppBloc.instance.bootstrap(WaterbusSdk().accessToken);
 
     return AuthSuccess();
   }
@@ -124,25 +112,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-
-    final Either<Failure, User> loginSucceed = await _loginWithSocial.call(
-      AuthParams(payloadModel: payload),
-    );
+    final User? user = await WaterbusSdk.instance.createToken(payload);
 
     // Pop loading
     AppNavigator.pop();
 
-    loginSucceed.fold((l) {}, (r) {
-      user = r;
-    });
+    if (user != null) {
+      _userLocal.saveUser(user);
+      _user = user;
+    }
   }
 
   Future<void> _handleLogOut() async {
-    await _logOut.call(NoParams());
+    _userLocal.clearUser();
+    await WaterbusSdk.instance.deleteToken();
 
     AppNavigator.pop();
 
-    user = null;
+    _user = null;
     AppBloc.userBloc.add(CleanProfileEvent());
     AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
   }

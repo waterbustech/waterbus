@@ -1,15 +1,10 @@
-// Dart imports:
 import 'dart:async';
-import 'dart:io';
 
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -17,27 +12,15 @@ import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
-import 'package:waterbus/core/constants/api_endpoints.dart';
-import 'package:waterbus/core/error/failures.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/core/utils/path_helper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
-import 'package:waterbus/features/meeting/domain/entities/status_enum.dart';
-import 'package:waterbus/features/meeting/domain/usecases/create_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/get_call_settings.dart';
-import 'package:waterbus/features/meeting/domain/usecases/get_info_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/join_meeting.dart';
-import 'package:waterbus/features/meeting/domain/usecases/save_call_settings.dart';
-import 'package:waterbus/features/meeting/domain/usecases/update_meeting.dart';
+import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart';
+import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
@@ -47,12 +30,8 @@ part 'meeting_state.dart';
 
 @injectable
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
-  final CreateMeeting _createMeeting;
-  final JoinMeeting _joinMeeting;
-  final UpdateMeeting _updateMeeting;
-  final GetInfoMeeting _getInfoMeeting;
-  final GetCallSettings _getCallSettings;
-  final SaveCallSettings _saveCallSettings;
+  final MeetingLocalDataSource _localDataSource;
+  final CallSettingsLocalDataSource _callSettingsLocalDataSource;
   final PipChannel _pipChannel;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
@@ -63,35 +42,18 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   CallSetting _callSetting = CallSetting();
 
   MeetingBloc(
-    this._createMeeting,
-    this._joinMeeting,
-    this._updateMeeting,
-    this._getInfoMeeting,
-    this._getCallSettings,
-    this._saveCallSettings,
     this._pipChannel,
+    this._localDataSource,
+    this._callSettingsLocalDataSource,
   ) : super(const MeetingInitial()) {
     on<MeetingEvent>(
       transformer: sequential(),
       (event, emit) async {
         if (event is InitializeMeetingEvent) {
-          final Directory? appDir = await PathHelper.appDir;
+          _callSetting = _callSettingsLocalDataSource.getSettings();
 
-          WaterbusSdk.instance.initial(
-            accessToken: event.accessToken,
-            waterbusUrl: ApiEndpoints.wsUrl,
-            recordBenchmarkPath:
-                appDir == null ? '' : '${appDir.path}/benchmark.txt',
-          );
-
-          _getCallSettings.call(null).then(
-                (settings) => settings.fold((l) => null, (r) async {
-                  _callSetting = r;
-
-                  _waterbusSdk.changeCallSetting(r);
-                  _waterbusSdk.onEventChangedRegister(_onEventChanged);
-                }),
-              );
+          _waterbusSdk.changeCallSetting(_callSetting);
+          _waterbusSdk.onEventChangedRegister = _onEventChanged;
         }
 
         if (event is CreateMeetingEvent) {
@@ -126,27 +88,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
 
           emit(_preJoinMeeting);
-          AppNavigator().push(Routes.meetingRoute);
+          AppNavigator().push(
+            Routes.meetingRoute,
+            arguments: {'meeting': _currentMeeting},
+          );
         }
 
         if (event is JoinMeetingWithPasswordEvent) {
           if (_currentMeeting == null) return;
 
-          final bool isJoinSucceed = await _handleJoinWithPassword(event);
-
-          if (isJoinSucceed) {
-            await _initialWebRTCManager(
-              roomCode: _currentMeeting!.code.toString(),
-              participantId: _mParticipant!.id,
-            );
-
-            final List<String> targetIds = _currentMeeting!.participants
-                .where((participant) => !participant.isMe)
-                .map((participant) => participant.id.toString())
-                .toList();
-
-            _waterbusSdk.subscribe(targetIds);
-          }
+          final bool isJoinSucceed = await _handleJoinRoom(event);
 
           AppNavigator.pop();
 
@@ -154,7 +105,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
 
             if (event.isMember) {
-              AppNavigator().push(Routes.meetingRoute);
+              AppNavigator().push(
+                Routes.meetingRoute,
+                arguments: {'meeting': _currentMeeting},
+              );
             }
           }
         }
@@ -186,6 +140,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         if (event is StartSharingScreenEvent) {
           DesktopCapturerSource? source;
+
           if (WebRTC.platformIsDesktop) {
             source = await showDialogWaterbus(
               alignment: Alignment.center,
@@ -225,7 +180,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is SaveCallSettingsEvent) {
-          _saveCallSettings.call(event.setting);
+          _callSettingsLocalDataSource.saveSettings(event.setting);
 
           _callSetting = event.setting;
 
@@ -313,79 +268,78 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: Private
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
-    final Either<Failure, Meeting> meeting = await _createMeeting.call(
-      CreateMeetingParams(
-        meeting: Meeting(title: event.roomName),
-        password: event.password,
-      ),
+    final Meeting? meeting = await _waterbusSdk.createRoom(
+      meeting: Meeting(title: event.roomName),
+      password: event.password,
+      userId: AppBloc.userBloc.user?.id,
     );
 
     AppNavigator.popUntil(Routes.rootRoute);
 
-    return meeting.fold((l) => null, (r) async {
-      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
-    });
+    if (meeting == null) return;
+
+    _localDataSource.insertOrUpdate(meeting);
+    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
   }
 
-  Future<bool> _handleJoinWithPassword(
+  Future<bool> _handleJoinRoom(
     JoinMeetingWithPasswordEvent event,
   ) async {
-    final Either<Failure, Meeting> meeting = await _joinMeeting.call(
-      CreateMeetingParams(
-        meeting: _currentMeeting!,
-        password: event.password,
-      ),
+    final Meeting? meeting = await _waterbusSdk.joinRoom(
+      meeting: _currentMeeting!,
+      password: event.password,
+      userId: AppBloc.userBloc.user?.id,
     );
 
-    return meeting.fold((l) => false, (r) {
-      _currentMeeting = r;
+    if (meeting == null) return false;
 
-      AppBloc.recentJoinedBloc.add(
-        InsertRecentJoinedEvent(meeting: r),
-      );
+    _localDataSource.insertOrUpdate(meeting);
 
-      final int indexOfMyParticipant = r.participants.lastIndexWhere(
-        (participant) => participant.isMe,
-      );
+    _currentMeeting = meeting;
 
-      if (indexOfMyParticipant != -1) {
-        _mParticipant = r.participants[indexOfMyParticipant];
-      }
+    AppBloc.recentJoinedBloc.add(
+      InsertRecentJoinedEvent(meeting: meeting),
+    );
 
-      return true;
-    });
+    final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
+      (participant) => participant.isMe,
+    );
+
+    if (indexOfMyParticipant != -1) {
+      _mParticipant = meeting.participants[indexOfMyParticipant];
+    }
+
+    return true;
   }
 
   Future<Meeting?> _handleGetInfoMeeting(GetInfoMeetingEvent event) async {
-    final Either<Failure, Meeting> meeting = await _getInfoMeeting.call(
-      GetMeetingParams(code: event.roomCode),
-    );
+    final Meeting? meeting =
+        await _waterbusSdk.getRoomInfo(code: event.roomCode);
 
     AppNavigator.pop();
 
-    return meeting.fold((l) => null, (r) {
-      return r;
-    });
+    return meeting;
   }
 
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
     if (_currentMeeting == null) return;
 
-    final Either<Failure, Meeting> meeting = await _updateMeeting.call(
-      CreateMeetingParams(
-        meeting: _currentMeeting!.copyWith(title: event.roomName),
-        password: event.password,
-      ),
+    final Meeting? meeting = await _waterbusSdk.updateRoom(
+      meeting: _currentMeeting!.copyWith(title: event.roomName),
+      password: event.password,
+      userId: AppBloc.userBloc.user?.id,
     );
 
     AppNavigator.pop();
 
-    meeting.fold((l) => null, (r) {
-      AppNavigator.popUntil(Routes.meetingRoute);
-      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: r));
+    if (meeting == null) return;
 
-      return _currentMeeting = r;
-    });
+    _localDataSource.insertOrUpdate(meeting);
+
+    AppNavigator.pop();
+    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+
+    _currentMeeting = meeting;
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
@@ -465,16 +419,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         UpdateRecentJoinedEvent(meeting: _currentMeeting!),
       );
     }
-  }
-
-  Future<void> _initialWebRTCManager({
-    required String roomCode,
-    required int participantId,
-  }) async {
-    await _waterbusSdk.joinRoom(
-      roomId: roomCode,
-      participantId: participantId,
-    );
   }
 
   Future<void> _displayDialogJoinMeeting(Meeting meeting) async {
