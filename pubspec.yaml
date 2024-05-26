@@ -93,7 +93,7 @@ dependencies:
     sdk: flutter
   i18n_extension: ^12.0.1
   # Code Editor
-  re_editor: ^0.2.0
+  re_editor: ^0.3.0
   re_highlight: ^0.0.3
 
   # Media
