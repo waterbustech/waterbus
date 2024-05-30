@@ -12,11 +12,9 @@ class BaseLocalData {
   }
 
   static Future<void> openBoxApp() async {
-    await Future.wait([
-      Hive.openBox(StorageKeys.boxAuth),
-      Hive.openBox(StorageKeys.boxMeeting),
-      Hive.openBox(StorageKeys.boxCallSettings),
-      Hive.openBox(StorageKeys.boxAppSettings),
-    ]);
+    await Hive.openBox(StorageKeys.boxAuth);
+    await Hive.openBox(StorageKeys.boxMeeting);
+    await Hive.openBox(StorageKeys.boxCallSettings);
+    await Hive.openBox(StorageKeys.boxAppSettings);
   }
 }

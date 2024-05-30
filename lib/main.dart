@@ -30,6 +30,11 @@ void main(List<String> args) async {
       PaintingBinding.instance.imageCache.maximumSizeBytes =
           1024 * 1024 * 300; // 300 MB
 
+      await WaterbusSdk.instance.initializeApp(
+        wsUrl: ApiEndpoints.wsUrl,
+        apiUrl: ApiEndpoints.baseUrl,
+      );
+
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -39,11 +44,6 @@ void main(List<String> args) async {
       if (kIsWeb) {
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
       }
-
-      await WaterbusSdk.instance.initial(
-        wsUrl: ApiEndpoints.wsUrl,
-        apiUrl: ApiEndpoints.baseUrl,
-      );
 
       runApp(
         I18n(
