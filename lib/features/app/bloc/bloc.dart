@@ -42,7 +42,7 @@ class AppBloc {
     ),
   ];
 
-  Future<void> bootstrap(String accessToken) async {
+  Future<void> bootstrap() async {
     userBloc.add(GetProfileEvent());
     recentJoinedBloc.add(GetRecentJoinedEvent());
     meetingBloc.add(const InitializeMeetingEvent());

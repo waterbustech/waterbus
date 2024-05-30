@@ -42,9 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _onAuthCheck(emit);
       }
 
-      if (event is LogInWithGoogleEvent ||
-          event is LogInWithFacebookEvent ||
-          event is LogInWithAppleEvent) {
+      if (event is LogInWithGoogleEvent || event is LogInWithAppleEvent) {
         await _handleLogin(event);
 
         if (_user != null) emit(_authSuccess);
@@ -75,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // MARK: state
   AuthSuccess get _authSuccess {
-    AppBloc.instance.bootstrap(WaterbusSdk().accessToken);
+    AppBloc.instance.bootstrap();
 
     return AuthSuccess();
   }
@@ -95,9 +93,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     switch (event) {
       case LogInWithGoogleEvent():
         payload = await Auth().signInWithGoogle();
-        break;
-      case LogInWithFacebookEvent():
-        payload = await Auth().signInWithFacebook();
         break;
       case LogInWithAppleEvent():
         payload = await Auth().signInWithApple();

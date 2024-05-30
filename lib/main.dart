@@ -13,6 +13,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
+import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 
@@ -38,6 +39,11 @@ void main(List<String> args) async {
       if (kIsWeb) {
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
       }
+
+      await WaterbusSdk.instance.initial(
+        wsUrl: ApiEndpoints.wsUrl,
+        apiUrl: ApiEndpoints.baseUrl,
+      );
 
       runApp(
         I18n(

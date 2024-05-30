@@ -28,7 +28,7 @@ allprojects {
 
                 def groupsToConfigure = [
                         // "com.fluttercandies.flutter_image_compress",
-                        "com.example.flutter_callkit_incoming",
+                        "com.example.waterbus_callkit_incoming",
                         "com.mix1009.android_path_provider"
                 ]
 

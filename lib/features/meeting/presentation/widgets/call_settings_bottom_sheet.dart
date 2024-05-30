@@ -82,7 +82,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {},
               ),
               CallSettingButton(
-                visible: WebRTC.platformIsIOS,
+                visible: WebRTC.platformIsMobile && !SizerUtil.isDesktop,
                 icon: PhosphorIcons.magic_wand,
                 lable: Strings.beautyFilters.i18n,
                 onTap: () {
