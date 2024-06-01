@@ -36,13 +36,13 @@ class MeetView extends StatelessWidget {
       type: MaterialType.card,
       color: Theme.of(context).colorScheme.onInverseSurface,
       shape: SuperellipseShape(
-        side: !borderEnabled || isScreenSharing
+        side: !borderEnabled || _isScreenSharing
             ? BorderSide.none
             : BorderSide(
                 color: Theme.of(context).colorScheme.primary,
-                width: audioLevel == AudioLevel.kAudioStrong
+                width: _audioLevel == AudioLevel.kAudioStrong
                     ? 8.sp
-                    : audioLevel == AudioLevel.kAudioLight
+                    : _audioLevel == AudioLevel.kAudioLight
                         ? 6.sp
                         : 0.sp,
               ),
@@ -54,18 +54,13 @@ class MeetView extends StatelessWidget {
           margin: margin,
           child: Stack(
             children: [
-              videoRenderer?.srcObject != null && isVideoEnabled
-                  ? RTCVideoView(
-                      videoRenderer!,
-                      key: videoRenderer!.textureId == null
-                          ? null
-                          : Key(videoRenderer!.textureId!.toString()),
-                      objectFit: isScreenSharing || !borderEnabled
+              _shoundDisplayVideoRenderer
+                  ? _mediaSource!.mediaView(
+                      objectFit: _isScreenSharing || !borderEnabled
                           ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
                           : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                       mirror:
-                          !isScreenSharing && cameraType == CameraType.front,
-                      filterQuality: FilterQuality.none,
+                          !_isScreenSharing && _cameraType == CameraType.front,
                     )
                   : Container(
                       alignment: Alignment.center,
@@ -97,10 +92,13 @@ class MeetView extends StatelessWidget {
                   bottom: 10.sp,
                   child: IconButton(
                     onPressed: () {
-                      if (videoRenderer?.textureId == null) return;
+                      if (participantSFU.cameraSource?.textureId == null) {
+                        return;
+                      }
 
                       WaterbusSdk.instance.setPiPEnabled(
-                        textureId: videoRenderer!.textureId.toString(),
+                        textureId:
+                            participantSFU.cameraSource!.textureId.toString(),
                       );
                     },
                     icon: Icon(
@@ -140,15 +138,15 @@ class MeetView extends StatelessWidget {
                           ),
                         ),
                         Visibility(
-                          visible: !hasFirstFrameRendered || !isAudioEnabled,
+                          visible: !_hasFirstFrameRendered || !_isAudioEnabled,
                           child: Padding(
                             padding: EdgeInsets.only(left: 6.sp),
-                            child: !isAudioEnabled || isScreenSharing
+                            child: !_isAudioEnabled || _isScreenSharing
                                 ? Icon(
-                                    isScreenSharing
+                                    _isScreenSharing
                                         ? PhosphorIcons.screencast_bold
                                         : PhosphorIcons.microphone_slash_fill,
-                                    color: isScreenSharing
+                                    color: _isScreenSharing
                                         ? Theme.of(context).colorScheme.primary
                                         : Colors.redAccent,
                                     size: avatarSize / 5.25,
@@ -182,43 +180,47 @@ class MeetView extends StatelessWidget {
     );
   }
 
-  RTCVideoRenderer? get videoRenderer {
-    if (participantSFU.isSharingScreen) {
-      return participantSFU.screenShareRenderer;
+  MediaSource? get _mediaSource {
+    if (_isScreenSharing) {
+      return participantSFU.screenSource;
     }
 
-    return participantSFU.renderer;
+    return participantSFU.cameraSource;
   }
 
-  bool get hasFirstFrameRendered {
-    if (isScreenSharing) return true;
+  bool get _hasFirstFrameRendered {
+    if (_isScreenSharing) return true;
 
-    return participantSFU.hasFirstFrameRendered;
+    return _mediaSource?.hasFirstFrameRendered ?? false;
   }
 
-  bool get isVideoEnabled {
+  bool get _isVideoEnabled {
     if (participantSFU.isSharingScreen) return true;
 
     return participantSFU.isVideoEnabled;
   }
 
-  bool get isAudioEnabled {
+  bool get _isAudioEnabled {
     if (participantSFU.isSharingScreen) return false;
 
     return participantSFU.isAudioEnabled;
   }
 
-  bool get isScreenSharing {
+  bool get _isScreenSharing {
     return participantSFU.isSharingScreen;
   }
 
-  CameraType get cameraType {
+  CameraType get _cameraType {
     return participantSFU.cameraType;
   }
 
-  AudioLevel get audioLevel {
-    if (!isAudioEnabled) return AudioLevel.kSilence;
+  AudioLevel get _audioLevel {
+    if (!_isAudioEnabled) return AudioLevel.kSilence;
 
     return participantSFU.audioLevel;
+  }
+
+  bool get _shoundDisplayVideoRenderer {
+    return _mediaSource?.stream != null && _isVideoEnabled;
   }
 }

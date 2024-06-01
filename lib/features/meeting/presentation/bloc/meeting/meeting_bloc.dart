@@ -476,7 +476,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         _currentMeeting!.participants[indexOfParticipant];
 
     _pipChannel.startPip(
-      remoteStreamId: participantSFU.renderer?.srcObject?.id ?? '',
+      remoteStreamId: participantSFU.cameraSource?.streamId ?? '',
       peerConnectionId: participantSFU.peerConnection.peerConnectionId,
       myAvatar: AppBloc.userBloc.user?.avatar ?? '',
       remoteAvatar: participant.user.avatar ?? '',
