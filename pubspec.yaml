@@ -97,7 +97,7 @@ dependencies:
   re_highlight: ^0.0.3
 
   # Media
-  image_picker: ^1.0.7
+  image_picker: ^1.1.2
   image_picker_android: ^0.8.9+5
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
