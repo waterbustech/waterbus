@@ -752,18 +752,20 @@ packages:
   google_sign_in_all_platforms:
     dependency: transitive
     description:
-      name: google_sign_in_all_platforms
-      sha256: "9ebb1d3f199bdb4b3e4f018392b5998736fa738ea53a7871897042c882cb0e74"
-      url: "https://pub.dev"
-    source: hosted
+      path: google_sign_in_all_platforms
+      ref: master
+      resolved-ref: "7ec7431691a51b83fa837cd05e7026b256409dac"
+      url: "https://github.com/waterbustech/sign-in-google-linux.git"
+    source: git
     version: "0.0.4"
   google_sign_in_all_platforms_desktop:
     dependency: transitive
     description:
-      name: google_sign_in_all_platforms_desktop
-      sha256: e584a9c2ac0aff35630088084b55f7b6c0a7ac560bc1888c349d70c905011740
-      url: "https://pub.dev"
-    source: hosted
+      path: google_sign_in_all_platforms_desktop
+      ref: master
+      resolved-ref: "7ec7431691a51b83fa837cd05e7026b256409dac"
+      url: "https://github.com/waterbustech/sign-in-google-linux.git"
+    source: git
     version: "0.0.1+1"
   google_sign_in_all_platforms_interface:
     dependency: transitive
