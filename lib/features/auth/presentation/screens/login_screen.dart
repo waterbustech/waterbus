@@ -76,9 +76,11 @@ class LogInScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 8.sp),
                               ButtonLogin(
-                                title: 'Continue with Github',
-                                iconAsset: Assets.icons.icGithub.path,
-                                onPressed: () async {},
+                                title: 'Sign in Anonymously',
+                                iconAsset: Assets.icons.icIncognito.path,
+                                onPressed: () async {
+                                  AppBloc.authBloc.add(LogInAnonymously());
+                                },
                               ),
                             ],
                           ),

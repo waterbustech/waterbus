@@ -96,11 +96,13 @@ class WaterbusImagePicker {
       );
 
       if (result?.files.isNotEmpty ?? false) {
-        final Uint8List? resizedImage = kIsWeb
-            ? result?.files.first.bytes
-            : await ImageUtils().reduceSize(
+        final Uint8List? resizedImage = WebRTC.platformIsMacOS
+            ? await ImageUtils().reduceSize(
                 File(result!.files.first.path!).path,
-              );
+              )
+            : kIsWeb
+                ? result?.files.first.bytes
+                : File(result!.files.first.path!).readAsBytesSync();
 
         if (resizedImage == null) return;
 
