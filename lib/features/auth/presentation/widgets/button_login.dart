@@ -23,7 +23,7 @@ class ButtonLogin extends StatelessWidget {
         width: 300.sp,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.sp),
-          color: Colors.transparent,
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(
             color: Theme.of(context).colorScheme.primary,
             width: 1.sp,

@@ -7,7 +7,7 @@ import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
 import './widgets/index.dart';
 
 class Auth {
-  final AuthService _authService = getAuthService();
+  final AuthService _authService = AuthServiceImpl();
 
   Future<void> initialize(Function(AuthPayloadModel payload) callback) =>
       _authService.initialize(callback);

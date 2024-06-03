@@ -1,13 +1,7 @@
-import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
+import 'package:universal_io/io.dart';
 
-import 'package:auth/services/auth_service.dart';
-import 'package:auth/services/auth_service_impl_linux.dart' as linux;
-import 'package:auth/services/auth_service_impl_stub.dart' as stub;
+export './auth_service_impl_stub.dart'
+    if (isLinux) './auth_service_impl_linux.dart';
 
-AuthService getAuthService() {
-  if (Platform.isLinux) {
-    return linux.AuthServiceImpl();
-  } else {
-    return stub.AuthServiceImpl();
-  }
-}
+bool get isLinux => !kIsWeb && Platform.isLinux;

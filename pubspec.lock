@@ -753,8 +753,8 @@ packages:
     dependency: transitive
     description:
       path: google_sign_in_all_platforms
-      ref: master
-      resolved-ref: "7ec7431691a51b83fa837cd05e7026b256409dac"
+      ref: "0.0.4+1"
+      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
       url: "https://github.com/waterbustech/sign-in-google-linux.git"
     source: git
     version: "0.0.4"
@@ -762,8 +762,8 @@ packages:
     dependency: transitive
     description:
       path: google_sign_in_all_platforms_desktop
-      ref: master
-      resolved-ref: "7ec7431691a51b83fa837cd05e7026b256409dac"
+      ref: "0.0.4+1"
+      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
       url: "https://github.com/waterbustech/sign-in-google-linux.git"
     source: git
     version: "0.0.1+1"
@@ -778,10 +778,11 @@ packages:
   google_sign_in_all_platforms_mobile:
     dependency: transitive
     description:
-      name: google_sign_in_all_platforms_mobile
-      sha256: "7fd432b9ec2a734909fdf862d550cd3c2d2fbf69cf40d8a73abd6c28cbe46d7e"
-      url: "https://pub.dev"
-    source: hosted
+      path: google_sign_in_all_platforms_mobile
+      ref: "0.0.4+1"
+      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
+      url: "https://github.com/waterbustech/sign-in-google-linux.git"
+    source: git
     version: "0.0.1"
   google_sign_in_android:
     dependency: transitive
