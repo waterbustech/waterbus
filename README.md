@@ -52,9 +52,10 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 | Feature            | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | Beauty Filters | End to End Encryption |
 | ------------------ | ----------------- | -------------- | ------------------ | ------------------ | -------------- | --------------------- |
 | Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟢        |           🟢          | 
-| iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
-| MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
-| Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |    
+| iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |        
+| Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |
+| MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |
+| Linux                |         🟢         |        🟢      |          🔴         |          🟡         |       🟡       |           🟢          |    
 
 
 🟢 = Available
