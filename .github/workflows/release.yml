@@ -77,7 +77,9 @@ jobs:
       - run: flutter clean
       - run: flutter pub get
       - name: Install dependencies for .deb
-        run: sudo apt-get install -y libgtk-3-dev dpkg-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build cmake gcc g++ libgtk-3-dev dpkg-dev libsecret-1-dev libjsoncpp-dev
       - name: 🔧 Build .deb
         run: flutter build linux --release
       - name: Create .deb package
