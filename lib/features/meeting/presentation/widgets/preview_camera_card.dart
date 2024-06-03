@@ -60,15 +60,10 @@ class PreviewCameraCard extends StatelessWidget {
                   ),
                 ),
                 child: participant.isVideoEnabled
-                    ? RTCVideoView(
-                        participant.renderer!,
-                        key: participant.renderer!.textureId == null
-                            ? null
-                            : Key(participant.renderer!.textureId!.toString()),
+                    ? participant.cameraSource!.mediaView(
                         objectFit:
                             RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                         mirror: true,
-                        filterQuality: FilterQuality.none,
                       )
                     : Container(
                         alignment: Alignment.center,
