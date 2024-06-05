@@ -98,7 +98,7 @@ PODS:
     - FlutterMacOS
   - flutter_webrtc_plus (0.9.36):
     - FlutterMacOS
-    - KaiRTC (= 124.6367.01)
+    - KaiRTC (= 125.6422.02)
   - FlutterMacOS (1.0.0)
   - google_sign_in_ios (0.0.1):
     - AppAuth (>= 1.7.4)
@@ -170,7 +170,7 @@ PODS:
   - GTMSessionFetcher/Core (3.4.1)
   - GTMSessionFetcher/Full (3.4.1):
     - GTMSessionFetcher/Core
-  - KaiRTC (124.6367.01)
+  - KaiRTC (125.6422.02)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -294,7 +294,7 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfigInterop: c55a739f5ab121792776e191d9fd437dc624a541
   FirebaseSessions: 2fdf949f9e58295a57703ae8f2efc44f9fa3aa16
   flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
-  flutter_webrtc_plus: e45ce8208dd2c7b7edb029318df1bb44426765bf
+  flutter_webrtc_plus: 2c3c7ab7fe9ec1e5cf8f8c1bbde7a4d5bdfb6540
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
   GoogleAppMeasurement: 9abf64b682732fed36da827aa2a68f0221fd2356
@@ -303,7 +303,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  KaiRTC: bf81fa8444b77e5838ed19b9e2cea1b029fa2ea8
+  KaiRTC: 63b96ffd1b03e5a45a8ceeca328ca87f9bca0ffc
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

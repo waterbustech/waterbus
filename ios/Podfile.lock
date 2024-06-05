@@ -40,14 +40,6 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
-  - FBAEMKit (17.0.2):
-    - FBSDKCoreKit_Basics (= 17.0.2)
-  - FBSDKCoreKit (17.0.2):
-    - FBAEMKit (= 17.0.2)
-    - FBSDKCoreKit_Basics (= 17.0.2)
-  - FBSDKCoreKit_Basics (17.0.2)
-  - FBSDKLoginKit (17.0.2):
-    - FBSDKCoreKit (= 17.0.2)
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
@@ -163,9 +155,6 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.27.0)
   - Flutter (1.0.0)
-  - flutter_facebook_auth (6.2.0):
-    - FBSDKLoginKit (~> 17.0.0)
-    - Flutter
   - flutter_image_compress_common (1.0.0):
     - Flutter
     - Mantle
@@ -173,11 +162,11 @@ PODS:
     - SDWebImageWebPCoder
   - flutter_native_splash (0.0.1):
     - Flutter
-  - flutter_secure_storage (6.0.0):
-    - Flutter
   - flutter_webrtc_plus (0.9.36):
     - Flutter
-    - KaiRTC (= 124.6367.01)
+    - KaiRTC (= 125.6422.02)
+  - google_sign_in_all_platforms_mobile (0.0.1):
+    - Flutter
   - google_sign_in_ios (0.0.1):
     - AppAuth (>= 1.7.4)
     - Flutter
@@ -252,7 +241,7 @@ PODS:
     - GTMSessionFetcher/Core
   - image_picker_ios (0.0.1):
     - Flutter
-  - KaiRTC (124.6367.01)
+  - KaiRTC (125.6422.02)
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
     - libwebp/mux (= 1.3.2)
@@ -294,8 +283,9 @@ PODS:
     - SDWebImage/Core (~> 5.17)
   - share_plus (0.0.1):
     - Flutter
-  - sign_in_with_apple (0.0.1):
+  - shared_preferences_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - sqflite (0.0.3):
     - Flutter
     - FlutterMacOS
@@ -320,11 +310,10 @@ DEPENDENCIES:
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - Flutter (from `Flutter`)
-  - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
-  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_webrtc_plus (from `.symlinks/plugins/flutter_webrtc_plus/ios`)
+  - google_sign_in_all_platforms_mobile (from `.symlinks/plugins/google_sign_in_all_platforms_mobile/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -332,7 +321,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - replay_kit_launcher (from `.symlinks/plugins/replay_kit_launcher/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
-  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
@@ -345,10 +334,6 @@ SPEC REPOS:
     - CryptoSwift
     - DKImagePickerController
     - DKPhotoGallery
-    - FBAEMKit
-    - FBSDKCoreKit
-    - FBSDKCoreKit_Basics
-    - FBSDKLoginKit
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -396,16 +381,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_performance/ios"
   Flutter:
     :path: Flutter
-  flutter_facebook_auth:
-    :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_image_compress_common:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
-  flutter_secure_storage:
-    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_webrtc_plus:
     :path: ".symlinks/plugins/flutter_webrtc_plus/ios"
+  google_sign_in_all_platforms_mobile:
+    :path: ".symlinks/plugins/google_sign_in_all_platforms_mobile/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
@@ -420,8 +403,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/replay_kit_launcher/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
-  sign_in_with_apple:
-    :path: ".symlinks/plugins/sign_in_with_apple/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
     :path: ".symlinks/plugins/sqflite/darwin"
   url_launcher_ios:
@@ -439,10 +422,6 @@ SPEC CHECKSUMS:
   CryptoSwift: c63a805d8bb5e5538e88af4e44bb537776af11ea
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  FBAEMKit: 619f96ea65427e8afca240d5b0f4703738dfdf5c
-  FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
-  FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
-  FBSDKLoginKit: f8ca5f7ab7c4e5b93e729d94975b0db7fcc511ed
   file_picker: 09aa5ec1ab24135ccd7a1621c46c84134bfd6655
   Firebase: 0312a2352584f782ea56f66d91606891d4607f06
   firebase_auth: 76ea642e91a9e914b3af751a416046ce1a965cf4
@@ -464,11 +443,10 @@ SPEC CHECKSUMS:
   FirebaseSessions: 2fdf949f9e58295a57703ae8f2efc44f9fa3aa16
   FirebaseSharedSwift: a03fe7a59ee646fef71099a887f774fe25d745b8
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_facebook_auth: 66188df7905bfcaf3d6d2bd6527302c56448f04d
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
-  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_webrtc_plus: 3727d9a4d0df1664ad0bda1ed1b8a35e9e29fcb7
+  flutter_webrtc_plus: 376326ba6630d4640f71262fbfc7ce9587d6c94e
+  google_sign_in_all_platforms_mobile: 14062cc28e3432a927ebf2fa5dbdba85c157951b
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
   GoogleAppMeasurement: 9abf64b682732fed36da827aa2a68f0221fd2356
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
@@ -477,7 +455,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
-  KaiRTC: bf81fa8444b77e5838ed19b9e2cea1b029fa2ea8
+  KaiRTC: 63b96ffd1b03e5a45a8ceeca328ca87f9bca0ffc
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
@@ -491,7 +469,7 @@ SPEC CHECKSUMS:
   SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   share_plus: 8875f4f2500512ea181eef553c3e27dba5135aad
-  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
