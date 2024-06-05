@@ -8,8 +8,6 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - FlutterMacOS
-  - facebook_auth_desktop (0.0.3):
-    - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - Firebase/Analytics (10.25.0):
@@ -98,11 +96,9 @@ PODS:
     - PromisesSwift (~> 2.1)
   - flutter_image_compress_macos (1.0.0):
     - FlutterMacOS
-  - flutter_secure_storage_macos (6.1.1):
-    - FlutterMacOS
   - flutter_webrtc_plus (0.9.36):
     - FlutterMacOS
-    - KaiRTC (= 124.6367.01)
+    - KaiRTC (= 125.6422.02)
   - FlutterMacOS (1.0.0)
   - google_sign_in_ios (0.0.1):
     - AppAuth (>= 1.7.4)
@@ -174,7 +170,7 @@ PODS:
   - GTMSessionFetcher/Core (3.4.1)
   - GTMSessionFetcher/Full (3.4.1):
     - GTMSessionFetcher/Core
-  - KaiRTC (124.6367.01)
+  - KaiRTC (125.6422.02)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -190,7 +186,8 @@ PODS:
     - PromisesObjC (= 2.4.0)
   - share_plus (0.0.1):
     - FlutterMacOS
-  - sign_in_with_apple (0.0.1):
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
     - FlutterMacOS
   - sqflite (0.0.3):
     - Flutter
@@ -202,21 +199,19 @@ PODS:
 
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin`)
-  - facebook_auth_desktop (from `Flutter/ephemeral/.symlinks/plugins/facebook_auth_desktop/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - Firebase/Analytics
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - firebase_crashlytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos`)
   - flutter_image_compress_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos`)
-  - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
   - flutter_webrtc_plus (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc_plus/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
-  - sign_in_with_apple (from `Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos`)
+  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/darwin`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
@@ -249,8 +244,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   connectivity_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin
-  facebook_auth_desktop:
-    :path: Flutter/ephemeral/.symlinks/plugins/facebook_auth_desktop/macos
   file_selector_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   firebase_auth:
@@ -261,8 +254,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos
   flutter_image_compress_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos
-  flutter_secure_storage_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos
   flutter_webrtc_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc_plus/macos
   FlutterMacOS:
@@ -275,8 +266,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   share_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/share_plus/macos
-  sign_in_with_apple:
-    :path: Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos
+  shared_preferences_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
   sqflite:
     :path: Flutter/ephemeral/.symlinks/plugins/sqflite/darwin
   url_launcher_macos:
@@ -287,7 +278,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
-  facebook_auth_desktop: 0ec755e3b01669ec14776af18b6945671a788916
   file_selector_macos: 54fdab7caa3ac3fc43c9fac4d7d8d231277f8cf2
   Firebase: 0312a2352584f782ea56f66d91606891d4607f06
   firebase_auth: 88f0918ad5a62cae02f4bdbc1da7ec848fe9ba1c
@@ -304,8 +294,7 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfigInterop: c55a739f5ab121792776e191d9fd437dc624a541
   FirebaseSessions: 2fdf949f9e58295a57703ae8f2efc44f9fa3aa16
   flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
-  flutter_secure_storage_macos: 59459653abe1adb92abbc8ea747d79f8d19866c9
-  flutter_webrtc_plus: e45ce8208dd2c7b7edb029318df1bb44426765bf
+  flutter_webrtc_plus: 2c3c7ab7fe9ec1e5cf8f8c1bbde7a4d5bdfb6540
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
   GoogleAppMeasurement: 9abf64b682732fed36da827aa2a68f0221fd2356
@@ -314,14 +303,14 @@ SPEC CHECKSUMS:
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  KaiRTC: bf81fa8444b77e5838ed19b9e2cea1b029fa2ea8
+  KaiRTC: 63b96ffd1b03e5a45a8ceeca328ca87f9bca0ffc
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   share_plus: 36537c04ce0c3e3f5bd297ce4318b6d5ee5fd6cf
-  sign_in_with_apple: a9e97e744e8edc36aefc2723111f652102a7a727
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269

@@ -6,6 +6,6 @@ class OnAuthCheckEvent extends AuthEvent {}
 
 class LogInWithGoogleEvent extends AuthEvent {}
 
-class LogInWithAppleEvent extends AuthEvent {}
+class LogInAnonymously extends AuthEvent {}
 
 class LogOutEvent extends AuthEvent {}

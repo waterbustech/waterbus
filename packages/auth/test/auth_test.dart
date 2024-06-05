@@ -1,4 +1,4 @@
-import 'package:auth/services/auth_service.dart';
+import 'package:auth/services/auth_service_impl_stub.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +12,7 @@ import 'auth_test.mocks.dart';
 void main() {
   final GoogleSignIn googleSignIn = MockGoogleSignIn();
   final FirebaseAuth firebaseAuth = MockFirebaseAuth();
-  final AuthService authService = AuthService(
+  final AuthServiceImpl authService = AuthServiceImpl(
     googleSignIn: googleSignIn,
     firebaseAuth: firebaseAuth,
   );

@@ -6,7 +6,7 @@
 </p>
 
 <div class="badges" align="center">
-<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/waterbustech/waterbus"><img src="https://www.codefactor.io/repository/github/waterbustech/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/waterbustech/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/waterbustech/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-124.6367.01-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
+<p><a href="https://codecov.io/gh/lambiengcode/waterbus"><img src="https://codecov.io/gh/lambiengcode/waterbus/branch/main/graph/badge.svg?token=7KEMH26LHZ" alt="codecov"></a><a href="https://www.codefactor.io/repository/github/waterbustech/waterbus"><img src="https://www.codefactor.io/repository/github/waterbustech/waterbus/badge" alt="CodeFactor"></a><img src="https://img.shields.io/github/actions/workflow/status/waterbustech/waterbus/ci.yml" alt="GitHub Workflow Status (with event)"><img src="https://img.shields.io/github/issues/waterbustech/waterbus" alt="GitHub issues"><a href="https://chromium.googlesource.com/external/webrtc/+/branch-heads/6099"><img src="https://img.shields.io/badge/libwebrtc-125.6422.02-yellow.svg" alt="libwebrtc"></a><img src="https://img.shields.io/cocoapods/v/KaiRTC" alt="Cocoapods Version"><a href="https://github.com/lambiengcode"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&amp;logo=github" alt="PRs Welcome"></a></p>
 </div>
 <div align="center">
 <a href="https://twitter.com/waterbustech"><img src="https://img.shields.io/twitter/follow/waterbus.tech?style=social" alt="Twitter Follow"></a><a href="https://discord.gg/mfrWVefU"><img alt="Discord" src="https://img.shields.io/discord/1220616225521143818"></a>
@@ -52,9 +52,10 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 | Feature            | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | Beauty Filters | End to End Encryption |
 | ------------------ | ----------------- | -------------- | ------------------ | ------------------ | -------------- | --------------------- |
 | Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟢        |           🟢          | 
-| iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
-| MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
-| Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |    
+| iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |        
+| Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |
+| MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |
+| Linux                |         🟢         |        🟢      |          🔴         |          🟡         |       🟡       |           🟢          |    
 
 
 🟢 = Available
