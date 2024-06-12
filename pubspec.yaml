@@ -54,7 +54,7 @@ dependencies:
   dio_cache_interceptor: ^3.5.0
 
   # State management
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   bloc_concurrency: ^0.2.5
 
   # Dependency Injection
@@ -65,10 +65,10 @@ dependencies:
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.25.4
-  firebase_auth: ^4.17.9
-  firebase_crashlytics: ^3.4.19
-  firebase_performance: ^0.9.3+18
+  firebase_core: ^3.0.0
+  firebase_auth: ^5.0.0
+  firebase_crashlytics: ^4.0.0
+  firebase_performance: ^0.10.0
 
   # Utils
   lottie: ^3.1.0
@@ -81,11 +81,11 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
   equatable: ^2.0.5
-  share_plus: ^8.0.3
+  share_plus: ^9.0.0
   simple_pip_mode: ^0.8.0
-  file_picker: ^8.0.0+1
+  file_picker: ^8.0.4
   universal_io: ^2.2.2
-  url_launcher: ^6.2.5
+  url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
   sizer: 
     path: ./packages/sizer
@@ -93,12 +93,12 @@ dependencies:
     sdk: flutter
   i18n_extension: ^12.0.1
   # Code Editor
-  re_editor: ^0.2.0
+  re_editor: ^0.3.0
   re_highlight: ^0.0.3
 
   # Media
-  image_picker: ^1.0.7
-  image_picker_android: ^0.8.9+5
+  image_picker: ^1.1.2
+  image_picker_android: ^0.8.12+3
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
 
@@ -127,11 +127,11 @@ dev_dependencies:
 
   # Code Generator
   injectable_generator: ^2.6.1
-  build_runner: ^2.4.9
+  build_runner: ^2.4.11
   flutter_gen_runner: ^5.4.0
 
   # Lints
-  flutter_lints: ^3.0.2
+  flutter_lints: ^4.0.0
   import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the

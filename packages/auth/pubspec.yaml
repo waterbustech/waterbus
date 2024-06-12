@@ -13,7 +13,7 @@ dependencies:
   universal_io: ^2.2.2
 
   # Firebase
-  firebase_auth: ^4.17.3
+  firebase_auth: ^5.0.0
 
   # Authenticate
   google_sign_in: ^6.1.4
