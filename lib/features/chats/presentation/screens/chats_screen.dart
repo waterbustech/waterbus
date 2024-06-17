@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -10,8 +11,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/features/chats/screens/conversation_list.dart';
-import 'package:waterbus/features/chats/xmodels/chat_model.dart';
+import 'package:waterbus/features/chats/presentation/screens/conversation_list.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -25,18 +25,18 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  ChatModel? _currentChat;
+  Meeting? _currentChat;
 
-  void _handleTapChatItem(ChatModel chatModel) {
+  void _handleTapChatItem(Meeting meeting) {
     if (SizerUtil.isDesktop) {
       setState(() {
-        _currentChat = chatModel;
+        _currentChat = meeting;
       });
     } else {
       AppNavigator().push(
         Routes.conversationRoute,
         arguments: {
-          'chatModel': chatModel,
+          'meeting': meeting,
         },
       );
     }
@@ -54,6 +54,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
               title: Strings.chat.i18n,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               leading: BlocBuilder<UserBloc, UserState>(
+                buildWhen: (previous, current) =>
+                    current is! UserSearchingState,
                 builder: (context, state) {
                   final User user =
                       state is UserGetDone ? state.user : kUserDefault;
@@ -72,7 +74,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
-                      AppNavigator().push(Routes.createMeetingRoute);
+                      AppNavigator().push(
+                        Routes.createMeetingRoute,
+                        arguments: {
+                          'isChatScreen': true,
+                        },
+                      );
                     },
                     icon: Icon(
                       PhosphorIcons.plus,
@@ -82,21 +89,48 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ],
             ),
-            body: SizerUtil.isDesktop
-                ? TabOptionsDesktopWidget(
-                    child: ConversationList(
-                      currentChat: _currentChat,
-                      onTap: (index) {
-                        _handleTapChatItem(listFakeChat[index]);
-                      },
-                    ),
-                  )
-                : ConversationList(
-                    currentChat: _currentChat,
-                    onTap: (index) {
-                      _handleTapChatItem(listFakeChat[index]);
-                    },
-                  ),
+            body: BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ActiveChatState) {
+                  return SizerUtil.isDesktop
+                      ? TabOptionsDesktopWidget(
+                          child: ConversationList(
+                            meetings: state.conversations,
+                            currentChat: _currentChat,
+                            onTap: (index) {
+                              _handleTapChatItem(state.conversations[index]);
+                            },
+                          ),
+                        )
+                      : ConversationList(
+                          meetings: state.conversations,
+                          currentChat: _currentChat,
+                          onTap: (index) {
+                            _handleTapChatItem(state.conversations[index]);
+                          },
+                        );
+                }
+
+                return const SizedBox();
+              },
+            ),
+            floatingActionButton: Container(
+              margin:
+                  EdgeInsets.only(bottom: SizerUtil.isDesktop ? 50.sp : 75.sp),
+              height: 42.sp,
+              width: 42.sp,
+              child: FloatingActionButton(
+                onPressed: () {
+                  AppNavigator().push(Routes.invitedRoute);
+                },
+                backgroundColor: Theme.of(context).colorScheme.onSecondary,
+                child: Icon(
+                  PhosphorIcons.paper_plane_tilt_bold,
+                  size: 24.sp,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
           ),
         ),
         if (SizerUtil.isDesktop)
@@ -106,7 +140,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         Expanded(
           child: _currentChat != null
-              ? ConversationScreen(chatModel: _currentChat!)
+              ? ConversationScreen(meeting: _currentChat!)
               : const SizedBox(),
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/helpers/string_extension.dart';
@@ -91,6 +92,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           CreateMeetingScreen(
             meeting: arguments?['meeting'],
+            isChatScreen: arguments?['isChatScreen'] ?? false,
           ),
         );
       case Routes.enterCodeRoute:
@@ -108,8 +110,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           ConversationScreen(
-            chatModel: arguments!['chatModel'],
+            meeting: arguments!['meeting'],
           ),
+        );
+      case Routes.invitedRoute:
+        return _buildRoute(
+          settings,
+          const InvitedChatScreen(),
         );
       case Routes.langRoute:
         return _buildRoute(
@@ -271,6 +278,7 @@ extension AppNavigatorX on AppNavigator {
         Routes.settingsCallRoute,
         Routes.langRoute,
         Routes.themeRoute,
+        Routes.invitedRoute,
       ];
 
   Widget getWidgetByRoute({
@@ -288,6 +296,8 @@ extension AppNavigatorX on AppNavigator {
         return const LanguageScreen();
       case Routes.themeRoute:
         return const ThemeScreen();
+      case Routes.invitedRoute:
+        return const InvitedChatScreen();
       default:
         return const SizedBox();
     }

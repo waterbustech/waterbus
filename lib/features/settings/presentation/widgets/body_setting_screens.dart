@@ -43,6 +43,7 @@ class BodySettingScreens extends StatelessWidget {
         child: Column(
           children: [
             BlocBuilder<UserBloc, UserState>(
+              buildWhen: (previous, current) => current is! UserSearchingState,
               builder: (context, state) {
                 final User? user = state is UserGetDone ? state.user : null;
 

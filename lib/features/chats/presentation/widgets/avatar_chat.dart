@@ -4,20 +4,20 @@ import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/features/chats/xmodels/chat_model.dart';
+import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 class AvatarChat extends StatelessWidget {
-  final ChatModel chatModel;
+  final Meeting meeting;
   final double size;
   const AvatarChat({
     super.key,
-    required this.chatModel,
+    required this.meeting,
     this.size = 48.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return chatModel.isGroup ? groupChat(context) : singleChat(context);
+    return meeting.isGroup ? groupChat(context) : singleChat(context);
   }
 
   Widget singleChat(BuildContext context) {
@@ -30,7 +30,7 @@ class AvatarChat extends StatelessWidget {
       child: CustomNetworkImage(
         height: size,
         width: size,
-        urlToImage: chatModel.urlImage.first,
+        urlToImage: meeting.members.first.user.avatar,
       ),
     );
   }
@@ -49,7 +49,7 @@ class AvatarChat extends StatelessWidget {
               child: CustomNetworkImage(
                 height: size * 0.7,
                 width: size * 0.7,
-                urlToImage: chatModel.urlImage.first,
+                urlToImage: meeting.members.first.user.avatar,
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class AvatarChat extends StatelessWidget {
               child: CustomNetworkImage(
                 height: size * 0.7,
                 width: size * 0.7,
-                urlToImage: chatModel.urlImage[1],
+                urlToImage: meeting.members[1].user.avatar,
               ),
             ),
           ),

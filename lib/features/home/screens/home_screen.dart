@@ -57,6 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 isVisibleBackButton: false,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 titleWidget: BlocBuilder<UserBloc, UserState>(
+                  buildWhen: (previous, current) =>
+                      current is! UserSearchingState,
                   builder: (context, state) {
                     final User user =
                         state is UserGetDone ? state.user : kUserDefault;

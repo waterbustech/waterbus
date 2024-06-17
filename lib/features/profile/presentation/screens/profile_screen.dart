@@ -118,6 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           SizedBox(height: 24.sp),
                           BlocBuilder<UserBloc, UserState>(
+                            buildWhen: (previous, current) =>
+                                current is! UserSearchingState,
                             builder: (context, state) {
                               _user = state is UserGetDone ? state.user : null;
 
@@ -203,6 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         BlocBuilder<UserBloc, UserState>(
+                                          buildWhen: (previous, current) =>
+                                              current is! UserSearchingState,
                                           builder: (context, state) {
                                             _user = state is UserGetDone
                                                 ? state.user

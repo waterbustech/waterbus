@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/features/chats/xmodels/chat_model.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
 import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
@@ -11,8 +10,8 @@ import 'package:waterbus/features/conversation/widgets/message_card.dart';
 import 'package:waterbus/features/conversation/xmodels/message_model.dart';
 
 class ConversationScreen extends StatelessWidget {
-  final ChatModel chatModel;
-  const ConversationScreen({super.key, required this.chatModel});
+  final Meeting meeting;
+  const ConversationScreen({super.key, required this.meeting});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class ConversationScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 5.sp),
-            ConversationHeader(chatModel: chatModel),
+            ConversationHeader(meeting: meeting),
             SizedBox(height: 5.sp),
             divider,
             Expanded(

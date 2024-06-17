@@ -2,11 +2,13 @@ import 'package:auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/chats/xmodels/datasources/user_local_datasource.dart';
+import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -75,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // MARK: state
   AuthSuccess get _authSuccess {
-    AppBloc.instance.bootstrap(WaterbusSdk().accessToken);
+    AppBloc.instance.bootstrap();
 
     return AuthSuccess();
   }
@@ -127,10 +129,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _userLocal.clearUser();
     await WaterbusSdk.instance.deleteToken();
 
-    AppNavigator.pop();
+    AppNavigator.popUntil(Routes.rootRoute);
 
     _user = null;
     AppBloc.userBloc.add(CleanProfileEvent());
     AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
+    AppBloc.chatBloc.add(CleanChatEvent());
   }
 }

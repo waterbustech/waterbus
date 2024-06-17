@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:universal_io/io.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/utils/path_helper.dart';
 
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/injection/injection_container.dart';
@@ -18,13 +16,9 @@ class Application {
       await BaseLocalData.initialBox();
 
       // Init dependency injection
-      final Directory? appDir = await PathHelper.appDir;
-
       await WaterbusSdk.instance.initial(
-        waterbusUrl: ApiEndpoints.wsUrl,
-        apiWaterbusUrl: ApiEndpoints.baseUrl,
-        recordBenchmarkPath:
-            appDir == null ? '' : '${appDir.path}/benchmark.txt',
+        wsUrl: ApiEndpoints.wsUrl,
+        apiUrl: ApiEndpoints.baseUrl,
       );
 
       configureDependencies();

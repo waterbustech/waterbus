@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -14,9 +15,11 @@ import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
 
 class CreateMeetingScreen extends StatefulWidget {
   final Meeting? meeting;
+  final bool isChatScreen;
   const CreateMeetingScreen({
     super.key,
     required this.meeting,
+    this.isChatScreen = false,
   });
 
   @override
@@ -53,20 +56,29 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
 
               displayLoadingLayer();
 
-              if (_isEditing) {
-                AppBloc.meetingBloc.add(
-                  UpdateMeetingEvent(
-                    roomName: _roomNameController.text,
+              if (widget.isChatScreen) {
+                AppBloc.chatBloc.add(
+                  CreateConversationEvent(
+                    title: _roomNameController.text,
                     password: _passwordController.text,
                   ),
                 );
               } else {
-                AppBloc.meetingBloc.add(
-                  CreateMeetingEvent(
-                    roomName: _roomNameController.text,
-                    password: _passwordController.text,
-                  ),
-                );
+                if (_isEditing) {
+                  AppBloc.meetingBloc.add(
+                    UpdateMeetingEvent(
+                      roomName: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                } else {
+                  AppBloc.meetingBloc.add(
+                    CreateMeetingEvent(
+                      roomName: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                }
               }
             },
             icon: Icon(

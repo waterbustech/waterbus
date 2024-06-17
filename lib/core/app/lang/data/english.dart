@@ -72,6 +72,7 @@ Map<String, String> english = {
   Strings.search: "Search",
   Strings.createRoom: "Create Room",
   Strings.chat: "Chats",
+  Strings.invitedChat: "Invited chat",
   Strings.enterPassword: "Enter Password",
   Strings.createMeeting: "Create Meeting",
   Strings.editMeeting: "Edit Meeting",
