@@ -19,13 +19,12 @@ part 'auth_state.dart';
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLocalDataSource _userLocal;
+  final Auth _auth = Auth();
 
   User? _user;
 
-  AuthBloc(
-    this._userLocal,
-  ) : super(AuthInitial()) {
-    Auth().initialize((payload) async {
+  AuthBloc(this._userLocal) : super(AuthInitial()) {
+    _auth.initialize((payload) async {
       final User? user = await WaterbusSdk.instance.createToken(payload);
 
       // Pop loading
@@ -44,9 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _onAuthCheck(emit);
       }
 
-      if (event is LogInWithGoogleEvent ||
-          event is LogInWithFacebookEvent ||
-          event is LogInWithAppleEvent) {
+      if (event is LogInWithGoogleEvent || event is LogInAnonymously) {
         await _handleLogin(event);
 
         if (_user != null) emit(_authSuccess);
@@ -83,7 +80,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   AuthFailure get _authFailure {
-    Auth().signInSilently();
+    _auth.signInSilently();
 
     return AuthFailure();
   }
@@ -96,13 +93,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     switch (event) {
       case LogInWithGoogleEvent():
-        payload = await Auth().signInWithGoogle();
+        payload = await _auth.signInWithGoogle();
         break;
-      case LogInWithFacebookEvent():
-        payload = await Auth().signInWithFacebook();
-        break;
-      case LogInWithAppleEvent():
-        payload = await Auth().signInWithApple();
+      case LogInAnonymously():
+        payload = await _auth.signInAnonymously();
         break;
       default:
         payload = null;

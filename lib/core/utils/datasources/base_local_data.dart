@@ -5,7 +5,6 @@ import 'package:waterbus/core/constants/storage_keys.dart';
 
 class BaseLocalData {
   static Future<void> initialBox() async {
-    await PathHelper.createDirWaterbus();
     final String? path = await PathHelper.localStoreDirWaterbus;
     Hive.init(path);
 

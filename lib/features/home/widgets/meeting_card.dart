@@ -7,7 +7,6 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/helpers/string_extension.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
@@ -47,7 +46,7 @@ class MeetingCard extends StatelessWidget {
               children: [
                 TextSpan(text: Strings.roomCode.i18n),
                 TextSpan(
-                  text: meeting.code.toString().formatRoomCode,
+                  text: meeting.code.toString().roomCodeFormatted,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     decoration: TextDecoration.underline,

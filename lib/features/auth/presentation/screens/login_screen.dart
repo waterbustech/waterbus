@@ -60,28 +60,37 @@ class LogInScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    kIsWeb
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(30.sp),
-                            child: Auth().loginRenderWidget(),
-                          )
-                        : Column(
-                            children: [
-                              ButtonLogin(
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            if (kIsWeb)
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(4.sp),
+                                child: Auth().loginRenderWidget(),
+                              ),
+                            IgnorePointer(
+                              ignoring: kIsWeb,
+                              child: ButtonLogin(
                                 title: 'Continue with Google',
                                 iconAsset: Assets.icons.icGoogle.path,
                                 onPressed: () async {
                                   AppBloc.authBloc.add(LogInWithGoogleEvent());
                                 },
                               ),
-                              SizedBox(height: 8.sp),
-                              ButtonLogin(
-                                title: 'Continue with Github',
-                                iconAsset: Assets.icons.icGithub.path,
-                                onPressed: () async {},
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8.sp),
+                        ButtonLogin(
+                          title: 'Sign in Anonymously',
+                          iconAsset: Assets.icons.icIncognito.path,
+                          onPressed: () async {
+                            AppBloc.authBloc.add(LogInAnonymously());
+                          },
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 20.sp),
                     RichText(
                       text: TextSpan(

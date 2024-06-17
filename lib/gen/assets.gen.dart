@@ -12,9 +12,6 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/ic_apple.png
-  AssetGenImage get icApple => const AssetGenImage('assets/icons/ic_apple.png');
-
   /// File path: assets/icons/ic_code.png
   AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
 
@@ -29,6 +26,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_google.png
   AssetGenImage get icGoogle =>
       const AssetGenImage('assets/icons/ic_google.png');
+
+  /// File path: assets/icons/ic_incognito.png
+  AssetGenImage get icIncognito =>
+      const AssetGenImage('assets/icons/ic_incognito.png');
 
   /// File path: assets/icons/ic_new_meeting.png
   AssetGenImage get icNewMeeting =>
@@ -50,11 +51,11 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        icApple,
         icCode,
         icEndCall,
         icGithub,
         icGoogle,
+        icIncognito,
         icNewMeeting,
         icNotes,
         icPaint,
