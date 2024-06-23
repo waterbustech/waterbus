@@ -121,7 +121,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     implementation "androidx.multidex:multidex:2.0.1"
-    implementation 'tech.waterbus:gpupixel:1.0.2'
+    implementation 'tech.waterbus:gpupixel:1.1.7'
 }
 
 apply plugin: 'com.google.gms.google-services'
