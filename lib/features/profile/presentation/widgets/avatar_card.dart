@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/constants/constants.dart';
 
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class AvatarCard extends StatelessWidget {
   final String? urlToImage;
@@ -20,47 +18,10 @@ class AvatarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return urlToImage == null || urlToImage!.isEmpty
-        ? Container(
-            margin: margin,
-            child: Material(
-              shape: isCircleShape
-                  ? CircleBorder(
-                      side: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(.5),
-                        width: .5,
-                      ),
-                    )
-                  : SuperellipseShape(
-                      borderRadius: BorderRadius.circular(size * 0.55),
-                      side: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(.5),
-                        width: .5,
-                      ),
-                    ),
-              child: Container(
-                width: size,
-                height: size,
-                padding: EdgeInsets.all(size * 0.12),
-                alignment: Alignment.center,
-                child: Image.asset(
-                  Assets.images.imgAppLogo.path,
-                  width: size,
-                  height: size,
-                ),
-              ),
-            ),
-          )
-        : CustomNetworkImage(
-            margin: margin,
-            width: size,
-            urlToImage: urlToImage,
-          );
+    return CustomNetworkImage(
+      margin: margin,
+      width: size,
+      urlToImage: urlToImage ?? kUserDefault.avatar,
+    );
   }
 }

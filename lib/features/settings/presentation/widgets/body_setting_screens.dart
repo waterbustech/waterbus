@@ -19,7 +19,6 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_row_button.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class BodySettingScreens extends StatelessWidget {
   final Function(String)? onTap;
@@ -81,18 +80,10 @@ class BodySettingScreens extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  child: user?.avatar == null
-                                      ? CircleAvatar(
-                                          radius: 30.sp,
-                                          backgroundColor: Colors.black,
-                                          backgroundImage: AssetImage(
-                                            Assets.images.imgAppLogo.path,
-                                          ),
-                                        )
-                                      : AvatarCard(
-                                          urlToImage: user?.avatar,
-                                          size: 50.sp,
-                                        ),
+                                  child: AvatarCard(
+                                    urlToImage: user?.avatar,
+                                    size: 50.sp,
+                                  ),
                                 ),
                                 SizedBox(width: 8.sp),
                                 Expanded(
@@ -158,18 +149,10 @@ class BodySettingScreens extends StatelessWidget {
                                   },
                                 );
                               },
-                              child: user?.avatar == null
-                                  ? CircleAvatar(
-                                      radius: 35.sp,
-                                      backgroundColor: Colors.black,
-                                      backgroundImage: AssetImage(
-                                        Assets.images.imgAppLogo.path,
-                                      ),
-                                    )
-                                  : AvatarCard(
-                                      urlToImage: user?.avatar,
-                                      size: 70.sp,
-                                    ),
+                              child: AvatarCard(
+                                urlToImage: user?.avatar,
+                                size: 70.sp,
+                              ),
                             ),
                           ),
                           Padding(

@@ -19,7 +19,6 @@ import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.da
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_text_field.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool isSettingDesktop;
@@ -135,18 +134,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       },
                                     );
                                   },
-                                  child: _user?.avatar == null
-                                      ? CircleAvatar(
-                                          radius: 35.sp,
-                                          backgroundColor: Colors.black,
-                                          backgroundImage: AssetImage(
-                                            Assets.images.imgAppLogo.path,
-                                          ),
-                                        )
-                                      : AvatarCard(
-                                          urlToImage: _user?.avatar,
-                                          size: 70.sp,
-                                        ),
+                                  child: AvatarCard(
+                                    urlToImage: _user?.avatar,
+                                    size: 70.sp,
+                                  ),
                                 ),
                               );
                             },

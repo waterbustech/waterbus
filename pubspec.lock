@@ -705,10 +705,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: "5ff845b44dbdeee45d79652300a2a020288d9f018d6ab65d837c9d965e54cca7"
+      sha256: "288ec8314ebd3113ac7992b1b64dd7ca658b809e154daff4d68baef5f015e0e3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.7+4"
+    version: "0.10.7+5"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1928,10 +1928,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: "040161babb36eaaaa0d4eba0d457cc2b12ef29a0fa5df0fc62a84dc131dd6ec6"
+      sha256: a324bf0a37711fc3d0239d438ef1e24cb17c299a48925ac9595efb66dd71ba54
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   web:
     dependency: "direct overridden"
     description:
