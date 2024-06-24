@@ -1928,10 +1928,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: a324bf0a37711fc3d0239d438ef1e24cb17c299a48925ac9595efb66dd71ba54
+      sha256: "1033ec13b3d1e34bcd3161202221279f348c786f9e1ba93643b0349558a77171"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.4.2"
   web:
     dependency: "direct overridden"
     description:
