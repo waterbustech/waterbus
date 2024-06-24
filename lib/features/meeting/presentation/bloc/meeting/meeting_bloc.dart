@@ -449,7 +449,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Future<void> startPiP() async {
     if (WebRTC.platformIsDesktop || kIsWeb) return;
 
-    if (_waterbusSdk.callState.participants.isEmpty) return;
+    if (_waterbusSdk.callState?.participants.isEmpty ?? true) return;
 
     if (WebRTC.platformIsAndroid) {
       SimplePip().setAutoPipMode();
@@ -457,7 +457,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     }
 
     final List<MapEntry<String, ParticipantSFU>> participants =
-        _waterbusSdk.callState.participants.entries.toList();
+        _waterbusSdk.callState?.participants.entries.toList() ?? [];
 
     participants.sort(
       (a, b) =>
