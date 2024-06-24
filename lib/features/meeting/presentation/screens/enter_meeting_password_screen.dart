@@ -91,7 +91,9 @@ class _EnterMeetingPasswordScreenState
                     children: [
                       Align(
                         child: Lottie.asset(
-                          kIsWeb ? Assets.lotties.unlockLottie : Assets.lotties.broadcastLottie,
+                          kIsWeb
+                              ? Assets.lotties.unlockLottie
+                              : Assets.lotties.broadcastLottie,
                           width: 130.sp,
                           height: 130.sp,
                           fit: BoxFit.contain,
