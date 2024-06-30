@@ -220,6 +220,8 @@ You can view the benchmark results in the generated plots and data files. Here's
 
 Support it by joining [stargazers](https://github.com/waterbustech/waterbus/stargazers) for this repository. ⭐
 
+<img src="https://githubachievements.com/_next/image?url=%2Fimages%2Fstarstruck%2F1.gif&w=1200&q=75"/>
+
 Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our next creations!
 
 ## 🤝 Contributing

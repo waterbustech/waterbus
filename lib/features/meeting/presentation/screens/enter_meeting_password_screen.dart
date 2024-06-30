@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
@@ -90,7 +91,9 @@ class _EnterMeetingPasswordScreenState
                     children: [
                       Align(
                         child: Lottie.asset(
-                          Assets.lotties.unlockLottie,
+                          kIsWeb
+                              ? Assets.lotties.unlockLottie
+                              : Assets.lotties.broadcastLottie,
                           width: 130.sp,
                           height: 130.sp,
                           fit: BoxFit.contain,
