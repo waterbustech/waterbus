@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/screens/conversation_list.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
@@ -57,16 +56,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 buildWhen: (previous, current) =>
                     current is! UserSearchingState,
                 builder: (context, state) {
-                  final User user =
-                      state is UserGetDone ? state.user : kUserDefault;
+                  if (state is UserGetDone) {
+                    final User user = state.user;
 
-                  return Align(
-                    alignment: Alignment.centerRight,
-                    child: AvatarCard(
-                      urlToImage: user.avatar,
-                      size: 24.sp,
-                    ),
-                  );
+                    return Align(
+                      alignment: Alignment.centerRight,
+                      child: AvatarCard(
+                        urlToImage: user.avatar,
+                        size: 24.sp,
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
                 },
               ),
               actions: [

@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/features/conversation/xmodels/message_model.dart';
+import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 
 class MessageCard extends StatelessWidget {
   final MessageModel message;
   final MessageModel? messagePrev;
-  const MessageCard({
-    super.key,
-    required this.message,
-    this.messagePrev,
-  });
+
+  const MessageCard({super.key, required this.message, this.messagePrev});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class MessageCard extends StatelessWidget {
               : CustomNetworkImage(
                   height: 18.sp,
                   width: 18.sp,
-                  urlToImage: kUserDefault.avatar,
+                  urlToImage: message.createdBy?.avatar,
                 ),
           SizedBox(width: 5.sp),
           Material(
@@ -64,7 +61,7 @@ class MessageCard extends StatelessWidget {
               ),
               constraints: BoxConstraints(maxWidth: 65.w),
               child: Text(
-                message.description,
+                message.data,
                 style: TextStyle(
                   color: message.isMe
                       ? Theme.of(context).colorScheme.surface

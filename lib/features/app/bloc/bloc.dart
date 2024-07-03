@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waterbus/core/injection/injection_container.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
@@ -16,6 +17,7 @@ class AppBloc {
   static final UserBloc userBloc = getIt<UserBloc>();
   static final MeetingBloc meetingBloc = getIt<MeetingBloc>();
   static final ChatBloc chatBloc = getIt<ChatBloc>();
+  static final MessageBloc messageBloc = getIt<MessageBloc>();
   static final RecentJoinedBloc recentJoinedBloc = getIt<RecentJoinedBloc>();
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
@@ -35,6 +37,9 @@ class AppBloc {
     ),
     BlocProvider<ChatBloc>(
       create: (context) => chatBloc,
+    ),
+    BlocProvider<MessageBloc>(
+      create: (context) => messageBloc,
     ),
     BlocProvider<RecentJoinedBloc>(
       create: (context) => recentJoinedBloc,

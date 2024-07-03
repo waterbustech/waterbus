@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -15,7 +16,6 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/widgets/user_card.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
-import 'package:waterbus_sdk/types/index.dart';
 
 class BottomSheetAddMember extends StatefulWidget {
   final int code;
@@ -34,8 +34,9 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 75.h,
+    return Container(
+      color: Colors.transparent,
+      height: SizerUtil.isDesktop ? 75.h : 90.h,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -88,7 +89,6 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                   AppBloc.userBloc.add(SearchUsersEvent(keyword: val.trim()));
                 });
               },
-              keyboardType: TextInputType.number,
               minLines: 1,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
@@ -120,6 +120,8 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                 suffix: GestureWrapper(
                   onTap: () {
                     _controller.clear();
+
+                    AppBloc.userBloc.add(const SearchUsersEvent(keyword: ""));
                   },
                   child: Container(
                     height: 14.sp,

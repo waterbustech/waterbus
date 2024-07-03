@@ -87,6 +87,7 @@ dependencies:
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
+  flutter_slidable: ^3.1.0
   sizer: 
     path: ./packages/sizer
   flutter_localizations:
@@ -95,6 +96,7 @@ dependencies:
   # Code Editor
   re_editor: ^0.3.0
   re_highlight: ^0.0.3
+  collection: ^1.18.0
 
   # Media
   image_picker: ^1.1.2

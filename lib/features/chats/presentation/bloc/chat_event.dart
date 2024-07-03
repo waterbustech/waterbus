@@ -41,4 +41,14 @@ class AcceptInviteEvent extends ChatEvent {
   AcceptInviteEvent({required this.code});
 }
 
+class UpdateLastMessageEvent extends ChatEvent {
+  final int meetingId;
+  final MessageModel message;
+
+  UpdateLastMessageEvent({
+    required this.meetingId,
+    required this.message,
+  });
+}
+
 class CleanChatEvent extends ChatEvent {}

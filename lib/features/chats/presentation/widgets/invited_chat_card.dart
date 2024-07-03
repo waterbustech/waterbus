@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
+
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/common/styles/style.dart';
-import 'package:waterbus_sdk/types/index.dart';
 
 class InvitedChatCard extends StatelessWidget {
   final Meeting invitedConversation;

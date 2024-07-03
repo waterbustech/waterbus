@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
+
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
@@ -42,14 +43,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is CreateConversationEvent) {
-        final Meeting? meeting = await _waterbusSdk.createRoom(
-          meeting: Meeting(title: event.title),
-          password: event.password,
-          userId: AppBloc.userBloc.user?.id,
-        );
+        final Meeting? meeting = await _createConversation(event);
 
         if (meeting != null) {
-          _conversations.add(meeting);
+          _conversations.insert(0, meeting);
 
           emit(_getDoneChat);
 
@@ -112,12 +109,36 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       }
 
+      if (event is UpdateLastMessageEvent) {
+        final int index = _conversations.indexWhere(
+          (conversation) => conversation.id == event.meetingId,
+        );
+
+        if (index != -1) {
+          _conversations[index].latestMessage = event.message;
+        }
+
+        emit(_getDoneChat);
+      }
+
       if (event is CleanChatEvent) {
         _cleanChat();
 
         emit(_getDoneChat);
       }
     });
+  }
+
+  Future<Meeting?> _createConversation(
+    CreateConversationEvent event,
+  ) async {
+    final Meeting? meeting = await _waterbusSdk.createRoom(
+      meeting: Meeting(title: event.title),
+      password: event.password,
+      userId: AppBloc.userBloc.user?.id,
+    );
+
+    return meeting;
   }
 
   // MARK: state

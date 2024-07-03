@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -60,47 +59,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   buildWhen: (previous, current) =>
                       current is! UserSearchingState,
                   builder: (context, state) {
-                    final User user =
-                        state is UserGetDone ? state.user : kUserDefault;
+                    if (state is UserGetDone) {
+                      final User user = state.user;
 
-                    return Row(
-                      children: [
-                        SizedBox(width: 6.sp),
-                        GestureDetector(
-                          onTap: _toggleDrawer,
-                          child: AvatarCard(
-                            urlToImage: user.avatar,
-                            size: 30.sp,
+                      return Row(
+                        children: [
+                          SizedBox(width: 6.sp),
+                          GestureDetector(
+                            onTap: _toggleDrawer,
+                            child: AvatarCard(
+                              urlToImage: user.avatar,
+                              size: 30.sp,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10.sp),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              user.fullName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Text(
-                              '@${user.userName}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontSize: 10.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
+                          SizedBox(width: 10.sp),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Text(
+                                '@${user.userName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 10.sp,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+
+                    return const SizedBox();
                   },
                 ),
                 actions: [_buildCreateMeetingButton],

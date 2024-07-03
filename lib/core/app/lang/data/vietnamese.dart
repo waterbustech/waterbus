@@ -70,6 +70,11 @@ Map<String, String> vietnamese = {
   Strings.search: "Tìm kiếm",
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
+  Strings.delete: "Xoá",
+  Strings.sureDeleteConversation:
+      'Bạn có chắc chắn muốn xoá\ncuộc trò chuyện này?',
+  Strings.sureDeleteMessage: 'Bạn có chắc chắn muốn xoá\tin nhắn này?',
+  Strings.leaveAMessage: "Để lại lời nhắn...",
   Strings.invitedChat: "Lời mời",
   Strings.enterPassword: "Nhập mật khẩu",
   Strings.createMeeting: "Tạo cuộc họp",

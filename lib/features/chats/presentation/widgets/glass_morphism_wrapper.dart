@@ -1,7 +1,5 @@
-// Dart imports:
 import 'dart:ui';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
 class GlassmorphismWrapper extends StatelessWidget {
@@ -21,8 +19,8 @@ class GlassmorphismWrapper extends StatelessWidget {
       borderRadius: borderRadius,
       child: BackdropFilter(
         filter: ImageFilter.blur(
-          sigmaX: Theme.of(context).brightness == Brightness.dark ? 20 : 10,
-          sigmaY: Theme.of(context).brightness == Brightness.dark ? 40 : 20,
+          sigmaX: Theme.of(context).brightness == Brightness.dark ? 12 : 6,
+          sigmaY: Theme.of(context).brightness == Brightness.dark ? 12 : 6,
         ),
         child: child,
       ),

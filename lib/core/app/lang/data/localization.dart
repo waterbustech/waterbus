@@ -76,6 +76,10 @@ class Strings {
   static const String search = 'search';
   static const String createRoom = 'createRoom';
   static const String chat = 'chats';
+  static const String delete = 'delete';
+  static const String sureDeleteConversation = 'sureDeleteConversation';
+  static const String sureDeleteMessage = 'sureDeleteMessage';
+  static const String leaveAMessage = 'leaveAMessage';
   static const String invitedChat = 'invitedChat';
   static const String enterPassword = 'enterPassword';
   static const String createMeeting = 'createMeeting';
