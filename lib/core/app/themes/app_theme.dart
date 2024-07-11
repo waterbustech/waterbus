@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/types/enums/color_seed.dart';
 import 'package:waterbus/gen/fonts.gen.dart';
 
 class AppTheme {
@@ -12,10 +13,10 @@ class AppTheme {
     required this.data,
   });
 
-  factory AppTheme.light() {
+  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.baseColor}) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
-      colorSchemeSeed: const Color(0xff6750a4),
+      colorSchemeSeed: colorSeed.color,
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -71,10 +72,10 @@ class AppTheme {
     );
   }
 
-  factory AppTheme.dark() {
+  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.baseColor}) {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
-      colorSchemeSeed: const Color(0xff6750a4),
+      colorSchemeSeed: colorSeed.color,
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(

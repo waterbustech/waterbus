@@ -12,11 +12,11 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i13;
-import '../../features/home/bloc/home/home_bloc.dart' as _i5;
-import '../../features/profile/presentation/bloc/user_bloc.dart' as _i3;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i12;
+import '../../features/home/bloc/home/home_bloc.dart' as _i3;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i5;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i10;
-import '../../features/settings/themes/bloc/themes_bloc.dart' as _i12;
+import '../../features/settings/themes/bloc/themes_bloc.dart' as _i13;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i9;
 import '../method_channels/pip_channel.dart' as _i6;
 
@@ -44,9 +44,9 @@ _i1.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.factory<_i3.UserBloc>(() => _i3.UserBloc());
+  gh.factory<_i3.HomeBloc>(() => _i3.HomeBloc());
   gh.factory<_i4.BeautyFiltersBloc>(() => _i4.BeautyFiltersBloc());
-  gh.factory<_i5.HomeBloc>(() => _i5.HomeBloc());
+  gh.factory<_i5.UserBloc>(() => _i5.UserBloc());
   gh.singleton<_i6.PipChannel>(() => _i6.PipChannel());
   gh.lazySingleton<_i7.MeetingLocalDataSource>(
       () => _i7.MeetingLocalDataSourceImpl());
@@ -57,10 +57,10 @@ _i1.GetIt $initGetIt(
       () => _i10.LanguagesDatasourceImpl());
   gh.lazySingleton<_i11.UserLocalDataSource>(
       () => _i11.UserLocalDataSourceImpl());
-  gh.factory<_i12.ThemesBloc>(
-      () => _i12.ThemesBloc(gh<_i9.ThemesDatasource>()));
-  gh.factory<_i13.AuthBloc>(
-      () => _i13.AuthBloc(gh<_i11.UserLocalDataSource>()));
+  gh.factory<_i12.AuthBloc>(
+      () => _i12.AuthBloc(gh<_i11.UserLocalDataSource>()));
+  gh.factory<_i13.ThemesBloc>(
+      () => _i13.ThemesBloc(gh<_i9.ThemesDatasource>()));
   gh.factory<_i14.MeetingBloc>(() => _i14.MeetingBloc(
         gh<_i6.PipChannel>(),
         gh<_i7.MeetingLocalDataSource>(),

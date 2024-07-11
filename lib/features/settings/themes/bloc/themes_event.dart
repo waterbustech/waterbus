@@ -2,7 +2,12 @@ part of 'themes_bloc.dart';
 
 abstract class ThemesEvent {}
 
-class OnChangeTheme extends ThemesEvent {
-  final ThemeList appTheme;
-  OnChangeTheme({required this.appTheme});
+class OnThemeChangedEvent extends ThemesEvent {
+  final ThemeMode mode;
+  OnThemeChangedEvent({required this.mode});
+}
+
+class OnColorSeedChangedEvent extends ThemesEvent {
+  final ColorSeed colorSeed;
+  OnColorSeedChangedEvent({required this.colorSeed});
 }

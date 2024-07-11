@@ -28,9 +28,9 @@ class _AppSettingsState extends State<AppSettings> {
           title: kAppTitle,
           navigatorKey: AppNavigator.navigatorSettingKey,
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.light().data,
-          darkTheme: AppTheme.dark().data,
-          themeMode: theme.props[0].theme,
+          theme: AppTheme.light(colorSeed: theme.props.last).data,
+          darkTheme: AppTheme.dark(colorSeed: theme.props.last).data,
+          themeMode: theme.props.first,
           onGenerateRoute: AppNavigator().getRoute,
           builder: (context, child) {
             return MediaQuery(
