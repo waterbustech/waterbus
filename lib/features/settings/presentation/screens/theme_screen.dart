@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/types/enums/color_seed.dart';
@@ -32,72 +33,77 @@ class ThemeScreen extends StatelessWidget {
           return Column(
             children: [
               divider,
-              Container(
-                margin: EdgeInsets.all(20.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
+              Padding(
+                padding: EdgeInsets.all(20.sp),
+                child: Material(
+                  shape: SuperellipseShape(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   color: Theme.of(context).colorScheme.onInverseSurface,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(
-                    ThemeMode.values.length,
-                    (index) => CustomRowButton(
-                      groupValue: mode.name,
-                      onTap: () {
-                        AppBloc.themesBloc.add(
-                          OnThemeChangedEvent(
-                            mode: ThemeMode.values[index],
-                          ),
-                        );
-                      },
-                      value: ThemeMode.values[index].name,
-                      text: ThemeMode.values[index].name.i18n,
-                      showDivider: index != ThemeMode.values.length - 1,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      ThemeMode.values.length,
+                      (index) => CustomRowButton(
+                        groupValue: mode.name,
+                        onTap: () {
+                          AppBloc.themesBloc.add(
+                            OnThemeChangedEvent(
+                              mode: ThemeMode.values[index],
+                            ),
+                          );
+                        },
+                        value: ThemeMode.values[index].name,
+                        text: ThemeMode.values[index].name.i18n,
+                        showDivider: index != ThemeMode.values.length - 1,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                child: Material(
+                  shape: SuperellipseShape(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   color: Theme.of(context).colorScheme.onInverseSurface,
-                ),
-                height: 44.sp,
-                width: double.infinity,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: ColorSeed.values.length,
-                  itemBuilder: (ctx, index) {
-                    final color = ColorSeed.values[index];
+                  child: SizedBox(
+                    height: 42.sp,
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: ColorSeed.values.length,
+                      itemBuilder: (ctx, index) {
+                        final color = ColorSeed.values[index];
 
-                    return GestureWrapper(
-                      onTap: () {
-                        AppBloc.themesBloc.add(
-                          OnColorSeedChangedEvent(colorSeed: color),
+                        return GestureWrapper(
+                          onTap: () {
+                            AppBloc.themesBloc.add(
+                              OnColorSeedChangedEvent(colorSeed: color),
+                            );
+                          },
+                          child: Container(
+                            height: 26.5.sp,
+                            width: 26.5.sp,
+                            margin: EdgeInsets.only(right: 10.sp),
+                            decoration: BoxDecoration(
+                              color: color.color,
+                              shape: BoxShape.circle,
+                              border: colorSeed != color
+                                  ? null
+                                  : Border.all(
+                                      color: ColorScheme.fromSeed(
+                                        seedColor: color.color,
+                                      ).primary,
+                                      width: 3.sp,
+                                    ),
+                            ),
+                          ),
                         );
                       },
-                      child: Container(
-                        height: 28.sp,
-                        width: 28.sp,
-                        margin: EdgeInsets.only(right: 10.sp),
-                        decoration: BoxDecoration(
-                          color: color.color,
-                          shape: BoxShape.circle,
-                          border: colorSeed != color
-                              ? null
-                              : Border.all(
-                                  color: ColorScheme.fromSeed(
-                                    seedColor: color.color,
-                                  ).primary,
-                                  width: 3.sp,
-                                ),
-                        ),
-                      ),
-                    );
-                  },
+                    ),
+                  ),
                 ),
               ),
             ],

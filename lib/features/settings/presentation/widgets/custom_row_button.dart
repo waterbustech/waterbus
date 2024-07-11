@@ -27,7 +27,7 @@ class CustomRowButton extends StatelessWidget {
         GestureWrapper(
           onTap: () => onTap.call(),
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 2.sp),
+            padding: EdgeInsets.symmetric(vertical: 2.sp, horizontal: 10.sp),
             color: Colors.transparent,
             child: Row(
               children: [
