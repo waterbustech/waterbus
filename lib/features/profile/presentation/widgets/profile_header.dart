@@ -5,7 +5,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/app/themes/theme_model.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -43,11 +42,11 @@ class ProfileHeader extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           AppBloc.themesBloc.add(
-                            OnChangeTheme(
-                              appTheme: Theme.of(context).brightness ==
+                            OnThemeChangedEvent(
+                              mode: Theme.of(context).brightness ==
                                       Brightness.light
-                                  ? ThemeList.dark
-                                  : ThemeList.light,
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
                             ),
                           );
                         },

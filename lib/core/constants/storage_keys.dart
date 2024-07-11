@@ -15,6 +15,7 @@ class StorageKeys {
   static const String callSettings = 'call-settings';
 
   // In Box - App Settings
-  static const String boxLanguage = 'languages';
-  static const String boxTheme = 'themes';
+  static const String language = 'language';
+  static const String theme = 'theme';
+  static const String colorSeed = 'colorSeed';
 }

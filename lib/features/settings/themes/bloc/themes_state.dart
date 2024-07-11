@@ -5,9 +5,10 @@ abstract class ThemesState {
 }
 
 class ThemesStateInitial extends ThemesState {
-  final ThemeList appTheme;
-  ThemesStateInitial({required this.appTheme});
+  final ThemeMode mode;
+  final ColorSeed colorSeed;
+  ThemesStateInitial({required this.mode, required this.colorSeed});
 
   @override
-  List get props => [appTheme];
+  List get props => [mode, colorSeed];
 }

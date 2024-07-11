@@ -27,14 +27,14 @@ class _AppState extends State<App> {
       child: Sizer(
         builder: (context, orientation, deviceType) {
           return BlocBuilder<ThemesBloc, ThemesState>(
-            builder: (context, stateThemes) {
+            builder: (context, theme) {
               return MaterialApp(
                 title: kAppTitle,
                 navigatorKey: AppNavigator.navigatorKey,
                 debugShowCheckedModeBanner: false,
-                theme: AppTheme.light().data,
-                darkTheme: AppTheme.dark().data,
-                themeMode: stateThemes.props[0].theme,
+                theme: AppTheme.light(colorSeed: theme.props.last).data,
+                darkTheme: AppTheme.dark(colorSeed: theme.props.last).data,
+                themeMode: theme.props.first,
                 initialRoute: Routes.rootRoute,
                 navigatorObservers: [
                   AppNavigatorObserver(),
