@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/stats_view.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -14,6 +16,7 @@ import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
   const CallSettingsBottomSheet({super.key});
@@ -116,7 +119,16 @@ class CallSettingsBottomSheet extends StatelessWidget {
               CallSettingButton(
                 icon: PhosphorIcons.chart_line,
                 lable: Strings.callStats.i18n,
-                onTap: () {},
+                onTap: () {
+                  AppNavigator.pop();
+
+                  showDialogWaterbus(
+                    duration: 200.milliseconds.inMilliseconds,
+                    maxHeight: 450.sp,
+                    maxWidth: 700.sp,
+                    child: const StatsView(),
+                  );
+                },
               ),
               CallSettingButton(
                 hasDivider: false,
