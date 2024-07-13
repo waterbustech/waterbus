@@ -92,6 +92,9 @@ class Strings {
   static const String beautyFilters = 'beautyFilters';
   static const String virtualBackground = 'virtualBackground';
   static const String callStats = 'callStats';
+  static const String frameSent = 'frameSent';
+  static const String resolution = 'resolution';
+  static const String latency = 'latency';
 
   // Profile screen
   static const String profile = 'profile';
