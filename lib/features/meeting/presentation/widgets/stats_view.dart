@@ -1,34 +1,60 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-final List<StatsData> data = [
-  StatsData(1, 10),
-  StatsData(2, 14),
-  StatsData(3, 12),
-  StatsData(4, 8),
-  StatsData(5, 17),
-];
+typedef StatsData = List<VideoSenderStats>;
 
-class StatsView extends StatelessWidget {
+class StatsView extends StatefulWidget {
   const StatsView({super.key});
+
+  @override
+  State<StatsView> createState() => _StatsViewState();
+}
+
+class _StatsViewState extends State<StatsView> {
+  final StreamController<StatsData> _statsStream =
+      StreamController<StatsData>.broadcast();
+  final StatsData _senderStats = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WaterbusSdk.onStatsChanged = _handleOnStatsChanged;
+  }
+
+  @override
+  void dispose() {
+    WaterbusSdk.onStatsChanged = null;
+    _statsStream.close();
+    super.dispose();
+  }
+
+  void _handleOnStatsChanged(VideoSenderStats stats) {
+    _senderStats.add(stats);
+    _statsStream.add(_senderStats);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Stats",
+                Strings.callStats.i18n,
                 style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
@@ -47,14 +73,36 @@ class StatsView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12.sp),
-          Row(
-            children: [
-              _buildStatsCell(context, title: "Frame Sent", value: "5559"),
-              SizedBox(width: 20.sp),
-              _buildStatsCell(context, title: "Frame Size", value: "480x360"),
-              SizedBox(width: 20.sp),
-              _buildStatsCell(context, title: "FPS", value: "15"),
-            ],
+          StreamBuilder<StatsData>(
+            stream: _statsStream.stream,
+            builder: (context, snapshot) {
+              final VideoSenderStats? stats =
+                  snapshot.hasData ? snapshot.data!.last : null;
+
+              return Row(
+                children: [
+                  _buildStatsCell(
+                    context,
+                    title: Strings.frameSent.i18n,
+                    value: stats?.framesSent.toString() ?? "NaN",
+                  ),
+                  SizedBox(width: 20.sp),
+                  _buildStatsCell(
+                    context,
+                    title: Strings.resolution.i18n,
+                    value:
+                        "${stats?.frameWidth ?? 'NaN'}x${stats?.frameHeight ?? 'NaN'}",
+                  ),
+                  if (SizerUtil.isDesktop) SizedBox(width: 20.sp),
+                  if (SizerUtil.isDesktop)
+                    _buildStatsCell(
+                      context,
+                      title: "FPS",
+                      value: stats?.framesPerSecond.toString() ?? "NaN",
+                    ),
+                ],
+              );
+            },
           ),
           SizedBox(height: 20.sp),
           SizedBox(
@@ -105,39 +153,38 @@ class StatsView extends StatelessWidget {
   }
 
   Widget _buildStatsChart(BuildContext context) {
-    return SfCartesianChart(
-      primaryXAxis: const CategoryAxis(),
-      // Chart title
-      title: const ChartTitle(text: 'Latency'),
-      // Enable legend
-      legend: const Legend(isVisible: true),
-      // Enable tooltip
-      tooltipBehavior: TooltipBehavior(enable: true),
-      series: <CartesianSeries<StatsData, String>>[
-        LineSeries<StatsData, String>(
-          dataSource: data,
-          xValueMapper: (stats, _) => stats.time.toString(),
-          yValueMapper: (sales, _) => sales.value,
-          name: 'ms',
-          // Enable data label
-          dataLabelSettings: const DataLabelSettings(isVisible: true),
-        ),
-        LineSeries<StatsData, String>(
-          dataSource: data,
-          xValueMapper: (stats, _) => stats.time.toString(),
-          yValueMapper: (sales, _) => sales.value + 2,
-          name: 'buffer',
-          // Enable data label
-          dataLabelSettings: const DataLabelSettings(isVisible: true),
-        ),
-      ],
+    return StreamBuilder<StatsData>(
+      stream: _statsStream.stream,
+      builder: (context, snapshot) {
+        final data = snapshot.data ?? [];
+
+        return SfCartesianChart(
+          primaryXAxis: const CategoryAxis(),
+          // Enable legend
+          legend: const Legend(isVisible: true),
+          // Enable tooltip
+          tooltipBehavior: TooltipBehavior(enable: true),
+          series: <CartesianSeries<VideoSenderStats, String>>[
+            LineSeries<VideoSenderStats, String>(
+              dataSource: data,
+              xValueMapper: (stats, index) => "${index * 2}",
+              yValueMapper: (stats, _) =>
+                  ((stats.roundTripTime ?? 0) * 1000).round(),
+              name: Strings.latency.i18n,
+              // Enable data label
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+            ),
+            LineSeries<VideoSenderStats, String>(
+              dataSource: data,
+              xValueMapper: (stats, index) => "${index * 2}",
+              yValueMapper: (stats, _) => stats.jitter,
+              name: 'jitter',
+              // Enable data label
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+            ),
+          ],
+        );
+      },
     );
   }
-}
-
-class StatsData {
-  final int time;
-  final int value;
-
-  StatsData(this.time, this.value);
 }

@@ -105,6 +105,9 @@ Map<String, String> english = {
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",
   Strings.checking: "Checking",
+  Strings.frameSent: "Frame sent",
+  Strings.resolution: "Resolution",
+  Strings.latency: "Latency (ms)",
 
   // Settings screen
   Strings.myProfile: "My Profile",
