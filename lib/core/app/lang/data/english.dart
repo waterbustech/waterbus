@@ -1,13 +1,12 @@
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/app/themes/theme_model.dart';
 
 Map<String, String> english = {
   Strings.language: "Language",
   Strings.vietnamese: "Vietnamese",
   Strings.english: "English",
-  Strings.darkMode: ThemeList.dark.text,
-  Strings.lightMode: ThemeList.light.text,
-  Strings.system: ThemeList.system.text,
+  Strings.darkMode: "Dark",
+  Strings.lightMode: "Light",
+  Strings.system: "System",
   Strings.today: "Today",
   Strings.cut: "Cut",
   Strings.copy: "Copy",
@@ -112,6 +111,9 @@ Map<String, String> english = {
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",
   Strings.checking: "Checking",
+  Strings.frameSent: "Frame sent",
+  Strings.resolution: "Resolution",
+  Strings.latency: "Latency (ms)",
 
   // Settings screen
   Strings.myProfile: "My Profile",

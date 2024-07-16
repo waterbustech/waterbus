@@ -66,7 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       (tab) => tab.key == _currentTabKey,
     );
 
-    if (indexOfTab == -1) return const SizedBox();
+    if (indexOfTab == -1) return _screensOption[1].tab;
 
     return _screensOption[indexOfTab].tab;
   }

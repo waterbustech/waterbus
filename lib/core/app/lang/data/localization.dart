@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
+
 import 'package:i18n_extension/i18n_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/english.dart';
 import 'package:waterbus/core/app/lang/data/vietnamese.dart';
-import 'package:waterbus/core/app/themes/theme_model.dart';
 
 class Strings {
   static const String language = 'language';
   static const String vietnamese = 'vietnamese';
   static const String english = 'english';
-  static String darkMode = ThemeList.dark.text;
-  static String lightMode = ThemeList.light.text;
-  static String system = ThemeList.system.text;
+  static String darkMode = ThemeMode.dark.name;
+  static String lightMode = ThemeMode.light.name;
+  static String system = ThemeMode.system.name;
   static const String today = 'today';
   static const String cut = 'cut';
   static const String copy = 'copy';
@@ -96,6 +97,9 @@ class Strings {
   static const String beautyFilters = 'beautyFilters';
   static const String virtualBackground = 'virtualBackground';
   static const String callStats = 'callStats';
+  static const String frameSent = 'frameSent';
+  static const String resolution = 'resolution';
+  static const String latency = 'latency';
 
   // Profile screen
   static const String profile = 'profile';

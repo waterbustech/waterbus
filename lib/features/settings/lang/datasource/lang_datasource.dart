@@ -16,13 +16,13 @@ class LanguagesDatasourceImpl extends LanguagesDatasource {
   @override
   void setLocale({required String langCode}) {
     hiveBox.put(
-      StorageKeys.boxLanguage,
+      StorageKeys.language,
       langCode,
     );
   }
 
   @override
   String? getLocale() {
-    return hiveBox.get(StorageKeys.boxLanguage);
+    return hiveBox.get(StorageKeys.language);
   }
 }

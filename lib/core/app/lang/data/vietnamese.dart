@@ -90,7 +90,10 @@ Map<String, String> vietnamese = {
   Strings.highQuality: "Chất lượng cao",
   Strings.beautyFilters: "Bộ lọc làm đẹp",
   Strings.virtualBackground: "Nền ảo",
-  Strings.callStats: "Thống kê cuộc gọi",
+  Strings.callStats: "Thống kê",
+  Strings.frameSent: "Khung đã gửi",
+  Strings.resolution: "Độ phân giải",
+  Strings.latency: "Độ trễ (mili giây)",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
