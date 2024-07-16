@@ -156,26 +156,6 @@ class ChatCard extends StatelessWidget {
             ],
           ),
         ),
-        // meeting.statusMessage == StatusMessage.endCall
-        //     ? Row(
-        //         children: [
-        //           Image.asset(
-        //             Assets.icons.icEndCall.path,
-        //             color: colorRedTitle,
-        //             height: 15.sp,
-        //           ),
-        //           SizedBox(width: 5.sp),
-        //           Text(
-        //             'End Call',
-        //             style: TextStyle(
-        //               color: colorRedTitle,
-        //               fontSize: 11.sp,
-        //               fontWeight: FontWeight.w600,
-        //             ),
-        //           ),
-        //         ],
-        //       )
-        //     : const SizedBox(),
       ],
     );
   }

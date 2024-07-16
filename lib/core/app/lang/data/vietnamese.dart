@@ -124,4 +124,9 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+  Strings.videoCall: 'Gọi video',
+  Strings.mute: 'Im lặng',
+  Strings.more: 'Thêm',
+  Strings.addMembers: 'Thêm thành viên',
+  Strings.owner: 'Chủ phòng',
 };

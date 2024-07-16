@@ -39,3 +39,21 @@ class DeleteMessageEvent extends MessageEvent {
 class CancelEditMessageEvent extends MessageEvent {}
 
 class CleanMessageEvent extends MessageEvent {}
+
+class InsertMessageEvent extends MessageEvent {
+  final MessageModel message;
+
+  InsertMessageEvent({required this.message});
+}
+
+class UpdateMessageFromSocketEvent extends MessageEvent {
+  final int messageId;
+  final String? data;
+  final int meetingId;
+
+  UpdateMessageFromSocketEvent({
+    required this.messageId,
+    required this.meetingId,
+    this.data,
+  });
+}

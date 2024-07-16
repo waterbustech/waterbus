@@ -1,14 +1,16 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+
+import 'package:collection/collection.dart';
+import 'package:waterbus_sdk/types/enums/meeting_role.dart';
+import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/types/models/index.dart';
+
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/conversation/xmodels/option_model.dart';
-import 'package:waterbus_sdk/types/enums/meeting_role.dart';
-import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/types/models/index.dart';
 
 extension MeetingModelX on Meeting {
   List<OptionModel> get getOptions {

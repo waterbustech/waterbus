@@ -12,6 +12,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_add_members.png
+  AssetGenImage get icAddMembers =>
+      const AssetGenImage('assets/icons/ic_add_members.png');
+
   /// File path: assets/icons/ic_code.png
   AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
 
@@ -51,6 +55,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        icAddMembers,
         icCode,
         icEndCall,
         icGithub,

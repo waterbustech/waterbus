@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 class AvatarChat extends StatelessWidget {
   final Meeting meeting;

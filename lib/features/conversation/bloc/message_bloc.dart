@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 part 'message_event.dart';
 part 'message_state.dart';
@@ -16,25 +17,26 @@ class CachedMessageByMeetingId {
 
 @injectable
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
-  final Map<int, CachedMessageByMeetingId> messagesMap = {};
+  final Map<int, CachedMessageByMeetingId> _messagesMap = {};
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
-  int? meetingId;
+  int? _meetingId;
   MessageModel? _messageBeingEdited;
 
   MessageBloc() : super(MessageInitial()) {
     on<MessageEvent>((event, emit) async {
       if (event is GetMessageByMeetingIdEvent) {
-        if (meetingId == event.meetingId) return;
+        if (_meetingId == event.meetingId) return;
 
         _messageBeingEdited = null;
-        meetingId = event.meetingId;
+        _meetingId = event.meetingId;
 
-        if (messagesMap[event.meetingId] == null) {
-          messagesMap[event.meetingId] = CachedMessageByMeetingId(messages: []);
+        if (_messagesMap[event.meetingId] == null) {
+          _messagesMap[event.meetingId] =
+              CachedMessageByMeetingId(messages: []);
         }
 
         if (state is GettingMessageState ||
-            messagesMap[event.meetingId]!.isOver) {
+            _messagesMap[event.meetingId]!.isOver) {
           return;
         }
 
@@ -44,11 +46,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       }
 
       if (event is RefreshMessagesEvent) {
-        if (meetingId == null) return;
+        if (_meetingId == null) return;
 
         emit(_gettingMessage);
-        messagesMap[meetingId!] = CachedMessageByMeetingId(messages: []);
-        await _getMessagesByMeetingId(meetingId!);
+        _messagesMap[_meetingId!] = CachedMessageByMeetingId(messages: []);
+        await _getMessagesByMeetingId(_meetingId!);
         emit(_getDoneMessage);
       }
 
@@ -87,6 +89,42 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
         emit(_getDoneMessage);
       }
+
+      if (event is InsertMessageEvent) {
+        if (_messagesMap[event.message.meeting] == null) {
+          _messagesMap[event.message.meeting] =
+              CachedMessageByMeetingId(messages: []);
+        }
+
+        final int? index = _messagesMap[event.message.meeting]
+            ?.messages
+            .indexWhere((message) => message.id == event.message.id);
+
+        if (index == -1) {
+          _messagesMap[event.message.meeting]
+              ?.messages
+              .insert(0, event.message);
+        }
+
+        emit(_getDoneMessage);
+      }
+
+      if (event is UpdateMessageFromSocketEvent) {
+        final int? index = _messagesMap[event.meetingId]
+            ?.messages
+            .indexWhere((message) => message.id == event.messageId);
+
+        if (index != null && index != -1) {
+          if (event.data == null) {
+            _messagesMap[event.meetingId]?.messages.removeAt(index);
+          } else {
+            _messagesMap[event.meetingId]?.messages[index].data =
+                event.data ?? "";
+          }
+        }
+
+        emit(_getDoneMessage);
+      }
     });
   }
 
@@ -102,17 +140,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       );
 
   List<MessageModel> get _messagesByMeetingId {
-    return messagesMap[meetingId]?.messages ?? [];
+    return _messagesMap[_meetingId]?.messages ?? [];
   }
 
   Future<void> _getMessagesByMeetingId(int meetingId) async {
     final List<MessageModel> response = await _waterbusSdk.getMessageByRoom(
       meetingId: meetingId,
-      skip: messagesMap[meetingId]?.messages.length ?? 0,
+      skip: _messagesMap[meetingId]?.messages.length ?? 0,
     );
 
     if (response.isNotEmpty) {
-      messagesMap[meetingId]?.messages.addAll(response);
+      _messagesMap[meetingId]?.messages.addAll(response);
     }
   }
 
@@ -123,7 +161,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
 
     if (message != null) {
-      messagesMap[event.meetingId]?.messages.insert(0, message);
+      _messagesMap[event.meetingId]?.messages.insert(0, message);
 
       AppBloc.chatBloc.add(
         UpdateLastMessageEvent(
@@ -141,17 +179,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
 
     if (isSuccess) {
-      final int index = messagesMap[meetingId]!
+      final int index = _messagesMap[_meetingId]!
           .messages
           .indexWhere((message) => message.id == event.messageId);
 
       if (index != -1) {
-        messagesMap[meetingId]?.messages[index].data = event.data;
+        _messagesMap[_meetingId]?.messages[index].data = event.data;
 
         AppBloc.chatBloc.add(
           UpdateLastMessageEvent(
             meetingId: event.messageId,
-            message: messagesMap[meetingId]!.messages[index],
+            message: _messagesMap[_meetingId]!.messages[index],
           ),
         );
       }
@@ -166,20 +204,20 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
 
     if (isSuccess) {
-      messagesMap[meetingId]
+      _messagesMap[_meetingId]
           ?.messages
           .removeWhere((message) => message.id == event.messageId);
 
       AppBloc.chatBloc.add(
         UpdateLastMessageEvent(
           meetingId: event.messageId,
-          message: messagesMap[meetingId]!.messages.first,
+          message: _messagesMap[_meetingId]!.messages.first,
         ),
       );
     }
   }
 
   _clearMessages() {
-    messagesMap.clear();
+    _messagesMap.clear();
   }
 }

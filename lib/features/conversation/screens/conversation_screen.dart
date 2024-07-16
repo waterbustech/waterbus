@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
-import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
 import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
+import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 
 class ConversationScreen extends StatefulWidget {
   final Meeting meeting;

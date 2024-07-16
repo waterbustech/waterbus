@@ -60,7 +60,7 @@ AppBar appBarTitleBack(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
                   child: Icon(
-                    PhosphorIcons.arrow_left,
+                    PhosphorIcons.caret_left_light,
                     size: 20.sp,
                     color: colorChild,
                   ),

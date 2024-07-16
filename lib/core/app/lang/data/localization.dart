@@ -127,6 +127,11 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+  static const String videoCall = 'videoCall';
+  static const String mute = 'mute';
+  static const String more = 'more';
+  static const String addMembers = 'addMembers';
+  static const String owner = 'owner';
 }
 
 class MyI18n {

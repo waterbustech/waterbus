@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/models/meeting_model.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
@@ -41,29 +42,50 @@ class ConversationHeader extends StatelessWidget {
               ),
             ),
           ),
-          AvatarChat(meeting: meeting, size: 30.sp),
-          SizedBox(width: 10.sp),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  meeting.title,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
+            child: GestureWrapper(
+              onTap: () {
+                AppNavigator().push(
+                  Routes.detailGroupRoute,
+                  arguments: {
+                    "meeting": meeting,
+                  },
+                );
+              },
+              child: ColoredBox(
+                color: Colors.transparent,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AvatarChat(meeting: meeting, size: 30.sp),
+                    SizedBox(width: 10.sp),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            meeting.title,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            Strings.online.i18n,
+                            style: TextStyle(
+                              color: colorGreenLight,
+                              fontSize: 10.sp,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                  ],
                 ),
-                Text(
-                  Strings.online.i18n,
-                  style: TextStyle(
-                    color: colorGreenLight,
-                    fontSize: 10.sp,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           SizedBox(width: 20.sp),

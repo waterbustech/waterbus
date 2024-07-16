@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/injection/injection_container.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/constants/constants.dart';
@@ -10,6 +11,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/conversation/socket/socket_chat_handle.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class App extends StatefulWidget {
@@ -20,6 +22,12 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    getIt<SocketChatHandle>().onListenSocket();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
