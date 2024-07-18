@@ -1,8 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.dart';
 
 import 'package:waterbus/features/conversation/socket/socket_chat_event.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 @injectable
 class SocketChatHandle {
@@ -19,18 +22,41 @@ class SocketChatHandle {
       socket.on(SocketChatEvent.sendMessageSSC, (data) {
         if (data == null) return;
 
-        // print("sendMessageSSC: $data");
+        final MessageModel message = MessageModel.fromMap(data);
+
+        if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
+
+        AppBloc.messageBloc.add(InsertMessageEvent(message: message));
       });
 
       socket.on(SocketChatEvent.updateMessageSSC, (data) {
         if (data == null) return;
 
-        // print("updateMessageSSC: $data");
+        final MessageModel message = MessageModel.fromMap(data);
+
+        if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
+
+        AppBloc.messageBloc.add(
+          UpdateMessageFromSocketEvent(
+            messageId: message.id,
+            meetingId: message.meeting,
+            data: message.data,
+          ),
+        );
       });
       socket.on(SocketChatEvent.deleteMessageSSC, (data) {
         if (data == null) return;
 
-        // print("deleteMessageSSC: $data");
+        final MessageModel message = MessageModel.fromMap(data);
+
+        if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
+
+        AppBloc.messageBloc.add(
+          UpdateMessageFromSocketEvent(
+            messageId: message.id,
+            meetingId: message.meeting,
+          ),
+        );
       });
     });
   }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus_sdk/types/models/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -80,6 +82,10 @@ class DetailGroupScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         DetailGroupButton(
+                          onTap: () {
+                            AppBloc.meetingBloc
+                                .add(JoinMeetingEvent(meeting: meeting));
+                          },
                           icon: PhosphorIcons.video_camera_fill,
                           title: Strings.videoCall.i18n,
                         ),

@@ -101,26 +101,24 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             .indexWhere((message) => message.id == event.message.id);
 
         if (index == -1) {
-          _messagesMap[event.message.meeting]
-              ?.messages
-              .insert(0, event.message);
+          _handleInsertMessage(event.message, event.message.meeting);
         }
 
         emit(_getDoneMessage);
       }
 
       if (event is UpdateMessageFromSocketEvent) {
-        final int? index = _messagesMap[event.meetingId]
-            ?.messages
-            .indexWhere((message) => message.id == event.messageId);
-
-        if (index != null && index != -1) {
-          if (event.data == null) {
-            _messagesMap[event.meetingId]?.messages.removeAt(index);
-          } else {
-            _messagesMap[event.meetingId]?.messages[index].data =
-                event.data ?? "";
-          }
+        if (event.data == null) {
+          _handleDeleteMessage(
+            messageId: event.messageId,
+            meetingId: event.meetingId,
+          );
+        } else {
+          _handleEditMessage(
+            messageId: event.messageId,
+            data: event.data!,
+            meetingId: event.meetingId,
+          );
         }
 
         emit(_getDoneMessage);
@@ -160,12 +158,16 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       data: event.data,
     );
 
+    _handleInsertMessage(message, event.meetingId);
+  }
+
+  void _handleInsertMessage(MessageModel? message, int meetingId) {
     if (message != null) {
-      _messagesMap[event.meetingId]?.messages.insert(0, message);
+      _messagesMap[meetingId]?.messages.insert(0, message);
 
       AppBloc.chatBloc.add(
         UpdateLastMessageEvent(
-          meetingId: event.meetingId,
+          meetingId: meetingId,
           message: message,
         ),
       );
@@ -179,23 +181,31 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
 
     if (isSuccess) {
-      final int index = _messagesMap[_meetingId]!
-          .messages
-          .indexWhere((message) => message.id == event.messageId);
-
-      if (index != -1) {
-        _messagesMap[_meetingId]?.messages[index].data = event.data;
-
-        AppBloc.chatBloc.add(
-          UpdateLastMessageEvent(
-            meetingId: event.messageId,
-            message: _messagesMap[_meetingId]!.messages[index],
-          ),
-        );
-      }
+      _handleEditMessage(messageId: event.messageId, data: event.data);
     }
 
     _messageBeingEdited = null;
+  }
+
+  void _handleEditMessage({
+    required int messageId,
+    int? meetingId,
+    required String data,
+  }) {
+    final int index = _messagesMap[meetingId ?? _meetingId]!
+        .messages
+        .indexWhere((message) => message.id == messageId);
+
+    if (index != -1) {
+      _messagesMap[meetingId ?? _meetingId]?.messages[index].data = data;
+
+      AppBloc.chatBloc.add(
+        UpdateLastMessageEvent(
+          meetingId: meetingId ?? _meetingId ?? 0,
+          message: _messagesMap[meetingId ?? _meetingId]!.messages[index],
+        ),
+      );
+    }
   }
 
   Future<void> _deleteMessage(DeleteMessageEvent event) async {
@@ -204,17 +214,24 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
 
     if (isSuccess) {
-      _messagesMap[_meetingId]
-          ?.messages
-          .removeWhere((message) => message.id == event.messageId);
-
-      AppBloc.chatBloc.add(
-        UpdateLastMessageEvent(
-          meetingId: event.messageId,
-          message: _messagesMap[_meetingId]!.messages.first,
-        ),
-      );
+      _handleDeleteMessage(messageId: event.messageId);
     }
+  }
+
+  void _handleDeleteMessage({
+    required int messageId,
+    int? meetingId,
+  }) {
+    _messagesMap[meetingId ?? _meetingId]
+        ?.messages
+        .removeWhere((message) => message.id == messageId);
+
+    AppBloc.chatBloc.add(
+      UpdateLastMessageEvent(
+        meetingId: meetingId ?? _meetingId ?? 0,
+        message: _messagesMap[meetingId ?? _meetingId]!.messages.first,
+      ),
+    );
   }
 
   _clearMessages() {

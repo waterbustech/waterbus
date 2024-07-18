@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -102,6 +104,9 @@ class ConversationHeader extends StatelessWidget {
           ),
           SizedBox(width: 10.sp),
           IconButtonCustom(
+            onTap: () {
+              AppBloc.meetingBloc.add(JoinMeetingEvent(meeting: meeting));
+            },
             icon: PhosphorIcons.video_camera_light,
             sizeIcon: 22.sp,
             padding: EdgeInsets.all(3.sp),
