@@ -94,6 +94,8 @@ dependencies:
     sdk: flutter
   i18n_extension: ^12.0.1
   syncfusion_flutter_charts: ^26.1.41+1
+  pull_to_refresh: ^2.0.0
+  super_sliver_list: ^0.4.1
 
   # Code Editor
   re_editor: ^0.3.0

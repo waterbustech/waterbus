@@ -131,11 +131,15 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+
+  // Chat Screen
   static const String videoCall = 'videoCall';
   static const String mute = 'mute';
   static const String more = 'more';
   static const String addMembers = 'addMembers';
   static const String owner = 'owner';
+  static const String youHaveBeenInvitedToChat = 'youHaveBeenInvitedToChat';
+  static const String confirm = 'confirm';
 }
 
 class MyI18n {

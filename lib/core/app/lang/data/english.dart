@@ -128,9 +128,13 @@ Map<String, String> english = {
   Strings.changeYourAvatar: 'Change your avatar',
   Strings.chooseFromGallery: 'Choose photo from gallery',
   Strings.takeAPhoto: 'Take a photo',
+
+  // Chat Screen
   Strings.videoCall: 'Video call',
   Strings.mute: 'Mute',
   Strings.more: 'More',
   Strings.addMembers: 'Add members',
   Strings.owner: 'Owner',
+  Strings.youHaveBeenInvitedToChat: 'You have been invited to chat',
+  Strings.confirm: "Confirm",
 };

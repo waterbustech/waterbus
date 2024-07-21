@@ -127,9 +127,13 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+
+  // Chat screen
   Strings.videoCall: 'Gọi video',
   Strings.mute: 'Im lặng',
   Strings.more: 'Thêm',
   Strings.addMembers: 'Thêm thành viên',
   Strings.owner: 'Chủ phòng',
+  Strings.youHaveBeenInvitedToChat: 'Bạn đã được mời tham gia cuộc trò chuyện',
+  Strings.confirm: "Xác nhận",
 };

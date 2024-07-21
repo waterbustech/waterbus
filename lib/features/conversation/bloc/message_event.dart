@@ -8,7 +8,11 @@ class GetMessageByMeetingIdEvent extends MessageEvent {
   GetMessageByMeetingIdEvent({required this.meetingId});
 }
 
-class RefreshMessagesEvent extends MessageEvent {}
+class RefreshMessagesEvent extends MessageEvent {
+  final Function hanleFinish;
+
+  RefreshMessagesEvent({required this.hanleFinish});
+}
 
 class SendMessageEvent extends MessageEvent {
   final String data;

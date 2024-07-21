@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -12,9 +10,11 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
 import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
   final Meeting meeting;

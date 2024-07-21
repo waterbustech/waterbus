@@ -1,11 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.dart';
-
 import 'package:waterbus/features/conversation/socket/socket_chat_event.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 @injectable
 class SocketChatHandle {

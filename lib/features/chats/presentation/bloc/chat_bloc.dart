@@ -14,10 +14,8 @@ part 'chat_state.dart';
 @injectable
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final List<Meeting> _conversations = [];
-  final List<Meeting> _invitedConversations = [];
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
   bool _isOver = false;
-  bool _isOverInvited = false;
 
   ChatBloc() : super(ChatInitial()) {
     on<ChatEvent>((event, emit) async {
@@ -34,12 +32,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is GetInvitedConversations) {
-        if (event is GettingInvitedChatState || _isOverInvited) return;
+      if (event is RefreshConversationsEvent) {
+        _conversations.clear();
+        _isOver = false;
 
-        emit(_gettingInvitedChat);
-        await _getConversationList(status: ChatStatusEnum.invite);
+        await _getConversationList();
         emit(_getDoneChat);
+        event.handleFinish();
       }
 
       if (event is CreateConversationEvent) {
@@ -68,16 +67,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is AcceptInviteEvent) {
-        final Meeting? meeting = await _waterbusSdk.acceptInvite(event.code);
+      if (event is InsertConversationEvent) {
+        _conversations.insert(0, event.conversation);
 
-        if (meeting != null) {
-          _invitedConversations
-              .removeWhere((conversation) => conversation.code == event.code);
-          _conversations.add(meeting);
-
-          emit(_getDoneChat);
-        }
+        emit(_getDoneChat);
       }
 
       if (event is DeleteMemberEvent) {
@@ -110,13 +103,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is UpdateLastMessageEvent) {
-        final int index = _conversations.indexWhere(
-          (conversation) => conversation.id == event.meetingId,
-        );
-
-        if (index != -1) {
-          _conversations[index].latestMessage = event.message;
-        }
+        _updateLastMessage(event);
 
         emit(_getDoneChat);
       }
@@ -129,6 +116,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
   }
 
+  // MARK: state
+  GettingChatState get _gettingChat => GettingChatState(
+        conversations: _conversations,
+      );
+  GetDoneChatState get _getDoneChat => GetDoneChatState(
+        conversations: _conversations,
+      );
+
+  // MARK: private methods
   Future<Meeting?> _createConversation(
     CreateConversationEvent event,
   ) async {
@@ -141,52 +137,31 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     return meeting;
   }
 
-  // MARK: state
-  GettingChatState get _gettingChat => GettingChatState(
-        conversations: _conversations,
-        invitedConversations: _invitedConversations,
-      );
-  GetDoneChatState get _getDoneChat => GetDoneChatState(
-        conversations: _conversations,
-        invitedConversations: _invitedConversations,
-      );
-  GettingInvitedChatState get _gettingInvitedChat => GettingInvitedChatState(
-        conversations: _conversations,
-        invitedConversations: _invitedConversations,
-      );
-
-  // MARK: private methods
-  Future<void> _getConversationList({
-    ChatStatusEnum status = ChatStatusEnum.join,
-  }) async {
-    final List<Meeting> result = await _waterbusSdk.getConversations(
-      skip: status == ChatStatusEnum.join
-          ? _conversations.length
-          : _invitedConversations.length,
-      status: status.status,
+  void _updateLastMessage(UpdateLastMessageEvent event) {
+    final int index = _conversations.indexWhere(
+      (conversation) => conversation.id == event.meetingId,
     );
 
-    if (result.isNotEmpty) {
-      if (status == ChatStatusEnum.join) {
-        _conversations.addAll(result);
+    if (index != -1) {
+      _conversations[index].latestMessage = event.message;
+    }
+  }
 
-        if (result.length < 10) {
-          _isOver = true;
-        }
-      } else {
-        _invitedConversations.addAll(result);
+  Future<void> _getConversationList() async {
+    final List<Meeting> result = await _waterbusSdk.getConversations(
+      skip: _conversations.length,
+      status: ChatStatusEnum.join.status,
+    );
 
-        if (result.length < 10) {
-          _isOverInvited = true;
-        }
-      }
+    _conversations.addAll(result);
+
+    if (result.length < 10) {
+      _isOver = true;
     }
   }
 
   void _cleanChat() {
     _conversations.clear();
-    _invitedConversations.clear();
     _isOver = false;
-    _isOverInvited = false;
   }
 }

@@ -4,9 +4,10 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 
@@ -47,8 +48,8 @@ class InvitedChatCard extends StatelessWidget {
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       children: [
-                        const TextSpan(
-                          text: "Bạn đã được mời tham gia cuộc trò chuyện ",
+                        TextSpan(
+                          text: "${Strings.youHaveBeenInvitedToChat.i18n} ",
                         ),
                         TextSpan(
                           text: "${invitedConversation.title}.",
@@ -63,7 +64,7 @@ class InvitedChatCard extends StatelessWidget {
               ),
               GestureWrapper(
                 onTap: () {
-                  AppBloc.chatBloc
+                  AppBloc.invitedChatBloc
                       .add(AcceptInviteEvent(code: invitedConversation.code));
                 },
                 child: Container(
@@ -81,7 +82,7 @@ class InvitedChatCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'XÁC NHẬN',
+                    Strings.confirm.i18n.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.w800,

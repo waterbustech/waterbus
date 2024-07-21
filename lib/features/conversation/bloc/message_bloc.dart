@@ -52,6 +52,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _messagesMap[_meetingId!] = CachedMessageByMeetingId(messages: []);
         await _getMessagesByMeetingId(_meetingId!);
         emit(_getDoneMessage);
+
+        event.hanleFinish.call();
       }
 
       if (event is SendMessageEvent) {

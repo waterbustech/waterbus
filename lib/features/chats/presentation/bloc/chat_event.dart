@@ -6,6 +6,12 @@ class OnChatEvent extends ChatEvent {}
 
 class GetConversationsEvent extends ChatEvent {}
 
+class RefreshConversationsEvent extends ChatEvent {
+  final Function handleFinish;
+
+  RefreshConversationsEvent({required this.handleFinish});
+}
+
 class CreateConversationEvent extends ChatEvent {
   final String title;
   final String password;
@@ -26,19 +32,17 @@ class AddMemberEvent extends ChatEvent {
   AddMemberEvent({required this.code, required this.userId});
 }
 
+class InsertConversationEvent extends ChatEvent {
+  final Meeting conversation;
+
+  InsertConversationEvent({required this.conversation});
+}
+
 class DeleteMemberEvent extends ChatEvent {
   final int code;
   final int userId;
 
   DeleteMemberEvent({required this.code, required this.userId});
-}
-
-class GetInvitedConversations extends ChatEvent {}
-
-class AcceptInviteEvent extends ChatEvent {
-  final int code;
-
-  AcceptInviteEvent({required this.code});
 }
 
 class UpdateLastMessageEvent extends ChatEvent {

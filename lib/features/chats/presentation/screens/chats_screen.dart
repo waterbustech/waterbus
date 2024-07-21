@@ -97,7 +97,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   return SizerUtil.isDesktop
                       ? TabOptionsDesktopWidget(
                           child: ConversationList(
-                            meetings: state.conversations,
                             currentChat: _currentChat,
                             onTap: (index) {
                               _handleTapChatItem(state.conversations[index]);
@@ -105,7 +104,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           ),
                         )
                       : ConversationList(
-                          meetings: state.conversations,
                           currentChat: _currentChat,
                           onTap: (index) {
                             _handleTapChatItem(state.conversations[index]);
