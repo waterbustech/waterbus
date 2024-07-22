@@ -11,6 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -24,7 +25,6 @@ import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasou
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
