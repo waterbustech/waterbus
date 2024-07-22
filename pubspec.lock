@@ -1943,10 +1943,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/Users/lambiengcode/Documents/flutter_waterbus_sdk"
-      relative: false
-    source: path
-    version: "1.4.6"
+      name: waterbus_sdk
+      sha256: "100c1d084eae3e28932e236c1e2b4e0799f7f94a4e1ac8d1236c2b7a442790c0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.7"
   web:
     dependency: "direct overridden"
     description:
