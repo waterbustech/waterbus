@@ -105,9 +105,9 @@ dependencies:
   flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk: ^1.4.6
-  # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  # waterbus_sdk: ^1.4.6
+  waterbus_sdk:
+    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0

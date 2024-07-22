@@ -24,6 +24,7 @@ import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasou
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/screen_select_dialog.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
@@ -36,10 +37,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   // MARK: private
+  final StreamController<String> _subtitle =
+      StreamController<String>.broadcast();
+  String? _currentBackground;
+  bool _isSubtitleEnabled = false;
   Meeting? _currentMeeting;
   Participant? _mParticipant;
-  String? _currentBackground;
   CallSetting _callSetting = CallSetting();
+  Timer? _subtitleTimer;
 
   MeetingBloc(
     this._pipChannel,
@@ -54,6 +59,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           _waterbusSdk.changeCallSetting(_callSetting);
           _waterbusSdk.onEventChangedRegister = _onEventChanged;
+          _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
         }
 
         if (event is CreateMeetingEvent) {
@@ -213,6 +219,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
+        if (event is ToggleSubtitleEvent) {
+          if (state is! JoinedMeeting) return;
+
+          _isSubtitleEnabled = !_isSubtitleEnabled;
+          _waterbusSdk.setSubscribeSubtitle(isEnabled: _isSubtitleEnabled);
+          emit(_joinedMeeting);
+        }
+
         if (event is RefreshDisplayMeetingEvent) {
           if (state is MeetingInitial) return;
 
@@ -253,6 +267,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
   JoinedMeeting get _joinedMeeting => JoinedMeeting(
+        isSubtitleEnabled: _isSubtitleEnabled,
+        subtitleStream: _subtitle.stream,
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _waterbusSdk.callState,
@@ -519,12 +535,36 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     }
   }
 
+  void _onSubtitleChanged(Subtitle sub) {
+    if (_currentMeeting == null) return;
+
+    final List<Participant> participants = _currentMeeting!.participants;
+
+    final int indexOfParticipant = participants.indexWhere(
+      (participant) => participant.id.toString() == sub.participant,
+    );
+
+    if (indexOfParticipant == -1) return;
+
+    _subtitleTimer?.cancel();
+
+    _subtitle.add(
+      "${participants[indexOfParticipant].user.fullName}: ${sub.content}",
+    );
+
+    _subtitleTimer = Timer.periodic(3.seconds, (timer) {
+      _subtitle.add("");
+      _subtitleTimer?.cancel();
+    });
+  }
+
   Future<void> _dispose() async {
     await _waterbusSdk.leaveRoom();
 
     _currentMeeting = null;
     _mParticipant = null;
     _currentBackground = null;
+    _subtitle.close();
 
     AppBloc.beautyFiltersBloc.add(ResetFiltersValueEvent());
   }
