@@ -279,7 +279,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                       builder: (context, snapshot) {
                         final String txt = snapshot.data ?? '';
 
-                        return txt.isNotEmpty
+                        return txt.isEmpty
                             ? const SizedBox()
                             : Container(
                                 alignment: Alignment.center,
