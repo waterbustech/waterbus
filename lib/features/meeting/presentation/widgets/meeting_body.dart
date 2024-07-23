@@ -305,7 +305,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                                             vertical: 12.sp,
                                           ),
                                           child: Text(
-                                            "[Impeller] Fixes rendering corruption when running on Intel mac simulators.",
+                                            txt,
                                             maxLines: 2,
                                             style: TextStyle(
                                               color: Colors.white,
