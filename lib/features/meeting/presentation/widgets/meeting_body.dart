@@ -271,9 +271,7 @@ class _MeetingBodyState extends State<MeetingBody> {
             ),
             // Build subtitle
             Positioned(
-              width: double.infinity,
               bottom: 20.sp,
-              left: 0,
               child: widget.state.subtitleStream == null
                   ? const SizedBox()
                   : StreamBuilder<String>(
@@ -281,34 +279,38 @@ class _MeetingBodyState extends State<MeetingBody> {
                       builder: (context, snapshot) {
                         final String txt = snapshot.data ?? '';
 
-                        return txt.isEmpty
+                        return txt.isNotEmpty
                             ? const SizedBox()
-                            : Padding(
+                            : Container(
+                                alignment: Alignment.center,
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 16.sp,
+                                  horizontal: SizerUtil.isDesktop ? 5.w : 16.sp,
                                 ),
+                                width: 100.w,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Material(
-                                      color: Colors.black.withOpacity(.35),
-                                      shape: SuperellipseShape(
-                                        borderRadius: BorderRadius.circular(
-                                          20.sp,
+                                    Flexible(
+                                      child: Material(
+                                        color: Colors.black.withOpacity(.35),
+                                        shape: SuperellipseShape(
+                                          borderRadius: BorderRadius.circular(
+                                            20.sp,
+                                          ),
                                         ),
-                                      ),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 20.sp,
-                                          vertical: 12.sp,
-                                        ),
-                                        child: Text(
-                                          txt,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.sp,
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 20.sp,
+                                            vertical: 12.sp,
+                                          ),
+                                          child: Text(
+                                            "[Impeller] Fixes rendering corruption when running on Intel mac simulators.",
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.sp,
+                                            ),
                                           ),
                                         ),
                                       ),
