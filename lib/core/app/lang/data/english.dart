@@ -89,6 +89,7 @@ Map<String, String> english = {
   Strings.dataSaver: "Data Saver",
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
+  Strings.back: "Back",
 
   // Profile screen
   Strings.profile: "Profile",
@@ -137,4 +138,12 @@ Map<String, String> english = {
   Strings.owner: 'Owner',
   Strings.youHaveBeenInvitedToChat: 'You have been invited to chat',
   Strings.confirm: "Confirm",
+  Strings.inviting: "Inviting",
+  Strings.invisible: "Invisible",
+  Strings.joined: "Joined",
+  Strings.leaveTheConversation: "Leave the conversation",
+  Strings.sureLeaveConversation:
+      "Are you sure you want to leave this conversation? This conversation will be deleted for you and you will no longer be a member of this conversation.",
+  Strings.member: "Member",
+  Strings.members: "Members",
 };

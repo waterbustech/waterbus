@@ -9,12 +9,6 @@ sealed class UserEvent extends Equatable {
 
 class GetProfileEvent extends UserEvent {}
 
-class SearchUsersEvent extends UserEvent {
-  final String keyword;
-
-  const SearchUsersEvent({required this.keyword});
-}
-
 class UpdateProfileEvent extends UserEvent {
   final String fullName;
   final String? bio;

@@ -19,9 +19,7 @@ class AppScaffold extends StatelessWidget {
   });
 
   void _hideKeyboard(BuildContext context) {
-    if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
-      FocusManager.instance.primaryFocus?.unfocus();
-    }
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
@@ -69,18 +67,22 @@ class AppScaffold extends StatelessWidget {
 
       if (childScaffold.body != null) {
         return GestureDetector(
-          onTap: () {
-            _hideKeyboard(context);
-          },
+          onTap: (FocusManager.instance.primaryFocus?.hasFocus ?? false)
+              ? () {
+                  _hideKeyboard(context);
+                }
+              : null,
           child: childScaffold.body,
         );
       }
     }
 
     return GestureDetector(
-      onTap: () {
-        _hideKeyboard(context);
-      },
+      onTap: (FocusManager.instance.primaryFocus?.hasFocus ?? false)
+          ? () {
+              _hideKeyboard(context);
+            }
+          : null,
       child: child,
     );
   }

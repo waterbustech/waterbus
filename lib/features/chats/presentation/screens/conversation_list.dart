@@ -11,24 +11,21 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/list_custom/pagination_list_view.dart';
+import 'package:waterbus/core/utils/shimmers/shimmer_list.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
-import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
-import 'package:waterbus/features/chats/presentation/widgets/shimmer_conversation_list.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 class ConversationList extends StatelessWidget {
-  final Meeting? currentChat;
   final Function(int) onTap;
 
   const ConversationList({
     super.key,
-    required this.currentChat,
     required this.onTap,
   });
 
@@ -45,11 +42,16 @@ class ConversationList extends StatelessWidget {
           child: BlocBuilder<ChatBloc, ChatState>(
             builder: (context, state) {
               if (state is ChatInitial) {
-                return const ShimmerConversationList();
+                return const ShimmerList(child: ShimmerChatCard());
               }
 
-              final List<Meeting> meetings =
-                  state is ActiveChatState ? state.conversations : [];
+              final List<Meeting> meetings = [];
+              Meeting? conversationCurrent;
+
+              if (state is ActiveChatState) {
+                meetings.addAll(state.conversations);
+                conversationCurrent = state.conversationCurrent;
+              }
 
               return meetings.isEmpty
                   ? const SizedBox()
@@ -70,6 +72,10 @@ class ConversationList extends StatelessWidget {
                         top: 8.sp,
                       ),
                       itemBuilder: (context, index) {
+                        if (index > meetings.length - 1) {
+                          return const SizedBox();
+                        }
+
                         return Slidable(
                           key: ValueKey(meetings[index].id),
                           endActionPane: ActionPane(
@@ -79,9 +85,10 @@ class ConversationList extends StatelessWidget {
                             children: [
                               SlidableAction(
                                 onPressed: (context) {
-                                  _handleDeleteConversation(
-                                    context: context,
-                                    meetingId: meetings[index].id,
+                                  AppBloc.chatBloc.add(
+                                    DeleteOrLeaveConversationEvent(
+                                      meeting: meetings[index],
+                                    ),
                                   );
                                 },
                                 backgroundColor: colorHigh,
@@ -120,7 +127,7 @@ class ConversationList extends StatelessWidget {
                                     vertical: 4.sp,
                                   ),
                                   color: SizerUtil.isDesktop &&
-                                          currentChat == meetings[index]
+                                          conversationCurrent == meetings[index]
                                       ? Theme.of(context)
                                           .colorScheme
                                           .primary
@@ -145,30 +152,6 @@ class ConversationList extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  void _handleDeleteConversation({
-    required BuildContext context,
-    required int meetingId,
-  }) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black38,
-      enableDrag: false,
-      builder: (context) {
-        return BottomSheetDelete(
-          handlePressed: () {
-            AppBloc.chatBloc.add(
-              DeleteConversationEvent(
-                meetingId: meetingId,
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

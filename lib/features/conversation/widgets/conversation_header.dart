@@ -14,6 +14,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
 import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
@@ -91,16 +92,22 @@ class ConversationHeader extends StatelessWidget {
             ),
           ),
           SizedBox(width: 20.sp),
-          IconButtonCustom(
-            onTap: () {
-              showDialogWaterbus(
-                child: BottomSheetAddMember(code: meeting.code),
-              );
-            },
-            icon: PhosphorIcons.user_circle_plus,
-            sizeIcon: 22.sp,
-            padding: EdgeInsets.all(3.sp),
-            margin: EdgeInsets.zero,
+          Visibility(
+            visible: meeting.isHost,
+            child: IconButtonCustom(
+              onTap: () {
+                showDialogWaterbus(
+                  child: BottomSheetAddMember(
+                    code: meeting.code,
+                    meetingId: meeting.id,
+                  ),
+                );
+              },
+              icon: PhosphorIcons.user_circle_plus,
+              sizeIcon: 22.sp,
+              padding: EdgeInsets.all(3.sp),
+              margin: EdgeInsets.zero,
+            ),
           ),
           SizedBox(width: 10.sp),
           IconButtonCustom(

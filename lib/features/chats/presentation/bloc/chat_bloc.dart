@@ -1,12 +1,17 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
@@ -15,6 +20,7 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final List<Meeting> _conversations = [];
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
+  Meeting? _conversationCurrent;
   bool _isOver = false;
 
   ChatBloc() : super(ChatInitial()) {
@@ -24,8 +30,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
+      if (event is SelectConversationCurrentEvent) {
+        _conversationCurrent = event.meeting;
+
+        emit(_getDoneChat);
+      }
+
+      if (event is CleanConversationCurrentEvent) {
+        _cleanConversationCurrent();
+
+        emit(_getDoneChat);
+      }
+
       if (event is GetConversationsEvent) {
-        if (event is GettingChatState || _isOver) return;
+        if (state is GettingChatState || _isOver) return;
 
         emit(_gettingChat);
         await _getConversationList();
@@ -59,10 +77,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is AddMemberEvent) {
-        final bool isSuccess =
+        final Meeting? meeting =
             await _waterbusSdk.addMember(event.code, event.userId);
 
-        if (!isSuccess) {}
+        if (meeting != null) {
+          final int index = _conversations
+              .indexWhere((conversation) => conversation.id == meeting.id);
+
+          if (index != -1) {
+            _conversations[index] = meeting;
+          }
+        }
 
         emit(_getDoneChat);
       }
@@ -89,17 +114,48 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       }
 
-      if (event is DeleteConversationEvent) {
-        final bool isSuccess =
-            await _waterbusSdk.deleteConversation(event.meetingId);
+      if (event is DeleteOrLeaveConversationEvent) {
+        final Meeting meeting = event.meeting;
 
-        if (isSuccess) {
-          _conversations.removeWhere(
-            (conversation) => conversation.id == event.meetingId,
+        if (meeting.isHost && meeting.members.length > 1) {
+        } else {
+          await showModalBottomSheet(
+            context: AppNavigator.context!,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            barrierColor: Colors.black38,
+            enableDrag: false,
+            builder: (context) {
+              return BottomSheetDelete(
+                actionText:
+                    meeting.isHost ? null : Strings.leaveTheConversation.i18n,
+                description:
+                    meeting.isHost ? null : Strings.sureLeaveConversation.i18n,
+                handlePressed: () async {
+                  if (meeting.isHost) {
+                    add(DeleteConversationByHostEvent(meetingId: meeting.id));
+                  } else {
+                    add(LeaveConversationByMemberEvent(meeting: meeting));
+                  }
+
+                  AppNavigator.popUntil(Routes.rootRoute);
+                },
+              );
+            },
           );
-
-          emit(_getDoneChat);
         }
+      }
+
+      if (event is LeaveConversationByMemberEvent) {
+        await _leaveConversation(event.meeting);
+
+        emit(_getDoneChat);
+      }
+
+      if (event is DeleteConversationByHostEvent) {
+        await _deleteConversation(event.meetingId);
+
+        emit(_getDoneChat);
       }
 
       if (event is UpdateLastMessageEvent) {
@@ -118,11 +174,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   // MARK: state
   GettingChatState get _gettingChat => GettingChatState(
-        conversations: _conversations,
+        conversations: _arrangedConversations,
+        conversationCurrent: _conversationCurrent,
       );
   GetDoneChatState get _getDoneChat => GetDoneChatState(
-        conversations: _conversations,
+        conversations: _arrangedConversations,
+        conversationCurrent: _conversationCurrent,
       );
+
+  List<Meeting> get _arrangedConversations {
+    _conversations
+        .sort((before, after) => after.updatedAt.compareTo(before.updatedAt));
+
+    return _conversations;
+  }
 
   // MARK: private methods
   Future<Meeting?> _createConversation(
@@ -147,6 +212,35 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
+  Future<void> _deleteConversation(int meetingId) async {
+    final bool isSuccess = await _waterbusSdk.deleteConversation(meetingId);
+
+    if (isSuccess) {
+      _conversations.removeWhere(
+        (conversation) => conversation.id == meetingId,
+      );
+
+      if (_conversationCurrent?.id == meetingId) {
+        _cleanConversationCurrent();
+      }
+    }
+  }
+
+  Future<void> _leaveConversation(Meeting meeting) async {
+    final Meeting? conversation =
+        await _waterbusSdk.leaveConversation(meeting.code);
+
+    if (conversation != null) {
+      _conversations.removeWhere(
+        (conversation) => conversation.id == conversation.id,
+      );
+
+      if (_conversationCurrent?.id == conversation.id) {
+        _cleanConversationCurrent();
+      }
+    }
+  }
+
   Future<void> _getConversationList() async {
     final List<Meeting> result = await _waterbusSdk.getConversations(
       skip: _conversations.length,
@@ -163,5 +257,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _cleanChat() {
     _conversations.clear();
     _isOver = false;
+  }
+
+  void _cleanConversationCurrent() {
+    _conversationCurrent = null;
   }
 }

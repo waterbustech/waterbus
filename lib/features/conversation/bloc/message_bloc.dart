@@ -26,6 +26,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     on<MessageEvent>((event, emit) async {
       if (event is GetMessageByMeetingIdEvent) {
         if (_meetingId == event.meetingId) return;
+        emit(MessageInitial());
 
         _messageBeingEdited = null;
         _meetingId = event.meetingId;
@@ -147,6 +148,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     final List<MessageModel> response = await _waterbusSdk.getMessageByRoom(
       meetingId: meetingId,
       skip: _messagesMap[meetingId]?.messages.length ?? 0,
+      limit: 30,
     );
 
     if (response.isNotEmpty) {

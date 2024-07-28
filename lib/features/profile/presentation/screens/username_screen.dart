@@ -71,7 +71,6 @@ class _UserNameScreenState extends State<UserNameScreen> {
         ),
         actions: [
           BlocBuilder<UserBloc, UserState>(
-            buildWhen: (previous, current) => current is! UserSearchingState,
             builder: (context, state) {
               if (state is UserGetDone) {
                 final CheckUsernameStatus status = state.checkUsernameStatus;
@@ -152,8 +151,6 @@ class _UserNameScreenState extends State<UserNameScreen> {
                   },
                 ),
                 BlocBuilder<UserBloc, UserState>(
-                  buildWhen: (previous, current) =>
-                      current is! UserSearchingState,
                   builder: (context, state) {
                     if (state is UserGetDone) {
                       final CheckUsernameStatus status =

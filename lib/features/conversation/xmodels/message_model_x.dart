@@ -36,7 +36,7 @@ extension MessageModelX on MessageModel {
               enableDrag: false,
               builder: (context) {
                 return BottomSheetDelete(
-                  text: Strings.sureDeleteMessage.i18n,
+                  description: Strings.sureDeleteMessage.i18n,
                   handlePressed: () {
                     AppBloc.messageBloc.add(DeleteMessageEvent(messageId: id));
                   },

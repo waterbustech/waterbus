@@ -5,14 +5,15 @@ import 'package:waterbus_sdk/types/models/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/features/meeting/domain/entities/status_enum_x.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class MemberCard extends StatelessWidget {
-  final User user;
+  final Member member;
   final bool isHost;
   const MemberCard({
     super.key,
-    required this.user,
+    required this.member,
     required this.isHost,
   });
 
@@ -24,7 +25,7 @@ class MemberCard extends StatelessWidget {
       child: Row(
         children: [
           AvatarCard(
-            urlToImage: user.avatar,
+            urlToImage: member.user.avatar,
             size: 30.sp,
           ),
           SizedBox(width: 10.sp),
@@ -33,7 +34,7 @@ class MemberCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  user.fullName,
+                  member.user.fullName,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -42,7 +43,7 @@ class MemberCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "online",
+                  member.status.title,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,

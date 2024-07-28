@@ -75,7 +75,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           final int indexOfMember = _currentMeeting!.members.indexWhere(
             (member) =>
                 member.user.id == AppBloc.userBloc.user?.id &&
-                member.status.value > StatusEnum.inviting.value,
+                member.status.value > MemberStatusEnum.inviting.value,
           );
 
           final bool isMember = indexOfMember != -1;

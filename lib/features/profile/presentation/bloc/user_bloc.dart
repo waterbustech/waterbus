@@ -15,7 +15,6 @@ part 'user_state.dart';
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
   // MARK: private
-  final List<User> _userSearchs = [];
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
   User? _user;
   CheckUsernameStatus _checkUsernameStatus = CheckUsernameStatus.none;
@@ -69,14 +68,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           await _handleUpdateUsername(event.username);
           emit(_userGetDone);
         }
-
-        if (event is SearchUsersEvent) {
-          emit(_userSearchingState);
-
-          await _handleSearchUsers(event);
-
-          emit(_userGetDone);
-        }
       },
     );
   }
@@ -85,38 +76,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserGetDone get _userGetDone => UserGetDone(
         user: _user ?? kUserDefault,
         checkUsernameStatus: _checkUsernameStatus,
-        userSearchs: _searchs,
       );
-
-  UserSearchingState get _userSearchingState => UserSearchingState(
-        user: _user ?? kUserDefault,
-        checkUsernameStatus: _checkUsernameStatus,
-        userSearchs: _searchs,
-      );
-
-  List<User> get _searchs {
-    _userSearchs.removeWhere((model) => model.id == user?.id);
-
-    return _userSearchs;
-  }
 
   // MARK: private methods
   Future<void> _getUserProfile() async {
     final User? user = await _waterbusSdk.getProfile();
 
     _user = user;
-  }
-
-  Future<void> _handleSearchUsers(SearchUsersEvent event) async {
-    _userSearchs.clear();
-
-    if (event.keyword.isEmpty) return;
-
-    final List<User> users = await _waterbusSdk.searchUsers(event.keyword);
-
-    if (users.isNotEmpty) {
-      _userSearchs.addAll(users);
-    }
   }
 
   Future<void> _handleUpdateUsername(String username) async {

@@ -24,22 +24,25 @@ class _GestureWrapperState extends State<GestureWrapper> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () {
-        if (!_enable && widget.onLongPress != null) {
-          widget.onLongPress!();
-        }
-      },
-      onTap: () {
-        if (widget.isCloseKeyboard) {
-          if (FocusScope.of(context).hasFocus) {
-            FocusScope.of(context).unfocus();
-          }
-        }
+      onLongPress: widget.onLongPress != null
+          ? () {
+              if (!_enable) {
+                widget.onLongPress!();
+              }
+            }
+          : null,
+      onTap: widget.onTap != null ||
+              (FocusScope.of(context).hasFocus && widget.isCloseKeyboard)
+          ? () {
+              if (FocusScope.of(context).hasFocus && widget.isCloseKeyboard) {
+                FocusScope.of(context).unfocus();
+              }
 
-        if (!_enable && widget.onTap != null) {
-          widget.onTap!();
-        }
-      },
+              if (!_enable && widget.onTap != null) {
+                widget.onTap!();
+              }
+            }
+          : null,
       onTapDown: (a) {
         setState(() {
           _enable = true;

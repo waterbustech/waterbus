@@ -9,11 +9,13 @@ import 'package:waterbus/features/chats/presentation/widgets/option_button.dart'
 
 class BottomSheetDelete extends StatelessWidget {
   final Function handlePressed;
-  final String? text;
+  final String? description;
+  final String? actionText;
   const BottomSheetDelete({
     super.key,
     required this.handlePressed,
-    this.text,
+    this.description,
+    this.actionText,
   });
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,8 @@ class BottomSheetDelete extends StatelessWidget {
                           : Theme.of(context).scaffoldBackgroundColor)
                       .withOpacity(0.7),
                   child: Text(
-                    text ?? Strings.sureDeleteConversation.i18n,
-                    textAlign: TextAlign.center,
+                    description ?? Strings.sureDeleteConversation.i18n,
+                    textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: 12.sp,
                       height: 1.35,
@@ -55,7 +57,7 @@ class BottomSheetDelete extends StatelessWidget {
                 ),
                 const Divider(),
                 ButtonOptionWidget(
-                  text: Strings.delete.i18n,
+                  text: actionText ?? Strings.delete.i18n,
                   isDanger: true,
                   handlePressed: () => handlePressed.call(),
                 ),

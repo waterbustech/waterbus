@@ -94,6 +94,7 @@ Map<String, String> vietnamese = {
   Strings.frameSent: "Khung đã gửi",
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
+  Strings.back: "Thoát",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
@@ -136,4 +137,12 @@ Map<String, String> vietnamese = {
   Strings.owner: 'Chủ phòng',
   Strings.youHaveBeenInvitedToChat: 'Bạn đã được mời tham gia cuộc trò chuyện',
   Strings.confirm: "Xác nhận",
+  Strings.inviting: "Đang mời",
+  Strings.invisible: "Ẩn",
+  Strings.joined: "Đã tham gia",
+  Strings.leaveTheConversation: "Rời khỏi cuộc trò chuyện",
+  Strings.sureLeaveConversation:
+      "Bạn có chắc chắn muốn rời khỏi cuộc hội thoại này không? Cuộc hội thoại này sẽ bị xoá đối với bạn và bạn sẽ không còn là thành viên của cuộc hội thoại này nữa.",
+  Strings.member: "Thành viên",
+  Strings.members: "Thành viên",
 };

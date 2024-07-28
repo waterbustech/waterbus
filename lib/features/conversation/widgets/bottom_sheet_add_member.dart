@@ -7,21 +7,27 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/list_custom/pagination_list_view.dart';
+import 'package:waterbus/core/utils/shimmers/shimmer_list.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/conversation/widgets/shimmer_user_card.dart';
 import 'package:waterbus/features/conversation/widgets/user_card.dart';
-import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/bloc/user_search_bloc.dart';
 
 class BottomSheetAddMember extends StatefulWidget {
   final int code;
+  final int meetingId;
   const BottomSheetAddMember({
     super.key,
     required this.code,
+    required this.meetingId,
   });
 
   @override
@@ -59,7 +65,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                   ),
                 ),
                 Text(
-                  "Add Members",
+                  Strings.addMembers.i18n,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
@@ -85,8 +91,9 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
               style: TextStyle(fontSize: 12.sp),
               onChanged: (val) {
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
-                _debounce = Timer(const Duration(milliseconds: 1000), () {
-                  AppBloc.userBloc.add(SearchUsersEvent(keyword: val.trim()));
+                _debounce = Timer(500.milliseconds, () {
+                  AppBloc.userSearchBloc
+                      .add(SearchUsersEvent(keyword: _controller.text));
                 });
               },
               minLines: 1,
@@ -121,7 +128,8 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                   onTap: () {
                     _controller.clear();
 
-                    AppBloc.userBloc.add(const SearchUsersEvent(keyword: ""));
+                    AppBloc.userSearchBloc
+                        .add(const SearchUsersEvent(keyword: ""));
                   },
                   child: Container(
                     height: 14.sp,
@@ -139,34 +147,44 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
               ),
             ),
           ),
-          BlocBuilder<UserBloc, UserState>(
+          BlocBuilder<UserSearchBloc, UserSearchState>(
             builder: (context, state) {
               if (state is UserSearchingState) {
-                return Padding(
-                  padding: EdgeInsets.only(top: 20.h),
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.primary,
-                    strokeWidth: 2.sp,
-                  ),
+                return const Expanded(
+                  child: ShimmerList(child: ShimmerUserCard()),
                 );
               }
 
-              if (state is UserGetDone) {
+              if (state is ActiveUserSearchState) {
                 final List<User> searchs = state.userSearchs;
 
                 return searchs.isEmpty || _controller.text.isEmpty
                     ? const SizedBox()
                     : Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(bottom: 20.sp),
-                          physics: const BouncingScrollPhysics(),
+                        child: PaginationListView(
+                          childShimmer: const ShimmerUserCard(),
                           itemCount: searchs.length,
+                          shrinkWrap: true,
+                          callBackRefresh: (handleFinish) {
+                            AppBloc.userSearchBloc.add(
+                              RefreshUserSearchEvent(
+                                handleFinish: handleFinish,
+                              ),
+                            );
+                          },
+                          callBackLoadMore: () {
+                            AppBloc.userSearchBloc
+                                .add(GetMoreUserSearchEvent());
+                          },
+                          isLoadMore: state is UserSearchGetMore,
+                          padding: EdgeInsets.only(bottom: 20.sp),
                           itemBuilder: (context, index) => GestureWrapper(
                             onTap: () {
                               AppNavigator.pop();
 
                               AppBloc.chatBloc.add(
                                 AddMemberEvent(
+                                  meeting: widget.meetingId,
                                   code: widget.code,
                                   userId: searchs[index].id,
                                 ),

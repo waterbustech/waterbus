@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
@@ -55,7 +56,7 @@ AppBar appBarTitleBack(
                 }
               },
               child: Tooltip(
-                message: 'Back',
+                message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),

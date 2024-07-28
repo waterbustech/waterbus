@@ -17,7 +17,6 @@ class ProfileHeader extends StatelessWidget {
     return BlocBuilder<ThemesBloc, ThemesState>(
       builder: (context, stateTheme) {
         return BlocBuilder<UserBloc, UserState>(
-          buildWhen: (previous, current) => current is! UserSearchingState,
           builder: (context, state) {
             if (state is UserGetDone) {
               final User user = state.user;

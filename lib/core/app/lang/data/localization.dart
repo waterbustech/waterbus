@@ -100,6 +100,7 @@ class Strings {
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
   static const String latency = 'latency';
+  static const String back = 'back';
 
   // Profile screen
   static const String profile = 'profile';
@@ -140,6 +141,13 @@ class Strings {
   static const String owner = 'owner';
   static const String youHaveBeenInvitedToChat = 'youHaveBeenInvitedToChat';
   static const String confirm = 'confirm';
+  static const String inviting = 'inviting';
+  static const String invisible = 'invisible';
+  static const String joined = 'joined';
+  static const String leaveTheConversation = 'leaveTheConversation';
+  static const String sureLeaveConversation = 'descriptionOfLeaveConversation';
+  static const String member = 'member';
+  static const String members = 'members';
 }
 
 class MyI18n {

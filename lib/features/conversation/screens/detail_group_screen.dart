@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:collection/collection.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
@@ -11,6 +13,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
@@ -33,12 +36,32 @@ class DetailGroupScreen extends StatelessWidget {
           SliverAppBar(
             pinned: true,
             expandedHeight: 155.sp,
+            actions: [
+              Tooltip(
+                message: Strings.leaveTheConversation.i18n,
+                child: GestureWrapper(
+                  onTap: () {
+                    AppBloc.chatBloc
+                        .add(DeleteOrLeaveConversationEvent(meeting: meeting));
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(right: 16.sp),
+                    child: Icon(
+                      PhosphorIcons.sign_out,
+                      size: 20.sp,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+              ),
+            ],
             leading: GestureWrapper(
               onTap: () {
                 AppNavigator.pop();
               },
               child: Tooltip(
-                message: 'Back',
+                message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 3.sp),
@@ -55,12 +78,12 @@ class DetailGroupScreen extends StatelessWidget {
                 size: 54.sp,
               ),
               subTitle: Text(
-                "${meeting.members.length} ${meeting.members.length < 2 ? "member" : "members"}",
+                "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 10.sp, color: fCL),
               ),
               title: Text(
-                meeting.host?.fullName ?? "",
+                meeting.title,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13.sp,
@@ -108,99 +131,132 @@ class DetailGroupScreen extends StatelessWidget {
               ],
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                meeting.members
+          BlocBuilder<ChatBloc, ChatState>(
+            builder: (context, state) {
+              if (state is ActiveChatState) {
+                final Meeting conversation =
+                    state.conversations.firstWhereOrNull(
+                          (conversation) => conversation.id == meeting.id,
+                        ) ??
+                        meeting;
+
+                conversation.members
                     .sort((a, b) => a.user.id == meeting.host?.id ? -1 : 1);
 
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.sp),
-                  padding: EdgeInsets.only(
-                    top: index == 0 ? 4.sp : 0,
-                    bottom: index == meeting.members.length ? 4.sp : 0,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    shape: SuperellipseShape(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(index == 0 ? 30.sp : 0),
-                        bottom: Radius.circular(
-                          index == meeting.members.length ? 30.sp : 0,
+                final int numberOfWidgetsAdded = meeting.isHost ? 1 : 0;
+                final int widgetLength =
+                    conversation.members.length + numberOfWidgetsAdded;
+
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16.sp),
+                        padding: EdgeInsets.only(
+                          top: index == 0 ? 4.sp : 0,
+                          bottom: index == widgetLength - 1 ? 4.sp : 0,
                         ),
-                      ),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      index == 0
-                          ? GestureWrapper(
-                              onTap: () {
-                                showDialogWaterbus(
-                                  child: BottomSheetAddMember(
-                                    code: meeting.code,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12.sp,
-                                  vertical: 2.sp,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 30.sp,
-                                      child: Image.asset(
-                                        Assets.icons.icAddMembers.path,
-                                        width: 24.sp,
-                                        height: 26.sp,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8.sp),
-                                    Text(
-                                      Strings.addMembers.i18n,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontSize: 12.sp,
-                                          ),
-                                    ),
-                                  ],
-                                ),
+                        decoration: ShapeDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          shape: SuperellipseShape(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(
+                                index == 0 ? 30.sp : 0,
                               ),
-                            )
-                          : MemberCard(
-                              user: meeting.members[index - 1].user,
-                              isHost: meeting.host?.id ==
-                                  meeting.members[index - 1].user.id,
+                              bottom: Radius.circular(
+                                index == widgetLength - 1 ? 30.sp : 0,
+                              ),
                             ),
-                      if (index != meeting.members.length)
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 4.sp,
-                            bottom: 4.sp,
-                            left: 50.sp,
                           ),
-                          child: const Divider(),
                         ),
-                    ],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            index == 0 && conversation.isHost
+                                ? AddMemberButton(conversation: conversation)
+                                : MemberCard(
+                                    member: conversation
+                                        .members[index - numberOfWidgetsAdded],
+                                    isHost: conversation.host?.id ==
+                                        conversation
+                                            .members[
+                                                index - numberOfWidgetsAdded]
+                                            .user
+                                            .id,
+                                  ),
+                            if (index != widgetLength - 1)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 4.sp,
+                                  bottom: 4.sp,
+                                  left: 50.sp,
+                                ),
+                                child: const Divider(),
+                              ),
+                          ],
+                        ),
+                      );
+                    },
+                    childCount: widgetLength,
                   ),
                 );
-              },
-              childCount: meeting.members.length + 1,
-            ),
+              }
+
+              return const SizedBox();
+            },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AddMemberButton extends StatelessWidget {
+  final Meeting conversation;
+  const AddMemberButton({
+    super.key,
+    required this.conversation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureWrapper(
+      onTap: () {
+        showDialogWaterbus(
+          child: BottomSheetAddMember(
+            meetingId: conversation.id,
+            code: conversation.code,
+          ),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 12.sp,
+          vertical: 2.sp,
+        ),
+        child: Row(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: 30.sp,
+              child: Image.asset(
+                Assets.icons.icAddMembers.path,
+                width: 24.sp,
+                height: 26.sp,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(width: 8.sp),
+            Text(
+              Strings.addMembers.i18n,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 12.sp,
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }

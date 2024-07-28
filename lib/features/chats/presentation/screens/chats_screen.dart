@@ -9,6 +9,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/screens/conversation_list.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
@@ -24,13 +25,18 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  Meeting? _currentChat;
+  @override
+  void initState() {
+    super.initState();
+
+    if (SizerUtil.isDesktop) {
+      AppBloc.chatBloc.add(CleanConversationCurrentEvent());
+    }
+  }
 
   void _handleTapChatItem(Meeting meeting) {
     if (SizerUtil.isDesktop) {
-      setState(() {
-        _currentChat = meeting;
-      });
+      AppBloc.chatBloc.add(SelectConversationCurrentEvent(meeting: meeting));
     } else {
       AppNavigator().push(
         Routes.conversationRoute,
@@ -53,8 +59,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
               title: Strings.chat.i18n,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               leading: BlocBuilder<UserBloc, UserState>(
-                buildWhen: (previous, current) =>
-                    current is! UserSearchingState,
                 builder: (context, state) {
                   if (state is UserGetDone) {
                     final User user = state.user;
@@ -97,14 +101,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   return SizerUtil.isDesktop
                       ? TabOptionsDesktopWidget(
                           child: ConversationList(
-                            currentChat: _currentChat,
                             onTap: (index) {
                               _handleTapChatItem(state.conversations[index]);
                             },
                           ),
                         )
                       : ConversationList(
-                          currentChat: _currentChat,
                           onTap: (index) {
                             _handleTapChatItem(state.conversations[index]);
                           },
@@ -138,10 +140,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
             width: .5,
             thickness: .5,
           ),
-        Expanded(
-          child: _currentChat != null
-              ? ConversationScreen(meeting: _currentChat!)
-              : const SizedBox(),
+        BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            if (state is GetDoneChatState) {
+              return Expanded(
+                child: state.conversationCurrent != null
+                    ? ConversationScreen(meeting: state.conversationCurrent!)
+                    : const SizedBox(),
+              );
+            }
+
+            return const SizedBox();
+          },
         ),
       ],
     );

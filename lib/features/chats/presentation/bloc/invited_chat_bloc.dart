@@ -18,14 +18,14 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
   InvitedChatBloc() : super(InvitedChatInitial()) {
     on<InvitedChatEvent>((event, emit) async {
       if (event is OnInvitedConversationEvent) {
-        if (event is InvitedChatInitial) return;
         emit(InvitedChatInitial());
-
+        _invitedConversations.clear();
+        _isOverInvited = false;
         await _getInvitedConversationList();
         emit(_getDoneChat);
       }
       if (event is GetInvitedConversationsEvent) {
-        if (event is GettingInvitedChatState || _isOverInvited) return;
+        if (state is GettingInvitedChatState || _isOverInvited) return;
 
         emit(_gettingInvitedChat);
         await _getInvitedConversationList();
