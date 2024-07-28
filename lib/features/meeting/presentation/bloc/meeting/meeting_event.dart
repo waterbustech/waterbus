@@ -84,4 +84,8 @@ class ApplyVirtualBackgroundEvent extends MeetingEvent {
   const ApplyVirtualBackgroundEvent(this.backgroundPath);
 }
 
+class ToggleSubtitleEvent extends MeetingEvent {
+  const ToggleSubtitleEvent();
+}
+
 class RefreshDisplayMeetingEvent extends MeetingEvent {}
