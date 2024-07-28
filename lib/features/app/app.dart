@@ -12,8 +12,6 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
-import '../meeting/controller/custom_paint.dart';
-
 class App extends StatefulWidget {
   const App({super.key});
 

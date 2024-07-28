@@ -17,23 +17,23 @@ class DrawingScreenState extends State<DrawingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: InteractiveViewer(
-            child: AbsorbPointer(
-              absorbing: drawingBlocked,
-              child: Listener(
-                onPointerMove: (details) {
-                  setState(() {
-                    points = List.of(points)..add(details.localPosition);
-                  });
-                },
-                onPointerDown: (details) {
-                  setState(() {
-                    points.add(null);
-                  });
-                },
-                child: CustomPaint(
-                    painter: DrawingPainter(points), size: Size.infinite),
+        child: InteractiveViewer(
+          child: AbsorbPointer(
+            absorbing: drawingBlocked,
+            child: Listener(
+              onPointerMove: (details) {
+                setState(() {
+                  points = List.of(points)..add(details.localPosition);
+                });
+              },
+              onPointerDown: (details) {
+                setState(() {
+                  points.add(null);
+                });
+              },
+              child: CustomPaint(
+                painter: DrawingPainter(points),
+                size: Size.infinite,
               ),
             ),
           ),
