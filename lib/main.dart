@@ -36,7 +36,7 @@ void main(List<String> args) async {
         apiUrl: ApiEndpoints.baseUrl,
       );
 
-      if (!Platform.isLinux) {
+      if (!Platform.isLinux || kIsWeb) {
         await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
         );
