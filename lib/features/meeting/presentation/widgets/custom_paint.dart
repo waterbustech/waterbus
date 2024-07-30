@@ -1,6 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_event.dart';
+import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_handle.dart';
 
 class DrawingScreen extends StatefulWidget {
   const DrawingScreen({super.key});
@@ -13,31 +18,40 @@ class DrawingScreenState extends State<DrawingScreen> {
   List<Offset?> points = [];
   bool drawingBlocked = false;
 
+  void onHanldeCancelDraw() {
+    AppBloc.drawingBloc.add(OnDrawingChangedEvent(points: points));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: InteractiveViewer(
-          child: AbsorbPointer(
-            absorbing: drawingBlocked,
-            child: Listener(
-              onPointerMove: (details) {
-                setState(() {
-                  points = List.of(points)..add(details.localPosition);
-                });
-              },
-              onPointerDown: (details) {
-                setState(() {
-                  points.add(null);
-                });
-              },
-              child: CustomPaint(
-                painter: DrawingPainter(points),
-                size: Size.infinite,
+      body: BlocBuilder<DrawingBloc, DrawingState>(
+        builder: (context, drawing) {
+          final otherPainters = drawing.props as List<Offset?>;
+          points.addAll(otherPainters);
+          return InteractiveViewer(
+            child: AbsorbPointer(
+              absorbing: drawingBlocked,
+              child: Listener(
+                onPointerMove: (details) {
+                  setState(() {
+                    points = List.of(points)..add(details.localPosition);
+                  });
+                },
+                onPointerCancel: (event) => onHanldeCancelDraw,
+                onPointerDown: (details) {
+                  setState(() {
+                    points.add(null);
+                  });
+                },
+                child: CustomPaint(
+                  painter: DrawingPainter(points),
+                  size: Size.infinite,
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
