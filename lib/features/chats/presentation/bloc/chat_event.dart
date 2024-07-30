@@ -71,11 +71,9 @@ class DeleteMemberEvent extends ChatEvent {
 }
 
 class UpdateLastMessageEvent extends ChatEvent {
-  final int meetingId;
   final MessageModel message;
 
   UpdateLastMessageEvent({
-    required this.meetingId,
     required this.message,
   });
 }

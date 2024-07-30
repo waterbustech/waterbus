@@ -4,14 +4,20 @@ abstract class MessageEvent {}
 
 class GetMessageByMeetingIdEvent extends MessageEvent {
   final int meetingId;
+  final Function? handleFinish;
 
-  GetMessageByMeetingIdEvent({required this.meetingId});
+  GetMessageByMeetingIdEvent({
+    required this.meetingId,
+    this.handleFinish,
+  });
 }
 
-class RefreshMessagesEvent extends MessageEvent {
-  final Function hanleFinish;
+class GetMoreMessageEvent extends MessageEvent {}
 
-  RefreshMessagesEvent({required this.hanleFinish});
+class ResendMessageEvent extends MessageEvent {
+  final MessageModel messageModel;
+
+  ResendMessageEvent({required this.messageModel});
 }
 
 class SendMessageEvent extends MessageEvent {

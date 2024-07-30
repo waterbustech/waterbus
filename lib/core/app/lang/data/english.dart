@@ -146,4 +146,8 @@ Map<String, String> english = {
       "Are you sure you want to leave this conversation? This conversation will be deleted for you and you will no longer be a member of this conversation.",
   Strings.member: "Member",
   Strings.members: "Members",
+  Strings.groupCreated: "Grounp created",
+  Strings.sending: "Sending",
+  Strings.canNotSend: "Can not send!",
+  Strings.resend: "Resend",
 };

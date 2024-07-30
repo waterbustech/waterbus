@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -105,7 +106,9 @@ class ChatCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      meeting.latestMessage?.data ?? "Grounp created",
+                      meeting.latestMessage?.data ?? Strings.groupCreated.i18n,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 11.sp,
                         color: Theme.of(context).textTheme.bodyLarge?.color,

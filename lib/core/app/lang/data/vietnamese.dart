@@ -145,4 +145,8 @@ Map<String, String> vietnamese = {
       "Bạn có chắc chắn muốn rời khỏi cuộc hội thoại này không? Cuộc hội thoại này sẽ bị xoá đối với bạn và bạn sẽ không còn là thành viên của cuộc hội thoại này nữa.",
   Strings.member: "Thành viên",
   Strings.members: "Thành viên",
+  Strings.groupCreated: "Nhóm đã được tạo",
+  Strings.sending: "Đang gửi",
+  Strings.canNotSend: "Không thể gửi!",
+  Strings.resend: "Gửi lại",
 };

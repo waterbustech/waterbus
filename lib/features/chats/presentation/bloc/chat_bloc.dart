@@ -204,7 +204,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void _updateLastMessage(UpdateLastMessageEvent event) {
     final int index = _conversations.indexWhere(
-      (conversation) => conversation.id == event.meetingId,
+      (conversation) => conversation.id == event.message.meeting,
     );
 
     if (index != -1) {
