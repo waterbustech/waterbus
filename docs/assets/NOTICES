@@ -6917,6 +6917,7 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
 --------------------------------------------------------------------------------
 dio
+dio_web_adapter
 
 MIT License
 
@@ -35710,7 +35711,7 @@ platform_detect
    limitations under the License.
 
 --------------------------------------------------------------------------------
-platform_detect
+platform_detect_wasm
 
 Copyright 2017 Workiva Inc.
 
