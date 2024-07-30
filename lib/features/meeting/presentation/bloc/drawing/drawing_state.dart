@@ -1,7 +1,7 @@
 part of 'drawing_bloc.dart';
 
 abstract class DrawingState {
-  List get props => [];
+   List<Offset?> get props => [];
 }
 
 final class DrawingInitialState extends DrawingState {}
@@ -12,5 +12,5 @@ final class DrawingChangedState extends DrawingState {
   DrawingChangedState({required this.points});
 
   @override
-  List get props => [points];
+   List<Offset?> get props => points;
 }

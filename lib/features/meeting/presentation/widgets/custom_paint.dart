@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_event.dart';
-import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_handle.dart';
 
 class DrawingScreen extends StatefulWidget {
   const DrawingScreen({super.key});
@@ -23,11 +21,16 @@ class DrawingScreenState extends State<DrawingScreen> {
   }
 
   @override
+  void initState() {
+    AppBloc.drawingBloc.add(OnDrawingChangedEvent(points: []));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DrawingBloc, DrawingState>(
         builder: (context, drawing) {
-          final otherPainters = drawing.props as List<Offset?>;
+          final otherPainters = drawing.props;
           points.addAll(otherPainters);
           return InteractiveViewer(
             child: AbsorbPointer(

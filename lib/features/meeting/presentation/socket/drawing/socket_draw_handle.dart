@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -8,7 +9,9 @@ import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.
 @injectable
 class SocketDrawHandle {
   final SocketHandler _webSocket;
-  SocketDrawHandle(this._webSocket);
+  SocketDrawHandle(this._webSocket) {
+    onListenSocket();
+  }
   void onListenSocket() {
     final Socket? socket = _webSocket.socket;
 
@@ -19,7 +22,7 @@ class SocketDrawHandle {
         if (data == null) return;
 
         AppBloc.drawingBloc.add(OnDrawingChangedEvent(points: []));
-        print(data);
+        debugPrint(data);
       });
     });
   }
