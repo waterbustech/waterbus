@@ -62,7 +62,7 @@ class _MeetingBodyState extends State<MeetingBody> {
             child: IconButton(
               alignment: Alignment.centerRight,
               onPressed: () async {
-                WaterbusSdk.instance.toggleSpeakerPhone();
+                await WaterbusSdk.instance.toggleSpeakerPhone();
                 DeviceUtils().lightImpact();
               },
               icon: Icon(
