@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 
 part 'message_event.dart';
 part 'message_state.dart';
@@ -27,18 +27,23 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc() : super(MessageInitial()) {
     on<MessageEvent>((event, emit) async {
       if (event is GetMessageByMeetingIdEvent) {
+        final CachedMessageByMeetingId? cachedMessageByMeetingId =
+            _messagesMap[event.meetingId];
+
         if (_meetingId == event.meetingId) return;
-        emit(MessageInitial());
 
         _messageBeingEdited = null;
         _meetingId = event.meetingId;
 
-        if (_messagesMap[event.meetingId] == null) {
+        if (cachedMessageByMeetingId == null) {
+          emit(MessageInitial());
+
           _messagesMap[event.meetingId] =
               CachedMessageByMeetingId(messages: []);
+
+          await _getMessagesByMeetingId(event.meetingId);
         }
 
-        await _getMessagesByMeetingId(event.meetingId);
         emit(_getDoneMessage);
       }
 
@@ -129,15 +134,22 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               CachedMessageByMeetingId(messages: []);
         }
 
-        final int? index = _messagesMap[event.message.meeting]
-            ?.messages
-            .indexWhere((message) => message.id == event.message.id);
+        final CachedMessageByMeetingId cachedMessageByMeetingId =
+            _messagesMap[event.message.meeting]!;
 
-        if (index == -1) {
-          _handleInsertMessage(event.message);
+        if (cachedMessageByMeetingId.messages.isEmpty &&
+            !cachedMessageByMeetingId.isOver) {
+          AppBloc.chatBloc.add(UpdateLastMessageEvent(message: event.message));
+        } else {
+          final int index = cachedMessageByMeetingId.messages
+              .indexWhere((message) => message.id == event.message.id);
+
+          if (index == -1) {
+            _handleInsertMessage(event.message);
+          }
+
+          emit(_getDoneMessage);
         }
-
-        emit(_getDoneMessage);
       }
 
       if (event is UpdateMessageFromSocketEvent) {
@@ -265,18 +277,19 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     required int messageId,
     int? meetingId,
   }) {
-    _messagesMap[meetingId ?? _meetingId]
-        ?.messages
-        .removeWhere((message) => message.id == messageId);
-
     AppBloc.chatBloc.add(
       UpdateLastMessageEvent(
         message: _messagesMap[meetingId ?? _meetingId]!.messages.first,
       ),
     );
+
+    _messagesMap[meetingId ?? _meetingId]
+        ?.messages
+        .removeWhere((message) => message.id == messageId);
   }
 
   _clearMessages() {
     _messagesMap.clear();
+    _meetingId = null;
   }
 }

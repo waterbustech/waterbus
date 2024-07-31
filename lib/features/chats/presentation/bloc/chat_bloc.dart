@@ -10,6 +10,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
+import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
@@ -51,8 +52,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is RefreshConversationsEvent) {
-        _conversations.clear();
-        _isOver = false;
+        _cleanChat();
+        AppBloc.messageBloc.add(CleanMessageEvent());
 
         await _getConversationList();
         emit(_getDoneChat);
@@ -257,6 +258,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _cleanChat() {
     _conversations.clear();
     _isOver = false;
+    _conversationCurrent = null;
   }
 
   void _cleanConversationCurrent() {

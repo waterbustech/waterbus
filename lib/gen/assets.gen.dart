@@ -139,6 +139,34 @@ class $AssetsImagesGen {
   AssetGenImage get imgAppLogo =>
       const AssetGenImage('assets/images/img_app_logo.png');
 
+  /// File path: assets/images/img_hello_message_1.gif
+  AssetGenImage get imgHelloMessage1 =>
+      const AssetGenImage('assets/images/img_hello_message_1.gif');
+
+  /// File path: assets/images/img_hello_message_2.gif
+  AssetGenImage get imgHelloMessage2 =>
+      const AssetGenImage('assets/images/img_hello_message_2.gif');
+
+  /// File path: assets/images/img_hello_message_3.gif
+  AssetGenImage get imgHelloMessage3 =>
+      const AssetGenImage('assets/images/img_hello_message_3.gif');
+
+  /// File path: assets/images/img_hello_message_4.gif
+  AssetGenImage get imgHelloMessage4 =>
+      const AssetGenImage('assets/images/img_hello_message_4.gif');
+
+  /// File path: assets/images/img_hello_message_5.gif
+  AssetGenImage get imgHelloMessage5 =>
+      const AssetGenImage('assets/images/img_hello_message_5.gif');
+
+  /// File path: assets/images/img_hello_message_6.gif
+  AssetGenImage get imgHelloMessage6 =>
+      const AssetGenImage('assets/images/img_hello_message_6.gif');
+
+  /// File path: assets/images/img_hello_message_7.gif
+  AssetGenImage get imgHelloMessage7 =>
+      const AssetGenImage('assets/images/img_hello_message_7.gif');
+
   /// File path: assets/images/img_logo.png
   AssetGenImage get imgLogo =>
       const AssetGenImage('assets/images/img_logo.png');
@@ -174,6 +202,13 @@ class $AssetsImagesGen {
         desktopBackground8Jpg,
         desktopBackground9Jpg,
         imgAppLogo,
+        imgHelloMessage1,
+        imgHelloMessage2,
+        imgHelloMessage3,
+        imgHelloMessage4,
+        imgHelloMessage5,
+        imgHelloMessage6,
+        imgHelloMessage7,
         imgLogo,
         loginBannerJpeg,
         logoRounded,

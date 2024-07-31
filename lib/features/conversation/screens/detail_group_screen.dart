@@ -11,17 +11,15 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
-import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
+import 'package:waterbus/features/conversation/widgets/add_member_button.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
-import 'package:waterbus/gen/assets.gen.dart';
 
 class DetailGroupScreen extends StatelessWidget {
   final Meeting meeting;
@@ -207,56 +205,6 @@ class DetailGroupScreen extends StatelessWidget {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class AddMemberButton extends StatelessWidget {
-  final Meeting conversation;
-  const AddMemberButton({
-    super.key,
-    required this.conversation,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureWrapper(
-      onTap: () {
-        showDialogWaterbus(
-          child: BottomSheetAddMember(
-            meetingId: conversation.id,
-            code: conversation.code,
-          ),
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 12.sp,
-          vertical: 2.sp,
-        ),
-        child: Row(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: 30.sp,
-              child: Image.asset(
-                Assets.icons.icAddMembers.path,
-                width: 24.sp,
-                height: 26.sp,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            SizedBox(width: 8.sp),
-            Text(
-              Strings.addMembers.i18n,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontSize: 12.sp,
-                  ),
-            ),
-          ],
-        ),
       ),
     );
   }

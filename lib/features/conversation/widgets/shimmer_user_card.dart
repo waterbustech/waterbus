@@ -36,13 +36,13 @@ class ShimmerUserCard extends StatelessWidget {
                     children: [
                       FadeShimmer(
                         height: 12.sp,
-                        width: 70.w,
+                        width: SizerUtil.isDesktop ? 245.sp : 70.w,
                         fadeTheme: FadeTheme.lightReverse,
                       ),
                       SizedBox(height: 4.sp),
                       FadeShimmer(
                         height: 10.5.sp,
-                        width: 40.w,
+                        width: SizerUtil.isDesktop ? 140.sp : 40.w,
                         fadeTheme: FadeTheme.lightReverse,
                       ),
                     ],

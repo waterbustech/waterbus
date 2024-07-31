@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/types/models/message_status_enum.dart';
+
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus_sdk/types/index.dart';
-
-import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
-import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 
 class MessageCard extends StatelessWidget {
   final MessageModel message;

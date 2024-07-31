@@ -16,6 +16,7 @@ import 'package:waterbus/features/conversation/screens/conversation_screen.dart'
 import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/gen/assets.gen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -146,7 +147,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
               return Expanded(
                 child: state.conversationCurrent != null
                     ? ConversationScreen(meeting: state.conversationCurrent!)
-                    : const SizedBox(),
+                    : Image.asset(
+                        Assets.images.imgAppLogo.path,
+                        width: 200.sp,
+                        height: 200.sp,
+                      ),
               );
             }
 

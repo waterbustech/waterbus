@@ -36,7 +36,7 @@ class ShimmerChatCard extends StatelessWidget {
                         children: [
                           FadeShimmer(
                             height: 12.sp,
-                            width: 30.w,
+                            width: SizerUtil.isDesktop ? 145.sp : 50.w,
                             fadeTheme: FadeTheme.lightReverse,
                           ),
                           const Spacer(),
@@ -65,7 +65,7 @@ class ShimmerChatCard extends StatelessWidget {
                         children: [
                           FadeShimmer(
                             height: 10.5.sp,
-                            width: 50.w,
+                            width: SizerUtil.isDesktop ? 100.sp : 30.w,
                             fadeTheme: FadeTheme.lightReverse,
                           ),
                           const Spacer(),

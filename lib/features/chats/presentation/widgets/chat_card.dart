@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 

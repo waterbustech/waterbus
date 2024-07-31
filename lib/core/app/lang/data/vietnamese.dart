@@ -149,4 +149,8 @@ Map<String, String> vietnamese = {
   Strings.sending: "Đang gửi",
   Strings.canNotSend: "Không thể gửi!",
   Strings.resend: "Gửi lại",
+  Strings.hi: "Xin chào",
+  Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
+  Strings.sendMessageOrTapOnTheGreetingBelow:
+      "Gửi tin nhắn hoặc nhấn vào lời chào bên dưới.",
 };

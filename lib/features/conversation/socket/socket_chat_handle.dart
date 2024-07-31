@@ -22,7 +22,7 @@ class SocketChatHandle {
       socket.on(SocketChatEvent.sendMessageSSC, (data) {
         if (data == null) return;
 
-        final MessageModel message = MessageModel.fromMap(data);
+        final MessageModel message = MessageModel.fromMapSocket(data);
 
         if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
@@ -32,7 +32,7 @@ class SocketChatHandle {
       socket.on(SocketChatEvent.updateMessageSSC, (data) {
         if (data == null) return;
 
-        final MessageModel message = MessageModel.fromMap(data);
+        final MessageModel message = MessageModel.fromMapSocket(data);
 
         if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
@@ -47,7 +47,7 @@ class SocketChatHandle {
       socket.on(SocketChatEvent.deleteMessageSSC, (data) {
         if (data == null) return;
 
-        final MessageModel message = MessageModel.fromMap(data);
+        final MessageModel message = MessageModel.fromMapSocket(data);
 
         if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 

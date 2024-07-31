@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/chats/presentation/widgets/glass_morphism_wrapper.dart';
 import 'package:waterbus/features/chats/presentation/widgets/option_button.dart';
@@ -42,13 +41,13 @@ class BottomSheetDelete extends StatelessWidget {
                     horizontal: 16.sp,
                     vertical: 12.sp,
                   ),
-                  color: (Theme.of(context).brightness == Brightness.dark
-                          ? colorBlackGlassmorphism
-                          : Theme.of(context).scaffoldBackgroundColor)
+                  color: Theme.of(context)
+                      .colorScheme
+                      .surfaceContainer
                       .withOpacity(0.7),
                   child: Text(
                     description ?? Strings.sureDeleteConversation.i18n,
-                    textAlign: TextAlign.justify,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12.sp,
                       height: 1.35,

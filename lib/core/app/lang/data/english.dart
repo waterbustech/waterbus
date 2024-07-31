@@ -150,4 +150,8 @@ Map<String, String> english = {
   Strings.sending: "Sending",
   Strings.canNotSend: "Can not send!",
   Strings.resend: "Resend",
+  Strings.hi: "Hi",
+  Strings.noMesssagesHereYet: "No messages here yet",
+  Strings.sendMessageOrTapOnTheGreetingBelow:
+      "Send a message or tap on the greeting below.",
 };
