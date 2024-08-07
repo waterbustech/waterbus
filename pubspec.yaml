@@ -92,7 +92,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   i18n_extension: ^12.0.1
-  syncfusion_flutter_charts: ^26.2.5+1
+  syncfusion_flutter_charts:
+    git: git@github.com:waterbustech/syncfusion_flutter_charts.git
 
   # Code Editor
   re_editor: ^0.3.1
