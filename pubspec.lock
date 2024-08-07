@@ -1723,7 +1723,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "09f2fad4272613bd58a3149d2b207e5cfaca060f"
-      url: "git@github.com:waterbustech/syncfusion_flutter_charts.git"
+      url: "https://github.com/waterbustech/syncfusion_flutter_charts.git"
     source: git
     version: "25.2.5"
   syncfusion_flutter_core:
