@@ -100,6 +100,14 @@ class _MeetingBodyState extends State<MeetingBody> {
           SizedBox(width: 4.sp),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          WaterbusSdk.instance.reconnect();
+        },
+        child: const Icon(
+          PhosphorIcons.arrow_clockwise,
+        ),
+      ),
       bottomNavigationBar: SafeArea(
         child: Container(
           height: 58.sp,
