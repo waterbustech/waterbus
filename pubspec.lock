@@ -217,11 +217,7 @@ packages:
     source: hosted
     version: "4.10.0"
   collection:
-<<<<<<< HEAD
     dependency: "direct main"
-=======
-    dependency: "direct overridden"
->>>>>>> a457efd3c07ed928258cac5eacd03f93a84dda13
     description:
       name: collection
       sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
@@ -1981,18 +1977,10 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-<<<<<<< HEAD
       path: "../waterbus-flutter-sdk"
       relative: true
     source: path
-    version: "1.4.6"
-=======
-      name: waterbus_sdk
-      sha256: b78405996b1a94f3b122cbcee7159d92119dfd70a543e90107711e71b5273905
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.11"
->>>>>>> a457efd3c07ed928258cac5eacd03f93a84dda13
+    version: "1.4.9"
   web:
     dependency: "direct overridden"
     description:
