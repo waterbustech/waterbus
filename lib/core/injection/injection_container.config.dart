@@ -9,9 +9,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:get_it/get_it.dart' as _i1;
-import 'package:injectable/injectable.dart' as _i2;
+import 'package:get_it/get_it.dart' as _i174;
+import 'package:injectable/injectable.dart' as _i526;
 
+<<<<<<< HEAD
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i19;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i6;
 import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i7;
@@ -34,24 +35,47 @@ import '../../features/meeting/data/datasources/call_settings_datasource.dart'
     as _i12;
 import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
     as _i11;
+=======
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/home/bloc/home/home_bloc.dart' as _i430;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
+import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
+import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../method_channels/pip_channel.dart' as _i921;
+
+import '../../features/chats/xmodels/datasources/user_local_datasource.dart'
+    as _i413;
+import '../../features/meeting/data/datasources/call_settings_datasource.dart'
+    as _i688;
+import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
+    as _i254;
+>>>>>>> a457efd3c07ed928258cac5eacd03f93a84dda13
 import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
-    as _i4;
+    as _i861;
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
+<<<<<<< HEAD
     as _i20;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i21;
+=======
+    as _i545;
+import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
+    as _i324;
+>>>>>>> a457efd3c07ed928258cac5eacd03f93a84dda13
 
 // initializes the registration of main-scope dependencies inside of GetIt
-_i1.GetIt $initGetIt(
-  _i1.GetIt getIt, {
+_i174.GetIt $initGetIt(
+  _i174.GetIt getIt, {
   String? environment,
-  _i2.EnvironmentFilter? environmentFilter,
+  _i526.EnvironmentFilter? environmentFilter,
 }) {
-  final gh = _i2.GetItHelper(
+  final gh = _i526.GetItHelper(
     getIt,
     environment,
     environmentFilter,
   );
+<<<<<<< HEAD
   gh.factory<_i3.HomeBloc>(() => _i3.HomeBloc());
   gh.factory<_i4.BeautyFiltersBloc>(() => _i4.BeautyFiltersBloc());
   gh.factory<_i5.UserBloc>(() => _i5.UserBloc());
@@ -82,5 +106,31 @@ _i1.GetIt $initGetIt(
       ));
   gh.factory<_i21.RecentJoinedBloc>(
       () => _i21.RecentJoinedBloc(gh<_i11.MeetingLocalDataSource>()));
+=======
+  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
+  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
+  gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
+  gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.lazySingleton<_i254.MeetingLocalDataSource>(
+      () => _i254.MeetingLocalDataSourceImpl());
+  gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
+      () => _i688.CallSettingsLocalDataSourceImpl());
+  gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
+  gh.lazySingleton<_i193.LanguagesDatasource>(
+      () => _i193.LanguagesDatasourceImpl());
+  gh.lazySingleton<_i413.UserLocalDataSource>(
+      () => _i413.UserLocalDataSourceImpl());
+  gh.factory<_i797.AuthBloc>(
+      () => _i797.AuthBloc(gh<_i413.UserLocalDataSource>()));
+  gh.factory<_i339.ThemesBloc>(
+      () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
+  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
+        gh<_i921.PipChannel>(),
+        gh<_i254.MeetingLocalDataSource>(),
+        gh<_i688.CallSettingsLocalDataSource>(),
+      ));
+  gh.factory<_i324.RecentJoinedBloc>(
+      () => _i324.RecentJoinedBloc(gh<_i254.MeetingLocalDataSource>()));
+>>>>>>> a457efd3c07ed928258cac5eacd03f93a84dda13
   return getIt;
 }

@@ -89,7 +89,7 @@ class MeetView extends StatelessWidget {
               if (kIsWeb)
                 Positioned(
                   right: 10.sp,
-                  bottom: 10.sp,
+                  top: 10.sp,
                   child: IconButton(
                     onPressed: () {
                       if (participantSFU.cameraSource?.textureId == null) {

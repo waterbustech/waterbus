@@ -2,12 +2,16 @@ part of 'meeting_bloc.dart';
 
 abstract class MeetingState extends Equatable {
   const MeetingState({
+    this.isSubtitleEnabled = false,
+    this.subtitleStream,
     this.meeting,
     this.participant,
     this.callState,
     this.callSetting,
   });
 
+  final bool isSubtitleEnabled;
+  final Stream<String>? subtitleStream;
   final Meeting? meeting;
   final Participant? participant;
   final CallState? callState;
@@ -15,6 +19,8 @@ abstract class MeetingState extends Equatable {
 
   @override
   List<Object?> get props => [
+        isSubtitleEnabled,
+        subtitleStream,
         meeting,
         participant,
         callState,
@@ -38,6 +44,8 @@ class PreJoinMeeting extends MeetingState {
 
 class JoinedMeeting extends MeetingState {
   const JoinedMeeting({
+    required super.isSubtitleEnabled,
+    required super.subtitleStream,
     required super.meeting,
     required super.participant,
     required super.callState,

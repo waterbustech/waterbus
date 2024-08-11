@@ -108,6 +108,7 @@ Map<String, String> english = {
   Strings.done: "Done",
   Strings.beautyFilters: "Beauty filters",
   Strings.virtualBackground: "Virtual background",
+  Strings.subtitle: "Subtitle",
   Strings.callStats: "Call stats",
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",

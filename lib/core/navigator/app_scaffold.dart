@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
@@ -36,7 +34,7 @@ class AppScaffold extends StatelessWidget {
             extendBody: true,
             body: PopScope(
               canPop: _canBackward,
-              onPopInvoked: _onPopInvoked,
+              onPopInvokedWithResult: _onPopInvoked,
               child: _child(context),
             ),
           );
@@ -89,7 +87,7 @@ class AppScaffold extends StatelessWidget {
 
   bool get _canBackward => AppNavigator.canPop;
 
-  Future<void> _onPopInvoked(bool canPop) async {
+  void _onPopInvoked(bool canPop, _) {
     if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }

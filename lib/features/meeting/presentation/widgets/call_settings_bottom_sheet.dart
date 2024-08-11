@@ -28,6 +28,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
       builder: (context, state) {
         final Meeting meeting = state.meeting!;
         final CallState? callState = state.callState;
+        final bool isSubtitleEnabled = state.isSubtitleEnabled;
 
         return Container(
           padding: EdgeInsets.symmetric(
@@ -116,6 +117,13 @@ class CallSettingsBottomSheet extends StatelessWidget {
 
                   AppNavigator().push(Routes.backgroundGallery);
                 },
+              ),
+              CallSettingButton(
+                icon: Icons.subtitles_outlined,
+                lable: Strings.subtitle.i18n,
+                isSwitchEnabled: isSubtitleEnabled,
+                isSwitchButton: true,
+                onTap: () {},
               ),
               CallSettingButton(
                 icon: PhosphorIcons.chart_line,

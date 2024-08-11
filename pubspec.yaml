@@ -46,10 +46,10 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  connectivity_plus: ^6.0.2
-  http_parser: ^4.0.2
+  connectivity_plus: ^6.0.4
+  http_parser: ^4.1.0
   socket_io_client: ^2.0.3+1
-  dio: ^5.4.2+1
+  dio: ^5.5.0+1
   dio_smart_retry: ^6.0.0
   dio_cache_interceptor: ^3.5.0
 
@@ -59,20 +59,20 @@ dependencies:
 
   # Dependency Injection
   get_it: ^7.6.8
-  injectable: ^2.4.1
+  injectable: ^2.4.4
 
   # Storage
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^3.1.0
-  firebase_auth: ^5.1.0
-  firebase_crashlytics: ^4.0.1
-  firebase_performance: ^0.10.0+1
+  firebase_core: ^3.2.0
+  firebase_auth: ^5.1.2
+  firebase_crashlytics: ^4.0.3
+  firebase_performance: ^0.10.0+3
 
   # Utils
   lottie: ^3.1.0
-  flutter_native_splash: ^2.4.0
+  flutter_native_splash: ^2.4.1
   superellipse_shape: ^0.2.0
   cached_network_image: ^3.3.1
   flutter_phosphor_icons: ^0.0.1+6
@@ -81,9 +81,9 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
   equatable: ^2.0.5
-  share_plus: ^9.0.0
+  share_plus: ^10.0.0
   simple_pip_mode: ^0.8.0
-  file_picker: ^8.0.5
+  file_picker: ^8.0.6
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
@@ -96,20 +96,22 @@ dependencies:
   syncfusion_flutter_charts: ^26.1.41+1
   pull_to_refresh: ^2.0.0
   super_sliver_list: ^0.4.1
+  syncfusion_flutter_charts:
+    git: https://github.com/waterbustech/syncfusion_flutter_charts.git
 
   # Code Editor
-  re_editor: ^0.3.0
+  re_editor: ^0.3.1
   re_highlight: ^0.0.3
   collection: ^1.18.0
 
   # Media
   image_picker: ^1.1.2
-  image_picker_android: ^0.8.12+3
+  image_picker_android: ^0.8.12+10
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk: ^1.4.6
+  waterbus_sdk: ^1.4.11
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
@@ -119,6 +121,11 @@ dependency_overrides:
   web: ^0.5.1
   waterbus_sdk:
     path: ../waterbus-flutter-sdk
+  collection: ^1.19.0
+  flutter_image_compress_web:
+    git:
+      url: https://github.com/myxzlpltk/flutter_image_compress.git
+      path: packages/flutter_image_compress_web
 
 dev_dependencies:
   # Test
@@ -134,9 +141,9 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.6.1
+  injectable_generator: ^2.6.2
   build_runner: ^2.4.11
-  flutter_gen_runner: ^5.4.0
+  flutter_gen_runner: ^5.6.0
 
   # Lints
   flutter_lints: ^4.0.0

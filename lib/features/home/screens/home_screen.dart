@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _sideMenuKey,
       ignorePointer: SizerUtil.isDesktop,
       drawerBuilder: (_) =>
-          SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(context),
+          SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(),
       contentBuilder: (_) => Scaffold(
         appBar: SizerUtil.isDesktop
             ? null
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ...(SizerUtil.isDesktop
                 ? [
                     TabOptionsDesktopWidget(
-                      child: _buildDrawable(context),
+                      child: _buildDrawable(),
                     ),
                     const VerticalDivider(
                       width: .5,
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDrawable(BuildContext context) {
+  Widget _buildDrawable() {
     return ProfileDrawerLayout(
       onTapItem: (item) {
         _toggleDrawer();
@@ -165,6 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
               AppNavigator().push(Routes.settingsCallRoute);
               break;
             case Strings.licenses:
+              if (!mounted) return;
+
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(

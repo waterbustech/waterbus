@@ -27,7 +27,6 @@ class MeetingScreen extends StatelessWidget {
 
         final Meeting meeting = state.meeting!;
         final CallState? callState = state.callState;
-        final CallSetting setting = state.callSetting ?? CallSetting();
 
         if (WebRTC.platformIsAndroid) {
           return PipWidget(
@@ -37,17 +36,13 @@ class MeetingScreen extends StatelessWidget {
                     return _buildPipView(context, meeting, callState);
                   },
             child: MeetingBody(
-              meeting: meeting,
-              callState: callState,
-              callSetting: setting,
+              state: state,
             ),
           );
         }
 
         return MeetingBody(
-          meeting: meeting,
-          callSetting: setting,
-          callState: callState,
+          state: state,
         );
       },
     );
