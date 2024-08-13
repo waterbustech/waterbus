@@ -2,17 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_event.dart';
-import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_handle.dart';
+import 'package:waterbus/features/meeting/presentation/xmodels/drawing_model.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 part 'drawing_event.dart';
 part 'drawing_state.dart';
 
 @injectable
 class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
-  final SocketDrawHandle _socketDrawHandle;
+  final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
-  DrawingBloc(this._socketDrawHandle) : super(DrawingInitialState()) {
+  DrawingBloc() : super(DrawingInitialState()) {
     on<DrawingEvent>((event, emit) {
       if (event is OnDrawingChangedEvent) {
         _hanldeChangeDraw();
@@ -26,6 +26,8 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     });
   }
   void _hanldeChangeDraw() {
-    _socketDrawHandle.onSendSocket(SocketDrawEvent.updateBoard);
+    // _sendMessage();
   }
+
+  Future<void> _sendMessage(DrawingModel drawingModel) async {}
 }

@@ -27,11 +27,4 @@ class SocketDrawHandle {
     });
   }
 
-  void onSendSocket(String event) {
-    final Socket? socket = _webSocket.socket;
-    if (socket == null || !socket.active) return;
-    socket.onConnect((_) async {
-      socket.emit(event);
-    });
-  }
 }
