@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
@@ -66,6 +68,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           if (event.username == _user?.userName) return;
 
           await _handleUpdateUsername(event.username);
+
           emit(_userGetDone);
         }
       },
@@ -91,6 +94,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (result ?? false) {
       _user = _user?.copyWith(userName: username);
       _checkUsernameStatus = CheckUsernameStatus.none;
+
+      showSnackBarWaterbus(content: Strings.updateUsernameSuccessfully.i18n);
 
       AppNavigator.pop();
     }
@@ -125,6 +130,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
 
       _user = user;
+
+      showSnackBarWaterbus(
+        content: Strings.updatedPersonalInformationSuccessfully.i18n,
+      );
     }
   }
 

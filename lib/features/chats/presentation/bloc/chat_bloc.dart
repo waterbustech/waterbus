@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/core/utils/modal/show_snackbar.dart';
+import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
@@ -74,12 +76,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           } else {
             AppNavigator.popUntil(Routes.rootRoute);
           }
+
+          showSnackBarWaterbus(content: Strings.addConversationSuccess.i18n);
         }
       }
 
       if (event is AddMemberEvent) {
         final Meeting? meeting =
-            await _waterbusSdk.addMember(event.code, event.userId);
+            await _waterbusSdk.addMember(event.code, event.user.id);
 
         if (meeting != null) {
           final int index = _conversations
@@ -88,6 +92,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           if (index != -1) {
             _conversations[index] = meeting;
           }
+
+          showSnackBarWaterbus(
+            child: InvitedSuccessText(
+              meeting: meeting,
+              fullname: event.user.fullName,
+            ),
+          );
         }
 
         emit(_getDoneChat);
@@ -100,25 +111,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is DeleteMemberEvent) {
-        final Meeting? meeting =
-            await _waterbusSdk.deleteMember(event.code, event.userId);
+        await _handleDeleteMember(event);
 
-        if (meeting != null) {
-          final int index = _conversations
-              .indexWhere((conversation) => conversation.code == meeting.code);
-
-          if (index != -1) {
-            _conversations[index] = meeting;
-          }
-
-          emit(_getDoneChat);
-        }
+        emit(_getDoneChat);
       }
 
       if (event is DeleteOrLeaveConversationEvent) {
         final Meeting meeting = event.meeting;
 
         if (meeting.isHost && meeting.members.length > 1) {
+          showSnackBarWaterbus(
+            content: Strings.hostCanNotDeleteConversation.i18n,
+          );
         } else {
           await showModalBottomSheet(
             context: AppNavigator.context!,
@@ -252,6 +256,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (result.length < 10) {
       _isOver = true;
+    }
+  }
+
+  Future<void> _handleDeleteMember(DeleteMemberEvent event) async {
+    final Meeting? meeting =
+        await _waterbusSdk.deleteMember(event.code, event.userId);
+
+    if (meeting != null) {
+      final int index = _conversations
+          .indexWhere((conversation) => conversation.code == meeting.code);
+
+      if (index != -1) {
+        _conversations[index] = meeting;
+      }
     }
   }
 

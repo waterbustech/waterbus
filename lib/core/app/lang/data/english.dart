@@ -116,6 +116,9 @@ Map<String, String> english = {
   Strings.frameSent: "Frame sent",
   Strings.resolution: "Resolution",
   Strings.latency: "Latency (ms)",
+  Strings.updatedPersonalInformationSuccessfully:
+      "Updated personal information successfully!",
+  Strings.updateUsernameSuccessfully: "Updated username successful!",
 
   // Settings screen
   Strings.myProfile: "My Profile",
@@ -153,6 +156,16 @@ Map<String, String> english = {
   Strings.resend: "Resend",
   Strings.hi: "Hi",
   Strings.noMesssagesHereYet: "No messages here yet",
+  Strings.youHaveInvitedThe: "You have invited the",
+  Strings.toJoinConversation: "to join conversation",
+  Strings.hostCanNotDeleteConversation:
+      "You as the host cannot delete a chat while it is still a member",
   Strings.sendMessageOrTapOnTheGreetingBelow:
       "Send a message or tap on the greeting below.",
+  Strings.sureDeleteMember:
+      "Are you sure you want to remove this member from the chat?",
+  Strings.deleteMember: "Delete this member",
+  Strings.addConversationSuccess: "New chat has been added to the list!",
+  Strings.youHaveConfirmedConversation:
+      "You have confirmed your participation in the conversation",
 };

@@ -186,7 +186,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                                 AddMemberEvent(
                                   meeting: widget.meetingId,
                                   code: widget.code,
-                                  userId: searchs[index].id,
+                                  user: searchs[index],
                                 ),
                               );
                             },

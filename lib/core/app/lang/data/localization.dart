@@ -120,6 +120,9 @@ class Strings {
   static const String canUseUsername = 'canUseUsername';
   static const String usernameUsed = 'usernameUsed';
   static const String checking = 'checking';
+  static const String updateUsernameSuccessfully = 'updateUsernameSuccessfully';
+  static const String updatedPersonalInformationSuccessfully =
+      'updatedPersonalInformationSuccessfully';
 
   // Settings screen
   static const String myProfile = 'myProfile';
@@ -155,6 +158,14 @@ class Strings {
   static const String resend = 'resend';
   static const String hi = 'hi';
   static const String noMesssagesHereYet = 'noMesssagesHereYet';
+  static const String youHaveInvitedThe = 'youHaveInvitedThe';
+  static const String toJoinConversation = 'toJoinConversation';
+  static const String deleteMember = 'deleteMember';
+  static const String addConversationSuccess = 'addConversationSuccess';
+  static const String sureDeleteMember = 'sureDeleteMember';
+  static const String youHaveConfirmedConversation = "youConfirmedConversation";
+  static const String hostCanNotDeleteConversation =
+      'hostCanNotDeleteConversation';
   static const String sendMessageOrTapOnTheGreetingBelow =
       'sendMessageOrTapOnTheGreetingBelow';
 }

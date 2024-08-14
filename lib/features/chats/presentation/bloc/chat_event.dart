@@ -47,12 +47,12 @@ class LeaveConversationByMemberEvent extends ChatEvent {
 
 class AddMemberEvent extends ChatEvent {
   final int code;
-  final int userId;
+  final User user;
   final int meeting;
 
   AddMemberEvent({
     required this.code,
-    required this.userId,
+    required this.user,
     required this.meeting,
   });
 }

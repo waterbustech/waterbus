@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sizer/sizer.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus_sdk/types/models/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -145,58 +146,117 @@ class DetailGroupScreen extends StatelessWidget {
                 final int widgetLength =
                     conversation.members.length + numberOfWidgetsAdded;
 
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.sp),
-                        padding: EdgeInsets.only(
-                          top: index == 0 ? 4.sp : 0,
-                          bottom: index == widgetLength - 1 ? 4.sp : 0,
-                        ),
-                        decoration: ShapeDecoration(
-                          color:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                          shape: SuperellipseShape(
+                return SliverPadding(
+                  padding: EdgeInsets.only(bottom: 30.sp),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final bool isHost = index > 0 &&
+                            conversation.host?.id ==
+                                conversation
+                                    .members[index - numberOfWidgetsAdded]
+                                    .user
+                                    .id;
+
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.sp),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondaryContainer,
                             borderRadius: BorderRadius.vertical(
                               top: Radius.circular(
-                                index == 0 ? 30.sp : 0,
+                                index == 0 ? 12.sp : 0,
                               ),
                               bottom: Radius.circular(
-                                index == widgetLength - 1 ? 30.sp : 0,
+                                index == widgetLength - 1 ? 12.sp : 0,
                               ),
                             ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            index == 0 && conversation.isHost
-                                ? AddMemberButton(conversation: conversation)
-                                : MemberCard(
-                                    member: conversation
-                                        .members[index - numberOfWidgetsAdded],
-                                    isHost: conversation.host?.id ==
-                                        conversation
-                                            .members[
-                                                index - numberOfWidgetsAdded]
-                                            .user
-                                            .id,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(
+                                index == widgetLength - 1 ? 12.sp : 0,
+                              ),
+                            ), // Bo góc nếu cần
+                            child: Slidable(
+                              key: ValueKey(conversation.id),
+                              enabled: index != 0 && !isHost,
+                              endActionPane: ActionPane(
+                                extentRatio: 0.3,
+                                motion: const StretchMotion(),
+                                dragDismissible: false,
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (context) async {
+                                      await showModalBottomSheet(
+                                        context: AppNavigator.context!,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Colors.black38,
+                                        enableDrag: false,
+                                        builder: (context) {
+                                          return BottomSheetDelete(
+                                            actionText:
+                                                Strings.deleteMember.i18n,
+                                            description:
+                                                Strings.sureDeleteMember.i18n,
+                                            handlePressed: () async {
+                                              AppBloc.chatBloc.add(
+                                                DeleteMemberEvent(
+                                                  code: conversation.code,
+                                                  userId: conversation
+                                                      .members[index -
+                                                          numberOfWidgetsAdded]
+                                                      .id,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    backgroundColor: colorHigh,
+                                    foregroundColor: mCL,
+                                    icon: PhosphorIcons.trash,
+                                    label: Strings.delete.i18n,
                                   ),
-                            if (index != widgetLength - 1)
-                              Padding(
+                                ],
+                              ),
+                              child: Container(
                                 padding: EdgeInsets.only(
                                   top: 4.sp,
-                                  bottom: 4.sp,
-                                  left: 50.sp,
+                                  bottom: index == widgetLength - 1 ? 4.sp : 0,
                                 ),
-                                child: const Divider(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    index == 0 && conversation.isHost
+                                        ? AddMemberButton(
+                                            conversation: conversation,
+                                          )
+                                        : MemberCard(
+                                            member: conversation.members[
+                                                index - numberOfWidgetsAdded],
+                                            isHost: isHost,
+                                          ),
+                                    if (index != widgetLength - 1)
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 4.sp,
+                                          left: 50.sp,
+                                        ),
+                                        child: const Divider(),
+                                      ),
+                                  ],
+                                ),
                               ),
-                          ],
-                        ),
-                      );
-                    },
-                    childCount: widgetLength,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: widgetLength,
+                    ),
                   ),
                 );
               }

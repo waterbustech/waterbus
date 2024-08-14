@@ -115,6 +115,9 @@ Map<String, String> vietnamese = {
   Strings.canUseUsername: "Bạn có thể sử dụng tên tài khoản này",
   Strings.usernameUsed: "Tên này đã được sử dụng",
   Strings.checking: "Đang kiểm tra",
+  Strings.updateUsernameSuccessfully: "Cập nhật tên tài khoản thành công!",
+  Strings.updatedPersonalInformationSuccessfully:
+      "Cập nhật thông tin cá nhân thành công!",
 
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
@@ -152,6 +155,17 @@ Map<String, String> vietnamese = {
   Strings.resend: "Gửi lại",
   Strings.hi: "Xin chào",
   Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
+  Strings.hostCanNotDeleteConversation:
+      "Bạn với tư cách là chủ phòng không thể xóa cuộc trò chuyện khi vẫn còn thành viên",
+  Strings.youHaveInvitedThe: "Bạn đã mời",
+  Strings.toJoinConversation: "tham gia cuộc trò chuyện",
   Strings.sendMessageOrTapOnTheGreetingBelow:
       "Gửi tin nhắn hoặc nhấn vào lời chào bên dưới.",
+  Strings.sureDeleteMember:
+      "Bạn có chắc chắn muốn xoá thành viên này khỏi cuộc trò truyện không?",
+  Strings.deleteMember: "Xoá thành viên",
+  Strings.addConversationSuccess:
+      "Cuộc trò truyện mới đã được thêm vào danh sách!",
+  Strings.youHaveConfirmedConversation:
+      "Bạn đã xác nhận tham gia cuộc trò chuyện",
 };
