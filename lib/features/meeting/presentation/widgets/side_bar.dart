@@ -14,10 +14,12 @@ import 'package:waterbus/features/meeting/presentation/widgets/code_editor.dart'
 class SideBar extends StatefulWidget {
   final bool isExpand;
   final Function(bool) onExpandChanged;
+  final int meetingId;
   const SideBar({
     super.key,
     required this.isExpand,
     required this.onExpandChanged,
+    required this.meetingId,
   });
 
   @override
@@ -64,7 +66,7 @@ class _SideBarState extends State<SideBar> {
                       child: _option == SideBarOptions.code
                           ? const CodeEditorPad()
                           : _option == SideBarOptions.paint
-                              ? const DrawingScreen()
+                              ? DrawingScreen(meetingId: widget.meetingId)
                               : Container(
                                   color: Colors.transparent,
                                 ),

@@ -50,6 +50,7 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
   gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
+  gh.factory<_i879.DrawingBloc>(() => _i879.DrawingBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
@@ -59,8 +60,10 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
-  gh.factory<_i313.SocketDrawHandle>(
-      () => _i313.SocketDrawHandle(gh<_i804.SocketHandler>()));
+  gh.factory<_i313.SocketDrawHandle>(() => _i313.SocketDrawHandle(
+        gh<_i804.SocketHandler>(),
+        gh<int>(),
+      ));
   gh.lazySingleton<_i413.UserLocalDataSource>(
       () => _i413.UserLocalDataSourceImpl());
   gh.factory<_i797.AuthBloc>(
@@ -72,8 +75,6 @@ _i174.GetIt $initGetIt(
         gh<_i254.MeetingLocalDataSource>(),
         gh<_i688.CallSettingsLocalDataSource>(),
       ));
-  gh.factory<_i879.DrawingBloc>(
-      () => _i879.DrawingBloc(gh<_i313.SocketDrawHandle>()));
   gh.factory<_i324.RecentJoinedBloc>(
       () => _i324.RecentJoinedBloc(gh<_i254.MeetingLocalDataSource>()));
   return getIt;
