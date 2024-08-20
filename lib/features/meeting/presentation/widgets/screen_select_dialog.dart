@@ -261,7 +261,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
             ),
             SizedBox(
               width: double.infinity,
-              child: ButtonBar(
+              child: OverflowBar(
                 children: <Widget>[
                   MaterialButton(
                     shape: SuperellipseShape(
