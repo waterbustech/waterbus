@@ -28,6 +28,7 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
       if (event is OnAnotherDrawingChangedEvent) {
         emit(AnotherDrawingState(points: event.points));
       }
+
       if (event is OnAnotherDrawingDeletedEvent) {
         emit(AnotherDrawingState(points: []));
       }
@@ -35,7 +36,6 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
   }
 
   // MARK: Private methods
-  
   void _sendDraw(DrawingModel drawingModel) {
     // _waterbusSdk.sendDraw(meetingId: meetingId); // code not pushed yet
   }
