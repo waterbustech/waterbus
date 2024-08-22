@@ -22,20 +22,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   User? _user;
 
   AuthBloc(this._userLocal) : super(AuthInitial()) {
+    _auth.initialize((payload) async {
+      final User? user = await WaterbusSdk.instance.createToken(payload);
 
-    // _auth.initialize((payload) async {
-    //   final User? user = await WaterbusSdk.instance.createToken(payload);
-    //
-    //   // Pop loading
-    //   AppNavigator.pop();
-    //
-    //   if (user != null) {
-    //     _userLocal.saveUser(user);
-    //     _user = user;
-    //   }
-    //
-    //   add(OnAuthCheckEvent());
-    // });
+      // Pop loading
+      AppNavigator.pop();
+
+      if (user != null) {
+        _userLocal.saveUser(user);
+        _user = user;
+      }
+
+      add(OnAuthCheckEvent());
+    });
 
     on<AuthEvent>((event, emit) async {
       if (event is OnAuthCheckEvent) {
@@ -43,12 +42,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
 
       if (event is LogInWithGoogleEvent || event is LogInAnonymously) {
-
         await _handleLogin(event);
 
-        if (_user != null) {
-          emit(_authSuccess);
-        }
+        if (_user != null) emit(_authSuccess);
       }
 
       if (event is LogOutEvent) {
@@ -110,8 +106,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-
-    // createToken on error;
     final User? user = await WaterbusSdk.instance.createToken(payload);
 
     // Pop loading
