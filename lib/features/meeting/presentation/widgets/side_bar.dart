@@ -9,14 +9,17 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/types/enums/side_bar_options.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/code_editor.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/custom_paint.dart';
 
 class SideBar extends StatefulWidget {
   final bool isExpand;
   final Function(bool) onExpandChanged;
+  final int meetingId;
   const SideBar({
     super.key,
     required this.isExpand,
     required this.onExpandChanged,
+    required this.meetingId,
   });
 
   @override
@@ -62,9 +65,11 @@ class _SideBarState extends State<SideBar> {
                       clipBehavior: Clip.hardEdge,
                       child: _option == SideBarOptions.code
                           ? const CodeEditorPad()
-                          : Container(
-                              color: Colors.transparent,
-                            ),
+                          : _option == SideBarOptions.paint
+                              ? DrawingScreen(meetingId: widget.meetingId)
+                              : Container(
+                                  color: Colors.transparent,
+                                ),
                     )
                   : const SizedBox(),
             ),
