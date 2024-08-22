@@ -15,7 +15,6 @@ import 'package:waterbus/features/meeting/presentation/screens/background_galler
 import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/custom_paint.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';

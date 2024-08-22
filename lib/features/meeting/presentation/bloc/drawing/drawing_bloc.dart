@@ -36,7 +36,6 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
       }
     });
   }
-  DrawingInitialState get _initDraw => DrawingInitialState();
 
   // MARK: Private methods
   void _sendDraw(DrawingModel drawingModel) {
