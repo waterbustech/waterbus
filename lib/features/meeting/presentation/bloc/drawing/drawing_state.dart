@@ -18,6 +18,8 @@ final class MyDrawingState extends DrawingState {
 
   @override
   List<Offset?> get myProps => drawingModel.points;
+  @override
+  List<Offset?> get props => [...myProps, ...anotherProps];
 }
 
 final class AnotherDrawingState extends DrawingState {
@@ -27,4 +29,6 @@ final class AnotherDrawingState extends DrawingState {
 
   @override
   List<Offset?> get anotherProps => points;
+  @override
+  List<Offset?> get props => [...myProps, ...anotherProps];
 }

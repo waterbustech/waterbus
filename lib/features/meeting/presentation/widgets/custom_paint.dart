@@ -42,12 +42,10 @@ class DrawingScreenState extends State<DrawingScreen> {
               child: Listener(
                 onPointerMove: (details) {
                   myPoints = List.of(myPoints)..add(details.localPosition);
+                  onHanldeCancelDraw(myPoints);
                 },
-                onPointerCancel: (event) => onHanldeCancelDraw(myPoints),
                 onPointerDown: (details) {
-                  setState(() {
-                    myPoints.add(null);
-                  });
+                  myPoints.add(null);
                 },
                 child: CustomPaint(
                   painter: DrawingPainter(drawing.props),
@@ -58,11 +56,9 @@ class DrawingScreenState extends State<DrawingScreen> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              setState(() {
-                myPoints.clear();
-                AppBloc.drawingBloc
-                    .add(OnDrawingDeletedEvent(meetingId: widget.meetingId));
-              });
+              myPoints.clear();
+              AppBloc.drawingBloc
+                  .add(OnDrawingDeletedEvent(meetingId: widget.meetingId));
             },
             child: const Icon(Icons.clear),
           ),
