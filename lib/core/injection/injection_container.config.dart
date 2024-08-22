@@ -20,9 +20,6 @@ import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
 import '../method_channels/pip_channel.dart' as _i921;
 
-import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.dart'
-    as _i804;
-
 import '../../features/chats/xmodels/datasources/user_local_datasource.dart'
     as _i413;
 import '../../features/meeting/data/datasources/call_settings_datasource.dart'
@@ -31,14 +28,10 @@ import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
     as _i254;
 import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
     as _i861;
-import '../../features/meeting/presentation/bloc/drawing/drawing_bloc.dart'
-    as _i879;
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i545;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i324;
-import '../../features/meeting/presentation/socket/drawing/socket_draw_handle.dart'
-    as _i313;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -53,7 +46,6 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
   gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
-  gh.factory<_i879.DrawingBloc>(() => _i879.DrawingBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
@@ -63,8 +55,6 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
-  gh.factory<_i313.SocketDrawHandle>(
-      () => _i313.SocketDrawHandle(gh<_i804.SocketHandler>()));
   gh.lazySingleton<_i413.UserLocalDataSource>(
       () => _i413.UserLocalDataSourceImpl());
   gh.factory<_i797.AuthBloc>(
