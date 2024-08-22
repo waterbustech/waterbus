@@ -8,8 +8,8 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/types/enums/side_bar_options.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/custom_paint.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/code_editor.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/custom_paint.dart';
 
 class SideBar extends StatefulWidget {
   final bool isExpand;
