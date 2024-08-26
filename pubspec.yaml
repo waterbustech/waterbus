@@ -1,5 +1,5 @@
 name: waterbus
-description: Built on WebRTC SDK M125. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Built on WebRTC SDK M128. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
 repository: https://github.com/waterbustech/waterbus
 # The following line prevents the package from being accidentally published to
@@ -46,12 +46,7 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  connectivity_plus: ^6.0.4
-  http_parser: ^4.1.0
-  socket_io_client: ^2.0.3+1
-  dio: ^5.5.0+1
-  dio_smart_retry: ^6.0.0
-  dio_cache_interceptor: ^3.5.0
+  connectivity_plus: ^6.0.5
 
   # State management
   flutter_bloc: ^8.1.6
@@ -65,16 +60,16 @@ dependencies:
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^3.2.0
-  firebase_auth: ^5.1.2
-  firebase_crashlytics: ^4.0.3
-  firebase_performance: ^0.10.0+3
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.4
+  firebase_crashlytics: ^4.0.4
+  firebase_performance: ^0.10.0+4
 
   # Utils
   lottie: ^3.1.0
   flutter_native_splash: ^2.4.1
   superellipse_shape: ^0.2.0
-  cached_network_image: ^3.3.1
+  cached_network_image: ^3.4.1
   flutter_phosphor_icons: ^0.0.1+6
   flutter_sliding_drawer: ^2.0.0
   permission_handler: ^11.3.1
@@ -83,7 +78,7 @@ dependencies:
   equatable: ^2.0.5
   share_plus: ^10.0.0
   simple_pip_mode: ^0.8.0
-  file_picker: ^8.0.6
+  file_picker: ^8.1.2
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
@@ -101,12 +96,12 @@ dependencies:
 
   # Media
   image_picker: ^1.1.2
-  image_picker_android: ^0.8.12+10
+  image_picker_android: ^0.8.12+11
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk: ^1.4.11
+  waterbus_sdk: ^1.4.13
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
@@ -115,10 +110,15 @@ dependency_overrides:
   win32: ^5.0.5 
   web: ^0.5.1
   collection: ^1.19.0
+  dio_web_adapter: ^2.0.0
   flutter_image_compress_web:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
+  rhttp:
+    git:
+      url: https://github.com/waterbustech/rhttp.git
+      path: rhttp
 
 dev_dependencies:
   # Test
@@ -135,7 +135,7 @@ dev_dependencies:
 
   # Code Generator
   injectable_generator: ^2.6.2
-  build_runner: ^2.4.11
+  build_runner: ^2.4.12
   flutter_gen_runner: ^5.6.0
 
   # Lints

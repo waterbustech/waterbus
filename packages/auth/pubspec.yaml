@@ -31,7 +31,7 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
-  waterbus_sdk: ^1.4.11
+  waterbus_sdk: ^1.4.13
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
@@ -46,7 +46,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+# flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
