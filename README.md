@@ -84,7 +84,7 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 To compile `Waterbus` from the source code, follow these steps:
 
 1. Install [Flutter](https://flutter.dev).
-2. Install Rust via [rustup](https://rustup.rs/)
+2. Install Rust via [rustup](https://rustup.rs/).
 3. Clone the Waterbus repository.
 4. Run `flutter pub get` to download dependencies.
 5. Run `flutter run` to start the app.
