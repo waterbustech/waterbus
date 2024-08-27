@@ -739,10 +739,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: "166960ba7d94b36f078a2c19de2f35464d0a3a18de493c70f583677ef87f5347"
+      sha256: d1d89a028ebeb814148919be861eea00ea48e648d691d87865f73ee1243a78f1
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+3"
+    version: "0.11.2+4"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1996,10 +1996,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: "4f642301ee83b6f6c8ec9b4753cf4b16845671c5391f9c7a6f689ac5f29d5c56"
+      sha256: f268c2b578cbd9c7bb176065e8a2806420c7ec2e5d2fb94bebe1a334b0c53b34
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.13"
+    version: "1.4.14"
   web:
     dependency: "direct overridden"
     description:
