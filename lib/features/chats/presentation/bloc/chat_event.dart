@@ -72,9 +72,11 @@ class DeleteMemberEvent extends ChatEvent {
 
 class UpdateLastMessageEvent extends ChatEvent {
   final MessageModel message;
+  final bool isUpdateMessage;
 
   UpdateLastMessageEvent({
     required this.message,
+    this.isUpdateMessage = false,
   });
 }
 

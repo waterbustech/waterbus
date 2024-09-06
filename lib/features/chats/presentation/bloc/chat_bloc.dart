@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus/core/utils/modal/show_snackbar.dart';
-import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
+import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
@@ -117,37 +117,43 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is DeleteOrLeaveConversationEvent) {
-        final Meeting meeting = event.meeting;
+        final int index = _conversations
+            .indexWhere((conversation) => conversation.id == event.meeting.id);
 
-        if (meeting.isHost && meeting.members.length > 1) {
-          showSnackBarWaterbus(
-            content: Strings.hostCanNotDeleteConversation.i18n,
-          );
-        } else {
-          await showModalBottomSheet(
-            context: AppNavigator.context!,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            barrierColor: Colors.black38,
-            enableDrag: false,
-            builder: (context) {
-              return BottomSheetDelete(
-                actionText:
-                    meeting.isHost ? null : Strings.leaveTheConversation.i18n,
-                description:
-                    meeting.isHost ? null : Strings.sureLeaveConversation.i18n,
-                handlePressed: () async {
-                  if (meeting.isHost) {
-                    add(DeleteConversationByHostEvent(meetingId: meeting.id));
-                  } else {
-                    add(LeaveConversationByMemberEvent(meeting: meeting));
-                  }
+        if (index != -1) {
+          final Meeting meeting = _conversations[index];
 
-                  AppNavigator.popUntil(Routes.rootRoute);
-                },
-              );
-            },
-          );
+          if (meeting.isHost && meeting.members.length > 1) {
+            showSnackBarWaterbus(
+              content: Strings.hostCanNotDeleteConversation.i18n,
+            );
+          } else {
+            await showModalBottomSheet(
+              context: AppNavigator.context!,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              barrierColor: Colors.black38,
+              enableDrag: false,
+              builder: (context) {
+                return BottomSheetDelete(
+                  actionText:
+                      meeting.isHost ? null : Strings.leaveTheConversation.i18n,
+                  description: meeting.isHost
+                      ? null
+                      : Strings.sureLeaveConversation.i18n,
+                  handlePressed: () async {
+                    if (meeting.isHost) {
+                      add(DeleteConversationByHostEvent(meetingId: meeting.id));
+                    } else {
+                      add(LeaveConversationByMemberEvent(meeting: meeting));
+                    }
+
+                    AppNavigator.popUntil(Routes.rootRoute);
+                  },
+                );
+              },
+            );
+          }
         }
       }
 
@@ -213,6 +219,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     );
 
     if (index != -1) {
+      if (event.isUpdateMessage &&
+          _conversations[index].latestMessage?.id != event.message.id) return;
+
       _conversations[index].latestMessage = event.message;
     }
   }

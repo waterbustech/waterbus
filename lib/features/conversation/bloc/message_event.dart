@@ -2,6 +2,8 @@ part of 'message_bloc.dart';
 
 abstract class MessageEvent {}
 
+class InitialMessageSocketEvent extends MessageEvent {}
+
 class GetMessageByMeetingIdEvent extends MessageEvent {
   final int meetingId;
   final Function? handleFinish;
@@ -57,13 +59,11 @@ class InsertMessageEvent extends MessageEvent {
 }
 
 class UpdateMessageFromSocketEvent extends MessageEvent {
-  final int messageId;
-  final String? data;
-  final int meetingId;
+  final MessageModel messageModel;
+  final bool isDeleted;
 
   UpdateMessageFromSocketEvent({
-    required this.messageId,
-    required this.meetingId,
-    this.data,
+    required this.messageModel,
+    this.isDeleted = false,
   });
 }

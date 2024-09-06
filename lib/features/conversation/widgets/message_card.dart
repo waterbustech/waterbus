@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/types/models/message_status_enum.dart';
+import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -45,7 +45,7 @@ class MessageCard extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              message.status == MessageStatusEnum.sending
+              message.sendingStatus == SendingStatusEnum.sending
                   ? Padding(
                       padding: EdgeInsets.only(bottom: 2.sp),
                       child: Text(
@@ -56,7 +56,7 @@ class MessageCard extends StatelessWidget {
                         ),
                       ),
                     )
-                  : message.status == MessageStatusEnum.error
+                  : message.sendingStatus == SendingStatusEnum.error
                       ? Padding(
                           padding: EdgeInsets.only(bottom: 3.sp),
                           child: RichText(
@@ -91,34 +91,47 @@ class MessageCard extends StatelessWidget {
               Material(
                 shape: SuperellipseShape(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.sp),
-                    topRight: Radius.circular(20.sp),
+                    topLeft: Radius.circular(16.sp),
+                    topRight: Radius.circular(16.sp),
                     bottomRight: messagePrev?.isMe == message.isMe
-                        ? Radius.circular(20.sp)
+                        ? Radius.circular(16.sp)
                         : !message.isMe
                             ? Radius.zero
-                            : Radius.circular(20.sp),
-                    bottomLeft: Radius.circular(20.sp),
+                            : Radius.circular(16.sp),
+                    bottomLeft: Radius.circular(16.sp),
                   ),
+                  side: message.isDeleted
+                      ? BorderSide(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? colorGray3
+                              : colorGray2,
+                        )
+                      : BorderSide.none,
                 ),
-                color: message.isMe
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.surfaceContainerHighest,
+                color: message.isDeleted
+                    ? Colors.transparent
+                    : message.isMe
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.surfaceContainerHighest,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 15.sp,
-                    vertical: 10.sp,
+                    horizontal: 10.sp,
+                    vertical: 6.sp,
                   ),
                   constraints: BoxConstraints(
                     maxWidth: SizerUtil.isDesktop ? 45.w : 195.sp,
                   ),
                   child: Text(
-                    message.data,
+                    message.dataX,
                     style: TextStyle(
-                      color: message.isMe
-                          ? Theme.of(context).colorScheme.surface
-                          : null,
-                      fontSize: 12.sp,
+                      color: message.isDeleted
+                          ? Theme.of(context).brightness == Brightness.dark
+                              ? colorGray3
+                              : colorGray2
+                          : message.isMe
+                              ? Theme.of(context).colorScheme.surface
+                              : null,
+                      fontSize: message.isDeleted ? 11.sp : 12.sp,
                     ),
                   ),
                 ),

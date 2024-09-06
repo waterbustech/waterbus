@@ -137,7 +137,7 @@ class ConversationList extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    left: SizerUtil.isDesktop ? 74.sp : 66.sp,
+                                    left: SizerUtil.isDesktop ? 74.sp : 64.sp,
                                   ),
                                   child: divider,
                                 ),

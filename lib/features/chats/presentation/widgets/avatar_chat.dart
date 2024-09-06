@@ -23,7 +23,6 @@ class AvatarChat extends StatelessWidget {
 
   Widget singleChat(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(2.5.sp),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Theme.of(context).scaffoldBackgroundColor,

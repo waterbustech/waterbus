@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
@@ -101,12 +100,12 @@ class ChatCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 2.sp),
+              SizedBox(height: 1.sp),
               Row(
                 children: [
                   Expanded(
                     child: Text(
-                      meeting.latestMessage?.data ?? Strings.groupCreated.i18n,
+                      meeting.latestMessageData,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

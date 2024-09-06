@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/message_status_enum.dart';
+import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -113,8 +113,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                     (context, index) {
                                       return GestureWrapper(
                                         onLongPress: () {
-                                          if (messages[index].status !=
-                                              MessageStatusEnum.sent) return;
+                                          if (messages[index].sendingStatus !=
+                                                  SendingStatusEnum.sent ||
+                                              messages[index].isDeleted) return;
 
                                           _handleLongPressMessageCard(
                                             messages[index],

@@ -10,6 +10,10 @@ import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/option_model.dart';
 
 extension MessageModelX on MessageModel {
+  String get dataX => isDeleted
+      ? "${isMe ? Strings.you.i18n : createdBy?.fullName ?? Strings.user.i18n} ${Strings.unsentAMessage.i18n}"
+      : data;
+
   List<OptionModel> get getOptions {
     final List<OptionModel> options = [];
 

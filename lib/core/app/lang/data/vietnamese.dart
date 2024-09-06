@@ -153,6 +153,9 @@ Map<String, String> vietnamese = {
   Strings.sending: "Đang gửi",
   Strings.canNotSend: "Không thể gửi!",
   Strings.resend: "Gửi lại",
+  Strings.you: "Bạn",
+  Strings.user: "Người dùng",
+  Strings.unsentAMessage: "đã thu hồi tin nhắn",
   Strings.hi: "Xin chào",
   Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
   Strings.hostCanNotDeleteConversation:

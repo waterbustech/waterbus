@@ -156,6 +156,9 @@ class Strings {
   static const String sending = 'sending';
   static const String canNotSend = 'canNotSend';
   static const String resend = 'resend';
+  static const String you = 'you';
+  static const String user = 'user';
+  static const String unsentAMessage = 'unsentAMessage';
   static const String hi = 'hi';
   static const String noMesssagesHereYet = 'noMesssagesHereYet';
   static const String youHaveInvitedThe = 'youHaveInvitedThe';

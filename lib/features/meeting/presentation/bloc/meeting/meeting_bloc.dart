@@ -396,10 +396,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       Participant(
         id: event.participant.id,
         user: User(
-          id: event.participant.user.id,
-          fullName: event.participant.user.fullName,
-          userName: event.participant.user.userName,
-          avatar: event.participant.user.avatar,
+          id: event.participant.user?.id ?? 0,
+          fullName: event.participant.user?.fullName ?? "",
+          userName: event.participant.user?.userName ?? "",
+          avatar: event.participant.user?.avatar,
         ),
       ),
     );
@@ -495,8 +495,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       remoteStreamId: participantSFU.cameraSource?.streamId ?? '',
       peerConnectionId: participantSFU.peerConnection.peerConnectionId,
       myAvatar: AppBloc.userBloc.user?.avatar ?? '',
-      remoteAvatar: participant.user.avatar ?? '',
-      remoteName: participant.user.fullName,
+      remoteAvatar: participant.user?.avatar ?? '',
+      remoteName: participant.user?.fullName ?? '',
       isRemoteCameraEnable: participantSFU.isVideoEnabled,
     );
   }
@@ -549,7 +549,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _subtitleTimer?.cancel();
 
     _subtitle.add(
-      "${participants[indexOfParticipant].user.fullName}: ${sub.content}",
+      "${participants[indexOfParticipant].user?.fullName}: ${sub.content}",
     );
 
     _subtitleTimer = Timer.periodic(3.seconds, (timer) {

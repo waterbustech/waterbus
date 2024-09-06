@@ -16,16 +16,12 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
 import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
-import '../../features/conversation/socket/socket_chat_handle.dart' as _i541;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
 import '../method_channels/pip_channel.dart' as _i921;
-
-import 'package:waterbus_sdk/core/websocket/interfaces/socket_handler_interface.dart'
-    as _i804;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
     as _i843;
@@ -68,8 +64,6 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
-  gh.factory<_i541.SocketChatHandle>(
-      () => _i541.SocketChatHandle(gh<_i804.SocketHandler>()));
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
   gh.factory<_i339.ThemesBloc>(
