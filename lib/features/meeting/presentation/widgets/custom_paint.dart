@@ -18,11 +18,18 @@ class DrawingScreen extends StatefulWidget {
 
 class DrawingScreenState extends State<DrawingScreen> {
   bool drawingBlocked = false;
+  Color currentColor = Colors.black; // colors
 
   void onHanldeCancelDraw(points) {
     final DrawingModel drawingModel =
         DrawingModel(meetingId: widget.meetingId, points: points);
     AppBloc.drawingBloc.add(OnDrawingChangedEvent(drawingModel: drawingModel));
+  }
+
+  void changeColor(Color color) {
+    setState(() {
+      currentColor = color;
+    });
   }
 
   @override
@@ -36,23 +43,47 @@ class DrawingScreenState extends State<DrawingScreen> {
       builder: (context, drawing) {
         var myPoints = drawing.myProps;
         return Scaffold(
-          body: InteractiveViewer(
-            child: AbsorbPointer(
-              absorbing: drawingBlocked,
-              child: Listener(
-                onPointerMove: (details) {
-                  myPoints = List.of(myPoints)..add(details.localPosition);
-                  onHanldeCancelDraw(myPoints);
-                },
-                onPointerDown: (details) {
-                  myPoints.add(null);
-                },
-                child: CustomPaint(
-                  painter: DrawingPainter(drawing.props),
-                  size: Size.infinite,
+          body: Column(
+            children: [
+              Expanded(
+                child: InteractiveViewer(
+                  child: AbsorbPointer(
+                    absorbing: drawingBlocked,
+                    child: Listener(
+                      onPointerMove: (details) {
+                        myPoints = List.of(myPoints)
+                          ..add(details.localPosition);
+                        onHanldeCancelDraw(myPoints);
+                      },
+                      onPointerDown: (details) {
+                        myPoints.add(null);
+                      },
+                      child: CustomPaint(
+                        painter: DrawingPainter(drawing.props, currentColor),
+                        size: Size.infinite,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Container(
+                height: 50,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                color: Colors.grey[200],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ColorPickerButton(Colors.black, changeColor),
+                    ColorPickerButton(Colors.red, changeColor),
+                    ColorPickerButton(Colors.blue, changeColor),
+                    ColorPickerButton(Colors.green, changeColor),
+                    ColorPickerButton(Colors.yellow, changeColor),
+                    ColorPickerButton(Colors.purple, changeColor),
+                    // Thêm các nút màu khác nếu cần
+                  ],
+                ),
+              ),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -68,15 +99,39 @@ class DrawingScreenState extends State<DrawingScreen> {
   }
 }
 
+class ColorPickerButton extends StatelessWidget {
+  final Color color;
+  final Function(Color) onColorSelected;
+
+  const ColorPickerButton(this.color, this.onColorSelected, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onColorSelected(color),
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black26),
+        ),
+      ),
+    );
+  }
+}
+
 class DrawingPainter extends CustomPainter {
   final List<Offset?> points;
+  final Color color; // Thêm thuộc tính màu sắc
 
-  DrawingPainter(this.points);
+  DrawingPainter(this.points, this.color);
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = Colors.black
+      ..color = color // Sử dụng thuộc tính màu sắc
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 5.0;
 
@@ -91,6 +146,6 @@ class DrawingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(DrawingPainter oldDelegate) {
-    return oldDelegate.points != points;
+    return oldDelegate.points != points || oldDelegate.color != color;
   }
 }

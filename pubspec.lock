@@ -96,6 +96,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  build_cli_annotations:
+    dependency: transitive
+    description:
+      name: build_cli_annotations
+      sha256: b59d2769769efd6c9ff6d4c4cede0be115a566afc591705c2040b707534b1172
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   build_config:
     dependency: transitive
     description:
@@ -236,10 +244,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: "3e7d1d9dbae40ae82cbe6c23c518f0c4ffe32764ee9749b9a99d32cbac8734f6"
+      sha256: "2056db5241f96cdc0126bd94459fc4cdc13876753768fc7a31c425e50a7177d0"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.4"
+    version: "6.0.5"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -332,10 +340,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: e17f6b3097b8c51b72c74c9f071a605c47bcc8893839bd66732457a5ebe73714
+      sha256: "0dfb6b6a1979dac1c1245e17cef824d7b452ea29bd33d3467269f9bef3715fb0"
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.0+1"
+    version: "5.6.0"
   dio_cache_interceptor:
     dependency: "direct main"
     description:
@@ -344,6 +352,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0"
+  dio_compatibility_layer:
+    dependency: transitive
+    description:
+      name: dio_compatibility_layer
+      sha256: bb7ea1dd6fe98b8f5e3d90da408802fc3abf14d4485416e882cf1b2c8fb4b209
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   dio_smart_retry:
     dependency: "direct main"
     description:
@@ -684,6 +700,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
+  flutter_rust_bridge:
+    dependency: transitive
+    description:
+      name: flutter_rust_bridge
+      sha256: b0271cc147d5afccf9774809e4eef52b7357babe1a1a31db649df6f02dd27580
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   flutter_sliding_drawer:
     dependency: "direct main"
     description:
@@ -714,10 +738,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: bedd8fc92cffd91aebed04dba1cd67c8380c78f818b2e6a13cdd1c770974497e
+      sha256: "4a96b768d6ea2d79e2de06915ea41d646d98024d81bdc32488449d68dfb32f14"
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+2"
+    version: "0.11.2+5"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.4"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1261,10 +1293,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider
-      sha256: c9e7d3a4cd1410877472158bee69963a4579f78b68c65a2b7d40d1a7a88bb161
+      sha256: fec0d61223fba3154d87759e3cc27fe2c8dc498f6386c6d6fc80d1afdd1bf378
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   path_provider_android:
     dependency: transitive
     description:
@@ -1457,6 +1489,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  rhttp:
+    dependency: transitive
+    description:
+      name: rhttp
+      sha256: "1f120dec4a09522dea734122eb7990f91cf21da70ce9f03807d31daf5713ef6b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.2"
   rxdart:
     dependency: transitive
     description:
@@ -1922,10 +1962,10 @@ packages:
     dependency: transitive
     description:
       name: wakelock_plus
-      sha256: "4fa83a128b4127619e385f686b4f080a5d2de46cff8e8c94eccac5fcf76550e5"
+      sha256: bf4ee6f17a2fa373ed3753ad0e602b7603f8c75af006d5b9bdade263928c0484
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.7"
+    version: "1.2.8"
   wakelock_plus_platform_interface:
     dependency: transitive
     description:
@@ -1954,10 +1994,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: b78405996b1a94f3b122cbcee7159d92119dfd70a543e90107711e71b5273905
+      sha256: f268c2b578cbd9c7bb176065e8a2806420c7ec2e5d2fb94bebe1a334b0c53b34
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.11"
+    version: "1.4.14"
   web:
     dependency: "direct overridden"
     description:
