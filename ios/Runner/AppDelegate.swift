@@ -2,7 +2,7 @@ import UIKit
 import Flutter
 import FirebaseCore
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
     var flutterEngine = FlutterEngine(name: "FlutterEngine")
     var replayKitChannel: FlutterMethodChannel! = nil
