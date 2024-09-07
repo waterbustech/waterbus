@@ -703,18 +703,11 @@ packages:
   flutter_rust_bridge:
     dependency: transitive
     description:
-<<<<<<< HEAD
-      name: flutter_rust_bridge
-      sha256: b0271cc147d5afccf9774809e4eef52b7357babe1a1a31db649df6f02dd27580
-      url: "https://pub.dev"
-    source: hosted
-=======
       path: frb_dart
       ref: HEAD
       resolved-ref: f58509660e47525398647848b4b462387deae086
       url: "https://github.com/waterbustech/flutter_rust_bridge.git"
     source: git
->>>>>>> aedf1d736a2e856dffe6183c7f49dea6b2a20e2b
     version: "2.3.0"
   flutter_sliding_drawer:
     dependency: "direct main"
@@ -746,17 +739,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-<<<<<<< HEAD
-      sha256: "4a96b768d6ea2d79e2de06915ea41d646d98024d81bdc32488449d68dfb32f14"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.2+5"
-=======
       sha256: d1d89a028ebeb814148919be861eea00ea48e648d691d87865f73ee1243a78f1
       url: "https://pub.dev"
     source: hosted
     version: "0.11.2+4"
->>>>>>> aedf1d736a2e856dffe6183c7f49dea6b2a20e2b
   freezed_annotation:
     dependency: transitive
     description:
@@ -1505,15 +1491,6 @@ packages:
     source: hosted
     version: "1.0.0"
   rhttp:
-<<<<<<< HEAD
-    dependency: transitive
-    description:
-      name: rhttp
-      sha256: "1f120dec4a09522dea734122eb7990f91cf21da70ce9f03807d31daf5713ef6b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.2"
-=======
     dependency: "direct overridden"
     description:
       path: rhttp
@@ -1522,7 +1499,6 @@ packages:
       url: "https://github.com/waterbustech/rhttp.git"
     source: git
     version: "0.6.1"
->>>>>>> aedf1d736a2e856dffe6183c7f49dea6b2a20e2b
   rxdart:
     dependency: transitive
     description:
@@ -1980,10 +1956,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
+      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.5"
+    version: "14.2.4"
   wakelock_plus:
     dependency: transitive
     description:

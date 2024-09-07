@@ -31,7 +31,8 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
-  waterbus_sdk: ^1.4.11
+  waterbus_sdk: ^1.4.14
+  
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 

@@ -102,14 +102,7 @@ dependencies:
 
   # Video call
   waterbus_sdk: ^1.4.14
-<<<<<<< HEAD
-  # waterbus_sdk:
-  #   git:
-  #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-  #     ref: feat/map-api-chat
-
-=======
->>>>>>> aedf1d736a2e856dffe6183c7f49dea6b2a20e2b
+  
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
