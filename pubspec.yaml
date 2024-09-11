@@ -47,6 +47,7 @@ dependencies:
 
   # Network
   connectivity_plus: ^6.0.5
+  socket_io_client: ^2.0.3+1
 
   # State management
   flutter_bloc: ^8.1.6

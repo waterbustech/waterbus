@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:waterbus/features/meeting/presentation/xmodels/drawing_model.dart';
+import 'package:equatable/equatable.dart';
 
 // import 'package:waterbus_sdk/flutter_waterbus_sdk.dart'; // code not pushed yet
 
@@ -17,28 +17,26 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     on<DrawingEvent>((event, emit) {
       if (event is OnDrawingChangedEvent) {
         _sendDraw(event.drawingModel);
-        emit(MyDrawingState(drawingModel: event.drawingModel));
+        emit(MyDrawingState(event.drawingModel));
       }
 
       if (event is OnDrawingDeletedEvent) {
         _sendDeleteDraw(event.meetingId);
-        final DrawingModel drawingModel =
-            DrawingModel(meetingId: event.meetingId, points: []);
-        emit(MyDrawingState(drawingModel: drawingModel));
+        // emit(MyDrawingState());
       }
 
       if (event is OnAnotherDrawingChangedEvent) {
-        emit(AnotherDrawingState(points: event.points));
+        // emit(AnotherDrawingState(points: event.points));
       }
 
       if (event is OnAnotherDrawingDeletedEvent) {
-        emit(AnotherDrawingState(points: []));
+        // emit(AnotherDrawingState(points: []));
       }
     });
   }
 
   // MARK: Private methods
-  void _sendDraw(DrawingModel drawingModel) {
+  void _sendDraw(List<DrawingModel?> drawingModel) {
     // _waterbusSdk.sendDraw(meetingId: meetingId); // code not pushed yet
   }
   void _sendDeleteDraw(int meetingId) {

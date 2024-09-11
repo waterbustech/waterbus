@@ -1,34 +1,30 @@
 part of 'drawing_bloc.dart';
 
-abstract class DrawingState {
-  List<Offset?> get props => [];
-  List<Offset?> get myProps => [];
-  List<Offset?> get anotherProps => [];
+abstract class DrawingState extends Equatable {
+  final List<DrawingModel?> localProps;
+  final List<DrawingModel?> remoteProps;
+
+  const DrawingState({this.localProps = const [], this.remoteProps = const []});
+  @override
+  List<DrawingModel?> get props => [...localProps, ...remoteProps];
 }
 
 final class DrawingInitialState extends DrawingState {
-  @override
-  List<Offset?> get props => [...myProps, ...anotherProps];
 }
 
 final class MyDrawingState extends DrawingState {
-  final DrawingModel drawingModel;
+  final List<DrawingModel?> drawingModel;
 
-  MyDrawingState({required this.drawingModel});
+  const MyDrawingState(this.drawingModel);
 
   @override
-  List<Offset?> get myProps => drawingModel.points;
-  @override
-  List<Offset?> get props => [...myProps, ...anotherProps];
+  List<DrawingModel?> get localProps => [...drawingModel];
 }
 
 final class AnotherDrawingState extends DrawingState {
-  final List<Offset?> points;
+  final List<DrawingModel?> drawingModel;
 
-  AnotherDrawingState({required this.points});
-
+  const AnotherDrawingState(this.drawingModel);
   @override
-  List<Offset?> get anotherProps => points;
-  @override
-  List<Offset?> get props => [...myProps, ...anotherProps];
+  List<DrawingModel?> get remoteProps =>  [...drawingModel];
 }

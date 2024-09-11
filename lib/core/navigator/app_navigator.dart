@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/custom_paint.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -35,8 +34,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       case Routes.rootRoute:
         return _buildRoute(
           settings,
-          // const Home(),
-          const DrawingScreen(meetingId: 1),
+          const Home(),
         );
 
       // Authenication

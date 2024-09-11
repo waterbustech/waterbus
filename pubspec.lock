@@ -1648,7 +1648,7 @@ packages:
     source: sdk
     version: "0.0.99"
   socket_io_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: socket_io_client
       sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b

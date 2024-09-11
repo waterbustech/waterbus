@@ -2,8 +2,13 @@ part of 'drawing_bloc.dart';
 
 class DrawingEvent {}
 
+class OnDrawingInitEvent extends DrawingEvent {
+  final List<DrawingModel?> drawingModel;
+  OnDrawingInitEvent({required this.drawingModel});
+}
+
 class OnDrawingChangedEvent extends DrawingEvent {
-  final DrawingModel drawingModel;
+  final List<DrawingModel?> drawingModel;
   OnDrawingChangedEvent({required this.drawingModel});
 }
 
