@@ -276,10 +276,10 @@ packages:
     dependency: transitive
     description:
       name: cross_file
-      sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
+      sha256: "7caf6a750a0c04effbb52a676dce9a4a592e10ad35c34d6d2d0e4811160d5670"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.4+1"
+    version: "0.3.4+2"
   crypto:
     dependency: transitive
     description:
@@ -316,10 +316,10 @@ packages:
     dependency: transitive
     description:
       name: dart_webrtc_plus
-      sha256: "5cf6c2687fc365037d8676c831dfff312697e57b92866d2d3e079ea5be588039"
+      sha256: "5225519c857ddd8c9e93c392d7683016949d027f82480d0f6bbdb3e0603b7353"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.6+2"
+    version: "1.4.9+1"
   dartx:
     dependency: transitive
     description:
@@ -739,10 +739,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: d1d89a028ebeb814148919be861eea00ea48e648d691d87865f73ee1243a78f1
+      sha256: d6b14160745ebdbb88c853698c42275c64ca6ced75d343e192af5603e0a98fed
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+4"
+    version: "0.11.2+6"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1090,22 +1090,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  isolate_contactor:
-    dependency: transitive
-    description:
-      name: isolate_contactor
-      sha256: f1be0a90f91e4309ef37cc45280b2a84e769e848aae378318dd3dd263cfc482a
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
   isolate_manager:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: isolate_manager
-      sha256: "8fb916c4444fd408f089448f904f083ac3e169ea1789fd4d987b25809af92188"
+      sha256: "36d2845ac5bc747174ce516fed5196b516c6898cb4e75ece4d05aa8835b7fb57"
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.1"
+    version: "5.2.1+1"
   js:
     dependency: transitive
     description:
@@ -1406,10 +1398,10 @@ packages:
     dependency: transitive
     description:
       name: platform_detect_wasm
-      sha256: "31ea80cb6224f590b465ef2f74d1bcbd2600f319bd436c16acfece35cdf4bf9b"
+      sha256: "6055b46b3af9acb51aafd49561a621cfa9f4cdc5825be212b8280f906c6adf98"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1519,10 +1511,10 @@ packages:
     dependency: "direct main"
     description:
       name: share_plus
-      sha256: "59dfd53f497340a0c3a81909b220cfdb9b8973a91055c4e5ab9b9b9ad7c513c0"
+      sha256: "468c43f285207c84bcabf5737f33b914ceb8eb38398b91e5e3ad1698d1b72a52"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "10.0.2"
   share_plus_platform_interface:
     dependency: transitive
     description:
@@ -1908,18 +1900,18 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_web
-      sha256: "8d9e750d8c9338601e709cd0885f95825086bd8b642547f26bda435aade95d8a"
+      sha256: "772638d3b34c779ede05ba3d38af34657a05ac55b06279ea6edd409e323dca8e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.3"
   url_launcher_windows:
     dependency: transitive
     description:
       name: url_launcher_windows
-      sha256: ecf9725510600aa2bb6d7ddabe16357691b6d2805f66216a97d1b881e21beff7
+      sha256: "49c10f879746271804767cb45551ec5592cdab00ee105c06dddde1a98f73b185"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   uuid:
     dependency: transitive
     description:
@@ -1996,18 +1988,18 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: f268c2b578cbd9c7bb176065e8a2806420c7ec2e5d2fb94bebe1a334b0c53b34
+      sha256: "3cdf65d33d02c657190b768fe0bc6f919e9353e0b090bfd84f4c2a88f594f330"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.14"
+    version: "1.4.16"
   web:
     dependency: "direct overridden"
     description:
       name: web
-      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
+      sha256: d43c1d6b787bf0afad444700ae7f4db8827f701bc61c255ac8d328c6f4d52062
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "1.0.0"
   web_socket_channel:
     dependency: transitive
     description:
