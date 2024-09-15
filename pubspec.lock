@@ -316,10 +316,10 @@ packages:
     dependency: transitive
     description:
       name: dart_webrtc_plus
-      sha256: "5cf6c2687fc365037d8676c831dfff312697e57b92866d2d3e079ea5be588039"
+      sha256: "5225519c857ddd8c9e93c392d7683016949d027f82480d0f6bbdb3e0603b7353"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.6+2"
+    version: "1.4.9+1"
   dartx:
     dependency: transitive
     description:
@@ -739,10 +739,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: d1d89a028ebeb814148919be861eea00ea48e648d691d87865f73ee1243a78f1
+      sha256: d6b14160745ebdbb88c853698c42275c64ca6ced75d343e192af5603e0a98fed
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+4"
+    version: "0.11.2+6"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1406,10 +1406,10 @@ packages:
     dependency: transitive
     description:
       name: platform_detect_wasm
-      sha256: "31ea80cb6224f590b465ef2f74d1bcbd2600f319bd436c16acfece35cdf4bf9b"
+      sha256: "6055b46b3af9acb51aafd49561a621cfa9f4cdc5825be212b8280f906c6adf98"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1996,10 +1996,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: f268c2b578cbd9c7bb176065e8a2806420c7ec2e5d2fb94bebe1a334b0c53b34
+      sha256: "3cdf65d33d02c657190b768fe0bc6f919e9353e0b090bfd84f4c2a88f594f330"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.14"
+    version: "1.4.16"
   web:
     dependency: "direct overridden"
     description:
