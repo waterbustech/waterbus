@@ -594,18 +594,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_gen_core
-      sha256: d8e828ad015a8511624491b78ad8e3f86edb7993528b1613aefbb4ad95947795
+      sha256: "638d518897f1aefc55a24278968027591d50223a6943b6ae9aa576fe1494d99d"
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.0"
+    version: "5.7.0"
   flutter_gen_runner:
     dependency: "direct dev"
     description:
       name: flutter_gen_runner
-      sha256: "931b03f77c164df0a4815aac0efc619a6ac8ec4cada55025119fca4894dada90"
+      sha256: "7f2f02d95e3ec96cf70a1c515700c0dd3ea905af003303a55d6fb081240e6b8a"
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.0"
+    version: "5.7.0"
   flutter_image_compress:
     dependency: "direct main"
     description:
