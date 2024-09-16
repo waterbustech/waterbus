@@ -14,9 +14,10 @@ showSnackBarWaterbus({
 
   ScaffoldMessenger.of(AppNavigator.context!).showSnackBar(
     SnackBar(
+      width: SizerUtil.isDesktop ? 45.w : null,
       duration: 2000.milliseconds,
       dismissDirection: DismissDirection.horizontal,
-      margin: EdgeInsets.only(bottom: 24.sp),
+      margin: SizerUtil.isDesktop ? null : EdgeInsets.only(bottom: 24.sp),
       backgroundColor: Colors.transparent,
       elevation: 0,
       content: GlassmorphismWrapper(

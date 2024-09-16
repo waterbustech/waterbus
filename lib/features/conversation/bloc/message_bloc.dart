@@ -40,7 +40,9 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _messageBeingEdited = null;
         _meetingId = event.meetingId;
 
-        if (cachedMessageByMeetingId == null) {
+        if (cachedMessageByMeetingId == null ||
+            (cachedMessageByMeetingId.messages.isEmpty &&
+                !cachedMessageByMeetingId.isOver)) {
           emit(MessageInitial());
 
           _messagesMap[event.meetingId] =
@@ -135,16 +137,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       }
 
       if (event is InsertMessageEvent) {
-        if (_messagesMap[event.message.meeting] == null) {
-          _messagesMap[event.message.meeting] =
-              CachedMessageByMeetingId(messages: []);
-        }
+        final CachedMessageByMeetingId? cachedMessageByMeetingId =
+            _messagesMap[event.message.meeting];
 
-        final CachedMessageByMeetingId cachedMessageByMeetingId =
-            _messagesMap[event.message.meeting]!;
-
-        if (cachedMessageByMeetingId.messages.isEmpty &&
-            !cachedMessageByMeetingId.isOver) {
+        if (cachedMessageByMeetingId == null) {
           AppBloc.chatBloc.add(UpdateLastMessageEvent(message: event.message));
         } else {
           final int index = cachedMessageByMeetingId.messages
@@ -188,9 +184,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   void _listenMessageSocket(MessageSocketEvent messageSocketEvent) {
-    final Map<String, dynamic> data = messageSocketEvent.data;
-
-    final MessageModel message = MessageModel.fromMapSocket(data);
+    final MessageModel message = messageSocketEvent.message;
 
     if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
