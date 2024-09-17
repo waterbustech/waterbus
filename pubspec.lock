@@ -2027,12 +2027,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "feat/map-api-chat"
-      resolved-ref: c54ce50f38822265fe21145a99dc7a09f3968e5d
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
-    version: "1.4.14"
+      name: waterbus_sdk
+      sha256: "041ddbd9e76f439bd605bd267691ee743553fed9d9fb904b2c56232caca28b88"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   web:
     dependency: "direct overridden"
     description:
