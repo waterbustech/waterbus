@@ -6,6 +6,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/types/slide.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
@@ -30,7 +31,7 @@ Future showDialogWaterbus({
       context: AppNavigator.context!,
       isScrollControlled: true,
       builder: (context) {
-        return child;
+        return GestureWrapper(child: child);
       },
     );
   }
@@ -73,12 +74,14 @@ Future showDialogWaterbus({
             Theme.of(AppNavigator.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: maxHeight,
-              maxWidth: maxWidth ?? 330.sp,
+          child: GestureWrapper(
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: maxHeight,
+                maxWidth: maxWidth ?? 330.sp,
+              ),
+              child: child,
             ),
-            child: child,
           ),
         ),
       );

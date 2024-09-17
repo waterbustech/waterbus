@@ -82,17 +82,21 @@ dependencies:
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
+  flutter_slidable: ^3.1.0
   sizer: 
     path: ./packages/sizer
   flutter_localizations:
     sdk: flutter
   i18n_extension: ^12.0.1
+  pull_to_refresh: ^2.0.0
+  super_sliver_list: ^0.4.1
   syncfusion_flutter_charts:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
 
   # Code Editor
   re_editor: ^0.3.1
   re_highlight: ^0.0.3
+  collection: ^1.18.0
 
   # Media
   image_picker: ^1.1.2
@@ -101,7 +105,8 @@ dependencies:
   flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk: ^1.4.14
+  waterbus_sdk: 1.5.0
+   
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 

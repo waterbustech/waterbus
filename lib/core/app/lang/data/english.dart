@@ -71,6 +71,12 @@ Map<String, String> english = {
   Strings.search: "Search",
   Strings.createRoom: "Create Room",
   Strings.chat: "Chats",
+  Strings.delete: "Delete",
+  Strings.sureDeleteConversation:
+      'Are you sure you want to delete\nthis conversation?',
+  Strings.sureDeleteMessage: 'Are you sure you want to delete\nthis message?',
+  Strings.leaveAMessage: "Leave a message...",
+  Strings.invitedChat: "Invited chat",
   Strings.enterPassword: "Enter Password",
   Strings.createMeeting: "Create Meeting",
   Strings.editMeeting: "Edit Meeting",
@@ -83,6 +89,7 @@ Map<String, String> english = {
   Strings.dataSaver: "Data Saver",
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
+  Strings.back: "Back",
 
   // Profile screen
   Strings.profile: "Profile",
@@ -109,6 +116,9 @@ Map<String, String> english = {
   Strings.frameSent: "Frame sent",
   Strings.resolution: "Resolution",
   Strings.latency: "Latency (ms)",
+  Strings.updatedPersonalInformationSuccessfully:
+      "Updated personal information successfully!",
+  Strings.updateUsernameSuccessfully: "Updated username successful!",
 
   // Settings screen
   Strings.myProfile: "My Profile",
@@ -123,4 +133,42 @@ Map<String, String> english = {
   Strings.changeYourAvatar: 'Change your avatar',
   Strings.chooseFromGallery: 'Choose photo from gallery',
   Strings.takeAPhoto: 'Take a photo',
+
+  // Chat Screen
+  Strings.videoCall: 'Video call',
+  Strings.mute: 'Mute',
+  Strings.more: 'More',
+  Strings.addMembers: 'Add members',
+  Strings.owner: 'Owner',
+  Strings.youHaveBeenInvitedToChat: 'You have been invited to chat',
+  Strings.confirm: "Confirm",
+  Strings.inviting: "Inviting",
+  Strings.invisible: "Invisible",
+  Strings.joined: "Joined",
+  Strings.leaveTheConversation: "Leave the conversation",
+  Strings.sureLeaveConversation:
+      "Are you sure you want to leave this conversation? This conversation will be deleted for you and you will no longer be a member of this conversation.",
+  Strings.member: "Member",
+  Strings.members: "Members",
+  Strings.groupCreated: "Grounp created",
+  Strings.sending: "Sending",
+  Strings.canNotSend: "Can not send!",
+  Strings.resend: "Resend",
+  Strings.you: "You",
+  Strings.user: "User",
+  Strings.unsentAMessage: "unsent a message",
+  Strings.hi: "Hi",
+  Strings.noMesssagesHereYet: "No messages here yet",
+  Strings.youHaveInvitedThe: "You have invited the",
+  Strings.toJoinConversation: "to join conversation",
+  Strings.hostCanNotDeleteConversation:
+      "You as the host cannot delete a chat while it is still a member",
+  Strings.sendMessageOrTapOnTheGreetingBelow:
+      "Send a message or tap on the greeting below.",
+  Strings.sureDeleteMember:
+      "Are you sure you want to remove this member from the chat?",
+  Strings.deleteMember: "Delete this member",
+  Strings.addConversationSuccess: "New chat has been added to the list!",
+  Strings.youHaveConfirmedConversation:
+      "You have confirmed your participation in the conversation",
 };

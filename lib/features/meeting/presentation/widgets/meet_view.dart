@@ -82,7 +82,7 @@ class MeetView extends StatelessWidget {
                         ),
                       ),
                       child: AvatarCard(
-                        urlToImage: participant.user.avatar,
+                        urlToImage: participant.user?.avatar,
                         size: avatarSize,
                       ),
                     ),
@@ -129,7 +129,7 @@ class MeetView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          participant.user.fullName,
+                          participant.user?.fullName ?? "",
                           style: TextStyle(
                             color:
                                 participant.isMe ? Colors.yellow : Colors.white,

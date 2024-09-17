@@ -4,12 +4,14 @@ class GestureWrapper extends StatefulWidget {
   final Function? onTap;
   final Function? onLongPress;
   final Widget child;
+  final bool isCloseKeyboard;
 
   const GestureWrapper({
     super.key,
     required this.child,
     this.onTap,
     this.onLongPress,
+    this.isCloseKeyboard = true,
   });
 
   @override
@@ -17,36 +19,46 @@ class GestureWrapper extends StatefulWidget {
 }
 
 class _GestureWrapperState extends State<GestureWrapper> {
-  bool enable = false;
+  bool _enable = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () {
-        if (!enable && widget.onLongPress != null) {
-          widget.onLongPress!();
-        }
-      },
-      onTap: () {
-        if (!enable && widget.onTap != null) {
-          widget.onTap!();
-        }
-      },
+      onLongPress: widget.onLongPress != null
+          ? () {
+              if (!_enable) {
+                widget.onLongPress!();
+              }
+            }
+          : null,
+      onTap: widget.onTap != null ||
+              (FocusScope.of(context).hasFocus && widget.isCloseKeyboard)
+          ? () {
+              if (FocusScope.of(context).hasFocus && widget.isCloseKeyboard) {
+                FocusScope.of(context).unfocus();
+              }
+
+              if (!_enable && widget.onTap != null) {
+                widget.onTap!();
+              }
+            }
+          : null,
       onTapDown: (a) {
         setState(() {
-          enable = true;
+          _enable = true;
         });
       },
       onTapUp: (a) {
         setState(() {
-          enable = false;
+          _enable = false;
         });
       },
       onTapCancel: () {
         setState(() {
-          enable = false;
+          _enable = false;
         });
       },
-      child: Opacity(opacity: enable ? 0.5 : 1, child: widget.child),
+      child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
     );
   }
 }

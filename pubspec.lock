@@ -225,7 +225,7 @@ packages:
     source: hosted
     version: "4.10.0"
   collection:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: collection
       sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
@@ -288,6 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  cryptography:
+    dependency: transitive
+    description:
+      name: cryptography
+      sha256: d146b76d33d94548cf035233fbc2f4338c1242fa119013bead807d033fc4ae05
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   csslib:
     dependency: transitive
     description:
@@ -316,10 +324,10 @@ packages:
     dependency: transitive
     description:
       name: dart_webrtc_plus
-      sha256: "5cf6c2687fc365037d8676c831dfff312697e57b92866d2d3e079ea5be588039"
+      sha256: "5225519c857ddd8c9e93c392d7683016949d027f82480d0f6bbdb3e0603b7353"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.6+2"
+    version: "1.4.9+1"
   dartx:
     dependency: transitive
     description:
@@ -709,6 +717,14 @@ packages:
       url: "https://github.com/waterbustech/flutter_rust_bridge.git"
     source: git
     version: "2.3.0"
+  flutter_slidable:
+    dependency: "direct main"
+    description:
+      name: flutter_slidable
+      sha256: "2c5611c0b44e20d180e4342318e1bbc28b0a44ad2c442f5df16962606fd3e8e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   flutter_sliding_drawer:
     dependency: "direct main"
     description:
@@ -739,10 +755,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: d1d89a028ebeb814148919be861eea00ea48e648d691d87865f73ee1243a78f1
+      sha256: d6b14160745ebdbb88c853698c42275c64ca6ced75d343e192af5603e0a98fed
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+4"
+    version: "0.11.2+6"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1406,10 +1422,10 @@ packages:
     dependency: transitive
     description:
       name: platform_detect_wasm
-      sha256: "31ea80cb6224f590b465ef2f74d1bcbd2600f319bd436c16acfece35cdf4bf9b"
+      sha256: "6055b46b3af9acb51aafd49561a621cfa9f4cdc5825be212b8280f906c6adf98"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1458,6 +1474,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   re_editor:
     dependency: "direct main"
     description:
@@ -1751,6 +1775,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  super_sliver_list:
+    dependency: "direct main"
+    description:
+      name: super_sliver_list
+      sha256: b1e1e64d08ce40e459b9bb5d9f8e361617c26b8c9f3bb967760b0f436b6e3f56
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   superellipse_shape:
     dependency: "direct main"
     description:
@@ -1996,10 +2028,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: f268c2b578cbd9c7bb176065e8a2806420c7ec2e5d2fb94bebe1a334b0c53b34
+      sha256: "041ddbd9e76f439bd605bd267691ee743553fed9d9fb904b2c56232caca28b88"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.14"
+    version: "1.5.0"
   web:
     dependency: "direct overridden"
     description:

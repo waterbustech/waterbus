@@ -12,6 +12,9 @@ const double k43 = 4 / 3;
 const double k169 = 16 / 9;
 const double k11 = 1;
 
+const int defaultLengthOfShimmerList = 10;
+const int defaultLengthOfMessages = 30;
+
 final User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',

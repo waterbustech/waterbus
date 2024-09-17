@@ -12,7 +12,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
-import 'package:waterbus/features/chats/screens/chats_screen.dart';
+import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
