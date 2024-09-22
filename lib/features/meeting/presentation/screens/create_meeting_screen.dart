@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
@@ -14,9 +15,11 @@ import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
 
 class CreateMeetingScreen extends StatefulWidget {
   final Meeting? meeting;
+  final bool isChatScreen;
   const CreateMeetingScreen({
     super.key,
     required this.meeting,
+    this.isChatScreen = false,
   });
 
   @override
@@ -53,20 +56,29 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
 
               displayLoadingLayer();
 
-              if (_isEditing) {
-                AppBloc.meetingBloc.add(
-                  UpdateMeetingEvent(
-                    roomName: _roomNameController.text,
+              if (widget.isChatScreen) {
+                AppBloc.chatBloc.add(
+                  CreateConversationEvent(
+                    title: _roomNameController.text,
                     password: _passwordController.text,
                   ),
                 );
               } else {
-                AppBloc.meetingBloc.add(
-                  CreateMeetingEvent(
-                    roomName: _roomNameController.text,
-                    password: _passwordController.text,
-                  ),
-                );
+                if (_isEditing) {
+                  AppBloc.meetingBloc.add(
+                    UpdateMeetingEvent(
+                      roomName: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                } else {
+                  AppBloc.meetingBloc.add(
+                    CreateMeetingEvent(
+                      roomName: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                }
               }
             },
             icon: Icon(

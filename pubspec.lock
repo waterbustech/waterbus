@@ -225,7 +225,7 @@ packages:
     source: hosted
     version: "4.10.0"
   collection:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: collection
       sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
@@ -288,6 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  cryptography:
+    dependency: transitive
+    description:
+      name: cryptography
+      sha256: d146b76d33d94548cf035233fbc2f4338c1242fa119013bead807d033fc4ae05
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   csslib:
     dependency: transitive
     description:
@@ -709,6 +717,14 @@ packages:
       url: "https://github.com/waterbustech/flutter_rust_bridge.git"
     source: git
     version: "2.3.0"
+  flutter_slidable:
+    dependency: "direct main"
+    description:
+      name: flutter_slidable
+      sha256: "2c5611c0b44e20d180e4342318e1bbc28b0a44ad2c442f5df16962606fd3e8e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   flutter_sliding_drawer:
     dependency: "direct main"
     description:
@@ -1450,6 +1466,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   re_editor:
     dependency: "direct main"
     description:
@@ -1743,6 +1767,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  super_sliver_list:
+    dependency: "direct main"
+    description:
+      name: super_sliver_list
+      sha256: b1e1e64d08ce40e459b9bb5d9f8e361617c26b8c9f3bb967760b0f436b6e3f56
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   superellipse_shape:
     dependency: "direct main"
     description:
@@ -1988,10 +2020,10 @@ packages:
     dependency: "direct main"
     description:
       name: waterbus_sdk
-      sha256: "3cdf65d33d02c657190b768fe0bc6f919e9353e0b090bfd84f4c2a88f594f330"
+      sha256: c76ea7e6db5cea7aa403f06fe0235502b2da12a9e383a1ed6df8d7a7e4344af8
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.16"
+    version: "1.5.1"
   web:
     dependency: "direct overridden"
     description:

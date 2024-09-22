@@ -1,7 +1,10 @@
 package com.waterbus.wanted
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.waterbus.FlutterViewEngine
 import com.pixpark.gpupixel.GPUPixel
@@ -38,6 +41,13 @@ class MainActivity: AppCompatActivity()  {
         flutterView.attachToFlutterEngine(engine)
         flutterViewEngine.attachFlutterView(flutterView)
 
+        // Handle back
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                flutterViewEngine.engine.navigationChannel.popRoute()
+            }
+        })
+
         GPUPixel.setContext(applicationContext)
     }
 
@@ -60,6 +70,7 @@ class MainActivity: AppCompatActivity()  {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onUserLeaveHint() {
         flutterViewEngine.onUserLeaveHint()
         super.onUserLeaveHint()

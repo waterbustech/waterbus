@@ -21,6 +21,8 @@ class Routes {
 
   // Chat
   static const String conversationRoute = '/conversation';
+  static const String invitedRoute = '/invited';
+  static const String detailGroupRoute = '/detail-group';
 
   // Others
   static const String dialogRoute = '/dialog';

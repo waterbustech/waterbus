@@ -60,7 +60,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: "Waterbus ${{ github.ref_name }}"
-          bodyFile: "RELEASE.md"
+          bodyFile: "CHANGELOG.md"
           artifacts: "build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.TOKEN }}
 
@@ -92,6 +92,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: "Waterbus ${{ github.ref_name }}"
-          bodyFile: "RELEASE.md"
+          bodyFile: "CHANGELOG.md"
           artifacts: "build/linux/packaging/*.deb"
           token: ${{ secrets.TOKEN }}

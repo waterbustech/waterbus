@@ -70,6 +70,12 @@ Map<String, String> vietnamese = {
   Strings.search: "Tìm kiếm",
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
+  Strings.delete: "Xoá",
+  Strings.sureDeleteConversation:
+      'Bạn có chắc chắn muốn xoá\ncuộc trò chuyện này?',
+  Strings.sureDeleteMessage: 'Bạn có chắc chắn muốn xoá\tin nhắn này?',
+  Strings.leaveAMessage: "Để lại lời nhắn...",
+  Strings.invitedChat: "Lời mời",
   Strings.enterPassword: "Nhập mật khẩu",
   Strings.createMeeting: "Tạo cuộc họp",
   Strings.editMeeting: "Chỉnh sửa cuộc họp",
@@ -89,6 +95,7 @@ Map<String, String> vietnamese = {
   Strings.frameSent: "Khung đã gửi",
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
+  Strings.back: "Thoát",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
@@ -108,6 +115,9 @@ Map<String, String> vietnamese = {
   Strings.canUseUsername: "Bạn có thể sử dụng tên tài khoản này",
   Strings.usernameUsed: "Tên này đã được sử dụng",
   Strings.checking: "Đang kiểm tra",
+  Strings.updateUsernameSuccessfully: "Cập nhật tên tài khoản thành công!",
+  Strings.updatedPersonalInformationSuccessfully:
+      "Cập nhật thông tin cá nhân thành công!",
 
   // Settings screen
   Strings.myProfile: "Thông tin cá nhân",
@@ -122,4 +132,43 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+
+  // Chat screen
+  Strings.videoCall: 'Gọi video',
+  Strings.mute: 'Im lặng',
+  Strings.more: 'Thêm',
+  Strings.addMembers: 'Thêm thành viên',
+  Strings.owner: 'Chủ phòng',
+  Strings.youHaveBeenInvitedToChat: 'Bạn đã được mời tham gia cuộc trò chuyện',
+  Strings.confirm: "Xác nhận",
+  Strings.inviting: "Đang mời",
+  Strings.invisible: "Ẩn",
+  Strings.joined: "Đã tham gia",
+  Strings.leaveTheConversation: "Rời khỏi cuộc trò chuyện",
+  Strings.sureLeaveConversation:
+      "Bạn có chắc chắn muốn rời khỏi cuộc hội thoại này không? Cuộc hội thoại này sẽ bị xoá đối với bạn và bạn sẽ không còn là thành viên của cuộc hội thoại này nữa.",
+  Strings.member: "Thành viên",
+  Strings.members: "Thành viên",
+  Strings.groupCreated: "Nhóm đã được tạo",
+  Strings.sending: "Đang gửi",
+  Strings.canNotSend: "Không thể gửi!",
+  Strings.resend: "Gửi lại",
+  Strings.you: "Bạn",
+  Strings.user: "Người dùng",
+  Strings.unsentAMessage: "đã thu hồi tin nhắn",
+  Strings.hi: "Xin chào",
+  Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
+  Strings.hostCanNotDeleteConversation:
+      "Bạn với tư cách là chủ phòng không thể xóa cuộc trò chuyện khi vẫn còn thành viên",
+  Strings.youHaveInvitedThe: "Bạn đã mời",
+  Strings.toJoinConversation: "tham gia cuộc trò chuyện",
+  Strings.sendMessageOrTapOnTheGreetingBelow:
+      "Gửi tin nhắn hoặc nhấn vào lời chào bên dưới.",
+  Strings.sureDeleteMember:
+      "Bạn có chắc chắn muốn xoá thành viên này khỏi cuộc trò truyện không?",
+  Strings.deleteMember: "Xoá thành viên",
+  Strings.addConversationSuccess:
+      "Cuộc trò truyện mới đã được thêm vào danh sách!",
+  Strings.youHaveConfirmedConversation:
+      "Bạn đã xác nhận tham gia cuộc trò chuyện",
 };
