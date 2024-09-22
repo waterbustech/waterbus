@@ -1,22 +1,22 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
 class SettingSwitchCard extends StatefulWidget {
   final String label;
-  final bool enabled;
   final Function(bool) onChanged;
-  final bool hasDivider;
   final String? value;
   final IconData? icon;
+  final bool enabled;
+  final bool hasDivider;
+  final bool readonly;
   const SettingSwitchCard({
     super.key,
     required this.label,
     required this.enabled,
     required this.onChanged,
     this.hasDivider = true,
+    this.readonly = false,
     this.value,
     this.icon,
   });
@@ -47,7 +47,12 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
               )
             : null,
       ),
-      padding: EdgeInsets.symmetric(vertical: 4.sp),
+      margin: EdgeInsets.symmetric(
+        horizontal: 12.sp,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 4.sp,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -70,10 +75,10 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
                 )
               : Switch(
                   value: _isEnabled,
-                  activeColor: Theme.of(context).primaryColor,
-                  thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
                     (states) {
-                      if (states.contains(MaterialState.selected)) {
+                      if (states.contains(WidgetState.selected)) {
                         return Icon(
                           widget.icon,
                           color: Colors.grey.shade100,
@@ -84,6 +89,8 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
                     },
                   ),
                   onChanged: (value) {
+                    if (widget.readonly) return;
+
                     setState(() {
                       _isEnabled = value;
                     });

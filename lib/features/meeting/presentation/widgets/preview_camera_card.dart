@@ -1,14 +1,11 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
@@ -48,17 +45,25 @@ class PreviewCameraCard extends StatelessWidget {
               child: Container(
                 width: 265.sp,
                 height: 200.sp,
-                color: Colors.black,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context).colorScheme.primary.withOpacity(.5),
+                      Theme.of(context)
+                          .colorScheme
+                          .surfaceContainerHighest
+                          .withOpacity(.5),
+                    ],
+                    stops: const [0.1, 0.9],
+                  ),
+                ),
                 child: participant.isVideoEnabled
-                    ? RTCVideoView(
-                        participant.renderer!,
-                        key: participant.renderer!.textureId == null
-                            ? null
-                            : Key(participant.renderer!.textureId!.toString()),
+                    ? participant.cameraSource!.mediaView(
                         objectFit:
                             RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                         mirror: true,
-                        filterQuality: FilterQuality.none,
                       )
                     : Container(
                         alignment: Alignment.center,

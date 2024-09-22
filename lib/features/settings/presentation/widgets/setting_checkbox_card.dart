@@ -1,11 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 class SettingCheckboxCard extends StatelessWidget {
@@ -37,7 +34,12 @@ class SettingCheckboxCard extends StatelessWidget {
                 )
               : null,
         ),
-        padding: EdgeInsets.symmetric(vertical: 10.sp),
+        margin: EdgeInsets.symmetric(
+          horizontal: 12.sp,
+        ),
+        padding: EdgeInsets.symmetric(
+          vertical: 10.sp,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

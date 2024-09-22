@@ -1,17 +1,13 @@
-// Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/helpers/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
-// Project imports:
-import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/thumbnail_widget.dart';
 
 class ScreenSelectDialog extends StatefulWidget {
@@ -22,43 +18,51 @@ class ScreenSelectDialog extends StatefulWidget {
 }
 
 class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
-  final Map<String, DesktopCapturerSource> _sources = {};
+  final List<DesktopCapturerSource> _screenSources = [];
+  final List<DesktopCapturerSource> _windowSources = [];
 
-  SourceType _sourceType = SourceType.Screen;
+  final StreamController<List<DesktopCapturerSource>> _screenSourcesStream =
+      StreamController.broadcast();
+  final StreamController<List<DesktopCapturerSource>> _windowSourcesStream =
+      StreamController.broadcast();
 
   DesktopCapturerSource? _selectedSource;
 
-  final List<StreamSubscription<DesktopCapturerSource>> _subscriptions = [];
+  SourceType _sourceType = SourceType.Screen;
 
-  StateSetter? _stateSetter;
+  final List<StreamSubscription<DesktopCapturerSource>> _subscriptions = [];
 
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(100.milliseconds, () {
-      _getSources();
-    });
+
     _subscriptions.add(
       desktopCapturer.onAdded.stream.listen((source) {
-        _sources[source.id] = source;
-        _stateSetter?.call(() {});
+        if (source.type == SourceType.Screen) {
+          _screenSources.add(source);
+          _screenSourcesStream.sink.add(_screenSources);
+        } else {
+          _windowSources.add(source);
+          _windowSourcesStream.sink.add(_windowSources);
+        }
       }),
     );
 
     _subscriptions.add(
       desktopCapturer.onRemoved.stream.listen((source) {
-        _sources.remove(source.id);
-        _stateSetter?.call(() {});
+        if (source.type == SourceType.Screen) {
+          _screenSources.removeWhere((d) => d.id == source.id);
+          _screenSourcesStream.sink.add(_screenSources);
+        } else {
+          _windowSources.removeWhere((d) => d.id == source.id);
+          _windowSourcesStream.sink.add(_windowSources);
+        }
       }),
     );
 
-    _subscriptions.add(
-      desktopCapturer.onThumbnailChanged.stream.listen((source) {
-        _stateSetter?.call(() {});
-      }),
-    );
+    _getSources(_sourceType);
   }
 
   @override
@@ -67,10 +71,12 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
       sub.cancel();
     }
     _timer?.cancel();
+    _screenSourcesStream.close();
+    _windowSourcesStream.close();
     super.dispose();
   }
 
-  Future<void> _ok(context) async {
+  Future<void> _ok(BuildContext context) async {
     _timer?.cancel();
     for (final element in _subscriptions) {
       element.cancel();
@@ -78,7 +84,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
     Navigator.pop<DesktopCapturerSource>(context, _selectedSource);
   }
 
-  Future<void> _cancel(context) async {
+  Future<void> _cancel(BuildContext context) async {
     _timer?.cancel();
     for (final element in _subscriptions) {
       element.cancel();
@@ -86,191 +92,206 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
     Navigator.pop<DesktopCapturerSource>(context);
   }
 
-  Future<void> _getSources() async {
+  Future<void> _getSources(SourceType type) async {
     try {
-      final sources = await desktopCapturer.getSources(types: [_sourceType]);
-      for (final element in sources) {
-        if (kDebugMode) {
-          print(
-            'name: ${element.name}, id: ${element.id}, type: ${element.type}',
-          );
-        }
-      }
       _timer?.cancel();
+      final sources = await desktopCapturer.getSources(types: [type]);
+
+      _windowSources.clear();
+      _screenSources.clear();
+
+      if (type == SourceType.Screen) {
+        _screenSources.addAll(sources);
+        _screenSourcesStream.sink.add(_screenSources);
+      } else {
+        _windowSources.addAll(sources);
+        _windowSourcesStream.sink.add(_windowSources);
+      }
+
       _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        desktopCapturer.updateSources(types: [_sourceType]);
+        desktopCapturer.updateSources(types: [type]);
       });
-      _sources.clear();
-      for (final element in sources) {
-        _sources[element.id] = element;
-      }
-      _stateSetter?.call(() {});
-      return;
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+      debugPrint(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 400.sp,
-      height: 450.sp,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(20.sp),
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Choose what to share',
-                    style: TextStyle(fontSize: 14.sp, color: mCL),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                    child: const Icon(Icons.close),
-                    onTap: () => _cancel(context),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(10.sp),
-              child: StatefulBuilder(
-                builder: (context, setState) {
-                  _stateSetter = setState;
-                  return DefaultTabController(
-                    length: 2,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          constraints: const BoxConstraints.expand(height: 24),
-                          child: TabBar(
-                            indicatorColor: Theme.of(context).primaryColor,
-                            onTap: (value) => Future.delayed(Duration.zero, () {
-                              _sourceType = value == 0
-                                  ? SourceType.Screen
-                                  : SourceType.Window;
-                              _getSources();
-                            }),
-                            tabs: [
-                              Tab(
-                                child: Text(
-                                  'Entire Screen',
-                                  style: TextStyle(color: mCM),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  'Window',
-                                  style: TextStyle(color: mCM),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: GridView.count(
-                                  crossAxisSpacing: 8,
-                                  crossAxisCount: 2,
-                                  children: _sources.entries
-                                      .where(
-                                        (element) =>
-                                            element.value.type ==
-                                            SourceType.Screen,
-                                      )
-                                      .map(
-                                        (e) => ThumbnailWidget(
-                                          onTap: (source) {
-                                            setState(() {
-                                              _selectedSource = source;
-                                            });
-                                          },
-                                          source: e.value,
-                                          selected:
-                                              _selectedSource?.id == e.value.id,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                              Align(
-                                child: GridView.count(
-                                  padding: EdgeInsets.zero,
-                                  crossAxisSpacing: 8.sp,
-                                  crossAxisCount: 3,
-                                  children: _sources.entries
-                                      .where(
-                                        (element) =>
-                                            element.value.type ==
-                                            SourceType.Window,
-                                      )
-                                      .map(
-                                        (e) => ThumbnailWidget(
-                                          onTap: (source) {
-                                            setState(() {
-                                              _selectedSource = source;
-                                            });
-                                          },
-                                          source: e.value,
-                                          selected:
-                                              _selectedSource?.id == e.value.id,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      shape: SuperellipseShape(
+        borderRadius: BorderRadius.circular(30.sp),
+      ),
+      child: Container(
+        width: 400.sp,
+        height: 450.sp,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.sp),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      Strings.chooseWhatToShare.i18n,
+                      style: TextStyle(fontSize: 14.sp),
                     ),
-                  );
-                },
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      child: const Icon(Icons.close),
+                      onTap: () => _cancel(context),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: ButtonBar(
-              children: <Widget>[
-                MaterialButton(
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(color: mCM),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(10.sp),
+                child: DefaultTabController(
+                  length: 2,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        constraints: const BoxConstraints.expand(height: 24),
+                        child: TabBar(
+                          labelColor: Theme.of(context).colorScheme.primary,
+                          indicatorColor: Theme.of(context).colorScheme.primary,
+                          onTap: (value) {
+                            _sourceType = value == 0
+                                ? SourceType.Screen
+                                : SourceType.Window;
+
+                            Future.delayed(300.milliseconds, () async {
+                              await _getSources(_sourceType);
+                            });
+                          },
+                          tabs: [
+                            Tab(
+                              child: Text(
+                                Strings.entireScreen.i18n,
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                Strings.window.i18n,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(),
+                      SizedBox(height: 2.sp),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: StreamBuilder<List<DesktopCapturerSource>>(
+                                stream: _screenSourcesStream.stream,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
+
+                                  return GridView.count(
+                                    crossAxisSpacing: 8,
+                                    crossAxisCount: 2,
+                                    children: snapshot.data!
+                                        .map(
+                                          (e) => ThumbnailWidget(
+                                            onTap: (source) {
+                                              setState(() {
+                                                _selectedSource = source;
+                                              });
+                                            },
+                                            source: e,
+                                            selected:
+                                                _selectedSource?.id == e.id,
+                                          ),
+                                        )
+                                        .toList(),
+                                  );
+                                },
+                              ),
+                            ),
+                            Align(
+                              child: StreamBuilder<List<DesktopCapturerSource>>(
+                                stream: _windowSourcesStream.stream,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
+
+                                  return GridView.count(
+                                    padding: EdgeInsets.zero,
+                                    crossAxisSpacing: 8.sp,
+                                    crossAxisCount: 3,
+                                    children: snapshot.data!
+                                        .map(
+                                          (e) => ThumbnailWidget(
+                                            onTap: (source) {
+                                              setState(() {
+                                                _selectedSource = source;
+                                              });
+                                            },
+                                            source: e,
+                                            selected:
+                                                _selectedSource?.id == e.id,
+                                          ),
+                                        )
+                                        .toList(),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: () {
-                    _cancel(context);
-                  },
                 ),
-                MaterialButton(
-                  color: Theme.of(context).primaryColor,
-                  child: const Text(
-                    'Share',
-                  ),
-                  onPressed: () {
-                    _ok(context);
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              width: double.infinity,
+              child: OverflowBar(
+                children: <Widget>[
+                  MaterialButton(
+                    shape: SuperellipseShape(
+                      borderRadius: BorderRadius.circular(12.sp),
+                    ),
+                    child: Text(
+                      Strings.cancel.i18n,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    onPressed: () {
+                      _cancel(context);
+                    },
+                  ),
+                  MaterialButton(
+                    shape: SuperellipseShape(
+                      borderRadius: BorderRadius.circular(12.sp),
+                    ),
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Text(
+                      Strings.share.i18n,
+                    ),
+                    onPressed: () {
+                      _ok(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

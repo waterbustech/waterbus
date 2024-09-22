@@ -1,13 +1,9 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class StackAvatar extends StatelessWidget {
@@ -35,9 +31,8 @@ class StackAvatar extends StatelessWidget {
                 height: size,
                 width: size,
                 margin: EdgeInsets.only(left: maxImages * (size * 0.8)),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColorDark,
                 ),
                 alignment: Alignment.center,
                 child: Text(

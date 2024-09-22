@@ -1,10 +1,7 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
@@ -30,13 +27,14 @@ class CallActionButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-          color: backgroundColor ?? mGD.withOpacity(.7),
+          color:
+              backgroundColor ?? Theme.of(context).colorScheme.onInverseSurface,
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
         child: Icon(
           icon,
-          color: iconColor ?? mCL,
+          color: backgroundColor != null ? mCL : iconColor,
           size: iconSize ?? 18.sp,
         ),
       ),

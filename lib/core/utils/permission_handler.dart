@@ -1,4 +1,3 @@
-// Package imports:
 import 'package:permission_handler/permission_handler.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 

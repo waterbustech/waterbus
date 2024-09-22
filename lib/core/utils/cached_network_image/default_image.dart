@@ -1,5 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
+
+import 'package:waterbus/gen/assets.gen.dart';
 
 class DefaultImage extends StatelessWidget {
   final double height;
@@ -34,7 +35,7 @@ class DefaultImage extends StatelessWidget {
                 shape: shape,
                 borderRadius: borderRadius,
                 image: DecorationImage(
-                  image: const AssetImage(''),
+                  image: Assets.images.imgAppLogo.provider(),
                   fit: shape == BoxShape.circle
                       ? BoxFit.fitHeight
                       : BoxFit.contain,

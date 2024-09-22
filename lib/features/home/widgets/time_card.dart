@@ -1,7 +1,5 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
@@ -21,8 +19,7 @@ class TimeCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.sp),
       child: Material(
-        color: backgroundColor ??
-            Theme.of(context).primaryColorLight.withOpacity(.08),
+        color: Theme.of(context).colorScheme.secondary,
         shape: SuperellipseShape(
           borderRadius: BorderRadius.circular(30.sp),
         ),
@@ -38,13 +35,14 @@ class TimeCard extends StatelessWidget {
                 child: Icon(
                   iconData,
                   size: 12.sp,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
               Text(
                 text,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 9.sp,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
               ),
             ],

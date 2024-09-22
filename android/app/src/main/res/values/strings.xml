@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Waterbus</string>
-    <string name="facebook_app_id">989363838888620</string> 
-    <string name="fb_login_protocol_scheme">fb989363838888620</string>
-    <string name="facebook_client_token">31eb9fca6bd344110ad109ca6d8af68f</string>
 </resources>

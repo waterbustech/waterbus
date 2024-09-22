@@ -11,8 +11,13 @@ final class UserInitial extends UserState {}
 
 class UserGetDone extends UserState {
   final User user;
-  const UserGetDone({required this.user});
+  final CheckUsernameStatus checkUsernameStatus;
+
+  const UserGetDone({
+    required this.user,
+    required this.checkUsernameStatus,
+  });
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [user, checkUsernameStatus];
 }

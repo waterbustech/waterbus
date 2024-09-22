@@ -1,31 +1,27 @@
-// Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/models/enums/audio_level.dart';
+import 'package:waterbus_sdk/types/enums/audio_level.dart';
 
-// Project imports:
-import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class MeetView extends StatelessWidget {
   final EdgeInsets? margin;
-  final Participant participant;
+  final ParticipantSFU participantSFU;
+  final List<Participant> participants;
   final double avatarSize;
   final double? width;
-  final CallState? callState;
   final BorderRadius? radius;
   final bool borderEnabled;
   const MeetView({
     super.key,
-    required this.participant,
-    required this.callState,
+    required this.participantSFU,
+    required this.participants,
     this.avatarSize = 80.0,
     this.borderEnabled = true,
     this.margin,
@@ -38,18 +34,19 @@ class MeetView extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       type: MaterialType.card,
+      color: Theme.of(context).colorScheme.onInverseSurface,
       shape: SuperellipseShape(
-        side: !borderEnabled
+        side: !borderEnabled || _isScreenSharing
             ? BorderSide.none
             : BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: audioLevel == AudioLevel.kAudioStrong
+                color: Theme.of(context).colorScheme.primary,
+                width: _audioLevel == AudioLevel.kAudioStrong
                     ? 8.sp
-                    : audioLevel == AudioLevel.kAudioLight
+                    : _audioLevel == AudioLevel.kAudioLight
                         ? 6.sp
-                        : 4.sp,
+                        : 0.sp,
               ),
-        borderRadius: radius ?? BorderRadius.circular(18.sp),
+        borderRadius: radius ?? BorderRadius.circular(12.sp),
       ),
       child: SizedBox(
         width: width,
@@ -57,69 +54,112 @@ class MeetView extends StatelessWidget {
           margin: margin,
           child: Stack(
             children: [
-              videoRenderer != null
-                  ? RTCVideoView(
-                      videoRenderer!,
-                      key: videoRenderer!.textureId == null
-                          ? null
-                          : Key(videoRenderer!.textureId!.toString()),
-                      objectFit: isScreenSharing || !borderEnabled
+              _shoundDisplayVideoRenderer
+                  ? _mediaSource!.mediaView(
+                      objectFit: _isScreenSharing || !borderEnabled
                           ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
                           : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                       mirror:
-                          !isScreenSharing && cameraType == CameraType.front,
-                      filterQuality: FilterQuality.none,
+                          !_isScreenSharing && _cameraType == CameraType.front,
                     )
                   : Container(
                       alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(.5),
+                            Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest
+                                .withOpacity(.5),
+                          ],
+                          stops: const [0.1, 0.9],
+                        ),
+                      ),
                       child: AvatarCard(
-                        urlToImage: participant.user.avatar,
+                        urlToImage: participant.user?.avatar,
                         size: avatarSize,
                       ),
                     ),
+              if (kIsWeb)
+                Positioned(
+                  right: 10.sp,
+                  top: 10.sp,
+                  child: IconButton(
+                    onPressed: () {
+                      if (participantSFU.cameraSource?.textureId == null) {
+                        return;
+                      }
+
+                      WaterbusSdk.instance.setPiPEnabled(
+                        textureId:
+                            participantSFU.cameraSource!.textureId.toString(),
+                      );
+                    },
+                    icon: Icon(
+                      PhosphorIcons.picture_in_picture,
+                      size: 18.sp,
+                    ),
+                  ),
+                ),
               Positioned(
                 left: 10.sp,
                 bottom: 10.sp,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.sp,
-                    vertical: 8.sp,
+                child: Material(
+                  shape: SuperellipseShape(
+                    borderRadius: BorderRadius.circular(12.sp),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.sp),
-                    color: Colors.black.withOpacity(.3),
-                  ),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        participant.user.fullName,
-                        style: TextStyle(
-                          color: participant.role == MeetingRole.host
-                              ? Colors.yellow
-                              : Colors.white,
-                          fontSize: avatarSize / 6,
-                          fontWeight: FontWeight.bold,
+                  clipBehavior: Clip.hardEdge,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .surfaceContainerHighest
+                      .withOpacity(.6),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.sp,
+                      vertical: 8.sp,
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          participant.user?.fullName ?? "",
+                          style: TextStyle(
+                            color:
+                                participant.isMe ? Colors.yellow : Colors.white,
+                            fontSize: avatarSize / 6,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: !hasFirstFrameRendered || !isAudioEnabled,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 6.sp),
-                          child: !isAudioEnabled
-                              ? Icon(
-                                  PhosphorIcons.microphone_slash_fill,
-                                  color: Colors.redAccent,
-                                  size: avatarSize / 5.25,
-                                )
-                              : CupertinoActivityIndicator(
-                                  radius: 6.5,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                        Visibility(
+                          visible: !_hasFirstFrameRendered || !_isAudioEnabled,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 6.sp),
+                            child: !_isAudioEnabled || _isScreenSharing
+                                ? Icon(
+                                    _isScreenSharing
+                                        ? PhosphorIcons.screencast_bold
+                                        : PhosphorIcons.microphone_slash_fill,
+                                    color: _isScreenSharing
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.redAccent,
+                                    size: avatarSize / 5.25,
+                                  )
+                                : CupertinoActivityIndicator(
+                                    radius: 6.5,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -130,75 +170,57 @@ class MeetView extends StatelessWidget {
     );
   }
 
-  RTCVideoRenderer? get videoRenderer {
-    if ((!hasFirstFrameRendered || !isCameraEnabled) && !isScreenSharing) {
-      return null;
+  Participant get participant {
+    if (participantSFU.ownerId == kIsMine) {
+      return participants.firstWhere((participant) => participant.isMe);
     }
 
-    if (participant.isMe) {
-      return callState?.mParticipant?.renderer;
-    } else {
-      return callState?.participants[participant.id.toString()]?.renderer;
-    }
+    return participants.firstWhere(
+      (participant) => participant.id.toString() == participantSFU.ownerId,
+    );
   }
 
-  bool get hasFirstFrameRendered {
-    if (participant.isMe) {
-      return callState?.mParticipant?.hasFirstFrameRendered ?? false;
-    } else {
-      return callState?.participants[participant.id.toString()]
-              ?.hasFirstFrameRendered ??
-          false;
+  MediaSource? get _mediaSource {
+    if (_isScreenSharing) {
+      return participantSFU.screenSource;
     }
+
+    return participantSFU.cameraSource;
   }
 
-  bool get isCameraEnabled {
-    if (participant.isMe) {
-      return callState?.mParticipant?.isVideoEnabled ?? false;
-    } else {
-      return callState
-              ?.participants[participant.id.toString()]?.isVideoEnabled ??
-          false;
-    }
+  bool get _hasFirstFrameRendered {
+    if (_isScreenSharing) return true;
+
+    return _mediaSource?.hasFirstFrameRendered ?? false;
   }
 
-  bool get isAudioEnabled {
-    if (participant.isMe) {
-      return callState?.mParticipant?.isAudioEnabled ?? false;
-    } else {
-      return callState
-              ?.participants[participant.id.toString()]?.isAudioEnabled ??
-          false;
-    }
+  bool get _isVideoEnabled {
+    if (participantSFU.isSharingScreen) return true;
+
+    return participantSFU.isVideoEnabled;
   }
 
-  bool get isScreenSharing {
-    if (participant.isMe) {
-      return callState?.mParticipant?.isSharingScreen ?? false;
-    } else {
-      return callState
-              ?.participants[participant.id.toString()]?.isSharingScreen ??
-          false;
-    }
+  bool get _isAudioEnabled {
+    if (participantSFU.isSharingScreen) return false;
+
+    return participantSFU.isAudioEnabled;
   }
 
-  CameraType get cameraType {
-    if (participant.isMe) {
-      return callState?.mParticipant?.cameraType ?? CameraType.front;
-    } else {
-      return callState?.participants[participant.id.toString()]?.cameraType ??
-          CameraType.front;
-    }
+  bool get _isScreenSharing {
+    return participantSFU.isSharingScreen;
   }
 
-  AudioLevel get audioLevel {
-    if (!isAudioEnabled) return AudioLevel.kSilence;
+  CameraType get _cameraType {
+    return participantSFU.cameraType;
+  }
 
-    if (participant.isMe) {
-      return callState?.mParticipant?.audioLevel ?? AudioLevel.kSilence;
-    } else {
-      return callState?.participants[participant.id.toString()]?.audioLevel ??
-          AudioLevel.kSilence;
-    }
+  AudioLevel get _audioLevel {
+    if (!_isAudioEnabled) return AudioLevel.kSilence;
+
+    return participantSFU.audioLevel;
+  }
+
+  bool get _shoundDisplayVideoRenderer {
+    return _mediaSource?.stream != null && _isVideoEnabled;
   }
 }

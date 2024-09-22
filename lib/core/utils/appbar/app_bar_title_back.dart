@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
@@ -23,6 +20,7 @@ AppBar appBarTitleBack(
   Widget? titleWidget,
   Widget? leading,
   double? elevation,
+  double? leadingWidth,
   bool centerTitle = true,
   bool isVisibleBackButton = true,
   double? titleSpacing,
@@ -31,16 +29,12 @@ AppBar appBarTitleBack(
 }) {
   return AppBar(
     toolbarHeight: toolbarHeight,
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ),
+    systemOverlayStyle: Theme.of(context).appBarTheme.systemOverlayStyle,
     elevation: elevation ?? 0.0,
     backgroundColor: backgroundColor ?? Colors.transparent,
     automaticallyImplyLeading: false,
     centerTitle: centerTitle,
-    leadingWidth: 40.sp,
+    leadingWidth: leadingWidth ?? 40.sp,
     titleSpacing: titleSpacing,
     title: titleWidget ??
         Text(
@@ -61,13 +55,16 @@ AppBar appBarTitleBack(
                   AppNavigator.pop();
                 }
               },
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
-                child: Icon(
-                  PhosphorIcons.arrow_left,
-                  size: 20.sp,
-                  color: colorChild,
+              child: Tooltip(
+                message: Strings.back.i18n,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
+                  child: Icon(
+                    PhosphorIcons.caret_left_light,
+                    size: 20.sp,
+                    color: colorChild,
+                  ),
                 ),
               ),
             ),

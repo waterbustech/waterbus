@@ -1,10 +1,7 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 
 class PrivacyScreen extends StatefulWidget {

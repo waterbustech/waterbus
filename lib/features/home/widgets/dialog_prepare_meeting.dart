@@ -1,18 +1,16 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
 
 class DialogPrepareMeeting extends StatelessWidget {
@@ -41,14 +39,14 @@ class DialogPrepareMeeting extends StatelessWidget {
               SizedBox(height: 16.sp),
               meeting.isNoOneElse
                   ? Text(
-                      "No participants yet",
+                      Strings.noParticipantsYet.i18n,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
                           ?.copyWith(fontSize: 11.sp),
                     )
                   : StackAvatar(
-                      images: meeting.getUniqueUsers
+                      images: meeting.members
                           .map(
                             (user) => user.user.avatar,
                           )
@@ -70,11 +68,11 @@ class DialogPrepareMeeting extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TimeCard(
-                    text: DateFormat('EEEEE dd', 'en_US')
+                    text: DateFormat('MMMM dd', 'en_US')
                         .format(meeting.latestJoinedTime),
                     iconData: PhosphorIcons.clock,
                     backgroundColor:
-                        Theme.of(context).primaryColor.withOpacity(.2),
+                        Theme.of(context).colorScheme.primary.withOpacity(.2),
                   ),
                   SizedBox(width: 4.sp),
                   GestureWrapper(
@@ -84,8 +82,8 @@ class DialogPrepareMeeting extends StatelessWidget {
                         description: meeting.title,
                       );
                     },
-                    child: const TimeCard(
-                      text: "Share link",
+                    child: TimeCard(
+                      text: Strings.shareLink.i18n,
                       iconData: PhosphorIcons.export,
                       backgroundColor: Colors.blueGrey,
                     ),
@@ -100,7 +98,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                   shape: SuperellipseShape(
                     borderRadius: BorderRadius.circular(30.sp),
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   child: Container(
                     width: 80.sp,
                     padding: EdgeInsets.symmetric(
@@ -113,16 +111,19 @@ class DialogPrepareMeeting extends StatelessWidget {
                       children: [
                         SizedBox(width: 4.sp),
                         Text(
-                          "Start",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 9.sp,
-                                  ),
+                          Strings.start.i18n,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                fontSize: 9.sp,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
                           PhosphorIcons.arrow_right_bold,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           size: 12.sp,
                         ),
                       ],

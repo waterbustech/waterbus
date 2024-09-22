@@ -1,10 +1,7 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:re_editor/re_editor.dart';
 
 const EdgeInsetsGeometry _kDefaultFindMargin = EdgeInsets.only(
@@ -259,7 +256,7 @@ class CodeFindPanelView extends StatelessWidget implements PreferredSizeWidget {
     required VoidCallback onPressed,
   }) {
     final Color selectedColor =
-        iconSelectedColor ?? Theme.of(context).primaryColor;
+        iconSelectedColor ?? Theme.of(context).colorScheme.primary;
     return GestureDetector(
       onTap: onPressed,
       child: MouseRegion(

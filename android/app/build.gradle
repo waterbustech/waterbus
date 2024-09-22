@@ -34,6 +34,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     compileSdkVersion 34
 
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
          // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
@@ -54,7 +58,7 @@ android {
         applicationId "com.waterbus.wanted"
 
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 
@@ -66,9 +70,9 @@ android {
     signingConfigs {
        release {
            storeFile file('waterbus.jks')
-           storePassword "$System.env.KEY_WATERBUS_PASSWORD"
+           storePassword "banhcuon"
            keyAlias 'upload'
-           keyPassword "$System.env.ALIAS_WATERBUS_PASSWORD"
+           keyPassword "banhcuon"
        }
     }
 
@@ -111,10 +115,14 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:32.7.1')
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-messaging-directboot:23.4.1'
+    implementation 'com.google.firebase:firebase-messaging-directboot:24.0.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'tech.waterbus:gpupixel:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

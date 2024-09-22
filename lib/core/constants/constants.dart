@@ -1,18 +1,27 @@
-// Project imports:
-import 'package:waterbus/features/auth/domain/entities/user.dart';
+import 'package:waterbus_sdk/types/index.dart';
+
 import 'package:waterbus/gen/assets.gen.dart';
 
+const String kAppTitle = 'Waterbus';
 const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
 const String kWaterbusDocs = 'https://docs.waterbus.tech';
 
-const User kUserDefault = User(
+// Aspect ratio meet view
+const double k35 = 3 / 5;
+const double k43 = 4 / 3;
+const double k169 = 16 / 9;
+const double k11 = 1;
+
+const int defaultLengthOfShimmerList = 10;
+const int defaultLengthOfMessages = 30;
+
+final User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',
-  avatar: 'https://avatars.githubusercontent.com/u/60530946?v=4',
+  avatar:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/32/34/d4/3234d466-75a0-81fa-68f2-65591f2d385c/AppIcon-0-0-1x_U007emarketing-0-0-0-4-0-0-0-85-220.png/512x512bb.jpg',
 );
-
-const kGridViewMinUsers = 4;
 
 final List<String> backgrounds = [
   Assets.images.background1Jpg.path,
@@ -33,3 +42,9 @@ final List<String> desktopBackgrounds = [
   Assets.images.desktopBackground8Jpg.path,
   Assets.images.desktopBackground9Jpg.path,
 ];
+
+// Tab Option Setting Screen
+const String profileTab = '/myProfile';
+const String appearanceTab = '/appearance';
+const String languageTab = '/language';
+const String callAndMeetingTab = '/callAndMeeting';

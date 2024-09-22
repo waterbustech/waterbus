@@ -1,11 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
-import 'package:waterbus/features/profile/presentation/fake/fake_menu_items.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
   final MenuItemModel item;
@@ -22,16 +20,17 @@ class MenuDrawerCard extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            item.iconData,
-            size: 20.sp,
-            color: Colors.white,
+            item.icon,
+            size: SizerUtil.isDesktop ? 21.sp : 18.sp,
+            color: Theme.of(context).colorScheme.secondary,
           ),
-          SizedBox(width: 10.sp),
+          SizedBox(width: 12.sp),
           Text(
-            item.title,
+            item.title.i18n,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ],

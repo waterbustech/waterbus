@@ -1,16 +1,24 @@
-// Dart imports:
 import 'dart:io';
 import 'dart:math';
 
-// Package imports:
-import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter/foundation.dart';
 
-// Project imports:
-import 'package:waterbus/core/utils/path_helper.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:waterbus_sdk/utils/path_helper.dart';
 
 class ImageUtils {
-  Future<File> reduceSize(String pathImage, {int quality = 80}) async {
+  Future<Uint8List> reduceSize(String pathImage, {int quality = 80}) async {
     if (isNeedReduce(pathImage)) {
+      if (kIsWeb) {
+        final Uint8List? buffer = await FlutterImageCompress.compressWithFile(
+          pathImage,
+          quality: quality,
+          numberOfRetries: 2,
+        );
+
+        return buffer ?? File(pathImage).readAsBytesSync();
+      }
+
       final String? tempPath = await PathHelper.tempDirWaterbus;
       final XFile? result = await FlutterImageCompress.compressAndGetFile(
         pathImage,
@@ -20,11 +28,11 @@ class ImageUtils {
       );
 
       if (result != null) {
-        return File(result.path);
+        return File(result.path).readAsBytesSync();
       }
     }
 
-    return File(pathImage);
+    return File(pathImage).readAsBytesSync();
   }
 
   bool isNeedReduce(String path) {

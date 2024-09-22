@@ -1,11 +1,11 @@
-// Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -13,7 +13,6 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/label_text.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -44,7 +43,7 @@ class _EnterMeetingPasswordScreenState
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Enter password',
+        title: Strings.enterPassword.i18n,
         onBackPressed: () {
           AppBloc.meetingBloc.add(DisposeMeetingEvent());
           AppNavigator.pop();
@@ -68,9 +67,9 @@ class _EnterMeetingPasswordScreenState
               ),
               padding: EdgeInsets.all(12.sp),
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -92,7 +91,9 @@ class _EnterMeetingPasswordScreenState
                     children: [
                       Align(
                         child: Lottie.asset(
-                          Assets.lotties.unlockLottie,
+                          kIsWeb
+                              ? Assets.lotties.unlockLottie
+                              : Assets.lotties.broadcastLottie,
                           width: 130.sp,
                           height: 130.sp,
                           fit: BoxFit.contain,
@@ -113,14 +114,14 @@ class _EnterMeetingPasswordScreenState
                       SizedBox(height: 12.sp),
                       widget.meeting.isNoOneElse
                           ? Text(
-                              "No participants yet",
+                              Strings.noParticipantsYet.i18n,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall
                                   ?.copyWith(fontSize: 11.sp),
                             )
                           : StackAvatar(
-                              images: widget.meeting.getUniqueUsers
+                              images: widget.meeting.members
                                   .map(
                                     (user) => user.user.avatar,
                                   )
@@ -134,7 +135,7 @@ class _EnterMeetingPasswordScreenState
                                 widget.meeting.participantsOnlineTile!,
                                 style: TextStyle(
                                   fontSize: 11.sp,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             )

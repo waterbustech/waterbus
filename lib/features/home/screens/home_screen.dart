@@ -1,26 +1,23 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-// Project imports:
-import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/auth/domain/entities/user.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/home/widgets/my_meetings.dart';
+import 'package:waterbus/features/home/widgets/recent_meetings.dart';
+import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
@@ -45,126 +42,131 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, auth) {
-        if (auth is AuthInitial) return const SizedBox();
+    return SlidingDrawer(
+      key: _sideMenuKey,
+      ignorePointer: SizerUtil.isDesktop,
+      drawerBuilder: (_) =>
+          SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(),
+      contentBuilder: (_) => Scaffold(
+        appBar: SizerUtil.isDesktop
+            ? null
+            : appBarTitleBack(
+                context,
+                centerTitle: false,
+                isVisibleBackButton: false,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                titleWidget: BlocBuilder<UserBloc, UserState>(
+                  builder: (context, state) {
+                    if (state is UserGetDone) {
+                      final User user = state.user;
 
-        if (auth is AuthFailure) return const LogInScreen();
-
-        return SlidingDrawer(
-          key: _sideMenuKey,
-          drawerBuilder: (_) => _buildDrawable(context),
-          contentBuilder: (_) => Scaffold(
-            appBar: SizerUtil.isDesktop
-                ? null
-                : appBarTitleBack(
-                    context,
-                    centerTitle: false,
-                    isVisibleBackButton: false,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    titleWidget: BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        final User user =
-                            state is UserGetDone ? state.user : kUserDefault;
-
-                        return Row(
-                          children: [
-                            SizedBox(width: 6.sp),
-                            GestureDetector(
-                              onTap: _toggleDrawer,
-                              child: AvatarCard(
-                                urlToImage: user.avatar,
-                                size: 30.sp,
+                      return Row(
+                        children: [
+                          SizedBox(width: 6.sp),
+                          GestureDetector(
+                            onTap: _toggleDrawer,
+                            child: AvatarCard(
+                              urlToImage: user.avatar,
+                              size: 30.sp,
+                            ),
+                          ),
+                          SizedBox(width: 10.sp),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
-                            ),
-                            SizedBox(width: 10.sp),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  user.fullName,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                                Text(
-                                  '@${user.userName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        fontSize: 10.sp,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
+                              Text(
+                                '@${user.userName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 10.sp,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+
+                    return const SizedBox();
+                  },
+                ),
+                actions: [_buildCreateMeetingButton],
+              ),
+        body: Row(
+          children: [
+            ...(SizerUtil.isDesktop
+                ? [
+                    TabOptionsDesktopWidget(
+                      child: _buildDrawable(),
+                    ),
+                    const VerticalDivider(
+                      width: .5,
+                      thickness: .5,
+                    ),
+                  ]
+                : []),
+            Expanded(
+              child: ColoredBox(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.sp),
+                    EnterCodeBox(
+                      hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
+                      suffixWidget: SizerUtil.isDesktop
+                          ? _buildCreateMeetingButton
+                          : null,
+                      onTap: () {
+                        AppNavigator().push(Routes.enterCodeRoute);
                       },
                     ),
-                    actions: [_buildCreateMeetingButton],
-                  ),
-            body: Row(
-              children: [
-                SizerUtil.isDesktop
-                    ? SizedBox(
-                        width: 30.w,
-                        child: _buildDrawable(context),
-                      )
-                    : const SizedBox(),
-                Expanded(
-                  child: ColoredBox(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10.sp),
-                        EnterCodeBox(
-                          suffixWidget: SizerUtil.isDesktop
-                              ? _buildCreateMeetingButton
-                              : null,
-                          onTap: () {
-                            AppNavigator.push(Routes.enterCodeRoute);
-                          },
-                        ),
-                        SizedBox(height: 12.sp),
-                        const Expanded(
-                          child: MyMeetings(),
-                        ),
-                      ],
+                    SizedBox(height: 12.sp),
+                    const Expanded(
+                      child: RecentMeetings(),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildDrawable(BuildContext context) {
+  Widget _buildDrawable() {
     return ProfileDrawerLayout(
       onTapItem: (item) {
         _toggleDrawer();
 
         Future.delayed(const Duration(milliseconds: 300), () {
           switch (item.title) {
-            case "Logout":
+            case Strings.logout:
               displayLoadingLayer();
               AppBloc.authBloc.add(LogOutEvent());
               break;
-            case "Profile":
-              AppNavigator.push(Routes.profileRoute);
+            case Strings.profile:
+              AppNavigator().push(Routes.profileRoute);
               break;
-            case "Settings":
-              AppNavigator.push(Routes.settingsRoute);
+            case Strings.settings:
+              AppNavigator().push(Routes.settingsCallRoute);
               break;
-            case "Licenses":
+            case Strings.licenses:
+              if (!mounted) return;
+
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
@@ -188,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await WaterbusPermissionHandler().checkGrantedForExecute(
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
-            AppNavigator.push(Routes.createMeetingRoute);
+            AppNavigator().push(Routes.createMeetingRoute);
           },
         );
       },

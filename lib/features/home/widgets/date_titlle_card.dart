@@ -1,11 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 
 class DateTitleCard extends StatelessWidget {
@@ -20,12 +18,14 @@ class DateTitleCard extends StatelessWidget {
         vertical: 4.sp,
         horizontal: 10.sp,
       ),
-      decoration: BoxDecoration(color: Colors.blueGrey.shade900),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.onInverseSurface,
+      ),
       alignment: Alignment.centerLeft,
       child: Text(
         DateTimeHelper().isEqualTwoDate(lastJoinedAt, DateTime.now())
-            ? 'Today'
-            : DateFormat('EEEEE dd', 'en_US').format(lastJoinedAt),
+            ? Strings.today.i18n
+            : DateFormat('MMMM dd', 'en_US').format(lastJoinedAt),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontSize: 9.25.sp,
             ),

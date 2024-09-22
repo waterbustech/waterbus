@@ -1,14 +1,13 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
 class TextFieldInput extends StatelessWidget {
   final String? Function(String?)? validatorForm;
   final void Function(String)? onChanged;
   final String hintText;
+  final TextStyle? hintStyle;
   final int maxLines;
   final int? maxLength;
   final bool isAvailable;
@@ -29,10 +28,15 @@ class TextFieldInput extends StatelessWidget {
   final InputBorder? errorBorder;
   final BorderSide? borderSide;
   final bool obscureText;
+  final InputBorder? border;
+  final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? margin;
+  final Function()? onEditingComplete;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
     required this.hintText,
+    this.hintStyle,
     this.textInputType,
     this.maxLines = 1,
     this.maxLength,
@@ -54,16 +58,22 @@ class TextFieldInput extends StatelessWidget {
     this.errorBorder,
     this.borderSide,
     this.obscureText = false,
+    this.border,
+    this.contentPadding,
+    this.margin,
+    this.onEditingComplete,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        top: maxLength != null ? 0.0 : 4.sp,
-        bottom: maxLength != null ? 4.sp : 0.0,
-      ),
+      margin: margin ??
+          EdgeInsets.only(
+            top: maxLength != null ? 0.0 : 4.sp,
+            bottom: maxLength != null ? 4.sp : 0.0,
+          ),
       width: double.infinity,
       child: TextFormField(
+        onEditingComplete: onEditingComplete,
         autofocus: autofocus,
         obscureText: obscureText,
         onTap: onTap ?? () {},
@@ -75,11 +85,11 @@ class TextFieldInput extends StatelessWidget {
         style: TextStyle(
           fontSize: 12.sp,
           color: isAvailable
-              ? Theme.of(context).textTheme.bodyMedium!.color
+              ? Theme.of(context).textTheme.bodyMedium?.color
               : Theme.of(context).textTheme.titleMedium?.color,
           height: height,
         ),
-        cursorColor: Theme.of(context).primaryColor,
+        cursorColor: Theme.of(context).colorScheme.primary,
         keyboardType: textInputType ?? TextInputType.multiline,
         onChanged: onChanged,
         maxLines: obscureText ? 1 : maxLines,
@@ -92,37 +102,40 @@ class TextFieldInput extends StatelessWidget {
           fillColor: fillColor ??
               (isAvailable
                   ? Theme.of(context).scaffoldBackgroundColor
-                  : Theme.of(context).colorScheme.background),
+                  : Theme.of(context).colorScheme.surface),
           hintText: hintText,
           errorStyle: errorStyle,
           errorBorder: errorBorder,
           focusedErrorBorder: errorBorder,
           focusedBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           border: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           enabledBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
+              : border ?? _outlineInputBorder(context),
           disabledBorder: maxLength != null
               ? InputBorder.none
-              : _outlineInputBorder(context),
-          hintStyle: TextStyle(
-            color: Theme.of(context).textTheme.labelSmall?.color,
-            fontSize: 12.sp,
-          ),
+              : border ?? _outlineInputBorder(context),
+          hintStyle: hintStyle ??
+              TextStyle(
+                color: Theme.of(context).textTheme.labelSmall?.color,
+                fontSize: 12.sp,
+              ),
           isDense: maxLines == 1,
-          contentPadding: maxLines == 1
-              ? EdgeInsets.symmetric(
-                  vertical: 11.sp,
-                  horizontal: 10.sp,
-                )
-              : EdgeInsets.symmetric(
-                  vertical: 8.sp,
-                  horizontal: 10.sp,
-                ),
+          contentPadding: contentPadding ??
+              (maxLines == 1
+                  ? contentPadding ??
+                      EdgeInsets.symmetric(
+                        vertical: 11.sp,
+                        horizontal: 10.sp,
+                      )
+                  : EdgeInsets.symmetric(
+                      vertical: 8.sp,
+                      horizontal: 10.sp,
+                    )),
           suffix: suffixIcon == null
               ? null
               : Padding(

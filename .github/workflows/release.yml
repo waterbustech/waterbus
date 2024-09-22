@@ -1,4 +1,4 @@
-name: Analyze, Build, Release APK
+name: Analyze, Build, Release APK and .deb
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.19.3"
+          flutter-version: "3.24.0"
           cache: true
       - run: flutter pub get
       - run: flutter analyze
@@ -46,7 +46,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.19.3"
+          flutter-version: "3.24.0"
           cache: true
       - run: flutter clean
       - run: flutter pub get
@@ -60,6 +60,38 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: "Waterbus ${{ github.ref_name }}"
-          bodyFile: "RELEASE.md"
+          bodyFile: "CHANGELOG.md"
           artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.TOKEN }}
+
+  build_deb:
+    needs: [test]
+    name: 🐧 Build & 📦 Release .deb
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          cache: true
+      - run: flutter clean
+      - run: flutter pub get
+      - name: Install dependencies for .deb
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build cmake gcc g++ libgtk-3-dev dpkg-dev libsecret-1-dev libjsoncpp-dev
+      - name: 🔧 Build .deb
+        run: flutter build linux --release
+      - name: Create .deb package
+        run: |
+          mkdir -p build/linux/packaging
+          cp -r build/linux/x64/release/bundle/* build/linux/packaging/
+          cd build/linux/packaging
+          fpm -s dir -t deb -n waterbus -v ${{ github.ref_name }} .
+      - name: Add .deb to Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: "Waterbus ${{ github.ref_name }}"
+          bodyFile: "CHANGELOG.md"
+          artifacts: "build/linux/packaging/*.deb"
           token: ${{ secrets.TOKEN }}

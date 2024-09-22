@@ -1,15 +1,14 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/beauty_filters.dart';
-import 'package:waterbus/features/meeting/domain/entities/participant.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/bloc/beauty_filters_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
+import 'package:waterbus/gen/assets.gen.dart';
+import 'package:waterbus/gen/fonts.gen.dart';
 
 class BeautyFilterWidget extends StatefulWidget {
   final Participant? participant;
@@ -36,9 +35,47 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 26.sp),
+          SizedBox(height: 12.sp),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return Row(
+                children: [
+                  Lottie.asset(
+                    Assets.lotties.beautyFiltersLottie,
+                    width: constraints.maxWidth * 0.2,
+                    fit: BoxFit.contain,
+                    frameRate: FrameRate.max,
+                    repeat: true,
+                  ),
+                  SizedBox(width: 24.sp),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: constraints.maxWidth * 0.06,
+                        fontFamily: FontFamily.pixelify,
+                      ),
+                      children: [
+                        const TextSpan(
+                          text: 'Beauty',
+                          style: TextStyle(
+                            color: Color(0xFFEFB7E9),
+                          ),
+                        ),
+                        TextSpan(
+                          text: '\t\tFilters',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
           _buildSliderButton(
-            "Smooth",
+            Strings.smooth.i18n,
             _beautyFilters.smoothValue,
             (value) {
               setState(() {
@@ -47,7 +84,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "White",
+            Strings.white.i18n,
             _beautyFilters.whiteValue,
             (value) {
               setState(() {
@@ -56,7 +93,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Thin Face",
+            Strings.thinFace.i18n,
             _beautyFilters.thinFaceValue * 10,
             (value) {
               setState(() {
@@ -65,7 +102,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Big Eyes",
+            Strings.bigEyes.i18n,
             _beautyFilters.bigEyeValue * 5,
             (value) {
               setState(() {
@@ -74,7 +111,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Lipstick",
+            Strings.lipstick.i18n,
             _beautyFilters.lipstickValue,
             (value) {
               setState(() {
@@ -83,7 +120,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             },
           ),
           _buildSliderButton(
-            "Blusher",
+            Strings.blusher.i18n,
             _beautyFilters.blusherValue,
             (value) {
               setState(() {
@@ -111,7 +148,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
         ),
         Slider(
           value: value,
-          activeColor: Theme.of(context).primaryColor,
+          activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (val) {
             onChanged(val);
             _update();

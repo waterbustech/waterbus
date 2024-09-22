@@ -1,7 +1,7 @@
 name: waterbus
-description: Built on WebRTC SDK M122. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Built on WebRTC SDK M128. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
-repository: https://github.com/lambiengcode/waterbus
+repository: https://github.com/waterbustech/waterbus
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -18,11 +18,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.0+5
+version: 1.2.0+7
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
-  flutter: ">=3.16.0"
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -33,6 +33,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins: 
+    sdk: flutter       
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,72 +46,85 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  connectivity_plus: ^5.0.2
-  http_parser: ^4.0.2
-  socket_io_client: ^2.0.3+1
-  dio: ^5.4.1
-  dio_smart_retry: ^6.0.0
-  dio_cache_interceptor: ^3.5.0
+  connectivity_plus: ^6.0.5
 
   # State management
-  flutter_bloc: ^8.1.4
-  bloc_concurrency: ^0.2.4
+  flutter_bloc: ^8.1.6
+  bloc_concurrency: ^0.2.5
 
   # Dependency Injection
-  get_it: ^7.6.6
-  injectable: ^2.3.2
+  get_it: ^7.6.8
+  injectable: ^2.4.4
 
   # Storage
   hive: ^2.2.3
 
   # Firebase
-  firebase_core: ^2.25.4
-  firebase_auth: ^4.17.9
-  firebase_crashlytics: ^3.4.19
-  firebase_performance: ^0.9.3+18
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.4
+  firebase_crashlytics: ^4.0.4
+  firebase_performance: ^0.10.0+4
 
   # Utils
   lottie: ^3.1.0
-  flutter_native_splash: ^2.4.0
+  flutter_native_splash: ^2.4.1
   superellipse_shape: ^0.2.0
-  cached_network_image: ^3.3.1
+  cached_network_image: ^3.4.1
   flutter_phosphor_icons: ^0.0.1+6
   flutter_sliding_drawer: ^2.0.0
-  permission_handler: ^11.3.0
+  permission_handler: ^11.3.1
   flutter_staggered_grid_view: ^0.7.0
-  intl: ^0.18.1
-  dartz: ^0.10.1
+  intl: ^0.19.0
   equatable: ^2.0.5
-  share_plus: ^7.2.1
+  share_plus: ^10.0.2
   simple_pip_mode: ^0.8.0
-  file_picker: ^6.2.0
+  file_picker: ^8.1.2
   universal_io: ^2.2.2
-  url_launcher: ^6.2.5
+  url_launcher: ^6.3.0
+  flutter_advanced_segment: ^3.0.2
+  flutter_slidable: ^3.1.0
   sizer: 
     path: ./packages/sizer
-  
+  flutter_localizations:
+    sdk: flutter
+  i18n_extension: ^12.0.1
+  pull_to_refresh: ^2.0.0
+  super_sliver_list: ^0.4.1
+  syncfusion_flutter_charts:
+    git: https://github.com/waterbustech/syncfusion_flutter_charts.git
+
   # Code Editor
-  re_editor: ^0.1.0
+  re_editor: ^0.3.1
   re_highlight: ^0.0.3
+  collection: ^1.18.0
 
   # Media
-  image_picker: ^1.0.7
-  image_picker_android: ^0.8.9+3
-  image_picker_platform_interface: ^2.9.4
-  flutter_image_compress: ^2.1.0
+  image_picker: ^1.1.2
+  image_picker_android: ^0.8.12+11
+  image_picker_platform_interface: ^2.10.0
+  flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk:
-    # path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
-    git:
-      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-      path: '.'
-      ref: 1.2.4
+  waterbus_sdk: 1.5.1
+   
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0
   win32: ^5.0.5 
-  web: ^0.5.1
+  web: ^1.0.0
+  collection: ^1.19.0
+  dio_web_adapter: ^2.0.0
+  isolate_manager: ^5.2.1+1
+  flutter_image_compress_web:
+    git:
+      url: https://github.com/myxzlpltk/flutter_image_compress.git
+      path: packages/flutter_image_compress_web
+  rhttp:
+    git:
+      url: https://github.com/waterbustech/rhttp.git
+      path: rhttp
 
 dev_dependencies:
   # Test
@@ -125,12 +140,12 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.4.1
-  build_runner: ^2.4.8
-  flutter_gen_runner: ^5.4.0
+  injectable_generator: ^2.6.2
+  build_runner: ^2.4.12
+  flutter_gen_runner: ^5.6.0
 
   # Lints
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
   import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
@@ -150,6 +165,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lotties/
+    - assets/welcome.java
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -202,3 +218,36 @@ flutter:
           weight: 700
         - asset: assets/fonts/pixelify/PixelifySans-Bold.ttf
           weight: 800
+    - family: UbuntuMono
+      fonts:
+        - asset: assets/fonts/ubuntu-mono/UbuntuMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/ubuntu-mono/UbuntuMono-Bold.ttf
+          weight: 700
+    - family: AnonymousPro
+      fonts:
+        - asset: assets/fonts/anonymous-pro/AnonymousPro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/anonymous-pro/AnonymousPro-Bold.ttf
+          weight: 700
+    - family: FiraPro
+      fonts:
+        - asset: assets/fonts/fira-pro/static/FiraCode-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/fira-pro/static/FiraCode-Bold.ttf
+          weight: 700
+    - family: JetbrainsMono
+      fonts:
+        - asset: assets/fonts/jetbrains-mono/static/JetBrainsMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/jetbrains-mono/static/JetBrainsMono-Bold.ttf
+          weight: 700
+    - family: SourceCodePro
+      fonts:
+        - asset: assets/fonts/source-code-pro/static/SourceCodePro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/source-code-pro/static/SourceCodePro-Bold.ttf
+          weight: 700
+
+import_sorter:
+  comments: false

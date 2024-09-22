@@ -1,17 +1,15 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class MeetingCard extends StatelessWidget {
@@ -46,13 +44,13 @@ class MeetingCard extends StatelessWidget {
                   .titleMedium
                   ?.copyWith(fontSize: 11.sp),
               children: [
-                const TextSpan(text: 'Room code: '),
+                TextSpan(text: Strings.roomCode.i18n),
                 TextSpan(
-                  text: meeting.code.toString(),
+                  text: meeting.code.toString().roomCodeFormatted,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     decoration: TextDecoration.underline,
-                    decorationColor: Theme.of(context).primaryColor,
+                    decorationColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ],
@@ -64,14 +62,14 @@ class MeetingCard extends StatelessWidget {
               Expanded(
                 child: meeting.isNoOneElse
                     ? Text(
-                        "No participants yet",
+                        Strings.noParticipantsYet.i18n,
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
-                        images: meeting.getUniqueUsers
+                        images: meeting.members
                             .map(
                               (user) => user.user.avatar,
                             )
@@ -94,7 +92,7 @@ class MeetingCard extends StatelessWidget {
                   shape: SuperellipseShape(
                     borderRadius: BorderRadius.circular(25.sp),
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
@@ -104,17 +102,20 @@ class MeetingCard extends StatelessWidget {
                       children: [
                         SizedBox(width: 4.sp),
                         Text(
-                          "Join",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 10.sp,
-                                  ),
+                          Strings.join.i18n,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                fontSize: 10.sp,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
                           PhosphorIcons.arrow_right_bold,
-                          color: Colors.white,
                           size: 12.sp,
+                          color: Theme.of(context).colorScheme.surface,
                         ),
                       ],
                     ),

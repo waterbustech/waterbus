@@ -1,11 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -38,7 +36,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Virtual Background',
+        title: Strings.virtualBackground.i18n,
         actions: [
           IconButton(
             onPressed: () {
@@ -50,7 +48,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
             icon: Icon(
               PhosphorIcons.check,
               size: 18.sp,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],
@@ -78,7 +76,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
                   border: Border.all(
                     width: 0.5,
                     color: _currentBackground == null
-                        ? Theme.of(context).primaryColor
+                        ? Theme.of(context).colorScheme.primary
                         : Theme.of(context).dividerColor,
                   ),
                 ),
@@ -103,7 +101,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
                 border: Border.all(
                   width: 1.sp,
                   color: _currentBackground == backgroundAssets[index - 1]
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).dividerColor,
                 ),
               ),

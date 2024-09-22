@@ -1,13 +1,11 @@
-// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_label_line.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -30,7 +28,7 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 16.sp),
           Text(
-            'Your messages and meetings\n are private',
+            Strings.yourMessagesAndMeetingsArePrivate.i18n,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15.sp,
@@ -39,7 +37,9 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 12.sp),
           Text(
-            'End to end encryption keeps your personal meetings between you and the other people. Not event Waterbus can listen to them. This includes your:',
+            Strings
+                .endToEndEncryptionKeepsYourPersonalMeetingsBetweenYouAndTheOtherPeopleNotEvenWaterbusCanListenToThemThisIncludesYour
+                .i18n,
             textAlign: TextAlign.justify,
             strutStyle: StrutStyle.disabled,
             style: TextStyle(
@@ -48,14 +48,14 @@ class E2eeBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.sp),
-          const E2eeLabelLine(
+          E2eeLabelLine(
             icon: PhosphorIcons.video_camera,
-            label: 'Audio and video calls',
+            label: Strings.audioAndVideoCalls.i18n,
           ),
           SizedBox(height: 8.sp),
-          const E2eeLabelLine(
+          E2eeLabelLine(
             icon: PhosphorIcons.chats_teardrop,
-            label: 'Text messages',
+            label: Strings.textMessages.i18n,
           ),
           SizedBox(height: 40.sp),
         ],

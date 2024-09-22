@@ -1,13 +1,11 @@
-// Dart imports:
-import 'dart:async';
-
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+import 'package:sizer/sizer.dart';
+
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class AppScaffold extends StatelessWidget {
@@ -19,26 +17,27 @@ class AppScaffold extends StatelessWidget {
   });
 
   void _hideKeyboard(BuildContext context) {
-    if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
-      FocusManager.instance.primaryFocus?.unfocus();
-    }
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      bottomNavigationBar: _bottomNavigationBar,
-      resizeToAvoidBottomInset:
-          _getChildScaffold?.resizeToAvoidBottomInset ?? false,
-      extendBodyBehindAppBar: _getChildScaffold?.extendBodyBehindAppBar ?? true,
-      extendBody: true,
-      body: PopScope(
-        canPop: _canBackward,
-        onPopInvoked: _onPopInvoked,
-        child: _child(context),
-      ),
-    );
+    return SizerUtil.isMinimunSizeSupport
+        ? const SizeNotSupportedWidget()
+        : Scaffold(
+            appBar: _appBar(context),
+            bottomNavigationBar: _bottomNavigationBar,
+            resizeToAvoidBottomInset:
+                _getChildScaffold?.resizeToAvoidBottomInset ?? false,
+            extendBodyBehindAppBar:
+                _getChildScaffold?.extendBodyBehindAppBar ?? true,
+            extendBody: true,
+            body: PopScope(
+              canPop: _canBackward,
+              onPopInvokedWithResult: _onPopInvoked,
+              child: _child(context),
+            ),
+          );
   }
 
   PreferredSizeWidget? _appBar(BuildContext context) {
@@ -66,26 +65,30 @@ class AppScaffold extends StatelessWidget {
 
       if (childScaffold.body != null) {
         return GestureDetector(
-          onTap: () {
-            _hideKeyboard(context);
-          },
+          onTap: (FocusManager.instance.primaryFocus?.hasFocus ?? false)
+              ? () {
+                  _hideKeyboard(context);
+                }
+              : null,
           child: childScaffold.body,
         );
       }
     }
 
     return GestureDetector(
-      onTap: () {
-        _hideKeyboard(context);
-      },
+      onTap: (FocusManager.instance.primaryFocus?.hasFocus ?? false)
+          ? () {
+              _hideKeyboard(context);
+            }
+          : null,
       child: child,
     );
   }
 
   bool get _canBackward => AppNavigator.canPop;
 
-  Future<void> _onPopInvoked(bool canPop) async {
-    if (Routes.meetingRoute == AppNavigator.currentRoute()) {
+  void _onPopInvoked(bool canPop, _) {
+    if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
       AppBloc.meetingBloc.add(const LeaveMeetingEvent());
     }
   }

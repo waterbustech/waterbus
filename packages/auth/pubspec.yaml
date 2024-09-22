@@ -1,6 +1,7 @@
 name: auth
 description: A new Flutter package project.
 version: 0.0.1
+publish_to: 'none'
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -9,17 +10,30 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  universal_io: ^2.2.2
 
   # Firebase
-  firebase_auth: ^4.17.3
+  firebase_auth: ^5.1.0
 
   # Authenticate
   google_sign_in: ^6.1.4
-  sign_in_with_apple: ^5.0.0
-  flutter_facebook_auth: ^6.0.0
+  google_sign_in_all_platforms:
+    git:
+      url: https://github.com/waterbustech/sign-in-google-linux.git
+      path: 'google_sign_in_all_platforms'
+      ref: 0.0.4+1
+  firedart: 
+    git:
+      url: https://github.com/waterbustech/firedart.git
+      path: '.'
+      ref: 0.9.8+1
 
   # Encryption
   crypto: ^3.0.2
+
+  waterbus_sdk: ^1.5.1
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dev_dependencies:
   flutter_test:
@@ -32,7 +46,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+# flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:

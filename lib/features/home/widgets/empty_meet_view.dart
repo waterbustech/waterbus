@@ -1,12 +1,10 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -21,7 +19,9 @@ class EmptyMeetView extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 4.w),
-          child: Assets.images.worldMap.image(),
+          child: Assets.images.worldMap.image(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
         SizedBox(height: 20.sp),
         GestureWrapper(
@@ -47,7 +47,7 @@ class EmptyMeetView extends StatelessWidget {
                   ),
                   SizedBox(width: 6.sp),
                   Text(
-                    "Give us star",
+                    Strings.giveUsStar.i18n,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.black87,

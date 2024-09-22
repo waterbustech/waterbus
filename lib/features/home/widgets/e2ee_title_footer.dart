@@ -1,12 +1,10 @@
-// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
 
@@ -28,12 +26,12 @@ class E2eeTitleFooter extends StatelessWidget {
                 padding: EdgeInsets.only(right: 4.sp),
                 child: Icon(
                   PhosphorIcons.lock_fill,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                  color: Theme.of(context).colorScheme.surfaceTint,
                   size: 10.sp,
                 ),
               ),
             ),
-            const TextSpan(text: 'Your personal meetings are '),
+            TextSpan(text: Strings.yourPersonalMeetingsAre.i18n),
             TextSpan(
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
@@ -42,9 +40,9 @@ class E2eeTitleFooter extends StatelessWidget {
                     child: const E2eeBottomSheet(),
                   );
                 },
-              text: 'end-to-end encrypted',
+              text: Strings.endToEndEncrypted.i18n,
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ],

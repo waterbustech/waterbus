@@ -1,10 +1,8 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:sizer/sizer.dart';
 
-// Project imports:
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -29,7 +27,9 @@ class _EnterMeetingCardState extends State {
     displayLoadingLayer();
 
     AppBloc.meetingBloc.add(
-      GetInfoMeetingEvent(roomCode: int.parse(_codeController.text)),
+      GetInfoMeetingEvent(
+        roomCode: int.parse(_codeController.text.replaceAll('-', '')),
+      ),
     );
   }
 
@@ -38,7 +38,7 @@ class _EnterMeetingCardState extends State {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: 'Join a meeting',
+        title: Strings.joinAMeeting.i18n,
         actions: [
           GestureWrapper(
             onTap: () {
@@ -52,9 +52,9 @@ class _EnterMeetingCardState extends State {
               color: Colors.transparent,
               alignment: Alignment.bottomRight,
               child: Text(
-                'Join',
+                Strings.join.i18n,
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w700,
                 ),
@@ -71,7 +71,7 @@ class _EnterMeetingCardState extends State {
             children: [
               SizedBox(height: 12.sp),
               Text(
-                "Enter a meeting code to request join the meeting and you need to wait for host accepted to started the meet",
+                Strings.participationInstructions.i18n,
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: 12.sp,
@@ -84,7 +84,7 @@ class _EnterMeetingCardState extends State {
                   left: 16.sp,
                   right: 10.sp,
                 ),
-                hintTextContent: "Example: 12345678",
+                hintTextContent: "123-456-789",
                 controller: _codeController,
                 onFieldSubmitted: (val) {
                   _onSubmited();
