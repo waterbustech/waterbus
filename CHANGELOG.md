@@ -1,3 +1,8 @@
+# v1.2.0+7
+
+- Bump WebRTC SDK to `M128.6613.01`
+- Release encrypted chas
+
 # v1.1.0+5
 
 - Bump WebRTC SDK to `M122.6261.01`

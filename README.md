@@ -32,6 +32,7 @@
 * 🌌 **Virtual Background**: Enhance your meetings with professional virtual backgrounds.
 * 🖼️ **Picture-in-Picture**: Increase productivity with picture-in-picture multitasking.
 * 🔒 **End-to-End Encryption**: Ensure secure meetings with end-to-end encryption.
+* 💬 **Encrypted Chat**: Communicate privately with encrypted messaging during video calls.
 * 💋 **Beauty Filter**: Using [GPUPixel](https://github.com/pixpark/gpupixel) to implement Beauty Filters
 * 💬 **Subtitles**: Enable subtitles for better accessibility and understanding during calls.
 

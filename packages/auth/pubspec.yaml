@@ -29,8 +29,9 @@ dependencies:
       ref: 0.9.8+1
 
   # Encryption
-  waterbus_sdk: 1.5.0
-  
+  crypto: ^3.0.2
+
+  waterbus_sdk: ^1.5.1
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
