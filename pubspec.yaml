@@ -61,7 +61,7 @@ dependencies:
 
   # Firebase
   firebase_core: ^3.3.0
-  firebase_auth: ^5.1.4
+  firebase_auth: ^5.3.0
   firebase_crashlytics: ^4.0.4
   firebase_performance: ^0.10.0+4
 
