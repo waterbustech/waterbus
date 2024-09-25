@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/features/profile/presentation/fake/menu_items.dart';
+import 'package:waterbus/features/profile/presentation/models/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
   final MenuItemModel item;

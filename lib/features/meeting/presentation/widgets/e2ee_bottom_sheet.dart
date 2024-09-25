@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -49,12 +49,12 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 20.sp),
           E2eeLabelLine(
-            icon: PhosphorIcons.video_camera,
+            icon: PhosphorIcons.videoCamera(),
             label: Strings.audioAndVideoCalls.i18n,
           ),
           SizedBox(height: 8.sp),
           E2eeLabelLine(
-            icon: PhosphorIcons.chats_teardrop,
+            icon: PhosphorIcons.chatsTeardrop(),
             label: Strings.textMessages.i18n,
           ),
           SizedBox(height: 40.sp),

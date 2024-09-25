@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
@@ -47,7 +47,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
               shape: SuperellipseShape(
                 borderRadius: BorderRadius.circular(25.sp),
               ),
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              color: Theme.of(context).colorScheme.surfaceContainerHigh,
               child: SizedBox(
                 width: 100.w,
                 height: 36.sp,
@@ -76,7 +76,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                     ),
                     filled: true,
                     fillColor:
-                        Theme.of(context).colorScheme.surfaceContainerHighest,
+                        Theme.of(context).colorScheme.surfaceContainerHigh,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6.sp),
                       borderSide: BorderSide.none,
@@ -91,7 +91,9 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                             width: 36.sp,
                             alignment: Alignment.center,
                             child: Icon(
-                              PhosphorIcons.magnifying_glass_bold,
+                              PhosphorIcons.magnifyingGlass(
+                                PhosphorIconsStyle.bold,
+                              ),
                               size: 14.sp,
                             ),
                           )

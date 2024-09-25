@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           },
                                         ),
                                         Icon(
-                                          PhosphorIcons.caret_right,
+                                          PhosphorIcons.caretRight(),
                                           color: colorGray3,
                                           size: 18.sp,
                                         ),

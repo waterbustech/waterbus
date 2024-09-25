@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -70,7 +70,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                   TimeCard(
                     text: DateFormat('MMMM dd', 'en_US')
                         .format(meeting.latestJoinedTime),
-                    iconData: PhosphorIcons.clock,
+                    iconData: PhosphorIcons.clock(),
                     backgroundColor:
                         Theme.of(context).colorScheme.primary.withOpacity(.2),
                   ),
@@ -84,7 +84,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                     },
                     child: TimeCard(
                       text: Strings.shareLink.i18n,
-                      iconData: PhosphorIcons.export,
+                      iconData: PhosphorIcons.export(),
                       backgroundColor: Colors.blueGrey,
                     ),
                   ),
@@ -122,7 +122,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
-                          PhosphorIcons.arrow_right_bold,
+                          PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
                           color: Theme.of(context).colorScheme.surface,
                           size: 12.sp,
                         ),

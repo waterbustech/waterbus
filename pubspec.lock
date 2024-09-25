@@ -64,6 +64,14 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   bloc:
     dependency: transitive
     description:
@@ -692,14 +700,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
-  flutter_phosphor_icons:
-    dependency: "direct main"
-    description:
-      name: flutter_phosphor_icons
-      sha256: "60a970f5fb5b22c93cea61e96c2cd922612dd2d4a359fa441e4d31c2e3b3c664"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1+6"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -717,6 +717,14 @@ packages:
       url: "https://github.com/waterbustech/flutter_rust_bridge.git"
     source: git
     version: "2.3.0"
+  flutter_side_menu:
+    dependency: "direct main"
+    description:
+      name: flutter_side_menu
+      sha256: "60a20aab560d170c70084a6007aa8d2087649c7d2b75cc887c17f3ba4ea6372f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.3"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -1402,6 +1410,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  phosphor_flutter:
+    dependency: "direct main"
+    description:
+      name: phosphor_flutter
+      sha256: "8a14f238f28a0b54842c5a4dc20676598dd4811fcba284ed828bd5a262c11fde"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   platform:
     dependency: transitive
     description:

@@ -13,7 +13,7 @@ class AppTheme {
     required this.data,
   });
 
-  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.baseColor}) {
+  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.blue}) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
@@ -72,7 +72,7 @@ class AppTheme {
     );
   }
 
-  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.baseColor}) {
+  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.blue}) {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,

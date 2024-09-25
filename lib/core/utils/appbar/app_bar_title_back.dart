@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -61,7 +61,7 @@ AppBar appBarTitleBack(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: paddingLeft ?? 3.sp),
                   child: Icon(
-                    PhosphorIcons.caret_left_light,
+                    PhosphorIcons.caretLeft(PhosphorIconsStyle.light),
                     size: 20.sp,
                     color: colorChild,
                   ),

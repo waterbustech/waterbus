@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
@@ -39,7 +39,7 @@ class ConversationHeader extends StatelessWidget {
                   EdgeInsets.only(right: 10.sp),
                 ),
                 child: Icon(
-                  PhosphorIcons.caret_left_light,
+                  PhosphorIcons.caretLeft(PhosphorIconsStyle.light),
                   size: 18.sp,
                 ),
               ),
@@ -103,7 +103,7 @@ class ConversationHeader extends StatelessWidget {
                   ),
                 );
               },
-              icon: PhosphorIcons.user_circle_plus,
+              icon: PhosphorIcons.userCirclePlus(),
               sizeIcon: 22.sp,
               padding: EdgeInsets.all(3.sp),
               margin: EdgeInsets.zero,
@@ -114,7 +114,7 @@ class ConversationHeader extends StatelessWidget {
             onTap: () {
               AppBloc.meetingBloc.add(JoinMeetingEvent(meeting: meeting));
             },
-            icon: PhosphorIcons.video_camera_light,
+            icon: PhosphorIcons.videoCamera(PhosphorIconsStyle.light),
             sizeIcon: 22.sp,
             padding: EdgeInsets.all(3.sp),
             margin: EdgeInsets.zero,

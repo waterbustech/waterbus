@@ -281,6 +281,8 @@ extension AppNavigatorX on AppNavigator {
   }
 
   List<String> get popupInstrealOfScreen => [
+        Routes.enterCodeRoute,
+        Routes.createMeetingRoute,
         Routes.profileRoute,
         Routes.usernameRoute,
         Routes.settingsCallRoute,
@@ -295,6 +297,13 @@ extension AppNavigatorX on AppNavigator {
     Map<String, dynamic>? arguments,
   }) {
     switch (route) {
+      case Routes.enterCodeRoute:
+        return const EnterMeetingCode();
+      case Routes.createMeetingRoute:
+        return CreateMeetingScreen(
+          meeting: arguments?['meeting'],
+          isChatScreen: arguments?['isChatScreen'] ?? false,
+        );
       case Routes.profileRoute:
         return const ProfileScreen();
       case Routes.usernameRoute:

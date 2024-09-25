@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 
@@ -17,24 +18,28 @@ final List<MenuItemModel> menuItems = [
     title: Strings.profile,
     icon: Icons.person_3_outlined,
   ),
-  const MenuItemModel(
+  MenuItemModel(
+    title: Strings.talkWithAI,
+    icon: PhosphorIcons.robot(),
+  ),
+  MenuItemModel(
     title: Strings.storage,
-    icon: Icons.folder_open_outlined,
+    icon: PhosphorIcons.record(),
   ),
-  const MenuItemModel(
+  MenuItemModel(
     title: Strings.archivedChats,
-    icon: Icons.bookmark_outline,
+    icon: PhosphorIcons.archive(),
   ),
-  const MenuItemModel(
+  MenuItemModel(
     title: Strings.settings,
-    icon: Icons.widgets_outlined,
+    icon: PhosphorIcons.slidersHorizontal(),
   ),
-  const MenuItemModel(
+  MenuItemModel(
     title: Strings.licenses,
-    icon: Icons.local_police_outlined,
+    icon: PhosphorIcons.signature(),
   ),
-  const MenuItemModel(
+  MenuItemModel(
     title: Strings.logout,
-    icon: Icons.logout_outlined,
+    icon: PhosphorIcons.signOut(),
   ),
 ];

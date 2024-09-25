@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/index.dart';
 
@@ -47,7 +47,7 @@ class DetailGroupScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(right: 16.sp),
                     child: Icon(
-                      PhosphorIcons.sign_out,
+                      PhosphorIcons.signOut(),
                       size: 20.sp,
                       color: Theme.of(context).colorScheme.error,
                     ),
@@ -65,7 +65,7 @@ class DetailGroupScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 3.sp),
                   child: Icon(
-                    PhosphorIcons.caret_left_light,
+                    PhosphorIcons.caretLeft(PhosphorIconsStyle.light),
                     size: 20.sp,
                   ),
                 ),
@@ -108,19 +108,25 @@ class DetailGroupScreen extends StatelessWidget {
                             AppBloc.meetingBloc
                                 .add(JoinMeetingEvent(meeting: meeting));
                           },
-                          icon: PhosphorIcons.video_camera_fill,
+                          icon: PhosphorIcons.videoCamera(
+                            PhosphorIconsStyle.fill,
+                          ),
                           title: Strings.videoCall.i18n,
                         ),
                         DetailGroupButton(
-                          icon: PhosphorIcons.bell_ringing_fill,
+                          icon: PhosphorIcons.bellRinging(
+                            PhosphorIconsStyle.fill,
+                          ),
                           title: Strings.mute.i18n,
                         ),
                         DetailGroupButton(
-                          icon: PhosphorIcons.magnifying_glass_bold,
+                          icon: PhosphorIcons.magnifyingGlass(
+                            PhosphorIconsStyle.fill,
+                          ),
                           title: Strings.search.i18n,
                         ),
                         DetailGroupButton(
-                          icon: PhosphorIcons.dots_three_outline_fill,
+                          icon: PhosphorIcons.dotsThreeOutline(),
                           title: Strings.more.i18n,
                         ),
                       ],
@@ -219,7 +225,7 @@ class DetailGroupScreen extends StatelessWidget {
                                     },
                                     backgroundColor: colorHigh,
                                     foregroundColor: mCL,
-                                    icon: PhosphorIcons.trash,
+                                    icon: PhosphorIcons.trash(),
                                     label: Strings.delete.i18n,
                                   ),
                                 ],

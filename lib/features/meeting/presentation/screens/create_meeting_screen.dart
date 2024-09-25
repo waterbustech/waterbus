@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -82,7 +82,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               }
             },
             icon: Icon(
-              PhosphorIcons.check,
+              PhosphorIcons.check(),
               size: 18.sp,
               color: Theme.of(context).colorScheme.primary,
             ),
