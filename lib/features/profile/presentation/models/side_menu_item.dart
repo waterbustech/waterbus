@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+
 import 'package:waterbus/core/app/lang/data/localization.dart';
 
 typedef IconStyle = PhosphorIconsStyle;

@@ -5,10 +5,6 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -19,6 +15,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
@@ -26,6 +23,9 @@ import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeScreen extends StatefulWidget {

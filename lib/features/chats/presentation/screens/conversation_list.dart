@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/chats/presentation/widgets/conversation_label.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -14,6 +13,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
+import 'package:waterbus/features/chats/presentation/widgets/conversation_label.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
