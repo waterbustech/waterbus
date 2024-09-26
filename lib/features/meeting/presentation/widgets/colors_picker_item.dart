@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:sizer/sizer.dart';
+
 import 'package:waterbus/core/constants/constants.dart';
 
 class ColorsPickerItem extends StatelessWidget {

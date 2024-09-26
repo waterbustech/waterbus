@@ -1,9 +1,10 @@
 import 'dart:ui';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:waterbus/features/meeting/presentation/xmodels/drawing_model.dart';
-import 'package:equatable/equatable.dart';
 
 // import 'package:waterbus_sdk/flutter_waterbus_sdk.dart'; // code not pushed yet
 

@@ -1,6 +1,8 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:waterbus/core/constants/constants.dart';
 
 part 'select_color_event.dart';

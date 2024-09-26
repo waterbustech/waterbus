@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/gen/assets.gen.dart';
