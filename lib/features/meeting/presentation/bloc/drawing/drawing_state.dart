@@ -9,8 +9,7 @@ abstract class DrawingState extends Equatable {
   List<DrawingModel?> get props => [...localProps, ...remoteProps];
 }
 
-final class DrawingInitialState extends DrawingState {
-}
+final class DrawingInitialState extends DrawingState {}
 
 final class MyDrawingState extends DrawingState {
   final List<DrawingModel?> drawingModel;
@@ -26,5 +25,5 @@ final class AnotherDrawingState extends DrawingState {
 
   const AnotherDrawingState(this.drawingModel);
   @override
-  List<DrawingModel?> get remoteProps =>  [...drawingModel];
+  List<DrawingModel?> get remoteProps => [...drawingModel];
 }

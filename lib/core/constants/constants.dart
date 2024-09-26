@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/gen/assets.gen.dart';
@@ -45,3 +46,13 @@ const String profileTab = '/myProfile';
 const String appearanceTab = '/appearance';
 const String languageTab = '/language';
 const String callAndMeetingTab = '/callAndMeeting';
+
+// Colors For Jam Table
+const List<Color> availableColor = [
+  Colors.black,
+  Colors.red,
+  Colors.amber,
+  Colors.blue,
+  Colors.green,
+  Colors.brown,
+];

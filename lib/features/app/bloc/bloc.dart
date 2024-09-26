@@ -45,6 +45,9 @@ class AppBloc {
     BlocProvider<DrawingBloc>(
       create: (context) => drawingBloc,
     ),
+    BlocProvider<DrawingBloc>(
+      create: (context) => drawingBloc,
+    ),
   ];
 
   Future<void> bootstrap() async {

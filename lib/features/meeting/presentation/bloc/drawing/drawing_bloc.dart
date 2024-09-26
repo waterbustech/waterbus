@@ -22,7 +22,7 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
 
       if (event is OnDrawingDeletedEvent) {
         _sendDeleteDraw(event.meetingId);
-        // emit(MyDrawingState());
+        // emit(MyDrawingState([]));
       }
 
       if (event is OnAnotherDrawingChangedEvent) {
