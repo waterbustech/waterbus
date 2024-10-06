@@ -54,7 +54,7 @@ dependencies:
 
   # Dependency Injection
   get_it: ^7.6.8
-  injectable: ^2.4.4
+  injectable: ^2.5.0
 
   # Storage
   hive: ^2.2.3
