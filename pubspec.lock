@@ -1647,10 +1647,10 @@ packages:
     dependency: "direct main"
     description:
       name: simple_pip_mode
-      sha256: "89f8137fa5a8d113f39c61007d4b658048a9359362447b8cfb8bce93631882ad"
+      sha256: "982dcd0bbcb7105505b2e7552e0e0e68826424395559ee676bcacc43c3666dcd"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0"
+    version: "1.0.0"
   sizer:
     dependency: "direct main"
     description:
