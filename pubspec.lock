@@ -356,10 +356,10 @@ packages:
     dependency: transitive
     description:
       name: dio
-      sha256: "0dfb6b6a1979dac1c1245e17cef824d7b452ea29bd33d3467269f9bef3715fb0"
+      sha256: "5598aa796bbf4699afd5c67c0f5f6e2ed542afc956884b9cd58c306966efc260"
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.0"
+    version: "5.7.0"
   dio_cache_interceptor:
     dependency: transitive
     description:
@@ -2035,10 +2035,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      name: waterbus_sdk
-      sha256: c76ea7e6db5cea7aa403f06fe0235502b2da12a9e383a1ed6df8d7a7e4344af8
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/lambiengcode/Documents/flutter_waterbus_sdk"
+      relative: false
+    source: path
     version: "1.5.1"
   web:
     dependency: "direct overridden"

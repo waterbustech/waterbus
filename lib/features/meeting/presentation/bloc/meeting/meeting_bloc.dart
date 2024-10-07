@@ -45,6 +45,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   Participant? _mParticipant;
   CallSetting _callSetting = CallSetting();
   Timer? _subtitleTimer;
+  int? _recordId;
 
   MeetingBloc(
     this._pipChannel,
@@ -257,6 +258,24 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
           }
         }
+
+        if (event is StartRecordEvent) {
+          final recordId = await _waterbusSdk.startRecord();
+
+          if (recordId != null) {
+            _recordId = recordId;
+
+            emit(_joinedMeeting);
+          }
+        }
+
+        if (event is StopRecordEvent) {
+          await _waterbusSdk.stopRecord();
+
+          _recordId = null;
+
+          emit(_joinedMeeting);
+        }
       },
     );
   }
@@ -273,6 +292,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         participant: _mParticipant,
         callState: _waterbusSdk.callState,
         callSetting: _callSetting,
+        isRecording: _recordId != null,
       );
 
   PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
@@ -564,6 +584,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _currentMeeting = null;
     _mParticipant = null;
     _currentBackground = null;
+    _recordId = null;
     _subtitle.close();
 
     AppBloc.beautyFiltersBloc.add(ResetFiltersValueEvent());

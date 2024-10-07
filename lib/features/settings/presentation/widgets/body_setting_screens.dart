@@ -262,7 +262,7 @@ class BodySettingScreens extends StatelessWidget {
               onTap: () {},
               isFirst: false,
               title: 'Waterbus ${Strings.version.i18n}',
-              value: 'v1.1.3',
+              value: kAppVersion,
               icon: PhosphorIcons.desktop(PhosphorIconsStyle.fill),
               iconBackground: colorCyan,
             ),

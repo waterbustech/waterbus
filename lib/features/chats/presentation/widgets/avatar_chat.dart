@@ -50,7 +50,8 @@ class AvatarChat extends StatelessWidget {
               child: CustomNetworkImage(
                 height: size * 0.7,
                 width: size * 0.7,
-                urlToImage: meeting.memberJoined.first.user.avatar,
+                urlToImage: meeting.memberJoined.first.user.avatar ??
+                    kUserDefault.avatar,
               ),
             ),
           ),
@@ -66,7 +67,8 @@ class AvatarChat extends StatelessWidget {
               child: CustomNetworkImage(
                 height: size * 0.7,
                 width: size * 0.7,
-                urlToImage: meeting.memberJoined[1].user.avatar,
+                urlToImage:
+                    meeting.memberJoined[1].user.avatar ?? kUserDefault.avatar,
               ),
             ),
           ),

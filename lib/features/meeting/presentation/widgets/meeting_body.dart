@@ -174,6 +174,19 @@ class _MeetingBodyState extends State<MeetingBody> {
                       AppBloc.meetingBloc.add(const ToggleSubtitleEvent());
                     },
                   ),
+                if (SizerUtil.isDesktop)
+                  CallActionButton(
+                    icon: Icons.fiber_manual_record_rounded,
+                    backgroundColor:
+                        widget.state.isRecording ? Colors.red : null,
+                    onTap: () {
+                      if (widget.state.isRecording) {
+                        AppBloc.meetingBloc.add(const StopRecordEvent());
+                      } else {
+                        AppBloc.meetingBloc.add(const StartRecordEvent());
+                      }
+                    },
+                  ),
                 CallActionButton(
                   icon: PhosphorIcons.gearSix(),
                   onTap: () {

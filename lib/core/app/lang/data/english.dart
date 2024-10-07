@@ -126,6 +126,8 @@ Map<String, String> english = {
   Strings.myProfile: "My Profile",
   Strings.edit: "Edit",
   Strings.appearance: "Appearance",
+  Strings.colorMode: "Color Mode",
+  Strings.primaryColor: "Primary Color",
   Strings.callAndMeeting: "Call and Meeting",
   Strings.serverConfiguration: "Server configuration",
   Strings.clearCache: "Clear cache",

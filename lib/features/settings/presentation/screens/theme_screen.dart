@@ -38,7 +38,7 @@ class ThemeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 divider,
-                _buildTitle(context, 'Color Mode'),
+                _buildTitle(context, Strings.colorMode.i18n),
                 SizedBox(
                   height: 40.sp,
                   child: ListView(
@@ -55,7 +55,7 @@ class ThemeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8.sp),
-                _buildTitle(context, 'Primary Color'),
+                _buildTitle(context, Strings.primaryColor.i18n),
                 GridView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 16.sp),
                   shrinkWrap: true,

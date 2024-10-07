@@ -125,6 +125,8 @@ Map<String, String> vietnamese = {
   Strings.myProfile: "Thông tin cá nhân",
   Strings.edit: "Sửa",
   Strings.appearance: "Giao diện",
+  Strings.colorMode: "Chế độ",
+  Strings.primaryColor: "Màu chủ đề",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
   Strings.serverConfiguration: "Cấu hình máy chủ",
   Strings.clearCache: "Xoá bộ nhớ tạm",

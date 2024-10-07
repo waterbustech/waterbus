@@ -130,6 +130,8 @@ class Strings {
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
   static const String appearance = 'appearance';
+  static const String colorMode = 'colorMode';
+  static const String primaryColor = 'primaryColor';
   static const String callAndMeeting = 'callAndMeeting';
   static const String serverConfiguration = 'serverConfiguration';
   static const String clearCache = 'clearCache';

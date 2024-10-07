@@ -5,6 +5,7 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Assets.images.imgLogo.path,
             height: 35.sp,
           ),
-          applicationVersion: '1.2.0',
+          applicationVersion: kAppVersion,
         );
       default:
         return Container();
@@ -219,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Assets.images.imgLogo.path,
                   height: 35.sp,
                 ),
-                applicationVersion: '1.2.0',
+                applicationVersion: kAppVersion,
               );
               break;
             default:
