@@ -1,7 +1,7 @@
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/socket/drawing/socket_draw_event.dart';
 
 class SocketDrawHandle {

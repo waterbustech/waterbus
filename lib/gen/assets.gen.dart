@@ -201,12 +201,23 @@ class $AssetsLottiesGen {
       ];
 }
 
+class $AssetsSvgsGen {
+  const $AssetsSvgsGen();
+
+  /// File path: assets/svgs/color_wheel.svg
+  String get colorWheel => 'assets/svgs/color_wheel.svg';
+
+  /// List of all assets
+  List<String> get values => [colorWheel];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
+  static const $AssetsSvgsGen svgs = $AssetsSvgsGen();
   static const String welcome = 'assets/welcome.java';
 
   /// List of all assets

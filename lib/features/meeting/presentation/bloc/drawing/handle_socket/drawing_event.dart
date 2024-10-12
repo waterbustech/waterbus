@@ -3,13 +3,20 @@ part of 'drawing_bloc.dart';
 class DrawingEvent {}
 
 class OnDrawingInitEvent extends DrawingEvent {
-  final List<DrawingModel?> drawingModel;
-  OnDrawingInitEvent({required this.drawingModel});
+  final Stroke drawingModel;
+  final int? polygonSides;
+  final bool? fillShape;
+  OnDrawingInitEvent(
+      {required this.drawingModel,
+      required this.polygonSides,
+      required this.fillShape});
 }
 
 class OnDrawingChangedEvent extends DrawingEvent {
-  final List<DrawingModel?> drawingModel;
-  OnDrawingChangedEvent({required this.drawingModel});
+  final Stroke drawingModel;
+  OnDrawingChangedEvent({
+    required this.drawingModel,
+  });
 }
 
 class OnDrawingDeletedEvent extends DrawingEvent {

@@ -8,32 +8,32 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
-import '../../features/home/bloc/home/home_bloc.dart' as _i430;
-import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
-import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
-import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
-import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
-import '../method_channels/pip_channel.dart' as _i921;
-
 import '../../features/chats/xmodels/datasources/user_local_datasource.dart'
     as _i413;
+import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/meeting/data/datasources/call_settings_datasource.dart'
     as _i688;
 import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
     as _i254;
 import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
     as _i861;
-import '../../features/meeting/presentation/bloc/drawing/drawing_bloc.dart'
-    as _i879;
+import '../../features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart'
+    as _i1026;
+import '../../features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart'
+    as _i51;
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i545;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i324;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
+import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
+import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../method_channels/pip_channel.dart' as _i921;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -48,7 +48,8 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
   gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
-  gh.factory<_i879.DrawingBloc>(() => _i879.DrawingBloc());
+  gh.factory<_i1026.DrawingBloc>(() => _i1026.DrawingBloc());
+  gh.factory<_i51.DrawingOptionsBloc>(() => _i51.DrawingOptionsBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
