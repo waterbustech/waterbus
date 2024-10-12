@@ -15,7 +15,6 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 part 'chat_event.dart';
@@ -84,12 +83,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
           emit(_getDoneChat);
 
-          if (AppBloc.homeBloc.currentIndex != 1) {
-            AppNavigator.popUntil(Routes.rootRoute);
-            AppBloc.homeBloc.add(OnChangeTabEvent(tabIndex: 1));
-          } else {
-            AppNavigator.popUntil(Routes.rootRoute);
-          }
+          AppNavigator.popUntil(Routes.rootRoute);
 
           showSnackBarWaterbus(content: Strings.addConversationSuccess.i18n);
         }

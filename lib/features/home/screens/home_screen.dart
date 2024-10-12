@@ -263,12 +263,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget get _buildCreateMeetingButton {
     return GestureWrapper(
       onTap: () async {
-        await WaterbusPermissionHandler().checkGrantedForExecute(
-          permissions: [Permission.camera, Permission.microphone],
-          callBack: () async {
-            AppNavigator().push(Routes.createMeetingRoute);
-          },
-        );
+        if (_currentTab == Strings.chat) {
+          AppNavigator().push(
+            Routes.createMeetingRoute,
+            arguments: {
+              'isChatScreen': _currentTab == Strings.chat,
+            },
+          );
+        } else {
+          await WaterbusPermissionHandler().checkGrantedForExecute(
+            permissions: [Permission.camera, Permission.microphone],
+            callBack: () async {
+              AppNavigator().push(Routes.createMeetingRoute);
+            },
+          );
+        }
       },
       child: Container(
         width: 36.sp,

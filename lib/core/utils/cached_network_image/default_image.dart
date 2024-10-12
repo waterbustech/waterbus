@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class DefaultImage extends StatelessWidget {
@@ -9,6 +9,8 @@ class DefaultImage extends StatelessWidget {
   final BoxShape shape;
   final BorderRadiusGeometry? borderRadius;
   final Widget? childInAvatar;
+  final DefaultAvatarModel? defaultAvatar;
+  final BoxBorder? border;
   const DefaultImage({
     super.key,
     required this.height,
@@ -17,6 +19,8 @@ class DefaultImage extends StatelessWidget {
     required this.shape,
     this.borderRadius,
     this.childInAvatar,
+    this.defaultAvatar,
+    this.border,
   });
   @override
   Widget build(BuildContext context) {
@@ -31,21 +35,38 @@ class DefaultImage extends StatelessWidget {
             child: Container(
               height: height,
               width: width,
-              decoration: BoxDecoration(
-                shape: shape,
-                borderRadius: borderRadius,
-                image: DecorationImage(
-                  image: Assets.images.imgAppLogo.provider(),
-                  fit: shape == BoxShape.circle
-                      ? BoxFit.fitHeight
-                      : BoxFit.contain,
-                ),
-              ),
+              decoration: defaultAvatar != null
+                  ? BoxDecoration(
+                      color: defaultAvatar!.backgroundColor,
+                      shape: shape,
+                      border: border,
+                    )
+                  : BoxDecoration(
+                      shape: shape,
+                      border: border,
+                      borderRadius: borderRadius,
+                      image: DecorationImage(
+                        image: AssetImage(Assets.images.imgLogo.path),
+                        fit: shape == BoxShape.circle
+                            ? BoxFit.fitHeight
+                            : BoxFit.contain,
+                      ),
+                    ),
               alignment: Alignment.bottomRight,
               child: childInAvatar,
             ),
           ),
-          const SizedBox(),
+          defaultAvatar == null
+              ? const SizedBox()
+              : Text(
+                  defaultAvatar!.keyword,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: width / 2.85,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
         ],
       ),
     );

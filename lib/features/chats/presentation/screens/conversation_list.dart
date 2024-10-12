@@ -99,9 +99,7 @@ class ConversationList extends StatelessWidget {
                             children: [
                               ChatCard(meeting: meetings[index]),
                               Padding(
-                                padding: EdgeInsets.only(
-                                  left: SizerUtil.isDesktop ? 74.sp : 64.sp,
-                                ),
+                                padding: EdgeInsets.only(left: 64.sp),
                                 child: divider,
                               ),
                             ],
