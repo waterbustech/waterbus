@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.3+6
+version: 1.2.0+7
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -47,7 +47,6 @@ dependencies:
 
   # Network
   connectivity_plus: ^6.0.5
-  socket_io_client: ^2.0.3+1
 
   # State management
   flutter_bloc: ^8.1.6
@@ -77,29 +76,27 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
   equatable: ^2.0.5
-  share_plus: ^10.0.0
+  share_plus: ^10.0.2
   simple_pip_mode: ^0.8.0
   file_picker: ^8.1.2
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
+  flutter_slidable: ^3.1.0
   sizer: 
     path: ./packages/sizer
   flutter_localizations:
     sdk: flutter
   i18n_extension: ^12.0.1
+  pull_to_refresh: ^2.0.0
+  super_sliver_list: ^0.4.1
   syncfusion_flutter_charts:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
-  flutter_colorpicker: ^1.1.0
-  flutter_svg: ^2.0.9
-  file_saver: ^0.2.9
-  font_awesome_flutter: ^10.6.0
-  universal_html: ^2.2.4
-  universal_platform: ^1.1.0
 
   # Code Editor
   re_editor: ^0.3.1
   re_highlight: ^0.0.3
+  collection: ^1.18.0
 
   # Media
   image_picker: ^1.1.2
@@ -108,17 +105,18 @@ dependencies:
   flutter_image_compress: ^2.2.0
 
   # Video call
-  # waterbus_sdk: ^1.4.14
-  
-  waterbus_sdk:
-    path: D:/Work/waterbus-flutter-sdk
+  waterbus_sdk: 1.5.1
+   
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0
   win32: ^5.0.5 
-  web: ^0.5.1
+  web: ^1.0.0
   collection: ^1.19.0
   dio_web_adapter: ^2.0.0
+  isolate_manager: ^5.2.1+1
   flutter_image_compress_web:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
@@ -168,8 +166,6 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/welcome.java
-    - assets/svgs/
-
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

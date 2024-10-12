@@ -5,6 +5,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 
 class EnterCodeBox extends StatefulWidget {
@@ -12,7 +13,7 @@ class EnterCodeBox extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final Function(String)? onChanged;
   final EdgeInsetsGeometry? contentPadding;
-  final String hintTextContent;
+  final String? hintTextContent;
   final TextEditingController? controller;
   final void Function(String)? onFieldSubmitted;
   final Widget? suffixWidget;
@@ -24,7 +25,7 @@ class EnterCodeBox extends StatefulWidget {
     this.margin,
     this.onChanged,
     this.contentPadding = EdgeInsets.zero,
-    this.hintTextContent = "Enter code to join meeting",
+    this.hintTextContent,
     this.suffixWidget,
   });
 
@@ -68,7 +69,8 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   ],
                   decoration: InputDecoration(
                     contentPadding: widget.contentPadding,
-                    hintText: widget.hintTextContent,
+                    hintText: widget.hintTextContent ??
+                        Strings.enterCodeToJoinMeeting.i18n,
                     hintStyle: TextStyle(
                       fontSize: 12.sp,
                     ),

@@ -10,7 +10,9 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
+import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
+import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
 import 'package:waterbus/features/meeting/presentation/screens/background_gallery.dart';
 import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
@@ -93,6 +95,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           CreateMeetingScreen(
             meeting: arguments?['meeting'],
+            isChatScreen: arguments?['isChatScreen'] ?? false,
           ),
         );
       case Routes.enterCodeRoute:
@@ -110,8 +113,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           ConversationScreen(
-            chatModel: arguments!['chatModel'],
+            meeting: arguments!['meeting'],
           ),
+        );
+      case Routes.invitedRoute:
+        return _buildRoute(
+          settings,
+          const InvitedChatScreen(),
         );
       case Routes.langRoute:
         return _buildRoute(
@@ -122,6 +130,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const ThemeScreen(),
+        );
+      case Routes.detailGroupRoute:
+        return _buildRoute(
+          settings,
+          DetailGroupScreen(
+            meeting: arguments?['meeting'],
+          ),
         );
       default:
         return _buildRoute(
@@ -273,6 +288,8 @@ extension AppNavigatorX on AppNavigator {
         Routes.settingsCallRoute,
         Routes.langRoute,
         Routes.themeRoute,
+        Routes.invitedRoute,
+        Routes.detailGroupRoute,
       ];
 
   Widget getWidgetByRoute({
@@ -290,6 +307,12 @@ extension AppNavigatorX on AppNavigator {
         return const LanguageScreen();
       case Routes.themeRoute:
         return const ThemeScreen();
+      case Routes.invitedRoute:
+        return const InvitedChatScreen();
+      case Routes.detailGroupRoute:
+        return DetailGroupScreen(
+          meeting: arguments?['meeting'],
+        );
       default:
         return const SizedBox();
     }

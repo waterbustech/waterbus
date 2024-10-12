@@ -12,9 +12,24 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+<<<<<<< HEAD
 import '../../features/chats/xmodels/datasources/user_local_datasource.dart'
     as _i413;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
+=======
+import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
+import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
+import '../../features/conversation/bloc/message_bloc.dart' as _i819;
+import '../../features/home/bloc/home/home_bloc.dart' as _i430;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
+import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
+import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../method_channels/pip_channel.dart' as _i921;
+
+import '../../features/chats/data/datasources/user_local_datasource.dart'
+    as _i843;
+>>>>>>> cb0470d4ace284b9cf96530b48b2ec981a72abd9
 import '../../features/meeting/data/datasources/call_settings_datasource.dart'
     as _i688;
 import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
@@ -29,11 +44,16 @@ import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i545;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i324;
+<<<<<<< HEAD
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
 import '../method_channels/pip_channel.dart' as _i921;
+=======
+import '../../features/profile/presentation/bloc/user_search_bloc.dart'
+    as _i254;
+>>>>>>> cb0470d4ace284b9cf96530b48b2ec981a72abd9
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -51,6 +71,10 @@ _i174.GetIt $initGetIt(
   gh.factory<_i1026.DrawingBloc>(() => _i1026.DrawingBloc());
   gh.factory<_i51.DrawingOptionsBloc>(() => _i51.DrawingOptionsBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
+  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
+  gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
+  gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
+  gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
@@ -59,12 +83,12 @@ _i174.GetIt $initGetIt(
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
-  gh.lazySingleton<_i413.UserLocalDataSource>(
-      () => _i413.UserLocalDataSourceImpl());
-  gh.factory<_i797.AuthBloc>(
-      () => _i797.AuthBloc(gh<_i413.UserLocalDataSource>()));
+  gh.lazySingleton<_i843.UserLocalDataSource>(
+      () => _i843.UserLocalDataSourceImpl());
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
+  gh.factory<_i797.AuthBloc>(
+      () => _i797.AuthBloc(gh<_i843.UserLocalDataSource>()));
   gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
         gh<_i921.PipChannel>(),
         gh<_i254.MeetingLocalDataSource>(),

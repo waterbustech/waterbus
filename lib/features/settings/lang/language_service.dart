@@ -33,4 +33,8 @@ class LanguageService {
         return Language.english; // default
     }
   }
+
+  bool getIsLanguage(String locale) {
+    return LanguagesDatasourceImpl().getLocale() == locale;
+  }
 }

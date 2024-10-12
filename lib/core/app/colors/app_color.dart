@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color colorBlack = Color(0xFF121212);
 const Color colorPrimaryBlack = Color(0xFF14171A);
+const Color colorBlackGlassmorphism = Color(0xFF292929);
 const Color colorDarkGrey = Color(0xFF657786);
 const Color colorPrimary = Color(0xFF1DA1F2);
 const Color colorTitle = Color(0xFF2C3D50);

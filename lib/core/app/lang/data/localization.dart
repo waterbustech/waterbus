@@ -77,6 +77,11 @@ class Strings {
   static const String search = 'search';
   static const String createRoom = 'createRoom';
   static const String chat = 'chats';
+  static const String delete = 'delete';
+  static const String sureDeleteConversation = 'sureDeleteConversation';
+  static const String sureDeleteMessage = 'sureDeleteMessage';
+  static const String leaveAMessage = 'leaveAMessage';
+  static const String invitedChat = 'invitedChat';
   static const String enterPassword = 'enterPassword';
   static const String createMeeting = 'createMeeting';
   static const String editMeeting = 'editMeeting';
@@ -96,6 +101,7 @@ class Strings {
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
   static const String latency = 'latency';
+  static const String back = 'back';
 
   // Profile screen
   static const String profile = 'profile';
@@ -114,6 +120,9 @@ class Strings {
   static const String canUseUsername = 'canUseUsername';
   static const String usernameUsed = 'usernameUsed';
   static const String checking = 'checking';
+  static const String updateUsernameSuccessfully = 'updateUsernameSuccessfully';
+  static const String updatedPersonalInformationSuccessfully =
+      'updatedPersonalInformationSuccessfully';
 
   // Settings screen
   static const String myProfile = 'myProfile';
@@ -127,6 +136,41 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+
+  // Chat Screen
+  static const String videoCall = 'videoCall';
+  static const String mute = 'mute';
+  static const String more = 'more';
+  static const String addMembers = 'addMembers';
+  static const String owner = 'owner';
+  static const String youHaveBeenInvitedToChat = 'youHaveBeenInvitedToChat';
+  static const String confirm = 'confirm';
+  static const String inviting = 'inviting';
+  static const String invisible = 'invisible';
+  static const String joined = 'joined';
+  static const String leaveTheConversation = 'leaveTheConversation';
+  static const String sureLeaveConversation = 'descriptionOfLeaveConversation';
+  static const String member = 'member';
+  static const String members = 'members';
+  static const String groupCreated = 'grounpCreated';
+  static const String sending = 'sending';
+  static const String canNotSend = 'canNotSend';
+  static const String resend = 'resend';
+  static const String you = 'you';
+  static const String user = 'user';
+  static const String unsentAMessage = 'unsentAMessage';
+  static const String hi = 'hi';
+  static const String noMesssagesHereYet = 'noMesssagesHereYet';
+  static const String youHaveInvitedThe = 'youHaveInvitedThe';
+  static const String toJoinConversation = 'toJoinConversation';
+  static const String deleteMember = 'deleteMember';
+  static const String addConversationSuccess = 'addConversationSuccess';
+  static const String sureDeleteMember = 'sureDeleteMember';
+  static const String youHaveConfirmedConversation = "youConfirmedConversation";
+  static const String hostCanNotDeleteConversation =
+      'hostCanNotDeleteConversation';
+  static const String sendMessageOrTapOnTheGreetingBelow =
+      'sendMessageOrTapOnTheGreetingBelow';
 }
 
 class MyI18n {

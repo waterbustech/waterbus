@@ -31,10 +31,16 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
+<<<<<<< HEAD
   # waterbus_sdk: ^1.4.14
   
   waterbus_sdk:
     path: D:/Work/waterbus-flutter-sdk
+=======
+  waterbus_sdk: ^1.5.1
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+>>>>>>> cb0470d4ace284b9cf96530b48b2ec981a72abd9
 
 dev_dependencies:
   flutter_test:
