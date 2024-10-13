@@ -1,13 +1,17 @@
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waterbus_sdk/types/models/draw_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/models/drawing_canvas_options.dart';
 import 'package:waterbus/features/meeting/domain/models/drawing_tool.dart';
-import 'package:waterbus/features/meeting/domain/models/undo_redo_stack.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/notifiers/current_stroke_value_notifier.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/canvas_side_bar.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/drawing_canvas.dart';
 
@@ -32,7 +36,8 @@ class DrawingScreenState extends State<DrawingScreen>
   bool filled = false;
   int polygonSides = 3;
   ui.Image? backgroundImage;
-  // late final UndoRedoStack undoRedoStack;
+  List<DrawModel?> historyDraw = [];
+  late final CurrentStroke _currentDraw;
 
   @override
   void initState() {
@@ -41,8 +46,19 @@ class DrawingScreenState extends State<DrawingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-  // final props = context.read<DrawingBloc>().state.props;
+    _currentDraw = CurrentStroke();
+    AppBloc.drawingBloc.add(OnDrawingInitEvent(meetingId: widget.meetingId));
+  }
 
+  void addHistoryDraw(DrawModel? draw) {
+    historyDraw.add(draw);
+  }
+
+  void deleteCurrentDraw() {
+    setState(() {
+      debugPrint("deleteCurrentDraw");
+      _currentDraw.clear();
+    });
   }
 
   @override
@@ -53,7 +69,6 @@ class DrawingScreenState extends State<DrawingScreen>
         children: [
           BlocBuilder<DrawingOptionsBloc, DrawingOptionsState>(
             builder: (context, state) {
-              // Sử dụng BLoC để xây dựng canvas
               return DrawingCanvas(
                 options: DrawingCanvasOptions(
                   currentTool: state.drawingTool,
@@ -61,8 +76,10 @@ class DrawingScreenState extends State<DrawingScreen>
                   strokeColor: state.selectedColor,
                   backgroundColor: const Color(0xfff2f3f7),
                   polygonSides: state.polygonSides,
-                  fillShape: state.filled, // not bloc
+                  fillShape: state.filled,
                 ),
+                historyDraw: addHistoryDraw,
+                currentDraw: _currentDraw,
                 canvasKey: canvasGlobalKey,
                 backgroundImage: backgroundImage,
               );
@@ -77,7 +94,8 @@ class DrawingScreenState extends State<DrawingScreen>
               ).animate(animationController),
               child: CanvasSideBar(
                 canvasGlobalKey: canvasGlobalKey,
-                // undoRedoStack: undoRedoStack,
+                historyDraw: historyDraw,
+                callBackCurrentDraw: deleteCurrentDraw,
               ),
             ),
           ),

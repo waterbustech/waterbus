@@ -30,7 +30,7 @@
 //   final ValueNotifier<bool> filled = ValueNotifier(false);
 //   final ValueNotifier<int> polygonSides = ValueNotifier(3);
 //   final ValueNotifier<ui.Image?> backgroundImage = ValueNotifier(null);
-//   final CurrentStrokeValueNotifier currentStroke = CurrentStrokeValueNotifier();
+//   final CurrentStroke currentStroke = CurrentStroke();
 //   final ValueNotifier<List<Stroke>> allStrokes = ValueNotifier([]);
 //   late final UndoRedoStack undoRedoStack;
 //   final ValueNotifier<bool> showGrid = ValueNotifier(false);

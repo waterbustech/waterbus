@@ -3,19 +3,18 @@ part of 'drawing_bloc.dart';
 class DrawingEvent {}
 
 class OnDrawingInitEvent extends DrawingEvent {
-  final Stroke drawingModel;
-  final int? polygonSides;
-  final bool? fillShape;
-  OnDrawingInitEvent(
-      {required this.drawingModel,
-      required this.polygonSides,
-      required this.fillShape});
+  final int meetingId;
+  OnDrawingInitEvent({
+    required this.meetingId,
+  });
 }
 
 class OnDrawingChangedEvent extends DrawingEvent {
-  final Stroke drawingModel;
+  final UpdateDrawEnum action;
+  final DrawModel drawingModel;
   OnDrawingChangedEvent({
     required this.drawingModel,
+    required this.action,
   });
 }
 
@@ -24,11 +23,16 @@ class OnDrawingDeletedEvent extends DrawingEvent {
   OnDrawingDeletedEvent({required this.meetingId});
 }
 
-class OnAnotherDrawingChangedEvent extends DrawingEvent {
-  final List<Offset?> points;
-  OnAnotherDrawingChangedEvent({required this.points});
+class OnRemoteDrawingInitEvent extends DrawingEvent {
+  final List<DrawModel> points;
+  OnRemoteDrawingInitEvent({required this.points});
 }
 
-class OnAnotherDrawingDeletedEvent extends DrawingEvent {
-  OnAnotherDrawingDeletedEvent();
+class OnRemoteDrawingChangedEvent extends DrawingEvent {
+  final List<DrawModel> points;
+  OnRemoteDrawingChangedEvent({required this.points});
+}
+
+class OnRemoteDrawingDeletedEvent extends DrawingEvent {
+  OnRemoteDrawingDeletedEvent();
 }

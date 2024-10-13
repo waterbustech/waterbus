@@ -28,7 +28,8 @@ class AppBloc {
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
   static final DrawingBloc drawingBloc = getIt<DrawingBloc>();
-  static final DrawingOptionsBloc drawingOptionsBloc = getIt<DrawingOptionsBloc>();
+  static final DrawingOptionsBloc drawingOptionsBloc =
+      getIt<DrawingOptionsBloc>();
 
   static final List<BlocProvider> providers = [
     BlocProvider<AuthBloc>(

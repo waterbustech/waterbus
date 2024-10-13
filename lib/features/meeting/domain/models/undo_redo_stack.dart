@@ -1,74 +1,35 @@
-// import 'package:flutter/material.dart';
-// import 'package:waterbus/features/meeting/domain/models/stroke.dart';
+import 'package:waterbus_sdk/types/models/draw_model.dart';
 
-// class UndoRedoStack {
-//   UndoRedoStack({
-//     required this.strokesNotifier,
-//     required this.currentStrokeNotifier,
-//   }) {
-//     _strokeCount = strokesNotifier.length;
-//     strokesNotifier.addListener(_strokesCountListener);
-//     _canRedo = ValueNotifier(_redoStack.isNotEmpty);
-//   }
+class UndoRedoStack {
+  final List<DrawModel> strokes;
+  final DrawModel? currentStroke;
+  final List<DrawModel> _undoStack = [];
+  final List<DrawModel> _redoStack = [];
 
-//   final List<Stroke> strokesNotifier;
-//   final Stroke? currentStrokeNotifier;
+  UndoRedoStack({
+    required this.strokes,
+    this.currentStroke,
+  });
 
-//   List<Stroke> get _redoStack => _redoStackInternal ??= [];
-//   List<Stroke>? _redoStackInternal;
+  void addStroke(DrawModel stroke) {
+    strokes.add(stroke);
+    _undoStack.add(stroke);
+    _redoStack.clear();
+  }
 
-//   late final ValueNotifier<bool> _canRedo;
+  void undo() {
+    if (_undoStack.isNotEmpty) {
+      final lastStroke = _undoStack.removeLast();
+      _redoStack.add(lastStroke);
+      strokes.remove(lastStroke);
+    }
+  }
 
-//   ValueNotifier<bool> get canRedo => _canRedo;
-
-//   late int _strokeCount;
-
-//   bool _isRedoing = false;
-
-//   void _strokesCountListener() {
-//     if (!_isRedoing && strokesNotifier.value.length > _strokeCount) {
-//       // if a new Stroke is drawn,
-//       // history is invalidated so clear redo stack
-//       _redoStack.clear();
-//       _canRedo.value = false;
-//       _strokeCount = strokesNotifier.value.length;
-//     }
-//   }
-
-//   void clear() {
-//     _strokeCount = 0;
-//     strokesNotifier.value = [];
-//     _redoStackInternal?.clear();
-//     currentStrokeNotifier.value = null;
-//     _canRedo.value = false;
-//   }
-
-//   void undo() {
-//     if (strokesNotifier.value.isNotEmpty) {
-//       _strokeCount--;
-//       final strokes = List<Stroke>.from(strokesNotifier.value);
-//       _redoStack.add(strokes.removeLast());
-//       strokesNotifier.value = strokes;
-//       _canRedo.value = _redoStack.isNotEmpty;
-//       currentStrokeNotifier.value = null;
-//     }
-//   }
-
-//   void redo() {
-//     if (_redoStack.isNotEmpty) {
-//       _isRedoing = true;
-
-//       final strokes = List<Stroke>.from(strokesNotifier.value);
-//       strokes.add(_redoStack.removeLast());
-//       strokesNotifier.value = strokes;
-//       _canRedo.value = _redoStack.isNotEmpty;
-//       _strokeCount++;
-
-//       _isRedoing = false;
-//     }
-//   }
-
-//   void dispose() {
-//     strokesNotifier.removeListener(_strokesCountListener);
-//   }
-// }
+  void redo() {
+    if (_redoStack.isNotEmpty) {
+      final lastRedoStroke = _redoStack.removeLast();
+      strokes.add(lastRedoStroke);
+      _undoStack.add(lastRedoStroke);
+    }
+  }
+}

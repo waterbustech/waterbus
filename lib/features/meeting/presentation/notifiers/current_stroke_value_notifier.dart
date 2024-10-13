@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:waterbus/features/meeting/domain/models/stroke.dart';
 
-class CurrentStrokeValueNotifier {
-  Stroke? value;
+import 'package:waterbus_sdk/types/enums/draw_types.dart';
+import 'package:waterbus_sdk/types/models/draw_model.dart';
+
+class CurrentStroke {
+  DrawModel? value;
 
   bool get hasStroke => value != null;
 
@@ -11,56 +13,51 @@ class CurrentStrokeValueNotifier {
     Color color = Colors.blueAccent,
     double size = 10,
     double opacity = 1,
-    StrokeType type = StrokeType.normal,
+    DrawTypes type = DrawTypes.normal,
     int? sides,
     bool? filled,
   }) {
     value = () {
-      if (type == StrokeType.eraser) {
+      if (type == DrawTypes.eraser) {
         return EraserStroke(
           points: [point],
           color: color,
           size: size,
-          opacity: opacity,
         );
       }
 
-      if (type == StrokeType.line) {
+      if (type == DrawTypes.line) {
         return LineStroke(
           points: [point],
           color: color,
           size: size,
-          opacity: opacity,
         );
       }
 
-      if (type == StrokeType.polygon) {
+      if (type == DrawTypes.polygon) {
         return PolygonStroke(
           points: [point],
           color: color,
           size: size,
-          opacity: opacity,
           sides: sides ?? 3,
           filled: filled ?? false,
         );
       }
 
-      if (type == StrokeType.circle) {
+      if (type == DrawTypes.circle) {
         return CircleStroke(
           points: [point],
           color: color,
           size: size,
-          opacity: opacity,
           filled: filled ?? false,
         );
       }
 
-      if (type == StrokeType.square) {
+      if (type == DrawTypes.square) {
         return SquareStroke(
           points: [point],
           color: color,
           size: size,
-          opacity: opacity,
           filled: filled ?? false,
         );
       }
@@ -69,7 +66,6 @@ class CurrentStrokeValueNotifier {
         points: [point],
         color: color,
         size: size,
-        opacity: opacity,
       );
     }();
   }

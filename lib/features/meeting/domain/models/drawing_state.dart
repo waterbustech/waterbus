@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+
+import 'package:waterbus_sdk/types/models/draw_model.dart';
+
 import 'package:waterbus/features/meeting/domain/models/drawing_tool.dart';
-import 'package:waterbus/features/meeting/domain/models/stroke.dart';
 
 class DrawingState {
   final Color selectedColor;
@@ -11,7 +14,7 @@ class DrawingState {
   final bool filled;
   final int polygonSides;
   final ui.Image? backgroundImage;
-  final List<Stroke> allStrokes;
+  final List<DrawModel> allStrokes;
   final bool showGrid;
 
   DrawingState({
@@ -34,7 +37,7 @@ class DrawingState {
     bool? filled,
     int? polygonSides,
     ui.Image? backgroundImage,
-    List<Stroke>? allStrokes,
+    List<DrawModel>? allStrokes,
     bool? showGrid,
   }) {
     return DrawingState(

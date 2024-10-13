@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+
+import 'package:waterbus_sdk/types/enums/draw_types.dart';
+
 import 'package:waterbus/features/meeting/domain/models/drawing_tool.dart';
-import 'package:waterbus/features/meeting/domain/models/stroke.dart';
 
 extension DrawingToolExtensions on DrawingTool {
-  StrokeType get strokeType {
+  DrawTypes get strokeType {
     switch (this) {
       case DrawingTool.pencil:
-        return StrokeType.normal;
+        return DrawTypes.normal;
       case DrawingTool.fill:
-        return StrokeType.normal;
+        return DrawTypes.normal;
       case DrawingTool.eraser:
-        return StrokeType.eraser;
+        return DrawTypes.eraser;
       case DrawingTool.line:
-        return StrokeType.line;
+        return DrawTypes.line;
       case DrawingTool.polygon:
-        return StrokeType.polygon;
+        return DrawTypes.polygon;
       case DrawingTool.square:
-        return StrokeType.square;
+        return DrawTypes.square;
       case DrawingTool.circle:
-        return StrokeType.circle;
+        return DrawTypes.circle;
     }
   }
 

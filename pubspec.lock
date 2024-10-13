@@ -791,7 +791,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.2+6"
-<<<<<<< HEAD
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -800,8 +799,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
-=======
->>>>>>> cb0470d4ace284b9cf96530b48b2ec981a72abd9
   freezed_annotation:
     dependency: transitive
     description:
@@ -2086,18 +2083,10 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-<<<<<<< HEAD
       path: "D:\\Work\\waterbus-flutter-sdk"
       relative: false
     source: path
     version: "1.5.0"
-=======
-      name: waterbus_sdk
-      sha256: c76ea7e6db5cea7aa403f06fe0235502b2da12a9e383a1ed6df8d7a7e4344af8
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.1"
->>>>>>> cb0470d4ace284b9cf96530b48b2ec981a72abd9
   web:
     dependency: "direct overridden"
     description:

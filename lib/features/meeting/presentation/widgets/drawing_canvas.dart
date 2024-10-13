@@ -2,11 +2,13 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waterbus_sdk/types/models/draw_model.dart';
+import 'package:waterbus_sdk/types/models/draw_socket_event.dart';
+
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/models/drawing_canvas_options.dart';
-import 'package:waterbus/features/meeting/domain/models/drawing_tool.dart';
-import 'package:waterbus/features/meeting/domain/models/stroke.dart';
 import 'package:waterbus/features/meeting/extensions/drawing_tool_extensions.dart';
 import 'package:waterbus/features/meeting/extensions/offset_extensions.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart';
@@ -15,16 +17,18 @@ import 'package:waterbus/features/meeting/presentation/notifiers/current_stroke_
 
 class DrawingCanvas extends StatefulWidget {
   final DrawingCanvasOptions options;
-  final Function(Stroke?)? onDrawingStrokeChanged;
   final GlobalKey canvasKey;
   final ui.Image? backgroundImage;
+  final void Function(DrawModel?) historyDraw;
+  final CurrentStroke? currentDraw;
 
   const DrawingCanvas({
     super.key,
     required this.options,
-    this.onDrawingStrokeChanged,
     required this.canvasKey,
     this.backgroundImage,
+    required this.historyDraw,
+    this.currentDraw,
   });
 
   @override
@@ -32,7 +36,7 @@ class DrawingCanvas extends StatefulWidget {
 }
 
 class _DrawingCanvasState extends State<DrawingCanvas> {
-  final _currentStroke = CurrentStrokeValueNotifier();
+  CurrentStroke get _currentStroke => widget.currentDraw!;
 
   void _onPointerDown(PointerDownEvent event) {
     final box = context.findRenderObject() as RenderBox?;
@@ -58,20 +62,24 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     setState(() {
       _currentStroke.addPoint(standardOffset);
     });
-    widget.onDrawingStrokeChanged?.call(_currentStroke.value);
   }
 
   void _onPointerUp(PointerUpEvent event) {
     if (!_currentStroke.hasStroke) return;
     final newStroke = _currentStroke.value!.copyWith();
-    AppBloc.drawingBloc.add(OnDrawingChangedEvent(drawingModel: newStroke));
+    widget.historyDraw(newStroke);
+    AppBloc.drawingBloc.add(
+      OnDrawingChangedEvent(
+        drawingModel: newStroke,
+        action: UpdateDrawEnum.add,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DrawingBloc, DrawingState>(
       builder: (context, state) {
-        debugPrint(state.props.length.toString());
         return BlocBuilder<DrawingOptionsBloc, DrawingOptionsState>(
           builder: (context, stateOptions) {
             return MouseRegion(
@@ -119,8 +127,8 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
 }
 
 class _DrawingCanvasPainter extends CustomPainter {
-  final List<Stroke>? strokesListenable;
-  final CurrentStrokeValueNotifier? strokeListenable;
+  final List<DrawModel>? strokesListenable;
+  final CurrentStroke? strokeListenable;
   final Color backgroundColor;
   final bool? showGrid;
   final ui.Image? backgroundImageListenable;
@@ -153,7 +161,7 @@ class _DrawingCanvasPainter extends CustomPainter {
       }
     }
 
-    final strokes = List<Stroke>.from(strokesListenable ?? []);
+    final strokes = List<DrawModel>.from(strokesListenable ?? []);
 
     if (strokeListenable?.hasStroke ?? false) {
       strokes.add(strokeListenable!.value!);
@@ -165,13 +173,11 @@ class _DrawingCanvasPainter extends CustomPainter {
 
       final strokeSize = max(stroke.size, 1.0);
       final paint = Paint()
-        ..color = stroke.color.withOpacity(stroke.opacity)
+        ..color = stroke.color.withOpacity(1.00)
         ..strokeWidth = strokeSize
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round
         ..style = PaintingStyle.stroke;
-
-      debugPrint("type Stroke: ${stroke.toString()}");
 
       // Pencil stroke
       if (stroke is NormalStroke) {
@@ -324,7 +330,7 @@ class _DrawingCanvasPainter extends CustomPainter {
     }
   }
 
-  Path _getStrokePath(Stroke stroke, Size size) {
+  Path _getStrokePath(DrawModel stroke, Size size) {
     final path = Path();
     final points = stroke.points;
     if (points.isNotEmpty) {

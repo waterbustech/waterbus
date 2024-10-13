@@ -48,7 +48,7 @@ class DrawingOptionsState extends Equatable {
         drawingTool,
         showGrid,
         polygonSides,
-        filled
+        filled,
       ];
 }
 

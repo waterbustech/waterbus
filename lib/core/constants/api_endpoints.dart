@@ -6,7 +6,7 @@ class ApiEndpoints {
 
   static const String baseUrl = 'https://service-v2.waterbus.tech/busapi/v1/';
   static const String wsUrl = 'https://sfu-v2.waterbus.tech';
-  
+
   // Auth
   static const String auth = 'auth';
   static const String presignedUrlS3 = 'auth/presigned-url';

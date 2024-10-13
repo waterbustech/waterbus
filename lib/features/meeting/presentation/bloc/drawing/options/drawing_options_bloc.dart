@@ -1,7 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:waterbus/features/meeting/domain/models/drawing_tool.dart';
 
 part 'drawing_options_event.dart';
@@ -30,7 +32,7 @@ class DrawingOptionsBloc
       if (event is ToggleGridEvent) {
         emit(state.copyWith(showGrid: !state.showGrid));
       }
-            if (event is ToggleFilledEvent) {
+      if (event is ToggleFilledEvent) {
         emit(state.copyWith(filled: !state.filled));
       }
     });

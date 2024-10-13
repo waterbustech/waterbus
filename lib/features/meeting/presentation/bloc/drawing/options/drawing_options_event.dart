@@ -52,7 +52,6 @@ class ToggleGridEvent extends DrawingOptionsEvent {
   List<Object?> get props => [showGrid];
 }
 
-
 class ToggleFilledEvent extends DrawingOptionsEvent {
   final bool filled;
   const ToggleFilledEvent(this.filled);
