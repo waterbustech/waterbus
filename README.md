@@ -97,13 +97,6 @@ These commands are intended for maintainers only.
 
 ### Android
 
-Set keystore password if you use jks in this repo, or create your own
-
-```bash
-export KEY_WATERBUS_PASSWORD=banhcuon
-export ALIAS_WATERBUS_PASSWORD=banhcuon
-```
-
 Traditional APK
 
 ```bash
