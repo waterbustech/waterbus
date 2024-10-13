@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -174,7 +175,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                       AppBloc.meetingBloc.add(const ToggleSubtitleEvent());
                     },
                   ),
-                if (SizerUtil.isDesktop)
+                if (SizerUtil.isDesktop && meeting.isHost)
                   CallActionButton(
                     icon: Icons.fiber_manual_record_rounded,
                     backgroundColor:

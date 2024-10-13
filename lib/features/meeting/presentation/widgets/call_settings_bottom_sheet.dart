@@ -12,7 +12,6 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';
@@ -59,19 +58,6 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               SizedBox(height: 12.sp),
               const Divider(),
-              CallSettingButton(
-                visible: meeting.isHost,
-                icon: PhosphorIcons.slidersHorizontal(),
-                lable: Strings.editMeeting.i18n,
-                onTap: () {
-                  AppNavigator().push(
-                    Routes.createMeetingRoute,
-                    arguments: {
-                      'meeting': meeting,
-                    },
-                  );
-                },
-              ),
               CallSettingButton(
                 icon: PhosphorIcons.phone(),
                 lable: Strings.callSettings.i18n,

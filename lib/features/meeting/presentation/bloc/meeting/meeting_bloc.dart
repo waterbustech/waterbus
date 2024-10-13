@@ -523,7 +523,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   void _onEventChanged(CallbackPayload event) {
     if (event.event == CallbackEvents.meetingEnded) {
-      _pipChannel.stopPip();
+      if (WebRTC.platformIsAndroid) {
+        SimplePip().setAutoPipMode(autoEnter: false);
+      } else {
+        _pipChannel.stopPip();
+      }
     } else {
       startPiP();
     }
