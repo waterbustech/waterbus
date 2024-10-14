@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -11,7 +10,6 @@ import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
@@ -116,7 +114,7 @@ class _MeetingBodyState extends State<MeetingBody> {
             EdgeInsets.only(bottom: 12.sp),
           ),
           child: SizedBox(
-            width: SizerUtil.isDesktop ? 350.sp : double.infinity,
+            width: SizerUtil.isDesktop ? 300.sp : double.infinity,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,45 +153,22 @@ class _MeetingBodyState extends State<MeetingBody> {
                     }
                   },
                 ),
-                if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
-                  CallActionButton(
-                    icon: PhosphorIcons.sparkle(),
-                    iconColor: Theme.of(context).colorScheme.primary,
-                    onTap: () {
-                      setState(() {
-                        _isFilterSettingsOpened = !_isFilterSettingsOpened;
-                      });
-                    },
-                  ),
-                if (SizerUtil.isDesktop)
-                  CallActionButton(
-                    icon: Icons.subtitles_outlined,
-                    backgroundColor: widget.state.isSubtitleEnabled
-                        ? Theme.of(context).colorScheme.primary
-                        : null,
-                    onTap: () {
-                      AppBloc.meetingBloc.add(const ToggleSubtitleEvent());
-                    },
-                  ),
-                if (SizerUtil.isDesktop && meeting.isHost)
-                  CallActionButton(
-                    icon: Icons.fiber_manual_record_rounded,
-                    backgroundColor:
-                        widget.state.isRecording ? Colors.red : null,
-                    onTap: () {
-                      if (widget.state.isRecording) {
-                        AppBloc.meetingBloc.add(const StopRecordEvent());
-                      } else {
-                        AppBloc.meetingBloc.add(const StartRecordEvent());
-                      }
-                    },
-                  ),
                 CallActionButton(
                   icon: PhosphorIcons.gearSix(),
                   onTap: () {
                     showDialogWaterbus(
-                      alignment: Alignment.center,
-                      child: const CallSettingsBottomSheet(),
+                      onlyShowAsDialog: true,
+                      maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
+                      paddingBottom: SizerUtil.isDesktop ? 80.sp : 20.sp,
+                      paddingHorizontal: 10.sp,
+                      alignment: Alignment.bottomCenter,
+                      child: CallSettingsBottomSheet(
+                        onBeautyFiltersTapped: () {
+                          setState(() {
+                            _isFilterSettingsOpened = !_isFilterSettingsOpened;
+                          });
+                        },
+                      ),
                     );
                   },
                 ),
@@ -276,7 +251,13 @@ class _MeetingBodyState extends State<MeetingBody> {
                       curve: Curves.fastLinearToSlowEaseIn,
                       width: _isFilterSettingsOpened ? 40.w : 0,
                       child: _isFilterSettingsOpened
-                          ? const BeautyFilterWidget()
+                          ? BeautyFilterWidget(
+                              handleClosed: () {
+                                setState(() {
+                                  _isFilterSettingsOpened = false;
+                                });
+                              },
+                            )
                           : const SizedBox(),
                     ),
                   ),
