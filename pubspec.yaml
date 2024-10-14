@@ -98,6 +98,7 @@ dependencies:
   super_sliver_list: ^0.4.1
   syncfusion_flutter_charts:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
+  diffutil_dart: ^4.0.1
 
   # Code Editor
   re_editor: ^0.3.1

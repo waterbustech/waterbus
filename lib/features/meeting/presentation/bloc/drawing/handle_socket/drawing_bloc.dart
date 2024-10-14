@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:diffutil_dart/diffutil.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/enums/draw_types.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 import 'package:waterbus_sdk/types/models/draw_socket_event.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/xmodels/drawing_model.dart';
 
 // ignore: unused_import
 
@@ -29,37 +30,60 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
         _waterbusSdk.getWhiteBoard(event.meetingId);
       }
       if (event is OnDrawingChangedEvent) {
-        final newState = addStrokeLocal([event.drawingModel]);
-        final updateState = UpdateDrawingState(
-            localProps: newState, remoteProps: state.remoteProps);
-        emit(updateState);
-
-        debugPrint("updateState localProps ${updateState.localProps}");
-        debugPrint("updateState remoteProps${updateState.remoteProps}");
-        debugPrint("State localProps ${state.localProps}");
-        debugPrint("State remoteProps${state.remoteProps}");
-        _waterbusSdk.updateWhiteBoard(
-          AppBloc.meetingBloc.state.meeting!.id,
-          event.drawingModel,
-          event.action.name,
-        );
-      }
-      if (event is OnDrawingDeletedEvent) {
-        emit(UpdateDrawingState());
+        if (event.action == UpdateDrawEnum.remove) {
+          final List<DrawModel> newList = List.from(state.localProps)
+            ..removeLast();
+          final updateState = UpdateDrawingState(
+            localProps: newList,
+            remoteProps: state.remoteProps,
+          );
+          emit(updateState);
+          _waterbusSdk.updateWhiteBoard(
+            AppBloc.meetingBloc.state.meeting!.id,
+            event.drawingModel,
+            event.action.name,
+          );
+        } else if (event.action == UpdateDrawEnum.add) {
+          final newState = addStrokeLocal([event.drawingModel]);
+          final updateState = UpdateDrawingState(
+            localProps: newState,
+            remoteProps: state.remoteProps,
+          );
+          emit(updateState);
+          _waterbusSdk.updateWhiteBoard(
+            AppBloc.meetingBloc.state.meeting!.id,
+            event.drawingModel,
+            event.action.name,
+          );
+        } else {
+          // debugPrint("wrong Update Enum");
+        }
       }
       if (event is OnRemoteDrawingChangedEvent) {
-        final newState = addStrokeRemote(event.points);
+        if (event.action == UpdateDrawEnum.remove) {
+          final List<DrawModel> newList = List.from(state.remoteProps)
+            ..removeLast();
+          final updateState = UpdateDrawingState(
+            localProps: state.localProps,
+            remoteProps: newList,
+          );
+          emit(updateState);
+        } else if (event.action == UpdateDrawEnum.remove) {
+          final newState = addStrokeRemote(event.points);
 
-        final updateState = UpdateDrawingState(
-            remoteProps: newState, localProps: state.localProps);
+          final updateState = UpdateDrawingState(
+            remoteProps: newState,
+            localProps: state.localProps,
+          );
 
-        emit(updateState);
+          emit(updateState);
+        }
       }
-
+      if (event is OnDrawingDeletedEvent) {
+        emit(const UpdateDrawingState());
+      }
       if (event is OnRemoteDrawingDeletedEvent) {
-        final updateState = UpdateDrawingState(remoteProps: []);
-
-        emit(updateState);
+        emit(const UpdateDrawingState());
       }
     });
   }
@@ -71,8 +95,12 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
       AppBloc.drawingBloc.add(OnRemoteDrawingInitEvent(points: message));
     } else if (rawSocketEvent.event == DrawSocketEnum.update) {
       final List<DrawModel> message = rawSocketEvent.draw;
-      debugPrint("DrawSocketEnum.update");
-      AppBloc.drawingBloc.add(OnRemoteDrawingChangedEvent(points: message));
+      AppBloc.drawingBloc.add(
+        OnRemoteDrawingChangedEvent(
+          points: message,
+          action: rawSocketEvent.action!,
+        ),
+      );
     } else {
       AppBloc.drawingBloc.add(OnRemoteDrawingDeletedEvent());
     }

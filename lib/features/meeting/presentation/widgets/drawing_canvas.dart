@@ -74,6 +74,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
         action: UpdateDrawEnum.add,
       ),
     );
+    _currentStroke.clear();
   }
 
   @override

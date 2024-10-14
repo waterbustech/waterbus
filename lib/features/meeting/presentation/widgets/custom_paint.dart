@@ -56,7 +56,6 @@ class DrawingScreenState extends State<DrawingScreen>
 
   void deleteCurrentDraw() {
     setState(() {
-      debugPrint("deleteCurrentDraw");
       _currentDraw.clear();
     });
   }

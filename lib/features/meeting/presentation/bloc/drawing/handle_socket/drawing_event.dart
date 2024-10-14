@@ -30,7 +30,11 @@ class OnRemoteDrawingInitEvent extends DrawingEvent {
 
 class OnRemoteDrawingChangedEvent extends DrawingEvent {
   final List<DrawModel> points;
-  OnRemoteDrawingChangedEvent({required this.points});
+  final UpdateDrawEnum action;
+  OnRemoteDrawingChangedEvent({
+    required this.points,
+    required this.action,
+  });
 }
 
 class OnRemoteDrawingDeletedEvent extends DrawingEvent {

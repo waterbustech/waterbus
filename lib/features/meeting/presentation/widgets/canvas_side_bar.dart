@@ -258,14 +258,13 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                                         action: UpdateDrawEnum.remove,
                                       ),
                                     ),
-                                    state.localProps.removeLast(),
                                   }
                               : null,
                           child: const Text('Undo'),
                         ),
                         TextButton(
                           onPressed: widget.historyDraw!.isNotEmpty &&
-                                  widget.historyDraw!.length ==
+                                  widget.historyDraw!.length !=
                                       state.localProps.length
                               ? () => {
                                     AppBloc.drawingBloc.add(
