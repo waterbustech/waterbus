@@ -15,9 +15,9 @@ class MenuItemModel {
 }
 
 final List<MenuItemModel> menuItems = [
-  const MenuItemModel(
+  MenuItemModel(
     title: Strings.profile,
-    icon: Icons.person_3_outlined,
+    icon: PhosphorIcons.userCircle(),
   ),
   MenuItemModel(
     title: Strings.talkWithAI,

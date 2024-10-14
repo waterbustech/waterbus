@@ -99,6 +99,7 @@ class Strings {
   static const String beautyFilters = 'beautyFilters';
   static const String virtualBackground = 'virtualBackground';
   static const String subtitle = 'subtitle';
+  static const String record = 'record';
   static const String callStats = 'callStats';
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
@@ -130,6 +131,8 @@ class Strings {
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
   static const String appearance = 'appearance';
+  static const String colorMode = 'colorMode';
+  static const String primaryColor = 'primaryColor';
   static const String callAndMeeting = 'callAndMeeting';
   static const String serverConfiguration = 'serverConfiguration';
   static const String clearCache = 'clearCache';

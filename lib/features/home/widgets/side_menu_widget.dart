@@ -99,7 +99,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                                   ),
                             ),
                             TextSpan(
-                              text: '\t\tv1.2.0',
+                              text: '\t\t$kAppVersion',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall

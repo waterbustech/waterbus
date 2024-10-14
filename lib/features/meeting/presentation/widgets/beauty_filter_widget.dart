@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -13,7 +14,13 @@ import 'package:waterbus/gen/fonts.gen.dart';
 class BeautyFilterWidget extends StatefulWidget {
   final Participant? participant;
   final CallState? callState;
-  const BeautyFilterWidget({super.key, this.callState, this.participant});
+  final Function? handleClosed;
+  const BeautyFilterWidget({
+    super.key,
+    this.callState,
+    this.participant,
+    this.handleClosed,
+  });
 
   @override
   State<StatefulWidget> createState() => _BeautyFilterWidgetState();
@@ -36,6 +43,19 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 12.sp),
+          if (SizerUtil.isDesktop)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () => widget.handleClosed?.call(),
+                  icon: Icon(
+                    PhosphorIcons.x(),
+                    size: 20.sp,
+                  ),
+                ),
+              ],
+            ),
           LayoutBuilder(
             builder: (context, constraints) {
               return Row(
