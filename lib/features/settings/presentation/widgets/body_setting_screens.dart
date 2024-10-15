@@ -195,7 +195,9 @@ class BodySettingScreens extends StatelessWidget {
               SizedBox(height: 18.sp),
             ],
             SettingRowButton(
-              onTap: () {},
+              onTap: () {
+                AppNavigator().push(Routes.notificationSettings);
+              },
               title: Strings.notifications.i18n,
               isLast: false,
               icon: PhosphorIcons.bell(PhosphorIconsStyle.fill),

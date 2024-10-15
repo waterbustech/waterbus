@@ -137,6 +137,13 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+  Strings.inAppNotification: 'Thông báo trong ứng dụng',
+  Strings.inMeeting: 'Trong cuộc họp',
+  Strings.newMessage: 'Tin nhắn mới',
+  Strings.newInvitation: 'Lời mời mới',
+  Strings.participantJoined: 'Có người tham gia',
+  Strings.participantLeft: 'Có người rời phòng',
+  Strings.participantRaiseHand: 'Có người giơ tay',
 
   // Chat screen
   Strings.videoCall: 'Gọi video',

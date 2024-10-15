@@ -5,6 +5,7 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -54,6 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return const RecentMeetings();
       case Strings.chat:
         return const ChatsScreen();
+      case Strings.notifications:
+        return const NotificationSettingsScreen();
       case Strings.appearance:
         return const ThemeScreen(isSettingDesktop: true);
       case Strings.language:

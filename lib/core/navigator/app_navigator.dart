@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -77,6 +78,11 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const PrivacyScreen(),
+        );
+      case Routes.notificationSettings:
+        return _buildRoute(
+          settings,
+          const NotificationSettingsScreen(),
         );
 
       // Meeting

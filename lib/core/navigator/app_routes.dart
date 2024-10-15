@@ -12,6 +12,7 @@ class Routes {
   static const String privacyRoute = '/privacy';
   static const String langRoute = '/language';
   static const String themeRoute = '/appearance';
+  static const String notificationSettings = '/notification-settings';
 
   // Meeting
   static const String meetingRoute = '/r/';

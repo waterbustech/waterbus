@@ -138,6 +138,13 @@ Map<String, String> english = {
   Strings.changeYourAvatar: 'Change your avatar',
   Strings.chooseFromGallery: 'Choose photo from gallery',
   Strings.takeAPhoto: 'Take a photo',
+  Strings.inAppNotification: 'In-app notification',
+  Strings.inMeeting: 'In meeting',
+  Strings.newMessage: 'New message',
+  Strings.newInvitation: 'New invitation',
+  Strings.participantJoined: 'Participant joined',
+  Strings.participantLeft: 'Participant left',
+  Strings.participantRaiseHand: 'Participant raise hand',
 
   // Chat Screen
   Strings.videoCall: 'Video call',

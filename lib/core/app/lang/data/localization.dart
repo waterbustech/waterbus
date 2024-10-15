@@ -141,6 +141,13 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+  static const String inAppNotification = 'inAppNotification';
+  static const String inMeeting = 'inMeeting';
+  static const String newMessage = 'newMessage';
+  static const String newInvitation = 'newInvitation';
+  static const String participantJoined = 'participantJoined';
+  static const String participantLeft = 'participantLeft';
+  static const String participantRaiseHand = 'participantRaiseHand';
 
   // Chat Screen
   static const String videoCall = 'videoCall';
