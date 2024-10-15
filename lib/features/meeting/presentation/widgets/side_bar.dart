@@ -66,7 +66,7 @@ class _SideBarState extends State<SideBar> {
                       child: _option == SideBarOptions.code
                           ? const CodeEditorPad()
                           : _option == SideBarOptions.paint
-                              ? DrawingScreen(meetingId: widget.meetingId)
+                              ? const DrawingScreen()
                               : Container(
                                   color: Colors.transparent,
                                 ),

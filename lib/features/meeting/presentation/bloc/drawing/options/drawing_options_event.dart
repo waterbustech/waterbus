@@ -26,15 +26,6 @@ class ChangeStrokeSizeEvent extends DrawingOptionsEvent {
   List<Object?> get props => [strokeSize];
 }
 
-class ChangeEraserSizeEvent extends DrawingOptionsEvent {
-  final double eraserSize;
-
-  const ChangeEraserSizeEvent(this.eraserSize);
-
-  @override
-  List<Object?> get props => [eraserSize];
-}
-
 class ChangeDrawingToolEvent extends DrawingOptionsEvent {
   final DrawingTool tool;
 

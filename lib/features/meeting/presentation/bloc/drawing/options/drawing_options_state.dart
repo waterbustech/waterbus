@@ -4,7 +4,6 @@ part of 'drawing_options_bloc.dart';
 class DrawingOptionsState extends Equatable {
   final Color selectedColor;
   final double strokeSize;
-  final double eraserSize;
   final DrawingTool drawingTool;
   final bool showGrid;
   final int polygonSides;
@@ -13,7 +12,6 @@ class DrawingOptionsState extends Equatable {
   const DrawingOptionsState({
     required this.selectedColor,
     required this.strokeSize,
-    required this.eraserSize,
     required this.drawingTool,
     required this.showGrid,
     required this.polygonSides,
@@ -23,7 +21,6 @@ class DrawingOptionsState extends Equatable {
   DrawingOptionsState copyWith({
     Color? selectedColor,
     double? strokeSize,
-    double? eraserSize,
     DrawingTool? drawingTool,
     bool? showGrid,
     int? polygonSides,
@@ -32,7 +29,6 @@ class DrawingOptionsState extends Equatable {
     return DrawingOptionsState(
       selectedColor: selectedColor ?? this.selectedColor,
       strokeSize: strokeSize ?? this.strokeSize,
-      eraserSize: eraserSize ?? this.eraserSize,
       drawingTool: drawingTool ?? this.drawingTool,
       showGrid: showGrid ?? this.showGrid,
       polygonSides: polygonSides ?? this.polygonSides,
@@ -44,7 +40,6 @@ class DrawingOptionsState extends Equatable {
   List<Object?> get props => [
         selectedColor,
         strokeSize,
-        eraserSize,
         drawingTool,
         showGrid,
         polygonSides,
@@ -57,7 +52,6 @@ class DrawingOptionsInitial extends DrawingOptionsState {
       : super(
           selectedColor: Colors.black,
           strokeSize: 10.0,
-          eraserSize: 30.0,
           drawingTool: DrawingTool.pencil,
           showGrid: false,
           polygonSides: 3,

@@ -1,10 +1,13 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 import 'package:waterbus_sdk/types/models/draw_socket_event.dart';
+
 import 'package:waterbus/features/app/bloc/bloc.dart';
 
 part 'drawing_event.dart';
@@ -23,7 +26,7 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
       } else if (event is OnRemoteDrawingChangedEvent) {
         _handleRemoteDrawingChanged(event, emit);
       } else if (event is OnDrawingDeletedEvent) {
-        _handleDrawingDeleted(emit);
+        _handleDrawingDeleted(emit, event.meetingId);
       } else if (event is OnRemoteDrawingDeletedEvent) {
         _handleRemoteDrawingDeleted(emit);
       }
@@ -82,8 +85,6 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     OnRemoteDrawingChangedEvent event,
     Emitter<DrawingState> emit,
   ) {
-    debugPrint(event.action.toString());
-
     if (event.action == UpdateDrawEnum.remove) {
       _removeRemoteStrokes(event.points, emit);
     } else if (event.action == UpdateDrawEnum.add) {
@@ -100,9 +101,6 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     final updatedList = newList
         .where((element) => !itemToRemove.contains(element.createdAt))
         .toList();
-    for (final a in updatedList) {
-      debugPrint(a.createdAt.toIso8601String());
-    }
     final updateState = UpdateDrawingState(
       localProps: state.localProps,
       remoteProps: updatedList,
@@ -119,8 +117,8 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     emit(updateState);
   }
 
-  void _handleDrawingDeleted(Emitter<DrawingState> emit) {
-    _waterbusSdk.cleanWhiteBoard();
+  void _handleDrawingDeleted(Emitter<DrawingState> emit, int meetingId) {
+    _waterbusSdk.cleanWhiteBoard(meetingId);
     emit(const UpdateDrawingState());
   }
 
@@ -141,6 +139,8 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
         ),
       );
     } else {
+      debugPrint("_handleRemoteDrawingDeleted");
+
       AppBloc.drawingBloc.add(OnRemoteDrawingDeletedEvent());
     }
   }

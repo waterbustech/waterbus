@@ -198,7 +198,6 @@ class _DrawingCanvasPainter extends CustomPainter {
         continue;
       }
 
-      // Eraser stroke. The eraser stroke is drawn with the background color.
       if (stroke is EraserStroke) {
         final path = _getStrokePath(stroke, size);
         canvas.drawPath(path, paint..color = backgroundColor);
@@ -207,7 +206,6 @@ class _DrawingCanvasPainter extends CustomPainter {
 
       // Line stroke.
       if (stroke is LineStroke) {
-        // scale the points to the standard size
         final firstPoint = points.first.scaleFromStandard(size);
         final lastPoint = points.last.scaleFromStandard(size);
         canvas.drawLine(firstPoint, lastPoint, paint);

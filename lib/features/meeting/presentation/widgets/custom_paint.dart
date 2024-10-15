@@ -16,9 +16,7 @@ import 'package:waterbus/features/meeting/presentation/widgets/canvas_side_bar.d
 import 'package:waterbus/features/meeting/presentation/widgets/drawing_canvas.dart';
 
 class DrawingScreen extends StatefulWidget {
-  final int meetingId;
-
-  const DrawingScreen({super.key, required this.meetingId});
+  const DrawingScreen({super.key});
 
   @override
   DrawingScreenState createState() => DrawingScreenState();
@@ -30,7 +28,6 @@ class DrawingScreenState extends State<DrawingScreen>
 
   Color selectedColor = Colors.black;
   double strokeSize = 10.0;
-  double eraserSize = 30.0;
   DrawingTool drawingTool = DrawingTool.pencil;
   final GlobalKey canvasGlobalKey = GlobalKey();
   bool filled = false;
@@ -47,7 +44,9 @@ class DrawingScreenState extends State<DrawingScreen>
       duration: const Duration(milliseconds: 300),
     );
     _currentDraw = CurrentStroke();
-    AppBloc.drawingBloc.add(OnDrawingInitEvent(meetingId: widget.meetingId));
+    AppBloc.drawingBloc.add(
+      OnDrawingInitEvent(meetingId: AppBloc.meetingBloc.state.meeting!.id),
+    );
   }
 
   void addHistoryDraw(DrawModel? draw) {
@@ -88,7 +87,7 @@ class DrawingScreenState extends State<DrawingScreen>
             top: kToolbarHeight - 15,
             child: SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(-1, 0),
+                begin: const Offset(0, -2),
                 end: Offset.zero,
               ).animate(animationController),
               child: CanvasSideBar(
@@ -130,14 +129,6 @@ class _CustomAppBar extends StatelessWidget {
               },
               icon: const Icon(Icons.menu),
             ),
-            const Text(
-              "Let's Draw",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 19,
-              ),
-            ),
-            const SizedBox.shrink(),
           ],
         ),
       ),

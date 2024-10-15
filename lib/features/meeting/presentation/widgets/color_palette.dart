@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart';
@@ -21,22 +22,16 @@ class ColorPalette extends StatelessWidget {
       Colors.white,
       ...Colors.primaries,
     ];
-    return Column(
+    final scrollController = ScrollController();
+
+    return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Row(
+        Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Select Color:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 10),
-            const Divider(
-              height: 40,
-            ),
             Container(
               height: 30,
               width: 30,
@@ -46,7 +41,9 @@ class ColorPalette extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(
+              height: 1.h,
+            ),
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
@@ -62,35 +59,49 @@ class ColorPalette extends StatelessWidget {
             ),
           ],
         ),
-        Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 2,
-          runSpacing: 2,
-          children: [
-            for (final Color color in colors)
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () => {
-                    AppBloc.drawingOptionsBloc.add(ChangeColorEvent(color)),
-                  },
-                  child: Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      color: color,
-                      border: Border.all(
-                        color: selectedColorListenable == color
-                            ? Colors.blue
-                            : Colors.grey,
-                        width: 1.5,
+        SizedBox(
+          width: 2.w,
+        ),
+        SizedBox(
+          height: 10.h,
+          width: 12.w,
+          child: Scrollbar(
+            controller: scrollController,
+            scrollbarOrientation: ScrollbarOrientation.right,
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 4,
+                runSpacing: 5,
+                children: [
+                  for (final Color color in colors)
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => {
+                          AppBloc.drawingOptionsBloc
+                              .add(ChangeColorEvent(color)),
+                        },
+                        child: Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                            color: color,
+                            border: Border.all(
+                              color: selectedColorListenable == color
+                                  ? Colors.blue
+                                  : Colors.grey,
+                              width: 1.5,
+                            ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                          ),
+                        ),
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
-                  ),
-                ),
+                ],
               ),
-          ],
+            ),
+          ),
         ),
         const SizedBox(height: 10),
       ],

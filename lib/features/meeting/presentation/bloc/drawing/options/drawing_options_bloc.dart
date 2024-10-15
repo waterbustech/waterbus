@@ -23,9 +23,6 @@ class DrawingOptionsBloc
       if (event is ChangeDrawingToolEvent) {
         emit(state.copyWith(drawingTool: event.tool));
       }
-      if (event is ChangeEraserSizeEvent) {
-        emit(state.copyWith(eraserSize: event.eraserSize));
-      }
       if (event is ChangePolygonSidesEvent) {
         emit(state.copyWith(polygonSides: event.sides));
       }
