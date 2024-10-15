@@ -7,6 +7,8 @@ import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -25,6 +27,9 @@ class AppBloc {
   static final RecentJoinedBloc recentJoinedBloc = getIt<RecentJoinedBloc>();
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
+  static final DrawingBloc drawingBloc = getIt<DrawingBloc>();
+  static final DrawingOptionsBloc drawingOptionsBloc =
+      getIt<DrawingOptionsBloc>();
 
   static final List<BlocProvider> providers = [
     BlocProvider<AuthBloc>(
@@ -59,6 +64,12 @@ class AppBloc {
     ),
     BlocProvider<ThemesBloc>(
       create: (context) => themesBloc,
+    ),
+    BlocProvider<DrawingBloc>(
+      create: (context) => drawingBloc,
+    ),
+    BlocProvider<DrawingOptionsBloc>(
+      create: (context) => drawingOptionsBloc,
     ),
   ];
 
