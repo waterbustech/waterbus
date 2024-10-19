@@ -24,6 +24,7 @@ import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
@@ -55,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return const RecentMeetings();
       case Strings.chat:
         return const ChatsScreen();
+      case Strings.storage:
+        return const RecordScreen();
       case Strings.notifications:
         return const NotificationSettingsScreen();
       case Strings.appearance:

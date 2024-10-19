@@ -112,6 +112,7 @@ Map<String, String> english = {
   Strings.virtualBackground: "Virtual background",
   Strings.subtitle: "Subtitle",
   Strings.record: "Record",
+  Strings.duration: "Duration",
   Strings.callStats: "Stats",
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",
@@ -122,6 +123,7 @@ Map<String, String> english = {
   Strings.updatedPersonalInformationSuccessfully:
       "Updated personal information successfully!",
   Strings.updateUsernameSuccessfully: "Updated username successful!",
+  Strings.createdAt: "Created at",
 
   // Settings screen
   Strings.myProfile: "My Profile",

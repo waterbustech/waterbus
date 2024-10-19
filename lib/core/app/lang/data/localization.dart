@@ -100,11 +100,13 @@ class Strings {
   static const String virtualBackground = 'virtualBackground';
   static const String subtitle = 'subtitle';
   static const String record = 'record';
+  static const String duration = 'duration';
   static const String callStats = 'callStats';
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
   static const String latency = 'latency';
   static const String back = 'back';
+  static const String createdAt = 'createdAt';
 
   // Profile screen
   static const String profile = 'profile';

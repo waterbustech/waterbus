@@ -94,11 +94,13 @@ Map<String, String> vietnamese = {
   Strings.virtualBackground: "Nền ảo",
   Strings.subtitle: "Phụ đề",
   Strings.record: "Ghi hình",
+  Strings.duration: "Thời lượng",
   Strings.callStats: "Thống kê",
   Strings.frameSent: "Khung đã gửi",
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
   Strings.back: "Thoát",
+  Strings.createdAt: "Tạo lúc",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
