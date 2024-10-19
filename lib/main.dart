@@ -10,6 +10,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:universal_io/io.dart';
+import 'package:video_player_media_kit/video_player_media_kit.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
@@ -26,6 +27,15 @@ void main(List<String> args) async {
           WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(
         widgetsBinding: widgetsBinding,
+      );
+
+      VideoPlayerMediaKit.ensureInitialized(
+        macOS: true,
+        windows: true,
+        linux: true,
+        web: true,
+        android: true,
+        iOS: true,
       );
 
       PaintingBinding.instance.imageCache.maximumSizeBytes =

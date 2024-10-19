@@ -214,6 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);
               break;
+            case Strings.storage:
+              AppNavigator().push(Routes.storage);
+              break;
             case Strings.settings:
               AppNavigator().push(Routes.settingsCallRoute);
               break;

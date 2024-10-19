@@ -13,6 +13,8 @@ class Routes {
   static const String langRoute = '/language';
   static const String themeRoute = '/appearance';
   static const String notificationSettings = '/notification-settings';
+  static const String storage = '/storage';
+  static const String videoPlayer = '/video-player';
 
   // Meeting
   static const String meetingRoute = '/r/';

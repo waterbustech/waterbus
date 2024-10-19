@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
+import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -83,6 +85,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const NotificationSettingsScreen(),
+        );
+      case Routes.storage:
+        return _buildRoute(settings, const RecordScreen());
+      case Routes.videoPlayer:
+        return _buildRoute(
+          settings,
+          VideoPlayerWidget(urlToVideo: arguments?['urlToVideo']),
         );
 
       // Meeting
