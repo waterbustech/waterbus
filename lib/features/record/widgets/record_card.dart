@@ -8,6 +8,8 @@ import 'package:waterbus_sdk/types/models/record_model.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/record/bloc/record/record_bloc.dart';
 
 class RecordCard extends StatelessWidget {
   final RecordModel record;
@@ -61,7 +63,9 @@ class RecordCard extends StatelessWidget {
                 icon: Icon(PhosphorIcons.playPause()),
               ),
               IconButton(
-                onPressed: () => {},
+                onPressed: () {
+                  AppBloc.recordBloc.add(SaveRecordFileEvent(record: record));
+                },
                 icon: Icon(PhosphorIcons.downloadSimple()),
               ),
             ],

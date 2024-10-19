@@ -22,6 +22,7 @@ import '../../features/record/bloc/record/record_bloc.dart' as _i625;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../helpers/file_saver.dart' as _i810;
 import '../method_channels/pip_channel.dart' as _i921;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
@@ -51,7 +52,6 @@ _i174.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
-  gh.factory<_i625.RecordBloc>(() => _i625.RecordBloc());
   gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
@@ -59,6 +59,7 @@ _i174.GetIt $initGetIt(
   gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
   gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
@@ -68,6 +69,8 @@ _i174.GetIt $initGetIt(
       () => _i193.LanguagesDatasourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
+  gh.factory<_i625.RecordBloc>(
+      () => _i625.RecordBloc(gh<_i810.FileSaverHelper>()));
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
   gh.factory<_i797.AuthBloc>(

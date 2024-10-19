@@ -10,3 +10,8 @@ sealed class RecordEvent extends Equatable {
 class OnRecordsEvent extends RecordEvent {}
 
 class GetRecordsEvent extends RecordEvent {}
+
+class SaveRecordFileEvent extends RecordEvent {
+  final RecordModel record;
+  const SaveRecordFileEvent({required this.record});
+}

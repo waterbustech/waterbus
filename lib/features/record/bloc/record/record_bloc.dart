@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/record_model.dart';
 
+import 'package:waterbus/core/helpers/file_saver.dart';
+
 part 'record_event.dart';
 part 'record_state.dart';
 
@@ -12,7 +14,9 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
   final List<RecordModel> _records = [];
 
-  RecordBloc() : super(RecordInitial()) {
+  final FileSaverHelper _fileSaver;
+
+  RecordBloc(this._fileSaver) : super(RecordInitial()) {
     on<RecordEvent>((event, emit) async {
       if (event is OnRecordsEvent) {
         if (_records.isNotEmpty) return;
@@ -24,6 +28,10 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
       if (event is GetRecordsEvent) {
         await _getRecords();
         emit(_recordDone);
+      }
+
+      if (event is SaveRecordFileEvent) {
+        await _fileSaver.saveFile(event.record.urlToVideo);
       }
     });
   }
