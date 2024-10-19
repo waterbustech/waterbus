@@ -4,22 +4,18 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waterbus_sdk/types/extensions/drawing_tool_extensions.dart';
+import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
-import 'package:waterbus_sdk/types/models/draw_socket_event.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/domain/models/drawing_canvas_options.dart';
-import 'package:waterbus/features/meeting/extensions/drawing_tool_extensions.dart';
 import 'package:waterbus/features/meeting/extensions/offset_extensions.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/handle_socket/drawing_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/notifiers/current_stroke_value_notifier.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
 
 class DrawingCanvas extends StatefulWidget {
-  final DrawingCanvasOptions options;
+  final DrawModel options;
   final GlobalKey canvasKey;
   final ui.Image? backgroundImage;
-  final void Function(DrawModel?) historyDraw;
   final CurrentStroke? currentDraw;
 
   const DrawingCanvas({
@@ -27,7 +23,6 @@ class DrawingCanvas extends StatefulWidget {
     required this.options,
     required this.canvasKey,
     this.backgroundImage,
-    required this.historyDraw,
     this.currentDraw,
   });
 
@@ -45,12 +40,11 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     final standardOffset = offset.scaleToStandard(box.size);
     _currentStroke.startStroke(
       standardOffset,
-      color: widget.options.strokeColor,
+      color: widget.options.color,
       size: widget.options.size,
-      opacity: widget.options.opacity,
-      type: widget.options.currentTool.strokeType,
+      type: widget.options.drawShapes.strokeType,
       sides: widget.options.polygonSides,
-      filled: widget.options.fillShape,
+      filled: widget.options.isFilled,
     );
   }
 
@@ -66,13 +60,10 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
 
   void _onPointerUp(PointerUpEvent event) {
     if (!_currentStroke.hasStroke) return;
-    final newStroke = _currentStroke.value!.copyWith();
-    widget.historyDraw(newStroke);
+
+    final newDraw = _currentStroke.value!.copyWith();
     AppBloc.drawingBloc.add(
-      OnDrawingChangedEvent(
-        drawingModel: newStroke,
-        action: UpdateDrawEnum.add,
-      ),
+      OnNewDrawEvent(drawList: newDraw),
     );
     _currentStroke.clear();
   }
@@ -81,10 +72,10 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
   Widget build(BuildContext context) {
     return BlocBuilder<DrawingBloc, DrawingState>(
       builder: (context, state) {
-        return BlocBuilder<DrawingOptionsBloc, DrawingOptionsState>(
+        return BlocBuilder<DrawingBloc, DrawingState>(
           builder: (context, stateOptions) {
             return MouseRegion(
-              cursor: widget.options.currentTool.cursor,
+              cursor: widget.options.drawShapes.cursor,
               child: Listener(
                 onPointerUp: _onPointerUp,
                 onPointerMove: _onPointerMove,
@@ -97,8 +88,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
                         child: CustomPaint(
                           isComplex: true,
                           painter: _DrawingCanvasPainter(
-                            strokesListenable: state.props,
-                            backgroundColor: widget.options.backgroundColor,
+                            strokesListenable: state.drawList,
                           ),
                         ),
                       ),
@@ -109,9 +99,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
                           isComplex: true,
                           painter: _DrawingCanvasPainter(
                             strokeListenable: _currentStroke,
-                            backgroundColor: widget.options.backgroundColor,
-                            showGrid: stateOptions.showGrid,
-                            backgroundImageListenable: widget.backgroundImage,
+                            showGrid: state.currentDraw!.showGrid,
                           ),
                         ),
                       ),
@@ -128,46 +116,22 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
 }
 
 class _DrawingCanvasPainter extends CustomPainter {
-  final List<DrawModel>? strokesListenable;
+  final List<DrawModel?>? strokesListenable;
   final CurrentStroke? strokeListenable;
-  final Color backgroundColor;
   final bool? showGrid;
-  final ui.Image? backgroundImageListenable;
 
   _DrawingCanvasPainter({
     this.strokesListenable,
     this.strokeListenable,
-    this.backgroundColor = Colors.white,
     this.showGrid,
-    this.backgroundImageListenable,
   }) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (backgroundImageListenable != null) {
-      final backgroundImage = backgroundImageListenable;
-
-      if (backgroundImage != null) {
-        canvas.drawImageRect(
-          backgroundImage,
-          Rect.fromLTWH(
-            0,
-            0,
-            backgroundImage.width.toDouble(),
-            backgroundImage.height.toDouble(),
-          ),
-          Rect.fromLTWH(0, 0, size.width, size.height),
-          Paint(),
-        );
-      }
-    }
-
     final strokes = List<DrawModel>.from(strokesListenable ?? []);
-
     if (strokeListenable?.hasStroke ?? false) {
       strokes.add(strokeListenable!.value!);
     }
-
     for (final stroke in strokes) {
       final points = stroke.points;
       if (points.isEmpty) continue;
@@ -200,7 +164,7 @@ class _DrawingCanvasPainter extends CustomPainter {
 
       if (stroke is EraserStroke) {
         final path = _getStrokePath(stroke, size);
-        canvas.drawPath(path, paint..color = backgroundColor);
+        canvas.drawPath(path, paint..color = Colors.white);
         continue;
       }
 

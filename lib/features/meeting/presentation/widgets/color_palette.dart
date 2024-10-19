@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/options/drawing_options_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
 
 class ColorPalette extends StatelessWidget {
   final Color selectedColorListenable;
@@ -20,9 +20,17 @@ class ColorPalette extends StatelessWidget {
     final List<Color> colors = [
       Colors.black,
       Colors.white,
-      ...Colors.primaries,
+      Colors.red,
+      Colors.green,
+      Colors.blue,
+      Colors.yellow,
+      Colors.orange,
+      Colors.purple,
+      Colors.pink,
+      Colors.teal,
+      Colors.brown,
+      Colors.cyan,
     ];
-    final scrollController = ScrollController();
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -38,7 +46,7 @@ class ColorPalette extends StatelessWidget {
               decoration: BoxDecoration(
                 color: selectedColorListenable,
                 border: Border.all(color: Colors.blue, width: 1.5),
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                shape: BoxShape.circle,
               ),
             ),
             SizedBox(
@@ -52,8 +60,8 @@ class ColorPalette extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   'assets/svgs/color_wheel.svg',
-                  height: 30,
-                  width: 30,
+                  height: 20,
+                  width: 20,
                 ),
               ),
             ),
@@ -63,43 +71,37 @@ class ColorPalette extends StatelessWidget {
           width: 2.w,
         ),
         SizedBox(
-          height: 10.h,
-          width: 12.w,
-          child: Scrollbar(
-            controller: scrollController,
-            scrollbarOrientation: ScrollbarOrientation.right,
-            child: SingleChildScrollView(
-              child: Wrap(
-                spacing: 4,
-                runSpacing: 5,
-                children: [
-                  for (final Color color in colors)
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () => {
-                          AppBloc.drawingOptionsBloc
-                              .add(ChangeColorEvent(color)),
-                        },
-                        child: Container(
-                          height: 25,
-                          width: 25,
-                          decoration: BoxDecoration(
-                            color: color,
-                            border: Border.all(
-                              color: selectedColorListenable == color
-                                  ? Colors.blue
-                                  : Colors.grey,
-                              width: 1.5,
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
+          height: 8.h,
+          width: 20.w,
+          child: Center(
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 7,
+              children: [
+                for (final Color color in colors)
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () => {
+                        AppBloc.drawingBloc.add(ChangeColorEvent(color)),
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          color: color,
+                          border: Border.all(
+                            color: selectedColorListenable == color
+                                ? Colors.blue
+                                : Colors.grey,
+                            width: 1.5,
                           ),
+                          shape: BoxShape.circle,
                         ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
           ),
         ),
@@ -125,7 +127,10 @@ class ColorPalette extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: const Text('Done'),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => {
+                AppBloc.drawingBloc.add(ChangeColorEvent(color)),
+                Navigator.pop(context),
+              },
             ),
           ],
         );
