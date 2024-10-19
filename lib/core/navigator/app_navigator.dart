@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/record/screens/record_screen.dart';
-import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -21,6 +19,8 @@ import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_cod
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
+import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';

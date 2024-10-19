@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus_sdk/types/models/record_model.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/date_time_helper.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
