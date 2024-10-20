@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/utils/list_custom/pagination_list_view.dart';
 import 'package:waterbus_sdk/types/models/record_model.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -46,8 +47,15 @@ class _RecordScreenState extends State<RecordScreen> {
                 final List<RecordModel> records =
                     state is GetRecordDone ? state.records : [];
 
-                return ListView.builder(
+                return PaginationListView(
                   physics: const BouncingScrollPhysics(),
+                  childShimmer: const SizedBox(),
+                  callBackLoadMore: () {
+                    AppBloc.recordBloc.add(GetRecordsEvent());
+                  },
+                  callBackRefresh: (handleFinish) {
+                    AppBloc.recordBloc.add(RefreshRecordsEvent(handleFinish));
+                  },
                   itemCount: records.length,
                   itemBuilder: (context, index) => RecordCard(
                     record: records[index],

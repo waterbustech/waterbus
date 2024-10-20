@@ -18,6 +18,13 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
 
   RecordBloc(this._fileSaver) : super(RecordInitial()) {
     on<RecordEvent>((event, emit) async {
+      if (event is RefreshRecordsEvent) {
+        _records.clear();
+        await _getRecords();
+        emit(_recordDone);
+        event.handleFinish();
+      }
+
       if (event is OnRecordsEvent) {
         if (_records.isNotEmpty) return;
 
@@ -39,7 +46,7 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   GetRecordDone get _recordDone => GetRecordDone(records: _records);
 
   Future<void> _getRecords() async {
-    final records = await _waterbusSdk.getRecords();
+    final records = await _waterbusSdk.getRecords(skip: _records.length);
 
     if (records.isEmpty) return;
 
