@@ -8,8 +8,8 @@ import 'package:waterbus_sdk/types/extensions/drawing_tool_extensions.dart';
 import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/core/types/extensions/offset_extensions.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 
 class DrawingCanvas extends StatefulWidget {

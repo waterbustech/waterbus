@@ -73,7 +73,7 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
         _currentPaint = _currentPaint?.copyWith(showGrid: event.showGrid);
         emit(_getDoneWhiteBoard);
       }
-      
+
       if (event is ToggleFilledEvent) {
         _currentPaint = _currentPaint?.copyWith(isFilled: event.filled);
         emit(_getDoneWhiteBoard);
