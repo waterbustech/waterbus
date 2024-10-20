@@ -16,7 +16,7 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   List<DrawModel> _paints = [];
-  DrawModel? _currentPaint;
+  DrawModel _currentPaint = DrawModel(points: const []);
 
   WhiteBoardBloc() : super(WhiteBoardInitialState()) {
     on<WhiteBoardEvent>((event, emit) {
@@ -50,39 +50,39 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
       // MARK: Options
       if (event is ChangeColorEvent) {
-        _currentPaint = _currentPaint?.copyWith(color: event.color);
+        _currentPaint = _currentPaint.copyWith(color: event.color);
         emit(_getDoneWhiteBoard);
       }
 
       if (event is ChangeStrokeSizeEvent) {
-        _currentPaint = _currentPaint?.copyWith(size: event.strokeSize);
+        _currentPaint = _currentPaint.copyWith(size: event.strokeSize);
         emit(_getDoneWhiteBoard);
       }
 
       if (event is ChangeDrawShapesEvent) {
-        _currentPaint = _currentPaint?.copyWith(drawShapes: event.shapes);
+        _currentPaint = _currentPaint.copyWith(drawShapes: event.shapes);
         emit(_getDoneWhiteBoard);
       }
 
       if (event is ChangePolygonSidesEvent) {
-        _currentPaint = _currentPaint?.copyWith(polygonSides: event.sides);
+        _currentPaint = _currentPaint.copyWith(polygonSides: event.sides);
         emit(_getDoneWhiteBoard);
       }
 
       if (event is ToggleGridEvent) {
-        _currentPaint = _currentPaint?.copyWith(showGrid: event.showGrid);
+        _currentPaint = _currentPaint.copyWith(showGrid: event.showGrid);
         emit(_getDoneWhiteBoard);
       }
 
       if (event is ToggleFilledEvent) {
-        _currentPaint = _currentPaint?.copyWith(isFilled: event.filled);
+        _currentPaint = _currentPaint.copyWith(isFilled: event.filled);
         emit(_getDoneWhiteBoard);
       }
     });
   }
 
   GetDoneWhiteBoard get _getDoneWhiteBoard => GetDoneWhiteBoard(
-        currentDraw: _currentPaint,
+        currentPaint: _currentPaint,
         paints: _paints,
       );
 

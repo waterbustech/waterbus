@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
@@ -12,15 +13,16 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/canvas_side_bar.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/drawing_canvas.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
-class DrawingScreen extends StatefulWidget {
-  const DrawingScreen({super.key});
+class WhiteBoardWidget extends StatefulWidget {
+  const WhiteBoardWidget({super.key});
 
   @override
-  DrawingScreenState createState() => DrawingScreenState();
+  WhiteBoardWidgetState createState() => WhiteBoardWidgetState();
 }
 
-class DrawingScreenState extends State<DrawingScreen>
+class WhiteBoardWidgetState extends State<WhiteBoardWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController animationController;
 
@@ -34,7 +36,7 @@ class DrawingScreenState extends State<DrawingScreen>
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: 300.milliseconds,
     );
     _currentDraw = CurrentStroke();
     AppBloc.whiteBoardBloc.add(
@@ -51,7 +53,7 @@ class DrawingScreenState extends State<DrawingScreen>
           BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
             builder: (context, state) {
               return DrawingCanvas(
-                options: state.currentDraw!,
+                options: state.currentPaint,
                 currentDraw: _currentDraw,
                 canvasKey: canvasGlobalKey,
                 backgroundImage: backgroundImage,
@@ -65,9 +67,12 @@ class DrawingScreenState extends State<DrawingScreen>
                 begin: const Offset(0, -2),
                 end: Offset.zero,
               ).animate(animationController),
-              child: CanvasSideBar(
-                canvasGlobalKey: canvasGlobalKey,
-                historyDraw: historyDraw,
+              child: SizedBox(
+                width: 100.w,
+                child: CanvasSideBar(
+                  canvasGlobalKey: canvasGlobalKey,
+                  historyDraw: historyDraw,
+                ),
               ),
             ),
           ),

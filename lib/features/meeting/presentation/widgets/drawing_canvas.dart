@@ -99,7 +99,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
                           isComplex: true,
                           painter: _DrawingCanvasPainter(
                             strokeListenable: _currentStroke,
-                            showGrid: state.currentDraw!.showGrid,
+                            showGrid: state.currentPaint.showGrid,
                           ),
                         ),
                       ),

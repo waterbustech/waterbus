@@ -1,28 +1,28 @@
 part of 'whiteboard_bloc.dart';
 
 class WhiteBoardState extends Equatable {
-  final List<DrawModel?>? paints;
-  final DrawModel? currentDraw;
+  final List<DrawModel> paints;
+  final DrawModel currentPaint;
   const WhiteBoardState({
-    this.paints,
-    this.currentDraw,
+    required this.paints,
+    required this.currentPaint,
   });
 
   @override
   List<Object?> get props => [
         paints,
-        currentDraw,
+        currentPaint,
       ];
 }
 
 final class WhiteBoardInitialState extends WhiteBoardState {
   WhiteBoardInitialState()
       : super(
-          currentDraw: DrawModel(points: const []),
+          currentPaint: DrawModel(points: const []),
           paints: [],
         );
 }
 
 final class GetDoneWhiteBoard extends WhiteBoardState {
-  const GetDoneWhiteBoard({super.currentDraw, super.paints});
+  const GetDoneWhiteBoard({required super.currentPaint, required super.paints});
 }

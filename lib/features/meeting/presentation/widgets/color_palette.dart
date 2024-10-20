@@ -7,6 +7,20 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 
+final List<Color> colors = [
+  Colors.black,
+  Colors.red,
+  Colors.green,
+  Colors.blue,
+  Colors.yellow,
+  Colors.orange,
+  Colors.purple,
+  Colors.pink,
+  Colors.teal,
+  Colors.brown,
+  Colors.cyan,
+];
+
 class ColorPalette extends StatelessWidget {
   final Color selectedColorListenable;
 
@@ -17,40 +31,23 @@ class ColorPalette extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> colors = [
-      Colors.black,
-      Colors.white,
-      Colors.red,
-      Colors.green,
-      Colors.blue,
-      Colors.yellow,
-      Colors.orange,
-      Colors.purple,
-      Colors.pink,
-      Colors.teal,
-      Colors.brown,
-      Colors.cyan,
-    ];
-
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 30,
-              width: 30,
+              height: 25.sp,
+              width: 25.sp,
               decoration: BoxDecoration(
                 color: selectedColorListenable,
-                border: Border.all(color: Colors.blue, width: 1.5),
                 shape: BoxShape.circle,
               ),
             ),
             SizedBox(
-              height: 1.h,
+              height: 12.sp,
             ),
             MouseRegion(
               cursor: SystemMouseCursors.click,
@@ -60,52 +57,46 @@ class ColorPalette extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   'assets/svgs/color_wheel.svg',
-                  height: 20,
-                  width: 20,
+                  height: 25.sp,
+                  width: 25.sp,
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(
-          width: 2.w,
-        ),
-        SizedBox(
-          height: 8.h,
-          width: 20.w,
-          child: Center(
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 7,
-              children: [
-                for (final Color color in colors)
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () => {
-                        AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
-                      },
-                      child: Container(
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                          color: color,
-                          border: Border.all(
-                            color: selectedColorListenable == color
-                                ? Colors.blue
-                                : Colors.grey,
-                            width: 1.5,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
+        SizedBox(width: 24.sp),
+        Expanded(
+          child: Wrap(
+            spacing: 10,
+            runSpacing: 7,
+            runAlignment: WrapAlignment.center,
+            children: [
+              for (final Color color in colors)
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => {
+                      AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
+                    },
+                    child: Container(
+                      height: 25.sp,
+                      width: 25.sp,
+                      decoration: BoxDecoration(
+                        color: color,
+                        border: selectedColorListenable == color
+                            ? Border.all(
+                                color: Theme.of(context).colorScheme.primary,
+                                width: 2,
+                              )
+                            : null,
+                        shape: BoxShape.circle,
                       ),
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
-        const SizedBox(height: 10),
       ],
     );
   }

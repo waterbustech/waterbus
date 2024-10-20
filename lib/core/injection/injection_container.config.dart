@@ -31,12 +31,12 @@ import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
     as _i254;
 import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
     as _i861;
-import '../../features/meeting/presentation/bloc/drawing/drawing_bloc.dart'
-    as _i879;
 import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i545;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i324;
+import '../../features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart'
+    as _i65;
 import '../../features/profile/presentation/bloc/user_search_bloc.dart'
     as _i254;
 
@@ -51,14 +51,14 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
+  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
+  gh.factory<_i65.WhiteBoardBloc>(() => _i65.WhiteBoardBloc());
+  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
+  gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
+  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
-  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
-  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
-  gh.factory<_i879.DrawingBloc>(() => _i879.DrawingBloc());
-  gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
-  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());

@@ -7,9 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus_sdk/types/enums/draw_shapes.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
@@ -17,7 +17,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/color_palette.dart';
 
-class CanvasSideBar extends StatefulWidget {
+class CanvasSideBar extends StatelessWidget {
   final GlobalKey canvasGlobalKey;
   final List<DrawModel?>? historyDraw;
   const CanvasSideBar({
@@ -27,17 +27,12 @@ class CanvasSideBar extends StatefulWidget {
   });
 
   @override
-  State<CanvasSideBar> createState() => _CanvasSideBarState();
-}
-
-class _CanvasSideBarState extends State<CanvasSideBar> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
       builder: (context, state) {
         return Container(
-          width: MediaQuery.of(context).size.width,
-          height: 12.h,
+          height: 90.sp,
+          width: 50.w,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -48,101 +43,103 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
               ),
             ],
           ),
-          child: Padding(
-            padding: EdgeInsets.only(left: 4.w),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 10.h,
-                  child: Wrap(
-                    direction: Axis.vertical,
-                    spacing: 5,
-                    runSpacing: 5,
-                    children: [
-                      _IconBox(
-                        iconData: FontAwesomeIcons.pencil,
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.normal,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(
-                            DrawShapes.normal,
-                          ),
+          child: Row(
+            children: [
+              Container(
+                width: 40.sp,
+                padding: EdgeInsets.only(left: 16.sp),
+                child: Wrap(
+                  direction: Axis.vertical,
+                  runAlignment: WrapAlignment.center,
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    _IconBox(
+                      iconData: PhosphorIcons.pencil,
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.normal,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(
+                          DrawShapes.normal,
                         ),
-                        tooltip: 'Pencil',
                       ),
-                      _IconBox(
-                        iconData: FontAwesomeIcons.eraser,
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.eraser,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(
-                            DrawShapes.eraser,
-                          ),
+                      tooltip: 'Pencil',
+                    ),
+                    _IconBox(
+                      iconData: PhosphorIcons.eraser,
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.eraser,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(
+                          DrawShapes.eraser,
                         ),
-                        tooltip: 'Eraser',
                       ),
-                    ],
-                  ),
+                      tooltip: 'Eraser',
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 1.w,
+              ),
+              _verticalDivider,
+              SizedBox(
+                width: 10.w,
+                child: Wrap(
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    _IconBox(
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.line,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(DrawShapes.line),
+                      ),
+                      tooltip: 'Line',
+                      iconData: PhosphorIcons.minus,
+                    ),
+                    _IconBox(
+                      iconData: Icons.hexagon_outlined,
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.polygon,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(
+                          DrawShapes.polygon,
+                        ),
+                      ),
+                      tooltip: 'Polygon',
+                    ),
+                    _IconBox(
+                      iconData: PhosphorIcons.square,
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.square,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(
+                          DrawShapes.square,
+                        ),
+                      ),
+                      tooltip: 'Square',
+                    ),
+                    _IconBox(
+                      iconData: PhosphorIcons.circle,
+                      selected:
+                          state.currentPaint.drawShapes == DrawShapes.circle,
+                      onTap: () => AppBloc.whiteBoardBloc.add(
+                        ChangeDrawShapesEvent(
+                          DrawShapes.circle,
+                        ),
+                      ),
+                      tooltip: 'Circle',
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 10.h,
-                  width: 10.w,
-                  child: Wrap(
-                    spacing: 5,
-                    runSpacing: 5,
-                    children: [
-                      _IconBox(
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.line,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(DrawShapes.line),
-                        ),
-                        tooltip: 'Line',
-                        iconData: PhosphorIcons.minus,
-                      ),
-                      _IconBox(
-                        iconData: Icons.hexagon_outlined,
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.polygon,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(
-                            DrawShapes.polygon,
-                          ),
-                        ),
-                        tooltip: 'Polygon',
-                      ),
-                      _IconBox(
-                        iconData: FontAwesomeIcons.square,
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.square,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(
-                            DrawShapes.square,
-                          ),
-                        ),
-                        tooltip: 'Square',
-                      ),
-                      _IconBox(
-                        iconData: FontAwesomeIcons.circle,
-                        selected:
-                            state.currentDraw!.drawShapes == DrawShapes.circle,
-                        onTap: () => AppBloc.whiteBoardBloc.add(
-                          ChangeDrawShapesEvent(
-                            DrawShapes.circle,
-                          ),
-                        ),
-                        tooltip: 'Circle',
-                      ),
-                    ],
-                  ),
-                ),
-                RotatedBox(
+              ),
+              SizedBox(
+                width: 20.sp,
+                child: RotatedBox(
                   quarterTurns: -1,
                   child: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
+                      overlayColor: Theme.of(context).colorScheme.primary,
+                      activeTrackColor: Theme.of(context).colorScheme.primary,
+                      inactiveTrackColor: Colors.grey,
                       thumbShape: const RoundSliderThumbShape(
                         enabledThumbRadius: 6,
                       ),
@@ -151,7 +148,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                       ),
                     ),
                     child: Slider(
-                      value: state.currentDraw!.size,
+                      value: state.currentPaint.size,
                       max: 50,
                       onChanged: (val) {
                         AppBloc.whiteBoardBloc.add(ChangeStrokeSizeEvent(val));
@@ -159,118 +156,126 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  child: state.currentDraw!.drawShapes == DrawShapes.polygon
-                      ? Row(
-                          children: [
-                            RotatedBox(
-                              quarterTurns: -1,
-                              child: SliderTheme(
-                                data: SliderTheme.of(context).copyWith(
-                                  thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 6,
-                                  ),
-                                  overlayShape: const RoundSliderOverlayShape(
-                                    overlayRadius: 10,
-                                  ),
+              ),
+              SizedBox(width: 8.sp),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                child: state.currentPaint.drawShapes == DrawShapes.polygon
+                    ? Row(
+                        children: [
+                          RotatedBox(
+                            quarterTurns: -1,
+                            child: SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                overlayColor:
+                                    Theme.of(context).colorScheme.primary,
+                                activeTrackColor:
+                                    Theme.of(context).colorScheme.primary,
+                                inactiveTrackColor: Colors.grey,
+                                thumbShape: const RoundSliderThumbShape(
+                                  enabledThumbRadius: 6,
                                 ),
-                                child: Slider(
-                                  value: state.currentDraw!.polygonSides
-                                      .toDouble(),
-                                  min: 3,
-                                  max: 8,
-                                  onChanged: (val) {
-                                    AppBloc.whiteBoardBloc.add(
-                                      ChangePolygonSidesEvent(val.toInt()),
-                                    );
-                                  },
-                                  label: '${state.currentDraw!.polygonSides}',
-                                  divisions: 5,
+                                overlayShape: const RoundSliderOverlayShape(
+                                  overlayRadius: 10,
                                 ),
                               ),
-                            ),
-                          ],
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                ColorPalette(
-                  selectedColorListenable: state.currentDraw!.color,
-                ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                SizedBox(
-                  width: 15.w,
-                  child: Wrap(
-                    children: [
-                      IconButton(
-                        onPressed: () async {
-                          final Uint8List? pngBytes = await getBytes();
-                          if (pngBytes != null) saveFile(pngBytes, 'png');
-                        },
-                        icon: const Icon(PhosphorIcons.floppy_disk),
-                      ),
-                      IconButton(
-                        onPressed: () => AppBloc.whiteBoardBloc.add(
-                          OnUndoEvent(),
-                        ),
-                        icon: const Icon(PhosphorIcons.arrow_u_up_left),
-                      ),
-                      IconButton(
-                        onPressed: () => AppBloc.whiteBoardBloc.add(
-                          OnRedoEvent(),
-                        ),
-                        icon: const Icon(PhosphorIcons.arrow_u_up_right),
-                      ),
-                      IconButton(
-                        icon: const Icon(PhosphorIcons.trash_simple),
-                        onPressed: () => {
-                          AppBloc.whiteBoardBloc.add(
-                            CleanWhiteBoardEvent(
-                              meetingId: AppBloc.meetingBloc.state.meeting!.id,
+                              child: Slider(
+                                value:
+                                    state.currentPaint.polygonSides.toDouble(),
+                                min: 3,
+                                max: 8,
+                                onChanged: (val) {
+                                  AppBloc.whiteBoardBloc.add(
+                                    ChangePolygonSidesEvent(val.toInt()),
+                                  );
+                                },
+                                label: '${state.currentPaint.polygonSides}',
+                                divisions: 5,
+                              ),
                             ),
                           ),
-                        },
-                      ),
-                      IconButton(
-                        onPressed: () => AppBloc.whiteBoardBloc.add(
-                          ToggleFilledEvent(!state.currentDraw!.isFilled),
-                        ),
-                        icon: Icon(
-                          state.currentDraw!.isFilled
-                              ? PhosphorIcons.paint_bucket_fill
-                              : PhosphorIcons.paint_bucket,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () => AppBloc.whiteBoardBloc.add(
-                          ToggleGridEvent(!state.currentDraw!.showGrid),
-                        ),
-                        icon: Icon(
-                          state.currentDraw!.showGrid
-                              ? PhosphorIcons.ruler_fill
-                              : PhosphorIcons.ruler,
-                        ),
-                      ),
-                    ],
-                  ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              ),
+              _verticalDivider,
+              SizedBox(
+                width: 280.sp,
+                child: ColorPalette(
+                  selectedColorListenable: state.currentPaint.color,
                 ),
-              ],
-            ),
+              ),
+              _verticalDivider,
+              SizedBox(
+                width: 150.sp,
+                child: Wrap(
+                  clipBehavior: Clip.hardEdge,
+                  children: [
+                    IconButton(
+                      onPressed: () async {
+                        final Uint8List? pngBytes = await _getBytes();
+                        if (pngBytes != null) _saveFile(pngBytes, 'png');
+                      },
+                      icon: const Icon(PhosphorIcons.floppy_disk),
+                    ),
+                    IconButton(
+                      onPressed: () => AppBloc.whiteBoardBloc.add(
+                        OnUndoEvent(),
+                      ),
+                      icon: const Icon(PhosphorIcons.arrow_u_up_left),
+                    ),
+                    IconButton(
+                      onPressed: () => AppBloc.whiteBoardBloc.add(
+                        OnRedoEvent(),
+                      ),
+                      icon: const Icon(PhosphorIcons.arrow_u_up_right),
+                    ),
+                    IconButton(
+                      icon: const Icon(PhosphorIcons.trash_simple),
+                      onPressed: () => {
+                        AppBloc.whiteBoardBloc.add(
+                          CleanWhiteBoardEvent(
+                            meetingId: AppBloc.meetingBloc.state.meeting!.id,
+                          ),
+                        ),
+                      },
+                    ),
+                    IconButton(
+                      onPressed: () => AppBloc.whiteBoardBloc.add(
+                        ToggleFilledEvent(!state.currentPaint.isFilled),
+                      ),
+                      icon: Icon(
+                        state.currentPaint.isFilled
+                            ? PhosphorIcons.paint_bucket_fill
+                            : PhosphorIcons.paint_bucket,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => AppBloc.whiteBoardBloc.add(
+                        ToggleGridEvent(!state.currentPaint.showGrid),
+                      ),
+                      icon: Icon(
+                        state.currentPaint.showGrid
+                            ? PhosphorIcons.ruler_fill
+                            : PhosphorIcons.ruler,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  Future<void> saveFile(Uint8List bytes, String extension) async {
+  Widget get _verticalDivider => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.sp),
+        child: VerticalDivider(color: mGB, width: 3),
+      );
+
+  Future<void> _saveFile(Uint8List bytes, String extension) async {
     if (kIsWeb) {
       html.AnchorElement()
         ..href = '${Uri.dataFromBytes(bytes, mimeType: 'image/$extension')}'
@@ -288,8 +293,8 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
     }
   }
 
-  Future<Uint8List?> getBytes() async {
-    final RenderRepaintBoundary boundary = widget.canvasGlobalKey.currentContext
+  Future<Uint8List?> _getBytes() async {
+    final RenderRepaintBoundary boundary = canvasGlobalKey.currentContext
         ?.findRenderObject() as RenderRepaintBoundary;
     final ui.Image image = await boundary.toImage();
     final ByteData? byteData =
@@ -325,7 +330,9 @@ class _IconBox extends StatelessWidget {
           width: 25.sp,
           decoration: BoxDecoration(
             border: Border.all(
-              color: selected ? Colors.grey[900]! : Colors.grey,
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.grey,
               width: 1.5,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -336,7 +343,9 @@ class _IconBox extends StatelessWidget {
             child: child ??
                 Icon(
                   iconData,
-                  color: selected ? Colors.grey[900] : Colors.grey,
+                  color: selected
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.grey,
                   size: 15.sp,
                 ),
           ),
