@@ -81,6 +81,8 @@ dependencies:
   share_plus: ^10.0.2
   simple_pip_mode: ^1.0.0
   file_picker: ^8.1.2
+  universal_html: ^2.2.4
+  flutter_colorpicker: ^1.1.0
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
@@ -119,9 +121,14 @@ dependencies:
 
   # Video call
   # waterbus_sdk: 1.5.1
+  waterbus_sdk: 
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 'migration/v2'
    
-  waterbus_sdk:
-    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -179,6 +186,7 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/welcome.java
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

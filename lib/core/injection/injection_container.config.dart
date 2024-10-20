@@ -37,6 +37,8 @@ import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
     as _i545;
 import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i324;
+import '../../features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart'
+    as _i65;
 import '../../features/profile/presentation/bloc/user_search_bloc.dart'
     as _i254;
 
@@ -52,6 +54,7 @@ _i174.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
+  gh.factory<_i65.WhiteBoardBloc>(() => _i65.WhiteBoardBloc());
   gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());

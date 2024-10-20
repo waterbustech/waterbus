@@ -209,6 +209,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                                 _isExtensionOpened = isExpand;
                               });
                             },
+                            meetingId: meeting.id,
                           ),
                   ),
                   Flexible(
