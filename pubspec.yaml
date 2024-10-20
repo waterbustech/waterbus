@@ -46,7 +46,7 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  connectivity_plus: ^6.0.5
+  connectivity_plus: ^6.1.0
 
   # State management
   flutter_bloc: ^8.1.6
