@@ -9,8 +9,8 @@ import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/extensions/offset_extensions.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/core/types/extensions/offset_extensions.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 
 class DrawingCanvas extends StatefulWidget {
   final DrawModel options;
@@ -62,17 +62,17 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     if (!_currentStroke.hasStroke) return;
 
     final newDraw = _currentStroke.value!.copyWith();
-    AppBloc.drawingBloc.add(
-      OnNewDrawEvent(drawList: newDraw),
+    AppBloc.whiteBoardBloc.add(
+      OnDrawEvent(drawModel: newDraw),
     );
     _currentStroke.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DrawingBloc, DrawingState>(
+    return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
       builder: (context, state) {
-        return BlocBuilder<DrawingBloc, DrawingState>(
+        return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
           builder: (context, stateOptions) {
             return MouseRegion(
               cursor: widget.options.drawShapes.cursor,
@@ -88,7 +88,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
                         child: CustomPaint(
                           isComplex: true,
                           painter: _DrawingCanvasPainter(
-                            strokesListenable: state.drawList,
+                            strokesListenable: state.paints,
                           ),
                         ),
                       ),

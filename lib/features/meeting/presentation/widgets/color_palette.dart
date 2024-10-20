@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 
 class ColorPalette extends StatelessWidget {
   final Color selectedColorListenable;
@@ -83,7 +83,7 @@ class ColorPalette extends StatelessWidget {
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
                       onTap: () => {
-                        AppBloc.drawingBloc.add(ChangeColorEvent(color)),
+                        AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
                       },
                       child: Container(
                         height: 20,
@@ -128,7 +128,7 @@ class ColorPalette extends StatelessWidget {
             TextButton(
               child: const Text('Done'),
               onPressed: () => {
-                AppBloc.drawingBloc.add(ChangeColorEvent(color)),
+                AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
                 Navigator.pop(context),
               },
             ),

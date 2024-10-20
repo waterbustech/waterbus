@@ -14,7 +14,7 @@ import 'package:waterbus_sdk/types/enums/draw_shapes.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/color_palette.dart';
 
 class CanvasSideBar extends StatefulWidget {
@@ -33,7 +33,7 @@ class CanvasSideBar extends StatefulWidget {
 class _CanvasSideBarState extends State<CanvasSideBar> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DrawingBloc, DrawingState>(
+    return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
       builder: (context, state) {
         return Container(
           width: MediaQuery.of(context).size.width,
@@ -63,7 +63,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         iconData: FontAwesomeIcons.pencil,
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.normal,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(
                             DrawShapes.normal,
                           ),
@@ -74,7 +74,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         iconData: FontAwesomeIcons.eraser,
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.eraser,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(
                             DrawShapes.eraser,
                           ),
@@ -97,7 +97,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                       _IconBox(
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.line,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(DrawShapes.line),
                         ),
                         tooltip: 'Line',
@@ -107,7 +107,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         iconData: Icons.hexagon_outlined,
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.polygon,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(
                             DrawShapes.polygon,
                           ),
@@ -118,7 +118,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         iconData: FontAwesomeIcons.square,
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.square,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(
                             DrawShapes.square,
                           ),
@@ -129,7 +129,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         iconData: FontAwesomeIcons.circle,
                         selected:
                             state.currentDraw!.drawShapes == DrawShapes.circle,
-                        onTap: () => AppBloc.drawingBloc.add(
+                        onTap: () => AppBloc.whiteBoardBloc.add(
                           ChangeDrawShapesEvent(
                             DrawShapes.circle,
                           ),
@@ -154,7 +154,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                       value: state.currentDraw!.size,
                       max: 50,
                       onChanged: (val) {
-                        AppBloc.drawingBloc.add(ChangeStrokeSizeEvent(val));
+                        AppBloc.whiteBoardBloc.add(ChangeStrokeSizeEvent(val));
                       },
                     ),
                   ),
@@ -184,7 +184,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                                   min: 3,
                                   max: 8,
                                   onChanged: (val) {
-                                    AppBloc.drawingBloc.add(
+                                    AppBloc.whiteBoardBloc.add(
                                       ChangePolygonSidesEvent(val.toInt()),
                                     );
                                   },
@@ -218,13 +218,13 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         icon: const Icon(PhosphorIcons.floppy_disk),
                       ),
                       IconButton(
-                        onPressed: () => AppBloc.drawingBloc.add(
+                        onPressed: () => AppBloc.whiteBoardBloc.add(
                           OnUndoEvent(),
                         ),
                         icon: const Icon(PhosphorIcons.arrow_u_up_left),
                       ),
                       IconButton(
-                        onPressed: () => AppBloc.drawingBloc.add(
+                        onPressed: () => AppBloc.whiteBoardBloc.add(
                           OnRedoEvent(),
                         ),
                         icon: const Icon(PhosphorIcons.arrow_u_up_right),
@@ -232,15 +232,15 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                       IconButton(
                         icon: const Icon(PhosphorIcons.trash_simple),
                         onPressed: () => {
-                          AppBloc.drawingBloc.add(
-                            OnDrawingDeletedEvent(
+                          AppBloc.whiteBoardBloc.add(
+                            CleanWhiteBoardEvent(
                               meetingId: AppBloc.meetingBloc.state.meeting!.id,
                             ),
                           ),
                         },
                       ),
                       IconButton(
-                        onPressed: () => AppBloc.drawingBloc.add(
+                        onPressed: () => AppBloc.whiteBoardBloc.add(
                           ToggleFilledEvent(!state.currentDraw!.isFilled),
                         ),
                         icon: Icon(
@@ -250,7 +250,7 @@ class _CanvasSideBarState extends State<CanvasSideBar> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () => AppBloc.drawingBloc.add(
+                        onPressed: () => AppBloc.whiteBoardBloc.add(
                           ToggleGridEvent(!state.currentDraw!.showGrid),
                         ),
                         icon: Icon(

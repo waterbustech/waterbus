@@ -9,7 +9,7 @@ import 'package:waterbus_sdk/types/models/draw_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/drawing/drawing_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/canvas_side_bar.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/drawing_canvas.dart';
 
@@ -37,8 +37,8 @@ class DrawingScreenState extends State<DrawingScreen>
       duration: const Duration(milliseconds: 300),
     );
     _currentDraw = CurrentStroke();
-    AppBloc.drawingBloc.add(
-      OnDrawingInitEvent(),
+    AppBloc.whiteBoardBloc.add(
+      OnStartWhiteBoardEvent(),
     );
   }
 
@@ -48,7 +48,7 @@ class DrawingScreenState extends State<DrawingScreen>
       backgroundColor: mCL,
       body: Stack(
         children: [
-          BlocBuilder<DrawingBloc, DrawingState>(
+          BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
             builder: (context, state) {
               return DrawingCanvas(
                 options: state.currentDraw!,

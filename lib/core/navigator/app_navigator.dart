@@ -37,7 +37,6 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const Home(),
-          // const DrawingScreen(meetingId: 1),
         );
 
       // Authenication

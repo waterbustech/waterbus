@@ -114,7 +114,7 @@ dependencies:
   # Video call
   # waterbus_sdk: ^1.5.1
   waterbus_sdk:
-    path: D:/Work/waterbus-flutter-sdk
+    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
   socket_io_client: ^2.0.3+1
 
 dependency_overrides: 
