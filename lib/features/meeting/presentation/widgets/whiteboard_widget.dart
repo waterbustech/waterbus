@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
@@ -111,8 +111,8 @@ class _CustomAppBar extends StatelessWidget {
                   },
                   icon: Icon(
                     animationController.value == 0
-                        ? PhosphorIcons.caret_down
-                        : PhosphorIcons.caret_up,
+                        ? PhosphorIcons.caretDown()
+                        : PhosphorIcons.caretUp(),
                   ),
                 );
               },

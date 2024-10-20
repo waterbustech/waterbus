@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:waterbus_sdk/types/enums/draw_shapes.dart';
@@ -55,7 +55,7 @@ class CanvasSideBar extends StatelessWidget {
                   runSpacing: 5,
                   children: [
                     _IconBox(
-                      iconData: PhosphorIcons.pencil,
+                      iconData: PhosphorIcons.pencil(),
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.normal,
                       onTap: () => AppBloc.whiteBoardBloc.add(
@@ -66,7 +66,7 @@ class CanvasSideBar extends StatelessWidget {
                       tooltip: 'Pencil',
                     ),
                     _IconBox(
-                      iconData: PhosphorIcons.eraser,
+                      iconData: PhosphorIcons.eraser(),
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.eraser,
                       onTap: () => AppBloc.whiteBoardBloc.add(
@@ -93,7 +93,7 @@ class CanvasSideBar extends StatelessWidget {
                         ChangeDrawShapesEvent(DrawShapes.line),
                       ),
                       tooltip: 'Line',
-                      iconData: PhosphorIcons.minus,
+                      iconData: PhosphorIcons.minus(),
                     ),
                     _IconBox(
                       iconData: Icons.hexagon_outlined,
@@ -107,7 +107,7 @@ class CanvasSideBar extends StatelessWidget {
                       tooltip: 'Polygon',
                     ),
                     _IconBox(
-                      iconData: PhosphorIcons.square,
+                      iconData: PhosphorIcons.square(),
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.square,
                       onTap: () => AppBloc.whiteBoardBloc.add(
@@ -118,7 +118,7 @@ class CanvasSideBar extends StatelessWidget {
                       tooltip: 'Square',
                     ),
                     _IconBox(
-                      iconData: PhosphorIcons.circle,
+                      iconData: PhosphorIcons.circle(),
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.circle,
                       onTap: () => AppBloc.whiteBoardBloc.add(
@@ -216,22 +216,22 @@ class CanvasSideBar extends StatelessWidget {
                         final Uint8List? pngBytes = await _getBytes();
                         if (pngBytes != null) _saveFile(pngBytes, 'png');
                       },
-                      icon: const Icon(PhosphorIcons.floppy_disk),
+                      icon: Icon(PhosphorIcons.floppyDisk()),
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
                         OnUndoEvent(),
                       ),
-                      icon: const Icon(PhosphorIcons.arrow_u_up_left),
+                      icon: Icon(PhosphorIcons.arrowUUpLeft()),
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
                         OnRedoEvent(),
                       ),
-                      icon: const Icon(PhosphorIcons.arrow_u_up_right),
+                      icon: Icon(PhosphorIcons.arrowUUpRight()),
                     ),
                     IconButton(
-                      icon: const Icon(PhosphorIcons.trash_simple),
+                      icon: Icon(PhosphorIcons.broom()),
                       onPressed: () => {
                         AppBloc.whiteBoardBloc.add(
                           CleanWhiteBoardEvent(
@@ -245,9 +245,11 @@ class CanvasSideBar extends StatelessWidget {
                         ToggleFilledEvent(!state.currentPaint.isFilled),
                       ),
                       icon: Icon(
-                        state.currentPaint.isFilled
-                            ? PhosphorIcons.paint_bucket_fill
-                            : PhosphorIcons.paint_bucket,
+                        PhosphorIcons.paintBucket(
+                          state.currentPaint.isFilled
+                              ? PhosphorIconsStyle.fill
+                              : PhosphorIconsStyle.regular,
+                        ),
                       ),
                     ),
                     IconButton(
@@ -255,9 +257,11 @@ class CanvasSideBar extends StatelessWidget {
                         ToggleGridEvent(!state.currentPaint.showGrid),
                       ),
                       icon: Icon(
-                        state.currentPaint.showGrid
-                            ? PhosphorIcons.ruler_fill
-                            : PhosphorIcons.ruler,
+                        PhosphorIcons.ruler(
+                          state.currentPaint.showGrid
+                              ? PhosphorIconsStyle.fill
+                              : PhosphorIconsStyle.regular,
+                        ),
                       ),
                     ),
                   ],

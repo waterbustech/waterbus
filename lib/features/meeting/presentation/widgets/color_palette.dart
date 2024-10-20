@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
+import 'package:waterbus/gen/assets.gen.dart';
 
 final List<Color> colors = [
-  Colors.black,
+  Colors.amber,
   Colors.red,
   Colors.green,
   Colors.blue,
@@ -16,9 +16,12 @@ final List<Color> colors = [
   Colors.orange,
   Colors.purple,
   Colors.pink,
-  Colors.teal,
   Colors.brown,
   Colors.cyan,
+  Colors.blueGrey,
+  Colors.teal,
+  Colors.indigo,
+  Colors.black,
 ];
 
 class ColorPalette extends StatelessWidget {
@@ -55,8 +58,7 @@ class ColorPalette extends StatelessWidget {
                 onTap: () {
                   showColorWheel(context, selectedColorListenable);
                 },
-                child: SvgPicture.asset(
-                  'assets/svgs/color_wheel.svg',
+                child: Assets.icons.colorPicker.image(
                   height: 25.sp,
                   width: 25.sp,
                 ),
