@@ -18,9 +18,11 @@ import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/record/bloc/record/record_bloc.dart' as _i625;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../helpers/file_saver.dart' as _i810;
 import '../method_channels/pip_channel.dart' as _i921;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
@@ -60,6 +62,7 @@ _i174.GetIt $initGetIt(
   gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
   gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
@@ -69,6 +72,8 @@ _i174.GetIt $initGetIt(
       () => _i193.LanguagesDatasourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
+  gh.factory<_i625.RecordBloc>(
+      () => _i625.RecordBloc(gh<_i810.FileSaverHelper>()));
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
   gh.factory<_i797.AuthBloc>(

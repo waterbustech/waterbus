@@ -14,54 +14,57 @@ class EmptyMeetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.w),
-          child: Assets.images.worldMap.image(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        SizedBox(height: 20.sp),
-        GestureWrapper(
-          onTap: () async {
-            await launchUrl(Uri.parse(kGithubRepo));
-          },
-          child: Material(
-            shape: SuperellipseShape(
-              borderRadius: BorderRadius.circular(20.sp),
+    return SizedBox(
+      width: 100.w,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            child: Assets.images.worldMap.image(
+              color: Theme.of(context).colorScheme.primary,
             ),
-            clipBehavior: Clip.hardEdge,
-            color: Colors.yellow,
-            child: Container(
-              width: 120.sp,
-              padding: EdgeInsets.symmetric(vertical: 5.sp),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Assets.icons.icGithub.image(
-                    width: 20.sp,
-                    height: 20.sp,
-                  ),
-                  SizedBox(width: 6.sp),
-                  Text(
-                    Strings.giveUsStar.i18n,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w600,
+          ),
+          SizedBox(height: 20.sp),
+          GestureWrapper(
+            onTap: () async {
+              await launchUrl(Uri.parse(kGithubRepo));
+            },
+            child: Material(
+              shape: SuperellipseShape(
+                borderRadius: BorderRadius.circular(20.sp),
+              ),
+              clipBehavior: Clip.hardEdge,
+              color: Colors.yellow,
+              child: Container(
+                width: 120.sp,
+                padding: EdgeInsets.symmetric(vertical: 5.sp),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Assets.icons.icGithub.image(
+                      width: 20.sp,
+                      height: 20.sp,
                     ),
-                  ),
-                  SizedBox(width: 2.sp),
-                ],
+                    SizedBox(width: 6.sp),
+                    Text(
+                      Strings.giveUsStar.i18n,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 2.sp),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(height: 20.sp),
-      ],
+          SizedBox(height: 20.sp),
+        ],
+      ),
     );
   }
 }

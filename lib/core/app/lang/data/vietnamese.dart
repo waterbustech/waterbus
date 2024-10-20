@@ -93,11 +93,14 @@ Map<String, String> vietnamese = {
   Strings.beautyFilters: "Bộ lọc làm đẹp",
   Strings.virtualBackground: "Nền ảo",
   Strings.subtitle: "Phụ đề",
+  Strings.record: "Ghi hình",
+  Strings.duration: "Thời lượng",
   Strings.callStats: "Thống kê",
   Strings.frameSent: "Khung đã gửi",
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
   Strings.back: "Thoát",
+  Strings.createdAt: "Tạo lúc",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
@@ -125,6 +128,8 @@ Map<String, String> vietnamese = {
   Strings.myProfile: "Thông tin cá nhân",
   Strings.edit: "Sửa",
   Strings.appearance: "Giao diện",
+  Strings.colorMode: "Chế độ",
+  Strings.primaryColor: "Màu chủ đề",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
   Strings.serverConfiguration: "Cấu hình máy chủ",
   Strings.clearCache: "Xoá bộ nhớ tạm",
@@ -134,6 +139,13 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+  Strings.inAppNotification: 'Thông báo trong ứng dụng',
+  Strings.inMeeting: 'Trong cuộc họp',
+  Strings.newMessage: 'Tin nhắn mới',
+  Strings.newInvitation: 'Lời mời mới',
+  Strings.participantJoined: 'Có người tham gia',
+  Strings.participantLeft: 'Có người rời phòng',
+  Strings.participantRaiseHand: 'Có người giơ tay',
 
   // Chat screen
   Strings.videoCall: 'Gọi video',

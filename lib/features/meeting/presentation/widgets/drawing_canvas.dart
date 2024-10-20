@@ -13,17 +13,17 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 
 class DrawingCanvas extends StatefulWidget {
-  final DrawModel options;
+  final DrawModel currentPaint;
   final GlobalKey canvasKey;
   final ui.Image? backgroundImage;
-  final CurrentStroke? currentDraw;
+  final CurrentStroke? currentStroke;
 
   const DrawingCanvas({
     super.key,
-    required this.options,
+    required this.currentPaint,
     required this.canvasKey,
     this.backgroundImage,
-    this.currentDraw,
+    this.currentStroke,
   });
 
   @override
@@ -31,7 +31,7 @@ class DrawingCanvas extends StatefulWidget {
 }
 
 class _DrawingCanvasState extends State<DrawingCanvas> {
-  CurrentStroke get _currentStroke => widget.currentDraw!;
+  CurrentStroke get _currentStroke => widget.currentStroke!;
 
   void _onPointerDown(PointerDownEvent event) {
     final box = context.findRenderObject() as RenderBox?;
@@ -40,11 +40,11 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     final standardOffset = offset.scaleToStandard(box.size);
     _currentStroke.startStroke(
       standardOffset,
-      color: widget.options.color,
-      size: widget.options.size,
-      type: widget.options.drawShapes.strokeType,
-      sides: widget.options.polygonSides,
-      filled: widget.options.isFilled,
+      color: widget.currentPaint.color,
+      size: widget.currentPaint.size,
+      type: widget.currentPaint.drawShapes.strokeType,
+      sides: widget.currentPaint.polygonSides,
+      filled: widget.currentPaint.isFilled,
     );
   }
 
@@ -62,9 +62,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     if (!_currentStroke.hasStroke) return;
 
     final newDraw = _currentStroke.value!.copyWith();
-    AppBloc.whiteBoardBloc.add(
-      OnDrawEvent(drawModel: newDraw),
-    );
+    AppBloc.whiteBoardBloc.add(OnDrawEvent(drawModel: newDraw));
     _currentStroke.clear();
   }
 
@@ -75,7 +73,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
         return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
           builder: (context, stateOptions) {
             return MouseRegion(
-              cursor: widget.options.drawShapes.cursor,
+              cursor: widget.currentPaint.drawShapes.cursor,
               child: Listener(
                 onPointerUp: _onPointerUp,
                 onPointerMove: _onPointerMove,

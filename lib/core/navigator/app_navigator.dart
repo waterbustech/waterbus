@@ -19,8 +19,11 @@ import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_cod
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
+import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
@@ -77,6 +80,18 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           const PrivacyScreen(),
+        );
+      case Routes.notificationSettings:
+        return _buildRoute(
+          settings,
+          const NotificationSettingsScreen(),
+        );
+      case Routes.storage:
+        return _buildRoute(settings, const RecordScreen());
+      case Routes.videoPlayer:
+        return _buildRoute(
+          settings,
+          VideoPlayerWidget(urlToVideo: arguments?['urlToVideo']),
         );
 
       // Meeting

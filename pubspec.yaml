@@ -46,6 +46,7 @@ dependencies:
     path: ./packages/auth
 
   # Network
+  dio: ^5.7.0
   connectivity_plus: ^6.0.5
 
   # State management
@@ -58,6 +59,7 @@ dependencies:
 
   # Storage
   hive: ^2.2.3
+  path_provider: ^2.1.4
 
   # Firebase
   firebase_core: ^3.3.0
@@ -77,9 +79,8 @@ dependencies:
   intl: ^0.19.0
   equatable: ^2.0.5
   share_plus: ^10.0.2
-  simple_pip_mode: ^0.8.0
+  simple_pip_mode: ^1.0.0
   file_picker: ^8.1.2
-  file_saver: ^0.2.9
   universal_html: ^2.2.4
   flutter_colorpicker: ^1.1.0
   universal_io: ^2.2.2
@@ -107,12 +108,27 @@ dependencies:
   image_picker_android: ^0.8.12+11
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
+  image_gallery_saver: ^2.0.3
+  file_saver: ^0.2.14
+  video_player_media_kit: ^1.0.5
+  video_player: ^2.9.2
+  
+  media_kit_libs_android_video: any
+  media_kit_libs_ios_video: any
+  media_kit_libs_macos_video: any
+  media_kit_libs_windows_video: any
+  media_kit_libs_linux: any
 
   # Video call
-  # waterbus_sdk: ^1.5.1
-  waterbus_sdk:
-    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
-  socket_io_client: ^2.0.3+1
+  # waterbus_sdk: 1.5.1
+  waterbus_sdk: 
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 'migration/v2'
+   
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0

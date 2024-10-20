@@ -111,7 +111,9 @@ Map<String, String> english = {
   Strings.beautyFilters: "Beauty filters",
   Strings.virtualBackground: "Virtual background",
   Strings.subtitle: "Subtitle",
-  Strings.callStats: "Call stats",
+  Strings.record: "Record",
+  Strings.duration: "Duration",
+  Strings.callStats: "Stats",
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",
   Strings.checking: "Checking",
@@ -121,11 +123,14 @@ Map<String, String> english = {
   Strings.updatedPersonalInformationSuccessfully:
       "Updated personal information successfully!",
   Strings.updateUsernameSuccessfully: "Updated username successful!",
+  Strings.createdAt: "Created at",
 
   // Settings screen
   Strings.myProfile: "My Profile",
   Strings.edit: "Edit",
   Strings.appearance: "Appearance",
+  Strings.colorMode: "Color Mode",
+  Strings.primaryColor: "Primary Color",
   Strings.callAndMeeting: "Call and Meeting",
   Strings.serverConfiguration: "Server configuration",
   Strings.clearCache: "Clear cache",
@@ -135,6 +140,13 @@ Map<String, String> english = {
   Strings.changeYourAvatar: 'Change your avatar',
   Strings.chooseFromGallery: 'Choose photo from gallery',
   Strings.takeAPhoto: 'Take a photo',
+  Strings.inAppNotification: 'In-app notification',
+  Strings.inMeeting: 'In meeting',
+  Strings.newMessage: 'New message',
+  Strings.newInvitation: 'New invitation',
+  Strings.participantJoined: 'Participant joined',
+  Strings.participantLeft: 'Participant left',
+  Strings.participantRaiseHand: 'Participant raise hand',
 
   // Chat Screen
   Strings.videoCall: 'Video call',

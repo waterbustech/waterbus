@@ -12,6 +12,7 @@ import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_search_bloc.dart';
+import 'package:waterbus/features/record/bloc/record/record_bloc.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class AppBloc {
@@ -26,6 +27,7 @@ class AppBloc {
   static final RecentJoinedBloc recentJoinedBloc = getIt<RecentJoinedBloc>();
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
+  static final RecordBloc recordBloc = getIt<RecordBloc>();
   static final WhiteBoardBloc whiteBoardBloc = getIt<WhiteBoardBloc>();
 
   static final List<BlocProvider> providers = [
@@ -61,6 +63,9 @@ class AppBloc {
     ),
     BlocProvider<ThemesBloc>(
       create: (context) => themesBloc,
+    ),
+    BlocProvider<RecordBloc>(
+      create: (context) => recordBloc,
     ),
     BlocProvider<WhiteBoardBloc>(
       create: (context) => whiteBoardBloc,

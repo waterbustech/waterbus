@@ -97,4 +97,19 @@ class DateTimeHelper {
   String getDayName(DateTime date) {
     return calendarTitle[date.weekday - 1];
   }
+
+  String formatDuration(int seconds) {
+    final duration = Duration(seconds: seconds);
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+    final hours = duration.inHours;
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final secs = twoDigits(duration.inSeconds.remainder(60));
+
+    if (hours > 0) {
+      return "${twoDigits(hours)}:$minutes:$secs";
+    } else {
+      return "$minutes:$secs";
+    }
+  }
 }

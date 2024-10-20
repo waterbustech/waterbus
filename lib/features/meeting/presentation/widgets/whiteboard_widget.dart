@@ -39,9 +39,7 @@ class WhiteBoardWidgetState extends State<WhiteBoardWidget>
       duration: 300.milliseconds,
     );
     _currentDraw = CurrentStroke();
-    AppBloc.whiteBoardBloc.add(
-      OnStartWhiteBoardEvent(),
-    );
+    AppBloc.whiteBoardBloc.add(OnStartWhiteBoardEvent());
   }
 
   @override
@@ -53,8 +51,8 @@ class WhiteBoardWidgetState extends State<WhiteBoardWidget>
           BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
             builder: (context, state) {
               return DrawingCanvas(
-                options: state.currentPaint,
-                currentDraw: _currentDraw,
+                currentPaint: state.currentPaint,
+                currentStroke: _currentDraw,
                 canvasKey: canvasGlobalKey,
                 backgroundImage: backgroundImage,
               );

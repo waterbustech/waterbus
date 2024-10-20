@@ -195,7 +195,9 @@ class BodySettingScreens extends StatelessWidget {
               SizedBox(height: 18.sp),
             ],
             SettingRowButton(
-              onTap: () {},
+              onTap: () {
+                AppNavigator().push(Routes.notificationSettings);
+              },
               title: Strings.notifications.i18n,
               isLast: false,
               icon: PhosphorIcons.bell(PhosphorIconsStyle.fill),
@@ -262,7 +264,7 @@ class BodySettingScreens extends StatelessWidget {
               onTap: () {},
               isFirst: false,
               title: 'Waterbus ${Strings.version.i18n}',
-              value: 'v1.1.3',
+              value: kAppVersion,
               icon: PhosphorIcons.desktop(PhosphorIconsStyle.fill),
               iconBackground: colorCyan,
             ),
