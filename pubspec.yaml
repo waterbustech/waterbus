@@ -67,7 +67,7 @@ dependencies:
 
   # Utils
   lottie: ^3.1.0
-  flutter_native_splash: ^2.4.1
+  flutter_native_splash: ^2.4.2
   superellipse_shape: ^0.2.0
   cached_network_image: ^3.4.1
   flutter_phosphor_icons: ^0.0.1+6
