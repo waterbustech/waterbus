@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
@@ -61,7 +61,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
               const Divider(),
               CallSettingButton(
                 visible: meeting.isHost,
-                icon: PhosphorIcons.sliders_horizontal,
+                icon: PhosphorIcons.slidersHorizontal(),
                 lable: Strings.editMeeting.i18n,
                 onTap: () {
                   AppNavigator().push(
@@ -73,7 +73,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 },
               ),
               CallSettingButton(
-                icon: PhosphorIcons.phone,
+                icon: PhosphorIcons.phone(),
                 lable: Strings.callSettings.i18n,
                 onTap: () {
                   AppNavigator.pop();
@@ -82,13 +82,13 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 },
               ),
               CallSettingButton(
-                icon: PhosphorIcons.chat_teardrop_text,
+                icon: PhosphorIcons.chatTeardropText(),
                 lable: Strings.chat.i18n,
                 onTap: () {},
               ),
               CallSettingButton(
                 visible: WebRTC.platformIsMobile && !SizerUtil.isDesktop,
-                icon: PhosphorIcons.magic_wand,
+                icon: PhosphorIcons.magicWand(),
                 lable: Strings.beautyFilters.i18n,
                 onTap: () {
                   AppNavigator.pop();
@@ -110,7 +110,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 },
               ),
               CallSettingButton(
-                icon: PhosphorIcons.selection_background,
+                icon: PhosphorIcons.selectionBackground(),
                 lable: Strings.virtualBackground.i18n,
                 onTap: () {
                   AppNavigator.pop();
@@ -126,7 +126,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                 onTap: () {},
               ),
               CallSettingButton(
-                icon: PhosphorIcons.chart_line,
+                icon: PhosphorIcons.chartLine(),
                 lable: Strings.callStats.i18n,
                 onTap: () {
                   AppNavigator.pop();
@@ -142,7 +142,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
               ),
               CallSettingButton(
                 hasDivider: false,
-                icon: PhosphorIcons.export,
+                icon: PhosphorIcons.export(),
                 lable: Strings.shareLink.i18n,
                 onTap: () async {
                   await ShareUtils().share(

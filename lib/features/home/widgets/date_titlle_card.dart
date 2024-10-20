@@ -19,16 +19,15 @@ class DateTitleCard extends StatelessWidget {
         horizontal: 10.sp,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onInverseSurface,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       alignment: Alignment.centerLeft,
       child: Text(
         DateTimeHelper().isEqualTwoDate(lastJoinedAt, DateTime.now())
             ? Strings.today.i18n
             : DateFormat('MMMM dd', 'en_US').format(lastJoinedAt),
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: 9.25.sp,
-            ),
+        style:
+            Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 9.25.sp),
       ),
     );
   }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -29,8 +31,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<ChatEvent>((event, emit) async {
       if (event is OnChatEvent) {
-        await _getConversationList();
-        emit(_getDoneChat);
+        if (_conversations.isEmpty) {
+          await _getConversationList();
+          emit(_getDoneChat);
+        }
+
+        if (SizerUtil.isDesktop) {
+          Future.delayed(1.seconds, () {
+            if (_conversationCurrent == null && _conversations.isNotEmpty) {
+              add(
+                SelectConversationCurrentEvent(meeting: _conversations.first),
+              );
+            }
+          });
+        }
       }
 
       if (event is SelectConversationCurrentEvent) {

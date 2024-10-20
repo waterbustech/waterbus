@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -65,7 +65,7 @@ class _StatsViewState extends State<StatsView> {
                   AppNavigator.pop();
                 },
                 icon: Icon(
-                  PhosphorIcons.x_circle_fill,
+                  PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
                   size: 20.sp,
                   color: Theme.of(context).colorScheme.primary,
                 ),

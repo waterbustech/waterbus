@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -42,6 +42,9 @@ class _SettingScreenState extends State<CallSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SizerUtil.isDesktop
+          ? Theme.of(context).colorScheme.surfaceContainerLow
+          : null,
       appBar: appBarTitleBack(
         context,
         title: Strings.callSettings.i18n,
@@ -203,7 +206,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                     readonly: AppNavigatorObserver.routeNames.contains(
                       Routes.meetingRoute,
                     ),
-                    icon: PhosphorIcons.shield_check_fill,
+                    icon: PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
                     onChanged: (isEnabled) {
                       setState(() {
                         _settings = _settings.copyWith(

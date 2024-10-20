@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -14,13 +15,17 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
-import 'package:waterbus/features/home/widgets/tab_options_desktop_widget.dart';
+import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,10 +39,37 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<SlidingDrawerState> _sideMenuKey =
       GlobalKey<SlidingDrawerState>();
 
-  void _toggleDrawer() {
+  String _currentTab = Strings.recent;
+
+  void _handleToggleDrawer() {
     if (SizerUtil.isDesktop) return;
 
     _sideMenuKey.toggle();
+  }
+
+  Widget _getCurrentTab() {
+    switch (_currentTab) {
+      case Strings.recent:
+        return const RecentMeetings();
+      case Strings.chat:
+        return const ChatsScreen();
+      case Strings.appearance:
+        return const ThemeScreen(isSettingDesktop: true);
+      case Strings.language:
+        return const LanguageScreen(isSettingDesktop: true);
+      case Strings.callSettings:
+        return const CallSettingsScreen(isSettingDesktop: true);
+      case Strings.licenses:
+        return LicensePage(
+          applicationIcon: Image.asset(
+            Assets.images.imgLogo.path,
+            height: 35.sp,
+          ),
+          applicationVersion: '1.2.0',
+        );
+      default:
+        return Container();
+    }
   }
 
   @override
@@ -64,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           SizedBox(width: 6.sp),
                           GestureDetector(
-                            onTap: _toggleDrawer,
+                            onTap: _handleToggleDrawer,
                             child: AvatarCard(
                               urlToImage: user.avatar,
                               size: 30.sp,
@@ -107,35 +139,49 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
         body: Row(
           children: [
-            ...(SizerUtil.isDesktop
-                ? [
-                    TabOptionsDesktopWidget(
-                      child: _buildDrawable(),
-                    ),
-                    const VerticalDivider(
-                      width: .5,
-                      thickness: .5,
-                    ),
-                  ]
-                : []),
+            if (SizerUtil.isDesktop)
+              Container(
+                padding: EdgeInsets.all(10.sp),
+                color: Theme.of(context).colorScheme.outlineVariant,
+                child: Material(
+                  shape: SuperellipseShape(
+                    borderRadius: BorderRadius.circular(25.sp),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: SideMenuWidget(
+                    onTabChanged: (tabLabel) {
+                      setState(() {
+                        _currentTab = tabLabel;
+                      });
+                    },
+                  ),
+                ),
+              ),
             Expanded(
               child: ColoredBox(
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: SizerUtil.isDesktop
+                    ? Theme.of(context).colorScheme.outlineVariant
+                    : Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   children: [
-                    SizedBox(height: 10.sp),
-                    EnterCodeBox(
-                      hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
-                      suffixWidget: SizerUtil.isDesktop
-                          ? _buildCreateMeetingButton
-                          : null,
-                      onTap: () {
-                        AppNavigator().push(Routes.enterCodeRoute);
-                      },
-                    ),
-                    SizedBox(height: 12.sp),
-                    const Expanded(
-                      child: RecentMeetings(),
+                    _buildHeader(context),
+                    Expanded(
+                      child: SizerUtil.isDesktop
+                          ? Container(
+                              margin:
+                                  EdgeInsets.only(bottom: 10.sp, right: 10.sp),
+                              child: Material(
+                                shape: SuperellipseShape(
+                                  borderRadius: BorderRadius.circular(25.sp),
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceContainerLow,
+                                child: _getCurrentTab(),
+                              ),
+                            )
+                          : _getCurrentTab(),
                     ),
                   ],
                 ),
@@ -150,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildDrawable() {
     return ProfileDrawerLayout(
       onTapItem: (item) {
-        _toggleDrawer();
+        _handleToggleDrawer();
 
         Future.delayed(const Duration(milliseconds: 300), () {
           switch (item.title) {
@@ -173,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Assets.images.imgLogo.path,
                   height: 35.sp,
                 ),
-                applicationVersion: '1.1.1',
+                applicationVersion: '1.2.0',
               );
               break;
             default:
@@ -182,6 +228,36 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
     );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    final margin = EdgeInsets.only(
+      top: 10.sp,
+      bottom: 12.sp,
+      left: SizerUtil.isDesktop ? 0 : 10.sp,
+      right: SizerUtil.isDesktop ? 0 : 10.sp,
+    );
+
+    switch (_currentTab) {
+      case Strings.recent:
+        return EnterCodeBox(
+          margin: margin,
+          hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
+          suffixWidget: SizerUtil.isDesktop ? _buildCreateMeetingButton : null,
+          onTap: () {
+            AppNavigator().push(Routes.enterCodeRoute);
+          },
+        );
+      case Strings.chat:
+        return EnterCodeBox(
+          margin: margin,
+          hintTextContent: Strings.search.i18n,
+          suffixWidget: _buildCreateMeetingButton,
+          onTap: () {},
+        );
+      default:
+        return SizedBox(height: 10.sp);
+    }
   }
 
   Widget get _buildCreateMeetingButton {

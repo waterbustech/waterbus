@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/models/user_model.dart';
@@ -123,7 +123,7 @@ class BodySettingScreens extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(right: 6.sp),
                                   child: Icon(
-                                    PhosphorIcons.caret_right,
+                                    PhosphorIcons.caretRight(),
                                     color: colorGray3,
                                     size: SizerUtil.isDesktop ? 14.sp : null,
                                   ),
@@ -189,7 +189,7 @@ class BodySettingScreens extends StatelessWidget {
                   AppNavigator().push(Routes.profileRoute);
                 },
                 title: Strings.myProfile.i18n,
-                icon: PhosphorIcons.user_circle_fill,
+                icon: PhosphorIcons.userCircle(PhosphorIconsStyle.fill),
                 iconBackground: colorRedCustom,
               ),
               SizedBox(height: 18.sp),
@@ -198,7 +198,7 @@ class BodySettingScreens extends StatelessWidget {
               onTap: () {},
               title: Strings.notifications.i18n,
               isLast: false,
-              icon: PhosphorIcons.bell_fill,
+              icon: PhosphorIcons.bell(PhosphorIconsStyle.fill),
               iconBackground: colorRedOrange,
             ),
             SettingRowButton(
@@ -212,7 +212,7 @@ class BodySettingScreens extends StatelessWidget {
               isLast: false,
               isFirst: false,
               title: Strings.appearance.i18n,
-              icon: PhosphorIcons.circle_half_fill,
+              icon: PhosphorIcons.circleHalf(PhosphorIconsStyle.fill),
               iconBackground: colorCyan,
             ),
             SettingRowButton(
@@ -226,7 +226,7 @@ class BodySettingScreens extends StatelessWidget {
               title: Strings.language.i18n,
               isFirst: false,
               value: LanguageService().getLocale().base,
-              icon: PhosphorIcons.globe,
+              icon: PhosphorIcons.globe(),
               iconBackground: colorPurple,
             ),
             SizedBox(height: 18.sp),
@@ -239,7 +239,7 @@ class BodySettingScreens extends StatelessWidget {
                 }
               },
               title: Strings.callAndMeeting.i18n,
-              icon: PhosphorIcons.video_camera_fill,
+              icon: PhosphorIcons.videoCamera(PhosphorIconsStyle.fill),
               iconBackground: colorActive,
             ),
             SizedBox(height: 18.sp),
@@ -247,7 +247,7 @@ class BodySettingScreens extends StatelessWidget {
               onTap: () {},
               isLast: false,
               title: Strings.serverConfiguration.i18n,
-              icon: PhosphorIcons.hard_drives_fill,
+              icon: PhosphorIcons.hardDrives(PhosphorIconsStyle.fill),
               iconBackground: Colors.deepOrange,
             ),
             SettingRowButton(
@@ -255,7 +255,7 @@ class BodySettingScreens extends StatelessWidget {
               isFirst: false,
               isLast: false,
               title: Strings.clearCache.i18n,
-              icon: PhosphorIcons.database_fill,
+              icon: PhosphorIcons.database(PhosphorIconsStyle.fill),
               iconBackground: Colors.indigoAccent,
             ),
             SettingRowButton(
@@ -263,7 +263,7 @@ class BodySettingScreens extends StatelessWidget {
               isFirst: false,
               title: 'Waterbus ${Strings.version.i18n}',
               value: 'v1.1.3',
-              icon: PhosphorIcons.desktop_fill,
+              icon: PhosphorIcons.desktop(PhosphorIconsStyle.fill),
               iconBackground: colorCyan,
             ),
           ],

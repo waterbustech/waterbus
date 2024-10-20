@@ -24,6 +24,7 @@
 🤙 This is an Open Source Video Conferencing App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
 
 ## ✨ Why is this so awesome?
+
 * 🌀 **Flutter WASM Support**: Seamlessly integrate with `Flutter WebAssembly` for enhanced performance.
 * 🕵🏻 **Anonymous Access**: Join meetings without the need for registration or login.
 * 👥 **Multiple Participants**: `Waterbus` enables high-quality group video calls using `WebRTC SFU`.

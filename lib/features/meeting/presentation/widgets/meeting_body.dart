@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
@@ -52,7 +52,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                 DeviceUtils().lightImpact();
               },
               icon: Icon(
-                PhosphorIcons.camera_rotate,
+                PhosphorIcons.cameraRotate(),
                 size: 20.sp,
               ),
             ),
@@ -68,8 +68,8 @@ class _MeetingBodyState extends State<MeetingBody> {
               icon: Icon(
                 callState?.mParticipant == null ||
                         callState!.mParticipant!.isSpeakerPhoneEnabled
-                    ? PhosphorIcons.speaker_high
-                    : PhosphorIcons.speaker_low,
+                    ? PhosphorIcons.speakerHigh()
+                    : PhosphorIcons.speakerLow(),
                 size: 18.5.sp,
               ),
             ),
@@ -82,7 +82,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                   alignment: Alignment.centerRight,
                   onPressed: () async {},
                   icon: Icon(
-                    PhosphorIcons.users,
+                    PhosphorIcons.users(),
                     size: 20.sp,
                   ),
                 ),
@@ -99,14 +99,6 @@ class _MeetingBodyState extends State<MeetingBody> {
           ),
           SizedBox(width: 4.sp),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          WaterbusSdk.instance.reconnect();
-        },
-        child: const Icon(
-          PhosphorIcons.arrow_clockwise,
-        ),
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
@@ -131,8 +123,8 @@ class _MeetingBodyState extends State<MeetingBody> {
                 CallActionButton(
                   icon: callState?.mParticipant == null ||
                           callState!.mParticipant!.isAudioEnabled
-                      ? PhosphorIcons.microphone
-                      : PhosphorIcons.microphone_slash,
+                      ? PhosphorIcons.microphone()
+                      : PhosphorIcons.microphoneSlash(),
                   onTap: () {
                     if (callState?.mParticipant == null) return;
 
@@ -142,8 +134,8 @@ class _MeetingBodyState extends State<MeetingBody> {
                 CallActionButton(
                   icon: callState?.mParticipant == null ||
                           callState!.mParticipant!.isVideoEnabled
-                      ? PhosphorIcons.camera
-                      : PhosphorIcons.camera_slash,
+                      ? PhosphorIcons.camera()
+                      : PhosphorIcons.cameraSlash(),
                   onTap: () {
                     if (callState?.mParticipant == null) return;
 
@@ -151,7 +143,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                   },
                 ),
                 CallActionButton(
-                  icon: PhosphorIcons.screencast,
+                  icon: PhosphorIcons.screencast(),
                   onTap: () {
                     if (callState?.mParticipant == null) return;
 
@@ -164,7 +156,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                 ),
                 if (!kIsWeb && Helper.platformIsDarwin && SizerUtil.isDesktop)
                   CallActionButton(
-                    icon: PhosphorIcons.sparkle,
+                    icon: PhosphorIcons.sparkle(),
                     iconColor: Theme.of(context).colorScheme.primary,
                     onTap: () {
                       setState(() {
@@ -183,7 +175,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                     },
                   ),
                 CallActionButton(
-                  icon: PhosphorIcons.gear_six,
+                  icon: PhosphorIcons.gearSix(),
                   onTap: () {
                     showDialogWaterbus(
                       alignment: Alignment.center,
@@ -192,7 +184,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                   },
                 ),
                 CallActionButton(
-                  icon: PhosphorIcons.x,
+                  icon: PhosphorIcons.x(),
                   backgroundColor: Colors.red,
                   onTap: () {
                     AppBloc.meetingBloc.add(const LeaveMeetingEvent());

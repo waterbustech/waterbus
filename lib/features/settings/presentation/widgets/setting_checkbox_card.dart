@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -52,7 +52,7 @@ class SettingCheckboxCard extends StatelessWidget {
             ),
             enabled
                 ? Icon(
-                    PhosphorIcons.check,
+                    PhosphorIcons.check(),
                     color: Colors.green,
                     size: 16.sp,
                   )

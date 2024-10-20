@@ -25,7 +25,9 @@ class Strings {
   static const String save = 'save';
   static const String invalidFullName = 'invalidFullName';
 
+  static const String recent = 'recent';
   static const String storage = 'storage';
+  static const String talkWithAI = 'talkWithAI';
   static const String archivedChats = 'archivedChats';
   static const String settings = 'settings';
   static const String licenses = 'licenses';

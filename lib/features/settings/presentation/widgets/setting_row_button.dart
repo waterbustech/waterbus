@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
@@ -93,7 +93,7 @@ class SettingRowButton extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 6.sp),
                     child: Icon(
-                      PhosphorIcons.caret_right,
+                      PhosphorIcons.caretRight(),
                       color: colorGray3,
                       size: SizerUtil.isDesktop ? 14.sp : null,
                     ),

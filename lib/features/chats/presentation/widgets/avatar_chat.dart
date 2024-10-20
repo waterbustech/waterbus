@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
@@ -13,7 +14,7 @@ class AvatarChat extends StatelessWidget {
   const AvatarChat({
     super.key,
     required this.meeting,
-    this.size = 48.0,
+    this.size = 42.0,
   });
 
   @override
@@ -30,7 +31,7 @@ class AvatarChat extends StatelessWidget {
       child: CustomNetworkImage(
         height: size,
         width: size,
-        urlToImage: meeting.host?.avatar,
+        urlToImage: meeting.host?.avatar ?? kUserDefault.avatar,
       ),
     );
   }
