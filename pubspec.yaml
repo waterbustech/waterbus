@@ -79,6 +79,9 @@ dependencies:
   share_plus: ^10.0.2
   simple_pip_mode: ^0.8.0
   file_picker: ^8.1.2
+  file_saver: ^0.2.9
+  universal_html: ^2.2.4
+  flutter_colorpicker: ^1.1.0
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   flutter_advanced_segment: ^3.0.2
@@ -106,10 +109,10 @@ dependencies:
   flutter_image_compress: ^2.2.0
 
   # Video call
-  waterbus_sdk: 1.5.1
-   
-  # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  # waterbus_sdk: ^1.5.1
+  waterbus_sdk:
+    path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  socket_io_client: ^2.0.3+1
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -167,6 +170,7 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/welcome.java
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

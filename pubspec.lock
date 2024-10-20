@@ -200,6 +200,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  charcode:
+    dependency: transitive
+    description:
+      name: charcode
+      sha256: fb98c0f6d12c920a02ee2d998da788bca066ca5f148492b7085ee23372b12306
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.1"
   checked_yaml:
     dependency: transitive
     description:
@@ -440,6 +448,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.2"
+  file_saver:
+    dependency: "direct main"
+    description:
+      name: file_saver
+      sha256: d375b351e3331663abbaf99747abd72f159260c58fbbdbca9f926f02c01bdc48
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.13"
   file_selector_linux:
     dependency: transitive
     description:
@@ -606,6 +622,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  flutter_colorpicker:
+    dependency: "direct main"
+    description:
+      name: flutter_colorpicker
+      sha256: "969de5f6f9e2a570ac660fb7b501551451ea2a1ab9e2097e89475f60e07816ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter_gen_core:
     dependency: transitive
     description:
@@ -763,10 +787,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: d6b14160745ebdbb88c853698c42275c64ca6ced75d343e192af5603e0a98fed
+      sha256: e8e120583ac7a34bd529351f03626864cc06ee2f99b4bf20553c6e4b6d616571
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+6"
+    version: "0.11.2+7"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1680,7 +1704,7 @@ packages:
     source: sdk
     version: "0.0.99"
   socket_io_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: socket_io_client
       sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
@@ -1888,6 +1912,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  universal_html:
+    dependency: "direct main"
+    description:
+      name: universal_html
+      sha256: "56536254004e24d9d8cfdb7dbbf09b74cf8df96729f38a2f5c238163e3d58971"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.4"
   universal_io:
     dependency: "direct main"
     description:
@@ -2035,10 +2067,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      name: waterbus_sdk
-      sha256: c76ea7e6db5cea7aa403f06fe0235502b2da12a9e383a1ed6df8d7a7e4344af8
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/lambiengcode/Documents/flutter_waterbus_sdk"
+      relative: false
+    source: path
     version: "1.5.1"
   web:
     dependency: "direct overridden"
