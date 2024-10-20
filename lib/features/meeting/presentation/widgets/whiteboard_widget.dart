@@ -7,13 +7,13 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/current_stroke_value.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/canvas_side_bar.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/drawing_canvas.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 class WhiteBoardWidget extends StatefulWidget {
   const WhiteBoardWidget({super.key});

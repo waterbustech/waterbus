@@ -9,10 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus_sdk/types/enums/draw_shapes.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
+import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/color_palette.dart';
