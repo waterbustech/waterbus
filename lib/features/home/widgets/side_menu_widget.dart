@@ -203,24 +203,30 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
             children: [
               userAvatar,
               SizedBox(width: 6.sp),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    user.fullName,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    '@${user.userName}',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          fontSize: 10.sp,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.fullName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    Text(
+                      '@${user.userName}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                            fontSize: 10.sp,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                    ),
+                  ],
+                ),
               ),
               const Spacer(),
               IconButton(

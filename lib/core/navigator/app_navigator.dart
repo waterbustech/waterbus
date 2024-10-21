@@ -12,6 +12,7 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
+import 'package:waterbus/features/conversation/screens/edit_conversation_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
 import 'package:waterbus/features/meeting/presentation/screens/background_gallery.dart';
 import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
@@ -147,9 +148,12 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       case Routes.detailGroupRoute:
         return _buildRoute(
           settings,
-          DetailGroupScreen(
-            meeting: arguments?['meeting'],
-          ),
+          const DetailGroupScreen(),
+        );
+      case Routes.editConversation:
+        return _buildRoute(
+          settings,
+          const EditConversationScreen(),
         );
       default:
         return _buildRoute(
@@ -305,6 +309,7 @@ extension AppNavigatorX on AppNavigator {
         Routes.themeRoute,
         Routes.invitedRoute,
         Routes.detailGroupRoute,
+        Routes.editConversation,
       ];
 
   Widget getWidgetByRoute({
@@ -321,6 +326,7 @@ extension AppNavigatorX on AppNavigator {
         );
       case Routes.profileRoute:
         return const ProfileScreen();
+
       case Routes.usernameRoute:
         return const UserNameScreen();
       case Routes.settingsCallRoute:
@@ -332,9 +338,9 @@ extension AppNavigatorX on AppNavigator {
       case Routes.invitedRoute:
         return const InvitedChatScreen();
       case Routes.detailGroupRoute:
-        return DetailGroupScreen(
-          meeting: arguments?['meeting'],
-        );
+        return const DetailGroupScreen();
+      case Routes.editConversation:
+        return const EditConversationScreen();
       default:
         return const SizedBox();
     }

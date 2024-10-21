@@ -1546,6 +1546,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  popover:
+    dependency: "direct main"
+    description:
+      name: popover
+      sha256: "0606f3e10f92fc0459f5c52fd917738c29e7552323b28694d50c2d3312d0e1a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   protobuf:
     dependency: transitive
     description:
@@ -2268,8 +2276,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "migration/v2"
-      resolved-ref: "921fc346c146a2f91c3c07e4ec5bc6a88628ee02"
+      ref: "feat/map-new-socket-event"
+      resolved-ref: c5f5f29fe3031dce3395006b854bc3758d34afee
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "1.5.1"

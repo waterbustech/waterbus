@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:waterbus/core/utils/cached_network_image/default_image.dart';
 import 'package:waterbus/core/utils/cached_network_image/place_holder.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String? urlToImage;
@@ -16,6 +17,7 @@ class CustomNetworkImage extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final BoxBorder? border;
   final Widget? placeHolderWidget;
+  final DefaultAvatarModel? defaultAvatar;
   final ColorFilter? colorFilter;
   final Widget? childInAvatar;
   final List<BoxShadow>? boxShadow;
@@ -32,6 +34,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.placeHolderWidget,
     this.colorFilter,
     this.childInAvatar,
+    this.defaultAvatar,
     this.border,
     this.boxShadow,
   }) : assert(height != null || width != null);
@@ -98,9 +101,9 @@ class CustomNetworkImage extends StatelessWidget {
         height: height ?? width!,
         width: width ?? height!,
         margin: margin,
-        shape: shape,
+        shape: borderRadius != null ? BoxShape.rectangle : shape,
         borderRadius: borderRadius,
-        childInAvatar: childInAvatar,
+        defaultAvatar: defaultAvatar,
       );
 
   Widget get _placeHolder => Container(

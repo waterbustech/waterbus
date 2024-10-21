@@ -64,8 +64,11 @@ class InvitedChatCard extends StatelessWidget {
               ),
               GestureWrapper(
                 onTap: () {
-                  AppBloc.invitedChatBloc
-                      .add(AcceptInviteEvent(code: invitedConversation.code));
+                  AppBloc.invitedChatBloc.add(
+                    AcceptInviteEvent(
+                      meetingId: invitedConversation.id,
+                    ),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -97,7 +100,7 @@ class InvitedChatCard extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8.sp)
-              .add(EdgeInsets.only(left: 58.sp)),
+              .add(EdgeInsets.only(left: 54.sp)),
           child: divider,
         ),
       ],

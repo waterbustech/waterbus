@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 
 class AvatarChat extends StatelessWidget {
   final Meeting meeting;
@@ -19,10 +16,6 @@ class AvatarChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return meeting.isGroup ? groupChat(context) : singleChat(context);
-  }
-
-  Widget singleChat(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -31,48 +24,8 @@ class AvatarChat extends StatelessWidget {
       child: CustomNetworkImage(
         height: size,
         width: size,
-        urlToImage: meeting.host?.avatar ?? kUserDefault.avatar,
-      ),
-    );
-  }
-
-  Widget groupChat(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              padding: EdgeInsets.all(1.sp),
-              child: CustomNetworkImage(
-                height: size * 0.7,
-                width: size * 0.7,
-                urlToImage: meeting.memberJoined.first.user.avatar ??
-                    kUserDefault.avatar,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(1.sp),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: mCL,
-              ),
-              child: CustomNetworkImage(
-                height: size * 0.7,
-                width: size * 0.7,
-                urlToImage:
-                    meeting.memberJoined[1].user.avatar ?? kUserDefault.avatar,
-              ),
-            ),
-          ),
-        ],
+        urlToImage: meeting.avatar,
+        defaultAvatar: DefaultAvatarModel.fromFullName(meeting.title),
       ),
     );
   }

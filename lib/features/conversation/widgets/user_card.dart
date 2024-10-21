@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 
@@ -32,7 +33,7 @@ class UserCard extends StatelessWidget {
                   child: CustomNetworkImage(
                     height: 32.sp,
                     width: 32.sp,
-                    urlToImage: user.avatar,
+                    urlToImage: user.avatar ?? kUserDefault.avatar,
                   ),
                 ),
                 SizedBox(width: 8.sp),

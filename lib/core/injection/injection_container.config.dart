@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/chats/presentation/bloc/archived_bloc.dart' as _i950;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
 import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
@@ -60,6 +61,7 @@ _i174.GetIt $initGetIt(
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
+  gh.factory<_i950.ArchivedBloc>(() => _i950.ArchivedBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());

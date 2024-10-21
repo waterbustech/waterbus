@@ -97,6 +97,7 @@ dependencies:
   super_sliver_list: ^0.4.1
   syncfusion_flutter_charts:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
+  popover: ^0.3.1
 
   # Code Editor
   re_editor: ^0.3.1
@@ -125,10 +126,8 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 'migration/v2'
+      ref: 'feat/map-new-socket-event'
    
-  # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0

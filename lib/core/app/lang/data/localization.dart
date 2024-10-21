@@ -163,7 +163,8 @@ class Strings {
   static const String invisible = 'invisible';
   static const String joined = 'joined';
   static const String leaveTheConversation = 'leaveTheConversation';
-  static const String sureLeaveConversation = 'descriptionOfLeaveConversation';
+  static const String sureLeaveConversation = 'sureLeaveConversation';
+  static const String sureArchivedConversation = 'sureArchivedConversation';
   static const String member = 'member';
   static const String members = 'members';
   static const String groupCreated = 'grounpCreated';
@@ -185,6 +186,12 @@ class Strings {
       'hostCanNotDeleteConversation';
   static const String sendMessageOrTapOnTheGreetingBelow =
       'sendMessageOrTapOnTheGreetingBelow';
+  static const String chatUpdatedSuccessfully =
+      'theConversationUpdateWasSuccessful';
+  static const String chatUpdateFailed = 'chatUpdateFailed';
+  static const String uploadImageFail = 'uploadImageFail';
+  static const String setNewPhoto = 'setNewPhoto';
+  static const String leaveGroup = 'leaveGroup';
 }
 
 class MyI18n {
