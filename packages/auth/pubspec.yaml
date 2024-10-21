@@ -31,7 +31,12 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
-  waterbus_sdk: ^1.5.1
+  # waterbus_sdk: ^1.5.1
+  waterbus_sdk: 
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      path: '.'
+      ref: 'feat/map-new-socket-event'
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 

@@ -8,6 +8,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
@@ -23,8 +24,10 @@ import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -53,6 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
         return const RecentMeetings();
       case Strings.chat:
         return const ChatsScreen();
+      case Strings.storage:
+        return const RecordScreen();
+      case Strings.notifications:
+        return const NotificationSettingsScreen();
       case Strings.appearance:
         return const ThemeScreen(isSettingDesktop: true);
       case Strings.archivedChats:
@@ -66,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Assets.images.imgLogo.path,
             height: 35.sp,
           ),
-          applicationVersion: '1.2.0',
+          applicationVersion: kAppVersion,
         );
       default:
         return Container();
@@ -208,6 +215,9 @@ class _HomeScreenState extends State<HomeScreen> {
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);
               break;
+            case Strings.storage:
+              AppNavigator().push(Routes.storage);
+              break;
             case Strings.settings:
               AppNavigator().push(Routes.settingsCallRoute);
               break;
@@ -220,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Assets.images.imgLogo.path,
                   height: 35.sp,
                 ),
-                applicationVersion: '1.2.0',
+                applicationVersion: kAppVersion,
               );
               break;
             default:

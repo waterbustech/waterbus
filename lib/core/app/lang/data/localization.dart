@@ -99,11 +99,14 @@ class Strings {
   static const String beautyFilters = 'beautyFilters';
   static const String virtualBackground = 'virtualBackground';
   static const String subtitle = 'subtitle';
+  static const String record = 'record';
+  static const String duration = 'duration';
   static const String callStats = 'callStats';
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
   static const String latency = 'latency';
   static const String back = 'back';
+  static const String createdAt = 'createdAt';
 
   // Profile screen
   static const String profile = 'profile';
@@ -130,6 +133,8 @@ class Strings {
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
   static const String appearance = 'appearance';
+  static const String colorMode = 'colorMode';
+  static const String primaryColor = 'primaryColor';
   static const String callAndMeeting = 'callAndMeeting';
   static const String serverConfiguration = 'serverConfiguration';
   static const String clearCache = 'clearCache';
@@ -138,6 +143,13 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+  static const String inAppNotification = 'inAppNotification';
+  static const String inMeeting = 'inMeeting';
+  static const String newMessage = 'newMessage';
+  static const String newInvitation = 'newInvitation';
+  static const String participantJoined = 'participantJoined';
+  static const String participantLeft = 'participantLeft';
+  static const String participantRaiseHand = 'participantRaiseHand';
 
   // Chat Screen
   static const String videoCall = 'videoCall';

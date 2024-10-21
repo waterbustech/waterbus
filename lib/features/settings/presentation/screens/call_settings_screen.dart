@@ -15,6 +15,7 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
@@ -105,7 +106,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 8.sp),
-                  _buildLabel(Strings.general.i18n),
+                  LabelWidget(label: Strings.general.i18n),
                   SettingSwitchCard(
                     label: Strings.lowBandwidthMode.i18n,
                     enabled: _settings.isLowBandwidthMode,
@@ -117,7 +118,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       });
                     },
                   ),
-                  _buildLabel(Strings.audio.i18n),
+                  LabelWidget(label: Strings.audio.i18n),
                   SettingSwitchCard(
                     label: Strings.startWithAudioMuted.i18n,
                     enabled: _settings.isAudioMuted,
@@ -163,7 +164,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       });
                     },
                   ),
-                  _buildLabel(Strings.video.i18n),
+                  LabelWidget(label: Strings.video.i18n),
                   SettingSwitchCard(
                     label: Strings.startWithVideoMuted.i18n,
                     enabled: _settings.isVideoMuted,
@@ -199,7 +200,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       onChanged: (isEnabled) {},
                     ),
                   ),
-                  _buildLabel(Strings.security.i18n),
+                  LabelWidget(label: Strings.security.i18n),
                   SettingSwitchCard(
                     label: Strings.endToEndEncryption.i18n,
                     enabled: _settings.e2eeEnabled,
@@ -215,7 +216,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       });
                     },
                   ),
-                  _buildLabel(Strings.preferredCodec.i18n),
+                  LabelWidget(label: Strings.preferredCodec.i18n),
                   SizedBox(height: 4.sp),
                   Column(
                     children: [
@@ -241,21 +242,6 @@ class _SettingScreenState extends State<CallSettingsScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildLabel(String label) {
-    return Padding(
-      padding: EdgeInsets.only(top: 12.sp).add(
-        EdgeInsets.symmetric(horizontal: 12.sp),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: 11.5.sp,
-              fontWeight: FontWeight.w600,
-            ),
       ),
     );
   }
