@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'dart:core';
+import 'dart:ui';
 
 import 'package:waterbus/core/constants/avatar_colors.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
@@ -15,8 +15,8 @@ class DefaultAvatarModel {
 
   factory DefaultAvatarModel.fromFullName(String name) {
     return DefaultAvatarModel(
-      keyword: name.substring(0, 1),
-      backgroundColor: generateColorFromName(name.substring(0, 1)),
+      keyword: name.trim().substring(0, 1),
+      backgroundColor: generateColorFromName(name.trim().substring(0, 1)),
     );
   }
 

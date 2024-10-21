@@ -75,22 +75,22 @@ class ConversationList extends StatelessWidget {
                         }
 
                         return GestureWrapper(
-                          onLongPress: () {
-                            HapticFeedback.lightImpact();
-
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              barrierColor: Colors.black38,
-                              enableDrag: false,
-                              builder: (context) {
-                                return BottomChatOptions(
-                                  options: meetings[index].getOptions,
-                                );
-                              },
-                            );
-                          },
+                          onLongPress: SizerUtil.isDesktop
+                              ? null
+                              : () {
+                                  _handleShowBottomSheetOptions(
+                                    context,
+                                    meetings[index],
+                                  );
+                                },
+                          onSecondaryTap: SizerUtil.isDesktop
+                              ? () {
+                                  _handleShowBottomSheetOptions(
+                                    context,
+                                    meetings[index],
+                                  );
+                                }
+                              : null,
                           onTap: () {
                             onTap.call(index);
                           },
@@ -99,7 +99,7 @@ class ConversationList extends StatelessWidget {
                             children: [
                               ChatCard(meeting: meetings[index]),
                               Padding(
-                                padding: EdgeInsets.only(left: 64.sp),
+                                padding: EdgeInsets.only(left: 58.sp),
                                 child: divider,
                               ),
                             ],
@@ -112,6 +112,24 @@ class ConversationList extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _handleShowBottomSheetOptions(
+    BuildContext context,
+    Meeting meeting,
+  ) {
+    HapticFeedback.lightImpact();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black38,
+      enableDrag: false,
+      builder: (context) {
+        return BottomChatOptions(options: meeting.getOptions);
+      },
     );
   }
 }

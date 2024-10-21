@@ -17,14 +17,11 @@ class EmptyMeetView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w),
-            child: Assets.images.worldMap.image(
-              width: 100.w,
-              height: 100.h,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          child: Assets.images.worldMap.image(
+            width: 100.w,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         SizedBox(height: 20.sp),

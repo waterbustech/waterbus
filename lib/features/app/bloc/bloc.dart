@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waterbus/core/injection/injection_container.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/archived_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
@@ -20,6 +21,7 @@ class AppBloc {
   static final UserSearchBloc userSearchBloc = getIt<UserSearchBloc>();
   static final MeetingBloc meetingBloc = getIt<MeetingBloc>();
   static final ChatBloc chatBloc = getIt<ChatBloc>();
+  static final ArchivedBloc archivedBloc = getIt<ArchivedBloc>();
   static final InvitedChatBloc invitedChatBloc = getIt<InvitedChatBloc>();
   static final MessageBloc messageBloc = getIt<MessageBloc>();
   static final RecentJoinedBloc recentJoinedBloc = getIt<RecentJoinedBloc>();
@@ -35,6 +37,9 @@ class AppBloc {
     ),
     BlocProvider<UserBloc>(
       create: (context) => userBloc,
+    ),
+    BlocProvider<ArchivedBloc>(
+      create: (context) => archivedBloc,
     ),
     BlocProvider<UserSearchBloc>(
       create: (context) => userSearchBloc,

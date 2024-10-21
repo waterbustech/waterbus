@@ -763,10 +763,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: d6b14160745ebdbb88c853698c42275c64ca6ced75d343e192af5603e0a98fed
+      sha256: e8e120583ac7a34bd529351f03626864cc06ee2f99b4bf20553c6e4b6d616571
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+6"
+    version: "0.11.2+7"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1450,6 +1450,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  popover:
+    dependency: "direct main"
+    description:
+      name: popover
+      sha256: "0606f3e10f92fc0459f5c52fd917738c29e7552323b28694d50c2d3312d0e1a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   protobuf:
     dependency: transitive
     description:
@@ -2035,10 +2043,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      name: waterbus_sdk
-      sha256: c76ea7e6db5cea7aa403f06fe0235502b2da12a9e383a1ed6df8d7a7e4344af8
-      url: "https://pub.dev"
-    source: hosted
+      path: "../waterbus-flutter-sdk"
+      relative: true
+    source: path
     version: "1.5.1"
   web:
     dependency: "direct overridden"
@@ -2105,5 +2112,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.5.0-259.0.dev <4.0.0"
-  flutter: ">=3.22.0"
+  dart: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"

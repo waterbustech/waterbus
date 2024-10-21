@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class GestureWrapper extends StatefulWidget {
   final Function? onTap;
+  final Function? onSecondaryTap;
   final Function? onLongPress;
   final Widget child;
   final bool isCloseKeyboard;
@@ -10,6 +11,7 @@ class GestureWrapper extends StatefulWidget {
     super.key,
     required this.child,
     this.onTap,
+    this.onSecondaryTap,
     this.onLongPress,
     this.isCloseKeyboard = true,
   });
@@ -58,6 +60,18 @@ class _GestureWrapperState extends State<GestureWrapper> {
           _enable = false;
         });
       },
+      onSecondaryTap: widget.onSecondaryTap != null ||
+              (FocusScope.of(context).hasFocus && widget.isCloseKeyboard)
+          ? () {
+              if (FocusScope.of(context).hasFocus && widget.isCloseKeyboard) {
+                FocusScope.of(context).unfocus();
+              }
+
+              if (!_enable && widget.onSecondaryTap != null) {
+                widget.onSecondaryTap!();
+              }
+            }
+          : null,
       child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
     );
   }

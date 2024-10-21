@@ -10,6 +10,7 @@ import 'package:waterbus_sdk/types/models/index.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -23,8 +24,7 @@ import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 
 class DetailGroupScreen extends StatelessWidget {
-  final Meeting meeting;
-  const DetailGroupScreen({super.key, required this.meeting});
+  const DetailGroupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +37,21 @@ class DetailGroupScreen extends StatelessWidget {
             expandedHeight: 155.sp,
             actions: [
               Tooltip(
-                message: Strings.leaveTheConversation.i18n,
+                message: Strings.editMeeting.i18n,
                 child: GestureWrapper(
                   onTap: () {
-                    AppBloc.chatBloc
-                        .add(DeleteOrLeaveConversationEvent(meeting: meeting));
+                    AppNavigator().push(Routes.editConversation);
                   },
                   child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(right: 16.sp),
-                    child: Icon(
-                      PhosphorIcons.signOut(),
-                      size: 20.sp,
-                      color: Theme.of(context).colorScheme.error,
+                    child: Text(
+                      Strings.edit.i18n,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -71,24 +73,38 @@ class DetailGroupScreen extends StatelessWidget {
                 ),
               ),
             ),
-            flexibleSpace: GroupSpaceBarCustom(
-              avatar: AvatarChat(
-                meeting: meeting,
-                size: 54.sp,
-              ),
-              subTitle: Text(
-                "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 10.sp, color: fCL),
-              ),
-              title: Text(
-                meeting.title,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
+            flexibleSpace: BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ActiveChatState) {
+                  final Meeting? meeting = state.conversationCurrent;
+
+                  return meeting == null
+                      ? const SizedBox()
+                      : GroupSpaceBarCustom(
+                          avatar: AvatarChat(
+                            meeting: meeting,
+                            size: 54.sp,
+                          ),
+                          subTitle: Text(
+                            "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 10.sp, color: fCL),
+                          ),
+                          title: Text(
+                            meeting.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        );
+                }
+                return const SizedBox();
+              },
             ),
           ),
           SliverList(
@@ -105,8 +121,15 @@ class DetailGroupScreen extends StatelessWidget {
                       children: [
                         DetailGroupButton(
                           onTap: () {
-                            AppBloc.meetingBloc
-                                .add(JoinMeetingEvent(meeting: meeting));
+                            if (AppBloc.chatBloc.conversationCurrent == null) {
+                              return;
+                            }
+
+                            AppBloc.meetingBloc.add(
+                              JoinMeetingEvent(
+                                meeting: AppBloc.chatBloc.conversationCurrent!,
+                              ),
+                            );
                           },
                           icon: PhosphorIcons.videoCamera(
                             PhosphorIconsStyle.fill,
@@ -136,25 +159,34 @@ class DetailGroupScreen extends StatelessWidget {
               ],
             ),
           ),
-          BlocBuilder<ChatBloc, ChatState>(
-            builder: (context, state) {
-              if (state is ActiveChatState) {
-                final Meeting conversation =
-                    state.conversations.firstWhereOrNull(
-                          (conversation) => conversation.id == meeting.id,
-                        ) ??
-                        meeting;
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: 30.sp),
+            sliver: BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ActiveChatState) {
+                  if (state.conversationCurrent == null) {
+                    return const SizedBox();
+                  }
 
-                conversation.members
-                    .sort((a, b) => a.user.id == meeting.host?.id ? -1 : 1);
+                  final Meeting conversation = state.conversations
+                          .firstWhereOrNull(
+                        (conversation) =>
+                            conversation.id == state.conversationCurrent?.id,
+                      ) ??
+                      state.conversationCurrent!;
 
-                final int numberOfWidgetsAdded = meeting.isHost ? 1 : 0;
-                final int widgetLength =
-                    conversation.members.length + numberOfWidgetsAdded;
+                  conversation.members.sort(
+                    (a, b) => a.user.id == state.conversationCurrent!.host?.id
+                        ? -1
+                        : 1,
+                  );
 
-                return SliverPadding(
-                  padding: EdgeInsets.only(bottom: 30.sp),
-                  sliver: SliverList(
+                  final int numberOfWidgetsAdded =
+                      state.conversationCurrent!.isHost ? 1 : 0;
+                  final int widgetLength =
+                      conversation.members.length + numberOfWidgetsAdded;
+
+                  return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final bool isHost = index > 0 &&
@@ -264,12 +296,12 @@ class DetailGroupScreen extends StatelessWidget {
                       },
                       childCount: widgetLength,
                     ),
-                  ),
-                );
-              }
+                  );
+                }
 
-              return const SizedBox();
-            },
+                return const SizedBox();
+              },
+            ),
           ),
         ],
       ),

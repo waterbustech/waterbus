@@ -76,6 +76,8 @@ Map<String, String> vietnamese = {
   Strings.sureDeleteConversation:
       'Bạn có chắc chắn muốn xoá\ncuộc trò chuyện này?',
   Strings.sureDeleteMessage: 'Bạn có chắc chắn muốn xoá\tin nhắn này?',
+  Strings.sureArchivedConversation:
+      'Cuộc trò chuyện này sẽ được lưu và bạn có thể xem lại nó khi truy cập Kho lưu trữ. Bạn có chắc chắn muốn lưu trữ cuộc trò chuyện này không?',
   Strings.leaveAMessage: "Để lại lời nhắn...",
   Strings.invitedChat: "Lời mời",
   Strings.enterPassword: "Nhập mật khẩu",
@@ -173,4 +175,9 @@ Map<String, String> vietnamese = {
       "Cuộc trò truyện mới đã được thêm vào danh sách!",
   Strings.youHaveConfirmedConversation:
       "Bạn đã xác nhận tham gia cuộc trò chuyện",
+  Strings.chatUpdatedSuccessfully: "Cập nhật cuộc trò chuyện thành công!",
+  Strings.chatUpdateFailed: "Cập nhật cuộc trò chuyện thất bại!",
+  Strings.uploadImageFail: "Tải hình ảnh bị lỗi. Vui lòng thử lại sau!",
+  Strings.setNewPhoto: "Tải ảnh mới",
+  Strings.leaveGroup: "Rời Nhóm",
 };

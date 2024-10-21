@@ -92,6 +92,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
           if (state is ActiveChatState) {
             return ConversationList(
               onTap: (index) {
+                if (index > state.conversations.length - 1) return;
+
                 _handleTapChatItem(state.conversations[index]);
               },
             );

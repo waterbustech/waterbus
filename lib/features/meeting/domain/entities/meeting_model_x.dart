@@ -22,10 +22,10 @@ extension MeetingModelX on Meeting {
 
     options.add(
       OptionModel(
-        title: Strings.delete.i18n,
+        title: isHost ? Strings.archivedChats.i18n : Strings.delete.i18n,
         isDanger: true,
         handlePressed: () {
-          AppBloc.chatBloc.add(DeleteOrLeaveConversationEvent(meeting: this));
+          AppBloc.chatBloc.add(ArchivedOrLeaveConversationEvent(meeting: this));
         },
       ),
     );

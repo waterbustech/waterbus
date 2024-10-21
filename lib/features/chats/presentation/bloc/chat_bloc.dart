@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
+import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -12,8 +15,10 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
@@ -32,6 +37,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (event is OnChatEvent) {
         if (_conversations.isEmpty) {
           await _getConversationList();
+          _waterbusSdk.onConversationSocketChanged = _listenConversationSocket;
           emit(_getDoneChat);
         }
 
@@ -47,13 +53,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is SelectConversationCurrentEvent) {
-        _conversationCurrent = event.meeting;
+        if (event.meeting != null) {
+          _conversationCurrent = event.meeting;
+        } else {
+          if (event.meetingId == null) return;
+
+          final index = _conversations
+              .indexWhere((conversation) => conversation.id == event.meetingId);
+
+          if (index != -1) {
+            _conversationCurrent = _conversations[index];
+          }
+        }
 
         emit(_getDoneChat);
       }
 
       if (event is CleanConversationCurrentEvent) {
-        _cleanConversationCurrent();
+        _conversationCurrent = null;
 
         emit(_getDoneChat);
       }
@@ -124,9 +141,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is DeleteOrLeaveConversationEvent) {
+      if (event is ArchivedOrLeaveConversationEvent) {
+        final Meeting? current = event.meeting ?? _conversationCurrent;
+
+        if (current == null) return;
+
         final int index = _conversations
-            .indexWhere((conversation) => conversation.id == event.meeting.id);
+            .indexWhere((conversation) => conversation.id == current.id);
 
         if (index != -1) {
           final Meeting meeting = _conversations[index];
@@ -135,6 +156,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             showSnackBarWaterbus(
               content: Strings.hostCanNotDeleteConversation.i18n,
             );
+
+            AppNavigator.pop();
           } else {
             await showModalBottomSheet(
               context: AppNavigator.context!,
@@ -144,14 +167,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               enableDrag: false,
               builder: (context) {
                 return BottomSheetDelete(
-                  actionText:
-                      meeting.isHost ? null : Strings.leaveTheConversation.i18n,
+                  actionText: meeting.isHost
+                      ? Strings.archivedChats.i18n
+                      : Strings.leaveTheConversation.i18n,
                   description: meeting.isHost
-                      ? null
+                      ? Strings.sureArchivedConversation.i18n
                       : Strings.sureLeaveConversation.i18n,
                   handlePressed: () async {
                     if (meeting.isHost) {
-                      add(DeleteConversationByHostEvent(meetingId: meeting.id));
+                      add(
+                        ChangeConversationToArchivedEvent(
+                          meetingId: meeting.id,
+                        ),
+                      );
                     } else {
                       add(LeaveConversationByMemberEvent(meeting: meeting));
                     }
@@ -171,9 +199,16 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is DeleteConversationByHostEvent) {
-        await _deleteConversation(event.meetingId);
+      if (event is ChangeConversationToArchivedEvent) {
+        await _archivedConversation(event.meetingId);
 
+        emit(_getDoneChat);
+      }
+
+      if (event is UpdateConversationEvent) {
+        displayLoadingLayer();
+        await _handleUpdateConversation(title: event.title);
+        AppNavigator.pop();
         emit(_getDoneChat);
       }
 
@@ -188,6 +223,33 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         emit(_getDoneChat);
       }
+
+      if (event is UpdateAvatarConversationEvent) {
+        displayLoadingLayer();
+
+        final String? presignedUrl = await WaterbusSdk().getPresignedUrl();
+
+        if (presignedUrl != null) {
+          final String? uploadAvatar = await WaterbusSdk().uploadAvatar(
+            uploadUrl: presignedUrl,
+            image: event.avatar,
+          );
+
+          if (uploadAvatar != null) {
+            await _handleUpdateConversation(avatar: uploadAvatar);
+
+            emit(_getDoneChat);
+          } else {
+            showSnackBarWaterbus(content: Strings.uploadImageFail.i18n);
+          }
+        }
+
+        AppNavigator.pop();
+      }
+
+      if (event is UpdateConversationFromSocketEvent) {
+        emit(_getDoneChat);
+      }
     });
   }
 
@@ -196,6 +258,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         conversations: _arrangedConversations,
         conversationCurrent: _conversationCurrent,
       );
+
   GetDoneChatState get _getDoneChat => GetDoneChatState(
         conversations: _arrangedConversations,
         conversationCurrent: _conversationCurrent,
@@ -221,6 +284,66 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     return meeting;
   }
 
+  void _listenConversationSocket(ConversationSocketEvent socketEvent) {
+    final Meeting? newConversation = socketEvent.conversation;
+    final Member? newMember = socketEvent.member;
+
+    if (socketEvent.event == ConversationEventEnum.newInvitaion) {
+      if (newConversation == null) return;
+      AppBloc.invitedChatBloc
+          .add(InsertInvitedConversationsEvent(invited: newConversation));
+    } else if (socketEvent.event == ConversationEventEnum.newMemberJoined) {
+      if (newMember == null) return;
+
+      final int index = _conversations
+          .indexWhere((conversation) => conversation.id == newMember.meetingId);
+
+      if (index != -1) {
+        final indexMember = _conversations[index]
+            .members
+            .indexWhere((member) => member.id == newMember.id);
+        if (indexMember != -1) {
+          _conversations[index].members[indexMember].status =
+              MemberStatusEnum.joined;
+        }
+      }
+
+      add(UpdateConversationFromSocketEvent());
+    }
+  }
+
+  Future<void> _handleUpdateConversation({
+    String? title,
+    String? avatar,
+  }) async {
+    if (_conversationCurrent == null) return;
+
+    final Meeting meeting = _conversationCurrent!.copyWith(
+      avatar: avatar ?? _conversationCurrent?.avatar,
+      title: title ?? _conversationCurrent?.title,
+    );
+
+    final isSuccess = await _waterbusSdk.updateConversation(meeting: meeting);
+
+    if (isSuccess) {
+      final int index = _conversations.indexWhere(
+        (conversation) => conversation.id == meeting.id,
+      );
+
+      if (index != -1) {
+        _conversationCurrent = _conversations[index] = meeting;
+      }
+
+      showSnackBarWaterbus(
+        content: Strings.chatUpdatedSuccessfully.i18n,
+      );
+    } else {
+      showSnackBarWaterbus(
+        content: Strings.chatUpdateFailed.i18n,
+      );
+    }
+  }
+
   void _updateLastMessage(UpdateLastMessageEvent event) {
     final int index = _conversations.indexWhere(
       (conversation) => conversation.id == event.message.meeting,
@@ -234,17 +357,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _deleteConversation(int meetingId) async {
+  Future<void> _archivedConversation(int meetingId) async {
     final bool isSuccess = await _waterbusSdk.deleteConversation(meetingId);
 
     if (isSuccess) {
-      _conversations.removeWhere(
-        (conversation) => conversation.id == meetingId,
-      );
-
-      if (_conversationCurrent?.id == meetingId) {
-        _cleanConversationCurrent();
-      }
+      _cleanConversationCurrent(meetingId);
     }
   }
 
@@ -253,13 +370,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         await _waterbusSdk.leaveConversation(meeting.code);
 
     if (conversation != null) {
-      _conversations.removeWhere(
-        (conversation) => conversation.id == conversation.id,
-      );
-
-      if (_conversationCurrent?.id == conversation.id) {
-        _cleanConversationCurrent();
-      }
+      _cleanConversationCurrent(conversation.id);
     }
   }
 
@@ -296,7 +407,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _conversationCurrent = null;
   }
 
-  void _cleanConversationCurrent() {
-    _conversationCurrent = null;
+  void _cleanConversationCurrent(int meetingId) {
+    _conversations.removeWhere(
+      (conversation) => conversation.id == meetingId,
+    );
+
+    if (_conversationCurrent?.id == meetingId) {
+      if (SizerUtil.isDesktop && _conversations.isNotEmpty) {
+        _conversationCurrent = _conversations.first;
+      } else {
+        _conversationCurrent = null;
+      }
+    }
   }
+
+  Meeting? get conversationCurrent => _conversationCurrent;
 }

@@ -74,7 +74,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         child: Column(
           children: [
             SizedBox(height: 5.sp),
-            ConversationHeader(meeting: widget.meeting),
+            const ConversationHeader(),
             SizedBox(height: 5.sp),
             divider,
             Expanded(

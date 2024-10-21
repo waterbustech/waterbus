@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus_sdk/types/models/meeting_model.dart';
 
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 
 class AvatarChat extends StatelessWidget {
   final Meeting meeting;

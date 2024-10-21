@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const ChatsScreen();
       case Strings.appearance:
         return const ThemeScreen(isSettingDesktop: true);
+      case Strings.archivedChats:
       case Strings.language:
         return const LanguageScreen(isSettingDesktop: true);
       case Strings.callSettings:

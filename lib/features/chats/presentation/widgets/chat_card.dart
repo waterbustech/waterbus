@@ -59,7 +59,7 @@ class _ChatCardState extends State<ChatCard> {
                               fontWeight: FontWeight.w600,
                             ),
                             children: [
-                              TextSpan(text: widget.meeting.title),
+                              TextSpan(text: widget.meeting.title.trim()),
                             ],
                           ),
                         ),

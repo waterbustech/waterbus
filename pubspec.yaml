@@ -93,6 +93,7 @@ dependencies:
   super_sliver_list: ^0.4.1
   syncfusion_flutter_charts:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
+  popover: ^0.3.1
 
   # Code Editor
   re_editor: ^0.3.1
@@ -108,11 +109,11 @@ dependencies:
   # Video call
   waterbus_sdk: 1.5.1
    
-  # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
 
 dependency_overrides: 
   watcher: ^1.1.0
+  waterbus_sdk:
+    path: ../waterbus-flutter-sdk
   win32: ^5.0.5 
   web: ^1.0.0
   collection: ^1.19.0
