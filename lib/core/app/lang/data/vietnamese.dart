@@ -195,4 +195,6 @@ Map<String, String> vietnamese = {
 
   Strings.viewPersonalInformation: "Xem thông tin cá nhân",
   Strings.signOutOfYourAccount: "Đăng xuất tài khoản",
+  Strings.descriptionArchivedConversation:
+      "Cuộc trò truyện này đã được Lưu trữ. Bạn chỉ có thể xem lại các tin nhắn của cuộc trò chuyện này.",
 };

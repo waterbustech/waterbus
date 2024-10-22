@@ -195,6 +195,8 @@ class Strings {
 
   static const String viewPersonalInformation = 'viewPersonalInformation';
   static const String signOutOfYourAccount = 'signOutOfYourAccount';
+  static const String descriptionArchivedConversation =
+      'descriptionArchivedConversation';
 }
 
 class MyI18n {

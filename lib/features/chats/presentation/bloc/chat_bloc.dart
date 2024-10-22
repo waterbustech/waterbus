@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
@@ -175,11 +176,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                       : Strings.sureLeaveConversation.i18n,
                   handlePressed: () async {
                     if (meeting.isHost) {
-                      add(
-                        ChangeConversationToArchivedEvent(
-                          meetingId: meeting.id,
-                        ),
-                      );
+                      add(ChangeConversationToArchivedEvent(meeting: meeting));
                     } else {
                       add(LeaveConversationByMemberEvent(meeting: meeting));
                     }
@@ -200,7 +197,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChangeConversationToArchivedEvent) {
-        await _archivedConversation(event.meetingId);
+        await _archivedConversation(event.meeting);
 
         emit(_getDoneChat);
       }
@@ -367,11 +364,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _archivedConversation(int meetingId) async {
-    final bool isSuccess = await _waterbusSdk.deleteConversation(meetingId);
+  Future<void> _archivedConversation(Meeting meeting) async {
+    final bool isSuccess = await _waterbusSdk.deleteConversation(meeting.id);
 
     if (isSuccess) {
-      _cleanConversationCurrent(meetingId);
+      AppBloc.archivedBloc.add(
+        InsertArchivedEvent(
+          meeting: meeting.copyWith(status: ChatStatusEnum.archived),
+        ),
+      );
+
+      _cleanConversationCurrent(meeting.id);
     }
   }
 

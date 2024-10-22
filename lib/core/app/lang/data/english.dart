@@ -195,4 +195,6 @@ Map<String, String> english = {
 
   Strings.viewPersonalInformation: "View personal information",
   Strings.signOutOfYourAccount: "Sign out of your account",
+  Strings.descriptionArchivedConversation:
+      "This conversation has been Archived. You can only review messages from this conversation.",
 };

@@ -15,7 +15,7 @@ class AvatarCard extends StatelessWidget {
     required this.urlToImage,
     required this.size,
     this.margin,
-    required this.title,
+    this.title,
     this.isCircleShape = false,
   });
 

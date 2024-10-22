@@ -35,9 +35,9 @@ class ArchivedOrLeaveConversationEvent extends ChatEvent {
 }
 
 class ChangeConversationToArchivedEvent extends ChatEvent {
-  final int meetingId;
+  final Meeting meeting;
 
-  ChangeConversationToArchivedEvent({required this.meetingId});
+  ChangeConversationToArchivedEvent({required this.meeting});
 }
 
 class LeaveConversationByMemberEvent extends ChatEvent {

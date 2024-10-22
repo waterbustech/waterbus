@@ -26,13 +26,33 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
         await _getArchivedConversationList();
         emit(_getDoneArchived);
       }
+
+      if (event is RefreshArchivedEvent) {
+        _archivedConversations.clear();
+        await _getArchivedConversationList();
+        emit(_getDoneArchived);
+        event.handleFinish.call();
+      }
+
+      if (event is InsertArchivedEvent) {
+        if (_archivedConversations.isEmpty && !_isOverArchived) return;
+
+        final int index = _archivedConversations
+            .indexWhere((conversation) => conversation.id == event.meeting.id);
+
+        if (index == -1) {
+          _archivedConversations.insert(0, event.meeting);
+        }
+
+        emit(_getDoneArchived);
+      }
     });
   }
 
   GettingArchivedState get _gettingArchived => GettingArchivedState(
         archivedConversations: _archivedConversations,
       );
-  GettingArchivedState get _getDoneArchived => GettingArchivedState(
+  GetDoneArchivedState get _getDoneArchived => GetDoneArchivedState(
         archivedConversations: _archivedConversations,
       );
 

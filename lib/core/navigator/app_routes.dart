@@ -30,4 +30,8 @@ class Routes {
   // Others
   static const String dialogRoute = '/dialog';
   static const String loadingRoute = '/loading';
+
+  // Archived
+  static const String archivedRoute = '/archived';
+  static const String archivedConversationRoute = '/archived-conversation';
 }
