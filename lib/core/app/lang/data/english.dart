@@ -192,4 +192,7 @@ Map<String, String> english = {
   Strings.uploadImageFail: "Image loading error. Please try again later!",
   Strings.setNewPhoto: "Set New Photo",
   Strings.leaveGroup: "Leave Group",
+
+  Strings.viewPersonalInformation: "View personal information",
+  Strings.signOutOfYourAccount: "Sign out of your account",
 };

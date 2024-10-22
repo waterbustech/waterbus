@@ -192,4 +192,7 @@ Map<String, String> vietnamese = {
   Strings.uploadImageFail: "Tải hình ảnh bị lỗi. Vui lòng thử lại sau!",
   Strings.setNewPhoto: "Tải ảnh mới",
   Strings.leaveGroup: "Rời Nhóm",
+
+  Strings.viewPersonalInformation: "Xem thông tin cá nhân",
+  Strings.signOutOfYourAccount: "Đăng xuất tài khoản",
 };

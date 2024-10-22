@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/app/colors/app_color.dart';
 
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
@@ -37,7 +38,7 @@ class MoreActionItem extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 12.sp,
-                color: textColor ?? const Color(0xFFF85E53),
+                color: textColor ?? colorRedRemove,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -46,7 +47,7 @@ class MoreActionItem extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 2.0.sp),
               child: Icon(
                 icon,
-                color: iconColor ?? const Color(0xFFF85E53),
+                color: iconColor ?? colorRedRemove,
                 size: 15.sp,
               ),
             ),

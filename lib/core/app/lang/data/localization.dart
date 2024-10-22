@@ -192,6 +192,9 @@ class Strings {
   static const String uploadImageFail = 'uploadImageFail';
   static const String setNewPhoto = 'setNewPhoto';
   static const String leaveGroup = 'leaveGroup';
+
+  static const String viewPersonalInformation = 'viewPersonalInformation';
+  static const String signOutOfYourAccount = 'signOutOfYourAccount';
 }
 
 class MyI18n {

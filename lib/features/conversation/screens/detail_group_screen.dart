@@ -52,7 +52,9 @@ class DetailGroupScreen extends StatelessWidget {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.only(right: 16.sp),
+                      padding: EdgeInsets.only(
+                        right: SizerUtil.isDesktop ? 24.sp : 16.sp,
+                      ),
                       child: Text(
                         Strings.edit.i18n,
                         style: TextStyle(
@@ -211,7 +213,7 @@ class DetailGroupScreen extends StatelessWidget {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final bool isHost = index > 0 &&
+                        final bool isHost = index - numberOfWidgetsAdded >= 0 &&
                             conversation.host?.id ==
                                 conversation
                                     .members[index - numberOfWidgetsAdded]
@@ -241,7 +243,8 @@ class DetailGroupScreen extends StatelessWidget {
                             ), // Bo góc nếu cần
                             child: Slidable(
                               key: ValueKey(conversation.id),
-                              enabled: index != 0 && !isHost,
+                              enabled:
+                                  index != 0 && !isHost && conversation.isHost,
                               endActionPane: ActionPane(
                                 extentRatio: 0.3,
                                 motion: const StretchMotion(),
