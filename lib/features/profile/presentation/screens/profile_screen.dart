@@ -134,6 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: AvatarCard(
                                     urlToImage: _user?.avatar,
                                     size: 70.sp,
+                                    title: _user?.fullName,
                                   ),
                                 ),
                               );

@@ -84,6 +84,7 @@ class MeetView extends StatelessWidget {
                       child: AvatarCard(
                         urlToImage: participant.user?.avatar,
                         size: avatarSize,
+                        title: participant.user?.fullName,
                       ),
                     ),
               if (kIsWeb)

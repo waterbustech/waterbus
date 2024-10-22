@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
@@ -38,6 +39,11 @@ class MessageCard extends StatelessWidget {
                   height: 18.sp,
                   width: 18.sp,
                   urlToImage: message.createdBy?.avatar,
+                  defaultAvatar: message.createdBy == null
+                      ? null
+                      : DefaultAvatarModel.fromFullName(
+                          message.createdBy!.fullName,
+                        ),
                 ),
           SizedBox(width: 5.sp),
           Column(

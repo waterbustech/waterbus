@@ -90,7 +90,7 @@ class ConversationHeader extends StatelessWidget {
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
-                                              fontSize: 13.sp,
+                                              fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -98,7 +98,7 @@ class ConversationHeader extends StatelessWidget {
                                         "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                         style: TextStyle(
                                           color: fCL,
-                                          fontSize: 10.sp,
+                                          fontSize: 9.sp,
                                         ),
                                       ),
                                     ],

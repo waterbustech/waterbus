@@ -69,6 +69,11 @@ class MeetingCard extends StatelessWidget {
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
+                        title: meeting.members
+                            .map(
+                              (user) => user.user.fullName,
+                            )
+                            .toList(),
                         images: meeting.members
                             .map(
                               (user) => user.user.avatar,

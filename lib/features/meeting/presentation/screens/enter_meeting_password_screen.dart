@@ -121,6 +121,11 @@ class _EnterMeetingPasswordScreenState
                                   ?.copyWith(fontSize: 11.sp),
                             )
                           : StackAvatar(
+                              title: widget.meeting.members
+                                  .map(
+                                    (user) => user.user.fullName,
+                                  )
+                                  .toList(),
                               images: widget.meeting.members
                                   .map(
                                     (user) => user.user.avatar,

@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/home/widgets/side_footer_body.dart';
 import 'package:waterbus_sdk/types/models/user_model.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/home/widgets/side_footer_body.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/models/side_menu_item.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -178,6 +178,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
         final userAvatar = AvatarCard(
           urlToImage: user.avatar,
           size: 32.sp,
+          title: user.fullName,
         );
 
         if (_isCollapsed) {

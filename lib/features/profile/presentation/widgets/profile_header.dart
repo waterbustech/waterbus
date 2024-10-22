@@ -38,6 +38,7 @@ class ProfileHeader extends StatelessWidget {
                       AvatarCard(
                         urlToImage: user.avatar,
                         size: SizerUtil.isDesktop ? 35.sp : 30.sp,
+                        title: user.fullName,
                       ),
                       IconButton(
                         onPressed: () {
