@@ -74,8 +74,9 @@ class DeleteMemberEvent extends ChatEvent {
 class UpdateConversationEvent extends ChatEvent {
   final String? avatar;
   final String? title;
+  final String? password;
 
-  UpdateConversationEvent({this.avatar, this.title});
+  UpdateConversationEvent({this.avatar, this.title, this.password});
 }
 
 class UpdateAvatarConversationEvent extends ChatEvent {

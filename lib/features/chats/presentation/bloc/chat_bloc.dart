@@ -206,8 +206,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is UpdateConversationEvent) {
-        displayLoadingLayer();
-        await _handleUpdateConversation(title: event.title);
+        await _handleUpdateConversation(
+          title: event.title,
+          password: event.password,
+        );
         AppNavigator.pop();
         emit(_getDoneChat);
       }
@@ -315,6 +317,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<void> _handleUpdateConversation({
     String? title,
     String? avatar,
+    String? password,
   }) async {
     if (_conversationCurrent == null) return;
 
@@ -323,7 +326,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       title: title ?? _conversationCurrent?.title,
     );
 
-    final isSuccess = await _waterbusSdk.updateConversation(meeting: meeting);
+    final isSuccess = await _waterbusSdk.updateConversation(
+      meeting: meeting,
+      password: password,
+    );
 
     if (isSuccess) {
       final int index = _conversations.indexWhere(
@@ -332,6 +338,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       if (index != -1) {
         _conversationCurrent = _conversations[index] = meeting;
+      }
+
+      if (password != null) {
+        AppNavigator.pop();
       }
 
       showSnackBarWaterbus(

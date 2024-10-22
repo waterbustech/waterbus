@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus_sdk/types/models/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -36,26 +37,33 @@ class DetailGroupScreen extends StatelessWidget {
             pinned: true,
             expandedHeight: 155.sp,
             actions: [
-              Tooltip(
-                message: Strings.editMeeting.i18n,
-                child: GestureWrapper(
-                  onTap: () {
-                    AppNavigator().push(Routes.editConversation);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(right: 16.sp),
-                    child: Text(
-                      Strings.edit.i18n,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
+              if (AppBloc.chatBloc.conversationCurrent?.isHost ?? false)
+                Tooltip(
+                  message: Strings.editMeeting.i18n,
+                  child: GestureWrapper(
+                    onTap: () {
+                      AppNavigator().push(
+                        Routes.createMeetingRoute,
+                        arguments: {
+                          "meeting": AppBloc.chatBloc.conversationCurrent,
+                          "isChatScreen": true,
+                        },
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(right: 16.sp),
+                      child: Text(
+                        Strings.edit.i18n,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
             leading: GestureWrapper(
               onTap: () {
@@ -81,9 +89,23 @@ class DetailGroupScreen extends StatelessWidget {
                   return meeting == null
                       ? const SizedBox()
                       : GroupSpaceBarCustom(
-                          avatar: AvatarChat(
-                            meeting: meeting,
-                            size: 54.sp,
+                          avatar: GestureWrapper(
+                            onTap: () async {
+                              await WaterbusImagePicker().openImagePicker(
+                                context: context,
+                                handleFinish: (image) async {
+                                  AppBloc.chatBloc.add(
+                                    UpdateAvatarConversationEvent(
+                                      avatar: image,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: AvatarChat(
+                              meeting: meeting,
+                              size: 54.sp,
+                            ),
                           ),
                           subTitle: Text(
                             "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",

@@ -95,9 +95,9 @@ class ConversationHeader extends StatelessWidget {
                                             ),
                                       ),
                                       Text(
-                                        Strings.online.i18n,
+                                        "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                         style: TextStyle(
-                                          color: colorGreenLight,
+                                          color: fCL,
                                           fontSize: 10.sp,
                                         ),
                                       ),
