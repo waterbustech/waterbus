@@ -218,6 +218,9 @@ class _HomeScreenState extends State<HomeScreen> {
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);
               break;
+            case Strings.archivedChats:
+              AppNavigator().push(Routes.archivedRoute);
+              break;
             case Strings.storage:
               AppNavigator().push(Routes.storage);
               break;

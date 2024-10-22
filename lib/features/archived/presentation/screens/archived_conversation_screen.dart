@@ -185,12 +185,21 @@ class _ArchivedConversationScreenState
               padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
               child: Text(
                 Strings.descriptionArchivedConversation.i18n,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w500,
                   color: fCD,
                 ),
               ),
+            ),
+            SizedBox(
+              height: !SizerUtil.isDesktop &&
+                      MediaQuery.of(context).viewInsets.bottom == 0
+                  ? 12.sp
+                  : 0.sp,
             ),
           ],
         ),
