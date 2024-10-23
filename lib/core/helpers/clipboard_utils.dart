@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 

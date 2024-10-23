@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
+import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 

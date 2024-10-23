@@ -5,10 +5,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/core/helpers/clipboard_utils.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/helpers/clipboard_utils.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
