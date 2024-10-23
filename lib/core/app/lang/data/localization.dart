@@ -182,6 +182,8 @@ class Strings {
   static const String addConversationSuccess = 'addConversationSuccess';
   static const String sureDeleteMember = 'sureDeleteMember';
   static const String youHaveConfirmedConversation = "youConfirmedConversation";
+  static const String hostCanNotArchivedConversation =
+      'hostCanNotArchivedConversation';
   static const String hostCanNotDeleteConversation =
       'hostCanNotDeleteConversation';
   static const String sendMessageOrTapOnTheGreetingBelow =

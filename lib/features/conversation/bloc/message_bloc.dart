@@ -302,8 +302,15 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
   }
 
-  _clearMessages() {
-    _messagesMap.clear();
+  _clearMessages({List<int>? meetingIds}) {
+    if (meetingIds == null || meetingIds.isEmpty) {
+      _messagesMap.clear();
+    } else {
+      for (final meetingId in meetingIds) {
+        _messagesMap.removeWhere((key, value) => key == meetingId);
+      }
+    }
+
     _meetingId = null;
   }
 }

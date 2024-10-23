@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
 part 'archived_event.dart';
 part 'archived_state.dart';
@@ -29,6 +30,13 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
 
       if (event is RefreshArchivedEvent) {
         _archivedConversations.clear();
+        AppBloc.messageBloc.add(
+          CleanMessageEvent(
+            meetingIds: _archivedConversations
+                .map((conversation) => conversation.id)
+                .toList(),
+          ),
+        );
         await _getArchivedConversationList();
         emit(_getDoneArchived);
         event.handleFinish.call();
@@ -57,9 +65,8 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
       );
 
   Future<void> _getArchivedConversationList() async {
-    final List<Meeting> result = await _waterbusSdk.getConversations(
+    final List<Meeting> result = await _waterbusSdk.getArchivedConversations(
       skip: _archivedConversations.length,
-      status: ChatStatusEnum.archived.status,
     );
 
     _archivedConversations.addAll(result);

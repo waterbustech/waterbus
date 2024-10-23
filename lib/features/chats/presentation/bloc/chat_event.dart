@@ -34,10 +34,16 @@ class ArchivedOrLeaveConversationEvent extends ChatEvent {
   ArchivedOrLeaveConversationEvent({this.meeting});
 }
 
-class ChangeConversationToArchivedEvent extends ChatEvent {
+class ArchivedConversationEvent extends ChatEvent {
   final Meeting meeting;
 
-  ChangeConversationToArchivedEvent({required this.meeting});
+  ArchivedConversationEvent({required this.meeting});
+}
+
+class DeleteConversationEvent extends ChatEvent {
+  final Meeting? meeting;
+
+  DeleteConversationEvent({this.meeting});
 }
 
 class LeaveConversationByMemberEvent extends ChatEvent {

@@ -177,6 +177,8 @@ Map<String, String> english = {
   Strings.noMesssagesHereYet: "No messages here yet",
   Strings.youHaveInvitedThe: "You have invited the",
   Strings.toJoinConversation: "to join conversation",
+  Strings.hostCanNotArchivedConversation:
+      "You as the host cannot archive a chat while it is still a member",
   Strings.hostCanNotDeleteConversation:
       "You as the host cannot delete a chat while it is still a member",
   Strings.sendMessageOrTapOnTheGreetingBelow:

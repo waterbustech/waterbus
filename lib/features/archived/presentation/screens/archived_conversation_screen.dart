@@ -121,7 +121,8 @@ class _ArchivedConversationScreenState
                                   "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                   style: TextStyle(
                                     color: fCL,
-                                    fontSize: 9.sp,
+                                    height: 0.75.sp,
+                                    fontSize: 10.sp,
                                   ),
                                 ),
                               ],

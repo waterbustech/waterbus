@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -85,8 +84,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is RefreshConversationsEvent) {
+        AppBloc.messageBloc.add(
+          CleanMessageEvent(
+            meetingIds:
+                _conversations.map((conversation) => conversation.id).toList(),
+          ),
+        );
         _cleanChat();
-        AppBloc.messageBloc.add(CleanMessageEvent());
 
         await _getConversationList();
         emit(_getDoneChat);
@@ -155,7 +159,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
           if (meeting.isHost && meeting.members.length > 1) {
             showSnackBarWaterbus(
-              content: Strings.hostCanNotDeleteConversation.i18n,
+              content: Strings.hostCanNotArchivedConversation.i18n,
             );
 
             AppNavigator.pop();
@@ -176,7 +180,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                       : Strings.sureLeaveConversation.i18n,
                   handlePressed: () async {
                     if (meeting.isHost) {
-                      add(ChangeConversationToArchivedEvent(meeting: meeting));
+                      add(ArchivedConversationEvent(meeting: meeting));
                     } else {
                       add(LeaveConversationByMemberEvent(meeting: meeting));
                     }
@@ -196,7 +200,42 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is ChangeConversationToArchivedEvent) {
+      if (event is DeleteConversationEvent) {
+        final Meeting? meeting = event.meeting ?? _conversationCurrent;
+
+        if (meeting == null) return;
+
+        if (meeting.isHost && meeting.members.length > 1) {
+          showSnackBarWaterbus(
+            content: Strings.hostCanNotDeleteConversation.i18n,
+          );
+
+          AppNavigator.pop();
+        } else {
+          await showModalBottomSheet(
+            context: AppNavigator.context!,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            barrierColor: Colors.black38,
+            enableDrag: false,
+            builder: (context) {
+              return BottomSheetDelete(
+                actionText: Strings.delete.i18n,
+                description: Strings.sureDeleteConversation.i18n,
+                handlePressed: () async {
+                  await _deleteConversation(meeting);
+
+                  AppNavigator.popUntil(Routes.rootRoute);
+
+                  add(UpdateConversationFromSocketEvent());
+                },
+              );
+            },
+          );
+        }
+      }
+
+      if (event is ArchivedConversationEvent) {
         await _archivedConversation(event.meeting);
 
         emit(_getDoneChat);
@@ -364,17 +403,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _archivedConversation(Meeting meeting) async {
+  Future<void> _deleteConversation(Meeting meeting) async {
     final bool isSuccess = await _waterbusSdk.deleteConversation(meeting.id);
 
     if (isSuccess) {
+      _cleanConversationCurrent(meeting.id);
+    }
+  }
+
+  Future<void> _archivedConversation(Meeting meeting) async {
+    final Meeting? archivedConversation =
+        await _waterbusSdk.archivedConversation(meeting.code);
+
+    if (archivedConversation != null) {
       AppBloc.archivedBloc.add(
-        InsertArchivedEvent(
-          meeting: meeting.copyWith(status: ChatStatusEnum.archived),
-        ),
+        InsertArchivedEvent(meeting: archivedConversation),
       );
 
-      _cleanConversationCurrent(meeting.id);
+      _cleanConversationCurrent(archivedConversation.id);
     }
   }
 
@@ -390,7 +436,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<void> _getConversationList() async {
     final List<Meeting> result = await _waterbusSdk.getConversations(
       skip: _conversations.length,
-      status: ChatStatusEnum.join.status,
+      status: MemberStatusEnum.joined.value,
     );
 
     _conversations.addAll(result);

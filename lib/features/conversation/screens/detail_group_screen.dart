@@ -189,7 +189,7 @@ class DetailGroupScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is ActiveChatState) {
                   if (state.conversationCurrent == null) {
-                    return const SizedBox();
+                    return const SliverToBoxAdapter();
                   }
 
                   final Meeting conversation = state.conversations
