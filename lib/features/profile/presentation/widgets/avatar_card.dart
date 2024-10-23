@@ -9,13 +9,13 @@ class AvatarCard extends StatelessWidget {
   final double size;
   final EdgeInsetsGeometry? margin;
   final bool isCircleShape;
-  final String? title;
+  final String? label;
   const AvatarCard({
     super.key,
     required this.urlToImage,
     required this.size,
     this.margin,
-    this.title,
+    this.label,
     this.isCircleShape = false,
   });
 
@@ -26,7 +26,7 @@ class AvatarCard extends StatelessWidget {
       width: size,
       urlToImage: urlToImage ?? kUserDefault.avatar,
       defaultAvatar:
-          title == null ? null : DefaultAvatarModel.fromFullName(title!),
+          label == null ? null : DefaultAvatarModel.fromFullName(label!),
     );
   }
 }

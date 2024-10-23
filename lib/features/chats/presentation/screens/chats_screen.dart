@@ -60,7 +60,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       child: AvatarCard(
                         urlToImage: user.avatar,
                         size: 24.sp,
-                        title: user.fullName,
+                        label: user.fullName,
                       ),
                     );
                   }

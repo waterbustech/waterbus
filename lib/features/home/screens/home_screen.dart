@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: AvatarCard(
                               urlToImage: user.avatar,
                               size: 30.sp,
-                              title: user.fullName,
+                              label: user.fullName,
                             ),
                           ),
                           SizedBox(width: 10.sp),

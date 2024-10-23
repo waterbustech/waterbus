@@ -178,7 +178,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
         final userAvatar = AvatarCard(
           urlToImage: user.avatar,
           size: 32.sp,
-          title: user.fullName,
+          label: user.fullName,
         );
 
         if (_isCollapsed) {

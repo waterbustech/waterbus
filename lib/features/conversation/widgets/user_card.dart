@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 
 class UserCard extends StatelessWidget {
   final User user;

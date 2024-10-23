@@ -27,7 +27,7 @@ class MemberCard extends StatelessWidget {
           AvatarCard(
             urlToImage: member.user.avatar,
             size: 30.sp,
-            title: member.user.fullName,
+            label: member.user.fullName,
           ),
           SizedBox(width: 10.sp),
           Expanded(

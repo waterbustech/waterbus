@@ -83,7 +83,7 @@ class BodySettingScreens extends StatelessWidget {
                                   child: AvatarCard(
                                     urlToImage: user?.avatar,
                                     size: 50.sp,
-                                    title: user?.fullName,
+                                    label: user?.fullName,
                                   ),
                                 ),
                                 SizedBox(width: 8.sp),
@@ -153,7 +153,7 @@ class BodySettingScreens extends StatelessWidget {
                               child: AvatarCard(
                                 urlToImage: user?.avatar,
                                 size: 70.sp,
-                                title: user?.fullName,
+                                label: user?.fullName,
                               ),
                             ),
                           ),

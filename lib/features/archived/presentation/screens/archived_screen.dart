@@ -65,7 +65,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                       child: AvatarCard(
                         urlToImage: user.avatar,
                         size: 24.sp,
-                        title: user.fullName,
+                        label: user.fullName,
                       ),
                     );
                   }

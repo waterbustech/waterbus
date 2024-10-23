@@ -180,7 +180,6 @@ class _ArchivedConversationScreenState
                 },
               ),
             ),
-            // InputSendMessage(meetingId: widget.meeting.id),
             divider,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),

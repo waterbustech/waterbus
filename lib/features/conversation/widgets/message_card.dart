@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
@@ -12,6 +11,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 
 class MessageCard extends StatelessWidget {

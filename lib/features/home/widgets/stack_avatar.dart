@@ -8,13 +8,13 @@ import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart'
 
 class StackAvatar extends StatelessWidget {
   final List<String?> images;
-  final List<String?> title;
+  final List<String?> label;
   final double size;
   final int maxImages;
   const StackAvatar({
     super.key,
     required this.images,
-    required this.title,
+    required this.label,
     this.size = 25,
     this.maxImages = 5,
   });
@@ -55,7 +55,7 @@ class StackAvatar extends StatelessWidget {
       margin: EdgeInsets.only(left: index * (size * 0.8)),
       urlToImage: images[index],
       isCircleShape: true,
-      title: title[index],
+      label: label[index],
     );
   }
 }
