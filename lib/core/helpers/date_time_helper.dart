@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DateTimeHelper {
   static const List<int> dayCountMonth = [
     31,
@@ -110,6 +112,34 @@ class DateTimeHelper {
       return "${twoDigits(hours)}:$minutes:$secs";
     } else {
       return "$minutes:$secs";
+    }
+  }
+
+  String formatDateTime(DateTime dateTime) {
+    final dateFormat = DateFormat('MMMM d, y');
+
+    final timeFormat = DateFormat('HH:mm');
+
+    final String formattedDate = dateFormat.format(dateTime);
+
+    final String formattedTime = timeFormat.format(dateTime);
+
+    return '$formattedDate | $formattedTime';
+  }
+
+  String getDaySuffix(int day) {
+    if (day >= 11 && day <= 13) {
+      return 'th';
+    }
+    switch (day % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
     }
   }
 }
