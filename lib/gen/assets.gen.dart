@@ -20,6 +20,9 @@ class $AssetsIconsGen {
   AssetGenImage get icAddMembers =>
       const AssetGenImage('assets/icons/ic_add_members.png');
 
+  /// File path: assets/icons/ic_check.png
+  AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
+
   /// File path: assets/icons/ic_code.png
   AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
 
@@ -61,6 +64,7 @@ class $AssetsIconsGen {
   List<AssetGenImage> get values => [
         colorPicker,
         icAddMembers,
+        icCheck,
         icCode,
         icEndCall,
         icGithub,

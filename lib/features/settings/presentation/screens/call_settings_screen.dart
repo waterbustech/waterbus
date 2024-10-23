@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -74,9 +75,13 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 SaveCallSettingsEvent(setting: _settings),
               );
 
-              DeviceUtils().lightImpact();
+              if (AppNavigator.canPop) {
+                DeviceUtils().lightImpact();
 
-              AppNavigator.pop();
+                AppNavigator.pop();
+              } else {
+                showDialogDone(text: Strings.saved.i18n);
+              }
             },
             child: Container(
               decoration: const BoxDecoration(

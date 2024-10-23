@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/core/helpers/clipboard_utils.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -46,6 +48,12 @@ class MeetingCard extends StatelessWidget {
               children: [
                 TextSpan(text: Strings.roomCode.i18n),
                 TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      ClipboardUtils.copy(
+                        meeting.code.toString().roomCodeFormatted,
+                      );
+                    },
                   text: meeting.code.toString().roomCodeFormatted,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,

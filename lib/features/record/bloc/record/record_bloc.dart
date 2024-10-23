@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/record_model.dart';
 
@@ -38,7 +40,13 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
       }
 
       if (event is SaveRecordFileEvent) {
-        await _fileSaver.saveFile(event.record.urlToVideo);
+        final bool isSucceed = await _fileSaver.saveFile(
+          event.record.urlToVideo,
+        );
+
+        if (isSucceed) {
+          showDialogDone(text: Strings.saved.i18n);
+        }
       }
     });
   }

@@ -2276,8 +2276,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "feat/map-new-socket-event"
-      resolved-ref: c5f5f29fe3031dce3395006b854bc3758d34afee
+      ref: "migration/v2"
+      resolved-ref: "390fef8d73c12e3be0dc365a7ac1d121e5f867e3"
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "1.5.1"
