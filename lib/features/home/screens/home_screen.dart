@@ -20,6 +20,7 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/home_app.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
 import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -161,6 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.hardEdge,
                   child: SideMenuWidget(
                     onTabChanged: (tabLabel) {
+                      AppNavigator.popUntilHomeContext();
+
                       setState(() {
                         _currentTab = tabLabel;
                       });
@@ -189,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .surfaceContainerLow,
-                                child: _getCurrentTab(),
+                                child:
+                                    HomeAppScreen(homeScreen: _getCurrentTab()),
                               ),
                             )
                           : _getCurrentTab(),

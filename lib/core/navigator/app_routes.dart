@@ -29,6 +29,7 @@ class Routes {
 
   // Others
   static const String dialogRoute = '/dialog';
+  static const String bottomSheetRoute = '/bottomSheetRoute';
   static const String loadingRoute = '/loading';
 
   // Archived

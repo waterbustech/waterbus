@@ -12,6 +12,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
@@ -252,11 +253,8 @@ class DetailGroupScreen extends StatelessWidget {
                                 children: [
                                   SlidableAction(
                                     onPressed: (context) async {
-                                      await showModalBottomSheet(
+                                      await showBottomSheetWaterbus(
                                         context: AppNavigator.context!,
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        barrierColor: Colors.black38,
                                         enableDrag: false,
                                         builder: (context) {
                                           return BottomSheetDelete(
@@ -268,11 +266,10 @@ class DetailGroupScreen extends StatelessWidget {
                                               AppBloc.chatBloc.add(
                                                 DeleteMemberEvent(
                                                   code: conversation.code,
-                                                  userId: conversation
+                                                  userModel: conversation
                                                       .members[index -
                                                           numberOfWidgetsAdded]
-                                                      .user
-                                                      .id,
+                                                      .user,
                                                 ),
                                               );
                                             },

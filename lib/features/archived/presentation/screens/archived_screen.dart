@@ -17,8 +17,6 @@ import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
-import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class ArchivedScreen extends StatefulWidget {
   const ArchivedScreen({super.key});
@@ -55,24 +53,6 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
           : appBarTitleBack(
               context,
               title: Strings.archivedChats.i18n,
-              leading: BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
-                  if (state is UserGetDone) {
-                    final User user = state.user;
-
-                    return Align(
-                      alignment: Alignment.centerRight,
-                      child: AvatarCard(
-                        urlToImage: user.avatar,
-                        size: 24.sp,
-                        label: user.fullName,
-                      ),
-                    );
-                  }
-
-                  return const SizedBox();
-                },
-              ),
             ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

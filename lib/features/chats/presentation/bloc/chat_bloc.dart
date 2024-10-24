@@ -1,7 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
@@ -12,6 +10,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
@@ -146,61 +145,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
 
-      if (event is ArchivedOrLeaveConversationEvent) {
-        final Meeting? current = event.meeting ?? _conversationCurrent;
-
-        if (current == null) return;
-
-        final int index = _conversations
-            .indexWhere((conversation) => conversation.id == current.id);
-
-        if (index != -1) {
-          final Meeting meeting = _conversations[index];
-
-          if (meeting.isHost && meeting.members.length > 1) {
-            showSnackBarWaterbus(
-              content: Strings.hostCanNotArchivedConversation.i18n,
-            );
-
-            AppNavigator.pop();
-          } else {
-            await showModalBottomSheet(
-              context: AppNavigator.context!,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              barrierColor: Colors.black38,
-              enableDrag: false,
-              builder: (context) {
-                return BottomSheetDelete(
-                  actionText: meeting.isHost
-                      ? Strings.archivedChats.i18n
-                      : Strings.leaveTheConversation.i18n,
-                  description: meeting.isHost
-                      ? Strings.sureArchivedConversation.i18n
-                      : Strings.sureLeaveConversation.i18n,
-                  handlePressed: () async {
-                    if (meeting.isHost) {
-                      add(ArchivedConversationEvent(meeting: meeting));
-                    } else {
-                      add(LeaveConversationByMemberEvent(meeting: meeting));
-                    }
-
-                    AppNavigator.popUntil(Routes.rootRoute);
-                  },
-                );
-              },
-            );
-          }
-        }
-      }
-
-      if (event is LeaveConversationByMemberEvent) {
-        await _leaveConversation(event.meeting);
-
-        emit(_getDoneChat);
-      }
-
-      if (event is DeleteConversationEvent) {
+      if (event is LeaveConversationEvent) {
         final Meeting? meeting = event.meeting ?? _conversationCurrent;
 
         if (meeting == null) return;
@@ -209,36 +154,55 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           showSnackBarWaterbus(
             content: Strings.hostCanNotDeleteConversation.i18n,
           );
-
-          AppNavigator.pop();
         } else {
-          await showModalBottomSheet(
-            context: AppNavigator.context!,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            barrierColor: Colors.black38,
-            enableDrag: false,
-            builder: (context) {
-              return BottomSheetDelete(
-                actionText: Strings.delete.i18n,
-                description: Strings.sureDeleteConversation.i18n,
-                handlePressed: () async {
-                  await _deleteConversation(meeting);
+          await _showBottomSheetSureAction(
+            actionText: Strings.leaveTheConversation.i18n,
+            description: Strings.sureLeaveConversation.i18n,
+            handleAction: () async {
+              await _leaveConversation(meeting);
 
-                  AppNavigator.popUntil(Routes.rootRoute);
+              AppNavigator.popUntil(Routes.rootRoute);
 
-                  add(UpdateConversationFromSocketEvent());
-                },
-              );
+              add(UpdateConversationFromSocketEvent());
             },
           );
         }
       }
 
-      if (event is ArchivedConversationEvent) {
-        await _archivedConversation(event.meeting);
+      if (event is DeleteConversationEvent) {
+        final Meeting? meeting = event.meeting ?? _conversationCurrent;
 
-        emit(_getDoneChat);
+        if (meeting == null) return;
+
+        await _showBottomSheetSureAction(
+          actionText: Strings.delete.i18n,
+          description: Strings.sureDeleteConversation.i18n,
+          handleAction: () async {
+            await _deleteConversation(meeting);
+
+            AppNavigator.popUntil(Routes.rootRoute);
+
+            add(UpdateConversationFromSocketEvent());
+          },
+        );
+      }
+
+      if (event is ArchivedConversationEvent) {
+        final Meeting? meeting = event.meeting ?? _conversationCurrent;
+
+        if (meeting == null) return;
+
+        await _showBottomSheetSureAction(
+          actionText: Strings.archivedChats.i18n,
+          description: Strings.sureArchivedConversation.i18n,
+          handleAction: () async {
+            await _archivedConversation(meeting);
+
+            AppNavigator.popUntil(Routes.rootRoute);
+
+            add(UpdateConversationFromSocketEvent());
+          },
+        );
       }
 
       if (event is UpdateConversationEvent) {
@@ -289,6 +253,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_getDoneChat);
       }
     });
+  }
+
+  Future<void> _showBottomSheetSureAction({
+    required String actionText,
+    required String description,
+    required Function() handleAction,
+  }) async {
+    await showBottomSheetWaterbus(
+      context: AppNavigator.context!,
+      enableDrag: false,
+      builder: (context) {
+        return BottomSheetDelete(
+          actionText: actionText,
+          description: description,
+          handlePressed: handleAction,
+        );
+      },
+    );
   }
 
   // MARK: state
@@ -408,6 +390,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (isSuccess) {
       _cleanConversationCurrent(meeting.id);
+
+      showSnackBarWaterbus(
+        content: Strings.haveSuccessfullyDeletedConversation.i18n,
+      );
+    } else {
+      showSnackBarWaterbus(content: Strings.cannotDeleteConversation.i18n);
     }
   }
 
@@ -421,6 +409,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       );
 
       _cleanConversationCurrent(archivedConversation.id);
+
+      showSnackBarWaterbus(content: Strings.haveArchivedConversation.i18n);
+    } else {
+      showSnackBarWaterbus(content: Strings.cannotBeArchived.i18n);
     }
   }
 
@@ -430,6 +422,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (conversation != null) {
       _cleanConversationCurrent(conversation.id);
+
+      showSnackBarWaterbus(content: Strings.haveLeftConversation.i18n);
+    } else {
+      showSnackBarWaterbus(content: Strings.leaveFailedConversation.i18n);
     }
   }
 
@@ -448,7 +444,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   Future<void> _handleDeleteMember(DeleteMemberEvent event) async {
     final Meeting? meeting =
-        await _waterbusSdk.deleteMember(event.code, event.userId);
+        await _waterbusSdk.deleteMember(event.code, event.userModel.id);
 
     if (meeting != null) {
       final int index = _conversations
@@ -457,6 +453,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (index != -1) {
         _conversations[index] = meeting;
       }
+
+      showSnackBarWaterbus(
+        content:
+            "${Strings.youHaveRemoved.i18n} ${event.userModel.fullName} ${Strings.fromTheChat.i18n}",
+      );
+    } else {
+      showSnackBarWaterbus(content: Strings.cannotDeleteMember.i18n);
     }
   }
 

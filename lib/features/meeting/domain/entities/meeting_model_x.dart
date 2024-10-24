@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/enums/meeting_role.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/types/models/index.dart';
@@ -20,15 +21,41 @@ extension MeetingModelX on Meeting {
   List<OptionModel> get getOptions {
     final List<OptionModel> options = [];
 
+    if (isHost) {
+      options.add(
+        OptionModel(
+          title: Strings.archivedChats.i18n,
+          iconData: PhosphorIcons.archive(),
+          handlePressed: () {
+            AppBloc.chatBloc.add(ArchivedConversationEvent(meeting: this));
+          },
+        ),
+      );
+    }
+
     options.add(
       OptionModel(
-        title: isHost ? Strings.archivedChats.i18n : Strings.delete.i18n,
+        title: Strings.delete.i18n,
         isDanger: true,
+        iconData: PhosphorIcons.trash(),
         handlePressed: () {
-          AppBloc.chatBloc.add(ArchivedOrLeaveConversationEvent(meeting: this));
+          AppBloc.chatBloc.add(DeleteConversationEvent(meeting: this));
         },
       ),
     );
+
+    if (!isHost) {
+      options.add(
+        OptionModel(
+          title: Strings.leaveTheConversation.i18n,
+          isDanger: true,
+          iconData: PhosphorIcons.signOut(),
+          handlePressed: () {
+            AppBloc.chatBloc.add(LeaveConversationEvent(meeting: this));
+          },
+        ),
+      );
+    }
 
     return options;
   }

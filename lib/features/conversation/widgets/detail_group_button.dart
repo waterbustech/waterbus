@@ -39,6 +39,22 @@ class DetailGroupButton extends StatelessWidget {
                 bodyBuilder: (context) => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MoreActionItem(
+                            title: Strings.archivedChats.i18n,
+                            icon: PhosphorIcons.archive(),
+                            textColor: Theme.of(context).colorScheme.primary,
+                            iconColor: Theme.of(context).colorScheme.primary,
+                            onTap: () {
+                              AppBloc.chatBloc.add(ArchivedConversationEvent());
+                            },
+                          ),
+                          divider,
+                        ],
+                      ),
                     MoreActionItem(
                       title: Strings.delete.i18n,
                       icon: PhosphorIcons.trash(),
@@ -46,19 +62,20 @@ class DetailGroupButton extends StatelessWidget {
                         AppBloc.chatBloc.add(DeleteConversationEvent());
                       },
                     ),
-                    divider,
-                    MoreActionItem(
-                      title: _isHost
-                          ? Strings.archivedChats.i18n
-                          : Strings.leaveGroup.i18n,
-                      icon: _isHost
-                          ? PhosphorIcons.archive()
-                          : PhosphorIcons.signOut(),
-                      onTap: () {
-                        AppBloc.chatBloc
-                            .add(ArchivedOrLeaveConversationEvent());
-                      },
-                    ),
+                    if (!_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          divider,
+                          MoreActionItem(
+                            title: Strings.leaveGroup.i18n,
+                            icon: PhosphorIcons.signOut(),
+                            onTap: () {
+                              AppBloc.chatBloc.add(LeaveConversationEvent());
+                            },
+                          ),
+                        ],
+                      ),
                   ],
                 ),
                 width: 145.sp,
