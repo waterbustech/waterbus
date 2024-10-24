@@ -1,18 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
@@ -20,7 +17,6 @@ import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
 import 'package:waterbus/features/conversation/widgets/list_conversation_shimmers.dart';
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
 import 'package:waterbus/features/conversation/widgets/message_suggest_widget.dart';
-import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -111,23 +107,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                 sliver: SuperSliverList(
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) {
-                                      return GestureWrapper(
-                                        onLongPress: () {
-                                          if (messages[index].sendingStatus !=
-                                                  SendingStatusEnum.sent ||
-                                              messages[index].isDeleted) return;
-
-                                          _handleLongPressMessageCard(
-                                            messages[index],
-                                          );
-                                        },
-                                        child: MessageCard(
-                                          message: messages[index],
-                                          messagePrev:
-                                              index < messages.length - 1
-                                                  ? messages[index + 1]
-                                                  : null,
-                                        ),
+                                      return MessageCard(
+                                        message: messages[index],
+                                        messagePrev: index < messages.length - 1
+                                            ? messages[index + 1]
+                                            : null,
                                       );
                                     },
                                     childCount: messages.length,
@@ -167,22 +151,5 @@ class _ConversationScreenState extends State<ConversationScreen> {
     ];
 
     return images[Random().nextInt(images.length)].path;
-  }
-
-  void _handleLongPressMessageCard(MessageModel messageModel) {
-    if (!messageModel.isMe) return;
-
-    HapticFeedback.lightImpact();
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black38,
-      enableDrag: false,
-      builder: (context) {
-        return BottomChatOptions(options: messageModel.getOptions);
-      },
-    );
   }
 }

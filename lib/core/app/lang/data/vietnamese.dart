@@ -73,6 +73,8 @@ Map<String, String> vietnamese = {
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
   Strings.delete: "Xoá",
+  Strings.retrieve: "Thu hồi",
+  Strings.editMessage: "Chỉnh sửa",
   Strings.sureDeleteConversation:
       'Bạn có chắc chắn muốn xoá\ncuộc trò chuyện này?',
   Strings.sureDeleteMessage: 'Bạn có chắc chắn muốn xoá\tin nhắn này?',
@@ -192,6 +194,20 @@ Map<String, String> vietnamese = {
   Strings.uploadImageFail: "Tải hình ảnh bị lỗi. Vui lòng thử lại sau!",
   Strings.setNewPhoto: "Tải ảnh mới",
   Strings.leaveGroup: "Rời Nhóm",
+  Strings.haveSuccessfullyDeletedConversation:
+      "Bạn đã xoá cuộc trò chuyện thành công!",
+  Strings.cannotDeleteConversation:
+      "Không thể xoá cuộc trò chuyện này. Vui lòng thử lại sau!",
+  Strings.haveArchivedConversation: "Bạn đã lưu trữ cuộc trò chuyện!",
+  Strings.cannotBeArchived:
+      "Không thể lưu trữ cuộc trò chuyện. Vui lòng thử lại sau!",
+  Strings.haveLeftConversation: "Bạn đã rời khỏi cuộc trò chuyện!",
+  Strings.leaveFailedConversation:
+      "Rời khỏi cuộc trò chuyện thất bại. Vui lòng thử lại sau!",
+  Strings.cannotDeleteMember:
+      "Không thể xoá thành viên này. Vui lòng thử lại sau!",
+  Strings.youHaveRemoved: "Bạn đã xoá",
+  Strings.fromTheChat: "khỏi cuộc trò chuyện!",
 
   Strings.viewPersonalInformation: "Xem thông tin cá nhân",
   Strings.signOutOfYourAccount: "Đăng xuất tài khoản",

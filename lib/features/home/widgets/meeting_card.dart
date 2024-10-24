@@ -22,6 +22,7 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       margin: EdgeInsets.only(bottom: 4.sp),
       padding: EdgeInsets.all(10.sp),
       child: Column(

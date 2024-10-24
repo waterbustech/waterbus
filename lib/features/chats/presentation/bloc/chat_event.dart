@@ -66,9 +66,9 @@ class InsertConversationEvent extends ChatEvent {
 
 class DeleteMemberEvent extends ChatEvent {
   final int code;
-  final int userId;
+  final User userModel;
 
-  DeleteMemberEvent({required this.code, required this.userId});
+  DeleteMemberEvent({required this.code, required this.userModel});
 }
 
 class UpdateConversationEvent extends ChatEvent {

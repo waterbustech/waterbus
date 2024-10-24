@@ -74,6 +74,8 @@ Map<String, String> english = {
   Strings.createRoom: "Create Room",
   Strings.chat: "Chats",
   Strings.delete: "Delete",
+  Strings.retrieve: "Retrieve",
+  Strings.editMessage: "Edit message",
   Strings.sureDeleteConversation:
       'Are you sure you want to delete\nthis conversation?',
   Strings.sureDeleteMessage: 'Are you sure you want to delete\nthis message?',
@@ -192,6 +194,19 @@ Map<String, String> english = {
   Strings.uploadImageFail: "Image loading error. Please try again later!",
   Strings.setNewPhoto: "Set New Photo",
   Strings.leaveGroup: "Leave Group",
+  Strings.haveSuccessfullyDeletedConversation:
+      "You have successfully deleted the conversation!",
+  Strings.cannotDeleteConversation:
+      "This conversation cannot be deleted. Please try again later!",
+  Strings.haveArchivedConversation: "You have archived the conversation!",
+  Strings.cannotBeArchived: "Chat cannot be archived. Please try again later!",
+  Strings.haveLeftConversation: "You have left the conversation!",
+  Strings.leaveFailedConversation:
+      "Leave the failed conversation. Please try again later!",
+  Strings.cannotDeleteMember:
+      "This member cannot be deleted. Please try again later!",
+  Strings.youHaveRemoved: "You have removed",
+  Strings.fromTheChat: "from the chat!",
 
   Strings.viewPersonalInformation: "View personal information",
   Strings.signOutOfYourAccount: "Sign out of your account",
