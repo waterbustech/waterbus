@@ -44,6 +44,9 @@ class _MeetingBodyState extends State<MeetingBody> {
   late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
   late CallState? callState = widget.state.callState;
 
+  bool get _isRecordingOnPhone =>
+      SizerUtil.isMobile && widget.state.isRecording;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +54,7 @@ class _MeetingBodyState extends State<MeetingBody> {
         context,
         toolbarHeight: SizerUtil.isDesktop ? 60.sp : null,
         titleWidget: Padding(
-          padding: EdgeInsets.only(right: 16.sp),
+          padding: EdgeInsets.only(right: SizerUtil.isDesktop ? 16.sp : 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,8 +77,17 @@ class _MeetingBodyState extends State<MeetingBody> {
           ),
         ),
         centerTitle: false,
-        leading: Center(child: Assets.images.imgAppLogo3d.image(height: 40.sp)),
-        leadingWidth: 60.sp,
+        leading: Align(
+          alignment: Alignment.centerRight,
+          child: _isRecordingOnPhone
+              ? _buildRecWidget()
+              : Assets.images.imgAppLogo3d.image(height: 30.sp),
+        ),
+        leadingWidth: SizerUtil.isDesktop
+            ? 50.sp
+            : _isRecordingOnPhone
+                ? 65.sp
+                : 40.sp,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
@@ -177,37 +189,10 @@ class _MeetingBodyState extends State<MeetingBody> {
             width: double.infinity,
             child: Row(
               children: [
-                widget.state.isRecording
-                    ? Material(
-                        clipBehavior: Clip.hardEdge,
-                        color: Colors.red,
-                        shape: SuperellipseShape(
-                          borderRadius: BorderRadius.circular(20.sp),
-                        ),
-                        child: SizedBox(
-                          height: 40.sp,
-                          width: 80.sp,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                PhosphorIcons.record(PhosphorIconsStyle.fill),
-                                size: 18.sp,
-                              ),
-                              SizedBox(width: 8.sp),
-                              Text(
-                                "REC",
-                                style: TextStyle(
-                                  color: mCL,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : SizedBox(width: 80.sp),
+                if (SizerUtil.isDesktop)
+                  widget.state.isRecording
+                      ? _buildRecWidget()
+                      : SizedBox(width: 80.sp),
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,28 +233,33 @@ class _MeetingBodyState extends State<MeetingBody> {
                           }
                         },
                       ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.hand(),
+                          onTap: () {},
+                        ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.paintBrush(),
+                          onTap: () {
+                            setState(() {
+                              _isWhiteBoardOpened = !_isWhiteBoardOpened;
+                            });
+                          },
+                        ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.chatTeardropText(),
+                          onTap: () {
+                            setState(() {
+                              _isChatOpened = !_isChatOpened;
+                            });
+                          },
+                        ),
                       CallActionButton(
-                        icon: PhosphorIcons.hand(),
-                        onTap: () {},
-                      ),
-                      CallActionButton(
-                        icon: PhosphorIcons.paintBrush(),
-                        onTap: () {
-                          setState(() {
-                            _isWhiteBoardOpened = !_isWhiteBoardOpened;
-                          });
-                        },
-                      ),
-                      CallActionButton(
-                        icon: PhosphorIcons.chatTeardropText(),
-                        onTap: () {
-                          setState(() {
-                            _isChatOpened = !_isChatOpened;
-                          });
-                        },
-                      ),
-                      CallActionButton(
-                        icon: PhosphorIcons.gearSix(),
+                        icon: PhosphorIcons.dotsThreeOutline(
+                          PhosphorIconsStyle.fill,
+                        ),
                         onTap: () {
                           showDialogWaterbus(
                             onlyShowAsDialog: true,
@@ -288,25 +278,34 @@ class _MeetingBodyState extends State<MeetingBody> {
                           );
                         },
                       ),
+                      if (SizerUtil.isMobile)
+                        CallActionButton(
+                          icon: PhosphorIcons.signOut(),
+                          backgroundColor: Colors.red,
+                          onTap: () {
+                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                          },
+                        ),
                     ],
                   ),
                 ),
-                Container(
-                  width: 100.sp,
-                  alignment: Alignment.bottomRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CallActionButton(
-                        icon: PhosphorIcons.signOut(),
-                        backgroundColor: Colors.red,
-                        onTap: () {
-                          AppBloc.meetingBloc.add(const LeaveMeetingEvent());
-                        },
-                      ),
-                    ],
+                if (SizerUtil.isDesktop)
+                  Container(
+                    width: 100.sp,
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CallActionButton(
+                          icon: PhosphorIcons.signOut(),
+                          backgroundColor: Colors.red,
+                          onTap: () {
+                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
@@ -481,6 +480,38 @@ class _MeetingBodyState extends State<MeetingBody> {
                               );
                       },
                     ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecWidget() {
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      color: Colors.red,
+      shape: SuperellipseShape(
+        borderRadius: BorderRadius.circular(20.sp),
+      ),
+      child: SizedBox(
+        height: SizerUtil.isDesktop ? 40.sp : 30.sp,
+        width: SizerUtil.isDesktop ? 80.sp : 55.sp,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              PhosphorIcons.record(PhosphorIconsStyle.fill),
+              size: SizerUtil.isDesktop ? 18.sp : 12.sp,
+            ),
+            SizedBox(width: SizerUtil.isDesktop ? 8.sp : 4.sp),
+            Text(
+              "REC",
+              style: TextStyle(
+                color: mCL,
+                fontSize: SizerUtil.isDesktop ? 12.sp : 10.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),

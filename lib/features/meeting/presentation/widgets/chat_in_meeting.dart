@@ -62,7 +62,8 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 16.sp),
+      padding:
+          SizerUtil.isDesktop ? EdgeInsets.only(right: 16.sp) : EdgeInsets.zero,
       child: Material(
         clipBehavior: Clip.hardEdge,
         borderRadius: BorderRadius.circular(12.sp),

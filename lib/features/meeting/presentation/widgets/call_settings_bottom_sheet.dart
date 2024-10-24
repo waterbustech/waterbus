@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -57,11 +58,28 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       AppNavigator().push(Routes.settingsCallRoute);
                     },
                   ),
-                  CallSettingButton(
-                    icon: PhosphorIcons.chatTeardropText(),
-                    lable: Strings.chat.i18n,
-                    onTap: () {},
-                  ),
+                  if (SizerUtil.isMobile)
+                    CallSettingButton(
+                      icon: PhosphorIcons.chatTeardropText(),
+                      lable: Strings.chat.i18n,
+                      onTap: () {
+                        if (meeting == null) return;
+
+                        AppNavigator.pop();
+
+                        showDialogWaterbus(
+                          child: SizedBox(
+                            height: 90.h,
+                            child: ChatInMeeting(
+                              meeting: meeting,
+                              onClosePressed: () {
+                                AppNavigator.pop();
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   CallSettingButton(
                     icon: PhosphorIcons.fire(),
                     lable: Strings.beautyFilters.i18n,

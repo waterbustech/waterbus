@@ -183,7 +183,7 @@ class BodySettingScreens extends StatelessWidget {
               },
             ),
             SizedBox(height: 20.sp),
-            if (!SizerUtil.isDesktop) ...[
+            if (SizerUtil.isMobile) ...[
               SettingRowButton(
                 onTap: () {
                   AppNavigator().push(Routes.profileRoute);

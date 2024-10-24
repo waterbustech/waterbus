@@ -107,7 +107,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             ),
             InputSendMessage(meetingId: widget.meeting.id),
             SizedBox(
-              height: !SizerUtil.isDesktop &&
+              height: SizerUtil.isMobile &&
                       MediaQuery.of(context).viewInsets.bottom == 0
                   ? 10.sp
                   : 0.sp,

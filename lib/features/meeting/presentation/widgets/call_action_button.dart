@@ -35,7 +35,7 @@ class CallActionButton extends StatelessWidget {
         onTap: onTap,
         child: Material(
           clipBehavior: Clip.hardEdge,
-          shape: shape == BoxShape.circle
+          shape: shape == BoxShape.circle || SizerUtil.isMobile
               ? const CircleBorder()
               : SuperellipseShape(
                   borderRadius: BorderRadius.circular(20.sp),

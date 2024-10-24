@@ -21,7 +21,7 @@ class NotificationSettingsScreen extends StatelessWidget {
         context,
         title: Strings.notifications.i18n,
         leadingWidth: 60.sp,
-        isVisibleBackButton: !SizerUtil.isDesktop,
+        isVisibleBackButton: SizerUtil.isMobile,
       ),
       body: Column(
         children: [

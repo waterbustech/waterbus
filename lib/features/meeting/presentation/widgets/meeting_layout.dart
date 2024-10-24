@@ -106,7 +106,7 @@ class MeetingLayout extends StatelessWidget {
           child: MeetView(
             participants: meeting.participants,
             participantSFU: _participants.first,
-            borderEnabled: _participants.length > 1 || !SizerUtil.isDesktop,
+            borderEnabled: _participants.length > 1 || SizerUtil.isMobile,
             radius: _participants.length == 1 || SizerUtil.isDesktop
                 ? BorderRadius.circular(20.sp)
                 : BorderRadius.vertical(top: Radius.circular(30.sp)),
