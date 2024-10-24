@@ -82,6 +82,7 @@ class PreviewCameraCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CallActionButton(
+                    shape: BoxShape.circle,
                     icon: participant.isVideoEnabled
                         ? PhosphorIcons.camera()
                         : PhosphorIcons.cameraSlash(),
@@ -91,6 +92,7 @@ class PreviewCameraCard extends StatelessWidget {
                   ),
                   SizedBox(width: 12.sp),
                   CallActionButton(
+                    shape: BoxShape.circle,
                     icon: participant.isAudioEnabled
                         ? PhosphorIcons.microphone()
                         : PhosphorIcons.microphoneSlash(),

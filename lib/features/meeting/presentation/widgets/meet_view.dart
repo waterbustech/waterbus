@@ -36,15 +36,13 @@ class MeetView extends StatelessWidget {
       type: MaterialType.card,
       color: Theme.of(context).colorScheme.onInverseSurface,
       shape: SuperellipseShape(
-        side: !borderEnabled || _isScreenSharing
+        side: !borderEnabled ||
+                _isScreenSharing ||
+                _audioLevel == AudioLevel.kSilence
             ? BorderSide.none
             : BorderSide(
                 color: Theme.of(context).colorScheme.primary,
-                width: _audioLevel == AudioLevel.kAudioStrong
-                    ? 8.sp
-                    : _audioLevel == AudioLevel.kAudioLight
-                        ? 6.sp
-                        : 0.sp,
+                width: _audioLevel == AudioLevel.kAudioStrong ? 8.sp : 6.sp,
               ),
         borderRadius: radius ?? BorderRadius.circular(12.sp),
       ),

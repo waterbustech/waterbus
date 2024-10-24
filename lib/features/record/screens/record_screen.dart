@@ -35,7 +35,7 @@ class _RecordScreenState extends State<RecordScreen> {
       appBar: appBarTitleBack(
         context,
         title: Strings.storage.i18n,
-        isVisibleBackButton: !SizerUtil.isDesktop,
+        isVisibleBackButton: SizerUtil.isMobile,
       ),
       body: Column(
         children: [
