@@ -15,10 +15,12 @@ import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/home_app.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
 import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -63,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case Strings.appearance:
         return const ThemeScreen(isSettingDesktop: true);
       case Strings.archivedChats:
+        return const ArchivedScreen();
       case Strings.language:
         return const LanguageScreen(isSettingDesktop: true);
       case Strings.callSettings:
@@ -108,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: AvatarCard(
                               urlToImage: user.avatar,
                               size: 30.sp,
+                              label: user.fullName,
                             ),
                           ),
                           SizedBox(width: 10.sp),
@@ -158,6 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.hardEdge,
                   child: SideMenuWidget(
                     onTabChanged: (tabLabel) {
+                      AppNavigator.popUntilHomeContext();
+
                       setState(() {
                         _currentTab = tabLabel;
                       });
@@ -186,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .surfaceContainerLow,
-                                child: _getCurrentTab(),
+                                child:
+                                    HomeAppScreen(homeScreen: _getCurrentTab()),
                               ),
                             )
                           : _getCurrentTab(),
@@ -214,6 +221,9 @@ class _HomeScreenState extends State<HomeScreen> {
               break;
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);
+              break;
+            case Strings.archivedChats:
+              AppNavigator().push(Routes.archivedRoute);
               break;
             case Strings.storage:
               AppNavigator().push(Routes.storage);
@@ -258,6 +268,12 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             AppNavigator().push(Routes.enterCodeRoute);
           },
+        );
+      case Strings.archivedChats:
+        return EnterCodeBox(
+          margin: margin,
+          hintTextContent: Strings.search.i18n,
+          onTap: () {},
         );
       case Strings.chat:
         return EnterCodeBox(

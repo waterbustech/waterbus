@@ -41,8 +41,8 @@ final User kUserDefault = User(
   id: 0,
   fullName: 'Waterbus',
   userName: 'waterbus.tech',
-  avatar:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/32/34/d4/3234d466-75a0-81fa-68f2-65591f2d385c/AppIcon-0-0-1x_U007emarketing-0-0-0-4-0-0-0-85-220.png/512x512bb.jpg',
+  // avatar:
+  //     'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/32/34/d4/3234d466-75a0-81fa-68f2-65591f2d385c/AppIcon-0-0-1x_U007emarketing-0-0-0-4-0-0-0-85-220.png/512x512bb.jpg',
 );
 
 final List<String> backgrounds = [

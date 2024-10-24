@@ -70,6 +70,7 @@ class PreviewCameraCard extends StatelessWidget {
                         child: AvatarCard(
                           urlToImage: AppBloc.userBloc.user?.avatar,
                           size: 50.sp,
+                          label: AppBloc.userBloc.user?.fullName,
                         ),
                       ),
               ),

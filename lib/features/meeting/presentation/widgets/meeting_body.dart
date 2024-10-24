@@ -124,6 +124,9 @@ class _MeetingBodyState extends State<MeetingBody> {
             child: Row(
               children: [
                 StackAvatar(
+                  label: meeting.participants
+                      .map((participant) => participant.user?.fullName)
+                      .toList(),
                   images: meeting.participants
                       .map((participant) => participant.user?.avatar)
                       .toList(),

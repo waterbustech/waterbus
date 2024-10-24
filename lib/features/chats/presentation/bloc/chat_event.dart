@@ -28,22 +28,22 @@ class CreateConversationEvent extends ChatEvent {
   CreateConversationEvent({required this.title, required this.password});
 }
 
-class ArchivedOrLeaveConversationEvent extends ChatEvent {
+class ArchivedConversationEvent extends ChatEvent {
   final Meeting? meeting;
 
-  ArchivedOrLeaveConversationEvent({this.meeting});
+  ArchivedConversationEvent({this.meeting});
 }
 
-class ChangeConversationToArchivedEvent extends ChatEvent {
-  final int meetingId;
+class DeleteConversationEvent extends ChatEvent {
+  final Meeting? meeting;
 
-  ChangeConversationToArchivedEvent({required this.meetingId});
+  DeleteConversationEvent({this.meeting});
 }
 
-class LeaveConversationByMemberEvent extends ChatEvent {
-  final Meeting meeting;
+class LeaveConversationEvent extends ChatEvent {
+  final Meeting? meeting;
 
-  LeaveConversationByMemberEvent({required this.meeting});
+  LeaveConversationEvent({this.meeting});
 }
 
 class AddMemberEvent extends ChatEvent {
@@ -66,16 +66,17 @@ class InsertConversationEvent extends ChatEvent {
 
 class DeleteMemberEvent extends ChatEvent {
   final int code;
-  final int userId;
+  final User userModel;
 
-  DeleteMemberEvent({required this.code, required this.userId});
+  DeleteMemberEvent({required this.code, required this.userModel});
 }
 
 class UpdateConversationEvent extends ChatEvent {
   final String? avatar;
   final String? title;
+  final String? password;
 
-  UpdateConversationEvent({this.avatar, this.title});
+  UpdateConversationEvent({this.avatar, this.title, this.password});
 }
 
 class UpdateAvatarConversationEvent extends ChatEvent {

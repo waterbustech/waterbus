@@ -85,11 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             },
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              padding: EdgeInsets.all(12.sp)
-                  .add(EdgeInsets.only(right: SizerUtil.isDesktop ? 12.sp : 0)),
+              color: Colors.transparent,
+              padding: EdgeInsets.all(12.sp),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(
@@ -137,6 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: AvatarCard(
                                     urlToImage: _user?.avatar,
                                     size: 70.sp,
+                                    label: _user?.fullName,
                                   ),
                                 ),
                               );

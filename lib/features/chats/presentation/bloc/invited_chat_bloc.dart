@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/chat_status_enum.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -99,7 +98,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
   Future<void> _getInvitedConversationList() async {
     final List<Meeting> result = await _waterbusSdk.getConversations(
       skip: _invitedConversations.length,
-      status: ChatStatusEnum.invite.status,
+      status: MemberStatusEnum.inviting.value,
     );
 
     _invitedConversations.addAll(result);

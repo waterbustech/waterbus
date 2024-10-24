@@ -57,12 +57,21 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               displayLoadingLayer();
 
               if (widget.isChatScreen) {
-                AppBloc.chatBloc.add(
-                  CreateConversationEvent(
-                    title: _roomNameController.text,
-                    password: _passwordController.text,
-                  ),
-                );
+                if (_isEditing) {
+                  AppBloc.chatBloc.add(
+                    UpdateConversationEvent(
+                      title: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                } else {
+                  AppBloc.chatBloc.add(
+                    CreateConversationEvent(
+                      title: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                }
               } else {
                 if (_isEditing) {
                   AppBloc.meetingBloc.add(

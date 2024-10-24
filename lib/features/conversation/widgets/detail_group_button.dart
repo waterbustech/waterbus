@@ -10,6 +10,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/widgets/more_action_item.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
@@ -35,16 +36,47 @@ class DetailGroupButton extends StatelessWidget {
               showPopover(
                 routeSettings: const RouteSettings(name: Routes.dialogRoute),
                 context: context,
-                bodyBuilder: (context) => MoreActionItem(
-                  title: _isHost
-                      ? Strings.archivedChats.i18n
-                      : Strings.leaveGroup.i18n,
-                  icon: _isHost
-                      ? PhosphorIcons.archive()
-                      : PhosphorIcons.signOut(),
-                  onTap: () {
-                    AppBloc.chatBloc.add(ArchivedOrLeaveConversationEvent());
-                  },
+                bodyBuilder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MoreActionItem(
+                            title: Strings.archivedChats.i18n,
+                            icon: PhosphorIcons.archive(),
+                            textColor: Theme.of(context).colorScheme.primary,
+                            iconColor: Theme.of(context).colorScheme.primary,
+                            onTap: () {
+                              AppBloc.chatBloc.add(ArchivedConversationEvent());
+                            },
+                          ),
+                          divider,
+                        ],
+                      ),
+                    MoreActionItem(
+                      title: Strings.delete.i18n,
+                      icon: PhosphorIcons.trash(),
+                      onTap: () {
+                        AppBloc.chatBloc.add(DeleteConversationEvent());
+                      },
+                    ),
+                    if (!_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          divider,
+                          MoreActionItem(
+                            title: Strings.leaveGroup.i18n,
+                            icon: PhosphorIcons.signOut(),
+                            onTap: () {
+                              AppBloc.chatBloc.add(LeaveConversationEvent());
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
                 width: 145.sp,
                 radius: 12.sp,

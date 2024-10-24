@@ -27,6 +27,7 @@ const Color colorBlue = Color(0xFF0080FF);
 const Color colorPurple = Color(0xFFC848FF);
 const Color colorRedCustom = Color(0xFFFF1D61);
 const Color colorRedOrange = Color(0xFFEF4704);
+const Color colorRedRemove = Color(0xFFF85E53);
 
 const Color colorGreyWhite = Color(0x4dE3E3E3);
 const Color colorGreyWhite2 = Color(0xFFE3E3E3);

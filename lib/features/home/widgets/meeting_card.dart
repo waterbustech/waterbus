@@ -24,6 +24,7 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       margin: EdgeInsets.only(bottom: 4.sp),
       padding: EdgeInsets.all(10.sp),
       child: Column(
@@ -77,6 +78,11 @@ class MeetingCard extends StatelessWidget {
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
+                        label: meeting.members
+                            .map(
+                              (user) => user.user.fullName,
+                            )
+                            .toList(),
                         images: meeting.members
                             .map(
                               (user) => user.user.avatar,
