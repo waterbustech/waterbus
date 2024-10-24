@@ -84,6 +84,7 @@ class DetailGroupScreen extends StatelessWidget {
                           avatar: AvatarChat(
                             meeting: meeting,
                             size: 54.sp,
+                            shape: BoxShape.circle,
                           ),
                           subTitle: Text(
                             "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",

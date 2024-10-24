@@ -106,6 +106,8 @@ class Strings {
   static const String resolution = 'resolution';
   static const String latency = 'latency';
   static const String back = 'back';
+  static const String saved = 'saved';
+  static const String copied = 'copied';
   static const String createdAt = 'createdAt';
 
   // Profile screen
