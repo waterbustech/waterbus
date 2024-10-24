@@ -14,6 +14,7 @@ import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
@@ -74,9 +75,13 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 SaveCallSettingsEvent(setting: _settings),
               );
 
-              DeviceUtils().lightImpact();
+              if (AppNavigator.canPop) {
+                DeviceUtils().lightImpact();
 
-              AppNavigator.pop();
+                AppNavigator.pop();
+              } else {
+                showDialogDone(text: Strings.saved.i18n);
+              }
             },
             child: Container(
               decoration: const BoxDecoration(

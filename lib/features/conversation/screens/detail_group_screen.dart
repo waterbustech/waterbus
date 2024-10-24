@@ -108,6 +108,7 @@ class DetailGroupScreen extends StatelessWidget {
                             child: AvatarChat(
                               meeting: meeting,
                               size: 54.sp,
+                              shape: BoxShape.circle,
                             ),
                           ),
                           subTitle: Text(

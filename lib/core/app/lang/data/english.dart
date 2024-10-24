@@ -96,6 +96,8 @@ Map<String, String> english = {
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
   Strings.back: "Back",
+  Strings.saved: "Saved",
+  Strings.copied: "Copied",
 
   // Profile screen
   Strings.profile: "Profile",

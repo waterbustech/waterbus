@@ -17,6 +17,7 @@ import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/stats_view.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
@@ -58,11 +59,28 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       AppNavigator().push(Routes.settingsCallRoute);
                     },
                   ),
-                  CallSettingButton(
-                    icon: PhosphorIcons.chatTeardropText(),
-                    lable: Strings.chat.i18n,
-                    onTap: () {},
-                  ),
+                  if (SizerUtil.isMobile)
+                    CallSettingButton(
+                      icon: PhosphorIcons.chatTeardropText(),
+                      lable: Strings.chat.i18n,
+                      onTap: () {
+                        if (meeting == null) return;
+
+                        AppNavigator.pop();
+
+                        showDialogWaterbus(
+                          child: SizedBox(
+                            height: 90.h,
+                            child: ChatInMeeting(
+                              meeting: meeting,
+                              onClosePressed: () {
+                                AppNavigator.pop();
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   CallSettingButton(
                     icon: PhosphorIcons.fire(),
                     lable: Strings.beautyFilters.i18n,

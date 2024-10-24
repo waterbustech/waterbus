@@ -6,17 +6,24 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
+import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/helpers/clipboard_utils.dart';
+import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_layout.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/side_bar.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/whiteboard_widget.dart';
+import 'package:waterbus/gen/assets.gen.dart';
 
 class MeetingBody extends StatefulWidget {
   final MeetingState state;
@@ -31,17 +38,56 @@ class MeetingBody extends StatefulWidget {
 
 class _MeetingBodyState extends State<MeetingBody> {
   bool _isFilterSettingsOpened = false;
-  bool _isExtensionOpened = false;
+  bool _isChatOpened = false;
+  bool _isWhiteBoardOpened = false;
   late Meeting meeting = widget.state.meeting!;
   late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
   late CallState? callState = widget.state.callState;
+
+  bool get _isRecordingOnPhone =>
+      SizerUtil.isMobile && widget.state.isRecording;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarTitleBack(
         context,
-        title: meeting.title,
+        toolbarHeight: SizerUtil.isDesktop ? 60.sp : null,
+        titleWidget: Padding(
+          padding: EdgeInsets.only(right: SizerUtil.isDesktop ? 16.sp : 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                meeting.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                DateTimeHelper().formatDateTime(DateTime.now()),
+                style: TextStyle(
+                  fontSize: 11.sp,
+                ),
+              ),
+            ],
+          ),
+        ),
+        centerTitle: false,
+        leading: Align(
+          alignment: Alignment.centerRight,
+          child: _isRecordingOnPhone
+              ? _buildRecWidget()
+              : Assets.images.imgAppLogo3d.image(height: 30.sp),
+        ),
+        leadingWidth: SizerUtil.isDesktop
+            ? 50.sp
+            : _isRecordingOnPhone
+                ? 65.sp
+                : 40.sp,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
@@ -77,19 +123,47 @@ class _MeetingBodyState extends State<MeetingBody> {
             visible: SizerUtil.isDesktop,
             child: Row(
               children: [
-                IconButton(
-                  alignment: Alignment.centerRight,
-                  onPressed: () async {},
-                  icon: Icon(
-                    PhosphorIcons.users(),
-                    size: 20.sp,
-                  ),
+                StackAvatar(
+                  label: meeting.participants
+                      .map((participant) => participant.user?.fullName)
+                      .toList(),
+                  images: meeting.participants
+                      .map((participant) => participant.user?.avatar)
+                      .toList(),
+                  size: 26.sp,
+                  maxImages: 4,
                 ),
-                Text(
-                  meeting.participants.length.toString(),
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
+                GestureWrapper(
+                  onTap: () {
+                    ClipboardUtils.copy(
+                      meeting.code.toString().roomCodeFormatted,
+                    );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 12.sp),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.sp,
+                      vertical: 8.sp,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.sp),
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          PhosphorIcons.linkSimpleHorizontal(),
+                          size: 18.sp,
+                        ),
+                        Text(
+                          ' | ${meeting.code.toString().roomCodeFormatted}',
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(width: 8.sp),
@@ -109,76 +183,132 @@ class _MeetingBodyState extends State<MeetingBody> {
               top: Radius.circular(12.sp),
             ),
           ),
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.bottomLeft,
           padding: EdgeInsets.symmetric(horizontal: 12.sp).add(
             EdgeInsets.only(bottom: 12.sp),
           ),
-          child: SizedBox(
-            width: SizerUtil.isDesktop ? 300.sp : double.infinity,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 2.sp),
+            width: double.infinity,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CallActionButton(
-                  icon: callState?.mParticipant == null ||
-                          callState!.mParticipant!.isAudioEnabled
-                      ? PhosphorIcons.microphone()
-                      : PhosphorIcons.microphoneSlash(),
-                  onTap: () {
-                    if (callState?.mParticipant == null) return;
+                if (SizerUtil.isDesktop)
+                  widget.state.isRecording
+                      ? _buildRecWidget()
+                      : SizedBox(width: 80.sp),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CallActionButton(
+                        icon: callState?.mParticipant == null ||
+                                callState!.mParticipant!.isAudioEnabled
+                            ? PhosphorIcons.microphone()
+                            : PhosphorIcons.microphoneSlash(),
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
 
-                    AppBloc.meetingBloc.add(ToggleAudioEvent());
-                  },
-                ),
-                CallActionButton(
-                  icon: callState?.mParticipant == null ||
-                          callState!.mParticipant!.isVideoEnabled
-                      ? PhosphorIcons.camera()
-                      : PhosphorIcons.cameraSlash(),
-                  onTap: () {
-                    if (callState?.mParticipant == null) return;
-
-                    AppBloc.meetingBloc.add(ToggleVideoEvent());
-                  },
-                ),
-                CallActionButton(
-                  icon: PhosphorIcons.screencast(),
-                  onTap: () {
-                    if (callState?.mParticipant == null) return;
-
-                    if (callState!.mParticipant!.isSharingScreen) {
-                      AppBloc.meetingBloc.add(StopSharingScreenEvent());
-                    } else {
-                      AppBloc.meetingBloc.add(StartSharingScreenEvent());
-                    }
-                  },
-                ),
-                CallActionButton(
-                  icon: PhosphorIcons.gearSix(),
-                  onTap: () {
-                    showDialogWaterbus(
-                      onlyShowAsDialog: true,
-                      maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
-                      paddingBottom: SizerUtil.isDesktop ? 80.sp : 20.sp,
-                      paddingHorizontal: 10.sp,
-                      alignment: Alignment.bottomCenter,
-                      child: CallSettingsBottomSheet(
-                        onBeautyFiltersTapped: () {
-                          setState(() {
-                            _isFilterSettingsOpened = !_isFilterSettingsOpened;
-                          });
+                          AppBloc.meetingBloc.add(ToggleAudioEvent());
                         },
                       ),
-                    );
-                  },
+                      CallActionButton(
+                        icon: callState?.mParticipant == null ||
+                                callState!.mParticipant!.isVideoEnabled
+                            ? PhosphorIcons.camera()
+                            : PhosphorIcons.cameraSlash(),
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
+
+                          AppBloc.meetingBloc.add(ToggleVideoEvent());
+                        },
+                      ),
+                      CallActionButton(
+                        icon: PhosphorIcons.monitorArrowUp(),
+                        onTap: () {
+                          if (callState?.mParticipant == null) return;
+
+                          if (callState!.mParticipant!.isSharingScreen) {
+                            AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                          } else {
+                            AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                          }
+                        },
+                      ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.hand(),
+                          onTap: () {},
+                        ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.paintBrush(),
+                          onTap: () {
+                            setState(() {
+                              _isWhiteBoardOpened = !_isWhiteBoardOpened;
+                            });
+                          },
+                        ),
+                      if (SizerUtil.isDesktop)
+                        CallActionButton(
+                          icon: PhosphorIcons.chatTeardropText(),
+                          onTap: () {
+                            setState(() {
+                              _isChatOpened = !_isChatOpened;
+                            });
+                          },
+                        ),
+                      CallActionButton(
+                        icon: PhosphorIcons.dotsThreeOutline(
+                          PhosphorIconsStyle.fill,
+                        ),
+                        onTap: () {
+                          showDialogWaterbus(
+                            onlyShowAsDialog: true,
+                            maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
+                            paddingBottom: SizerUtil.isDesktop ? 80.sp : 20.sp,
+                            paddingHorizontal: 10.sp,
+                            alignment: Alignment.bottomCenter,
+                            child: CallSettingsBottomSheet(
+                              onBeautyFiltersTapped: () {
+                                setState(() {
+                                  _isFilterSettingsOpened =
+                                      !_isFilterSettingsOpened;
+                                });
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      if (SizerUtil.isMobile)
+                        CallActionButton(
+                          icon: PhosphorIcons.signOut(),
+                          backgroundColor: Colors.red,
+                          onTap: () {
+                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                          },
+                        ),
+                    ],
+                  ),
                 ),
-                CallActionButton(
-                  icon: PhosphorIcons.x(),
-                  backgroundColor: Colors.red,
-                  onTap: () {
-                    AppBloc.meetingBloc.add(const LeaveMeetingEvent());
-                  },
-                ),
+                if (SizerUtil.isDesktop)
+                  Container(
+                    width: 100.sp,
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CallActionButton(
+                          icon: PhosphorIcons.signOut(),
+                          backgroundColor: Colors.red,
+                          onTap: () {
+                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
@@ -193,78 +323,115 @@ class _MeetingBodyState extends State<MeetingBody> {
               child: Row(
                 children: [
                   Flexible(
-                    flex: _isFilterSettingsOpened || !SizerUtil.isDesktop
-                        ? 0
-                        : _isExtensionOpened
-                            ? 7
-                            : 1,
-                    child: _isFilterSettingsOpened || !SizerUtil.isDesktop
-                        ? const SizedBox()
-                        : SideBar(
-                            isExpand: _isExtensionOpened,
-                            onExpandChanged: (isExpand) {
-                              if (_isExtensionOpened == isExpand) return;
-
-                              setState(() {
-                                _isExtensionOpened = isExpand;
-                              });
-                            },
-                            meetingId: meeting.id,
-                          ),
-                  ),
-                  Flexible(
                     flex: _isFilterSettingsOpened
                         ? 6
-                        : _isExtensionOpened
+                        : _isChatOpened
                             ? 3
-                            : 20,
-                    child: AnimatedContainer(
+                            : 1,
+                    child: AnimatedSize(
                       duration: 300.milliseconds,
-                      width: _isFilterSettingsOpened
-                          ? 60.w
-                          : _isExtensionOpened
-                              ? 30.w
-                              : SizerUtil.isDesktop
-                                  ? 95.w
-                                  : 100.w,
-                      child: _isFilterSettingsOpened
-                          ? Container(
-                              margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                              child: MeetView(
-                                participants: meeting.participants,
-                                participantSFU: callState!.mParticipant!
-                                    .copyWith(isSharingScreen: false),
-                                radius: BorderRadius.zero,
-                                borderEnabled: false,
+                      curve: Curves.easeInOutExpo,
+                      child: SizedBox(
+                        width: _isFilterSettingsOpened
+                            ? 60.w
+                            : _isChatOpened
+                                ? 75.w
+                                : 100.w,
+                        child: _isFilterSettingsOpened
+                            ? Container(
+                                margin: EdgeInsets.symmetric(horizontal: 12.sp),
+                                child: MeetView(
+                                  participants: meeting.participants,
+                                  participantSFU: callState!.mParticipant!
+                                      .copyWith(isSharingScreen: false),
+                                  radius: BorderRadius.zero,
+                                  borderEnabled: false,
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Expanded(
+                                    child: MeetingLayout(
+                                      meeting: meeting,
+                                      callState: callState,
+                                      callSetting: callSetting,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: _isWhiteBoardOpened ? 4 : 0,
+                                    child: AnimatedSize(
+                                      duration: 300.milliseconds,
+                                      curve: Curves.easeInOutExpo,
+                                      child: _isWhiteBoardOpened
+                                          ? Container(
+                                              margin: EdgeInsets.only(
+                                                top: 20.sp,
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 20.sp,
+                                              ),
+                                              child: Material(
+                                                clipBehavior: Clip.hardEdge,
+                                                shape: SuperellipseShape(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    20.sp,
+                                                  ),
+                                                ),
+                                                child: const WhiteBoardWidget(),
+                                              ),
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                          : MeetingLayout(
-                              meeting: meeting,
-                              callState: callState,
-                              callSetting: callSetting,
-                            ),
+                      ),
                     ),
                   ),
                   Flexible(
-                    flex: _isFilterSettingsOpened ? 4 : 0,
-                    child: AnimatedContainer(
+                    flex: _isFilterSettingsOpened
+                        ? 4
+                        : _isChatOpened
+                            ? 1
+                            : 0,
+                    child: AnimatedSize(
                       duration: 300.milliseconds,
-                      curve: Curves.fastLinearToSlowEaseIn,
-                      width: _isFilterSettingsOpened ? 40.w : 0,
-                      child: _isFilterSettingsOpened
-                          ? BeautyFilterWidget(
-                              handleClosed: () {
-                                setState(() {
-                                  _isFilterSettingsOpened = false;
-                                });
-                              },
-                            )
-                          : const SizedBox(),
+                      curve: Curves.easeInOutExpo,
+                      child: SizedBox(
+                        width: _isFilterSettingsOpened
+                            ? 40.w
+                            : _isChatOpened
+                                ? 25.w
+                                : 0,
+                        child: AnimatedSwitcher(
+                          duration: 300.milliseconds,
+                          child: _isFilterSettingsOpened
+                              ? BeautyFilterWidget(
+                                  handleClosed: () {
+                                    setState(() {
+                                      _isFilterSettingsOpened = false;
+                                    });
+                                  },
+                                )
+                              : _isChatOpened
+                                  ? ChatInMeeting(
+                                      meeting: meeting,
+                                      onClosePressed: () {
+                                        setState(() {
+                                          _isChatOpened = false;
+                                        });
+                                      },
+                                    )
+                                  : const SizedBox(),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
+
             // Build subtitle
             Positioned(
               bottom: 20.sp,
@@ -316,6 +483,38 @@ class _MeetingBodyState extends State<MeetingBody> {
                               );
                       },
                     ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecWidget() {
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      color: Colors.red,
+      shape: SuperellipseShape(
+        borderRadius: BorderRadius.circular(20.sp),
+      ),
+      child: SizedBox(
+        height: SizerUtil.isDesktop ? 40.sp : 30.sp,
+        width: SizerUtil.isDesktop ? 80.sp : 55.sp,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              PhosphorIcons.record(PhosphorIconsStyle.fill),
+              size: SizerUtil.isDesktop ? 18.sp : 12.sp,
+            ),
+            SizedBox(width: SizerUtil.isDesktop ? 8.sp : 4.sp),
+            Text(
+              "REC",
+              style: TextStyle(
+                color: mCL,
+                fontSize: SizerUtil.isDesktop ? 12.sp : 10.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),

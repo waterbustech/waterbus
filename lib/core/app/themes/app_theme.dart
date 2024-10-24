@@ -17,6 +17,10 @@ class AppTheme {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
+      cardColor: Colors.black.withOpacity(0.04),
+      textTheme: TextTheme(
+        labelMedium: TextStyle(color: fCD),
+      ),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -76,6 +80,10 @@ class AppTheme {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
+      cardColor: mGD,
+      textTheme: TextTheme(
+        labelMedium: TextStyle(color: mCU),
+      ),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(

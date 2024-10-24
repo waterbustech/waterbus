@@ -47,28 +47,36 @@ class MeetingLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: SizerUtil.isDesktop ? 16.sp : 10.sp,
-      ),
+      margin: SizerUtil.isDesktop
+          ? EdgeInsets.only(left: 20.sp, right: 4.sp)
+          : EdgeInsets.symmetric(horizontal: 10.sp),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final bool isCollapsed =
-              constraints.maxWidth < 30.w && SizerUtil.isDesktop;
+              constraints.maxHeight < 30.w && SizerUtil.isDesktop;
 
-          return _participants.length > 2 || isCollapsed
-              ? _buildLayoutMultipleUsers(
+          return isCollapsed
+              ? _buildLayoutMultipleUsersHorizontal(
                   context,
                   meeting,
                   callState,
                   callSetting,
                   constraints,
                 )
-              : _buildLayoutLess2Users(
-                  context,
-                  meeting,
-                  callState,
-                  constraints,
-                );
+              : _participants.length > 2
+                  ? _buildLayoutMultipleUsers(
+                      context,
+                      meeting,
+                      callState,
+                      callSetting,
+                      constraints,
+                    )
+                  : _buildLayoutLess2Users(
+                      context,
+                      meeting,
+                      callState,
+                      constraints,
+                    );
         },
       ),
     );
@@ -98,7 +106,7 @@ class MeetingLayout extends StatelessWidget {
           child: MeetView(
             participants: meeting.participants,
             participantSFU: _participants.first,
-            borderEnabled: _participants.length > 1 || !SizerUtil.isDesktop,
+            borderEnabled: _participants.length > 1 || SizerUtil.isMobile,
             radius: _participants.length == 1 || SizerUtil.isDesktop
                 ? BorderRadius.circular(20.sp)
                 : BorderRadius.vertical(top: Radius.circular(30.sp)),
@@ -171,6 +179,30 @@ class MeetingLayout extends StatelessWidget {
         childAspectRatio: SizerUtil.isDesktop
             ? (_participants.length <= 6 && crossAxisCount == 3 ? k43 : k169)
             : (_participants.length < 6 ? k35 : k11),
+      ),
+    );
+  }
+
+  Widget _buildLayoutMultipleUsersHorizontal(
+    BuildContext context,
+    Meeting meeting,
+    CallState? callState,
+    CallSetting setting,
+    BoxConstraints constraints,
+  ) {
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: _participants.length,
+      padding: EdgeInsets.zero,
+      itemBuilder: (_, index) => AspectRatio(
+        aspectRatio: 16 / 9,
+        child: _buildVideoView(
+          context,
+          participant: _participants[index],
+          callState: callState,
+          avatarSize: SizerUtil.isDesktop ? 50.sp : 35.sp,
+        ),
       ),
     );
   }

@@ -320,7 +320,7 @@ extension AppNavigatorX on AppNavigator {
   }
 
   bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-    if (!SizerUtil.isDesktop) return false;
+    if (SizerUtil.isMobile) return false;
 
     return popupInstrealOfScreen.contains(route);
   }

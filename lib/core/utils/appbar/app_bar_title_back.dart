@@ -39,6 +39,7 @@ AppBar appBarTitleBack(
     title: titleWidget ??
         Text(
           title,
+          maxLines: 2,
           style: TextStyle(
             fontSize: titleTextSize ?? 13.5.sp,
             fontWeight: FontWeight.w700,

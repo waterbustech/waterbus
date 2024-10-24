@@ -27,7 +27,7 @@ Future showDialogWaterbus({
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
-  if (!SizerUtil.isDesktop && !onlyShowAsDialog) {
+  if (SizerUtil.isMobile && !onlyShowAsDialog) {
     return showBottomSheetWaterbus(
       context: AppNavigator.context!,
       builder: (context) {

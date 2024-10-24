@@ -104,6 +104,8 @@ Map<String, String> vietnamese = {
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
   Strings.back: "Thoát",
+  Strings.saved: "Đã lưu",
+  Strings.copied: "Đã sao chép",
   Strings.createdAt: "Tạo lúc",
 
   // Profile screen

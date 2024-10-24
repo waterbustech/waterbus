@@ -127,7 +127,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
-      ref: 'feat/map-api-archived'
+      ref: 'migration/v2'
    
 
 dependency_overrides: 
