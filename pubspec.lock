@@ -2331,9 +2331,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "../waterbus-flutter-sdk"
-      relative: true
-    source: path
+      path: "."
+      ref: "feat/map-api-archived"
+      resolved-ref: "7af6e2b11d90365a7b615ad9b0aa31acab5fd52e"
+      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
+    source: git
     version: "1.5.1"
   web:
     dependency: "direct overridden"
