@@ -48,7 +48,7 @@ class MeetingLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: SizerUtil.isDesktop
-          ? EdgeInsets.only(left: 16.sp, right: 4.sp)
+          ? EdgeInsets.only(left: 20.sp, right: 4.sp)
           : EdgeInsets.symmetric(horizontal: 10.sp),
       child: LayoutBuilder(
         builder: (context, constraints) {

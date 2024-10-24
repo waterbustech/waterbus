@@ -50,25 +50,28 @@ class _MeetingBodyState extends State<MeetingBody> {
       appBar: appBarTitleBack(
         context,
         toolbarHeight: SizerUtil.isDesktop ? 60.sp : null,
-        titleWidget: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              meeting.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 13.5.sp,
-                fontWeight: FontWeight.w700,
+        titleWidget: Padding(
+          padding: EdgeInsets.only(right: 16.sp),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                meeting.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            Text(
-              DateTimeHelper().formatDateTime(DateTime.now()),
-              style: TextStyle(
-                fontSize: 11.sp,
+              Text(
+                DateTimeHelper().formatDateTime(DateTime.now()),
+                style: TextStyle(
+                  fontSize: 11.sp,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         centerTitle: false,
         leading: Center(child: Assets.images.imgAppLogo3d.image(height: 40.sp)),

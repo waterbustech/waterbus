@@ -26,6 +26,8 @@ class CallActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 42.sp,
+      width: 42.sp,
       margin: shape == BoxShape.circle
           ? EdgeInsets.zero
           : EdgeInsets.only(left: 8.sp),
@@ -41,8 +43,6 @@ class CallActionButton extends StatelessWidget {
           color:
               backgroundColor ?? Theme.of(context).colorScheme.onInverseSurface,
           child: Container(
-            height: 48.sp,
-            width: 48.sp,
             alignment: Alignment.center,
             child: Icon(
               icon,
