@@ -7,7 +7,6 @@ import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 import 'package:waterbus/features/conversation/xmodels/option_model.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
@@ -24,9 +23,7 @@ extension MeetingModelX on Meeting {
       OptionModel(
         title: isHost ? Strings.archivedChats.i18n : Strings.delete.i18n,
         isDanger: true,
-        handlePressed: () {
-          AppBloc.chatBloc.add(ArchivedOrLeaveConversationEvent(meeting: this));
-        },
+        handlePressed: () {},
       ),
     );
 

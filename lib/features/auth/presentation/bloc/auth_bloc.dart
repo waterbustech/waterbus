@@ -2,6 +2,7 @@ import 'package:auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
+import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -129,5 +130,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppBloc.userBloc.add(CleanProfileEvent());
     AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
     AppBloc.chatBloc.add(CleanChatEvent());
+    AppBloc.invitedChatBloc.add(CleanInvitedConversationEvent());
   }
 }

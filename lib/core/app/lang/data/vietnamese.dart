@@ -174,10 +174,8 @@ Map<String, String> vietnamese = {
   Strings.unsentAMessage: "đã thu hồi tin nhắn",
   Strings.hi: "Xin chào",
   Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
-  Strings.hostCanNotArchivedConversation:
-      "Bạn với tư cách là chủ phòng không thể lưu trữ cuộc trò chuyện khi vẫn còn thành viên",
   Strings.hostCanNotDeleteConversation:
-      "Bạn với tư cách là chủ phòng không thể xoá cuộc trò chuyện khi vẫn còn thành viên",
+      "Bạn với tư cách là chủ phòng không thể rời cuộc trò chuyện khi vẫn còn thành viên",
   Strings.youHaveInvitedThe: "Bạn đã mời",
   Strings.toJoinConversation: "tham gia cuộc trò chuyện",
   Strings.sendMessageOrTapOnTheGreetingBelow:

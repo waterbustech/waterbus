@@ -5,6 +5,7 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/home/widgets/home_app.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -161,6 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.hardEdge,
                   child: SideMenuWidget(
                     onTabChanged: (tabLabel) {
+                      AppNavigator.popUntilHomeContext();
+
                       setState(() {
                         _currentTab = tabLabel;
                       });
@@ -189,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .surfaceContainerLow,
-                                child: _getCurrentTab(),
+                                child:
+                                    HomeAppScreen(homeScreen: _getCurrentTab()),
                               ),
                             )
                           : _getCurrentTab(),

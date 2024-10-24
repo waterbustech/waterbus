@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 class MoreActionItem extends StatelessWidget {
@@ -26,7 +27,11 @@ class MoreActionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureWrapper(
-      onTap: onTap,
+      onTap: () {
+        AppNavigator.pop();
+
+        onTap?.call();
+      },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 12.sp),
         decoration: BoxDecoration(
