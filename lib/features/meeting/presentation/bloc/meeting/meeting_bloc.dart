@@ -186,6 +186,15 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
+        if (event is ToggleHandRasing) {
+          await _waterbusSdk.toggleRaiseHand();
+          if (state is JoinedMeeting) {
+            emit(_joinedMeeting);
+          } else if (state is PreJoinMeeting) {
+            emit(_preJoinMeeting);
+          }
+        }
+
         if (event is SaveCallSettingsEvent) {
           _callSettingsLocalDataSource.saveSettings(event.setting);
 
@@ -554,8 +563,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         } else if (state is PreJoinMeeting) {
           add(DisposeMeetingEvent());
         }
-
-        break;
       default:
         break;
     }

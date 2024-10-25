@@ -40,6 +40,7 @@ class _MeetingBodyState extends State<MeetingBody> {
   bool _isFilterSettingsOpened = false;
   bool _isChatOpened = false;
   bool _isWhiteBoardOpened = false;
+
   late Meeting meeting = widget.state.meeting!;
   late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
   late CallState? callState = widget.state.callState;
@@ -238,8 +239,13 @@ class _MeetingBodyState extends State<MeetingBody> {
                       ),
                       if (SizerUtil.isDesktop)
                         CallActionButton(
-                          icon: PhosphorIcons.hand(),
-                          onTap: () {},
+                          icon: callState!.mParticipant!.isHandRaising
+                              ? PhosphorIcons.handPalm(PhosphorIconsStyle.fill)
+                              : PhosphorIcons.handPalm(),
+                          onTap: () {
+                            if (callState?.mParticipant == null) return;
+                            AppBloc.meetingBloc.add(ToggleHandRasing());
+                          },
                         ),
                       if (SizerUtil.isDesktop)
                         CallActionButton(

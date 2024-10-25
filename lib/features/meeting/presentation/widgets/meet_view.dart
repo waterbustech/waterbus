@@ -161,8 +161,20 @@ class MeetView extends StatelessWidget {
                                   ),
                           ),
                         ),
+                        // const Spacer(),
                       ],
                     ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 10.sp,
+                bottom: 10.sp,
+                child: Visibility(
+                  visible: _isRaisingHand,
+                  child: Icon(
+                    PhosphorIcons.handPalm(PhosphorIconsStyle.fill),
+                    size: avatarSize / 2,
                   ),
                 ),
               ),
@@ -207,6 +219,12 @@ class MeetView extends StatelessWidget {
     if (participantSFU.isSharingScreen) return false;
 
     return participantSFU.isAudioEnabled;
+  }
+
+  bool get _isRaisingHand {
+    if (participantSFU.isSharingScreen) return false;
+
+    return participantSFU.isHandRaising;
   }
 
   bool get _isScreenSharing {
