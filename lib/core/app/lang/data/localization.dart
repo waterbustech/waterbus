@@ -80,6 +80,8 @@ class Strings {
   static const String createRoom = 'createRoom';
   static const String chat = 'chats';
   static const String delete = 'delete';
+  static const String retrieve = 'retrieve';
+  static const String editMessage = 'editMessage';
   static const String sureDeleteConversation = 'sureDeleteConversation';
   static const String sureDeleteMessage = 'sureDeleteMessage';
   static const String leaveAMessage = 'leaveAMessage';
@@ -194,6 +196,21 @@ class Strings {
   static const String uploadImageFail = 'uploadImageFail';
   static const String setNewPhoto = 'setNewPhoto';
   static const String leaveGroup = 'leaveGroup';
+  static const String haveSuccessfullyDeletedConversation =
+      'haveSuccessfullyDeletedConversation';
+  static const String cannotDeleteConversation = 'cannotDeleteConversation';
+  static const String haveArchivedConversation = 'haveArchivedConversation';
+  static const String cannotBeArchived = 'cannotBeArchived';
+  static const String haveLeftConversation = 'haveLeftConversation';
+  static const String leaveFailedConversation = 'leaveFailedConversation';
+  static const String cannotDeleteMember = 'cannotDeleteMember';
+  static const String youHaveRemoved = 'youHaveRemoved';
+  static const String fromTheChat = 'fromTheChat';
+
+  static const String viewPersonalInformation = 'viewPersonalInformation';
+  static const String signOutOfYourAccount = 'signOutOfYourAccount';
+  static const String descriptionArchivedConversation =
+      'descriptionArchivedConversation';
 }
 
 class MyI18n {

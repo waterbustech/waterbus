@@ -9,6 +9,7 @@ import 'package:waterbus_sdk/types/models/user_model.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/home/widgets/side_footer_body.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/models/side_menu_item.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -177,6 +178,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
         final userAvatar = AvatarCard(
           urlToImage: user.avatar,
           size: 32.sp,
+          label: user.fullName,
         );
 
         if (_isCollapsed) {
@@ -188,54 +190,9 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
         return Container(
           margin: EdgeInsets.all(12.sp),
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.sp,
-            vertical: 8.sp,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40.sp),
-            border: Border.all(
-              width: 1.sp,
-              color: Theme.of(context).colorScheme.secondaryContainer,
-            ),
-          ),
-          child: Row(
-            children: [
-              userAvatar,
-              SizedBox(width: 6.sp),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user.fullName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Text(
-                      '@${user.userName}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                            fontSize: 10.sp,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  PhosphorIcons.dotsThree(),
-                ),
-              ),
-            ],
+          child: SideFooterBody(
+            userAvatar: userAvatar,
+            user: user,
           ),
         );
       },

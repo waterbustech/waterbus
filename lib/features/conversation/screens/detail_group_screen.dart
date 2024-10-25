@@ -12,10 +12,12 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
+import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/conversation/widgets/add_member_button.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
@@ -36,26 +38,35 @@ class DetailGroupScreen extends StatelessWidget {
             pinned: true,
             expandedHeight: 155.sp,
             actions: [
-              Tooltip(
-                message: Strings.editMeeting.i18n,
-                child: GestureWrapper(
-                  onTap: () {
-                    AppNavigator().push(Routes.editConversation);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(right: 16.sp),
-                    child: Text(
-                      Strings.edit.i18n,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
+              if (AppBloc.chatBloc.conversationCurrent?.isHost ?? false)
+                Tooltip(
+                  message: Strings.editMeeting.i18n,
+                  child: GestureWrapper(
+                    onTap: () {
+                      AppNavigator().push(
+                        Routes.createMeetingRoute,
+                        arguments: {
+                          "meeting": AppBloc.chatBloc.conversationCurrent,
+                          "isChatScreen": true,
+                        },
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(
+                        right: SizerUtil.isDesktop ? 24.sp : 16.sp,
+                      ),
+                      child: Text(
+                        Strings.edit.i18n,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
             leading: GestureWrapper(
               onTap: () {
@@ -81,10 +92,24 @@ class DetailGroupScreen extends StatelessWidget {
                   return meeting == null
                       ? const SizedBox()
                       : GroupSpaceBarCustom(
-                          avatar: AvatarChat(
-                            meeting: meeting,
-                            size: 54.sp,
-                            shape: BoxShape.circle,
+                          avatar: GestureWrapper(
+                            onTap: () async {
+                              await WaterbusImagePicker().openImagePicker(
+                                context: context,
+                                handleFinish: (image) async {
+                                  AppBloc.chatBloc.add(
+                                    UpdateAvatarConversationEvent(
+                                      avatar: image,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: AvatarChat(
+                              meeting: meeting,
+                              size: 54.sp,
+                              shape: BoxShape.circle,
+                            ),
                           ),
                           subTitle: Text(
                             "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
@@ -166,7 +191,7 @@ class DetailGroupScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is ActiveChatState) {
                   if (state.conversationCurrent == null) {
-                    return const SizedBox();
+                    return const SliverToBoxAdapter();
                   }
 
                   final Meeting conversation = state.conversations
@@ -190,7 +215,7 @@ class DetailGroupScreen extends StatelessWidget {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final bool isHost = index > 0 &&
+                        final bool isHost = index - numberOfWidgetsAdded >= 0 &&
                             conversation.host?.id ==
                                 conversation
                                     .members[index - numberOfWidgetsAdded]
@@ -220,7 +245,8 @@ class DetailGroupScreen extends StatelessWidget {
                             ), // Bo góc nếu cần
                             child: Slidable(
                               key: ValueKey(conversation.id),
-                              enabled: index != 0 && !isHost,
+                              enabled:
+                                  index != 0 && !isHost && conversation.isHost,
                               endActionPane: ActionPane(
                                 extentRatio: 0.3,
                                 motion: const StretchMotion(),
@@ -228,11 +254,8 @@ class DetailGroupScreen extends StatelessWidget {
                                 children: [
                                   SlidableAction(
                                     onPressed: (context) async {
-                                      await showModalBottomSheet(
+                                      await showBottomSheetWaterbus(
                                         context: AppNavigator.context!,
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        barrierColor: Colors.black38,
                                         enableDrag: false,
                                         builder: (context) {
                                           return BottomSheetDelete(
@@ -244,11 +267,10 @@ class DetailGroupScreen extends StatelessWidget {
                                               AppBloc.chatBloc.add(
                                                 DeleteMemberEvent(
                                                   code: conversation.code,
-                                                  userId: conversation
+                                                  userModel: conversation
                                                       .members[index -
                                                           numberOfWidgetsAdded]
-                                                      .user
-                                                      .id,
+                                                      .user,
                                                 ),
                                               );
                                             },

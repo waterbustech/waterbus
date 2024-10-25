@@ -9,6 +9,7 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -129,5 +130,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppBloc.userBloc.add(CleanProfileEvent());
     AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
     AppBloc.chatBloc.add(CleanChatEvent());
+    AppBloc.invitedChatBloc.add(CleanInvitedConversationEvent());
   }
 }

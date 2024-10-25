@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waterbus/core/injection/injection_container.dart';
+import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:waterbus/features/chats/presentation/bloc/archived_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';

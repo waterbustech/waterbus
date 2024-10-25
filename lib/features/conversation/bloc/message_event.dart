@@ -50,7 +50,11 @@ class DeleteMessageEvent extends MessageEvent {
 
 class CancelEditMessageEvent extends MessageEvent {}
 
-class CleanMessageEvent extends MessageEvent {}
+class CleanMessageEvent extends MessageEvent {
+  final List<int> meetingIds;
+
+  CleanMessageEvent({required this.meetingIds});
+}
 
 class InsertMessageEvent extends MessageEvent {
   final MessageModel message;

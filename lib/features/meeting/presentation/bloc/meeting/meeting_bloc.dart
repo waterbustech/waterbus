@@ -398,7 +398,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _waterbusSdk.leaveRoom();
     }
 
-    AppNavigator.pop();
+    if (AppNavigator.currentRoute() == Routes.meetingRoute) {
+      AppNavigator.pop();
+    }
   }
 
   Future<void> _handleNewParticipant(NewParticipantEvent event) async {

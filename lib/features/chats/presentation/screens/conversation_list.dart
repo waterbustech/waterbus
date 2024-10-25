@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:super_context_menu/super_context_menu.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -11,7 +11,6 @@ import 'package:waterbus/core/utils/list_custom/pagination_list_view.dart';
 import 'package:waterbus/core/utils/shimmers/shimmer_list.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus/features/chats/presentation/widgets/bottom_chat_options.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/presentation/widgets/conversation_label.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
@@ -75,29 +74,18 @@ class ConversationList extends StatelessWidget {
                         }
 
                         return GestureWrapper(
-                          onLongPress: SizerUtil.isDesktop
-                              ? null
-                              : () {
-                                  _handleShowBottomSheetOptions(
-                                    context,
-                                    meetings[index],
-                                  );
-                                },
-                          onSecondaryTap: SizerUtil.isDesktop
-                              ? () {
-                                  _handleShowBottomSheetOptions(
-                                    context,
-                                    meetings[index],
-                                  );
-                                }
-                              : null,
                           onTap: () {
                             onTap.call(index);
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ChatCard(meeting: meetings[index]),
+                              ContextMenuWidget(
+                                menuProvider: (_) {
+                                  return _menuProvider(meetings[index]);
+                                },
+                                child: ChatCard(meeting: meetings[index]),
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 58.sp),
                                 child: divider,
@@ -115,21 +103,23 @@ class ConversationList extends StatelessWidget {
     );
   }
 
-  void _handleShowBottomSheetOptions(
-    BuildContext context,
-    Meeting meeting,
-  ) {
-    HapticFeedback.lightImpact();
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black38,
-      enableDrag: false,
-      builder: (context) {
-        return BottomChatOptions(options: meeting.getOptions);
-      },
+  Menu _menuProvider(Meeting conversation) {
+    return Menu(
+      children: List.generate(
+        conversation.getOptions.length,
+        (indexOptions) => MenuAction(
+          image: MenuImage.icon(
+            conversation.getOptions[indexOptions].iconData,
+          ),
+          attributes: MenuActionAttributes(
+            destructive: conversation.getOptions[indexOptions].isDanger,
+          ),
+          title: conversation.getOptions[indexOptions].title,
+          callback: () {
+            conversation.getOptions[indexOptions].handlePressed?.call();
+          },
+        ),
+      ),
     );
   }
 }

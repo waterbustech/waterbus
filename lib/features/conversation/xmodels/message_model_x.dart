@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
@@ -20,23 +20,22 @@ extension MessageModelX on MessageModel {
     if (isMe) {
       options.add(
         OptionModel(
-          title: Strings.edit.i18n,
+          title: Strings.editMessage.i18n,
           handlePressed: () {
             AppBloc.messageBloc.add(SelectMessageEditEvent(message: this));
           },
+          iconData: PhosphorIcons.pencil(),
         ),
       );
 
       options.add(
         OptionModel(
-          title: Strings.delete.i18n,
+          iconData: PhosphorIcons.trash(),
+          title: Strings.retrieve.i18n,
           isDanger: true,
           handlePressed: () {
-            showModalBottomSheet(
+            showBottomSheetWaterbus(
               context: AppNavigator.context!,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              barrierColor: Colors.black38,
               enableDrag: false,
               builder: (context) {
                 return BottomSheetDelete(

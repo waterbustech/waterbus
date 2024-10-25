@@ -10,6 +10,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
@@ -89,9 +90,10 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       if (SizerUtil.isDesktop) {
                         onBeautyFiltersTapped();
                       } else {
-                        showModalBottomSheet(
+                        showBottomSheetWaterbus(
                           context: context,
-                          isScrollControlled: true,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surfaceContainerLow,
                           builder: (context) => SizedBox(
                             width: double.infinity,
                             height: 80.h,

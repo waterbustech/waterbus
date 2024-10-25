@@ -24,11 +24,15 @@ class Routes {
 
   // Chat
   static const String conversationRoute = '/conversation';
-  static const String editConversation = '/edit-conversation';
   static const String invitedRoute = '/invited';
   static const String detailGroupRoute = '/detail-group';
 
   // Others
   static const String dialogRoute = '/dialog';
+  static const String bottomSheetRoute = '/bottomSheetRoute';
   static const String loadingRoute = '/loading';
+
+  // Archived
+  static const String archivedRoute = '/archived';
+  static const String archivedConversationRoute = '/archived-conversation';
 }
