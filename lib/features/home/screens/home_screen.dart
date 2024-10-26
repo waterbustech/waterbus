@@ -98,55 +98,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 centerTitle: false,
                 isVisibleBackButton: false,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                titleWidget: BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    if (state is UserGetDone) {
-                      final User user = state.user;
+                titleWidget: _sideMenuKey.currentState?.isOpen ?? false
+                    ? null
+                    : BlocBuilder<UserBloc, UserState>(
+                        builder: (context, state) {
+                          if (state is UserGetDone) {
+                            final User user = state.user;
 
-                      return Row(
-                        children: [
-                          SizedBox(width: 6.sp),
-                          GestureDetector(
-                            onTap: _handleToggleDrawer,
-                            child: AvatarCard(
-                              urlToImage: user.avatar,
-                              size: 30.sp,
-                              label: user.fullName,
-                            ),
-                          ),
-                          SizedBox(width: 10.sp),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                user.fullName,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w600,
+                            return Row(
+                              children: [
+                                SizedBox(width: 6.sp),
+                                GestureDetector(
+                                  onTap: _handleToggleDrawer,
+                                  child: AvatarCard(
+                                    urlToImage: user.avatar,
+                                    size: 30.sp,
+                                    label: user.fullName,
+                                  ),
+                                ),
+                                SizedBox(width: 10.sp),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      user.fullName,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                     ),
-                              ),
-                              Text(
-                                '@${user.userName}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 10.sp,
+                                    Text(
+                                      '@${user.userName}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontSize: 10.sp,
+                                          ),
                                     ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    }
+                                  ],
+                                ),
+                              ],
+                            );
+                          }
 
-                    return const SizedBox();
-                  },
-                ),
+                          return const SizedBox();
+                        },
+                      ),
                 actions: [_buildCreateMeetingButton],
               ),
         body: Row(
