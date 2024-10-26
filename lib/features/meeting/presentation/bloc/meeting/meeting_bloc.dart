@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   CallSetting _callSetting = CallSetting();
   Timer? _subtitleTimer;
   int? _recordId;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   MeetingBloc(
     this._pipChannel,
@@ -290,6 +292,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   // MARK: state
+
   MeetingInitial get _meetingInitial => MeetingInitial(
         callSetting: _callSetting,
       );
@@ -353,7 +356,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     if (indexOfMyParticipant != -1) {
       _mParticipant = meeting.participants[indexOfMyParticipant];
     }
-
     return true;
   }
 
@@ -442,6 +444,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     AppBloc.recentJoinedBloc.add(
       UpdateRecentJoinedEvent(meeting: _currentMeeting!),
     );
+    _playSoundJoinRoom();
   }
 
   Future<void> _handleParticipantHasLeft(
@@ -545,6 +548,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     switch (event.event) {
       case CallbackEvents.shouldBeUpdateState:
         add(RefreshDisplayMeetingEvent());
+
+        break;
+      case CallbackEvents.raiseHand:
+        add(RefreshDisplayMeetingEvent());
+        _playSoundRaiseHand();
         break;
       case CallbackEvents.newParticipant:
         if (event.newParticipant == null) return;
@@ -591,9 +599,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     });
   }
 
+  Future<void> _playSoundJoinRoom() async {
+    await _audioPlayer.play(AssetSource('sounds/sound_notif.mp3'));
+  }
+
+  Future<void> _playSoundRaiseHand() async {
+    if (state.callState!.participants.values.first.isHandRaising) {
+      await _audioPlayer.play(AssetSource('sounds/sound_raise_hand.mp3'));
+    }
+  }
+
   Future<void> _dispose() async {
     await _waterbusSdk.leaveRoom();
 
+    _audioPlayer.dispose();
     _currentMeeting = null;
     _mParticipant = null;
     _currentBackground = null;
