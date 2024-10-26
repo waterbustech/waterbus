@@ -38,7 +38,7 @@ dependencies:
       path: '.'
       ref: 'migration/v2'
   # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
 
 dev_dependencies:
   flutter_test:

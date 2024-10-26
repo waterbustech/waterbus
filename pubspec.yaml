@@ -128,6 +128,8 @@ dependencies:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
       path: '.'
       ref: 'migration/v2'
+  # waterbus_sdk:
+  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
 
 dependency_overrides: 

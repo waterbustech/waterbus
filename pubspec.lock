@@ -2333,7 +2333,7 @@ packages:
     description:
       path: "."
       ref: "migration/v2"
-      resolved-ref: "4800b674e902df8ae5904eb4790ab2dc23298d0e"
+      resolved-ref: c41f947f4da3b2cffb0052144fc09bdbd94529bf
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "1.5.1"
