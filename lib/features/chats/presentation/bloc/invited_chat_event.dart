@@ -12,10 +12,16 @@ class RefreshInvitedConversationsEvent extends InvitedChatEvent {
   RefreshInvitedConversationsEvent({required this.handleFinish});
 }
 
-class AcceptInviteEvent extends InvitedChatEvent {
-  final int code;
+class InsertInvitedConversationsEvent extends InvitedChatEvent {
+  final Meeting invited;
 
-  AcceptInviteEvent({required this.code});
+  InsertInvitedConversationsEvent({required this.invited});
+}
+
+class AcceptInviteEvent extends InvitedChatEvent {
+  final int meetingId;
+
+  AcceptInviteEvent({required this.meetingId});
 }
 
 class CleanInvitedConversationEvent extends InvitedChatEvent {}

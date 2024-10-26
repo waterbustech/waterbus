@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -59,7 +59,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                     AppNavigator.pop();
                   },
                   child: Icon(
-                    PhosphorIcons.x_circle,
+                    PhosphorIcons.xCircle(),
                     color: Theme.of(context).colorScheme.primary,
                     size: 22.sp,
                   ),
@@ -120,7 +120,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                   width: 36.sp,
                   alignment: Alignment.center,
                   child: Icon(
-                    PhosphorIcons.magnifying_glass_bold,
+                    PhosphorIcons.magnifyingGlass(PhosphorIconsStyle.bold),
                     size: 14.sp,
                   ),
                 ),
@@ -139,7 +139,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     child: Icon(
-                      PhosphorIcons.x,
+                      PhosphorIcons.x(),
                       size: 8.5.sp,
                     ),
                   ),

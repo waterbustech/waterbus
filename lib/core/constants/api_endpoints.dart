@@ -1,12 +1,11 @@
 class ApiEndpoints {
-  static const String baseUrl = 'https://service.waterbus.tech/busapi/v1/';
-  static const String wsUrl = 'https://sfu.waterbus.tech';
+  static const String baseUrl = 'https://service-v2.waterbus.tech/busapi/v1/';
+  static const String wsUrl = 'https://sfu-v2.waterbus.tech';
   // static const String baseUrl = 'http://192.168.1.12:5980/busapi/v1/';
   // static const String wsUrl = 'http://192.168.1.12:5985';
 
   // Auth
   static const String auth = 'auth';
-  static const String presignedUrlS3 = 'auth/presigned-url';
 
   // Users
   static const String users = 'users';

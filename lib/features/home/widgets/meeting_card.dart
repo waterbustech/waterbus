@@ -1,12 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/helpers/clipboard_utils.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
@@ -22,6 +24,7 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       margin: EdgeInsets.only(bottom: 4.sp),
       padding: EdgeInsets.all(10.sp),
       child: Column(
@@ -46,6 +49,12 @@ class MeetingCard extends StatelessWidget {
               children: [
                 TextSpan(text: Strings.roomCode.i18n),
                 TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      ClipboardUtils.copy(
+                        meeting.code.toString().roomCodeFormatted,
+                      );
+                    },
                   text: meeting.code.toString().roomCodeFormatted,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
@@ -69,6 +78,11 @@ class MeetingCard extends StatelessWidget {
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
+                        label: meeting.members
+                            .map(
+                              (user) => user.user.fullName,
+                            )
+                            .toList(),
                         images: meeting.members
                             .map(
                               (user) => user.user.avatar,
@@ -113,7 +127,7 @@ class MeetingCard extends StatelessWidget {
                         ),
                         SizedBox(width: 4.sp),
                         Icon(
-                          PhosphorIcons.arrow_right_bold,
+                          PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
                           size: 12.sp,
                           color: Theme.of(context).colorScheme.surface,
                         ),

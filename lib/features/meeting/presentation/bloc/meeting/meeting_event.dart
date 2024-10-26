@@ -86,4 +86,12 @@ class ToggleSubtitleEvent extends MeetingEvent {
   const ToggleSubtitleEvent();
 }
 
+class StartRecordEvent extends MeetingEvent {
+  const StartRecordEvent();
+}
+
+class StopRecordEvent extends MeetingEvent {
+  const StopRecordEvent();
+}
+
 class RefreshDisplayMeetingEvent extends MeetingEvent {}

@@ -60,6 +60,8 @@ class SizerUtil {
 
   static bool get isDesktop => deviceType != DeviceType.mobile;
 
+  static bool get isMobile => deviceType == DeviceType.mobile;
+
   static bool get isMinimunSizeSupport =>
       kIsWeb && (width < 800 || height < 600);
 

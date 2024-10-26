@@ -18,7 +18,9 @@ Map<String, String> vietnamese = {
   Strings.notifications: "Thông báo",
   Strings.save: "Lưu",
   Strings.invalidFullName: "Tên đầy đủ không hợp lệ",
-  Strings.storage: "Bộ nhớ",
+  Strings.recent: "Gần đây",
+  Strings.storage: "Bản ghi",
+  Strings.talkWithAI: "Trò chuyện AI",
   Strings.archivedChats: "Lưu trữ",
   Strings.settings: "Cài đặt",
   Strings.licenses: "Giấy phép",
@@ -71,9 +73,13 @@ Map<String, String> vietnamese = {
   Strings.createRoom: "Tạo Phòng",
   Strings.chat: "Trò Chuyện",
   Strings.delete: "Xoá",
+  Strings.retrieve: "Thu hồi",
+  Strings.editMessage: "Chỉnh sửa",
   Strings.sureDeleteConversation:
       'Bạn có chắc chắn muốn xoá\ncuộc trò chuyện này?',
   Strings.sureDeleteMessage: 'Bạn có chắc chắn muốn xoá\tin nhắn này?',
+  Strings.sureArchivedConversation:
+      'Cuộc trò chuyện này sẽ được lưu và bạn có thể xem lại nó khi truy cập Kho lưu trữ. Bạn có chắc chắn muốn lưu trữ cuộc trò chuyện này không?',
   Strings.leaveAMessage: "Để lại lời nhắn...",
   Strings.invitedChat: "Lời mời",
   Strings.enterPassword: "Nhập mật khẩu",
@@ -91,11 +97,16 @@ Map<String, String> vietnamese = {
   Strings.beautyFilters: "Bộ lọc làm đẹp",
   Strings.virtualBackground: "Nền ảo",
   Strings.subtitle: "Phụ đề",
+  Strings.record: "Ghi hình",
+  Strings.duration: "Thời lượng",
   Strings.callStats: "Thống kê",
   Strings.frameSent: "Khung đã gửi",
   Strings.resolution: "Độ phân giải",
   Strings.latency: "Độ trễ (mili giây)",
   Strings.back: "Thoát",
+  Strings.saved: "Đã lưu",
+  Strings.copied: "Đã sao chép",
+  Strings.createdAt: "Tạo lúc",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
@@ -123,6 +134,8 @@ Map<String, String> vietnamese = {
   Strings.myProfile: "Thông tin cá nhân",
   Strings.edit: "Sửa",
   Strings.appearance: "Giao diện",
+  Strings.colorMode: "Chế độ",
+  Strings.primaryColor: "Màu chủ đề",
   Strings.callAndMeeting: "Cuộc gọi và Cuộc họp",
   Strings.serverConfiguration: "Cấu hình máy chủ",
   Strings.clearCache: "Xoá bộ nhớ tạm",
@@ -132,6 +145,13 @@ Map<String, String> vietnamese = {
   Strings.changeYourAvatar: 'Đổi ảnh đại diện',
   Strings.chooseFromGallery: 'Chọn ảnh từ thư viện',
   Strings.takeAPhoto: 'Chụp ảnh mới',
+  Strings.inAppNotification: 'Thông báo trong ứng dụng',
+  Strings.inMeeting: 'Trong cuộc họp',
+  Strings.newMessage: 'Tin nhắn mới',
+  Strings.newInvitation: 'Lời mời mới',
+  Strings.participantJoined: 'Có người tham gia',
+  Strings.participantLeft: 'Có người rời phòng',
+  Strings.participantRaiseHand: 'Có người giơ tay',
 
   // Chat screen
   Strings.videoCall: 'Gọi video',
@@ -159,7 +179,7 @@ Map<String, String> vietnamese = {
   Strings.hi: "Xin chào",
   Strings.noMesssagesHereYet: "Chưa có tin nhắn nào",
   Strings.hostCanNotDeleteConversation:
-      "Bạn với tư cách là chủ phòng không thể xóa cuộc trò chuyện khi vẫn còn thành viên",
+      "Bạn với tư cách là chủ phòng không thể rời cuộc trò chuyện khi vẫn còn thành viên",
   Strings.youHaveInvitedThe: "Bạn đã mời",
   Strings.toJoinConversation: "tham gia cuộc trò chuyện",
   Strings.sendMessageOrTapOnTheGreetingBelow:
@@ -171,4 +191,28 @@ Map<String, String> vietnamese = {
       "Cuộc trò truyện mới đã được thêm vào danh sách!",
   Strings.youHaveConfirmedConversation:
       "Bạn đã xác nhận tham gia cuộc trò chuyện",
+  Strings.chatUpdatedSuccessfully: "Cập nhật cuộc trò chuyện thành công!",
+  Strings.chatUpdateFailed: "Cập nhật cuộc trò chuyện thất bại!",
+  Strings.uploadImageFail: "Tải hình ảnh bị lỗi. Vui lòng thử lại sau!",
+  Strings.setNewPhoto: "Tải ảnh mới",
+  Strings.leaveGroup: "Rời Nhóm",
+  Strings.haveSuccessfullyDeletedConversation:
+      "Bạn đã xoá cuộc trò chuyện thành công!",
+  Strings.cannotDeleteConversation:
+      "Không thể xoá cuộc trò chuyện này. Vui lòng thử lại sau!",
+  Strings.haveArchivedConversation: "Bạn đã lưu trữ cuộc trò chuyện!",
+  Strings.cannotBeArchived:
+      "Không thể lưu trữ cuộc trò chuyện. Vui lòng thử lại sau!",
+  Strings.haveLeftConversation: "Bạn đã rời khỏi cuộc trò chuyện!",
+  Strings.leaveFailedConversation:
+      "Rời khỏi cuộc trò chuyện thất bại. Vui lòng thử lại sau!",
+  Strings.cannotDeleteMember:
+      "Không thể xoá thành viên này. Vui lòng thử lại sau!",
+  Strings.youHaveRemoved: "Bạn đã xoá",
+  Strings.fromTheChat: "khỏi cuộc trò chuyện!",
+
+  Strings.viewPersonalInformation: "Xem thông tin cá nhân",
+  Strings.signOutOfYourAccount: "Đăng xuất tài khoản",
+  Strings.descriptionArchivedConversation:
+      "Cuộc trò truyện này đã được Lưu trữ. Bạn chỉ có thể xem lại các tin nhắn của cuộc trò chuyện này.",
 };

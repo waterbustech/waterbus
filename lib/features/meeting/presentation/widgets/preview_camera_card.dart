@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
@@ -70,6 +70,7 @@ class PreviewCameraCard extends StatelessWidget {
                         child: AvatarCard(
                           urlToImage: AppBloc.userBloc.user?.avatar,
                           size: 50.sp,
+                          label: AppBloc.userBloc.user?.fullName,
                         ),
                       ),
               ),
@@ -82,18 +83,20 @@ class PreviewCameraCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CallActionButton(
+                    shape: BoxShape.circle,
                     icon: participant.isVideoEnabled
-                        ? PhosphorIcons.camera
-                        : PhosphorIcons.camera_slash,
+                        ? PhosphorIcons.camera()
+                        : PhosphorIcons.cameraSlash(),
                     onTap: () {
                       AppBloc.meetingBloc.add(ToggleVideoEvent());
                     },
                   ),
                   SizedBox(width: 12.sp),
                   CallActionButton(
+                    shape: BoxShape.circle,
                     icon: participant.isAudioEnabled
-                        ? PhosphorIcons.microphone
-                        : PhosphorIcons.microphone_slash,
+                        ? PhosphorIcons.microphone()
+                        : PhosphorIcons.microphoneSlash(),
                     onTap: () {
                       AppBloc.meetingBloc.add(ToggleAudioEvent());
                     },

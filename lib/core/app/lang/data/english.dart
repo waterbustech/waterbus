@@ -18,8 +18,10 @@ Map<String, String> english = {
   Strings.notifications: "Notifications",
   Strings.save: "Save",
   Strings.invalidFullName: "Invalid full name",
-  Strings.storage: "Storage",
-  Strings.archivedChats: "Archived chats",
+  Strings.recent: "Recent",
+  Strings.storage: "Records",
+  Strings.talkWithAI: "Talk with AI",
+  Strings.archivedChats: "Archived",
   Strings.settings: "Settings",
   Strings.licenses: "Licenses",
   Strings.logout: "Logout",
@@ -72,9 +74,13 @@ Map<String, String> english = {
   Strings.createRoom: "Create Room",
   Strings.chat: "Chats",
   Strings.delete: "Delete",
+  Strings.retrieve: "Retrieve",
+  Strings.editMessage: "Edit message",
   Strings.sureDeleteConversation:
       'Are you sure you want to delete\nthis conversation?',
   Strings.sureDeleteMessage: 'Are you sure you want to delete\nthis message?',
+  Strings.sureArchivedConversation:
+      'This conversation will be saved and you can review it when you access Archives. Are you sure you want to archive this chat?',
   Strings.leaveAMessage: "Leave a message...",
   Strings.invitedChat: "Invited chat",
   Strings.enterPassword: "Enter Password",
@@ -90,6 +96,8 @@ Map<String, String> english = {
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
   Strings.back: "Back",
+  Strings.saved: "Saved",
+  Strings.copied: "Copied",
 
   // Profile screen
   Strings.profile: "Profile",
@@ -109,7 +117,9 @@ Map<String, String> english = {
   Strings.beautyFilters: "Beauty filters",
   Strings.virtualBackground: "Virtual background",
   Strings.subtitle: "Subtitle",
-  Strings.callStats: "Call stats",
+  Strings.record: "Record",
+  Strings.duration: "Duration",
+  Strings.callStats: "Stats",
   Strings.canUseUsername: "You can use this username",
   Strings.usernameUsed: "This username is already in use",
   Strings.checking: "Checking",
@@ -119,11 +129,14 @@ Map<String, String> english = {
   Strings.updatedPersonalInformationSuccessfully:
       "Updated personal information successfully!",
   Strings.updateUsernameSuccessfully: "Updated username successful!",
+  Strings.createdAt: "Created at",
 
   // Settings screen
   Strings.myProfile: "My Profile",
   Strings.edit: "Edit",
   Strings.appearance: "Appearance",
+  Strings.colorMode: "Color Mode",
+  Strings.primaryColor: "Primary Color",
   Strings.callAndMeeting: "Call and Meeting",
   Strings.serverConfiguration: "Server configuration",
   Strings.clearCache: "Clear cache",
@@ -133,6 +146,13 @@ Map<String, String> english = {
   Strings.changeYourAvatar: 'Change your avatar',
   Strings.chooseFromGallery: 'Choose photo from gallery',
   Strings.takeAPhoto: 'Take a photo',
+  Strings.inAppNotification: 'In-app notification',
+  Strings.inMeeting: 'In meeting',
+  Strings.newMessage: 'New message',
+  Strings.newInvitation: 'New invitation',
+  Strings.participantJoined: 'Participant joined',
+  Strings.participantLeft: 'Participant left',
+  Strings.participantRaiseHand: 'Participant raise hand',
 
   // Chat Screen
   Strings.videoCall: 'Video call',
@@ -162,7 +182,7 @@ Map<String, String> english = {
   Strings.youHaveInvitedThe: "You have invited the",
   Strings.toJoinConversation: "to join conversation",
   Strings.hostCanNotDeleteConversation:
-      "You as the host cannot delete a chat while it is still a member",
+      "You as the host cannot leave a chat while it is still a member",
   Strings.sendMessageOrTapOnTheGreetingBelow:
       "Send a message or tap on the greeting below.",
   Strings.sureDeleteMember:
@@ -171,4 +191,27 @@ Map<String, String> english = {
   Strings.addConversationSuccess: "New chat has been added to the list!",
   Strings.youHaveConfirmedConversation:
       "You have confirmed your participation in the conversation",
+  Strings.chatUpdatedSuccessfully: "Chat updated successfully!",
+  Strings.chatUpdateFailed: "Chat update failed!",
+  Strings.uploadImageFail: "Image loading error. Please try again later!",
+  Strings.setNewPhoto: "Set New Photo",
+  Strings.leaveGroup: "Leave Group",
+  Strings.haveSuccessfullyDeletedConversation:
+      "You have successfully deleted the conversation!",
+  Strings.cannotDeleteConversation:
+      "This conversation cannot be deleted. Please try again later!",
+  Strings.haveArchivedConversation: "You have archived the conversation!",
+  Strings.cannotBeArchived: "Chat cannot be archived. Please try again later!",
+  Strings.haveLeftConversation: "You have left the conversation!",
+  Strings.leaveFailedConversation:
+      "Leave the failed conversation. Please try again later!",
+  Strings.cannotDeleteMember:
+      "This member cannot be deleted. Please try again later!",
+  Strings.youHaveRemoved: "You have removed",
+  Strings.fromTheChat: "from the chat!",
+
+  Strings.viewPersonalInformation: "View personal information",
+  Strings.signOutOfYourAccount: "Sign out of your account",
+  Strings.descriptionArchivedConversation:
+      "This conversation has been Archived. You can only review messages from this conversation.",
 };

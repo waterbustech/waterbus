@@ -13,10 +13,14 @@ class AppTheme {
     required this.data,
   });
 
-  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.baseColor}) {
+  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.blue}) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
+      cardColor: Colors.black.withOpacity(0.04),
+      textTheme: TextTheme(
+        labelMedium: TextStyle(color: fCD),
+      ),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(
@@ -72,10 +76,14 @@ class AppTheme {
     );
   }
 
-  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.baseColor}) {
+  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.blue}) {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
+      cardColor: mGD,
+      textTheme: TextTheme(
+        labelMedium: TextStyle(color: mCU),
+      ),
       pageTransitionsTheme: kIsWeb
           ? null
           : const PageTransitionsTheme(

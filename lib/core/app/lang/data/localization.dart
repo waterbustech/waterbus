@@ -25,7 +25,9 @@ class Strings {
   static const String save = 'save';
   static const String invalidFullName = 'invalidFullName';
 
+  static const String recent = 'recent';
   static const String storage = 'storage';
+  static const String talkWithAI = 'talkWithAI';
   static const String archivedChats = 'archivedChats';
   static const String settings = 'settings';
   static const String licenses = 'licenses';
@@ -78,6 +80,8 @@ class Strings {
   static const String createRoom = 'createRoom';
   static const String chat = 'chats';
   static const String delete = 'delete';
+  static const String retrieve = 'retrieve';
+  static const String editMessage = 'editMessage';
   static const String sureDeleteConversation = 'sureDeleteConversation';
   static const String sureDeleteMessage = 'sureDeleteMessage';
   static const String leaveAMessage = 'leaveAMessage';
@@ -97,11 +101,16 @@ class Strings {
   static const String beautyFilters = 'beautyFilters';
   static const String virtualBackground = 'virtualBackground';
   static const String subtitle = 'subtitle';
+  static const String record = 'record';
+  static const String duration = 'duration';
   static const String callStats = 'callStats';
   static const String frameSent = 'frameSent';
   static const String resolution = 'resolution';
   static const String latency = 'latency';
   static const String back = 'back';
+  static const String saved = 'saved';
+  static const String copied = 'copied';
+  static const String createdAt = 'createdAt';
 
   // Profile screen
   static const String profile = 'profile';
@@ -128,6 +137,8 @@ class Strings {
   static const String myProfile = 'myProfile';
   static const String edit = 'edit';
   static const String appearance = 'appearance';
+  static const String colorMode = 'colorMode';
+  static const String primaryColor = 'primaryColor';
   static const String callAndMeeting = 'callAndMeeting';
   static const String serverConfiguration = 'serverConfiguration';
   static const String clearCache = 'clearCache';
@@ -136,6 +147,13 @@ class Strings {
   static const String changeYourAvatar = 'changeYourAvatar';
   static const String chooseFromGallery = 'chooseFromGallery';
   static const String takeAPhoto = 'takeAPhoto';
+  static const String inAppNotification = 'inAppNotification';
+  static const String inMeeting = 'inMeeting';
+  static const String newMessage = 'newMessage';
+  static const String newInvitation = 'newInvitation';
+  static const String participantJoined = 'participantJoined';
+  static const String participantLeft = 'participantLeft';
+  static const String participantRaiseHand = 'participantRaiseHand';
 
   // Chat Screen
   static const String videoCall = 'videoCall';
@@ -149,7 +167,8 @@ class Strings {
   static const String invisible = 'invisible';
   static const String joined = 'joined';
   static const String leaveTheConversation = 'leaveTheConversation';
-  static const String sureLeaveConversation = 'descriptionOfLeaveConversation';
+  static const String sureLeaveConversation = 'sureLeaveConversation';
+  static const String sureArchivedConversation = 'sureArchivedConversation';
   static const String member = 'member';
   static const String members = 'members';
   static const String groupCreated = 'grounpCreated';
@@ -171,6 +190,27 @@ class Strings {
       'hostCanNotDeleteConversation';
   static const String sendMessageOrTapOnTheGreetingBelow =
       'sendMessageOrTapOnTheGreetingBelow';
+  static const String chatUpdatedSuccessfully =
+      'theConversationUpdateWasSuccessful';
+  static const String chatUpdateFailed = 'chatUpdateFailed';
+  static const String uploadImageFail = 'uploadImageFail';
+  static const String setNewPhoto = 'setNewPhoto';
+  static const String leaveGroup = 'leaveGroup';
+  static const String haveSuccessfullyDeletedConversation =
+      'haveSuccessfullyDeletedConversation';
+  static const String cannotDeleteConversation = 'cannotDeleteConversation';
+  static const String haveArchivedConversation = 'haveArchivedConversation';
+  static const String cannotBeArchived = 'cannotBeArchived';
+  static const String haveLeftConversation = 'haveLeftConversation';
+  static const String leaveFailedConversation = 'leaveFailedConversation';
+  static const String cannotDeleteMember = 'cannotDeleteMember';
+  static const String youHaveRemoved = 'youHaveRemoved';
+  static const String fromTheChat = 'fromTheChat';
+
+  static const String viewPersonalInformation = 'viewPersonalInformation';
+  static const String signOutOfYourAccount = 'signOutOfYourAccount';
+  static const String descriptionArchivedConversation =
+      'descriptionArchivedConversation';
 }
 
 class MyI18n {

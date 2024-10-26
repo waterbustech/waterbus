@@ -32,6 +32,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       }
 
       if (event is GetMessageByMeetingIdEvent) {
+        AppBloc.chatBloc.add(
+          SelectConversationCurrentEvent(meetingId: event.meetingId),
+        );
+
         final CachedMessageByMeetingId? cachedMessageByMeetingId =
             _messagesMap[event.meetingId];
 
@@ -189,15 +193,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
     if (messageSocketEvent.event == MessageEventEnum.create) {
-      AppBloc.messageBloc.add(InsertMessageEvent(message: message));
+      add(InsertMessageEvent(message: message));
     } else if (messageSocketEvent.event == MessageEventEnum.update) {
-      AppBloc.messageBloc.add(
-        UpdateMessageFromSocketEvent(messageModel: message),
-      );
+      add(UpdateMessageFromSocketEvent(messageModel: message));
     } else {
-      AppBloc.messageBloc.add(
-        UpdateMessageFromSocketEvent(messageModel: message, isDeleted: true),
-      );
+      add(UpdateMessageFromSocketEvent(messageModel: message, isDeleted: true));
     }
   }
 
@@ -302,8 +302,15 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
   }
 
-  _clearMessages() {
-    _messagesMap.clear();
+  _clearMessages({List<int>? meetingIds}) {
+    if (meetingIds == null || meetingIds.isEmpty) {
+      _messagesMap.clear();
+    } else {
+      for (final meetingId in meetingIds) {
+        _messagesMap.removeWhere((key, value) => key == meetingId);
+      }
+    }
+
     _meetingId = null;
   }
 }

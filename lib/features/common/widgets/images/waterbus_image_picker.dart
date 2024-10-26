@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -137,7 +137,7 @@ class WaterbusImagePicker {
             ),
             _buildImageModalButton(
               context,
-              icon: PhosphorIcons.folder_open,
+              icon: PhosphorIcons.folderOpen(),
               text: Strings.chooseFromGallery.i18n,
               source: ImageSource.gallery,
               handleFinish: handleFinish,
@@ -145,7 +145,7 @@ class WaterbusImagePicker {
             divider,
             _buildImageModalButton(
               context,
-              icon: PhosphorIcons.camera,
+              icon: PhosphorIcons.camera(),
               text: Strings.takeAPhoto.i18n,
               source: ImageSource.camera,
               handleFinish: handleFinish,

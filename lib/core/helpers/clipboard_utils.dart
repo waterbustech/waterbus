@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
+import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 
 /// A Flutter Clipboard Plugin.
 class ClipboardUtils {
@@ -10,6 +12,7 @@ class ClipboardUtils {
     if (text.isNotEmpty) {
       DeviceUtils().lightImpact();
       await Clipboard.setData(ClipboardData(text: text));
+      showDialogDone(text: Strings.copied.i18n);
       return;
     } else {
       throw 'Please enter a string';

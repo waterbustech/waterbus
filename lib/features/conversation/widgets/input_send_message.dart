@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -141,7 +141,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
                       ? Padding(
                           padding: EdgeInsets.all(7.sp),
                           child: Icon(
-                            PhosphorIcons.x,
+                            PhosphorIcons.x(),
                             color: WebRTC.platformIsMobile
                                 ? mCL
                                 : Theme.of(context).colorScheme.primary,
@@ -157,7 +157,9 @@ class _InputSendMessageState extends State<InputSendMessage> {
                               : null,
                           padding: EdgeInsets.all(7.sp),
                           child: Icon(
-                            PhosphorIcons.paper_plane_right_fill,
+                            PhosphorIcons.paperPlaneRight(
+                              PhosphorIconsStyle.fill,
+                            ),
                             color: WebRTC.platformIsMobile
                                 ? mCL
                                 : Theme.of(context).colorScheme.primary,

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
@@ -36,15 +36,13 @@ class MeetView extends StatelessWidget {
       type: MaterialType.card,
       color: Theme.of(context).colorScheme.onInverseSurface,
       shape: SuperellipseShape(
-        side: !borderEnabled || _isScreenSharing
+        side: !borderEnabled ||
+                _isScreenSharing ||
+                _audioLevel == AudioLevel.kSilence
             ? BorderSide.none
             : BorderSide(
                 color: Theme.of(context).colorScheme.primary,
-                width: _audioLevel == AudioLevel.kAudioStrong
-                    ? 8.sp
-                    : _audioLevel == AudioLevel.kAudioLight
-                        ? 6.sp
-                        : 0.sp,
+                width: _audioLevel == AudioLevel.kAudioStrong ? 8.sp : 6.sp,
               ),
         borderRadius: radius ?? BorderRadius.circular(12.sp),
       ),
@@ -84,6 +82,7 @@ class MeetView extends StatelessWidget {
                       child: AvatarCard(
                         urlToImage: participant.user?.avatar,
                         size: avatarSize,
+                        label: participant.user?.fullName,
                       ),
                     ),
               if (kIsWeb)
@@ -102,7 +101,7 @@ class MeetView extends StatelessWidget {
                       );
                     },
                     icon: Icon(
-                      PhosphorIcons.picture_in_picture,
+                      PhosphorIcons.pictureInpicture(),
                       size: 18.sp,
                     ),
                   ),
@@ -144,8 +143,12 @@ class MeetView extends StatelessWidget {
                             child: !_isAudioEnabled || _isScreenSharing
                                 ? Icon(
                                     _isScreenSharing
-                                        ? PhosphorIcons.screencast_bold
-                                        : PhosphorIcons.microphone_slash_fill,
+                                        ? PhosphorIcons.screencast(
+                                            PhosphorIconsStyle.bold,
+                                          )
+                                        : PhosphorIcons.microphoneSlash(
+                                            PhosphorIconsStyle.fill,
+                                          ),
                                     color: _isScreenSharing
                                         ? Theme.of(context).colorScheme.primary
                                         : Colors.redAccent,

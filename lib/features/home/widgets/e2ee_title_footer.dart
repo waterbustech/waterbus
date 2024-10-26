@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -25,7 +25,7 @@ class E2eeTitleFooter extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 4.sp),
                 child: Icon(
-                  PhosphorIcons.lock_fill,
+                  PhosphorIcons.lock(PhosphorIconsStyle.fill),
                   color: Theme.of(context).colorScheme.surfaceTint,
                   size: 10.sp,
                 ),

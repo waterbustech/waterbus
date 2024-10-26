@@ -96,7 +96,7 @@ class _GroupSpaceBarCustomState extends State<GroupSpaceBarCustom> {
                 alwaysIncludeSemantics: true,
                 child: Container(
                   padding: EdgeInsets.only(
-                    bottom: (titleStyle.fontSize ?? 0) + 30.sp,
+                    bottom: (titleStyle.fontSize ?? 0) + 34.sp,
                   ),
                   child: Transform(
                     alignment: titleAlignment,
@@ -134,6 +134,8 @@ class _GroupSpaceBarCustomState extends State<GroupSpaceBarCustom> {
             Container(
               padding: EdgeInsets.only(
                 bottom: (subTitleStyle?.fontSize ?? 0) + scaleValue * 6.sp,
+                left: 16.sp,
+                right: 16.sp,
               ),
               child: Transform(
                 alignment: titleAlignment,

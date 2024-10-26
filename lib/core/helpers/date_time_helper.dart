@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DateTimeHelper {
   static const List<int> dayCountMonth = [
     31,
@@ -96,5 +98,48 @@ class DateTimeHelper {
 
   String getDayName(DateTime date) {
     return calendarTitle[date.weekday - 1];
+  }
+
+  String formatDuration(int seconds) {
+    final duration = Duration(seconds: seconds);
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+    final hours = duration.inHours;
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final secs = twoDigits(duration.inSeconds.remainder(60));
+
+    if (hours > 0) {
+      return "${twoDigits(hours)}:$minutes:$secs";
+    } else {
+      return "$minutes:$secs";
+    }
+  }
+
+  String formatDateTime(DateTime dateTime) {
+    final dateFormat = DateFormat('MMMM d, y');
+
+    final timeFormat = DateFormat('HH:mm');
+
+    final String formattedDate = dateFormat.format(dateTime);
+
+    final String formattedTime = timeFormat.format(dateTime);
+
+    return '$formattedDate | $formattedTime';
+  }
+
+  String getDaySuffix(int day) {
+    if (day >= 11 && day <= 13) {
+      return 'th';
+    }
+    switch (day % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
   }
 }

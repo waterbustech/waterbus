@@ -13,6 +13,8 @@ class ProfileTextField extends StatelessWidget {
   final Function()? onEditingComplete;
   final void Function(String)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
+  final String? Function(String?)? validatorForm;
+  final FocusNode? focusNode;
 
   const ProfileTextField({
     super.key,
@@ -22,11 +24,14 @@ class ProfileTextField extends StatelessWidget {
     this.onEditingComplete,
     this.onChanged,
     this.inputFormatters,
+    this.validatorForm,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFieldInput(
+      focusNode: focusNode,
       onEditingComplete: onEditingComplete,
       margin: margin,
       contentPadding: EdgeInsets.symmetric(
@@ -35,7 +40,7 @@ class ProfileTextField extends StatelessWidget {
       ),
       inputFormatters: inputFormatters,
       onChanged: onChanged,
-      validatorForm: (val) => null,
+      validatorForm: validatorForm ?? (val) => null,
       hintText: hintText,
       hintStyle: TextStyle(
         color: colorGray3,

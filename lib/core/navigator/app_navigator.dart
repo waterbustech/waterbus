@@ -8,6 +8,8 @@ import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
+import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
@@ -19,15 +21,18 @@ import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_cod
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
+import 'package:waterbus/features/record/screens/record_screen.dart';
+import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  static GlobalKey<NavigatorState> navigatorSettingKey = GlobalKey();
+  static GlobalKey<NavigatorState> navigatorHomeKey = GlobalKey();
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
@@ -78,6 +83,18 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           const PrivacyScreen(),
         );
+      case Routes.notificationSettings:
+        return _buildRoute(
+          settings,
+          const NotificationSettingsScreen(),
+        );
+      case Routes.storage:
+        return _buildRoute(settings, const RecordScreen());
+      case Routes.videoPlayer:
+        return _buildRoute(
+          settings,
+          VideoPlayerWidget(urlToVideo: arguments?['urlToVideo']),
+        );
 
       // Meeting
       case Routes.meetingRoute:
@@ -114,10 +131,22 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
             meeting: arguments!['meeting'],
           ),
         );
+      case Routes.archivedConversationRoute:
+        return _buildRoute(
+          settings,
+          ArchivedConversationScreen(
+            meeting: arguments!['meeting'],
+          ),
+        );
       case Routes.invitedRoute:
         return _buildRoute(
           settings,
           const InvitedChatScreen(),
+        );
+      case Routes.archivedRoute:
+        return _buildRoute(
+          settings,
+          const ArchivedScreen(),
         );
       case Routes.langRoute:
         return _buildRoute(
@@ -132,9 +161,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       case Routes.detailGroupRoute:
         return _buildRoute(
           settings,
-          DetailGroupScreen(
-            meeting: arguments?['meeting'],
-          ),
+          const DetailGroupScreen(),
         );
       default:
         return _buildRoute(
@@ -159,20 +186,13 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   Future? push<T>(
     String route, {
     Object? arguments,
+    bool forceRootState = false,
   }) {
     final bool hasMatchConditions = _middlewareRouter(route, arguments);
 
     if (hasMatchConditions) return null;
 
-    late NavigatorState stateByContext;
-
-    if (SizerUtil.isDesktop && settingState != null) {
-      stateByContext = settingState!;
-    } else {
-      stateByContext = state;
-    }
-
-    return stateByContext.pushNamed(route, arguments: arguments);
+    return _currentState(route).pushNamed(route, arguments: arguments);
   }
 
   static Future pushNamedAndRemoveUntil<T>(
@@ -183,7 +203,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
       AppNavigatorObserver.resetRoutes();
     }
 
-    return state.pushNamedAndRemoveUntil(
+    return _currentState(route).pushNamedAndRemoveUntil(
       route,
       (route) => false,
       arguments: arguments,
@@ -194,7 +214,8 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     String route, {
     Map<String, dynamic>? arguments,
   }) {
-    return state.pushReplacementNamed(route, arguments: arguments);
+    return _currentState(route)
+        .pushReplacementNamed(route, arguments: arguments);
   }
 
   static void popUntil<T>(String routeName) {
@@ -203,35 +224,59 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
       return route.settings.name == routeName;
     });
+
+    if (routeName == Routes.rootRoute) {
+      popUntilHomeContext();
+    }
   }
 
   static void pop() {
     if (!canPop) return;
 
-    state.pop();
+    _currentState(AppNavigatorObserver.currentRouteName).pop();
   }
 
   _getArguments(RouteSettings settings) {
     return settings.arguments;
   }
 
-  void navigatorSettingPopToRoot() {
-    settingState?.popUntil((route) => route.isFirst);
+  static void popUntilHomeContext() {
+    homeState?.popUntil((route) => route.isFirst);
   }
 
-  static bool get canPop => state.canPop();
+  static bool getRouteDesktop(String route) => [
+        Routes.conversationRoute,
+        Routes.archivedConversationRoute,
+      ].contains(route);
+
+  static NavigatorState _currentState(String? route) {
+    late NavigatorState stateByContext;
+
+    if (SizerUtil.isDesktop &&
+        homeState != null &&
+        getRouteDesktop(route ?? "")) {
+      stateByContext = homeState!;
+    } else {
+      stateByContext = state;
+    }
+
+    return stateByContext;
+  }
+
+  static bool get canPop =>
+      _currentState(AppNavigatorObserver.currentRouteName).canPop();
 
   static String? currentRoute() => AppNavigatorObserver.currentRouteName;
 
   static BuildContext? get context => navigatorKey.currentContext;
 
-  static BuildContext? get settingContext =>
-      AppNavigator.navigatorSettingKey.currentContext;
+  static BuildContext? get homeContext =>
+      AppNavigator.navigatorHomeKey.currentContext;
 
   static NavigatorState get state => navigatorKey.currentState!;
 
-  static NavigatorState? get settingState =>
-      AppNavigator.navigatorSettingKey.currentState;
+  static NavigatorState? get homeState =>
+      AppNavigator.navigatorHomeKey.currentState;
 }
 
 extension AppNavigatorX on AppNavigator {
@@ -275,12 +320,14 @@ extension AppNavigatorX on AppNavigator {
   }
 
   bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-    if (!SizerUtil.isDesktop) return false;
+    if (SizerUtil.isMobile) return false;
 
     return popupInstrealOfScreen.contains(route);
   }
 
   List<String> get popupInstrealOfScreen => [
+        Routes.enterCodeRoute,
+        Routes.createMeetingRoute,
         Routes.profileRoute,
         Routes.usernameRoute,
         Routes.settingsCallRoute,
@@ -295,8 +342,16 @@ extension AppNavigatorX on AppNavigator {
     Map<String, dynamic>? arguments,
   }) {
     switch (route) {
+      case Routes.enterCodeRoute:
+        return const EnterMeetingCode();
+      case Routes.createMeetingRoute:
+        return CreateMeetingScreen(
+          meeting: arguments?['meeting'],
+          isChatScreen: arguments?['isChatScreen'] ?? false,
+        );
       case Routes.profileRoute:
         return const ProfileScreen();
+
       case Routes.usernameRoute:
         return const UserNameScreen();
       case Routes.settingsCallRoute:
@@ -308,9 +363,7 @@ extension AppNavigatorX on AppNavigator {
       case Routes.invitedRoute:
         return const InvitedChatScreen();
       case Routes.detailGroupRoute:
-        return DetailGroupScreen(
-          meeting: arguments?['meeting'],
-        );
+        return const DetailGroupScreen();
       default:
         return const SizedBox();
     }

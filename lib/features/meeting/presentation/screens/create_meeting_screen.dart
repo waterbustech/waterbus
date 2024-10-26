@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -57,24 +57,33 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               displayLoadingLayer();
 
               if (widget.isChatScreen) {
-                AppBloc.chatBloc.add(
-                  CreateConversationEvent(
-                    title: _roomNameController.text,
-                    password: _passwordController.text,
-                  ),
-                );
+                if (_isEditing) {
+                  AppBloc.chatBloc.add(
+                    UpdateConversationEvent(
+                      title: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                } else {
+                  AppBloc.chatBloc.add(
+                    CreateConversationEvent(
+                      title: _roomNameController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                }
               } else {
                 if (_isEditing) {
                   AppBloc.meetingBloc.add(
                     UpdateMeetingEvent(
-                      roomName: _roomNameController.text,
+                      roomName: _roomNameController.text.trim(),
                       password: _passwordController.text,
                     ),
                   );
                 } else {
                   AppBloc.meetingBloc.add(
                     CreateMeetingEvent(
-                      roomName: _roomNameController.text,
+                      roomName: _roomNameController.text.trim(),
                       password: _passwordController.text,
                     ),
                   );
@@ -82,7 +91,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               }
             },
             icon: Icon(
-              PhosphorIcons.check,
+              PhosphorIcons.check(),
               size: 18.sp,
               color: Theme.of(context).colorScheme.primary,
             ),

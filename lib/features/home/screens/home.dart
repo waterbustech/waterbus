@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -70,21 +70,25 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.presentation,
-                                iconDataSelected:
-                                    PhosphorIcons.presentation_fill,
+                                iconData: PhosphorIcons.presentation(),
+                                iconDataSelected: PhosphorIcons.presentation(
+                                  PhosphorIconsStyle.fill,
+                                ),
                                 label: Strings.home.i18n,
                               ),
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.chats_teardrop,
-                                iconDataSelected:
-                                    PhosphorIcons.chats_teardrop_fill,
+                                iconData: PhosphorIcons.chatsTeardrop(),
+                                iconDataSelected: PhosphorIcons.chatsTeardrop(
+                                  PhosphorIconsStyle.fill,
+                                ),
                                 label: Strings.chat.i18n,
                                 index: 1,
                               ),
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.gear,
-                                iconDataSelected: PhosphorIcons.gear_fill,
+                                iconData: PhosphorIcons.gear(),
+                                iconDataSelected: PhosphorIcons.gear(
+                                  PhosphorIconsStyle.fill,
+                                ),
                                 label: Strings.settings.i18n,
                                 index: 2,
                               ),

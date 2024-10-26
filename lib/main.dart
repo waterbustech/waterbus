@@ -15,6 +15,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/helpers/media_kit/index.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 
@@ -27,6 +28,8 @@ void main(List<String> args) async {
       FlutterNativeSplash.preserve(
         widgetsBinding: widgetsBinding,
       );
+
+      initializeMediaKit();
 
       PaintingBinding.instance.imageCache.maximumSizeBytes =
           1024 * 1024 * 300; // 300 MB

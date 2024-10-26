@@ -3,12 +3,18 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  file_saver
   file_selector_linux
   flutter_webrtc_plus
+  irondash_engine_context
+  media_kit_libs_linux
+  media_kit_video
+  super_native_extensions
   url_launcher_linux
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  media_kit_native_event_loop
   rhttp
 )
 

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:popover/popover.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/conversation/widgets/more_action_item.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 class DetailGroupButton extends StatelessWidget {
   final IconData icon;
@@ -17,10 +26,67 @@ class DetailGroupButton extends StatelessWidget {
     this.onTap,
   });
 
+  bool get _isHost => AppBloc.chatBloc.conversationCurrent?.isHost ?? false;
+
   @override
   Widget build(BuildContext context) {
     return GestureWrapper(
-      onTap: onTap,
+      onTap: icon == PhosphorIcons.dotsThreeOutline()
+          ? () {
+              showPopover(
+                routeSettings: const RouteSettings(name: Routes.dialogRoute),
+                context: context,
+                bodyBuilder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MoreActionItem(
+                            title: Strings.archivedChats.i18n,
+                            icon: PhosphorIcons.archive(),
+                            textColor: Theme.of(context).colorScheme.primary,
+                            iconColor: Theme.of(context).colorScheme.primary,
+                            onTap: () {
+                              AppBloc.chatBloc.add(ArchivedConversationEvent());
+                            },
+                          ),
+                          divider,
+                        ],
+                      ),
+                    MoreActionItem(
+                      title: Strings.delete.i18n,
+                      icon: PhosphorIcons.trash(),
+                      onTap: () {
+                        AppBloc.chatBloc.add(DeleteConversationEvent());
+                      },
+                    ),
+                    if (!_isHost)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          divider,
+                          MoreActionItem(
+                            title: Strings.leaveGroup.i18n,
+                            icon: PhosphorIcons.signOut(),
+                            onTap: () {
+                              AppBloc.chatBloc.add(LeaveConversationEvent());
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+                width: 145.sp,
+                radius: 12.sp,
+                barrierColor: Colors.black38,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+                arrowHeight: 8.sp,
+                arrowWidth: 12.sp,
+              );
+            }
+          : onTap,
       child: Container(
         width: 64.sp,
         decoration: ShapeDecoration(

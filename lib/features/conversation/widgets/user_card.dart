@@ -5,6 +5,7 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/utils/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
 
 class UserCard extends StatelessWidget {
   final User user;
@@ -33,6 +34,8 @@ class UserCard extends StatelessWidget {
                     height: 32.sp,
                     width: 32.sp,
                     urlToImage: user.avatar,
+                    defaultAvatar:
+                        DefaultAvatarModel.fromFullName(user.fullName),
                   ),
                 ),
                 SizedBox(width: 8.sp),

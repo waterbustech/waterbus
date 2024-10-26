@@ -12,6 +12,9 @@ class Routes {
   static const String privacyRoute = '/privacy';
   static const String langRoute = '/language';
   static const String themeRoute = '/appearance';
+  static const String notificationSettings = '/notification-settings';
+  static const String storage = '/storage';
+  static const String videoPlayer = '/video-player';
 
   // Meeting
   static const String meetingRoute = '/r/';
@@ -26,5 +29,10 @@ class Routes {
 
   // Others
   static const String dialogRoute = '/dialog';
+  static const String bottomSheetRoute = '/bottomSheetRoute';
   static const String loadingRoute = '/loading';
+
+  // Archived
+  static const String archivedRoute = '/archived';
+  static const String archivedConversationRoute = '/archived-conversation';
 }

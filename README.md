@@ -24,6 +24,7 @@
 🤙 This is an Open Source Video Conferencing App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
 
 ## ✨ Why is this so awesome?
+
 * 🌀 **Flutter WASM Support**: Seamlessly integrate with `Flutter WebAssembly` for enhanced performance.
 * 🕵🏻 **Anonymous Access**: Join meetings without the need for registration or login.
 * 👥 **Multiple Participants**: `Waterbus` enables high-quality group video calls using `WebRTC SFU`.
@@ -96,13 +97,6 @@ These commands are intended for maintainers only.
 
 ### Android
 
-Set keystore password if you use jks in this repo, or create your own
-
-```bash
-export KEY_WATERBUS_PASSWORD=banhcuon
-export ALIAS_WATERBUS_PASSWORD=banhcuon
-```
-
 Traditional APK
 
 ```bash
@@ -147,79 +141,6 @@ flutter build macos
 flutter build web
 ```
 
-## 🔥 Usage
-
-1. Sign in with Google
-2. Create a new meeting
-3. Share the meeting code & password with other participants
-4. Start the meeting and utilize the available features
-
-## 🛠 Selfhosted Waterbus
-
-- [Waterbus Server API](https://github.com/waterbustech/waterbus-restful-service)
-- [Waterbus Server WebSocket & SFU](https://github.com/waterbustech/waterbus-sfu-meeting)
-- [Waterbus Documents](https://docs.waterbus.tech)
-
-## ⏲️ Benchmarking
-
-- This part is benchmarking video codecs within a 60-second duration of an online meeting on an iPhone 13 running iOS 17.0.2. The codecs included in the benchmark are VP8, VP9, H.264, H.265, and AV1.
-- The benchmark aims to quickly compare the performance differences between these codecs during a short online meeting session.
-
-#### 📱 Device Specifications
-
-- **Model:** iPhone 13
-- **Operating System:** iOS 17.0.2
-
-#### 🌟 Results
-
-You can view the benchmark results in the generated plots and data files. Here's how you can interpret the results:
-
-<details>
-  <summary>VP8</summary>
-  - Total encode time: 9325 (µs) in 60s call
-
-  <picture>
-    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/vp8-benchmark-plot.png">
-    <img width="100%" alt="lambiengcode" src="./benchmark/vp8-benchmark-plot-light.png">
-  </picture>
-</details>
-<details>
-  <summary>VP9</summary>
-  - Total encode time: 12091 (µs) in 60s call
-  
-  <picture>
-    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/vp9-benchmark-plot.png">
-    <img width="100%" alt="lambiengcode" src="./benchmark/vp9-benchmark-plot-light.png">
-  </picture>
-</details>
-<details>
-  <summary>H264</summary>
-  - Total encode time: 11127 (µs) in 60s call
-  
-  <picture>
-    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/h264-benchmark-plot.png">
-    <img width="100%" alt="lambiengcode" src="./benchmark/h264-benchmark-plot-light.png">
-  </picture>
-</details>
-<details>
-  <summary>H265</summary>
-  - Total encode time: 9264 (µs) in 60s call
-  
-  <picture>
-    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/h265-benchmark-plot.png">
-    <img width="100%" alt="lambiengcode" src="./benchmark/h265-benchmark-plot-light.png">
-  </picture>
-</details>
-<details>
-  <summary>AV1</summary>
-  - Total encode time: 13615 (µs) in 60s call
-  
-  <picture>
-    <source width="100%" alt="lambiengcode" media="(prefers-color-scheme: dark)" srcset="./benchmark/av1-benchmark-plot.png">
-    <img width="100%" alt="lambiengcode" src="./benchmark/av1-benchmark-plot-light.png">
-  </picture>
-</details>
-
 ## 💙 Supports
 
 Support it by joining [stargazers](https://github.com/waterbustech/waterbus/stargazers) for this repository. ⭐
@@ -231,8 +152,4 @@ Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our ne
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you encounter any problems or have suggestions for improvements.
-
-## 📧 Contact Information
-
-If you have any questions or suggestions related to this application, please contact me via email: `lambiengcode@gmail.com`.
 

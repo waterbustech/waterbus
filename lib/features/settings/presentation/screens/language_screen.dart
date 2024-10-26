@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -32,6 +32,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SizerUtil.isDesktop
+          ? Theme.of(context).colorScheme.surfaceContainerLow
+          : null,
       appBar: appBarTitleBack(
         context,
         leading: widget.isSettingDesktop ? const SizedBox() : null,
@@ -45,7 +48,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.sp),
-                color: Theme.of(context).colorScheme.onInverseSurface,
+                color: Theme.of(context).colorScheme.surfaceContainerHigh,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -100,7 +103,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                 LanguageService().getLocale().langCode ==
                                         Language.values[index].langCode
                                     ? Icon(
-                                        PhosphorIcons.check,
+                                        PhosphorIcons.check(),
                                         color: Theme.of(context)
                                             .colorScheme
                                             .primary,

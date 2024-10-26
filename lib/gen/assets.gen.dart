@@ -12,16 +12,16 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/color-picker.png
+  AssetGenImage get colorPicker =>
+      const AssetGenImage('assets/icons/color-picker.png');
+
   /// File path: assets/icons/ic_add_members.png
   AssetGenImage get icAddMembers =>
       const AssetGenImage('assets/icons/ic_add_members.png');
 
-  /// File path: assets/icons/ic_code.png
-  AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
-
-  /// File path: assets/icons/ic_end_call.png
-  AssetGenImage get icEndCall =>
-      const AssetGenImage('assets/icons/ic_end_call.png');
+  /// File path: assets/icons/ic_check.png
+  AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
 
   /// File path: assets/icons/ic_github.png
   AssetGenImage get icGithub =>
@@ -39,12 +39,6 @@ class $AssetsIconsGen {
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
-  /// File path: assets/icons/ic_notes.png
-  AssetGenImage get icNotes => const AssetGenImage('assets/icons/ic_notes.png');
-
-  /// File path: assets/icons/ic_paint.png
-  AssetGenImage get icPaint => const AssetGenImage('assets/icons/ic_paint.png');
-
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
@@ -55,15 +49,13 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        colorPicker,
         icAddMembers,
-        icCode,
-        icEndCall,
+        icCheck,
         icGithub,
         icGoogle,
         icIncognito,
         icNewMeeting,
-        icNotes,
-        icPaint,
         launcherIcon,
         launcherIconAndroid12
       ];
@@ -135,6 +127,10 @@ class $AssetsImagesGen {
   AssetGenImage get desktopBackground9Jpg =>
       const AssetGenImage('assets/images/desktop-background-9.jpg.webp');
 
+  /// File path: assets/images/img-app-logo-3d.png
+  AssetGenImage get imgAppLogo3d =>
+      const AssetGenImage('assets/images/img-app-logo-3d.png');
+
   /// File path: assets/images/img_app_logo.png
   AssetGenImage get imgAppLogo =>
       const AssetGenImage('assets/images/img_app_logo.png');
@@ -201,6 +197,7 @@ class $AssetsImagesGen {
         desktopBackground7Jpg,
         desktopBackground8Jpg,
         desktopBackground9Jpg,
+        imgAppLogo3d,
         imgAppLogo,
         imgHelloMessage1,
         imgHelloMessage2,

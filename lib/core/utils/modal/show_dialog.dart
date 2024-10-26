@@ -7,6 +7,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
@@ -26,10 +27,12 @@ Future showDialogWaterbus({
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
-  if (!SizerUtil.isDesktop && !onlyShowAsDialog) {
-    return showModalBottomSheet(
-      context: AppNavigator.context!,
-      isScrollControlled: true,
+  final BuildContext context = AppNavigator.context!;
+
+  if (SizerUtil.isMobile && !onlyShowAsDialog) {
+    return showBottomSheetWaterbus(
+      context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (context) {
         return GestureWrapper(child: child);
       },
