@@ -10,12 +10,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:universal_io/io.dart';
-import 'package:video_player_media_kit/video_player_media_kit.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/helpers/media_kit/index.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 
@@ -29,14 +29,7 @@ void main(List<String> args) async {
         widgetsBinding: widgetsBinding,
       );
 
-      VideoPlayerMediaKit.ensureInitialized(
-        macOS: true,
-        windows: true,
-        linux: true,
-        web: true,
-        android: true,
-        iOS: true,
-      );
+      initializeMediaKit();
 
       PaintingBinding.instance.imageCache.maximumSizeBytes =
           1024 * 1024 * 300; // 300 MB

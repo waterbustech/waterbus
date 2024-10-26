@@ -27,9 +27,12 @@ Future showDialogWaterbus({
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
+  final BuildContext context = AppNavigator.context!;
+
   if (SizerUtil.isMobile && !onlyShowAsDialog) {
     return showBottomSheetWaterbus(
-      context: AppNavigator.context!,
+      context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (context) {
         return GestureWrapper(child: child);
       },

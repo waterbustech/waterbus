@@ -19,10 +19,10 @@ final List<MenuItemModel> menuItems = [
     title: Strings.profile,
     icon: PhosphorIcons.userCircle(),
   ),
-  MenuItemModel(
-    title: Strings.talkWithAI,
-    icon: PhosphorIcons.robot(),
-  ),
+  // MenuItemModel(
+  //   title: Strings.talkWithAI,
+  //   icon: PhosphorIcons.robot(),
+  // ),
   MenuItemModel(
     title: Strings.storage,
     icon: PhosphorIcons.record(),

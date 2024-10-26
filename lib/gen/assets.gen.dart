@@ -23,13 +23,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_check.png
   AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
 
-  /// File path: assets/icons/ic_code.png
-  AssetGenImage get icCode => const AssetGenImage('assets/icons/ic_code.png');
-
-  /// File path: assets/icons/ic_end_call.png
-  AssetGenImage get icEndCall =>
-      const AssetGenImage('assets/icons/ic_end_call.png');
-
   /// File path: assets/icons/ic_github.png
   AssetGenImage get icGithub =>
       const AssetGenImage('assets/icons/ic_github.png');
@@ -46,12 +39,6 @@ class $AssetsIconsGen {
   AssetGenImage get icNewMeeting =>
       const AssetGenImage('assets/icons/ic_new_meeting.png');
 
-  /// File path: assets/icons/ic_notes.png
-  AssetGenImage get icNotes => const AssetGenImage('assets/icons/ic_notes.png');
-
-  /// File path: assets/icons/ic_paint.png
-  AssetGenImage get icPaint => const AssetGenImage('assets/icons/ic_paint.png');
-
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
@@ -65,14 +52,10 @@ class $AssetsIconsGen {
         colorPicker,
         icAddMembers,
         icCheck,
-        icCode,
-        icEndCall,
         icGithub,
         icGoogle,
         icIncognito,
         icNewMeeting,
-        icNotes,
-        icPaint,
         launcherIcon,
         launcherIconAndroid12
       ];
