@@ -226,7 +226,18 @@ class _MeetingBodyState extends State<MeetingBody> {
                         },
                       ),
                       CallActionButton(
-                        icon: PhosphorIcons.monitorArrowUp(),
+                        icon: PhosphorIcons.monitorArrowUp(
+                          callState!.mParticipant!.isSharingScreen
+                              ? PhosphorIconsStyle.fill
+                              : PhosphorIconsStyle.regular,
+                        ),
+                        iconColor: callState!.mParticipant!.isSharingScreen
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
+                        backgroundColor:
+                            callState!.mParticipant!.isSharingScreen
+                                ? Theme.of(context).colorScheme.primaryContainer
+                                : null,
                         onTap: () {
                           if (callState?.mParticipant == null) return;
 
@@ -240,8 +251,15 @@ class _MeetingBodyState extends State<MeetingBody> {
                       if (SizerUtil.isDesktop)
                         CallActionButton(
                           icon: callState!.mParticipant!.isHandRaising
-                              ? PhosphorIcons.handPalm(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.handPalm(),
+                              ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
+                              : PhosphorIcons.hand(),
+                          iconColor: callState!.mParticipant!.isHandRaising
+                              ? Colors.yellow.shade100
+                              : null,
+                          backgroundColor:
+                              callState!.mParticipant!.isHandRaising
+                                  ? Colors.yellow.shade900
+                                  : null,
                           onTap: () {
                             if (callState?.mParticipant == null) return;
                             AppBloc.meetingBloc.add(ToggleHandRasing());
@@ -249,7 +267,17 @@ class _MeetingBodyState extends State<MeetingBody> {
                         ),
                       if (SizerUtil.isDesktop)
                         CallActionButton(
-                          icon: PhosphorIcons.paintBrush(),
+                          icon: PhosphorIcons.paintBrush(
+                            _isWhiteBoardOpened
+                                ? PhosphorIconsStyle.fill
+                                : PhosphorIconsStyle.regular,
+                          ),
+                          iconColor: _isWhiteBoardOpened
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
+                          backgroundColor: _isWhiteBoardOpened
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : null,
                           onTap: () {
                             setState(() {
                               _isWhiteBoardOpened = !_isWhiteBoardOpened;
@@ -258,7 +286,17 @@ class _MeetingBodyState extends State<MeetingBody> {
                         ),
                       if (SizerUtil.isDesktop)
                         CallActionButton(
-                          icon: PhosphorIcons.chatTeardropText(),
+                          icon: PhosphorIcons.chatTeardropText(
+                            _isChatOpened
+                                ? PhosphorIconsStyle.fill
+                                : PhosphorIconsStyle.regular,
+                          ),
+                          iconColor: _isChatOpened
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
+                          backgroundColor: _isChatOpened
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : null,
                           onTap: () {
                             setState(() {
                               _isChatOpened = !_isChatOpened;

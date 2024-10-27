@@ -8,6 +8,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/enums/audio_level.dart';
 
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class MeetView extends StatelessWidget {
@@ -89,8 +90,8 @@ class MeetView extends StatelessWidget {
                 Positioned(
                   right: 10.sp,
                   top: 10.sp,
-                  child: IconButton(
-                    onPressed: () {
+                  child: GestureWrapper(
+                    onTap: () {
                       if (participantSFU.cameraSource?.textureId == null) {
                         return;
                       }
@@ -100,9 +101,18 @@ class MeetView extends StatelessWidget {
                             participantSFU.cameraSource!.textureId.toString(),
                       );
                     },
-                    icon: Icon(
-                      PhosphorIcons.pictureInpicture(),
-                      size: 18.sp,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.2),
+                        shape: BoxShape.circle,
+                      ),
+                      height: 28.sp,
+                      width: 28.sp,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        PhosphorIcons.cornersOut(),
+                        size: 15.sp,
+                      ),
                     ),
                   ),
                 ),
@@ -173,8 +183,9 @@ class MeetView extends StatelessWidget {
                 child: Visibility(
                   visible: _isRaisingHand,
                   child: Icon(
-                    PhosphorIcons.handPalm(PhosphorIconsStyle.fill),
-                    size: avatarSize / 2,
+                    PhosphorIcons.hand(PhosphorIconsStyle.fill),
+                    size: 20.sp,
+                    color: Colors.yellow,
                   ),
                 ),
               ),

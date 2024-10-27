@@ -2388,8 +2388,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "feat/raise-hand"
-      resolved-ref: c9ddd2566e3fcc3b88f7d79efe82853d1d5a1c78
+      ref: "migration/v2"
+      resolved-ref: f1a9bd1d62e6f5cc40f67b9fe173a70b67019c6f
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "1.5.1"

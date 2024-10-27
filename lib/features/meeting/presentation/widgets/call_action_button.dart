@@ -46,7 +46,7 @@ class CallActionButton extends StatelessWidget {
             alignment: Alignment.center,
             child: Icon(
               icon,
-              color: backgroundColor != null ? mCL : iconColor,
+              color: iconColor ?? mCL,
               size: iconSize ?? 18.sp,
             ),
           ),

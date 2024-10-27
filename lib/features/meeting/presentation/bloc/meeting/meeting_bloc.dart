@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +16,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
@@ -35,6 +35,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final MeetingLocalDataSource _localDataSource;
   final CallSettingsLocalDataSource _callSettingsLocalDataSource;
   final PipChannel _pipChannel;
+  final MeetingSound _meetingSound;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   // MARK: private
@@ -47,10 +48,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   CallSetting _callSetting = CallSetting();
   Timer? _subtitleTimer;
   int? _recordId;
-  final AudioPlayer _audioPlayer = AudioPlayer();
 
   MeetingBloc(
     this._pipChannel,
+    this._meetingSound,
     this._localDataSource,
     this._callSettingsLocalDataSource,
   ) : super(const MeetingInitial()) {
@@ -112,6 +113,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           if (isJoinSucceed) {
             emit(_joinedMeeting);
+
+            _meetingSound.playSoundJoinRoom();
 
             if (event.isMember) {
               AppNavigator().push(
@@ -189,7 +192,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is ToggleHandRasing) {
-          await _waterbusSdk.toggleRaiseHand();
+          _waterbusSdk.toggleRaiseHand();
+
+          if (_waterbusSdk.callState.mParticipant?.isHandRaising ?? false) {
+            _meetingSound.playSoundRaiseHand();
+          }
+
           if (state is JoinedMeeting) {
             emit(_joinedMeeting);
           } else if (state is PreJoinMeeting) {
@@ -275,6 +283,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           if (recordId != null) {
             _recordId = recordId;
+
+            _meetingSound.playSoundRecording();
 
             emit(_joinedMeeting);
           }
@@ -444,7 +454,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     AppBloc.recentJoinedBloc.add(
       UpdateRecentJoinedEvent(meeting: _currentMeeting!),
     );
-    _playSoundJoinRoom();
+
+    _meetingSound.playSoundJoinRoom();
   }
 
   Future<void> _handleParticipantHasLeft(
@@ -552,7 +563,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         break;
       case CallbackEvents.raiseHand:
         add(RefreshDisplayMeetingEvent());
-        _playSoundRaiseHand();
+        _meetingSound.playSoundRaiseHand();
         break;
       case CallbackEvents.newParticipant:
         if (event.newParticipant == null) return;
@@ -562,6 +573,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       case CallbackEvents.participantHasLeft:
         final String? participantId = event.participantId;
         if (participantId == null) return;
+
+        _meetingSound.playSoundLeaveRoom();
 
         add(ParticipantHasLeftEvent(participantId: participantId));
         break;
@@ -599,20 +612,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     });
   }
 
-  Future<void> _playSoundJoinRoom() async {
-    await _audioPlayer.play(AssetSource('sounds/sound_notif.mp3'));
-  }
-
-  Future<void> _playSoundRaiseHand() async {
-    if (state.callState!.participants.values.first.isHandRaising) {
-      await _audioPlayer.play(AssetSource('sounds/sound_raise_hand.mp3'));
-    }
-  }
-
   Future<void> _dispose() async {
     await _waterbusSdk.leaveRoom();
 
-    _audioPlayer.dispose();
     _currentMeeting = null;
     _mParticipant = null;
     _currentBackground = null;
