@@ -25,6 +25,7 @@ import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
 import '../helpers/file_saver.dart' as _i810;
 import '../method_channels/pip_channel.dart' as _i921;
+import '../utils/audio/meeting_sound.dart' as _i89;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
     as _i843;
@@ -65,10 +66,17 @@ _i174.GetIt $initGetIt(
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());
+  gh.singleton<_i89.MeetingSound>(() => _i89.MeetingSound());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
   gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
       () => _i688.CallSettingsLocalDataSourceImpl());
+  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
+        gh<_i921.PipChannel>(),
+        gh<_i89.MeetingSound>(),
+        gh<_i254.MeetingLocalDataSource>(),
+        gh<_i688.CallSettingsLocalDataSource>(),
+      ));
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
@@ -80,11 +88,6 @@ _i174.GetIt $initGetIt(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
   gh.factory<_i797.AuthBloc>(
       () => _i797.AuthBloc(gh<_i843.UserLocalDataSource>()));
-  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
-        gh<_i921.PipChannel>(),
-        gh<_i254.MeetingLocalDataSource>(),
-        gh<_i688.CallSettingsLocalDataSource>(),
-      ));
   gh.factory<_i324.RecentJoinedBloc>(
       () => _i324.RecentJoinedBloc(gh<_i254.MeetingLocalDataSource>()));
   return getIt;

@@ -72,6 +72,8 @@ class ToggleAudioEvent extends MeetingEvent {}
 
 class ToggleVideoEvent extends MeetingEvent {}
 
+class ToggleHandRasing extends MeetingEvent {}
+
 class SaveCallSettingsEvent extends MeetingEvent {
   final CallSetting setting;
   const SaveCallSettingsEvent({required this.setting});

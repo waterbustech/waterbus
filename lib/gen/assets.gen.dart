@@ -238,12 +238,32 @@ class $AssetsLottiesGen {
       ];
 }
 
+class $AssetsSoundsGen {
+  const $AssetsSoundsGen();
+
+  /// File path: assets/sounds/hand_raising.mp3
+  String get handRaising => 'assets/sounds/hand_raising.mp3';
+
+  /// File path: assets/sounds/joined.mp3
+  String get joined => 'assets/sounds/joined.mp3';
+
+  /// File path: assets/sounds/leave.mp3
+  String get leave => 'assets/sounds/leave.mp3';
+
+  /// File path: assets/sounds/recording.mp3
+  String get recording => 'assets/sounds/recording.mp3';
+
+  /// List of all assets
+  List<String> get values => [handRaising, joined, leave, recording];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
+  static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
   static const String welcome = 'assets/welcome.java';
 
   /// List of all assets
@@ -280,7 +300,7 @@ class AssetGenImage {
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
     bool matchTextDirection = false,
-    bool gaplessPlayback = false,
+    bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
     FilterQuality filterQuality = FilterQuality.low,

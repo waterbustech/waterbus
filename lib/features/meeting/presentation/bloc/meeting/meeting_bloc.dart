@@ -16,6 +16,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
@@ -34,6 +35,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final MeetingLocalDataSource _localDataSource;
   final CallSettingsLocalDataSource _callSettingsLocalDataSource;
   final PipChannel _pipChannel;
+  final MeetingSound _meetingSound;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   // MARK: private
@@ -49,6 +51,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   MeetingBloc(
     this._pipChannel,
+    this._meetingSound,
     this._localDataSource,
     this._callSettingsLocalDataSource,
   ) : super(const MeetingInitial()) {
@@ -110,6 +113,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
           if (isJoinSucceed) {
             emit(_joinedMeeting);
+
+            _meetingSound.playSoundJoinRoom();
 
             if (event.isMember) {
               AppNavigator().push(
@@ -178,6 +183,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         if (event is ToggleAudioEvent) {
           await _waterbusSdk.toggleAudio();
+
+          if (state is JoinedMeeting) {
+            emit(_joinedMeeting);
+          } else if (state is PreJoinMeeting) {
+            emit(_preJoinMeeting);
+          }
+        }
+
+        if (event is ToggleHandRasing) {
+          _waterbusSdk.toggleRaiseHand();
+
+          if (_waterbusSdk.callState.mParticipant?.isHandRaising ?? false) {
+            _meetingSound.playSoundRaiseHand();
+          }
 
           if (state is JoinedMeeting) {
             emit(_joinedMeeting);
@@ -265,6 +284,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           if (recordId != null) {
             _recordId = recordId;
 
+            _meetingSound.playSoundRecording();
+
             emit(_joinedMeeting);
           }
         }
@@ -281,6 +302,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   // MARK: state
+
   MeetingInitial get _meetingInitial => MeetingInitial(
         callSetting: _callSetting,
       );
@@ -344,7 +366,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     if (indexOfMyParticipant != -1) {
       _mParticipant = meeting.participants[indexOfMyParticipant];
     }
-
     return true;
   }
 
@@ -433,6 +454,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     AppBloc.recentJoinedBloc.add(
       UpdateRecentJoinedEvent(meeting: _currentMeeting!),
     );
+
+    _meetingSound.playSoundJoinRoom();
   }
 
   Future<void> _handleParticipantHasLeft(
@@ -536,6 +559,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     switch (event.event) {
       case CallbackEvents.shouldBeUpdateState:
         add(RefreshDisplayMeetingEvent());
+
+        break;
+      case CallbackEvents.raiseHand:
+        add(RefreshDisplayMeetingEvent());
+        _meetingSound.playSoundRaiseHand();
         break;
       case CallbackEvents.newParticipant:
         if (event.newParticipant == null) return;
@@ -546,6 +574,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         final String? participantId = event.participantId;
         if (participantId == null) return;
 
+        _meetingSound.playSoundLeaveRoom();
+
         add(ParticipantHasLeftEvent(participantId: participantId));
         break;
       case CallbackEvents.meetingEnded:
@@ -554,8 +584,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         } else if (state is PreJoinMeeting) {
           add(DisposeMeetingEvent());
         }
-
-        break;
       default:
         break;
     }

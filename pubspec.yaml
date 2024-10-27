@@ -114,7 +114,8 @@ dependencies:
   file_saver: ^0.2.14
   video_player_media_kit: ^1.0.5
   video_player: ^2.9.2
-  
+  audioplayers: ^6.1.0
+
   media_kit_libs_android_video: any
   media_kit_libs_ios_video: any
   media_kit_libs_macos_video: any
@@ -188,6 +189,7 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/welcome.java
+    - assets/sounds/
 
   # assets:
   #   - images/a_dot_burr.jpeg
