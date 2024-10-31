@@ -858,11 +858,10 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      name: flutter_webrtc_plus
-      sha256: e8e120583ac7a34bd529351f03626864cc06ee2f99b4bf20553c6e4b6d616571
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.2+7"
+      path: "C:/Users/lambi/Documents/flutter-webrtc-plus"
+      relative: false
+    source: path
+    version: "0.12.2"
   freezed_annotation:
     dependency: transitive
     description:
@@ -915,8 +914,8 @@ packages:
     dependency: transitive
     description:
       path: google_sign_in_all_platforms
-      ref: "0.0.4+1"
-      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
+      ref: "0.0.4+2"
+      resolved-ref: "48005c92c15a72108f5ac9158fee54b0e7d2881e"
       url: "https://github.com/waterbustech/sign-in-google-linux.git"
     source: git
     version: "0.0.4"
@@ -924,8 +923,8 @@ packages:
     dependency: transitive
     description:
       path: google_sign_in_all_platforms_desktop
-      ref: "0.0.4+1"
-      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
+      ref: "0.0.4+2"
+      resolved-ref: "48005c92c15a72108f5ac9158fee54b0e7d2881e"
       url: "https://github.com/waterbustech/sign-in-google-linux.git"
     source: git
     version: "0.0.1+1"
@@ -941,8 +940,8 @@ packages:
     dependency: transitive
     description:
       path: google_sign_in_all_platforms_mobile
-      ref: "0.0.4+1"
-      resolved-ref: "84474f37790f258eaede8dbfe219e7ab983de326"
+      ref: "0.0.4+2"
+      resolved-ref: "48005c92c15a72108f5ac9158fee54b0e7d2881e"
       url: "https://github.com/waterbustech/sign-in-google-linux.git"
     source: git
     version: "0.0.1"
@@ -2387,11 +2386,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "migration/v2"
-      resolved-ref: f1a9bd1d62e6f5cc40f67b9fe173a70b67019c6f
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
+      path: "C:\\Users\\lambi\\Documents\\waterbus-flutter-sdk"
+      relative: false
+    source: path
     version: "1.5.1"
   web:
     dependency: "direct overridden"

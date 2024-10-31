@@ -59,7 +59,8 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 | iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |        
 | Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |
 | MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |
-| Linux                |         🟢         |        🟢      |          🔴         |          🟡         |       🟡       |           🟢          |    
+| Linux                |         🟢         |        🟢      |          🔴         |          🟡         |       🟡       |           🟢          |  
+| Windows                |         🟢         |        🟢      |          🔴         |          🟡         |       🟡       |           🟢          |    
 
 
 🟢 = Available

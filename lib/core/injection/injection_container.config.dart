@@ -55,17 +55,17 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
-  gh.factory<_i65.WhiteBoardBloc>(() => _i65.WhiteBoardBloc());
-  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
-  gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
-  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
+  gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
-  gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
-  gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
+  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
+  gh.factory<_i65.WhiteBoardBloc>(() => _i65.WhiteBoardBloc());
+  gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
+  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());
+  gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.singleton<_i89.MeetingSound>(() => _i89.MeetingSound());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
