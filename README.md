@@ -136,6 +136,26 @@ bash clean-pods.sh
 flutter build macos
 ```
 
+### Linux
+
+- Install libmpv
+
+```bash
+sudo apt install libmpv-dev mpv
+```
+
+- Install GStreamer
+
+```bash
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+```
+
+- Build
+
+```bash
+flutter build linux
+```
+
 ### Web
 
 ```bash

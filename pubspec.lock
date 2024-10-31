@@ -858,7 +858,7 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      path: "C:/Users/lambi/Documents/flutter-webrtc-plus"
+      path: "/home/lambiengcode/Documents/flutter-webrtc-plus"
       relative: false
     source: path
     version: "0.12.2"
@@ -2386,7 +2386,7 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\lambi\\Documents\\waterbus-flutter-sdk"
+      path: "/home/lambiengcode/Documents/waterbus-flutter-sdk"
       relative: false
     source: path
     version: "1.5.1"

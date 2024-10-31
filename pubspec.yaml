@@ -130,7 +130,7 @@ dependencies:
   #     path: '.'
   #     ref: 'migration/v2'
   waterbus_sdk:
-    path: C:/Users/lambi/Documents/waterbus-flutter-sdk
+    path: /home/lambiengcode/Documents/waterbus-flutter-sdk
    
 
 dependency_overrides: 
