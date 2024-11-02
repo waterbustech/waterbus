@@ -70,9 +70,9 @@ android {
     signingConfigs {
        release {
            storeFile file('waterbus.jks')
-           storePassword "banhcuon"
+           storePassword "waterbus"
            keyAlias 'upload'
-           keyPassword "banhcuon"
+           keyPassword "waterbus"
        }
     }
 

@@ -23,7 +23,7 @@ import '../../features/record/bloc/record/record_bloc.dart' as _i625;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
-import '../helpers/file_saver.dart' as _i810;
+import '../helpers/saver/file_saver.dart' as _i513;
 import '../method_channels/pip_channel.dart' as _i921;
 import '../utils/audio/meeting_sound.dart' as _i89;
 
@@ -55,18 +55,18 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
-  gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
-  gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
-  gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
-  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
   gh.factory<_i65.WhiteBoardBloc>(() => _i65.WhiteBoardBloc());
+  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
-  gh.singleton<_i810.FileSaverHelper>(() => _i810.FileSaverHelper());
-  gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
+  gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
+  gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
+  gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i89.MeetingSound>(() => _i89.MeetingSound());
+  gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
+  gh.singleton<_i513.FileSaverHelper>(() => _i513.FileSaverHelper());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
   gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
@@ -78,12 +78,12 @@ _i174.GetIt $initGetIt(
         gh<_i688.CallSettingsLocalDataSource>(),
       ));
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
+  gh.factory<_i625.RecordBloc>(
+      () => _i625.RecordBloc(gh<_i513.FileSaverHelper>()));
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
-  gh.factory<_i625.RecordBloc>(
-      () => _i625.RecordBloc(gh<_i810.FileSaverHelper>()));
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
   gh.factory<_i797.AuthBloc>(

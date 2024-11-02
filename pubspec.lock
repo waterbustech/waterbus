@@ -858,10 +858,11 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      path: "/home/lambiengcode/Documents/flutter-webrtc-plus"
-      relative: false
-    source: path
-    version: "0.12.2"
+      name: flutter_webrtc_plus
+      sha256: "7f1e1d7ce8c3785c15d43e66cdcdedbeb77b4a7ab6987c44fc9dd61186bc98e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.1+1"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1097,14 +1098,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.3.0"
-  image_gallery_saver:
-    dependency: "direct main"
-    description:
-      name: image_gallery_saver
-      sha256: "0aba74216a4d9b0561510cb968015d56b701ba1bd94aace26aacdd8ae5761816"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
   image_picker:
     dependency: "direct main"
     description:
@@ -2386,10 +2379,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/home/lambiengcode/Documents/waterbus-flutter-sdk"
-      relative: false
-    source: path
-    version: "1.5.1"
+      name: waterbus_sdk
+      sha256: "70e2688da2c79f2990f0e4258fc19db834aeaf8beda7f496fd80c2ac8ab5b4e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.2"
   web:
     dependency: "direct overridden"
     description:
