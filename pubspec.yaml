@@ -101,7 +101,7 @@ dependencies:
   super_context_menu: ^0.8.24
 
   # Code Editor
-  re_editor: ^0.5.0
+  re_editor: ^0.6.0
   re_highlight: ^0.0.3
   collection: ^1.18.0
 
