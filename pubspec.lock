@@ -859,10 +859,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: e8e120583ac7a34bd529351f03626864cc06ee2f99b4bf20553c6e4b6d616571
+      sha256: "7f1e1d7ce8c3785c15d43e66cdcdedbeb77b4a7ab6987c44fc9dd61186bc98e3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.2+7"
+    version: "0.12.1+1"
   freezed_annotation:
     dependency: transitive
     description:
@@ -2389,10 +2389,10 @@ packages:
     description:
       path: "."
       ref: "migration/v2"
-      resolved-ref: f1a9bd1d62e6f5cc40f67b9fe173a70b67019c6f
+      resolved-ref: ea2f6d3361145c44359cf3ae903b37624826b03b
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
-    version: "1.5.1"
+    version: "1.5.2"
   web:
     dependency: "direct overridden"
     description:
