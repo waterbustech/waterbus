@@ -1078,10 +1078,10 @@ packages:
     dependency: "direct main"
     description:
       name: i18n_extension
-      sha256: "296f7b091b9feb7f682360cece9c335f5b0b35121c31bd1993bbdcf1985c272e"
+      sha256: "35ec0e5017600c567c39ab21d4e1126baa6dc61bcfc265dafab2b3cd1c062d94"
       url: "https://pub.dev"
     source: hosted
-    version: "12.0.1"
+    version: "13.0.2"
   i18n_extension_core:
     dependency: transitive
     description:
