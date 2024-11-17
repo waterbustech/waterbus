@@ -41,7 +41,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
           IconButton(
             onPressed: () {
               AppBloc.meetingBloc.add(
-                ApplyVirtualBackgroundEvent(_currentBackground),
+                MeetingApplyVirtualBackground(_currentBackground),
               );
               AppNavigator.pop();
             },

@@ -75,14 +75,14 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               } else {
                 if (_isEditing) {
                   AppBloc.meetingBloc.add(
-                    UpdateMeetingEvent(
+                    MeetingUpdate(
                       roomName: _roomNameController.text.trim(),
                       password: _passwordController.text,
                     ),
                   );
                 } else {
                   AppBloc.meetingBloc.add(
-                    CreateMeetingEvent(
+                    MeetingCreate(
                       roomName: _roomNameController.text.trim(),
                       password: _passwordController.text,
                     ),

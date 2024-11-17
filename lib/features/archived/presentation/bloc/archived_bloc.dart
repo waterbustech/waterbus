@@ -32,7 +32,7 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
       if (event is RefreshArchivedEvent) {
         _archivedConversations.clear();
         AppBloc.messageBloc.add(
-          CleanMessageEvent(
+          MessageClean(
             meetingIds: _archivedConversations
                 .map((conversation) => conversation.id)
                 .toList(),

@@ -84,7 +84,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       if (event is ChatRefresh) {
         AppBloc.messageBloc.add(
-          CleanMessageEvent(
+          MessageClean(
             meetingIds:
                 _conversations.map((conversation) => conversation.id).toList(),
           ),

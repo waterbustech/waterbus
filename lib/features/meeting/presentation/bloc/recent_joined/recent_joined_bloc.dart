@@ -9,59 +9,55 @@ part 'recent_joined_event.dart';
 part 'recent_joined_state.dart';
 
 @injectable
-class RecentJoinedBloc extends Bloc<MeetingListEvent, MeetingListState> {
+class RecentJoinedBloc extends Bloc<RecentJoinedEvent, RecentJoinedState> {
   final List<Meeting> _recentMeetings = [];
   final MeetingLocalDataSource _localDataSource;
 
   RecentJoinedBloc(
     this._localDataSource,
-  ) : super(MeetingListInitial()) {
-    on<MeetingListEvent>(
+  ) : super(RecentJoinedInitial()) {
+    on<RecentJoinedEvent>(
       (event, emit) async {
-        if (event is GetRecentJoinedEvent) {
+        if (event is RecentJoinedGet) {
           _handleGetRecentJoined();
 
-          emit(_getDoneMeetings);
+          emit(_recentJoinedDone);
         }
 
-        if (event is InsertRecentJoinedEvent) {
+        if (event is RecentJoinedInsert) {
           _insertMeeting(event.meeting);
 
-          emit(_getDoneMeetings);
+          emit(_recentJoinedDone);
         }
 
-        if (event is UpdateRecentJoinedEvent) {
+        if (event is RecentJoinedUpdate) {
           _findAndModifyRecent(event.meeting);
 
-          emit(_getDoneMeetings);
+          emit(_recentJoinedDone);
         }
 
-        if (event is RemoveRecentJoinedEvent) {
+        if (event is RecentJoinedRemove) {
           _removeMeeting(event.meetingId);
 
-          emit(_getDoneMeetings);
+          emit(_recentJoinedDone);
         }
 
-        if (event is CleanAllRecentJoinedEvent) {
+        if (event is RecentJoinedClean) {
           _handleCleanAllRecentJoined();
 
-          emit(_getDoneMeetings);
+          emit(_recentJoinedDone);
         }
       },
     );
   }
 
   // MARK: state
-  GetDoneMeetings get _getDoneMeetings {
-    _recentMeetings.sort(
-      (pre, cur) {
-        return cur.latestJoinedTime.compareTo(pre.latestJoinedTime);
-      },
-    );
+  RecentJoinedDone get _recentJoinedDone {
+    _recentMeetings.sort((pre, cur) {
+      return cur.latestJoinedTime.compareTo(pre.latestJoinedTime);
+    });
 
-    return GetDoneMeetings(
-      recentMeetings: _recentMeetings,
-    );
+    return RecentJoinedDone(recentMeetings: _recentMeetings);
   }
 
   // MARK: private functions

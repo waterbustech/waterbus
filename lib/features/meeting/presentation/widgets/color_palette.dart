@@ -78,7 +78,7 @@ class ColorPalette extends StatelessWidget {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () => {
-                      AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
+                      AppBloc.whiteBoardBloc.add(WhiteBoardChangeColor(color)),
                     },
                     child: Container(
                       height: 25.sp,
@@ -121,7 +121,7 @@ class ColorPalette extends StatelessWidget {
             TextButton(
               child: const Text('Done'),
               onPressed: () => {
-                AppBloc.whiteBoardBloc.add(ChangeColorEvent(color)),
+                AppBloc.whiteBoardBloc.add(WhiteBoardChangeColor(color)),
                 Navigator.pop(context),
               },
             ),

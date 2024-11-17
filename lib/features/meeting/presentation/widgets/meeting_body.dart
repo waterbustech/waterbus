@@ -211,7 +211,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         onTap: () {
                           if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(ToggleAudioEvent());
+                          AppBloc.meetingBloc.add(MeetingToggleAudio());
                         },
                       ),
                       CallActionButton(
@@ -222,7 +222,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         onTap: () {
                           if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(ToggleVideoEvent());
+                          AppBloc.meetingBloc.add(MeetingToggleVideo());
                         },
                       ),
                       CallActionButton(
@@ -242,9 +242,10 @@ class _MeetingBodyState extends State<MeetingBody> {
                           if (callState?.mParticipant == null) return;
 
                           if (callState!.mParticipant!.isSharingScreen) {
-                            AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                            AppBloc.meetingBloc.add(MeetingStopSharingScreen());
                           } else {
-                            AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                            AppBloc.meetingBloc
+                                .add(MeetingStartSharingScreen());
                           }
                         },
                       ),
@@ -262,7 +263,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                                   : null,
                           onTap: () {
                             if (callState?.mParticipant == null) return;
-                            AppBloc.meetingBloc.add(ToggleHandRasing());
+                            AppBloc.meetingBloc.add(MeetingToggleHandRasing());
                           },
                         ),
                       if (SizerUtil.isDesktop)
@@ -330,7 +331,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                           icon: PhosphorIcons.signOut(),
                           backgroundColor: Colors.red,
                           onTap: () {
-                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                            AppBloc.meetingBloc.add(const MeetingLeave());
                           },
                         ),
                     ],
@@ -347,7 +348,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                           icon: PhosphorIcons.signOut(),
                           backgroundColor: Colors.red,
                           onTap: () {
-                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                            AppBloc.meetingBloc.add(const MeetingLeave());
                           },
                         ),
                       ],

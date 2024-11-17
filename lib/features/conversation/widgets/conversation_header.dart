@@ -132,7 +132,7 @@ class ConversationHeader extends StatelessWidget {
                       IconButtonCustom(
                         onTap: () {
                           AppBloc.meetingBloc
-                              .add(JoinMeetingEvent(meeting: meeting));
+                              .add(MeetingJoin(meeting: meeting));
                         },
                         icon:
                             PhosphorIcons.videoCamera(PhosphorIconsStyle.light),

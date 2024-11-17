@@ -58,7 +58,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     on<MeetingEvent>(
       transformer: sequential(),
       (event, emit) async {
-        if (event is InitializeMeetingEvent) {
+        if (event is MeetingStarted) {
           _callSetting = _callSettingsLocalDataSource.getSettings();
 
           _waterbusSdk.changeCallSetting(_callSetting);
@@ -66,11 +66,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
         }
 
-        if (event is CreateMeetingEvent) {
+        if (event is MeetingCreate) {
           await _handleCreateMeeting(event);
         }
 
-        if (event is UpdateMeetingEvent) {
+        if (event is MeetingUpdate) {
           await _handleUpdateMeeting(event);
 
           if (_currentMeeting != null) {
@@ -78,7 +78,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is JoinMeetingEvent) {
+        if (event is MeetingJoin) {
           // Will be take the meeting object in recent joined
           _currentMeeting = event.meeting;
 
@@ -93,7 +93,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           // Will join directly if the participant is room member
           if (isMember) {
             displayLoadingLayer();
-            add(const JoinMeetingWithPasswordEvent(isMember: true));
+            add(const MeetingJoinWithPassword(isMember: true));
             return;
           }
 
@@ -104,7 +104,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           );
         }
 
-        if (event is JoinMeetingWithPasswordEvent) {
+        if (event is MeetingJoinWithPassword) {
           if (_currentMeeting == null) return;
 
           final bool isJoinSucceed = await _handleJoinRoom(event);
@@ -125,7 +125,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is GetInfoMeetingEvent) {
+        if (event is MeetingGetInfo) {
           final Meeting? meeting = await _handleGetInfoMeeting(event);
 
           if (meeting != null) {
@@ -135,8 +135,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is LeaveMeetingEvent) {
-          if (state is PreJoinMeeting) {
+        if (event is MeetingLeave) {
+          if (state is MeetingPreJoin) {
             await _dispose();
           } else {
             await _handleLeaveMeeting(event);
@@ -144,13 +144,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(_meetingInitial);
         }
 
-        if (event is DisplayDialogMeetingEvent) {
+        if (event is MeetingDisplayDialog) {
           await _displayDialogJoinMeeting(event.meeting);
 
           emit(_preJoinMeeting);
         }
 
-        if (event is StartSharingScreenEvent) {
+        if (event is MeetingStartSharingScreen) {
           DesktopCapturerSource? source;
 
           if (WebRTC.platformIsDesktop) {
@@ -167,52 +167,52 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           await _waterbusSdk.startScreenSharing(source: source);
         }
 
-        if (event is StopSharingScreenEvent) {
+        if (event is MeetingStopSharingScreen) {
           await _waterbusSdk.stopScreenSharing();
         }
 
-        if (event is ToggleVideoEvent) {
+        if (event is MeetingToggleVideo) {
           await _waterbusSdk.toggleVideo();
 
-          if (state is JoinedMeeting) {
+          if (state is MeetingJoined) {
             emit(_joinedMeeting);
-          } else if (state is PreJoinMeeting) {
+          } else if (state is MeetingPreJoin) {
             emit(_preJoinMeeting);
           }
         }
 
-        if (event is ToggleAudioEvent) {
+        if (event is MeetingToggleAudio) {
           await _waterbusSdk.toggleAudio();
 
-          if (state is JoinedMeeting) {
+          if (state is MeetingJoined) {
             emit(_joinedMeeting);
-          } else if (state is PreJoinMeeting) {
+          } else if (state is MeetingPreJoin) {
             emit(_preJoinMeeting);
           }
         }
 
-        if (event is ToggleHandRasing) {
+        if (event is MeetingToggleHandRasing) {
           _waterbusSdk.toggleRaiseHand();
 
           if (_waterbusSdk.callState.mParticipant?.isHandRaising ?? false) {
             _meetingSound.playSoundRaiseHand();
           }
 
-          if (state is JoinedMeeting) {
+          if (state is MeetingJoined) {
             emit(_joinedMeeting);
-          } else if (state is PreJoinMeeting) {
+          } else if (state is MeetingPreJoin) {
             emit(_preJoinMeeting);
           }
         }
 
-        if (event is SaveCallSettingsEvent) {
+        if (event is MeetingSaveCallSettings) {
           _callSettingsLocalDataSource.saveSettings(event.setting);
 
           _callSetting = event.setting;
 
           _waterbusSdk.changeCallSetting(_callSetting);
 
-          if (state is JoinedMeeting) {
+          if (state is MeetingJoined) {
             // Hot update settings
             return;
           }
@@ -220,7 +220,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(_meetingInitial);
         }
 
-        if (event is ApplyVirtualBackgroundEvent) {
+        if (event is MeetingApplyVirtualBackground) {
           _currentBackground = event.backgroundPath;
 
           if (event.backgroundPath != null) {
@@ -239,30 +239,30 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is ToggleSubtitleEvent) {
-          if (state is! JoinedMeeting) return;
+        if (event is MeetingToggleSubtitle) {
+          if (state is! MeetingJoined) return;
 
           _isSubtitleEnabled = !_isSubtitleEnabled;
           _waterbusSdk.setSubscribeSubtitle(isEnabled: _isSubtitleEnabled);
           emit(_joinedMeeting);
         }
 
-        if (event is RefreshDisplayMeetingEvent) {
+        if (event is MeetingRefreshDisplay) {
           if (state is MeetingInitial) return;
 
-          if (state is PreJoinMeeting) {
+          if (state is MeetingPreJoin) {
             emit(_preJoinMeeting);
           } else {
             emit(_joinedMeeting);
           }
         }
 
-        if (event is DisposeMeetingEvent) {
+        if (event is MeetingDispose) {
           await _dispose();
           emit(_meetingInitial);
         }
 
-        if (event is NewParticipantEvent) {
+        if (event is MeetingSomeoneNewJoined) {
           await _handleNewParticipant(event);
 
           if (_currentMeeting != null) {
@@ -270,7 +270,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is ParticipantHasLeftEvent) {
+        if (event is MeetingSomeoneLeft) {
           await _handleParticipantHasLeft(event);
 
           if (_currentMeeting != null) {
@@ -278,7 +278,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is StartRecordEvent) {
+        if (event is MeetingStartRecord) {
           final recordId = await _waterbusSdk.startRecord();
 
           if (recordId != null) {
@@ -290,7 +290,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           }
         }
 
-        if (event is StopRecordEvent) {
+        if (event is MeetingStopRecord) {
           await _waterbusSdk.stopRecord();
 
           _recordId = null;
@@ -307,7 +307,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         callSetting: _callSetting,
       );
 
-  JoinedMeeting get _joinedMeeting => JoinedMeeting(
+  MeetingJoined get _joinedMeeting => MeetingJoined(
         isSubtitleEnabled: _isSubtitleEnabled,
         subtitleStream: _subtitle.stream,
         meeting: _currentMeeting,
@@ -317,7 +317,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         isRecording: _recordId != null,
       );
 
-  PreJoinMeeting get _preJoinMeeting => PreJoinMeeting(
+  MeetingPreJoin get _preJoinMeeting => MeetingPreJoin(
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _waterbusSdk.callState,
@@ -325,7 +325,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
   // MARK: Private
-  Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
+  Future<void> _handleCreateMeeting(MeetingCreate event) async {
     final Meeting? meeting = await _waterbusSdk.createRoom(
       meeting: Meeting(title: event.roomName),
       password: event.password,
@@ -337,11 +337,11 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     if (meeting == null) return;
 
     _localDataSource.insertOrUpdate(meeting);
-    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+    AppBloc.recentJoinedBloc.add(RecentJoinedInsert(meeting: meeting));
   }
 
   Future<bool> _handleJoinRoom(
-    JoinMeetingWithPasswordEvent event,
+    MeetingJoinWithPassword event,
   ) async {
     final Meeting? meeting = await _waterbusSdk.joinRoom(
       meeting: _currentMeeting!,
@@ -356,7 +356,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _currentMeeting = meeting;
 
     AppBloc.recentJoinedBloc.add(
-      InsertRecentJoinedEvent(meeting: meeting),
+      RecentJoinedInsert(meeting: meeting),
     );
 
     final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
@@ -369,7 +369,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     return true;
   }
 
-  Future<Meeting?> _handleGetInfoMeeting(GetInfoMeetingEvent event) async {
+  Future<Meeting?> _handleGetInfoMeeting(MeetingGetInfo event) async {
     final Meeting? meeting =
         await _waterbusSdk.getRoomInfo(code: event.roomCode);
 
@@ -378,7 +378,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     return meeting;
   }
 
-  Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
+  Future<void> _handleUpdateMeeting(MeetingUpdate event) async {
     if (_currentMeeting == null) return;
 
     final Meeting? meeting = await _waterbusSdk.updateRoom(
@@ -394,12 +394,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _localDataSource.insertOrUpdate(meeting);
 
     AppNavigator.pop();
-    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+    AppBloc.recentJoinedBloc.add(RecentJoinedInsert(meeting: meeting));
 
     _currentMeeting = meeting;
   }
 
-  Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {
+  Future<void> _handleLeaveMeeting(MeetingLeave event) async {
     if (_currentMeeting == null || _mParticipant == null) return;
 
     final List<Participant> participants = _currentMeeting!.participants
@@ -409,7 +409,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _currentMeeting = _currentMeeting!.copyWith(participants: participants);
 
     AppBloc.recentJoinedBloc.add(
-      UpdateRecentJoinedEvent(meeting: _currentMeeting!),
+      RecentJoinedUpdate(meeting: _currentMeeting!),
     );
 
     _currentMeeting = null;
@@ -424,7 +424,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     }
   }
 
-  Future<void> _handleNewParticipant(NewParticipantEvent event) async {
+  Future<void> _handleNewParticipant(MeetingSomeoneNewJoined event) async {
     if (_currentMeeting == null) return;
 
     final List<Participant> participants = _currentMeeting!.participants;
@@ -452,14 +452,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     );
 
     AppBloc.recentJoinedBloc.add(
-      UpdateRecentJoinedEvent(meeting: _currentMeeting!),
+      RecentJoinedUpdate(meeting: _currentMeeting!),
     );
 
     _meetingSound.playSoundJoinRoom();
   }
 
   Future<void> _handleParticipantHasLeft(
-    ParticipantHasLeftEvent event,
+    MeetingSomeoneLeft event,
   ) async {
     if (_currentMeeting == null) return;
 
@@ -477,7 +477,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       );
 
       AppBloc.recentJoinedBloc.add(
-        UpdateRecentJoinedEvent(meeting: _currentMeeting!),
+        RecentJoinedUpdate(meeting: _currentMeeting!),
       );
     }
   }
@@ -497,12 +497,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           isDismissWithoutJoin = false;
 
           AppNavigator.popUntil(Routes.rootRoute);
-          add(JoinMeetingEvent(meeting: meeting));
+          add(MeetingJoin(meeting: meeting));
         },
       ),
     ).then((value) {
       if (isDismissWithoutJoin) {
-        add(DisposeMeetingEvent());
+        add(MeetingDispose());
       }
     });
   }
@@ -558,17 +558,17 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     }
     switch (event.event) {
       case CallbackEvents.shouldBeUpdateState:
-        add(RefreshDisplayMeetingEvent());
+        add(MeetingRefreshDisplay());
 
         break;
       case CallbackEvents.raiseHand:
-        add(RefreshDisplayMeetingEvent());
+        add(MeetingRefreshDisplay());
         _meetingSound.playSoundRaiseHand();
         break;
       case CallbackEvents.newParticipant:
         if (event.newParticipant == null) return;
 
-        add(NewParticipantEvent(participant: event.newParticipant!));
+        add(MeetingSomeoneNewJoined(participant: event.newParticipant!));
         break;
       case CallbackEvents.participantHasLeft:
         final String? participantId = event.participantId;
@@ -576,13 +576,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
         _meetingSound.playSoundLeaveRoom();
 
-        add(ParticipantHasLeftEvent(participantId: participantId));
+        add(MeetingSomeoneLeft(participantId: participantId));
         break;
       case CallbackEvents.meetingEnded:
-        if (state is JoinedMeeting) {
-          add(const LeaveMeetingEvent(isReleasedWaterbusSdk: true));
-        } else if (state is PreJoinMeeting) {
-          add(DisposeMeetingEvent());
+        if (state is MeetingJoined) {
+          add(const MeetingLeave(isReleasedWaterbusSdk: true));
+        } else if (state is MeetingPreJoin) {
+          add(MeetingDispose());
         }
       default:
         break;
@@ -621,7 +621,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _recordId = null;
     _subtitle.close();
 
-    AppBloc.beautyFiltersBloc.add(ResetFiltersValueEvent());
+    AppBloc.beautyFiltersBloc.add(BeautyFilterReset());
   }
 
   // MARK: export

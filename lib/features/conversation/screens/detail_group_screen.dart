@@ -152,7 +152,7 @@ class DetailGroupScreen extends StatelessWidget {
                             }
 
                             AppBloc.meetingBloc.add(
-                              JoinMeetingEvent(
+                              MeetingJoin(
                                 meeting: AppBloc.chatBloc.conversationCurrent!,
                               ),
                             );

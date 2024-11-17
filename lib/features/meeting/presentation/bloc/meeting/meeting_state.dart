@@ -35,8 +35,8 @@ class MeetingInitial extends MeetingState {
   const MeetingInitial({super.callSetting});
 }
 
-class PreJoinMeeting extends MeetingState {
-  const PreJoinMeeting({
+class MeetingPreJoin extends MeetingState {
+  const MeetingPreJoin({
     required super.meeting,
     required super.participant,
     required super.callState,
@@ -44,8 +44,8 @@ class PreJoinMeeting extends MeetingState {
   });
 }
 
-class JoinedMeeting extends MeetingState {
-  const JoinedMeeting({
+class MeetingJoined extends MeetingState {
+  const MeetingJoined({
     required super.isSubtitleEnabled,
     required super.subtitleStream,
     required super.meeting,

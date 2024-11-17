@@ -22,7 +22,7 @@ extension MessageModelX on MessageModel {
         OptionModel(
           title: Strings.editMessage.i18n,
           handlePressed: () {
-            AppBloc.messageBloc.add(SelectMessageEditEvent(message: this));
+            AppBloc.messageBloc.add(MessageSelect(message: this));
           },
           iconData: PhosphorIcons.pencil(),
         ),
@@ -41,7 +41,7 @@ extension MessageModelX on MessageModel {
                 return BottomSheetDelete(
                   description: Strings.sureDeleteMessage.i18n,
                   handlePressed: () {
-                    AppBloc.messageBloc.add(DeleteMessageEvent(messageId: id));
+                    AppBloc.messageBloc.add(MessageDelete(messageId: id));
                   },
                 );
               },

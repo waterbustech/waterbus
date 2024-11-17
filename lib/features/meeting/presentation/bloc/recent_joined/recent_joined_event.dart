@@ -1,29 +1,27 @@
 part of 'recent_joined_bloc.dart';
 
-sealed class MeetingListEvent extends Equatable {
-  const MeetingListEvent();
+sealed class RecentJoinedEvent extends Equatable {
+  const RecentJoinedEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetRecentJoinedEvent extends MeetingListEvent {}
+class RecentJoinedGet extends RecentJoinedEvent {}
 
-class InsertRecentJoinedEvent extends MeetingListEvent {
+class RecentJoinedInsert extends RecentJoinedEvent {
   final Meeting meeting;
-  const InsertRecentJoinedEvent({
-    required this.meeting,
-  });
+  const RecentJoinedInsert({required this.meeting});
 }
 
-class UpdateRecentJoinedEvent extends MeetingListEvent {
+class RecentJoinedUpdate extends RecentJoinedEvent {
   final Meeting meeting;
-  const UpdateRecentJoinedEvent({required this.meeting});
+  const RecentJoinedUpdate({required this.meeting});
 }
 
-class RemoveRecentJoinedEvent extends MeetingListEvent {
+class RecentJoinedRemove extends RecentJoinedEvent {
   final int meetingId;
-  const RemoveRecentJoinedEvent({required this.meetingId});
+  const RecentJoinedRemove({required this.meetingId});
 }
 
-class CleanAllRecentJoinedEvent extends MeetingListEvent {}
+class RecentJoinedClean extends RecentJoinedEvent {}

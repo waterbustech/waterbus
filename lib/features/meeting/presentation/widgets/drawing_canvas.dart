@@ -62,7 +62,7 @@ class _DrawingCanvasState extends State<DrawingCanvas> {
     if (!_currentStroke.hasStroke) return;
 
     final newDraw = _currentStroke.value!.copyWith();
-    AppBloc.whiteBoardBloc.add(OnDrawEvent(drawModel: newDraw));
+    AppBloc.whiteBoardBloc.add(WhiteBoardDraw(drawModel: newDraw));
     _currentStroke.clear();
   }
 

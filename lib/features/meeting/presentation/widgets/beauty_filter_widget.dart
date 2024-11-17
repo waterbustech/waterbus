@@ -180,7 +180,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
 
   void _update() {
     AppBloc.beautyFiltersBloc.add(
-      UpdateFiltersValueEvent(filters: _beautyFilters),
+      BeautyFilterUpdate(filters: _beautyFilters),
     );
   }
 }

@@ -55,7 +55,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
       child: BlocBuilder<MessageBloc, MessageState>(
         builder: (context, state) {
           final MessageModel? messageBeingEdited =
-              state is ActiveMessageState ? state.messageBeingEdited : null;
+              state is MessageActice ? state.messageBeingEdited : null;
 
           if (messageBeingEdited != null) {
             if (!_flagEdit) {
@@ -130,7 +130,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
                     if (dataEditing) {
                       _messageController.text = '';
                       _requestFocus(isFocus: false);
-                      AppBloc.messageBloc.add(CancelEditMessageEvent());
+                      AppBloc.messageBloc.add(MessageCancelEditing());
                     } else {
                       _handleSendMessage(
                         messageBeingEdited: messageBeingEdited,
@@ -178,14 +178,14 @@ class _InputSendMessageState extends State<InputSendMessage> {
   void _handleSendMessage({MessageModel? messageBeingEdited}) {
     if (messageBeingEdited != null) {
       AppBloc.messageBloc.add(
-        EditMessageEvent(
+        MessageEdit(
           data: _messageController.text.trim(),
           messageId: messageBeingEdited.id,
         ),
       );
     } else {
       AppBloc.messageBloc.add(
-        SendMessageEvent(
+        MessageSend(
           data: _messageController.text.trim(),
           meetingId: widget.meetingId,
         ),

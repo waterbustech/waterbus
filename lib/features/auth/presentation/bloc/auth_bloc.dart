@@ -128,7 +128,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     _user = null;
     AppBloc.userBloc.add(UserClean());
-    AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
+    AppBloc.recentJoinedBloc.add(RecentJoinedClean());
     AppBloc.chatBloc.add(ChatClean());
     AppBloc.invitedChatBloc.add(InvitedChatClean());
   }

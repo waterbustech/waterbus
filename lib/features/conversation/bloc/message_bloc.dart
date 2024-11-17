@@ -27,11 +27,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
   MessageBloc() : super(MessageInitial()) {
     on<MessageEvent>((event, emit) async {
-      if (event is InitialMessageSocketEvent) {
+      if (event is MessageSocketStarted) {
         _waterbusSdk.onMessageSocketChanged = _listenMessageSocket;
       }
 
-      if (event is GetMessageByMeetingIdEvent) {
+      if (event is MessageGetByMeeting) {
         AppBloc.chatBloc.add(
           ChatSelectTheCurrent(meetingId: event.meetingId),
         );
@@ -55,22 +55,22 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           await _getMessagesByMeetingId(event.meetingId);
         }
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is GetMoreMessageEvent) {
-        if (state is GettingMessageState ||
+      if (event is MessageGetMore) {
+        if (state is MessageInProgress ||
             _meetingId == null ||
             _messagesMap[_meetingId]!.isOver) {
           return;
         }
 
-        emit(_gettingMessage);
+        emit(_messageInProgress);
         await _getMessagesByMeetingId(_meetingId!);
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is SendMessageEvent) {
+      if (event is MessageSend) {
         final MessageModel message = MessageModel(
           id: DateTime.now().millisecondsSinceEpoch,
           createdBy: AppBloc.userBloc.user,
@@ -85,14 +85,14 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
         _handleInsertMessage(message);
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
 
         await _sendMessage(message);
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is ResendMessageEvent) {
+      if (event is MessageResend) {
         final MessageModel messageModel = event.messageModel
             .copyWith(sendingStatus: SendingStatusEnum.sending);
 
@@ -103,44 +103,44 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           _messagesByMeetingId[index].status = messageModel.status;
         }
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
 
         await _sendMessage(messageModel);
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is SelectMessageEditEvent) {
+      if (event is MessageSelect) {
         _messageBeingEdited = event.message;
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is EditMessageEvent) {
+      if (event is MessageEdit) {
         await _editMessage(event);
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is DeleteMessageEvent) {
+      if (event is MessageDelete) {
         await _deleteMessage(event);
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is CleanMessageEvent) {
+      if (event is MessageClean) {
         _clearMessages();
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is CancelEditMessageEvent) {
+      if (event is MessageCancelEditing) {
         _messageBeingEdited = null;
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
 
-      if (event is InsertMessageEvent) {
+      if (event is MessageInsert) {
         final CachedMessageByMeetingId? cachedMessageByMeetingId =
             _messagesMap[event.message.meeting];
 
@@ -154,30 +154,30 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             _handleInsertMessage(event.message);
           }
 
-          emit(_getDoneMessage);
+          emit(_messageDone);
         }
       }
 
-      if (event is UpdateMessageFromSocketEvent) {
+      if (event is MessageUpdateFromSocket) {
         if (event.isDeleted) {
           _handleDeleteMessage(messageModel: event.messageModel);
         } else {
           _handleEditMessage(messageModel: event.messageModel);
         }
 
-        emit(_getDoneMessage);
+        emit(_messageDone);
       }
     });
   }
 
   // MARK: state
-  GettingMessageState get _gettingMessage => GettingMessageState(
+  MessageInProgress get _messageInProgress => MessageInProgress(
         messages: _messagesByMeetingId,
         messageBeingEdited: _messageBeingEdited,
         isOver: _messagesMap[_meetingId]?.isOver ?? false,
       );
 
-  GetDoneMessageState get _getDoneMessage => GetDoneMessageState(
+  MessageDone get _messageDone => MessageDone(
         messages: _messagesByMeetingId,
         messageBeingEdited: _messageBeingEdited,
         isOver: _messagesMap[_meetingId]?.isOver ?? false,
@@ -193,11 +193,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
     if (messageSocketEvent.event == MessageEventEnum.create) {
-      add(InsertMessageEvent(message: message));
+      add(MessageInsert(message: message));
     } else if (messageSocketEvent.event == MessageEventEnum.update) {
-      add(UpdateMessageFromSocketEvent(messageModel: message));
+      add(MessageUpdateFromSocket(messageModel: message));
     } else {
-      add(UpdateMessageFromSocketEvent(messageModel: message, isDeleted: true));
+      add(MessageUpdateFromSocket(messageModel: message, isDeleted: true));
     }
   }
 
@@ -245,7 +245,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     AppBloc.chatBloc.add(ChatUpdateLastMessage(message: message));
   }
 
-  Future<void> _editMessage(EditMessageEvent event) async {
+  Future<void> _editMessage(MessageEdit event) async {
     final MessageModel? messageModel = await _waterbusSdk.editMessage(
       data: event.data,
       messageId: event.messageId,
@@ -275,7 +275,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
   }
 
-  Future<void> _deleteMessage(DeleteMessageEvent event) async {
+  Future<void> _deleteMessage(MessageDelete event) async {
     final MessageModel? messageModel = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );

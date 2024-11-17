@@ -79,10 +79,10 @@ class AppBloc {
 
   Future<void> bootstrap() async {
     userBloc.add(UserGet());
-    recentJoinedBloc.add(GetRecentJoinedEvent());
-    meetingBloc.add(InitializeMeetingEvent());
+    recentJoinedBloc.add(RecentJoinedGet());
+    meetingBloc.add(MeetingStarted());
     chatBloc.add(ChatStarted());
-    messageBloc.add(InitialMessageSocketEvent());
+    messageBloc.add(MessageSocketStarted());
   }
 
   ///Singleton factory
