@@ -78,10 +78,10 @@ class AppBloc {
   ];
 
   Future<void> bootstrap() async {
-    userBloc.add(GetProfileEvent());
+    userBloc.add(UserGet());
     recentJoinedBloc.add(GetRecentJoinedEvent());
     meetingBloc.add(InitializeMeetingEvent());
-    chatBloc.add(OnChatEvent());
+    chatBloc.add(ChatStarted());
     messageBloc.add(InitialMessageSocketEvent());
   }
 

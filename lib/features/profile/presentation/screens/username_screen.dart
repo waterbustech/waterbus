@@ -41,7 +41,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
 
     if (_isActive) {
       AppBloc.userBloc.add(
-        UpdateUsernameEvent(username: _usernameController.text),
+        UserUpdateUsername(username: _usernameController.text),
       );
     }
   }
@@ -72,7 +72,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
         actions: [
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
-              if (state is UserGetDone) {
+              if (state is UserDone) {
                 final CheckUsernameStatus status = state.checkUsernameStatus;
                 if (status != CheckUsernameStatus.checking) {
                   _isActive = status == CheckUsernameStatus.valid &&
@@ -142,7 +142,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
                       const Duration(milliseconds: 500),
                       () {
                         AppBloc.userBloc.add(
-                          CheckUsernameEvent(
+                          UserCheckUsername(
                             username: _usernameController.text,
                           ),
                         );
@@ -152,7 +152,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
                 ),
                 BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
-                    if (state is UserGetDone) {
+                    if (state is UserDone) {
                       final CheckUsernameStatus status =
                           state.checkUsernameStatus;
 

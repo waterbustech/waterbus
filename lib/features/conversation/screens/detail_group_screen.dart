@@ -86,7 +86,7 @@ class DetailGroupScreen extends StatelessWidget {
             ),
             flexibleSpace: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
-                if (state is ActiveChatState) {
+                if (state is ChatActive) {
                   final Meeting? meeting = state.conversationCurrent;
 
                   return meeting == null
@@ -98,7 +98,7 @@ class DetailGroupScreen extends StatelessWidget {
                                 context: context,
                                 handleFinish: (image) async {
                                   AppBloc.chatBloc.add(
-                                    UpdateAvatarConversationEvent(
+                                    ChatUpdateAvatar(
                                       avatar: image,
                                     ),
                                   );
@@ -189,7 +189,7 @@ class DetailGroupScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 30.sp),
             sliver: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
-                if (state is ActiveChatState) {
+                if (state is ChatActive) {
                   if (state.conversationCurrent == null) {
                     return const SliverToBoxAdapter();
                   }
@@ -265,7 +265,7 @@ class DetailGroupScreen extends StatelessWidget {
                                                 Strings.sureDeleteMember.i18n,
                                             handlePressed: () async {
                                               AppBloc.chatBloc.add(
-                                                DeleteMemberEvent(
+                                                ChatDeleteMember(
                                                   code: conversation.code,
                                                   userModel: conversation
                                                       .members[index -

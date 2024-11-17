@@ -93,7 +93,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
                 _debounce = Timer(500.milliseconds, () {
                   AppBloc.userSearchBloc
-                      .add(SearchUsersEvent(keyword: _controller.text));
+                      .add(UserSearchStarted(keyword: _controller.text));
                 });
               },
               minLines: 1,
@@ -129,7 +129,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                     _controller.clear();
 
                     AppBloc.userSearchBloc
-                        .add(const SearchUsersEvent(keyword: ""));
+                        .add(const UserSearchStarted(keyword: ""));
                   },
                   child: Container(
                     height: 14.sp,
@@ -149,13 +149,13 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
           ),
           BlocBuilder<UserSearchBloc, UserSearchState>(
             builder: (context, state) {
-              if (state is UserSearchingState) {
+              if (state is UserSearchInprogress) {
                 return const Expanded(
                   child: ShimmerList(child: ShimmerUserCard()),
                 );
               }
 
-              if (state is ActiveUserSearchState) {
+              if (state is UserSearchActive) {
                 final List<User> searchs = state.userSearchs;
 
                 return searchs.isEmpty || _controller.text.isEmpty
@@ -167,23 +167,22 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                           shrinkWrap: true,
                           callBackRefresh: (handleFinish) {
                             AppBloc.userSearchBloc.add(
-                              RefreshUserSearchEvent(
+                              UserSearchRefresh(
                                 handleFinish: handleFinish,
                               ),
                             );
                           },
                           callBackLoadMore: () {
-                            AppBloc.userSearchBloc
-                                .add(GetMoreUserSearchEvent());
+                            AppBloc.userSearchBloc.add(UserSearchGetMore());
                           },
-                          isLoadMore: state is UserSearchGetMore,
+                          isLoadMore: state is UserSearchLoadMore,
                           padding: EdgeInsets.only(bottom: 20.sp),
                           itemBuilder: (context, index) => GestureWrapper(
                             onTap: () {
                               AppNavigator.pop();
 
                               AppBloc.chatBloc.add(
-                                AddMemberEvent(
+                                ChatAddMember(
                                   meeting: widget.meetingId,
                                   code: widget.code,
                                   user: searchs[index],

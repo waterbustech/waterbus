@@ -33,7 +33,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
       if (event is GetMessageByMeetingIdEvent) {
         AppBloc.chatBloc.add(
-          SelectConversationCurrentEvent(meetingId: event.meetingId),
+          ChatSelectTheCurrent(meetingId: event.meetingId),
         );
 
         final CachedMessageByMeetingId? cachedMessageByMeetingId =
@@ -145,7 +145,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             _messagesMap[event.message.meeting];
 
         if (cachedMessageByMeetingId == null) {
-          AppBloc.chatBloc.add(UpdateLastMessageEvent(message: event.message));
+          AppBloc.chatBloc.add(ChatUpdateLastMessage(message: event.message));
         } else {
           final int index = cachedMessageByMeetingId.messages
               .indexWhere((message) => message.id == event.message.id);
@@ -229,7 +229,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _messagesByMeetingId[index] = message;
 
         AppBloc.chatBloc.add(
-          UpdateLastMessageEvent(message: message),
+          ChatUpdateLastMessage(message: message),
         );
       } else {
         _messagesByMeetingId[index].sendingStatus = SendingStatusEnum.error;
@@ -242,7 +242,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       _messagesMap[message.meeting]?.messages.insert(0, message);
     }
 
-    AppBloc.chatBloc.add(UpdateLastMessageEvent(message: message));
+    AppBloc.chatBloc.add(ChatUpdateLastMessage(message: message));
   }
 
   Future<void> _editMessage(EditMessageEvent event) async {
@@ -271,7 +271,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
 
     AppBloc.chatBloc.add(
-      UpdateLastMessageEvent(message: messageModel, isUpdateMessage: true),
+      ChatUpdateLastMessage(message: messageModel, isUpdateMessage: true),
     );
   }
 
@@ -298,7 +298,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
 
     AppBloc.chatBloc.add(
-      UpdateLastMessageEvent(message: messageModel, isUpdateMessage: true),
+      ChatUpdateLastMessage(message: messageModel, isUpdateMessage: true),
     );
   }
 

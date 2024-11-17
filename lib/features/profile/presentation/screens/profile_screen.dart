@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               displayLoadingLayer();
 
               AppBloc.userBloc.add(
-                UpdateProfileEvent(
+                UserUpdate(
                   fullName: _fullNameController.text,
                   bio: _bioController.text,
                 ),
@@ -115,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 24.sp),
                           BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) {
-                              _user = state is UserGetDone ? state.user : null;
+                              _user = state is UserDone ? state.user : null;
 
                               return Align(
                                 child: GestureWrapper(
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         displayLoadingLayer();
 
                                         AppBloc.userBloc.add(
-                                          UpdateAvatarEvent(image: image),
+                                          UserUpdateAvatar(image: image),
                                         );
                                       },
                                     );
@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         BlocBuilder<UserBloc, UserState>(
                                           builder: (context, state) {
-                                            _user = state is UserGetDone
+                                            _user = state is UserDone
                                                 ? state.user
                                                 : null;
 
@@ -253,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           GestureWrapper(
                             onTap: () {
                               displayLoadingLayer();
-                              AppBloc.authBloc.add(LogOutEvent());
+                              AppBloc.authBloc.add(AuthLogOut());
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 20.sp),

@@ -173,7 +173,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   Widget _buildFooter(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        final User user = state is UserGetDone ? state.user : kUserDefault;
+        final User user = state is UserDone ? state.user : kUserDefault;
 
         final userAvatar = AvatarCard(
           urlToImage: user.avatar,

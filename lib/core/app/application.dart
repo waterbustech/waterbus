@@ -14,7 +14,7 @@ class Application {
 
       configureDependencies();
 
-      AppBloc.authBloc.add(OnAuthCheckEvent());
+      AppBloc.authBloc.add(AuthStarted());
     } catch (error) {
       debugPrint(error.toString());
     }

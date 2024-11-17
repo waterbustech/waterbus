@@ -24,59 +24,59 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitial()) {
     on<UserEvent>(
       (event, emit) async {
-        if (event is GetProfileEvent) {
+        if (event is UserGet) {
           if (_user != null) return;
 
           await _getUserProfile();
 
           if (_user != null) {
-            emit(_userGetDone);
+            emit(_userDone);
           }
         }
 
-        if (event is UpdateProfileEvent) {
+        if (event is UserUpdate) {
           await _updateUserProfile(event);
 
           if (_user != null) {
-            emit(_userGetDone);
+            emit(_userDone);
           }
         }
 
-        if (event is UpdateAvatarEvent) {
+        if (event is UserUpdateAvatar) {
           await _handleChangeAvatar(event);
 
           if (_user != null) {
-            emit(_userGetDone);
+            emit(_userDone);
           }
         }
 
-        if (event is CleanProfileEvent) {
+        if (event is UserClean) {
           _user = null;
 
           emit(UserInitial());
         }
 
-        if (event is CheckUsernameEvent) {
+        if (event is UserCheckUsername) {
           _checkUsernameStatus = CheckUsernameStatus.checking;
-          emit(_userGetDone);
+          emit(_userDone);
 
           await _handleCheckUsername(event.username);
-          emit(_userGetDone);
+          emit(_userDone);
         }
 
-        if (event is UpdateUsernameEvent) {
+        if (event is UserUpdateUsername) {
           if (event.username == _user?.userName) return;
 
           await _handleUpdateUsername(event.username);
 
-          emit(_userGetDone);
+          emit(_userDone);
         }
       },
     );
   }
 
   // MARK: state
-  UserGetDone get _userGetDone => UserGetDone(
+  UserDone get _userDone => UserDone(
         user: _user ?? kUserDefault,
         checkUsernameStatus: _checkUsernameStatus,
       );
@@ -109,7 +109,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _updateUserProfile(
-    UpdateProfileEvent event, {
+    UserUpdate event, {
     bool ignorePop = false,
   }) async {
     if (_user == null) return;
@@ -137,7 +137,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  Future<void> _handleChangeAvatar(UpdateAvatarEvent event) async {
+  Future<void> _handleChangeAvatar(UserUpdateAvatar event) async {
     final String? presignedUrl = await _waterbusSdk.getPresignedUrl();
 
     if (presignedUrl == null) return;
@@ -150,7 +150,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (uploadAvatar == null) return;
 
     await _updateUserProfile(
-      UpdateProfileEvent(
+      UserUpdate(
         fullName: _user!.fullName,
         avatar: uploadAvatar,
         bio: _user?.bio,

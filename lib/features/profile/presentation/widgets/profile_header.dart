@@ -19,7 +19,7 @@ class ProfileHeader extends StatelessWidget {
       builder: (context, stateTheme) {
         return BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
-            final User user = state is UserGetDone ? state.user : kUserDefault;
+            final User user = state is UserDone ? state.user : kUserDefault;
 
             return Container(
               padding: EdgeInsets.only(

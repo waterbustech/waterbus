@@ -2,10 +2,10 @@ part of 'auth_bloc.dart';
 
 abstract class AuthEvent {}
 
-class OnAuthCheckEvent extends AuthEvent {}
+class AuthStarted extends AuthEvent {}
 
-class LogInWithGoogleEvent extends AuthEvent {}
+class AuthSignInWithGoogle extends AuthEvent {}
 
-class LogInAnonymously extends AuthEvent {}
+class AuthSignInAnonymously extends AuthEvent {}
 
-class LogOutEvent extends AuthEvent {}
+class AuthLogOut extends AuthEvent {}

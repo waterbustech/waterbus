@@ -59,14 +59,14 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               if (widget.isChatScreen) {
                 if (_isEditing) {
                   AppBloc.chatBloc.add(
-                    UpdateConversationEvent(
+                    ChatUpdate(
                       title: _roomNameController.text,
                       password: _passwordController.text,
                     ),
                   );
                 } else {
                   AppBloc.chatBloc.add(
-                    CreateConversationEvent(
+                    ChatCreate(
                       title: _roomNameController.text,
                       password: _passwordController.text,
                     ),

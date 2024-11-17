@@ -26,14 +26,14 @@ class ConversationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChatBloc, ChatState>(
       buildWhen: (bf, at) {
-        if (bf is ActiveChatState && at is ActiveChatState) {
+        if (bf is ChatActive && at is ChatActive) {
           return bf.conversationCurrent != at.conversationCurrent;
         }
 
         return true;
       },
       builder: (context, state) {
-        if (state is ActiveChatState) {
+        if (state is ChatActive) {
           final Meeting? meeting = state.conversationCurrent;
 
           return meeting == null

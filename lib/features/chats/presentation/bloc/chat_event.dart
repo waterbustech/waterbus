@@ -2,99 +2,99 @@ part of 'chat_bloc.dart';
 
 abstract class ChatEvent {}
 
-class OnChatEvent extends ChatEvent {}
+class ChatStarted extends ChatEvent {}
 
-class GetConversationsEvent extends ChatEvent {}
+class ChatGet extends ChatEvent {}
 
-class RefreshConversationsEvent extends ChatEvent {
+class ChatRefresh extends ChatEvent {
   final Function handleFinish;
 
-  RefreshConversationsEvent({required this.handleFinish});
+  ChatRefresh({required this.handleFinish});
 }
 
-class SelectConversationCurrentEvent extends ChatEvent {
+class ChatSelectTheCurrent extends ChatEvent {
   final Meeting? meeting;
   final int? meetingId;
 
-  SelectConversationCurrentEvent({this.meeting, this.meetingId});
+  ChatSelectTheCurrent({this.meeting, this.meetingId});
 }
 
-class CleanConversationCurrentEvent extends ChatEvent {}
+class ChatCleanConversationCurrent extends ChatEvent {}
 
-class CreateConversationEvent extends ChatEvent {
+class ChatCreate extends ChatEvent {
   final String title;
   final String password;
 
-  CreateConversationEvent({required this.title, required this.password});
+  ChatCreate({required this.title, required this.password});
 }
 
-class ArchivedConversationEvent extends ChatEvent {
+class ChatArchived extends ChatEvent {
   final Meeting? meeting;
 
-  ArchivedConversationEvent({this.meeting});
+  ChatArchived({this.meeting});
 }
 
-class DeleteConversationEvent extends ChatEvent {
+class ChatDelete extends ChatEvent {
   final Meeting? meeting;
 
-  DeleteConversationEvent({this.meeting});
+  ChatDelete({this.meeting});
 }
 
-class LeaveConversationEvent extends ChatEvent {
+class ChatLeave extends ChatEvent {
   final Meeting? meeting;
 
-  LeaveConversationEvent({this.meeting});
+  ChatLeave({this.meeting});
 }
 
-class AddMemberEvent extends ChatEvent {
+class ChatAddMember extends ChatEvent {
   final int code;
   final User user;
   final int meeting;
 
-  AddMemberEvent({
+  ChatAddMember({
     required this.code,
     required this.user,
     required this.meeting,
   });
 }
 
-class InsertConversationEvent extends ChatEvent {
+class ChatInsert extends ChatEvent {
   final Meeting conversation;
 
-  InsertConversationEvent({required this.conversation});
+  ChatInsert({required this.conversation});
 }
 
-class DeleteMemberEvent extends ChatEvent {
+class ChatDeleteMember extends ChatEvent {
   final int code;
   final User userModel;
 
-  DeleteMemberEvent({required this.code, required this.userModel});
+  ChatDeleteMember({required this.code, required this.userModel});
 }
 
-class UpdateConversationEvent extends ChatEvent {
+class ChatUpdate extends ChatEvent {
   final String? avatar;
   final String? title;
   final String? password;
 
-  UpdateConversationEvent({this.avatar, this.title, this.password});
+  ChatUpdate({this.avatar, this.title, this.password});
 }
 
-class UpdateAvatarConversationEvent extends ChatEvent {
+class ChatUpdateAvatar extends ChatEvent {
   final Uint8List avatar;
 
-  UpdateAvatarConversationEvent({required this.avatar});
+  ChatUpdateAvatar({required this.avatar});
 }
 
-class UpdateConversationFromSocketEvent extends ChatEvent {}
+class ChatUpdateConversationFromSocket extends ChatEvent {}
 
-class UpdateLastMessageEvent extends ChatEvent {
+class ChatUpdateLastMessage extends ChatEvent {
   final MessageModel message;
   final bool isUpdateMessage;
 
-  UpdateLastMessageEvent({
+  ChatUpdateLastMessage({
     required this.message,
     this.isUpdateMessage = false,
   });
 }
 
-class CleanChatEvent extends ChatEvent {}
+class ChatClean extends ChatEvent {}
