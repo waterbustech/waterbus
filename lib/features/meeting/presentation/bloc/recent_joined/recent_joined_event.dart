@@ -7,7 +7,7 @@ sealed class RecentJoinedEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RecentJoinedGet extends RecentJoinedEvent {}
+class RecentJoinedStarted extends RecentJoinedEvent {}
 
 class RecentJoinedInsert extends RecentJoinedEvent {
   final Meeting meeting;

@@ -18,7 +18,7 @@ class RecentJoinedBloc extends Bloc<RecentJoinedEvent, RecentJoinedState> {
   ) : super(RecentJoinedInitial()) {
     on<RecentJoinedEvent>(
       (event, emit) async {
-        if (event is RecentJoinedGet) {
+        if (event is RecentJoinedStarted) {
           _handleGetRecentJoined();
 
           emit(_recentJoinedDone);
