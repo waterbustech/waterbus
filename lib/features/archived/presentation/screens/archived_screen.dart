@@ -30,7 +30,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
   void initState() {
     super.initState();
 
-    AppBloc.archivedBloc.add(OnArchivedEvent());
+    AppBloc.archivedBloc.add(ArchivedStarted());
   }
 
   void _handleTapArchivedItem(Meeting meeting) {
@@ -82,7 +82,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
 
                 final List<Meeting> meetings = [];
 
-                if (state is ActiveArchivedState) {
+                if (state is ArchivedActive) {
                   meetings.addAll(state.archivedConversations);
                 }
 
@@ -93,15 +93,15 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                         shrinkWrap: true,
                         callBackRefresh: (handleFinish) {
                           AppBloc.archivedBloc.add(
-                            RefreshArchivedEvent(
+                            ArchivedRefresh(
                               handleFinish: handleFinish,
                             ),
                           );
                         },
                         callBackLoadMore: () {
-                          AppBloc.archivedBloc.add(GetMoreArchivedEvent());
+                          AppBloc.archivedBloc.add(ArchivedGetMore());
                         },
-                        isLoadMore: state is GettingArchivedState,
+                        isLoadMore: state is ArchivedInProgress,
                         padding: EdgeInsets.only(
                           bottom: SizerUtil.isDesktop ? 25.sp : 70.sp,
                           top: 8.sp,

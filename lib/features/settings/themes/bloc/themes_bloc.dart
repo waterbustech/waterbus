@@ -21,12 +21,12 @@ class ThemesBloc extends Bloc<ThemesEvent, ThemesState> {
           ),
         ) {
     on<ThemesEvent>((event, emit) {
-      if (event is OnThemeChangedEvent) {
+      if (event is ThemeChange) {
         _handleThemeChanged(event);
         emit(_theme);
       }
 
-      if (event is OnColorSeedChangedEvent) {
+      if (event is ThemeChangeColorSeed) {
         _handleColorSeedChanged(event);
         emit(_theme);
       }
@@ -38,11 +38,11 @@ class ThemesBloc extends Bloc<ThemesEvent, ThemesState> {
         colorSeed: _themesLocal.getColorSeed(),
       );
 
-  void _handleThemeChanged(OnThemeChangedEvent event) {
+  void _handleThemeChanged(ThemeChange event) {
     _themesLocal.setTheme(themeMode: event.mode.name);
   }
 
-  void _handleColorSeedChanged(OnColorSeedChangedEvent event) {
+  void _handleColorSeedChanged(ThemeChangeColorSeed event) {
     _themesLocal.setColorSeed(colorSeed: event.colorSeed);
   }
 }

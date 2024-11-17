@@ -117,7 +117,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                 IconButton(
                   onPressed: () {
                     AppBloc.themesBloc.add(
-                      OnThemeChangedEvent(
+                      ThemeChange(
                         mode: Theme.of(context).brightness == Brightness.light
                             ? ThemeMode.dark
                             : ThemeMode.light,

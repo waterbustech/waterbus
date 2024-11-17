@@ -73,7 +73,7 @@ class ThemeScreen extends StatelessWidget {
                     return GestureWrapper(
                       onTap: () {
                         AppBloc.themesBloc.add(
-                          OnColorSeedChangedEvent(colorSeed: color),
+                          ThemeChangeColorSeed(colorSeed: color),
                         );
                       },
                       child: Material(
@@ -142,7 +142,7 @@ class ThemeScreen extends StatelessWidget {
   ) {
     return GestureWrapper(
       onTap: () {
-        AppBloc.themesBloc.add(OnThemeChangedEvent(mode: theme));
+        AppBloc.themesBloc.add(ThemeChange(mode: theme));
       },
       child: Padding(
         padding: EdgeInsets.only(right: 8.sp),

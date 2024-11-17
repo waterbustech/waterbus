@@ -404,7 +404,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (archivedConversation != null) {
       AppBloc.archivedBloc.add(
-        InsertArchivedEvent(meeting: archivedConversation),
+        ArchivedInsert(meeting: archivedConversation),
       );
 
       _cleanConversationCurrent(archivedConversation.id);

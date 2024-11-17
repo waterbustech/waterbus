@@ -2,18 +2,18 @@ part of 'archived_bloc.dart';
 
 abstract class ArchivedEvent {}
 
-class OnArchivedEvent extends ArchivedEvent {}
+class ArchivedStarted extends ArchivedEvent {}
 
-class GetMoreArchivedEvent extends ArchivedEvent {}
+class ArchivedGetMore extends ArchivedEvent {}
 
-class InsertArchivedEvent extends ArchivedEvent {
+class ArchivedInsert extends ArchivedEvent {
   final Meeting meeting;
 
-  InsertArchivedEvent({required this.meeting});
+  ArchivedInsert({required this.meeting});
 }
 
-class RefreshArchivedEvent extends ArchivedEvent {
+class ArchivedRefresh extends ArchivedEvent {
   final Function handleFinish;
 
-  RefreshArchivedEvent({required this.handleFinish});
+  ArchivedRefresh({required this.handleFinish});
 }
