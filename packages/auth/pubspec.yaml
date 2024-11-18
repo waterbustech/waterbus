@@ -21,7 +21,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/sign-in-google-linux.git
       path: 'google_sign_in_all_platforms'
-      ref: 0.0.4+1
+      ref: 0.0.4+2
   firedart: 
     git:
       url: https://github.com/waterbustech/firedart.git
@@ -31,12 +31,7 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
-  # waterbus_sdk: ^1.5.1
-  waterbus_sdk: 
-    git:
-      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-      path: '.'
-      ref: 'migration/v2'
+  waterbus_sdk: ^1.5.2
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
 

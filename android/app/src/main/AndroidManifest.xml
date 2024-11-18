@@ -48,6 +48,7 @@
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true"
         android:allowBackup="true"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:label">
        <meta-data
            android:name="io.flutter.embedding.android.EnableImpeller"

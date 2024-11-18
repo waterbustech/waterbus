@@ -2,11 +2,12 @@
 
 import 'package:dio/dio.dart';
 import 'package:file_saver/file_saver.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
+
+import 'package:waterbus/core/helpers/saver/image_gallery_saver.dart';
 
 @singleton
 class FileSaverHelper {

@@ -167,7 +167,7 @@ class PictureInPictureView: UIView {
         self.remoteRenderer!.videoContentMode = .scaleAspectFill
         
         // Get RemoteMTLVideoView
-        let mediaRemoteStream = FlutterWebRTCPlugin.sharedSingleton().stream(forId: self.remoteStreamId, peerConnectionId: self.peerConnectionId)
+        let mediaRemoteStream = FlutterWebRTCPlugin.sharedSingleton()?.stream(forId: self.remoteStreamId!, peerConnectionId: self.peerConnectionId)
         mediaRemoteStream?.videoTracks.first?.add(self.remoteRenderer!)
         
         self.remoteView.addSubview(self.remoteRenderer!)

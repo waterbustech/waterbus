@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.7.5)
   - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - connectivity_plus (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -241,8 +243,6 @@ PODS:
   - GTMSessionFetcher/Core (3.5.0)
   - GTMSessionFetcher/Full (3.5.0):
     - GTMSessionFetcher/Core
-  - image_gallery_saver (2.0.2):
-    - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - irondash_engine_context (0.0.1):
@@ -325,6 +325,7 @@ PODS:
     - waterbus_callkit_incoming (= 0.0.2)
 
 DEPENDENCIES:
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
@@ -340,7 +341,6 @@ DEPENDENCIES:
   - flutter_webrtc_plus (from `.symlinks/plugins/flutter_webrtc_plus/ios`)
   - google_sign_in_all_platforms_mobile (from `.symlinks/plugins/google_sign_in_all_platforms_mobile/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
-  - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - irondash_engine_context (from `.symlinks/plugins/irondash_engine_context/ios`)
   - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
@@ -403,6 +403,8 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/darwin"
   device_info_plus:
@@ -431,8 +433,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in_all_platforms_mobile/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
-  image_gallery_saver:
-    :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   irondash_engine_context:
@@ -478,6 +478,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   connectivity_plus: 4c41c08fc6d7c91f63bc7aec70ffe3730b04f563
   CryptoSwift: 967f37cea5a3294d9cce358f78861652155be483
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
@@ -517,7 +518,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
-  image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   irondash_engine_context: 3458bf979b90d616ffb8ae03a150bafe2e860cc9
   KaiRTC: 85d741a5c81058201b44704e821b78228d6eae72
