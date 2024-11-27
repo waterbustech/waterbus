@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
+import 'package:waterbus_sdk/types/result.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -111,23 +112,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is AddMemberEvent) {
-        final Meeting? meeting =
+        final Result<Meeting> response =
             await _waterbusSdk.addMember(event.code, event.user.id);
 
-        if (meeting != null) {
-          final int index = _conversations
-              .indexWhere((conversation) => conversation.id == meeting.id);
+        if (response.isSuccess) {
+          final Meeting? meeting = response.value;
 
-          if (index != -1) {
-            _conversations[index] = meeting;
+          if (meeting != null) {
+            final int index = _conversations
+                .indexWhere((conversation) => conversation.id == meeting.id);
+
+            if (index != -1) {
+              _conversations[index] = meeting;
+            }
+
+            showSnackBarWaterbus(
+              child: InvitedSuccessText(
+                meeting: meeting,
+                fullname: event.user.fullName,
+              ),
+            );
           }
-
-          showSnackBarWaterbus(
-            child: InvitedSuccessText(
-              meeting: meeting,
-              fullname: event.user.fullName,
-            ),
-          );
         }
 
         emit(_getDoneChat);
@@ -344,12 +349,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       title: title ?? _conversationCurrent?.title,
     );
 
-    final isSuccess = await _waterbusSdk.updateConversation(
+    final Result<bool> response = await _waterbusSdk.updateConversation(
       meeting: meeting,
       password: password,
     );
 
-    if (isSuccess) {
+    if (response.isSuccess) {
       final int index = _conversations.indexWhere(
         (conversation) => conversation.id == meeting.id,
       );
@@ -386,9 +391,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _deleteConversation(Meeting meeting) async {
-    final bool isSuccess = await _waterbusSdk.deleteConversation(meeting.id);
+    final Result<bool> response =
+        await _waterbusSdk.deleteConversation(meeting.id);
 
-    if (isSuccess) {
+    if (response.isSuccess) {
       _cleanConversationCurrent(meeting.id);
 
       showSnackBarWaterbus(
@@ -400,66 +406,90 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _archivedConversation(Meeting meeting) async {
-    final Meeting? archivedConversation =
+    final Result<Meeting> response =
         await _waterbusSdk.archivedConversation(meeting.code);
 
-    if (archivedConversation != null) {
-      AppBloc.archivedBloc.add(
-        InsertArchivedEvent(meeting: archivedConversation),
-      );
+    if (response.isSuccess) {
+      final Meeting? archivedConversation = response.value;
 
-      _cleanConversationCurrent(archivedConversation.id);
+      if (archivedConversation != null) {
+        AppBloc.archivedBloc.add(
+          InsertArchivedEvent(meeting: archivedConversation),
+        );
 
-      showSnackBarWaterbus(content: Strings.haveArchivedConversation.i18n);
+        _cleanConversationCurrent(archivedConversation.id);
+
+        showSnackBarWaterbus(content: Strings.haveArchivedConversation.i18n);
+      } else {
+        showSnackBarWaterbus(content: Strings.cannotBeArchived.i18n);
+      }
     } else {
-      showSnackBarWaterbus(content: Strings.cannotBeArchived.i18n);
+      // Handle archived conversation fail
     }
   }
 
   Future<void> _leaveConversation(Meeting meeting) async {
-    final Meeting? conversation =
+    final Result<Meeting> response =
         await _waterbusSdk.leaveConversation(meeting.code);
 
-    if (conversation != null) {
-      _cleanConversationCurrent(conversation.id);
+    if (response.isSuccess) {
+      final Meeting? conversation = response.value;
 
-      showSnackBarWaterbus(content: Strings.haveLeftConversation.i18n);
+      if (conversation != null) {
+        _cleanConversationCurrent(conversation.id);
+
+        showSnackBarWaterbus(content: Strings.haveLeftConversation.i18n);
+      } else {
+        showSnackBarWaterbus(content: Strings.leaveFailedConversation.i18n);
+      }
     } else {
-      showSnackBarWaterbus(content: Strings.leaveFailedConversation.i18n);
+      // Handle leave conversation fail
     }
   }
 
   Future<void> _getConversationList() async {
-    final List<Meeting> result = await _waterbusSdk.getConversations(
+    final Result<List<Meeting>> response = await _waterbusSdk.getConversations(
       skip: _conversations.length,
       status: MemberStatusEnum.joined.value,
     );
 
-    _conversations.addAll(result);
+    if (response.isSuccess) {
+      final List<Meeting> result = response.value ?? [];
 
-    if (result.length < 10) {
-      _isOver = true;
+      _conversations.addAll(result);
+
+      if (result.length < 10) {
+        _isOver = true;
+      }
+    } else {
+      // Handle get conversation fail
     }
   }
 
   Future<void> _handleDeleteMember(DeleteMemberEvent event) async {
-    final Meeting? meeting =
+    final Result<Meeting> response =
         await _waterbusSdk.deleteMember(event.code, event.userModel.id);
 
-    if (meeting != null) {
-      final int index = _conversations
-          .indexWhere((conversation) => conversation.code == meeting.code);
+    if (response.isSuccess) {
+      final Meeting? meeting = response.value;
 
-      if (index != -1) {
-        _conversations[index] = meeting;
+      if (meeting != null) {
+        final int index = _conversations
+            .indexWhere((conversation) => conversation.code == meeting.code);
+
+        if (index != -1) {
+          _conversations[index] = meeting;
+        }
+
+        showSnackBarWaterbus(
+          content:
+              "${Strings.youHaveRemoved.i18n} ${event.userModel.fullName} ${Strings.fromTheChat.i18n}",
+        );
+      } else {
+        showSnackBarWaterbus(content: Strings.cannotDeleteMember.i18n);
       }
-
-      showSnackBarWaterbus(
-        content:
-            "${Strings.youHaveRemoved.i18n} ${event.userModel.fullName} ${Strings.fromTheChat.i18n}",
-      );
     } else {
-      showSnackBarWaterbus(content: Strings.cannotDeleteMember.i18n);
+      // Handle delete member fail
     }
   }
 

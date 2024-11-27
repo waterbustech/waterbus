@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 part 'message_event.dart';
 part 'message_state.dart';
@@ -202,38 +203,50 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _getMessagesByMeetingId(int meetingId) async {
-    final List<MessageModel> response = await _waterbusSdk.getMessageByRoom(
+    final Result<List<MessageModel>> response =
+        await _waterbusSdk.getMessageByRoom(
       meetingId: meetingId,
       skip: _messagesMap[meetingId]?.messages.length ?? 0,
       limit: defaultLengthOfMessages,
     );
 
-    _messagesMap[meetingId]?.messages.addAll(response);
+    if (response.isSuccess) {
+      final List<MessageModel> messagesReponse = response.value ?? [];
+      _messagesMap[meetingId]?.messages.addAll(messagesReponse);
 
-    if (response.length < defaultLengthOfMessages) {
-      _messagesMap[_meetingId]?.isOver = true;
+      if (messagesReponse.length < defaultLengthOfMessages) {
+        _messagesMap[_meetingId]?.isOver = true;
+      }
+    } else {
+      // Handle get message by meetingId fail
     }
   }
 
   Future<void> _sendMessage(MessageModel messageModel) async {
-    final MessageModel? message = await _waterbusSdk.sendMessage(
+    final Result<MessageModel?> response = await _waterbusSdk.sendMessage(
       meetingId: messageModel.meeting,
       data: messageModel.data,
     );
 
-    final int index = _messagesByMeetingId
-        .indexWhere((message) => message.id == messageModel.id);
+    if (response.isSuccess) {
+      final MessageModel? message = response.value;
 
-    if (index != -1) {
-      if (message != null) {
-        _messagesByMeetingId[index] = message;
+      final int index = _messagesByMeetingId
+          .indexWhere((message) => message.id == messageModel.id);
 
-        AppBloc.chatBloc.add(
-          UpdateLastMessageEvent(message: message),
-        );
-      } else {
-        _messagesByMeetingId[index].sendingStatus = SendingStatusEnum.error;
+      if (index != -1) {
+        if (message != null) {
+          _messagesByMeetingId[index] = message;
+
+          AppBloc.chatBloc.add(
+            UpdateLastMessageEvent(message: message),
+          );
+        } else {
+          _messagesByMeetingId[index].sendingStatus = SendingStatusEnum.error;
+        }
       }
+    } else {
+      // Handle send message fail
     }
   }
 
@@ -246,16 +259,22 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _editMessage(EditMessageEvent event) async {
-    final MessageModel? messageModel = await _waterbusSdk.editMessage(
+    final Result<MessageModel> response = await _waterbusSdk.editMessage(
       data: event.data,
       messageId: event.messageId,
     );
 
-    if (messageModel != null) {
-      _handleEditMessage(messageModel: messageModel);
-    }
+    if (response.isSuccess) {
+      final MessageModel? messageModel = response.value;
 
-    _messageBeingEdited = null;
+      if (messageModel != null) {
+        _handleEditMessage(messageModel: messageModel);
+      }
+
+      _messageBeingEdited = null;
+    } else {
+      // Handle edit message fail
+    }
   }
 
   void _handleEditMessage({required MessageModel messageModel}) {
@@ -276,12 +295,18 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _deleteMessage(DeleteMessageEvent event) async {
-    final MessageModel? messageModel = await _waterbusSdk.deleteMessage(
+    final Result<MessageModel?> response = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );
 
-    if (messageModel != null) {
-      _handleDeleteMessage(messageModel: messageModel);
+    if (response.isSuccess) {
+      final MessageModel? messageModel = response.value;
+
+      if (messageModel != null) {
+        _handleDeleteMessage(messageModel: messageModel);
+      }
+    } else {
+      // Handle delete message fail
     }
   }
 
