@@ -122,7 +122,7 @@ dependencies:
   media_kit_libs_linux: any
 
   # Video call
-  waterbus_sdk: 1.5.2
+  waterbus_sdk: ^1.5.2
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
@@ -142,12 +142,14 @@ dependency_overrides:
     git:
       url: https://github.com/waterbustech/rhttp.git
       path: rhttp
+  flutter_webrtc_plus:
+    path: /Users/lambiengcode/Documents/waterbus/flutter-webrtc-plus
 
 dev_dependencies:
   # Test
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
   mockito: ^5.4.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
