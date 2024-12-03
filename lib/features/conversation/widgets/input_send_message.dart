@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -75,99 +76,110 @@ class _InputSendMessageState extends State<InputSendMessage> {
               (messageBeingEdited.data == _messageController.text.trim() ||
                   _messageController.text.isEmpty);
 
-          return Container(
-            padding: EdgeInsets.only(left: 6.sp, right: 2.75.sp),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: WebRTC.platformIsMobile
-                  ? Theme.of(context).colorScheme.surfaceContainerHighest
-                  : Colors.transparent,
-              borderRadius: WebRTC.platformIsMobile
-                  ? BorderRadius.circular(30.sp)
-                  : BorderRadius.zero,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    onFieldSubmitted: (val) => _handleSendMessage(
-                      messageBeingEdited: messageBeingEdited,
-                    ),
-                    focusNode: _focusNode,
-                    controller: _messageController,
-                    style: TextStyle(fontSize: 12.sp),
-                    keyboardType: TextInputType.multiline,
-                    minLines: 1,
-                    maxLines: 2,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10.sp,
-                      ),
-                      hintText: Strings.leaveAMessage.i18n,
-                      hintStyle: TextStyle(fontSize: 12.sp),
-                      filled: true,
-                      fillColor: WebRTC.platformIsMobile
-                          ? Theme.of(context)
-                              .colorScheme
-                              .surfaceContainerHighest
-                          : Colors.transparent,
-                      border: OutlineInputBorder(
-                        borderRadius: WebRTC.platformIsMobile
-                            ? BorderRadius.circular(40.sp)
-                            : BorderRadius.zero,
-                        borderSide: BorderSide.none,
-                      ),
-                      hoverColor: Colors.transparent,
-                    ),
-                    onChanged: (val) {
-                      setState(() {});
-                    },
-                  ),
-                ),
-                GestureWrapper(
-                  isCloseKeyboard: false,
-                  onTap: () {
-                    if (dataEditing) {
-                      _messageController.text = '';
-                      _requestFocus(isFocus: false);
-                      AppBloc.messageBloc.add(CancelEditMessageEvent());
-                    } else {
-                      _handleSendMessage(
+          return CallbackShortcuts(
+            bindings: {
+              const SingleActivator(LogicalKeyboardKey.enter): () {
+                _handleSendMessage(
+                  messageBeingEdited: messageBeingEdited,
+                );
+                debugPrint("123123");
+              },
+            },
+            child: Container(
+              padding: EdgeInsets.only(left: 6.sp, right: 2.75.sp),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: WebRTC.platformIsMobile
+                    ? Theme.of(context).colorScheme.surfaceContainerHighest
+                    : Colors.transparent,
+                borderRadius: WebRTC.platformIsMobile
+                    ? BorderRadius.circular(30.sp)
+                    : BorderRadius.zero,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      onFieldSubmitted: (val) => _handleSendMessage(
                         messageBeingEdited: messageBeingEdited,
-                      );
-                    }
-                  },
-                  child: dataEditing
-                      ? Padding(
-                          padding: EdgeInsets.all(7.sp),
-                          child: Icon(
-                            PhosphorIcons.x(),
-                            color: WebRTC.platformIsMobile
-                                ? mCL
-                                : Theme.of(context).colorScheme.primary,
-                            size: SizerUtil.isDesktop ? 22.sp : 18.sp,
-                          ),
-                        )
-                      : Container(
-                          decoration: WebRTC.platformIsMobile
-                              ? BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  shape: BoxShape.circle,
-                                )
-                              : null,
-                          padding: EdgeInsets.all(7.sp),
-                          child: Icon(
-                            PhosphorIcons.paperPlaneRight(
-                              PhosphorIconsStyle.fill,
-                            ),
-                            color: WebRTC.platformIsMobile
-                                ? mCL
-                                : Theme.of(context).colorScheme.primary,
-                            size: SizerUtil.isDesktop ? 22.sp : 18.sp,
-                          ),
+                      ),
+                      focusNode: _focusNode,
+                      controller: _messageController,
+                      style: TextStyle(fontSize: 12.sp),
+                      keyboardType: TextInputType.multiline,
+                      minLines: 1,
+                      maxLines: 2,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10.sp,
                         ),
-                ),
-              ],
+                        hintText: Strings.leaveAMessage.i18n,
+                        hintStyle: TextStyle(fontSize: 12.sp),
+                        filled: true,
+                        fillColor: WebRTC.platformIsMobile
+                            ? Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest
+                            : Colors.transparent,
+                        border: OutlineInputBorder(
+                          borderRadius: WebRTC.platformIsMobile
+                              ? BorderRadius.circular(40.sp)
+                              : BorderRadius.zero,
+                          borderSide: BorderSide.none,
+                        ),
+                        hoverColor: Colors.transparent,
+                      ),
+                      onChanged: (val) {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  GestureWrapper(
+                    isCloseKeyboard: false,
+                    onTap: () {
+                      if (dataEditing) {
+                        _messageController.text = '';
+                        _requestFocus(isFocus: false);
+                        AppBloc.messageBloc.add(CancelEditMessageEvent());
+                      } else {
+                        _handleSendMessage(
+                          messageBeingEdited: messageBeingEdited,
+                        );
+                      }
+                    },
+                    child: dataEditing
+                        ? Padding(
+                            padding: EdgeInsets.all(7.sp),
+                            child: Icon(
+                              PhosphorIcons.x(),
+                              color: WebRTC.platformIsMobile
+                                  ? mCL
+                                  : Theme.of(context).colorScheme.primary,
+                              size: SizerUtil.isDesktop ? 22.sp : 18.sp,
+                            ),
+                          )
+                        : Container(
+                            decoration: WebRTC.platformIsMobile
+                                ? BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    shape: BoxShape.circle,
+                                  )
+                                : null,
+                            padding: EdgeInsets.all(7.sp),
+                            child: Icon(
+                              PhosphorIcons.paperPlaneRight(
+                                PhosphorIconsStyle.fill,
+                              ),
+                              color: WebRTC.platformIsMobile
+                                  ? mCL
+                                  : Theme.of(context).colorScheme.primary,
+                              size: SizerUtil.isDesktop ? 22.sp : 18.sp,
+                            ),
+                          ),
+                  ),
+                ],
+              ),
             ),
           );
         },
