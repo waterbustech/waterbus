@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (item.title) {
             case Strings.logout:
               displayLoadingLayer();
-              AppBloc.authBloc.add(AuthLogOut());
+              AppBloc.authBloc.add(AuthLoggedOut());
               break;
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);

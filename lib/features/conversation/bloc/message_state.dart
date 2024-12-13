@@ -4,19 +4,19 @@ abstract class MessageState {}
 
 class MessageInitial extends MessageState {}
 
-class MessageActice extends MessageState {
+class MessageActived extends MessageState {
   final List<MessageModel> messages;
   final MessageModel? messageBeingEdited;
   final bool isOver;
 
-  MessageActice({
+  MessageActived({
     required this.messages,
     required this.messageBeingEdited,
     required this.isOver,
   });
 }
 
-class MessageInProgress extends MessageActice {
+class MessageInProgress extends MessageActived {
   MessageInProgress({
     required super.messages,
     required super.messageBeingEdited,
@@ -24,7 +24,7 @@ class MessageInProgress extends MessageActice {
   });
 }
 
-class MessageDone extends MessageActice {
+class MessageDone extends MessageActived {
   MessageDone({
     required super.messages,
     required super.messageBeingEdited,

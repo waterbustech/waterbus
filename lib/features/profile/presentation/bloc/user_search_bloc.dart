@@ -22,10 +22,10 @@ class UserSearchBloc extends Bloc<UserSearchsEvent, UserSearchState> {
         if (event is UserSearchStarted) {
           emit(_userSearchInprogress);
           keyword = event.keyword;
-          add(const UserSearchRefresh());
+          add(const UserSearchRefreshed());
         }
 
-        if (event is UserSearchGetMore) {
+        if (event is UserSearchFetched) {
           if (state is UserSearchLoadMore || !_isOver) return;
 
           emit(_userSearchLoadMore);
@@ -33,7 +33,7 @@ class UserSearchBloc extends Bloc<UserSearchsEvent, UserSearchState> {
           emit(_userSearchDone);
         }
 
-        if (event is UserSearchRefresh) {
+        if (event is UserSearchRefreshed) {
           _cleanUserSearch();
           await _handleSearchUsers();
           emit(_userSearchDone);

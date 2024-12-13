@@ -90,7 +90,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
-          if (state is ChatActive) {
+          if (state is ChatActived) {
             return ConversationList(
               onTap: (index) {
                 if (index > state.conversations.length - 1) return;

@@ -42,7 +42,7 @@ class _InvitedChatScreenState extends State<InvitedChatScreen> {
           Expanded(
             child: BlocBuilder<InvitedChatBloc, InvitedChatState>(
               builder: (context, state) {
-                if (state is InvitedChatActive) {
+                if (state is InvitedChatActived) {
                   final List<Meeting> invitedConversations =
                       state.invitedConversations;
 
@@ -52,12 +52,12 @@ class _InvitedChatScreenState extends State<InvitedChatScreen> {
                     shrinkWrap: true,
                     callBackRefresh: (handleFinish) =>
                         AppBloc.invitedChatBloc.add(
-                      InvitedChatRefresh(
+                      InvitedChatRefreshed(
                         handleFinish: handleFinish,
                       ),
                     ),
                     callBackLoadMore: () =>
-                        AppBloc.invitedChatBloc.add(InvitedChatGet()),
+                        AppBloc.invitedChatBloc.add(InvitedChatFetched()),
                     isLoadMore: state is InvitedChatInProgress,
                     itemBuilder: (context, index) {
                       if (index > invitedConversations.length - 1) {

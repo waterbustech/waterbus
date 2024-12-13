@@ -155,7 +155,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                 );
               }
 
-              if (state is UserSearchActive) {
+              if (state is UserSearchActived) {
                 final List<User> searchs = state.userSearchs;
 
                 return searchs.isEmpty || _controller.text.isEmpty
@@ -167,13 +167,13 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                           shrinkWrap: true,
                           callBackRefresh: (handleFinish) {
                             AppBloc.userSearchBloc.add(
-                              UserSearchRefresh(
+                              UserSearchRefreshed(
                                 handleFinish: handleFinish,
                               ),
                             );
                           },
                           callBackLoadMore: () {
-                            AppBloc.userSearchBloc.add(UserSearchGetMore());
+                            AppBloc.userSearchBloc.add(UserSearchFetched());
                           },
                           isLoadMore: state is UserSearchLoadMore,
                           padding: EdgeInsets.only(bottom: 20.sp),
@@ -182,7 +182,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
                               AppNavigator.pop();
 
                               AppBloc.chatBloc.add(
-                                ChatAddMember(
+                                ChatMemberAdded(
                                   meeting: widget.meetingId,
                                   code: widget.code,
                                   user: searchs[index],

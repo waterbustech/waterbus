@@ -4,69 +4,69 @@ abstract class MessageEvent {}
 
 class MessageSocketStarted extends MessageEvent {}
 
-class MessageGetByMeeting extends MessageEvent {
+class MessageFetchedByMeeting extends MessageEvent {
   final int meetingId;
   final Function? handleFinish;
 
-  MessageGetByMeeting({
+  MessageFetchedByMeeting({
     required this.meetingId,
     this.handleFinish,
   });
 }
 
-class MessageGetMore extends MessageEvent {}
+class MessageFetched extends MessageEvent {}
 
-class MessageResend extends MessageEvent {
+class MessageResent extends MessageEvent {
   final MessageModel messageModel;
 
-  MessageResend({required this.messageModel});
+  MessageResent({required this.messageModel});
 }
 
-class MessageSend extends MessageEvent {
+class MessageSent extends MessageEvent {
   final String data;
   final int meetingId;
 
-  MessageSend({required this.data, required this.meetingId});
+  MessageSent({required this.data, required this.meetingId});
 }
 
-class MessageEdit extends MessageEvent {
+class MessageEdited extends MessageEvent {
   final String data;
   final int messageId;
 
-  MessageEdit({required this.data, required this.messageId});
+  MessageEdited({required this.data, required this.messageId});
 }
 
-class MessageSelect extends MessageEvent {
+class MessageSelected extends MessageEvent {
   final MessageModel message;
 
-  MessageSelect({required this.message});
+  MessageSelected({required this.message});
 }
 
-class MessageDelete extends MessageEvent {
+class MessageDeleted extends MessageEvent {
   final int messageId;
 
-  MessageDelete({required this.messageId});
+  MessageDeleted({required this.messageId});
 }
 
-class MessageCancelEditing extends MessageEvent {}
+class MessageEditingCancelled extends MessageEvent {}
 
-class MessageClean extends MessageEvent {
+class MessageCleaned extends MessageEvent {
   final List<int> meetingIds;
 
-  MessageClean({required this.meetingIds});
+  MessageCleaned({required this.meetingIds});
 }
 
-class MessageInsert extends MessageEvent {
+class MessageInserted extends MessageEvent {
   final MessageModel message;
 
-  MessageInsert({required this.message});
+  MessageInserted({required this.message});
 }
 
-class MessageUpdateFromSocket extends MessageEvent {
+class MessageUpdatedViaSocket extends MessageEvent {
   final MessageModel messageModel;
   final bool isDeleted;
 
-  MessageUpdateFromSocket({
+  MessageUpdatedViaSocket({
     required this.messageModel,
     this.isDeleted = false,
   });

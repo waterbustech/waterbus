@@ -26,7 +26,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
           emit(_invitedChatDone);
         }
       }
-      if (event is InvitedChatGet) {
+      if (event is InvitedChatFetched) {
         if (state is InvitedChatInProgress || _isOverInvited) return;
 
         emit(_invitedChatInprogress);
@@ -34,7 +34,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
         emit(_invitedChatDone);
       }
 
-      if (event is InvitedChatRefresh) {
+      if (event is InvitedChatRefreshed) {
         _invitedConversations.clear();
         _isOverInvited = false;
 
@@ -43,7 +43,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
         event.handleFinish();
       }
 
-      if (event is InvitedChatAccept) {
+      if (event is InvitedChatAccepted) {
         final Meeting? meeting =
             await _waterbusSdk.acceptInvite(event.meetingId);
 
@@ -51,7 +51,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
           _invitedConversations.removeWhere(
             (conversation) => conversation.id == event.meetingId,
           );
-          AppBloc.chatBloc.add(ChatInsert(conversation: meeting));
+          AppBloc.chatBloc.add(ChatInserted(conversation: meeting));
 
           showSnackBarWaterbus(
             content: Strings.youHaveConfirmedConversation.i18n,
@@ -63,7 +63,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
         }
       }
 
-      if (event is InvitedChatInsert) {
+      if (event is InvitedChatInserted) {
         if (!_isOverInvited ||
             (_isOverInvited && _invitedConversations.isEmpty)) {
           final index = _invitedConversations
@@ -79,7 +79,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
         }
       }
 
-      if (event is InvitedChatClean) {
+      if (event is InvitedChatCleaned) {
         _cleanInvitedChat();
         emit(_invitedChatDone);
       }

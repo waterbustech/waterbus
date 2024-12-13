@@ -82,7 +82,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
 
                 final List<Meeting> meetings = [];
 
-                if (state is ArchivedActive) {
+                if (state is ArchivedActived) {
                   meetings.addAll(state.archivedConversations);
                 }
 
@@ -93,13 +93,13 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                         shrinkWrap: true,
                         callBackRefresh: (handleFinish) {
                           AppBloc.archivedBloc.add(
-                            ArchivedRefresh(
+                            ArchivedRefreshed(
                               handleFinish: handleFinish,
                             ),
                           );
                         },
                         callBackLoadMore: () {
-                          AppBloc.archivedBloc.add(ArchivedGetMore());
+                          AppBloc.archivedBloc.add(ArchivedDataFetched());
                         },
                         isLoadMore: state is ArchivedInProgress,
                         padding: EdgeInsets.only(

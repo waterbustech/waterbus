@@ -89,7 +89,7 @@ class AppScaffold extends StatelessWidget {
 
   void _onPopInvoked(bool canPop, _) {
     if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
-      AppBloc.meetingBloc.add(const MeetingLeave());
+      AppBloc.meetingBloc.add(const MeetingLeft());
     }
   }
 }

@@ -41,7 +41,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
 
     if (_isActive) {
       AppBloc.userBloc.add(
-        UserUpdateUsername(username: _usernameController.text),
+        UserUsernameUpdated(username: _usernameController.text),
       );
     }
   }
@@ -142,7 +142,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
                       const Duration(milliseconds: 500),
                       () {
                         AppBloc.userBloc.add(
-                          UserCheckUsername(
+                          UserUsernameChecked(
                             username: _usernameController.text,
                           ),
                         );

@@ -24,7 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitial()) {
     on<UserEvent>(
       (event, emit) async {
-        if (event is UserGet) {
+        if (event is UserFetched) {
           if (_user != null) return;
 
           await _getUserProfile();
@@ -34,7 +34,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           }
         }
 
-        if (event is UserUpdate) {
+        if (event is UserUpdated) {
           await _updateUserProfile(event);
 
           if (_user != null) {
@@ -42,7 +42,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           }
         }
 
-        if (event is UserUpdateAvatar) {
+        if (event is UserAvatarUpdated) {
           await _handleChangeAvatar(event);
 
           if (_user != null) {
@@ -50,13 +50,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           }
         }
 
-        if (event is UserClean) {
+        if (event is UserCleaned) {
           _user = null;
 
           emit(UserInitial());
         }
 
-        if (event is UserCheckUsername) {
+        if (event is UserUsernameChecked) {
           _checkUsernameStatus = CheckUsernameStatus.checking;
           emit(_userDone);
 
@@ -64,7 +64,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           emit(_userDone);
         }
 
-        if (event is UserUpdateUsername) {
+        if (event is UserUsernameUpdated) {
           if (event.username == _user?.userName) return;
 
           await _handleUpdateUsername(event.username);
@@ -109,7 +109,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _updateUserProfile(
-    UserUpdate event, {
+    UserUpdated event, {
     bool ignorePop = false,
   }) async {
     if (_user == null) return;
@@ -137,7 +137,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  Future<void> _handleChangeAvatar(UserUpdateAvatar event) async {
+  Future<void> _handleChangeAvatar(UserAvatarUpdated event) async {
     final String? presignedUrl = await _waterbusSdk.getPresignedUrl();
 
     if (presignedUrl == null) return;
@@ -150,7 +150,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (uploadAvatar == null) return;
 
     await _updateUserProfile(
-      UserUpdate(
+      UserUpdated(
         fullName: _user!.fullName,
         avatar: uploadAvatar,
         bio: _user?.bio,

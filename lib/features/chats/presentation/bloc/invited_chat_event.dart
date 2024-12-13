@@ -4,24 +4,24 @@ abstract class InvitedChatEvent {}
 
 class InvitedChatStarted extends InvitedChatEvent {}
 
-class InvitedChatGet extends InvitedChatEvent {}
+class InvitedChatFetched extends InvitedChatEvent {}
 
-class InvitedChatRefresh extends InvitedChatEvent {
+class InvitedChatRefreshed extends InvitedChatEvent {
   final Function handleFinish;
 
-  InvitedChatRefresh({required this.handleFinish});
+  InvitedChatRefreshed({required this.handleFinish});
 }
 
-class InvitedChatInsert extends InvitedChatEvent {
+class InvitedChatInserted extends InvitedChatEvent {
   final Meeting invited;
 
-  InvitedChatInsert({required this.invited});
+  InvitedChatInserted({required this.invited});
 }
 
-class InvitedChatAccept extends InvitedChatEvent {
+class InvitedChatAccepted extends InvitedChatEvent {
   final int meetingId;
 
-  InvitedChatAccept({required this.meetingId});
+  InvitedChatAccepted({required this.meetingId});
 }
 
-class InvitedChatClean extends InvitedChatEvent {}
+class InvitedChatCleaned extends InvitedChatEvent {}

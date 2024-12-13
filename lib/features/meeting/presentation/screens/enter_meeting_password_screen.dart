@@ -45,7 +45,7 @@ class _EnterMeetingPasswordScreenState
         context,
         title: Strings.enterPassword.i18n,
         onBackPressed: () {
-          AppBloc.meetingBloc.add(MeetingDispose());
+          AppBloc.meetingBloc.add(MeetingDisposed());
           AppNavigator.pop();
         },
         actions: [
@@ -56,7 +56,7 @@ class _EnterMeetingPasswordScreenState
               displayLoadingLayer();
 
               AppBloc.meetingBloc.add(
-                MeetingJoinWithPassword(
+                MeetingJoinedWithPassword(
                   password: _passwordController.text,
                 ),
               );

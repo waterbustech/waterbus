@@ -65,7 +65,7 @@ class InvitedChatCard extends StatelessWidget {
               GestureWrapper(
                 onTap: () {
                   AppBloc.invitedChatBloc.add(
-                    InvitedChatAccept(
+                    InvitedChatAccepted(
                       meetingId: invitedConversation.id,
                     ),
                   );

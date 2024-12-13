@@ -4,68 +4,68 @@ sealed class WhiteBoardEvent {}
 
 class WhiteBoardStarted extends WhiteBoardEvent {}
 
-class WhiteBoardDraw extends WhiteBoardEvent {
+class WhiteBoardDrawed extends WhiteBoardEvent {
   final DrawModel drawModel;
-  WhiteBoardDraw({required this.drawModel});
+  WhiteBoardDrawed({required this.drawModel});
 }
 
-class WhiteBoardUpdate extends WhiteBoardEvent {
+class WhiteBoardUpdated extends WhiteBoardEvent {
   final List<DrawModel> draws;
-  WhiteBoardUpdate({required this.draws});
+  WhiteBoardUpdated({required this.draws});
 }
 
-class WhiteBoardClean extends WhiteBoardEvent {
+class WhiteBoardCleaned extends WhiteBoardEvent {
   final int meetingId;
-  WhiteBoardClean({required this.meetingId});
+  WhiteBoardCleaned({required this.meetingId});
 }
 
-class WhiteBoardUndo extends WhiteBoardEvent {}
+class WhiteBoardUndid extends WhiteBoardEvent {}
 
-class OnRedoEvent extends WhiteBoardEvent {}
+class WhiteBoardRedid extends WhiteBoardEvent {}
 
 // MARK : side bar options
-class WhiteBoardChangeColor extends WhiteBoardEvent {
+class WhiteBoardColorChanged extends WhiteBoardEvent {
   final Color color;
 
-  WhiteBoardChangeColor(this.color);
+  WhiteBoardColorChanged(this.color);
 
   List<Object?> get props => [color];
 }
 
-class WhiteBoardChangeStrokeSize extends WhiteBoardEvent {
+class WhiteBoardStrokeSizeChanged extends WhiteBoardEvent {
   final double strokeSize;
 
-  WhiteBoardChangeStrokeSize(this.strokeSize);
+  WhiteBoardStrokeSizeChanged(this.strokeSize);
 
   List<Object?> get props => [strokeSize];
 }
 
-class WhiteBoardChangeDrawShapes extends WhiteBoardEvent {
+class WhiteBoardDrawShapesChanged extends WhiteBoardEvent {
   final DrawShapes shapes;
 
-  WhiteBoardChangeDrawShapes(this.shapes);
+  WhiteBoardDrawShapesChanged(this.shapes);
 
   List<Object?> get props => [shapes];
 }
 
-class WhiteBoardToggleGrid extends WhiteBoardEvent {
+class WhiteBoardGridToggled extends WhiteBoardEvent {
   final bool showGrid;
-  WhiteBoardToggleGrid(this.showGrid);
+  WhiteBoardGridToggled(this.showGrid);
 
   List<Object?> get props => [showGrid];
 }
 
-class WhiteBoardToggleFilled extends WhiteBoardEvent {
+class WhiteBoardFilledToggled extends WhiteBoardEvent {
   final bool filled;
-  WhiteBoardToggleFilled(this.filled);
+  WhiteBoardFilledToggled(this.filled);
 
   List<Object?> get props => [filled];
 }
 
-class WhiteBoardChangePolygonSides extends WhiteBoardEvent {
+class WhiteBoardPolygonSidesChanged extends WhiteBoardEvent {
   final int sides;
 
-  WhiteBoardChangePolygonSides(this.sides);
+  WhiteBoardPolygonSidesChanged(this.sides);
 
   List<Object?> get props => [sides];
 }

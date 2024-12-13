@@ -9,19 +9,19 @@ sealed class RecentJoinedEvent extends Equatable {
 
 class RecentJoinedStarted extends RecentJoinedEvent {}
 
-class RecentJoinedInsert extends RecentJoinedEvent {
+class RecentJoinedInserted extends RecentJoinedEvent {
   final Meeting meeting;
-  const RecentJoinedInsert({required this.meeting});
+  const RecentJoinedInserted({required this.meeting});
 }
 
-class RecentJoinedUpdate extends RecentJoinedEvent {
+class RecentJoinedUpdated extends RecentJoinedEvent {
   final Meeting meeting;
-  const RecentJoinedUpdate({required this.meeting});
+  const RecentJoinedUpdated({required this.meeting});
 }
 
-class RecentJoinedRemove extends RecentJoinedEvent {
+class RecentJoinedRemoved extends RecentJoinedEvent {
   final int meetingId;
-  const RecentJoinedRemove({required this.meetingId});
+  const RecentJoinedRemoved({required this.meetingId});
 }
 
-class RecentJoinedClean extends RecentJoinedEvent {}
+class RecentJoinedCleaned extends RecentJoinedEvent {}

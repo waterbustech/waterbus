@@ -72,7 +72,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
           GestureWrapper(
             onTap: () {
               AppBloc.meetingBloc.add(
-                MeetingSaveCallSettings(setting: _settings),
+                MeetingCallSettingsSave(setting: _settings),
               );
 
               if (AppNavigator.canPop) {

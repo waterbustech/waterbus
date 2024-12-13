@@ -51,10 +51,10 @@ class _RecordScreenState extends State<RecordScreen> {
                   physics: const BouncingScrollPhysics(),
                   childShimmer: const SizedBox(),
                   callBackLoadMore: () {
-                    AppBloc.recordBloc.add(RecordsGet());
+                    AppBloc.recordBloc.add(RecordsFetched());
                   },
                   callBackRefresh: (handleFinish) {
-                    AppBloc.recordBloc.add(RecordsRefresh(handleFinish));
+                    AppBloc.recordBloc.add(RecordsRefreshed(handleFinish));
                   },
                   itemCount: records.length,
                   itemBuilder: (context, index) => RecordCard(

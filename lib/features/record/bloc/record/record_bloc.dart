@@ -20,7 +20,7 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
 
   RecordBloc(this._fileSaver) : super(RecordInitial()) {
     on<RecordEvent>((event, emit) async {
-      if (event is RecordsRefresh) {
+      if (event is RecordsRefreshed) {
         _records.clear();
         await _getRecords();
         emit(_recordDone);
@@ -34,12 +34,12 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
         emit(_recordDone);
       }
 
-      if (event is RecordsGet) {
+      if (event is RecordsFetched) {
         await _getRecords();
         emit(_recordDone);
       }
 
-      if (event is RecordsSave) {
+      if (event is RecordsSaved) {
         final bool isSucceed = await _fileSaver.saveFile(
           event.record.urlToVideo,
         );

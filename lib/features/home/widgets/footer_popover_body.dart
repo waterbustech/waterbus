@@ -39,7 +39,7 @@ class FooterPopoverBody extends StatelessWidget {
           color: colorRedRemove,
           title: Strings.signOutOfYourAccount.i18n,
           onTap: () {
-            AppBloc.authBloc.add(AuthLogOut());
+            AppBloc.authBloc.add(AuthLoggedOut());
           },
         ),
         SizedBox(height: 8.sp),

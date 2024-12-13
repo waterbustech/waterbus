@@ -4,16 +4,16 @@ abstract class ArchivedState {}
 
 class ArchivedInitial extends ArchivedState {}
 
-class ArchivedActive extends ArchivedState {
+class ArchivedActived extends ArchivedState {
   final List<Meeting> archivedConversations;
 
-  ArchivedActive({required this.archivedConversations});
+  ArchivedActived({required this.archivedConversations});
 }
 
-class ArchivedInProgress extends ArchivedActive {
+class ArchivedInProgress extends ArchivedActived {
   ArchivedInProgress({required super.archivedConversations});
 }
 
-class ArchivedDone extends ArchivedActive {
+class ArchivedDone extends ArchivedActived {
   ArchivedDone({required super.archivedConversations});
 }

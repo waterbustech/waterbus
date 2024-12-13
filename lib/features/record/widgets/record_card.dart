@@ -91,7 +91,7 @@ class RecordCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  AppBloc.recordBloc.add(RecordsSave(record: record));
+                  AppBloc.recordBloc.add(RecordsSaved(record: record));
                 },
                 icon: Icon(PhosphorIcons.downloadSimple()),
               ),

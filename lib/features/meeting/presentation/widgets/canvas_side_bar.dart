@@ -59,7 +59,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.normal,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(
+                        WhiteBoardDrawShapesChanged(
                           DrawShapes.normal,
                         ),
                       ),
@@ -70,7 +70,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.eraser,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(
+                        WhiteBoardDrawShapesChanged(
                           DrawShapes.eraser,
                         ),
                       ),
@@ -90,7 +90,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.line,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(DrawShapes.line),
+                        WhiteBoardDrawShapesChanged(DrawShapes.line),
                       ),
                       tooltip: 'Line',
                       iconData: PhosphorIcons.minus(),
@@ -100,7 +100,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.polygon,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(
+                        WhiteBoardDrawShapesChanged(
                           DrawShapes.polygon,
                         ),
                       ),
@@ -111,7 +111,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.square,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(
+                        WhiteBoardDrawShapesChanged(
                           DrawShapes.square,
                         ),
                       ),
@@ -122,7 +122,7 @@ class CanvasSideBar extends StatelessWidget {
                       selected:
                           state.currentPaint.drawShapes == DrawShapes.circle,
                       onTap: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardChangeDrawShapes(
+                        WhiteBoardDrawShapesChanged(
                           DrawShapes.circle,
                         ),
                       ),
@@ -152,7 +152,7 @@ class CanvasSideBar extends StatelessWidget {
                       max: 50,
                       onChanged: (val) {
                         AppBloc.whiteBoardBloc
-                            .add(WhiteBoardChangeStrokeSize(val));
+                            .add(WhiteBoardStrokeSizeChanged(val));
                       },
                     ),
                   ),
@@ -187,7 +187,7 @@ class CanvasSideBar extends StatelessWidget {
                                 max: 8,
                                 onChanged: (val) {
                                   AppBloc.whiteBoardBloc.add(
-                                    WhiteBoardChangePolygonSides(val.toInt()),
+                                    WhiteBoardPolygonSidesChanged(val.toInt()),
                                   );
                                 },
                                 label: '${state.currentPaint.polygonSides}',
@@ -221,13 +221,13 @@ class CanvasSideBar extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardUndo(),
+                        WhiteBoardUndid(),
                       ),
                       icon: Icon(PhosphorIcons.arrowUUpLeft()),
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
-                        OnRedoEvent(),
+                        WhiteBoardRedid(),
                       ),
                       icon: Icon(PhosphorIcons.arrowUUpRight()),
                     ),
@@ -235,7 +235,7 @@ class CanvasSideBar extends StatelessWidget {
                       icon: Icon(PhosphorIcons.broom()),
                       onPressed: () => {
                         AppBloc.whiteBoardBloc.add(
-                          WhiteBoardClean(
+                          WhiteBoardCleaned(
                             meetingId: AppBloc.meetingBloc.state.meeting!.id,
                           ),
                         ),
@@ -243,7 +243,7 @@ class CanvasSideBar extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardToggleFilled(!state.currentPaint.isFilled),
+                        WhiteBoardFilledToggled(!state.currentPaint.isFilled),
                       ),
                       icon: Icon(
                         PhosphorIcons.paintBucket(
@@ -255,7 +255,7 @@ class CanvasSideBar extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () => AppBloc.whiteBoardBloc.add(
-                        WhiteBoardToggleGrid(!state.currentPaint.showGrid),
+                        WhiteBoardGridToggled(!state.currentPaint.showGrid),
                       ),
                       icon: Icon(
                         PhosphorIcons.ruler(

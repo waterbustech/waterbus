@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc() : super(HomeInitial(index: 0)) {
     on<HomeEvent>((event, emit) {
-      if (event is HomeChange) {
+      if (event is HomeChanged) {
         _handleChangeTab(event);
         emit(_home);
       }
@@ -21,7 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   // MARK: Private methods
   HomeInitial get _home => HomeInitial(index: currentIndex);
 
-  void _handleChangeTab(HomeChange event) {
+  void _handleChangeTab(HomeChanged event) {
     if (event.tabIndex == currentIndex) return;
 
     currentIndex = event.tabIndex;

@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
       child: GestureWrapper(
         onTap: () {
           AppBloc.homeBloc.add(
-            HomeChange(tabIndex: index),
+            HomeChanged(tabIndex: index),
           );
         },
         child: BlocBuilder<HomeBloc, HomeState>(

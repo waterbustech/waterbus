@@ -97,7 +97,7 @@ class MeetingCard extends StatelessWidget {
                     permissions: [Permission.camera, Permission.microphone],
                     callBack: () async {
                       AppBloc.meetingBloc.add(
-                        MeetingDisplayDialog(meeting: meeting),
+                        MeetingDialogDisplayed(meeting: meeting),
                       );
                     },
                   );

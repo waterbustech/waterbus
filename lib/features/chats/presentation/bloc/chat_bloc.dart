@@ -44,14 +44,16 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           Future.delayed(1.seconds, () {
             if (_conversationCurrent == null && _conversations.isNotEmpty) {
               add(
-                ChatSelectTheCurrent(meeting: _conversations.first),
+                ChatCurrentConversationSelected(
+                  meeting: _conversations.first,
+                ),
               );
             }
           });
         }
       }
 
-      if (event is ChatSelectTheCurrent) {
+      if (event is ChatCurrentConversationSelected) {
         if (event.meeting != null) {
           _conversationCurrent = event.meeting;
         } else {
@@ -68,13 +70,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_chatDone);
       }
 
-      if (event is ChatCleanConversationCurrent) {
+      if (event is ChatCurrentConversationCleaned) {
         _conversationCurrent = null;
 
         emit(_chatDone);
       }
 
-      if (event is ChatGet) {
+      if (event is ChatFetched) {
         if (state is ChatInProgress || _isOver) return;
 
         emit(_chatInProgress);
@@ -82,9 +84,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_chatDone);
       }
 
-      if (event is ChatRefresh) {
+      if (event is ChatRefreshed) {
         AppBloc.messageBloc.add(
-          MessageClean(
+          MessageCleaned(
             meetingIds:
                 _conversations.map((conversation) => conversation.id).toList(),
           ),
@@ -96,7 +98,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         event.handleFinish();
       }
 
-      if (event is ChatCreate) {
+      if (event is ChatCreated) {
         final Meeting? meeting = await _createConversation(event);
 
         if (meeting != null) {
@@ -110,7 +112,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       }
 
-      if (event is ChatAddMember) {
+      if (event is ChatMemberAdded) {
         final Meeting? meeting =
             await _waterbusSdk.addMember(event.code, event.user.id);
 
@@ -133,19 +135,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_chatDone);
       }
 
-      if (event is ChatInsert) {
+      if (event is ChatInserted) {
         _conversations.insert(0, event.conversation);
 
         emit(_chatDone);
       }
 
-      if (event is ChatDeleteMember) {
+      if (event is ChatMemberDeleted) {
         await _handleDeleteMember(event);
 
         emit(_chatDone);
       }
 
-      if (event is ChatLeave) {
+      if (event is ChatLeft) {
         final Meeting? meeting = event.meeting ?? _conversationCurrent;
 
         if (meeting == null) return;
@@ -163,13 +165,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
               AppNavigator.popUntil(Routes.rootRoute);
 
-              add(ChatUpdateConversationFromSocket());
+              add(ChatSocketConversationUpdated());
             },
           );
         }
       }
 
-      if (event is ChatDelete) {
+      if (event is ChatDeleted) {
         final Meeting? meeting = event.meeting ?? _conversationCurrent;
 
         if (meeting == null) return;
@@ -182,7 +184,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
             AppNavigator.popUntil(Routes.rootRoute);
 
-            add(ChatUpdateConversationFromSocket());
+            add(ChatSocketConversationUpdated());
           },
         );
       }
@@ -200,12 +202,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
             AppNavigator.popUntil(Routes.rootRoute);
 
-            add(ChatUpdateConversationFromSocket());
+            add(ChatSocketConversationUpdated());
           },
         );
       }
 
-      if (event is ChatUpdate) {
+      if (event is ChatUpdated) {
         await _handleUpdateConversation(
           title: event.title,
           password: event.password,
@@ -214,19 +216,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(_chatDone);
       }
 
-      if (event is ChatUpdateLastMessage) {
+      if (event is ChatLatestMessageUpdated) {
         _updateLastMessage(event);
 
         emit(_chatDone);
       }
 
-      if (event is ChatClean) {
+      if (event is ChatCleaned) {
         _cleanChat();
 
         emit(_chatDone);
       }
 
-      if (event is ChatUpdateAvatar) {
+      if (event is ChatAvatarUpdated) {
         displayLoadingLayer();
 
         final String? presignedUrl = await WaterbusSdk().getPresignedUrl();
@@ -249,7 +251,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         AppNavigator.pop();
       }
 
-      if (event is ChatUpdateConversationFromSocket) {
+      if (event is ChatSocketConversationUpdated) {
         emit(_chatDone);
       }
     });
@@ -293,7 +295,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   // MARK: private methods
   Future<Meeting?> _createConversation(
-    ChatCreate event,
+    ChatCreated event,
   ) async {
     final Meeting? meeting = await _waterbusSdk.createRoom(
       meeting: Meeting(title: event.title),
@@ -310,7 +312,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (socketEvent.event == ConversationEventEnum.newInvitaion) {
       if (newConversation == null) return;
-      AppBloc.invitedChatBloc.add(InvitedChatInsert(invited: newConversation));
+      AppBloc.invitedChatBloc
+          .add(InvitedChatInserted(invited: newConversation));
     } else if (socketEvent.event == ConversationEventEnum.newMemberJoined) {
       if (newMember == null) return;
 
@@ -327,7 +330,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       }
 
-      add(ChatUpdateConversationFromSocket());
+      add(ChatSocketConversationUpdated());
     }
   }
 
@@ -371,7 +374,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  void _updateLastMessage(ChatUpdateLastMessage event) {
+  void _updateLastMessage(ChatLatestMessageUpdated event) {
     final int index = _conversations.indexWhere(
       (conversation) => conversation.id == event.message.meeting,
     );
@@ -404,7 +407,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (archivedConversation != null) {
       AppBloc.archivedBloc.add(
-        ArchivedInsert(meeting: archivedConversation),
+        ArchivedInserted(meeting: archivedConversation),
       );
 
       _cleanConversationCurrent(archivedConversation.id);
@@ -441,7 +444,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _handleDeleteMember(ChatDeleteMember event) async {
+  Future<void> _handleDeleteMember(ChatMemberDeleted event) async {
     final Meeting? meeting =
         await _waterbusSdk.deleteMember(event.code, event.userModel.id);
 

@@ -4,16 +4,16 @@ abstract class ArchivedEvent {}
 
 class ArchivedStarted extends ArchivedEvent {}
 
-class ArchivedGetMore extends ArchivedEvent {}
+class ArchivedDataFetched extends ArchivedEvent {}
 
-class ArchivedInsert extends ArchivedEvent {
+class ArchivedInserted extends ArchivedEvent {
   final Meeting meeting;
 
-  ArchivedInsert({required this.meeting});
+  ArchivedInserted({required this.meeting});
 }
 
-class ArchivedRefresh extends ArchivedEvent {
+class ArchivedRefreshed extends ArchivedEvent {
   final Function handleFinish;
 
-  ArchivedRefresh({required this.handleFinish});
+  ArchivedRefreshed({required this.handleFinish});
 }

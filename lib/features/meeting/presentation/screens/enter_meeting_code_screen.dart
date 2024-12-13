@@ -27,7 +27,7 @@ class _EnterMeetingCardState extends State {
     displayLoadingLayer();
 
     AppBloc.meetingBloc.add(
-      MeetingGetInfo(
+      MeetingInfoGot(
         roomCode: int.parse(_codeController.text.replaceAll('-', '')),
       ),
     );

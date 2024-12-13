@@ -21,7 +21,7 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
         emit(_archivedDone);
       }
 
-      if (event is ArchivedGetMore) {
+      if (event is ArchivedDataFetched) {
         if (state is ArchivedInProgress || _isOverArchived) return;
 
         emit(_archivedInProgress);
@@ -29,10 +29,10 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
         emit(_archivedDone);
       }
 
-      if (event is ArchivedRefresh) {
+      if (event is ArchivedRefreshed) {
         _archivedConversations.clear();
         AppBloc.messageBloc.add(
-          MessageClean(
+          MessageCleaned(
             meetingIds: _archivedConversations
                 .map((conversation) => conversation.id)
                 .toList(),
@@ -43,7 +43,7 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
         event.handleFinish.call();
       }
 
-      if (event is ArchivedInsert) {
+      if (event is ArchivedInserted) {
         if (_archivedConversations.isEmpty && !_isOverArchived) return;
 
         final int index = _archivedConversations

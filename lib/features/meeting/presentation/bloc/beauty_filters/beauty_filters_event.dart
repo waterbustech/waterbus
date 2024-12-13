@@ -7,9 +7,9 @@ sealed class BeautyFiltersEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class BeautyFilterUpdate extends BeautyFiltersEvent {
+class BeautyFilterUpdated extends BeautyFiltersEvent {
   final BeautyFilters filters;
-  const BeautyFilterUpdate({required this.filters});
+  const BeautyFilterUpdated({required this.filters});
 }
 
 class BeautyFilterReset extends BeautyFiltersEvent {}

@@ -77,7 +77,7 @@ class RecentMeetings extends StatelessWidget {
           title: Strings.delete.i18n,
           callback: () {
             AppBloc.recentJoinedBloc.add(
-              RecentJoinedRemove(
+              RecentJoinedRemoved(
                 meetingId: conversation.id,
               ),
             );

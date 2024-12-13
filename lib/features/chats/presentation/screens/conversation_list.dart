@@ -46,7 +46,7 @@ class ConversationList extends StatelessWidget {
 
               final List<Meeting> meetings = [];
 
-              if (state is ChatActive) {
+              if (state is ChatActived) {
                 meetings.addAll(state.conversations);
               }
 
@@ -57,11 +57,11 @@ class ConversationList extends StatelessWidget {
                       shrinkWrap: true,
                       callBackRefresh: (handleFinish) {
                         AppBloc.chatBloc.add(
-                          ChatRefresh(handleFinish: handleFinish),
+                          ChatRefreshed(handleFinish: handleFinish),
                         );
                       },
                       callBackLoadMore: () {
-                        AppBloc.chatBloc.add(ChatGet());
+                        AppBloc.chatBloc.add(ChatFetched());
                       },
                       isLoadMore: state is ChatInProgress,
                       padding: EdgeInsets.only(

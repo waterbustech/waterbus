@@ -4,24 +4,24 @@ abstract class ChatState {}
 
 class ChatInitial extends ChatState {}
 
-class ChatActive extends ChatState {
+class ChatActived extends ChatState {
   final List<Meeting> conversations;
   final Meeting? conversationCurrent;
 
-  ChatActive({
+  ChatActived({
     required this.conversations,
     required this.conversationCurrent,
   });
 }
 
-class ChatInProgress extends ChatActive {
+class ChatInProgress extends ChatActived {
   ChatInProgress({
     required super.conversations,
     required super.conversationCurrent,
   });
 }
 
-class ChatDone extends ChatActive {
+class ChatDone extends ChatActived {
   ChatDone({
     required super.conversations,
     required super.conversationCurrent,

@@ -39,7 +39,7 @@ extension MeetingModelX on Meeting {
         isDanger: true,
         iconData: PhosphorIcons.trash(),
         handlePressed: () {
-          AppBloc.chatBloc.add(ChatDelete(meeting: this));
+          AppBloc.chatBloc.add(ChatDeleted(meeting: this));
         },
       ),
     );
@@ -51,7 +51,7 @@ extension MeetingModelX on Meeting {
           isDanger: true,
           iconData: PhosphorIcons.signOut(),
           handlePressed: () {
-            AppBloc.chatBloc.add(ChatLeave(meeting: this));
+            AppBloc.chatBloc.add(ChatLeft(meeting: this));
           },
         ),
       );

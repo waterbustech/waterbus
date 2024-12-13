@@ -4,8 +4,8 @@ abstract class AuthEvent {}
 
 class AuthStarted extends AuthEvent {}
 
-class AuthSignInWithGoogle extends AuthEvent {}
+class AuthGoogleLogined extends AuthEvent {}
 
-class AuthSignInAnonymously extends AuthEvent {}
+class AuthAnonymouslyLoggedIn extends AuthEvent {}
 
-class AuthLogOut extends AuthEvent {}
+class AuthLoggedOut extends AuthEvent {}

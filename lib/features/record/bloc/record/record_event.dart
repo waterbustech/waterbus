@@ -9,14 +9,14 @@ sealed class RecordEvent extends Equatable {
 
 class RecordsStarted extends RecordEvent {}
 
-class RecordsGet extends RecordEvent {}
+class RecordsFetched extends RecordEvent {}
 
-class RecordsSave extends RecordEvent {
+class RecordsSaved extends RecordEvent {
   final RecordModel record;
-  const RecordsSave({required this.record});
+  const RecordsSaved({required this.record});
 }
 
-class RecordsRefresh extends RecordEvent {
+class RecordsRefreshed extends RecordEvent {
   final Function handleFinish;
-  const RecordsRefresh(this.handleFinish);
+  const RecordsRefreshed(this.handleFinish);
 }

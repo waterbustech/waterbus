@@ -75,7 +75,7 @@ class BodySettingScreens extends StatelessWidget {
                                         displayLoadingLayer();
 
                                         AppBloc.userBloc.add(
-                                          UserUpdateAvatar(image: image),
+                                          UserAvatarUpdated(image: image),
                                         );
                                       },
                                     );
@@ -145,7 +145,7 @@ class BodySettingScreens extends StatelessWidget {
                                     displayLoadingLayer();
 
                                     AppBloc.userBloc.add(
-                                      UserUpdateAvatar(image: image),
+                                      UserAvatarUpdated(image: image),
                                     );
                                   },
                                 );

@@ -12,7 +12,7 @@ class BeautyFiltersBloc extends Bloc<BeautyFiltersEvent, BeautyFiltersState> {
 
   BeautyFiltersBloc() : super(BeautyFiltersInitial()) {
     on<BeautyFiltersEvent>((event, emit) {
-      if (event is BeautyFilterUpdate) {
+      if (event is BeautyFilterUpdated) {
         _adjustValue(event.filters);
         emit(_beautyFiltersUpdated);
       }

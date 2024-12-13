@@ -9,49 +9,49 @@ sealed class MeetingEvent extends Equatable {
 
 class MeetingStarted extends MeetingEvent {}
 
-class PrepareMediaStreamEvent extends MeetingEvent {}
+class MeetingMediaStreamSetup extends MeetingEvent {}
 
-class MeetingCreate extends MeetingEvent {
+class MeetingCreated extends MeetingEvent {
   final String roomName;
   final String password;
-  const MeetingCreate({required this.roomName, required this.password});
+  const MeetingCreated({required this.roomName, required this.password});
 }
 
-class MeetingUpdate extends MeetingEvent {
+class MeetingUpdated extends MeetingEvent {
   final String roomName;
   final String password;
-  const MeetingUpdate({required this.roomName, required this.password});
+  const MeetingUpdated({required this.roomName, required this.password});
 }
 
-class MeetingJoin extends MeetingEvent {
+class MeetingJoinedEvent extends MeetingEvent {
   final Meeting meeting;
-  const MeetingJoin({required this.meeting});
+  const MeetingJoinedEvent({required this.meeting});
 }
 
-class MeetingJoinWithPassword extends MeetingEvent {
+class MeetingJoinedWithPassword extends MeetingEvent {
   final String password;
   final bool isMember;
-  const MeetingJoinWithPassword({
+  const MeetingJoinedWithPassword({
     this.password = '',
     this.isMember = false,
   });
 }
 
-class MeetingGetInfo extends MeetingEvent {
+class MeetingInfoGot extends MeetingEvent {
   final int roomCode;
-  const MeetingGetInfo({required this.roomCode});
+  const MeetingInfoGot({required this.roomCode});
 }
 
-class MeetingLeave extends MeetingEvent {
+class MeetingLeft extends MeetingEvent {
   final bool isReleasedWaterbusSdk;
-  const MeetingLeave({this.isReleasedWaterbusSdk = false});
+  const MeetingLeft({this.isReleasedWaterbusSdk = false});
 }
 
-class MeetingDispose extends MeetingEvent {}
+class MeetingDisposed extends MeetingEvent {}
 
-class MeetingDisplayDialog extends MeetingEvent {
+class MeetingDialogDisplayed extends MeetingEvent {
   final Meeting meeting;
-  const MeetingDisplayDialog({required this.meeting});
+  const MeetingDialogDisplayed({required this.meeting});
 }
 
 class MeetingSomeoneNewJoined extends MeetingEvent {
@@ -64,36 +64,36 @@ class MeetingSomeoneLeft extends MeetingEvent {
   const MeetingSomeoneLeft({required this.participantId});
 }
 
-class MeetingStartSharingScreen extends MeetingEvent {}
+class MeetingSharingScreenStarted extends MeetingEvent {}
 
-class MeetingStopSharingScreen extends MeetingEvent {}
+class MeetingSharingScreenStoped extends MeetingEvent {}
 
-class MeetingToggleAudio extends MeetingEvent {}
+class MeetingAudioToggled extends MeetingEvent {}
 
-class MeetingToggleVideo extends MeetingEvent {}
+class MeetingVideoToggled extends MeetingEvent {}
 
-class MeetingToggleHandRasing extends MeetingEvent {}
+class MeetingHandRasingToggled extends MeetingEvent {}
 
-class MeetingSaveCallSettings extends MeetingEvent {
+class MeetingCallSettingsSave extends MeetingEvent {
   final CallSetting setting;
-  const MeetingSaveCallSettings({required this.setting});
+  const MeetingCallSettingsSave({required this.setting});
 }
 
-class MeetingApplyVirtualBackground extends MeetingEvent {
+class MeetingVirtualBackgroundApplied extends MeetingEvent {
   final String? backgroundPath;
-  const MeetingApplyVirtualBackground(this.backgroundPath);
+  const MeetingVirtualBackgroundApplied(this.backgroundPath);
 }
 
-class MeetingToggleSubtitle extends MeetingEvent {
-  const MeetingToggleSubtitle();
+class MeetingSubtitleToggled extends MeetingEvent {
+  const MeetingSubtitleToggled();
 }
 
-class MeetingStartRecord extends MeetingEvent {
-  const MeetingStartRecord();
+class MeetingRecordStarted extends MeetingEvent {
+  const MeetingRecordStarted();
 }
 
-class MeetingStopRecord extends MeetingEvent {
-  const MeetingStopRecord();
+class MeetingRecordStoped extends MeetingEvent {
+  const MeetingRecordStoped();
 }
 
-class MeetingRefreshDisplay extends MeetingEvent {}
+class MeetingDisplayRefreshed extends MeetingEvent {}

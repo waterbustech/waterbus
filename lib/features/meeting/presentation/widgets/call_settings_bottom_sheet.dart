@@ -128,7 +128,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                         ? Theme.of(context).colorScheme.primaryContainer
                         : null,
                     onTap: () {
-                      AppBloc.meetingBloc.add(const MeetingToggleSubtitle());
+                      AppBloc.meetingBloc.add(const MeetingSubtitleToggled());
                     },
                   ),
                   if (meeting?.isHost ?? false)
@@ -142,9 +142,9 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       color: isRecording ? Colors.redAccent : null,
                       onTap: () {
                         if (isRecording) {
-                          AppBloc.meetingBloc.add(const MeetingStopRecord());
+                          AppBloc.meetingBloc.add(const MeetingRecordStoped());
                         } else {
-                          AppBloc.meetingBloc.add(const MeetingStartRecord());
+                          AppBloc.meetingBloc.add(const MeetingRecordStarted());
                         }
                       },
                     ),

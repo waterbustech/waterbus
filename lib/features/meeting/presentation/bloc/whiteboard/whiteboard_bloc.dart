@@ -20,7 +20,7 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
   WhiteBoardBloc() : super(WhiteBoardInitialState()) {
     on<WhiteBoardEvent>((event, emit) {
-      if (event is WhiteBoardUpdate) {
+      if (event is WhiteBoardUpdated) {
         _paints = event.draws;
         emit(_whiteBoardDone);
       }
@@ -29,52 +29,52 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
         _handleDrawingInit(event);
       }
 
-      if (event is WhiteBoardDraw) {
+      if (event is WhiteBoardDrawed) {
         _waterbusSdk.updateWhiteBoard(
           event.drawModel,
           DrawActionEnum.updateAdd,
         );
       }
 
-      if (event is WhiteBoardUndo) {
+      if (event is WhiteBoardUndid) {
         _waterbusSdk.undo();
       }
 
-      if (event is OnRedoEvent) {
+      if (event is WhiteBoardRedid) {
         _waterbusSdk.redo();
       }
 
-      if (event is WhiteBoardClean) {
+      if (event is WhiteBoardCleaned) {
         _waterbusSdk.cleanWhiteBoard();
       }
 
       // MARK: Options
-      if (event is WhiteBoardChangeColor) {
+      if (event is WhiteBoardColorChanged) {
         _currentPaint = _currentPaint.copyWith(color: event.color);
         emit(_whiteBoardDone);
       }
 
-      if (event is WhiteBoardChangeStrokeSize) {
+      if (event is WhiteBoardStrokeSizeChanged) {
         _currentPaint = _currentPaint.copyWith(size: event.strokeSize);
         emit(_whiteBoardDone);
       }
 
-      if (event is WhiteBoardChangeDrawShapes) {
+      if (event is WhiteBoardDrawShapesChanged) {
         _currentPaint = _currentPaint.copyWith(drawShapes: event.shapes);
         emit(_whiteBoardDone);
       }
 
-      if (event is WhiteBoardChangePolygonSides) {
+      if (event is WhiteBoardPolygonSidesChanged) {
         _currentPaint = _currentPaint.copyWith(polygonSides: event.sides);
         emit(_whiteBoardDone);
       }
 
-      if (event is WhiteBoardToggleGrid) {
+      if (event is WhiteBoardGridToggled) {
         _currentPaint = _currentPaint.copyWith(showGrid: event.showGrid);
         emit(_whiteBoardDone);
       }
 
-      if (event is WhiteBoardToggleFilled) {
+      if (event is WhiteBoardFilledToggled) {
         _currentPaint = _currentPaint.copyWith(isFilled: event.filled);
         emit(_whiteBoardDone);
       }
@@ -95,6 +95,6 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
   }
 
   void _callBackDrawChanged(List<DrawModel> paints) {
-    add(WhiteBoardUpdate(draws: paints));
+    add(WhiteBoardUpdated(draws: paints));
   }
 }

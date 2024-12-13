@@ -13,12 +13,12 @@ class UserSearchStarted extends UserSearchsEvent {
   const UserSearchStarted({required this.keyword});
 }
 
-class UserSearchGetMore extends UserSearchsEvent {}
+class UserSearchFetched extends UserSearchsEvent {}
 
-class UserSearchRefresh extends UserSearchsEvent {
+class UserSearchRefreshed extends UserSearchsEvent {
   final Function? handleFinish;
 
-  const UserSearchRefresh({this.handleFinish});
+  const UserSearchRefreshed({this.handleFinish});
 }
 
 class UserSearchClean extends UserSearchsEvent {}

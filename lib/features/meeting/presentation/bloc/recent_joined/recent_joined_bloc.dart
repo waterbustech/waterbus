@@ -24,25 +24,25 @@ class RecentJoinedBloc extends Bloc<RecentJoinedEvent, RecentJoinedState> {
           emit(_recentJoinedDone);
         }
 
-        if (event is RecentJoinedInsert) {
+        if (event is RecentJoinedInserted) {
           _insertMeeting(event.meeting);
 
           emit(_recentJoinedDone);
         }
 
-        if (event is RecentJoinedUpdate) {
+        if (event is RecentJoinedUpdated) {
           _findAndModifyRecent(event.meeting);
 
           emit(_recentJoinedDone);
         }
 
-        if (event is RecentJoinedRemove) {
+        if (event is RecentJoinedRemoved) {
           _removeMeeting(event.meetingId);
 
           emit(_recentJoinedDone);
         }
 
-        if (event is RecentJoinedClean) {
+        if (event is RecentJoinedCleaned) {
           _handleCleanAllRecentJoined();
 
           emit(_recentJoinedDone);

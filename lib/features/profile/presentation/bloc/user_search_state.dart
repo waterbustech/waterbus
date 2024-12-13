@@ -9,10 +9,10 @@ sealed class UserSearchState extends Equatable {
 
 final class UserInitial extends UserSearchState {}
 
-class UserSearchActive extends UserSearchState {
+class UserSearchActived extends UserSearchState {
   final List<User> userSearchs;
 
-  const UserSearchActive({
+  const UserSearchActived({
     required this.userSearchs,
   });
 
@@ -20,14 +20,14 @@ class UserSearchActive extends UserSearchState {
   List<Object> get props => [userSearchs];
 }
 
-class UserSearchInprogress extends UserSearchActive {
+class UserSearchInprogress extends UserSearchActived {
   const UserSearchInprogress({required super.userSearchs});
 }
 
-class UserSearchLoadMore extends UserSearchActive {
+class UserSearchLoadMore extends UserSearchActived {
   const UserSearchLoadMore({required super.userSearchs});
 }
 
-class UserSearchDone extends UserSearchActive {
+class UserSearchDone extends UserSearchActived {
   const UserSearchDone({required super.userSearchs});
 }

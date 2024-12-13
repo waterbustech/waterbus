@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               displayLoadingLayer();
 
               AppBloc.userBloc.add(
-                UserUpdate(
+                UserUpdated(
                   fullName: _fullNameController.text,
                   bio: _bioController.text,
                 ),
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         displayLoadingLayer();
 
                                         AppBloc.userBloc.add(
-                                          UserUpdateAvatar(image: image),
+                                          UserAvatarUpdated(image: image),
                                         );
                                       },
                                     );
@@ -253,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           GestureWrapper(
                             onTap: () {
                               displayLoadingLayer();
-                              AppBloc.authBloc.add(AuthLogOut());
+                              AppBloc.authBloc.add(AuthLoggedOut());
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 20.sp),

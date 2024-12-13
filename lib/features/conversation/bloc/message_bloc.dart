@@ -31,9 +31,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _waterbusSdk.onMessageSocketChanged = _listenMessageSocket;
       }
 
-      if (event is MessageGetByMeeting) {
+      if (event is MessageFetchedByMeeting) {
         AppBloc.chatBloc.add(
-          ChatSelectTheCurrent(meetingId: event.meetingId),
+          ChatCurrentConversationSelected(
+            meetingId: event.meetingId,
+          ),
         );
 
         final CachedMessageByMeetingId? cachedMessageByMeetingId =
@@ -58,7 +60,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         emit(_messageDone);
       }
 
-      if (event is MessageGetMore) {
+      if (event is MessageFetched) {
         if (state is MessageInProgress ||
             _meetingId == null ||
             _messagesMap[_meetingId]!.isOver) {
@@ -70,7 +72,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         emit(_messageDone);
       }
 
-      if (event is MessageSend) {
+      if (event is MessageSent) {
         final MessageModel message = MessageModel(
           id: DateTime.now().millisecondsSinceEpoch,
           createdBy: AppBloc.userBloc.user,
@@ -92,7 +94,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         emit(_messageDone);
       }
 
-      if (event is MessageResend) {
+      if (event is MessageResent) {
         final MessageModel messageModel = event.messageModel
             .copyWith(sendingStatus: SendingStatusEnum.sending);
 
@@ -110,42 +112,43 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         emit(_messageDone);
       }
 
-      if (event is MessageSelect) {
+      if (event is MessageSelected) {
         _messageBeingEdited = event.message;
 
         emit(_messageDone);
       }
 
-      if (event is MessageEdit) {
+      if (event is MessageEdited) {
         await _editMessage(event);
 
         emit(_messageDone);
       }
 
-      if (event is MessageDelete) {
+      if (event is MessageDeleted) {
         await _deleteMessage(event);
 
         emit(_messageDone);
       }
 
-      if (event is MessageClean) {
+      if (event is MessageCleaned) {
         _clearMessages();
 
         emit(_messageDone);
       }
 
-      if (event is MessageCancelEditing) {
+      if (event is MessageEditingCancelled) {
         _messageBeingEdited = null;
 
         emit(_messageDone);
       }
 
-      if (event is MessageInsert) {
+      if (event is MessageInserted) {
         final CachedMessageByMeetingId? cachedMessageByMeetingId =
             _messagesMap[event.message.meeting];
 
         if (cachedMessageByMeetingId == null) {
-          AppBloc.chatBloc.add(ChatUpdateLastMessage(message: event.message));
+          AppBloc.chatBloc
+              .add(ChatLatestMessageUpdated(message: event.message));
         } else {
           final int index = cachedMessageByMeetingId.messages
               .indexWhere((message) => message.id == event.message.id);
@@ -158,7 +161,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         }
       }
 
-      if (event is MessageUpdateFromSocket) {
+      if (event is MessageUpdatedViaSocket) {
         if (event.isDeleted) {
           _handleDeleteMessage(messageModel: event.messageModel);
         } else {
@@ -193,11 +196,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
     if (messageSocketEvent.event == MessageEventEnum.create) {
-      add(MessageInsert(message: message));
+      add(MessageInserted(message: message));
     } else if (messageSocketEvent.event == MessageEventEnum.update) {
-      add(MessageUpdateFromSocket(messageModel: message));
+      add(MessageUpdatedViaSocket(messageModel: message));
     } else {
-      add(MessageUpdateFromSocket(messageModel: message, isDeleted: true));
+      add(MessageUpdatedViaSocket(messageModel: message, isDeleted: true));
     }
   }
 
@@ -229,7 +232,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _messagesByMeetingId[index] = message;
 
         AppBloc.chatBloc.add(
-          ChatUpdateLastMessage(message: message),
+          ChatLatestMessageUpdated(message: message),
         );
       } else {
         _messagesByMeetingId[index].sendingStatus = SendingStatusEnum.error;
@@ -242,10 +245,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       _messagesMap[message.meeting]?.messages.insert(0, message);
     }
 
-    AppBloc.chatBloc.add(ChatUpdateLastMessage(message: message));
+    AppBloc.chatBloc.add(ChatLatestMessageUpdated(message: message));
   }
 
-  Future<void> _editMessage(MessageEdit event) async {
+  Future<void> _editMessage(MessageEdited event) async {
     final MessageModel? messageModel = await _waterbusSdk.editMessage(
       data: event.data,
       messageId: event.messageId,
@@ -271,11 +274,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
 
     AppBloc.chatBloc.add(
-      ChatUpdateLastMessage(message: messageModel, isUpdateMessage: true),
+      ChatLatestMessageUpdated(message: messageModel, isUpdateMessage: true),
     );
   }
 
-  Future<void> _deleteMessage(MessageDelete event) async {
+  Future<void> _deleteMessage(MessageDeleted event) async {
     final MessageModel? messageModel = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );
@@ -298,7 +301,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
 
     AppBloc.chatBloc.add(
-      ChatUpdateLastMessage(message: messageModel, isUpdateMessage: true),
+      ChatLatestMessageUpdated(message: messageModel, isUpdateMessage: true),
     );
   }
 

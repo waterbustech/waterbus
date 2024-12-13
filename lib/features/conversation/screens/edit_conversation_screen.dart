@@ -64,7 +64,7 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
                 }
 
                 AppBloc.chatBloc.add(
-                  ChatUpdate(
+                  ChatUpdated(
                     title: _conversationNameController.text,
                   ),
                 );
@@ -96,7 +96,7 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
             children: [
               BlocBuilder<ChatBloc, ChatState>(
                 builder: (context, state) {
-                  if (state is ChatActive) {
+                  if (state is ChatActived) {
                     return state.conversationCurrent == null
                         ? const SizedBox()
                         : Padding(
@@ -124,7 +124,7 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
                   await WaterbusImagePicker().openImagePicker(
                     context: context,
                     handleFinish: (image) async {
-                      AppBloc.chatBloc.add(ChatUpdateAvatar(avatar: image));
+                      AppBloc.chatBloc.add(ChatAvatarUpdated(avatar: image));
                     },
                   );
                 },
