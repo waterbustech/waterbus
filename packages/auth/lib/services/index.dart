@@ -5,7 +5,7 @@ import 'package:universal_io/io.dart';
 import './auth_service_impl_stub.dart' as sub;
 import './auth_service_impl_linux.dart' as linux;
 
-bool get isLinux => !kIsWeb && Platform.isLinux;
+bool get isLinux => !kIsWeb && (Platform.isLinux || Platform.isWindows);
 
 AuthService get getInstance =>
     isLinux ? linux.AuthServiceImpl() : sub.AuthServiceImpl();
