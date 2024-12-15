@@ -1,15 +1,15 @@
 flutter_launcher_icons:
-  image_path: "web/icons/waterbus-favicon.png"
-  adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "web/icons/waterbus-favicon.png"
-  adaptive_icon_monochrome: "web/icons/waterbus-favicon.png"
+  image_path: "assets/icons/launcher_icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/launcher_icon.png"
+  adaptive_icon_monochrome: "assets/icons/launcher_icon.png"
   adaptive_icon_foreground_inset: 24
   android:
     generate: true
   ios: false
   web:
     generate: true
-    image_path: "web/icons/waterbus-favicon.png"
+    image_path: "assets/icons/launcher_icon.png"
   windows:
     generate: true
-    image_path: "windows/img-app-logo-3d.png"
+    image_path: "assets/icons/launcher_icon.png"

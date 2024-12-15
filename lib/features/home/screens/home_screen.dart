@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case Strings.licenses:
         return LicensePage(
           applicationIcon: Image.asset(
-            Assets.images.imgLogo.path,
+            Assets.icons.launcherIcon.path,
             height: 35.sp,
           ),
           applicationVersion: kAppVersion,
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
-                  Assets.images.imgLogo.path,
+                  Assets.icons.launcherIcon.path,
                   height: 35.sp,
                 ),
                 applicationVersion: kAppVersion,
