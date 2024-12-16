@@ -23,10 +23,12 @@ class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDifferentSender =
+        messagePrev?.createdBy?.id != message.createdBy?.id;
     return Container(
       width: 100.w,
       margin: EdgeInsets.only(
-        top: message.isMe == messagePrev?.isMe ? 4.sp : 12.sp,
+        top: isDifferentSender ? 12.sp : 4.sp,
       ),
       padding: EdgeInsets.symmetric(horizontal: 10.sp),
       child: Row(
@@ -34,24 +36,36 @@ class MessageCard extends StatelessWidget {
         mainAxisAlignment:
             message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          message.isMe || messagePrev?.isMe == message.isMe
-              ? SizedBox(width: 18.sp)
-              : CustomNetworkImage(
-                  height: 18.sp,
-                  width: 18.sp,
-                  urlToImage: message.createdBy?.avatar,
-                  defaultAvatar: message.createdBy == null
-                      ? null
-                      : DefaultAvatarModel.fromFullName(
-                          message.createdBy!.fullName,
-                        ),
-                ),
+          if (!message.isMe && isDifferentSender)
+            CustomNetworkImage(
+              height: 18.sp,
+              width: 18.sp,
+              urlToImage: message.createdBy?.avatar,
+              defaultAvatar: message.createdBy == null
+                  ? null
+                  : DefaultAvatarModel.fromFullName(
+                      message.createdBy!.fullName,
+                    ),
+            )
+          else
+            SizedBox(width: 18.sp),
           SizedBox(width: 5.sp),
           Column(
             crossAxisAlignment: message.isMe
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
+              if (isDifferentSender && !message.isMe)
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.sp),
+                  child: Text(
+                    message.createdBy?.fullName ?? "Unknown",
+                    style: TextStyle(
+                      fontSize: 8.sp,
+                      color: colorGray2,
+                    ),
+                  ),
+                ),
               message.sendingStatus == SendingStatusEnum.sending
                   ? Padding(
                       padding: EdgeInsets.only(bottom: 2.sp),

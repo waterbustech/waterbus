@@ -5,7 +5,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/record_model.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/helpers/file_saver.dart';
+import 'package:waterbus/core/helpers/saver/file_saver.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 
 part 'record_event.dart';

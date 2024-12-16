@@ -13,11 +13,11 @@ import 'package:universal_io/io.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
-import 'package:waterbus/core/app/firebase_config.dart';
 import 'package:waterbus/core/constants/api_endpoints.dart';
 import 'package:waterbus/core/helpers/media_kit/index.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/firebase_options.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();
@@ -40,7 +40,7 @@ void main(List<String> args) async {
         privateMessageKey: "waterbus2024",
       );
 
-      if (!Platform.isLinux || kIsWeb) {
+      if (!(Platform.isLinux || Platform.isWindows) || kIsWeb) {
         await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
         );

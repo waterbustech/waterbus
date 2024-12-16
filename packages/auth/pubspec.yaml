@@ -21,7 +21,7 @@ dependencies:
     git:
       url: https://github.com/waterbustech/sign-in-google-linux.git
       path: 'google_sign_in_all_platforms'
-      ref: 0.0.4+1
+      ref: 0.0.4+2
   firedart: 
     git:
       url: https://github.com/waterbustech/firedart.git
@@ -38,7 +38,7 @@ dependencies:
       path: '.'
       ref: 'feat/catch-api-exceptions'
   # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/flutter_waterbus_sdk
+  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
 
 dev_dependencies:
   flutter_test:

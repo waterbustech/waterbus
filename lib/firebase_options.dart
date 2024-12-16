@@ -27,6 +27,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
+        return windows;
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
@@ -82,5 +83,15 @@ class DefaultFirebaseOptions {
     iosClientId:
         '727554668212-b4qpqkcl5792g0gkqng85kugh5c5r51e.apps.googleusercontent.com',
     iosBundleId: 'com.waterbus.wanted',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDfLv8s_qUqMKgpNjqHzhJ7qeikwgU2_PY',
+    appId: '1:727554668212:web:dab48c7708c390ffb989e1',
+    messagingSenderId: '727554668212',
+    projectId: 'waterbus-71cf5',
+    authDomain: 'waterbus-71cf5.firebaseapp.com',
+    storageBucket: 'waterbus-71cf5.appspot.com',
+    measurementId: 'G-R498F3T303',
   );
 }
