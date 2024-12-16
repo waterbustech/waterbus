@@ -329,6 +329,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         CallActionButton(
                           icon: PhosphorIcons.signOut(),
                           backgroundColor: Colors.red,
+                          iconColor: mCL,
                           onTap: () {
                             AppBloc.meetingBloc.add(const LeaveMeetingEvent());
                           },
@@ -346,6 +347,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         CallActionButton(
                           icon: PhosphorIcons.signOut(),
                           backgroundColor: Colors.red,
+                          iconColor: mCL,
                           onTap: () {
                             AppBloc.meetingBloc.add(const LeaveMeetingEvent());
                           },
