@@ -3,11 +3,11 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus_sdk/types/result.dart';
 
 part 'message_event.dart';
 part 'message_state.dart';

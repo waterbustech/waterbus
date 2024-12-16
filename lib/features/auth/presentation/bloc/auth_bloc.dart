@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -26,14 +27,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._userLocal) : super(AuthInitial()) {
     _auth.initialize((payload) async {
-      final User? user = await WaterbusSdk.instance.createToken(payload);
+      final Result<User> user = await WaterbusSdk.instance.createToken(payload);
 
       // Pop loading
       AppNavigator.pop();
 
-      if (user != null) {
-        _userLocal.saveUser(user);
-        _user = user;
+      if (user.value != null) {
+        _userLocal.saveUser(user.value!);
+        _user = user.value;
       }
 
       add(OnAuthCheckEvent());
@@ -109,14 +110,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-    final User? user = await WaterbusSdk.instance.createToken(payload);
+    final Result<User> user = await WaterbusSdk.instance.createToken(payload);
 
     // Pop loading
     AppNavigator.pop();
 
-    if (user != null) {
-      _userLocal.saveUser(user);
-      _user = user;
+    if (user.isSuccess) {
+      _userLocal.saveUser(user.value!);
+      _user = user.value;
     }
   }
 

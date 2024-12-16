@@ -11,6 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
@@ -262,10 +263,12 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         if (event is StartRecordEvent) {
           final recordId = await _waterbusSdk.startRecord();
 
-          if (recordId != null) {
-            _recordId = recordId;
+          if (recordId.value != null) {
+            _recordId = recordId.value;
 
             emit(_joinedMeeting);
+          } else {
+            // Toast failure
           }
         }
 
@@ -304,7 +307,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
   // MARK: Private
   Future<void> _handleCreateMeeting(CreateMeetingEvent event) async {
-    final Meeting? meeting = await _waterbusSdk.createRoom(
+    final Result<Meeting> result = await _waterbusSdk.createRoom(
       meeting: Meeting(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -312,55 +315,67 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.popUntil(Routes.rootRoute);
 
-    if (meeting == null) return;
-
-    _localDataSource.insertOrUpdate(meeting);
-    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+    if (result.value != null) {
+      final Meeting meeting = result.value!;
+      _localDataSource.insertOrUpdate(meeting);
+      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
+    } else {
+      // Toast failure
+    }
   }
 
   Future<bool> _handleJoinRoom(
     JoinMeetingWithPasswordEvent event,
   ) async {
-    final Meeting? meeting = await _waterbusSdk.joinRoom(
+    final Result<Meeting> result = await _waterbusSdk.joinRoom(
       meeting: _currentMeeting!,
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
 
-    if (meeting == null) return false;
+    if (result.value != null) {
+      final Meeting meeting = result.value!;
+      _localDataSource.insertOrUpdate(meeting);
 
-    _localDataSource.insertOrUpdate(meeting);
+      _currentMeeting = meeting;
 
-    _currentMeeting = meeting;
+      AppBloc.recentJoinedBloc.add(
+        InsertRecentJoinedEvent(meeting: meeting),
+      );
 
-    AppBloc.recentJoinedBloc.add(
-      InsertRecentJoinedEvent(meeting: meeting),
-    );
+      final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
+        (participant) => participant.isMe,
+      );
 
-    final int indexOfMyParticipant = meeting.participants.lastIndexWhere(
-      (participant) => participant.isMe,
-    );
+      if (indexOfMyParticipant != -1) {
+        _mParticipant = meeting.participants[indexOfMyParticipant];
+      }
 
-    if (indexOfMyParticipant != -1) {
-      _mParticipant = meeting.participants[indexOfMyParticipant];
+      return true;
+    } else {
+      // Toast failure
+      return false;
     }
-
-    return true;
   }
 
   Future<Meeting?> _handleGetInfoMeeting(GetInfoMeetingEvent event) async {
-    final Meeting? meeting =
+    final Result<Meeting> result =
         await _waterbusSdk.getRoomInfo(code: event.roomCode);
 
     AppNavigator.pop();
 
-    return meeting;
+    if (result.isSuccess) {
+      return result.value;
+    } else {
+      // Toast failure
+      return null;
+    }
   }
 
   Future<void> _handleUpdateMeeting(UpdateMeetingEvent event) async {
     if (_currentMeeting == null) return;
 
-    final Meeting? meeting = await _waterbusSdk.updateRoom(
+    final Result<bool> result = await _waterbusSdk.updateRoom(
       meeting: _currentMeeting!.copyWith(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
@@ -368,14 +383,17 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.pop();
 
-    if (meeting == null) return;
+    if (result.isSuccess) {
+      final Meeting meeting = _currentMeeting!.copyWith(title: event.roomName);
+      _localDataSource.insertOrUpdate(meeting);
 
-    _localDataSource.insertOrUpdate(meeting);
+      AppNavigator.pop();
+      AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
 
-    AppNavigator.pop();
-    AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
-
-    _currentMeeting = meeting;
+      _currentMeeting = meeting;
+    } else {
+      // Toast failure
+    }
   }
 
   Future<void> _handleLeaveMeeting(LeaveMeetingEvent event) async {

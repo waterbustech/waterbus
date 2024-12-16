@@ -10,6 +10,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -83,29 +84,34 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   // MARK: private methods
   Future<void> _getUserProfile() async {
-    final User? user = await _waterbusSdk.getProfile();
+    final Result<User> result = await _waterbusSdk.getProfile();
 
-    _user = user;
+    _user = result.value;
   }
 
   Future<void> _handleUpdateUsername(String username) async {
-    final bool? result = await _waterbusSdk.updateUsername(username: username);
+    final Result<bool> result =
+        await _waterbusSdk.updateUsername(username: username);
 
-    if (result ?? false) {
+    if (result.value != null) {
       _user = _user?.copyWith(userName: username);
       _checkUsernameStatus = CheckUsernameStatus.none;
 
       showSnackBarWaterbus(content: Strings.updateUsernameSuccessfully.i18n);
 
       AppNavigator.pop();
+    } else {
+      // Toast failure
     }
   }
 
   Future<void> _handleCheckUsername(String username) async {
-    final bool result = await _waterbusSdk.checkUsername(username: username);
+    final Result<bool> result =
+        await _waterbusSdk.checkUsername(username: username);
 
-    _checkUsernameStatus =
-        result ? CheckUsernameStatus.registered : CheckUsernameStatus.valid;
+    _checkUsernameStatus = result.value ?? true
+        ? CheckUsernameStatus.registered
+        : CheckUsernameStatus.valid;
   }
 
   Future<void> _updateUserProfile(
@@ -114,7 +120,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }) async {
     if (_user == null) return;
 
-    final User? user = await _waterbusSdk.updateProfile(
+    final Result<bool> result = await _waterbusSdk.updateProfile(
       user: _user!.copyWith(
         fullName: event.fullName,
         avatar: event.avatar,
@@ -124,39 +130,45 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     AppNavigator.pop();
 
-    if (user != null) {
-      if (!ignorePop) {
-        AppNavigator.pop();
-      }
+    if (!ignorePop) {
+      AppNavigator.pop();
+    }
 
-      _user = user;
+    if (result.isSuccess) {
+      _user = _user!.copyWith(
+        fullName: event.fullName,
+        avatar: event.avatar,
+        bio: event.bio ?? "",
+      );
 
       showSnackBarWaterbus(
         content: Strings.updatedPersonalInformationSuccessfully.i18n,
       );
+    } else {
+      // Toast failure
     }
   }
 
   Future<void> _handleChangeAvatar(UpdateAvatarEvent event) async {
-    final String? presignedUrl = await _waterbusSdk.getPresignedUrl();
+    final Result<String> presignedUrl = await _waterbusSdk.getPresignedUrl();
 
-    if (presignedUrl == null) return;
+    if (presignedUrl.isSuccess) {
+      final Result<String> uploadAvatar = await _waterbusSdk.uploadAvatar(
+        uploadUrl: presignedUrl.value ?? "",
+        image: event.image,
+      );
 
-    final String? uploadAvatar = await _waterbusSdk.uploadAvatar(
-      uploadUrl: presignedUrl,
-      image: event.image,
-    );
-
-    if (uploadAvatar == null) return;
-
-    await _updateUserProfile(
-      UpdateProfileEvent(
-        fullName: _user!.fullName,
-        avatar: uploadAvatar,
-        bio: _user?.bio,
-      ),
-      ignorePop: true,
-    );
+      if (uploadAvatar.isSuccess) {
+        await _updateUserProfile(
+          UpdateProfileEvent(
+            fullName: _user!.fullName,
+            avatar: uploadAvatar.value ?? "",
+            bio: _user?.bio,
+          ),
+          ignorePop: true,
+        );
+      }
+    }
   }
 
   // MARK: export getter

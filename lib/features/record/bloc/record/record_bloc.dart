@@ -54,10 +54,10 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   GetRecordDone get _recordDone => GetRecordDone(records: _records);
 
   Future<void> _getRecords() async {
-    final records = await _waterbusSdk.getRecords(skip: _records.length);
+    final result = await _waterbusSdk.getRecords(skip: _records.length);
 
-    if (records.isEmpty) return;
+    if (result.isFailure) return;
 
-    _records.addAll(records);
+    _records.addAll(result.value ?? []);
   }
 }

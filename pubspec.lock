@@ -2331,11 +2331,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "feat/catch-api-exceptions"
-      resolved-ref: "52bb8843b3c740bcbc7feda227f2480a51d2afce"
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
+      path: "../waterbus-flutter-sdk"
+      relative: true
+    source: path
     version: "1.5.2"
   web:
     dependency: "direct overridden"

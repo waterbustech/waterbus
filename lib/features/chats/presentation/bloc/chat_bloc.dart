@@ -234,21 +234,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (event is UpdateAvatarConversationEvent) {
         displayLoadingLayer();
 
-        final String? presignedUrl = await WaterbusSdk().getPresignedUrl();
+        final Result<String> presignedUrl =
+            await WaterbusSdk().getPresignedUrl();
 
-        if (presignedUrl != null) {
-          final String? uploadAvatar = await WaterbusSdk().uploadAvatar(
-            uploadUrl: presignedUrl,
+        if (presignedUrl.isSuccess) {
+          final Result<String> uploadAvatar = await WaterbusSdk().uploadAvatar(
+            uploadUrl: presignedUrl.value ?? "",
             image: event.avatar,
           );
 
-          if (uploadAvatar != null) {
-            await _handleUpdateConversation(avatar: uploadAvatar);
+          if (uploadAvatar.isSuccess) {
+            await _handleUpdateConversation(avatar: uploadAvatar.value);
 
             emit(_getDoneChat);
           } else {
             showSnackBarWaterbus(content: Strings.uploadImageFail.i18n);
           }
+        } else {
+          showSnackBarWaterbus(content: Strings.uploadImageFail.i18n);
         }
 
         AppNavigator.pop();
@@ -300,13 +303,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<Meeting?> _createConversation(
     CreateConversationEvent event,
   ) async {
-    final Meeting? meeting = await _waterbusSdk.createRoom(
+    final Result<Meeting> result = await _waterbusSdk.createRoom(
       meeting: Meeting(title: event.title),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
-
-    return meeting;
+    if (result.isSuccess) {
+      return result.value;
+    } else {
+      // Toast failure
+      return null;
+    }
   }
 
   void _listenConversationSocket(ConversationSocketEvent socketEvent) {
