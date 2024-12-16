@@ -356,12 +356,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       title: title ?? _conversationCurrent?.title,
     );
 
-    final Result<bool> response = await _waterbusSdk.updateConversation(
+    final Result<bool> result = await _waterbusSdk.updateConversation(
       meeting: meeting,
       password: password,
     );
 
-    if (response.isSuccess) {
+    if (result.isSuccess) {
       final int index = _conversations.indexWhere(
         (conversation) => conversation.id == meeting.id,
       );
@@ -398,10 +398,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _deleteConversation(Meeting meeting) async {
-    final Result<bool> response =
+    final Result<bool> result =
         await _waterbusSdk.deleteConversation(meeting.id);
 
-    if (response.isSuccess) {
+    if (result.isSuccess) {
       _cleanConversationCurrent(meeting.id);
 
       showSnackBarWaterbus(
@@ -413,11 +413,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _archivedConversation(Meeting meeting) async {
-    final Result<Meeting> response =
+    final Result<Meeting> result =
         await _waterbusSdk.archivedConversation(meeting.code);
 
-    if (response.isSuccess) {
-      final Meeting? archivedConversation = response.value;
+    if (result.isSuccess) {
+      final Meeting? archivedConversation = result.value;
 
       if (archivedConversation != null) {
         AppBloc.archivedBloc.add(
@@ -436,11 +436,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _leaveConversation(Meeting meeting) async {
-    final Result<Meeting> response =
+    final Result<Meeting> result =
         await _waterbusSdk.leaveConversation(meeting.code);
 
-    if (response.isSuccess) {
-      final Meeting? conversation = response.value;
+    if (result.isSuccess) {
+      final Meeting? conversation = result.value;
 
       if (conversation != null) {
         _cleanConversationCurrent(conversation.id);
@@ -455,17 +455,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _getConversationList() async {
-    final Result<List<Meeting>> response = await _waterbusSdk.getConversations(
+    final Result<List<Meeting>> result = await _waterbusSdk.getConversations(
       skip: _conversations.length,
       status: MemberStatusEnum.joined.value,
     );
 
-    if (response.isSuccess) {
-      final List<Meeting> result = response.value ?? [];
+    if (result.isSuccess) {
+      final List<Meeting> conversationLst = result.value ?? [];
 
-      _conversations.addAll(result);
+      _conversations.addAll(conversationLst);
 
-      if (result.length < 10) {
+      if (conversationLst.length < 10) {
         _isOver = true;
       }
     } else {
@@ -474,11 +474,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _handleDeleteMember(DeleteMemberEvent event) async {
-    final Result<Meeting> response =
+    final Result<Meeting> result =
         await _waterbusSdk.deleteMember(event.code, event.userModel.id);
 
-    if (response.isSuccess) {
-      final Meeting? meeting = response.value;
+    if (result.isSuccess) {
+      final Meeting? meeting = result.value;
 
       if (meeting != null) {
         final int index = _conversations

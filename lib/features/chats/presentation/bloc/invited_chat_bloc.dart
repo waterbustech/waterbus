@@ -45,11 +45,11 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
       }
 
       if (event is AcceptInviteEvent) {
-        final Result<Meeting> response =
+        final Result<Meeting> result =
             await _waterbusSdk.acceptInvite(event.meetingId);
 
-        if (response.isSuccess) {
-          final Meeting? meeting = response.value;
+        if (result.isSuccess) {
+          final Meeting? meeting = result.value;
 
           if (meeting != null) {
             _invitedConversations.removeWhere(
@@ -104,17 +104,17 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
 
   // MARK: private methods
   Future<void> _getInvitedConversationList() async {
-    final Result<List<Meeting>> response = await _waterbusSdk.getConversations(
+    final Result<List<Meeting>> result = await _waterbusSdk.getConversations(
       skip: _invitedConversations.length,
       status: MemberStatusEnum.inviting.value,
     );
 
-    if (response.isSuccess) {
-      final List<Meeting> result = response.value ?? [];
+    if (result.isSuccess) {
+      final List<Meeting> invitedConversations = result.value ?? [];
 
-      _invitedConversations.addAll(result);
+      _invitedConversations.addAll(invitedConversations);
 
-      if (result.length < 10) {
+      if (invitedConversations.length < 10) {
         _isOverInvited = true;
       }
     }

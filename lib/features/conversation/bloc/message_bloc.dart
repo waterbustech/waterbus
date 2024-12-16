@@ -203,15 +203,15 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _getMessagesByMeetingId(int meetingId) async {
-    final Result<List<MessageModel>> response =
+    final Result<List<MessageModel>> result =
         await _waterbusSdk.getMessageByRoom(
       meetingId: meetingId,
       skip: _messagesMap[meetingId]?.messages.length ?? 0,
       limit: defaultLengthOfMessages,
     );
 
-    if (response.isSuccess) {
-      final List<MessageModel> messagesReponse = response.value ?? [];
+    if (result.isSuccess) {
+      final List<MessageModel> messagesReponse = result.value ?? [];
       _messagesMap[meetingId]?.messages.addAll(messagesReponse);
 
       if (messagesReponse.length < defaultLengthOfMessages) {
@@ -223,13 +223,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _sendMessage(MessageModel messageModel) async {
-    final Result<MessageModel?> response = await _waterbusSdk.sendMessage(
+    final Result<MessageModel?> result = await _waterbusSdk.sendMessage(
       meetingId: messageModel.meeting,
       data: messageModel.data,
     );
 
-    if (response.isSuccess) {
-      final MessageModel? message = response.value;
+    if (result.isSuccess) {
+      final MessageModel? message = result.value;
 
       final int index = _messagesByMeetingId
           .indexWhere((message) => message.id == messageModel.id);
@@ -259,13 +259,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _editMessage(EditMessageEvent event) async {
-    final Result<MessageModel> response = await _waterbusSdk.editMessage(
+    final Result<MessageModel> result = await _waterbusSdk.editMessage(
       data: event.data,
       messageId: event.messageId,
     );
 
-    if (response.isSuccess) {
-      final MessageModel? messageModel = response.value;
+    if (result.isSuccess) {
+      final MessageModel? messageModel = result.value;
 
       if (messageModel != null) {
         _handleEditMessage(messageModel: messageModel);
@@ -295,12 +295,12 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _deleteMessage(DeleteMessageEvent event) async {
-    final Result<MessageModel?> response = await _waterbusSdk.deleteMessage(
+    final Result<MessageModel?> result = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );
 
-    if (response.isSuccess) {
-      final MessageModel? messageModel = response.value;
+    if (result.isSuccess) {
+      final MessageModel? messageModel = result.value;
 
       if (messageModel != null) {
         _handleDeleteMessage(messageModel: messageModel);

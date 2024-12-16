@@ -27,14 +27,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._userLocal) : super(AuthInitial()) {
     _auth.initialize((payload) async {
-      final Result<User> user = await WaterbusSdk.instance.createToken(payload);
+      final Result<User> result =
+          await WaterbusSdk.instance.createToken(payload);
 
       // Pop loading
       AppNavigator.pop();
 
-      if (user.value != null) {
-        _userLocal.saveUser(user.value!);
-        _user = user.value;
+      if (result.value != null) {
+        _userLocal.saveUser(result.value!);
+        _user = result.value;
       }
 
       add(OnAuthCheckEvent());
@@ -110,14 +111,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppNavigator.pop();
       return;
     }
-    final Result<User> user = await WaterbusSdk.instance.createToken(payload);
+    final Result<User> result = await WaterbusSdk.instance.createToken(payload);
 
     // Pop loading
     AppNavigator.pop();
 
-    if (user.isSuccess) {
-      _userLocal.saveUser(user.value!);
-      _user = user.value;
+    if (result.isSuccess) {
+      _userLocal.saveUser(result.value!);
+      _user = result.value;
     }
   }
 
