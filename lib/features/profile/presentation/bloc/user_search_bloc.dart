@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus_sdk/types/result.dart';
 
 part 'user_search_event.dart';
 part 'user_search_state.dart';
