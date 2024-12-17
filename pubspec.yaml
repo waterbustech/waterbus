@@ -99,6 +99,7 @@ dependencies:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
   popover: ^0.3.1
   super_context_menu: ^0.8.24
+  msix: ^3.16.8
 
   # Code Editor
   re_editor: ^0.5.0
@@ -125,7 +126,6 @@ dependencies:
   waterbus_sdk: 1.5.2
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
-   
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -164,6 +164,15 @@ dev_dependencies:
   # Lints
   flutter_lints: ^4.0.0
   import_sorter: ^4.6.0
+
+# MSIX config
+msix_config:
+  display_name: Waterbus
+  publisher_display_name: Waterbus
+  identity_name: com.facebook.katana
+  msix_version: 1.0.0.0
+  logo_path: assets\images\logo_rounded.png
+  capabilities: internetClient, location, microphone, webcam
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
