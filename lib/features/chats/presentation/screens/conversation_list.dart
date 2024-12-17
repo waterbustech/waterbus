@@ -84,12 +84,22 @@ class ConversationList extends StatelessWidget {
                                 menuProvider: (_) {
                                   return _menuProvider(meetings[index]);
                                 },
+                                liftBuilder: (context, child) {
+                                  return ChatCard(
+                                    meeting: meetings[index],
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.sp,
+                                      vertical: 8.sp,
+                                    ),
+                                  );
+                                },
                                 child: ChatCard(meeting: meetings[index]),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 58.sp),
-                                child: divider,
-                              ),
+                              if (index < meetings.length - 1)
+                                Padding(
+                                  padding: EdgeInsets.only(left: 58.sp),
+                                  child: divider,
+                                ),
                             ],
                           ),
                         );
