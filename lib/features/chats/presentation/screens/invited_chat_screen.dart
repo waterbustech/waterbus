@@ -26,7 +26,7 @@ class _InvitedChatScreenState extends State<InvitedChatScreen> {
   void initState() {
     super.initState();
 
-    AppBloc.invitedChatBloc.add(OnInvitedConversationEvent());
+    AppBloc.invitedChatBloc.add(InvitedChatStarted());
   }
 
   @override
@@ -42,7 +42,7 @@ class _InvitedChatScreenState extends State<InvitedChatScreen> {
           Expanded(
             child: BlocBuilder<InvitedChatBloc, InvitedChatState>(
               builder: (context, state) {
-                if (state is ActiveInvitedChatState) {
+                if (state is InvitedChatActived) {
                   final List<Meeting> invitedConversations =
                       state.invitedConversations;
 
@@ -52,13 +52,13 @@ class _InvitedChatScreenState extends State<InvitedChatScreen> {
                     shrinkWrap: true,
                     callBackRefresh: (handleFinish) =>
                         AppBloc.invitedChatBloc.add(
-                      RefreshInvitedConversationsEvent(
+                      InvitedChatRefreshed(
                         handleFinish: handleFinish,
                       ),
                     ),
-                    callBackLoadMore: () => AppBloc.invitedChatBloc
-                        .add(GetInvitedConversationsEvent()),
-                    isLoadMore: state is GettingInvitedChatState,
+                    callBackLoadMore: () =>
+                        AppBloc.invitedChatBloc.add(InvitedChatFetched()),
+                    isLoadMore: state is InvitedChatInProgress,
                     itemBuilder: (context, index) {
                       if (index > invitedConversations.length - 1) {
                         return const SizedBox();

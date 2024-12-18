@@ -7,18 +7,18 @@ sealed class UserSearchsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SearchUsersEvent extends UserSearchsEvent {
+class UserSearchStarted extends UserSearchsEvent {
   final String keyword;
 
-  const SearchUsersEvent({required this.keyword});
+  const UserSearchStarted({required this.keyword});
 }
 
-class GetMoreUserSearchEvent extends UserSearchsEvent {}
+class UserSearchFetched extends UserSearchsEvent {}
 
-class RefreshUserSearchEvent extends UserSearchsEvent {
+class UserSearchRefreshed extends UserSearchsEvent {
   final Function? handleFinish;
 
-  const RefreshUserSearchEvent({this.handleFinish});
+  const UserSearchRefreshed({this.handleFinish});
 }
 
-class CleanUserSearchsEvent extends UserSearchsEvent {}
+class UserSearchClean extends UserSearchsEvent {}

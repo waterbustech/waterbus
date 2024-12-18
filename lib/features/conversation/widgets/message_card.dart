@@ -93,7 +93,7 @@ class MessageCard extends StatelessWidget {
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       AppBloc.messageBloc.add(
-                                        ResendMessageEvent(
+                                        MessageResent(
                                           messageModel: message,
                                         ),
                                       );

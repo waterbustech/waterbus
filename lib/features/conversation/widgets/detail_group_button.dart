@@ -49,7 +49,7 @@ class DetailGroupButton extends StatelessWidget {
                             textColor: Theme.of(context).colorScheme.primary,
                             iconColor: Theme.of(context).colorScheme.primary,
                             onTap: () {
-                              AppBloc.chatBloc.add(ArchivedConversationEvent());
+                              AppBloc.chatBloc.add(ChatArchived());
                             },
                           ),
                           divider,
@@ -59,7 +59,7 @@ class DetailGroupButton extends StatelessWidget {
                       title: Strings.delete.i18n,
                       icon: PhosphorIcons.trash(),
                       onTap: () {
-                        AppBloc.chatBloc.add(DeleteConversationEvent());
+                        AppBloc.chatBloc.add(ChatDeleted());
                       },
                     ),
                     if (!_isHost)
@@ -71,7 +71,7 @@ class DetailGroupButton extends StatelessWidget {
                             title: Strings.leaveGroup.i18n,
                             icon: PhosphorIcons.signOut(),
                             onTap: () {
-                              AppBloc.chatBloc.add(LeaveConversationEvent());
+                              AppBloc.chatBloc.add(ChatLeft());
                             },
                           ),
                         ],

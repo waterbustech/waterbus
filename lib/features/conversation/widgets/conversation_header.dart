@@ -26,14 +26,14 @@ class ConversationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChatBloc, ChatState>(
       buildWhen: (bf, at) {
-        if (bf is ActiveChatState && at is ActiveChatState) {
+        if (bf is ChatActived && at is ChatActived) {
           return bf.conversationCurrent != at.conversationCurrent;
         }
 
         return true;
       },
       builder: (context, state) {
-        if (state is ActiveChatState) {
+        if (state is ChatActived) {
           final Meeting? meeting = state.conversationCurrent;
 
           return meeting == null
@@ -132,7 +132,7 @@ class ConversationHeader extends StatelessWidget {
                       IconButtonCustom(
                         onTap: () {
                           AppBloc.meetingBloc
-                              .add(JoinMeetingEvent(meeting: meeting));
+                              .add(MeetingJoinedEvent(meeting: meeting));
                         },
                         icon:
                             PhosphorIcons.videoCamera(PhosphorIconsStyle.light),

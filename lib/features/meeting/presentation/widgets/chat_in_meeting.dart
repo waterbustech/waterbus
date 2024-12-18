@@ -31,7 +31,7 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
     super.initState();
 
     AppBloc.messageBloc.add(
-      GetMessageByMeetingIdEvent(meetingId: widget.meeting.id),
+      MessageFetchedByMeeting(meetingId: widget.meeting.id),
     );
 
     _scrollController.addListener(
@@ -39,7 +39,7 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
         if (_scrollController.position.maxScrollExtent > 0 &&
             _scrollController.position.pixels >=
                 _scrollController.position.maxScrollExtent - 2.sp) {
-          AppBloc.messageBloc.add(GetMoreMessageEvent());
+          AppBloc.messageBloc.add(MessageFetched());
         }
       },
     );
@@ -49,7 +49,7 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
   void didUpdateWidget(ChatInMeeting oldWidget) {
     super.didUpdateWidget(oldWidget);
     AppBloc.messageBloc.add(
-      GetMessageByMeetingIdEvent(meetingId: widget.meeting.id),
+      MessageFetchedByMeeting(meetingId: widget.meeting.id),
     );
   }
 
@@ -102,7 +102,7 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
                       return const SizedBox();
                     }
 
-                    if (state is ActiveMessageState) {
+                    if (state is MessageActived) {
                       final List<MessageModel> messages = state.messages;
                       return MessageList(
                         messages: messages,

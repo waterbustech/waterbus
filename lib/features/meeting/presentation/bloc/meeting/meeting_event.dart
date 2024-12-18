@@ -7,93 +7,93 @@ sealed class MeetingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class InitializeMeetingEvent extends MeetingEvent {}
+class MeetingStarted extends MeetingEvent {}
 
-class PrepareMediaStreamEvent extends MeetingEvent {}
+class MeetingMediaStreamSetup extends MeetingEvent {}
 
-class CreateMeetingEvent extends MeetingEvent {
+class MeetingCreated extends MeetingEvent {
   final String roomName;
   final String password;
-  const CreateMeetingEvent({required this.roomName, required this.password});
+  const MeetingCreated({required this.roomName, required this.password});
 }
 
-class UpdateMeetingEvent extends MeetingEvent {
+class MeetingUpdated extends MeetingEvent {
   final String roomName;
   final String password;
-  const UpdateMeetingEvent({required this.roomName, required this.password});
+  const MeetingUpdated({required this.roomName, required this.password});
 }
 
-class JoinMeetingEvent extends MeetingEvent {
+class MeetingJoinedEvent extends MeetingEvent {
   final Meeting meeting;
-  const JoinMeetingEvent({required this.meeting});
+  const MeetingJoinedEvent({required this.meeting});
 }
 
-class JoinMeetingWithPasswordEvent extends MeetingEvent {
+class MeetingJoinedWithPassword extends MeetingEvent {
   final String password;
   final bool isMember;
-  const JoinMeetingWithPasswordEvent({
+  const MeetingJoinedWithPassword({
     this.password = '',
     this.isMember = false,
   });
 }
 
-class GetInfoMeetingEvent extends MeetingEvent {
+class MeetingInfoGot extends MeetingEvent {
   final int roomCode;
-  const GetInfoMeetingEvent({required this.roomCode});
+  const MeetingInfoGot({required this.roomCode});
 }
 
-class LeaveMeetingEvent extends MeetingEvent {
+class MeetingLeft extends MeetingEvent {
   final bool isReleasedWaterbusSdk;
-  const LeaveMeetingEvent({this.isReleasedWaterbusSdk = false});
+  const MeetingLeft({this.isReleasedWaterbusSdk = false});
 }
 
-class DisposeMeetingEvent extends MeetingEvent {}
+class MeetingDisposed extends MeetingEvent {}
 
-class DisplayDialogMeetingEvent extends MeetingEvent {
+class MeetingDialogDisplayed extends MeetingEvent {
   final Meeting meeting;
-  const DisplayDialogMeetingEvent({required this.meeting});
+  const MeetingDialogDisplayed({required this.meeting});
 }
 
-class NewParticipantEvent extends MeetingEvent {
+class MeetingSomeoneNewJoined extends MeetingEvent {
   final Participant participant;
-  const NewParticipantEvent({required this.participant});
+  const MeetingSomeoneNewJoined({required this.participant});
 }
 
-class ParticipantHasLeftEvent extends MeetingEvent {
+class MeetingSomeoneLeft extends MeetingEvent {
   final String participantId;
-  const ParticipantHasLeftEvent({required this.participantId});
+  const MeetingSomeoneLeft({required this.participantId});
 }
 
-class StartSharingScreenEvent extends MeetingEvent {}
+class MeetingSharingScreenStarted extends MeetingEvent {}
 
-class StopSharingScreenEvent extends MeetingEvent {}
+class MeetingSharingScreenStoped extends MeetingEvent {}
 
-class ToggleAudioEvent extends MeetingEvent {}
+class MeetingAudioToggled extends MeetingEvent {}
 
-class ToggleVideoEvent extends MeetingEvent {}
+class MeetingVideoToggled extends MeetingEvent {}
 
-class ToggleHandRasing extends MeetingEvent {}
+class MeetingHandRasingToggled extends MeetingEvent {}
 
-class SaveCallSettingsEvent extends MeetingEvent {
+class MeetingCallSettingsSave extends MeetingEvent {
   final CallSetting setting;
-  const SaveCallSettingsEvent({required this.setting});
+  const MeetingCallSettingsSave({required this.setting});
 }
 
-class ApplyVirtualBackgroundEvent extends MeetingEvent {
+class MeetingVirtualBackgroundApplied extends MeetingEvent {
   final String? backgroundPath;
-  const ApplyVirtualBackgroundEvent(this.backgroundPath);
+  const MeetingVirtualBackgroundApplied(this.backgroundPath);
 }
 
-class ToggleSubtitleEvent extends MeetingEvent {
-  const ToggleSubtitleEvent();
+class MeetingSubtitleToggled extends MeetingEvent {
+  const MeetingSubtitleToggled();
 }
 
-class StartRecordEvent extends MeetingEvent {
-  const StartRecordEvent();
+class MeetingRecordStarted extends MeetingEvent {
+  const MeetingRecordStarted();
 }
 
-class StopRecordEvent extends MeetingEvent {
-  const StopRecordEvent();
+class MeetingRecordStoped extends MeetingEvent {
+  const MeetingRecordStoped();
 }
 
-class RefreshDisplayMeetingEvent extends MeetingEvent {}
+class MeetingDisplayRefreshed extends MeetingEvent {}

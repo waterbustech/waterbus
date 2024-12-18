@@ -16,34 +16,34 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
 
   ArchivedBloc() : super(ArchivedInitial()) {
     on<ArchivedEvent>((event, emit) async {
-      if (event is OnArchivedEvent) {
+      if (event is ArchivedStarted) {
         await _getArchivedConversationList();
-        emit(_getDoneArchived);
+        emit(_archivedDone);
       }
 
-      if (event is GetMoreArchivedEvent) {
-        if (state is GettingArchivedState || _isOverArchived) return;
+      if (event is ArchivedDataFetched) {
+        if (state is ArchivedInProgress || _isOverArchived) return;
 
-        emit(_gettingArchived);
+        emit(_archivedInProgress);
         await _getArchivedConversationList();
-        emit(_getDoneArchived);
+        emit(_archivedDone);
       }
 
-      if (event is RefreshArchivedEvent) {
+      if (event is ArchivedRefreshed) {
         _archivedConversations.clear();
         AppBloc.messageBloc.add(
-          CleanMessageEvent(
+          MessageCleaned(
             meetingIds: _archivedConversations
                 .map((conversation) => conversation.id)
                 .toList(),
           ),
         );
         await _getArchivedConversationList();
-        emit(_getDoneArchived);
+        emit(_archivedDone);
         event.handleFinish.call();
       }
 
-      if (event is InsertArchivedEvent) {
+      if (event is ArchivedInserted) {
         if (_archivedConversations.isEmpty && !_isOverArchived) return;
 
         final int index = _archivedConversations
@@ -53,15 +53,15 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
           _archivedConversations.insert(0, event.meeting);
         }
 
-        emit(_getDoneArchived);
+        emit(_archivedDone);
       }
     });
   }
 
-  GettingArchivedState get _gettingArchived => GettingArchivedState(
+  ArchivedInProgress get _archivedInProgress => ArchivedInProgress(
         archivedConversations: _archivedConversations,
       );
-  GetDoneArchivedState get _getDoneArchived => GetDoneArchivedState(
+  ArchivedDone get _archivedDone => ArchivedDone(
         archivedConversations: _archivedConversations,
       );
 

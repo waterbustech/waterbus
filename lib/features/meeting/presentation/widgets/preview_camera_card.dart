@@ -88,7 +88,7 @@ class PreviewCameraCard extends StatelessWidget {
                         ? PhosphorIcons.camera()
                         : PhosphorIcons.cameraSlash(),
                     onTap: () {
-                      AppBloc.meetingBloc.add(ToggleVideoEvent());
+                      AppBloc.meetingBloc.add(MeetingVideoToggled());
                     },
                   ),
                   SizedBox(width: 12.sp),
@@ -98,7 +98,7 @@ class PreviewCameraCard extends StatelessWidget {
                         ? PhosphorIcons.microphone()
                         : PhosphorIcons.microphoneSlash(),
                     onTap: () {
-                      AppBloc.meetingBloc.add(ToggleAudioEvent());
+                      AppBloc.meetingBloc.add(MeetingAudioToggled());
                     },
                   ),
                 ],

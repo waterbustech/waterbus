@@ -36,21 +36,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _user = user;
       }
 
-      add(OnAuthCheckEvent());
+      add(AuthStarted());
     });
 
     on<AuthEvent>((event, emit) async {
-      if (event is OnAuthCheckEvent) {
+      if (event is AuthStarted) {
         await _onAuthCheck(emit);
       }
 
-      if (event is LogInWithGoogleEvent || event is LogInAnonymously) {
+      if (event is AuthGoogleLogined || event is AuthAnonymouslyLoggedIn) {
         await _handleLogin(event);
 
         if (_user != null) emit(_authSuccess);
       }
 
-      if (event is LogOutEvent) {
+      if (event is AuthLoggedOut) {
         await _handleLogOut();
 
         if (_user == null) {
@@ -74,10 +74,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   // MARK: state
-  AuthSuccess get _authSuccess {
+  AuthSucceeded get _authSuccess {
     AppBloc.instance.bootstrap();
 
-    return AuthSuccess();
+    return AuthSucceeded();
   }
 
   AuthFailure get _authFailure {
@@ -93,10 +93,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     late final AuthPayloadModel? payload;
 
     switch (event) {
-      case LogInWithGoogleEvent():
+      case AuthGoogleLogined():
         payload = await _auth.signInWithGoogle();
         break;
-      case LogInAnonymously():
+      case AuthAnonymouslyLoggedIn():
         payload = await _auth.signInAnonymously();
         break;
       default:
@@ -127,9 +127,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppNavigator.popUntil(Routes.rootRoute);
 
     _user = null;
-    AppBloc.userBloc.add(CleanProfileEvent());
-    AppBloc.recentJoinedBloc.add(CleanAllRecentJoinedEvent());
-    AppBloc.chatBloc.add(CleanChatEvent());
-    AppBloc.invitedChatBloc.add(CleanInvitedConversationEvent());
+    AppBloc.userBloc.add(UserCleaned());
+    AppBloc.recentJoinedBloc.add(RecentJoinedCleaned());
+    AppBloc.chatBloc.add(ChatCleaned());
+    AppBloc.invitedChatBloc.add(InvitedChatCleaned());
   }
 }

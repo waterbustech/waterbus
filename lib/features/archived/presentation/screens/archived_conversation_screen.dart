@@ -37,14 +37,14 @@ class _ArchivedConversationScreenState
   void initState() {
     super.initState();
     AppBloc.messageBloc
-        .add(GetMessageByMeetingIdEvent(meetingId: widget.meeting.id));
+        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
 
     _scrollController.addListener(
       () {
         if (_scrollController.position.maxScrollExtent > 0 &&
             _scrollController.position.pixels >=
                 _scrollController.position.maxScrollExtent - 2.sp) {
-          AppBloc.messageBloc.add(GetMoreMessageEvent());
+          AppBloc.messageBloc.add(MessageFetched());
         }
       },
     );
@@ -54,7 +54,7 @@ class _ArchivedConversationScreenState
   void didUpdateWidget(ArchivedConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     AppBloc.messageBloc
-        .add(GetMessageByMeetingIdEvent(meetingId: widget.meeting.id));
+        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
   }
 
   @override
@@ -144,7 +144,7 @@ class _ArchivedConversationScreenState
                     return const ListConversationShimmers();
                   }
 
-                  if (state is ActiveMessageState) {
+                  if (state is MessageActived) {
                     final List<MessageModel> messages = state.messages;
 
                     return CustomScrollView(

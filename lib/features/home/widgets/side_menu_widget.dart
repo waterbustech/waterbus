@@ -117,7 +117,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                 IconButton(
                   onPressed: () {
                     AppBloc.themesBloc.add(
-                      OnThemeChangedEvent(
+                      ThemeChanged(
                         mode: Theme.of(context).brightness == Brightness.light
                             ? ThemeMode.dark
                             : ThemeMode.light,
@@ -173,7 +173,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   Widget _buildFooter(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        final User user = state is UserGetDone ? state.user : kUserDefault;
+        final User user = state is UserDone ? state.user : kUserDefault;
 
         final userAvatar = AvatarCard(
           urlToImage: user.avatar,

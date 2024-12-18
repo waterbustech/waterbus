@@ -9,7 +9,7 @@ sealed class BeautyFiltersState extends Equatable {
 
 final class BeautyFiltersInitial extends BeautyFiltersState {}
 
-class UpdatedBeautyFilters extends BeautyFiltersState {
+class BeautyFiltersUpdated extends BeautyFiltersState {
   final BeautyFilters filters;
-  const UpdatedBeautyFilters({required this.filters});
+  const BeautyFiltersUpdated({required this.filters});
 }
