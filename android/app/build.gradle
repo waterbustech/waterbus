@@ -84,8 +84,8 @@ android {
             signingConfig signingConfigs.debug
             debuggable true                // make app non-debuggable
             crunchPngs true                 // shrink images
-            minifyEnabled true              // obfuscate code and remove unused code
-            shrinkResources true
+            minifyEnabled false             // obfuscate code and remove unused code
+            shrinkResources false
             multiDexEnabled true
         }
 
@@ -93,7 +93,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             debuggable false                // make app non-debuggable
             crunchPngs true                 // shrink images
             minifyEnabled false             // obfuscate code and remove unused code

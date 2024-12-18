@@ -316,10 +316,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: "876849631b0c7dc20f8b471a2a03142841b482438e3b707955464f5ffca3e4c3"
+      sha256: e0817759ec6d2d8e57eb234e6e57d2173931367a865850c7acea40d4b4f9c27d
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -444,10 +444,10 @@ packages:
     dependency: transitive
     description:
       name: dio_cache_interceptor
-      sha256: fb7905c0d12075d8786a6b63bffd64ae062d053f682cfaf28d145a2686507308
+      sha256: "1346705a2057c265014d7696e3e2318b560bfb00b484dac7f9b01e2ceaebb07d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.5.1"
   dio_compatibility_layer:
     dependency: transitive
     description:
@@ -807,12 +807,11 @@ packages:
   flutter_rust_bridge:
     dependency: transitive
     description:
-      path: frb_dart
-      ref: HEAD
-      resolved-ref: f58509660e47525398647848b4b462387deae086
-      url: "https://github.com/waterbustech/flutter_rust_bridge.git"
-    source: git
-    version: "2.3.0"
+      name: flutter_rust_bridge
+      sha256: "35c257fc7f98e34c1314d6c145e5ed54e7c94e8a9f469947e31c9298177d546f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   flutter_side_menu:
     dependency: "direct main"
     description:
@@ -883,10 +882,10 @@ packages:
     dependency: "direct main"
     description:
       name: get_it
-      sha256: d85128a5dae4ea777324730dc65edd9c9f43155c109d5cc0a69cab74139fbac1
+      sha256: f126a3e286b7f5b578bf436d5592968706c4c1de28a228b870ce375d9f743103
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "8.0.3"
   glob:
     dependency: transitive
     description:
@@ -1074,6 +1073,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  http_profile:
+    dependency: transitive
+    description:
+      name: http_profile
+      sha256: "7e679e355b09aaee2ab5010915c932cce3f2d1c11c3b2dc177891687014ffa78"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   i18n_extension:
     dependency: "direct main"
     description:
@@ -1286,10 +1293,10 @@ packages:
     dependency: transitive
     description:
       name: logger
-      sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
+      sha256: be4b23575aac7ebf01f225a241eb7f6b5641eeaf43c6a8613510fc2f8cf187d1
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.5.0"
   logging:
     dependency: transitive
     description:
@@ -1715,14 +1722,13 @@ packages:
     source: hosted
     version: "1.0.0"
   rhttp:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: rhttp
-      ref: HEAD
-      resolved-ref: bbec8d9e20c6adb3137de299c247d449d37c3b9f
-      url: "https://github.com/waterbustech/rhttp.git"
-    source: git
-    version: "0.6.1"
+      name: rhttp
+      sha256: "8212cbc816cc3e761eecb8d4dbbaa1eca95de715428320a198a4e7a89acdcd2e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.8"
   rxdart:
     dependency: transitive
     description:
@@ -1931,18 +1937,18 @@ packages:
     dependency: transitive
     description:
       name: socket_io_client
-      sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
+      sha256: "180fdbc7685e32a849511bbf8b1c7bcc46ab0ff116f7024aa204b425bb3a1ffe"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3+1"
+    version: "3.0.2"
   socket_io_common:
     dependency: transitive
     description:
       name: socket_io_common
-      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
+      sha256: "41fdf2d333d1f8209d9c39885c2805141afc570df6bd93ae791e12e271e2e42c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.0.1"
   source_gen:
     dependency: transitive
     description:
@@ -2379,11 +2385,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "feat/catch-api-exceptions"
-      resolved-ref: "4a8c650eabb1c4ff67da7a5d6d7e1b0c0c68c6b7"
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
+      path: "/Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk"
+      relative: false
+    source: path
     version: "1.5.2"
   web:
     dependency: "direct overridden"
