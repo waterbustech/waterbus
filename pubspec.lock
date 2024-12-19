@@ -2385,8 +2385,8 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk"
-      relative: false
+      path: "../waterbus-flutter-sdk"
+      relative: true
     source: path
     version: "1.5.2"
   web:

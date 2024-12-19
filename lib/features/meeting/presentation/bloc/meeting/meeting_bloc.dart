@@ -337,7 +337,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     AppNavigator.popUntil(Routes.rootRoute);
 
-    if (result.value != null) {
+    if (result.isSuccess) {
       final Meeting meeting = result.value!;
       _localDataSource.insertOrUpdate(meeting);
       AppBloc.recentJoinedBloc.add(InsertRecentJoinedEvent(meeting: meeting));
@@ -355,7 +355,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       userId: AppBloc.userBloc.user?.id,
     );
 
-    if (result.value != null) {
+    if (result.isSuccess) {
       final Meeting meeting = result.value!;
       _localDataSource.insertOrUpdate(meeting);
 

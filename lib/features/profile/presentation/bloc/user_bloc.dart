@@ -93,7 +93,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final Result<bool> result =
         await _waterbusSdk.updateUsername(username: username);
 
-    if (result.value != null) {
+    if (result.isSuccess) {
       _user = _user?.copyWith(userName: username);
       _checkUsernameStatus = CheckUsernameStatus.none;
 

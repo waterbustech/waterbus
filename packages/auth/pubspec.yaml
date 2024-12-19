@@ -33,7 +33,7 @@ dependencies:
 
   # waterbus_sdk: ^1.5.1
   waterbus_sdk:
-    path: ../waterbus-flutter-sdk
+    path: ../../../waterbus-flutter-sdk
 
 dev_dependencies:
   flutter_test:

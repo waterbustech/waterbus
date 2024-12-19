@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Pop loading
       AppNavigator.pop();
 
-      if (result.value != null) {
+      if (result.isSuccess) {
         _userLocal.saveUser(result.value!);
         _user = result.value;
       }
