@@ -17,11 +17,11 @@ class MeetingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
-        if (state is PreJoinMeeting) {
+        if (state is MeetingPreJoin) {
           return EnterMeetingPasswordScreen(meeting: state.meeting!);
         }
 
-        if (state is! JoinedMeeting || state.meeting == null) {
+        if (state is! MeetingJoined || state.meeting == null) {
           return const SizedBox();
         }
 

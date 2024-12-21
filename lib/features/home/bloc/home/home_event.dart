@@ -2,9 +2,9 @@ part of 'home_bloc.dart';
 
 abstract class HomeEvent {}
 
-class OnChangeTabEvent extends HomeEvent {
+class HomeChanged extends HomeEvent {
   final int tabIndex;
-  OnChangeTabEvent({required this.tabIndex});
+  HomeChanged({required this.tabIndex});
 }
 
-class GoToRootEvent extends HomeEvent {}
+class HomeNavigateToRoot extends HomeEvent {}

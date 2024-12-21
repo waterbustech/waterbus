@@ -20,31 +20,31 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
 
   InvitedChatBloc() : super(InvitedChatInitial()) {
     on<InvitedChatEvent>((event, emit) async {
-      if (event is OnInvitedConversationEvent) {
+      if (event is InvitedChatStarted) {
         if (_invitedConversations.isEmpty && !_isOverInvited) {
           emit(InvitedChatInitial());
           await _getInvitedConversationList();
-          emit(_getDoneChat);
+          emit(_invitedChatDone);
         }
       }
-      if (event is GetInvitedConversationsEvent) {
-        if (state is GettingInvitedChatState || _isOverInvited) return;
+      if (event is InvitedChatFetched) {
+        if (state is InvitedChatInProgress || _isOverInvited) return;
 
-        emit(_gettingInvitedChat);
+        emit(_invitedChatInprogress);
         await _getInvitedConversationList();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
       }
 
-      if (event is RefreshInvitedConversationsEvent) {
+      if (event is InvitedChatRefreshed) {
         _invitedConversations.clear();
         _isOverInvited = false;
 
         await _getInvitedConversationList();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
         event.handleFinish();
       }
 
-      if (event is AcceptInviteEvent) {
+      if (event is InvitedChatAccepted) {
         final Result<Meeting> result =
             await _waterbusSdk.acceptInvite(event.meetingId);
 
@@ -55,8 +55,7 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
             _invitedConversations.removeWhere(
               (conversation) => conversation.id == event.meetingId,
             );
-            AppBloc.chatBloc
-                .add(InsertConversationEvent(conversation: meeting));
+            AppBloc.chatBloc.add(ChatInserted(conversation: meeting));
 
             showSnackBarWaterbus(
               content: Strings.youHaveConfirmedConversation.i18n,
@@ -64,14 +63,14 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
 
             AppNavigator.pop();
 
-            emit(_getDoneChat);
+            emit(_invitedChatDone);
           }
         } else {
           // Handle accept invited fail
         }
       }
 
-      if (event is InsertInvitedConversationsEvent) {
+      if (event is InvitedChatInserted) {
         if (!_isOverInvited ||
             (_isOverInvited && _invitedConversations.isEmpty)) {
           final index = _invitedConversations
@@ -83,24 +82,22 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
             _invitedConversations.insert(0, event.invited);
           }
 
-          emit(_getDoneChat);
+          emit(_invitedChatDone);
         }
       }
 
-      if (event is CleanInvitedConversationEvent) {
+      if (event is InvitedChatCleaned) {
         _cleanInvitedChat();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
       }
     });
   }
 
   // MARK: state
-  GettingInvitedChatState get _gettingInvitedChat => GettingInvitedChatState(
-        invitedConversations: _invitedConversations,
-      );
-  GetDoneInvitedChatState get _getDoneChat => GetDoneInvitedChatState(
-        invitedConversations: _invitedConversations,
-      );
+  InvitedChatInProgress get _invitedChatInprogress =>
+      InvitedChatInProgress(invitedConversations: _invitedConversations);
+  InvitedChatDone get _invitedChatDone =>
+      InvitedChatDone(invitedConversations: _invitedConversations);
 
   // MARK: private methods
   Future<void> _getInvitedConversationList() async {

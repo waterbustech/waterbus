@@ -20,24 +20,24 @@ class UserSearchBloc extends Bloc<UserSearchsEvent, UserSearchState> {
   UserSearchBloc() : super(UserInitial()) {
     on<UserSearchsEvent>(
       (event, emit) async {
-        if (event is SearchUsersEvent) {
-          emit(_userSearchingState);
+        if (event is UserSearchStarted) {
+          emit(_userSearchInprogress);
           keyword = event.keyword;
-          add(const RefreshUserSearchEvent());
+          add(const UserSearchRefreshed());
         }
 
-        if (event is GetMoreUserSearchEvent) {
-          if (state is UserSearchGetMore || !_isOver) return;
+        if (event is UserSearchFetched) {
+          if (state is UserSearchLoadMore || !_isOver) return;
 
-          emit(_userGetMore);
+          emit(_userSearchLoadMore);
           await _handleSearchUsers();
-          emit(_userGetDone);
+          emit(_userSearchDone);
         }
 
-        if (event is RefreshUserSearchEvent) {
+        if (event is UserSearchRefreshed) {
           _cleanUserSearch();
           await _handleSearchUsers();
-          emit(_userGetDone);
+          emit(_userSearchDone);
           event.handleFinish?.call();
         }
       },
@@ -45,13 +45,13 @@ class UserSearchBloc extends Bloc<UserSearchsEvent, UserSearchState> {
   }
 
   // MARK: state
-  UserSearchGetDone get _userGetDone => UserSearchGetDone(
+  UserSearchDone get _userSearchDone => UserSearchDone(
         userSearchs: _searchs,
       );
-  UserSearchGetMore get _userGetMore => UserSearchGetMore(
+  UserSearchLoadMore get _userSearchLoadMore => UserSearchLoadMore(
         userSearchs: _searchs,
       );
-  UserSearchingState get _userSearchingState => UserSearchingState(
+  UserSearchInprogress get _userSearchInprogress => UserSearchInprogress(
         userSearchs: _searchs,
       );
 
