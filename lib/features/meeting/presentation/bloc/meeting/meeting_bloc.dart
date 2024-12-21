@@ -435,7 +435,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     _mParticipant = null;
 
     if (!event.isReleasedWaterbusSdk) {
-      _waterbusSdk.leaveRoom();
+      await _waterbusSdk.leaveRoom();
     }
 
     if (AppNavigator.currentRoute() == Routes.meetingRoute) {
