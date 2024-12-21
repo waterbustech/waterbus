@@ -328,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  console:
+    dependency: transitive
+    description:
+      name: console
+      sha256: e04e7824384c5b39389acdd6dc7d33f3efe6b232f6f16d7626f194f6a01ad69a
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   convert:
     dependency: transitive
     description:
@@ -858,10 +866,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: "7f1e1d7ce8c3785c15d43e66cdcdedbeb77b4a7ab6987c44fc9dd61186bc98e3"
+      sha256: f12741aff3bb99b42714a37ae184da2e7d91ff6cbf861ae212f85195cde86aea
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.1+1"
+    version: "0.12.1+3"
   freezed_annotation:
     dependency: transitive
     description:
@@ -882,10 +890,10 @@ packages:
     dependency: "direct main"
     description:
       name: get_it
-      sha256: f126a3e286b7f5b578bf436d5592968706c4c1de28a228b870ce375d9f743103
+      sha256: d85128a5dae4ea777324730dc65edd9c9f43155c109d5cc0a69cab74139fbac1
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.3"
+    version: "7.7.0"
   glob:
     dependency: transitive
     description:
@@ -1417,6 +1425,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.4"
+  msix:
+    dependency: "direct main"
+    description:
+      name: msix
+      sha256: c50d6bd1aafe0d071a3c1e5a5ccb056404502935cb0a549e3178c4aae16caf33
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.16.8"
   nested:
     dependency: transitive
     description:
@@ -2387,7 +2403,7 @@ packages:
     description:
       path: "."
       ref: "fix/can-not-run-in-android"
-      resolved-ref: ae069a399cc11f2bf4689024cc56b99aeee37397
+      resolved-ref: "6e49a53e3fe621c1fa3dfd8fe6748d17a24c8a4c"
       url: "https://github.com/waterbustech/waterbus-flutter-sdk"
     source: git
     version: "1.5.2"
