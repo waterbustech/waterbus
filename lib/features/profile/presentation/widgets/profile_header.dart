@@ -19,7 +19,7 @@ class ProfileHeader extends StatelessWidget {
       builder: (context, stateTheme) {
         return BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
-            final User user = state is UserGetDone ? state.user : kUserDefault;
+            final User user = state is UserDone ? state.user : kUserDefault;
 
             return Container(
               padding: EdgeInsets.only(
@@ -43,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           AppBloc.themesBloc.add(
-                            OnThemeChangedEvent(
+                            ThemeChanged(
                               mode: Theme.of(context).brightness ==
                                       Brightness.light
                                   ? ThemeMode.dark

@@ -7,16 +7,16 @@ sealed class RecordEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RefreshRecordsEvent extends RecordEvent {
-  final Function handleFinish;
-  const RefreshRecordsEvent(this.handleFinish);
+class RecordsStarted extends RecordEvent {}
+
+class RecordsFetched extends RecordEvent {}
+
+class RecordsSaved extends RecordEvent {
+  final RecordModel record;
+  const RecordsSaved({required this.record});
 }
 
-class OnRecordsEvent extends RecordEvent {}
-
-class GetRecordsEvent extends RecordEvent {}
-
-class SaveRecordFileEvent extends RecordEvent {
-  final RecordModel record;
-  const SaveRecordFileEvent({required this.record});
+class RecordsRefreshed extends RecordEvent {
+  final Function handleFinish;
+  const RecordsRefreshed(this.handleFinish);
 }

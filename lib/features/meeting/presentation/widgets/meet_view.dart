@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:collection/collection.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
@@ -81,9 +82,9 @@ class MeetView extends StatelessWidget {
                         ),
                       ),
                       child: AvatarCard(
-                        urlToImage: participant.user?.avatar,
+                        urlToImage: participant?.user?.avatar,
                         size: avatarSize,
-                        label: participant.user?.fullName,
+                        label: participant?.user?.fullName,
                       ),
                     ),
               if (kIsWeb)
@@ -138,10 +139,11 @@ class MeetView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          participant.user?.fullName ?? "",
+                          participant?.user?.fullName ?? "",
                           style: TextStyle(
-                            color:
-                                participant.isMe ? Colors.yellow : Colors.white,
+                            color: participant?.isMe ?? false
+                                ? Colors.yellow
+                                : Colors.white,
                             fontSize: avatarSize / 6,
                             fontWeight: FontWeight.bold,
                           ),
@@ -196,12 +198,12 @@ class MeetView extends StatelessWidget {
     );
   }
 
-  Participant get participant {
+  Participant? get participant {
     if (participantSFU.ownerId == kIsMine) {
-      return participants.firstWhere((participant) => participant.isMe);
+      return participants.firstWhereOrNull((participant) => participant.isMe);
     }
 
-    return participants.firstWhere(
+    return participants.firstWhereOrNull(
       (participant) => participant.id.toString() == participantSFU.ownerId,
     );
   }

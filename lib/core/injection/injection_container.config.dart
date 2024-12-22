@@ -8,17 +8,27 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/archived/presentation/bloc/archived_bloc.dart' as _i935;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
-import '../../features/chats/data/datasources/user_local_datasource.dart'
-    as _i843;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
 import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
+import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/record/bloc/record/record_bloc.dart' as _i625;
+import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
+import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
+import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
+import '../helpers/saver/file_saver.dart' as _i513;
+import '../method_channels/pip_channel.dart' as _i921;
+import '../utils/audio/meeting_sound.dart' as _i89;
+
+import '../../features/chats/data/datasources/user_local_datasource.dart'
+    as _i843;
 import '../../features/meeting/data/datasources/call_settings_datasource.dart'
     as _i688;
 import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
@@ -31,16 +41,8 @@ import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_blo
     as _i324;
 import '../../features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart'
     as _i65;
-import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
 import '../../features/profile/presentation/bloc/user_search_bloc.dart'
     as _i254;
-import '../../features/record/bloc/record/record_bloc.dart' as _i625;
-import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
-import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
-import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
-import '../helpers/saver/file_saver.dart' as _i513;
-import '../method_channels/pip_channel.dart' as _i921;
-import '../utils/audio/meeting_sound.dart' as _i89;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(

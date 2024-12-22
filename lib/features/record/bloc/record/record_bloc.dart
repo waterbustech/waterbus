@@ -20,26 +20,26 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
 
   RecordBloc(this._fileSaver) : super(RecordInitial()) {
     on<RecordEvent>((event, emit) async {
-      if (event is RefreshRecordsEvent) {
+      if (event is RecordsRefreshed) {
         _records.clear();
         await _getRecords();
         emit(_recordDone);
         event.handleFinish();
       }
 
-      if (event is OnRecordsEvent) {
+      if (event is RecordsStarted) {
         if (_records.isNotEmpty) return;
 
         await _getRecords();
         emit(_recordDone);
       }
 
-      if (event is GetRecordsEvent) {
+      if (event is RecordsFetched) {
         await _getRecords();
         emit(_recordDone);
       }
 
-      if (event is SaveRecordFileEvent) {
+      if (event is RecordsSaved) {
         final bool isSucceed = await _fileSaver.saveFile(
           event.record.urlToVideo,
         );
@@ -54,10 +54,10 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   GetRecordDone get _recordDone => GetRecordDone(records: _records);
 
   Future<void> _getRecords() async {
-    final records = await _waterbusSdk.getRecords(skip: _records.length);
+    final result = await _waterbusSdk.getRecords(skip: _records.length);
 
-    if (records.isEmpty) return;
+    if (result.isFailure) return;
 
-    _records.addAll(records);
+    _records.addAll(result.value ?? []);
   }
 }

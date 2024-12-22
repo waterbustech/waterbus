@@ -74,7 +74,7 @@ class LogInScreen extends StatelessWidget {
                                 title: 'Continue with Google',
                                 iconAsset: Assets.icons.icGoogle.path,
                                 onPressed: () async {
-                                  AppBloc.authBloc.add(LogInWithGoogleEvent());
+                                  AppBloc.authBloc.add(AuthGoogleLogined());
                                 },
                               ),
                             ),
@@ -85,7 +85,7 @@ class LogInScreen extends StatelessWidget {
                           title: 'Sign in Anonymously',
                           iconAsset: Assets.icons.icIncognito.path,
                           onPressed: () async {
-                            AppBloc.authBloc.add(LogInAnonymously());
+                            AppBloc.authBloc.add(AuthAnonymouslyLoggedIn());
                           },
                         ),
                       ],

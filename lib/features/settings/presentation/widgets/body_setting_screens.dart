@@ -43,7 +43,7 @@ class BodySettingScreens extends StatelessWidget {
           children: [
             BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                final User? user = state is UserGetDone ? state.user : null;
+                final User? user = state is UserDone ? state.user : null;
 
                 return SizerUtil.isDesktop
                     ? GestureWrapper(
@@ -75,7 +75,7 @@ class BodySettingScreens extends StatelessWidget {
                                         displayLoadingLayer();
 
                                         AppBloc.userBloc.add(
-                                          UpdateAvatarEvent(image: image),
+                                          UserAvatarUpdated(image: image),
                                         );
                                       },
                                     );
@@ -145,7 +145,7 @@ class BodySettingScreens extends StatelessWidget {
                                     displayLoadingLayer();
 
                                     AppBloc.userBloc.add(
-                                      UpdateAvatarEvent(image: image),
+                                      UserAvatarUpdated(image: image),
                                     );
                                   },
                                 );

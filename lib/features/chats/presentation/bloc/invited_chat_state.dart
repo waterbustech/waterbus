@@ -4,22 +4,20 @@ abstract class InvitedChatState {}
 
 class InvitedChatInitial extends InvitedChatState {}
 
-class ActiveInvitedChatState extends InvitedChatState {
+class InvitedChatActived extends InvitedChatState {
   final List<Meeting> invitedConversations;
 
-  ActiveInvitedChatState({
-    required this.invitedConversations,
-  });
+  InvitedChatActived({required this.invitedConversations});
 }
 
-class GetDoneInvitedChatState extends ActiveInvitedChatState {
-  GetDoneInvitedChatState({
+class InvitedChatInProgress extends InvitedChatActived {
+  InvitedChatInProgress({
     required super.invitedConversations,
   });
 }
 
-class GettingInvitedChatState extends ActiveInvitedChatState {
-  GettingInvitedChatState({
+class InvitedChatDone extends InvitedChatActived {
+  InvitedChatDone({
     required super.invitedConversations,
   });
 }
