@@ -12,20 +12,20 @@ class BeautyFiltersBloc extends Bloc<BeautyFiltersEvent, BeautyFiltersState> {
 
   BeautyFiltersBloc() : super(BeautyFiltersInitial()) {
     on<BeautyFiltersEvent>((event, emit) {
-      if (event is UpdateFiltersValueEvent) {
+      if (event is BeautyFilterUpdated) {
         _adjustValue(event.filters);
-        emit(_updatedFilters);
+        emit(_beautyFiltersUpdated);
       }
 
-      if (event is ResetFiltersValueEvent) {
+      if (event is BeautyFilterReset) {
         _adjustValue(BeautyFilters());
-        emit(_updatedFilters);
+        emit(_beautyFiltersUpdated);
       }
     });
   }
 
   // MARK: state
-  UpdatedBeautyFilters get _updatedFilters => UpdatedBeautyFilters(
+  BeautyFiltersUpdated get _beautyFiltersUpdated => BeautyFiltersUpdated(
         filters: _filters,
       );
 

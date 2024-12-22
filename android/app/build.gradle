@@ -69,7 +69,7 @@ android {
     }
 
     signingConfigs {
-        release {
+        common {
             storeFile file('waterbus.jks')
             storePassword "waterbus"
             keyAlias 'upload'
@@ -82,11 +82,11 @@ android {
             // TODO: Add your own signing config for the debug build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
-            debuggable true                // make app non-debuggable
+            signingConfig signingConfigs.common
+            debuggable false                // make app non-debuggable
             crunchPngs true                 // shrink images
-            minifyEnabled false              // obfuscate code and remove unused code
-            shrinkResources false
+            minifyEnabled true              // obfuscate code and remove unused code
+            shrinkResources true
             multiDexEnabled true
         }
 
@@ -94,7 +94,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.common
             debuggable false                // make app non-debuggable
             crunchPngs true                 // shrink images
             minifyEnabled false             // obfuscate code and remove unused code

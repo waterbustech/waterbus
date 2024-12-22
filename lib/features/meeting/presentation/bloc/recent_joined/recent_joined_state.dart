@@ -1,23 +1,15 @@
 part of 'recent_joined_bloc.dart';
 
-abstract class MeetingListState extends Equatable {
-  const MeetingListState({
-    this.recentMeetings = const [],
-  });
-
+abstract class RecentJoinedState extends Equatable {
   final List<Meeting> recentMeetings;
+  const RecentJoinedState({this.recentMeetings = const []});
 
   @override
-  List<Object?> get props => [
-        recentMeetings,
-        identityHashCode(this),
-      ];
+  List<Object?> get props => [recentMeetings, identityHashCode(this)];
 }
 
-final class MeetingListInitial extends MeetingListState {}
+final class RecentJoinedInitial extends RecentJoinedState {}
 
-class GetDoneMeetings extends MeetingListState {
-  const GetDoneMeetings({
-    required super.recentMeetings,
-  });
+class RecentJoinedDone extends RecentJoinedState {
+  const RecentJoinedDone({required super.recentMeetings});
 }

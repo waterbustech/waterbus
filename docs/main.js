@@ -71,7 +71,7 @@ window.addEventListener("load", function () {
       serviceWorkerVersion: serviceWorkerVersion,
     },
     onEntrypointLoaded: function (engineInitializer) {
-      let config = { renderer: "html" };
+      let config = { useColorEmoji: true };
       engineInitializer.initializeEngine(config).then(function (appRunner) {
         appRunner.runApp();
       });

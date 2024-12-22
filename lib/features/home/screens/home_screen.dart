@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case Strings.licenses:
         return LicensePage(
           applicationIcon: Image.asset(
-            Assets.images.imgLogo.path,
+            Assets.icons.launcherIcon.path,
             height: 35.sp,
           ),
           applicationVersion: kAppVersion,
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? null
                     : BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
-                          if (state is UserGetDone) {
+                          if (state is UserDone) {
                             final User user = state.user;
 
                             return Row(
@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (item.title) {
             case Strings.logout:
               displayLoadingLayer();
-              AppBloc.authBloc.add(LogOutEvent());
+              AppBloc.authBloc.add(AuthLoggedOut());
               break;
             case Strings.profile:
               AppNavigator().push(Routes.profileRoute);
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
-                  Assets.images.imgLogo.path,
+                  Assets.icons.launcherIcon.path,
                   height: 35.sp,
                 ),
                 applicationVersion: kAppVersion,

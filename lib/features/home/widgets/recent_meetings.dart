@@ -21,7 +21,7 @@ class RecentMeetings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecentJoinedBloc, MeetingListState>(
+    return BlocBuilder<RecentJoinedBloc, RecentJoinedState>(
       builder: (context, state) {
         if (state is MeetingInitial) return const SizedBox();
 
@@ -77,7 +77,7 @@ class RecentMeetings extends StatelessWidget {
           title: Strings.delete.i18n,
           callback: () {
             AppBloc.recentJoinedBloc.add(
-              RemoveRecentJoinedEvent(
+              RecentJoinedRemoved(
                 meetingId: conversation.id,
               ),
             );

@@ -20,81 +20,81 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
   WhiteBoardBloc() : super(WhiteBoardInitialState()) {
     on<WhiteBoardEvent>((event, emit) {
-      if (event is OnUpdateBoardEvent) {
+      if (event is WhiteBoardUpdated) {
         _paints = event.draws;
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is OnStartWhiteBoardEvent) {
+      if (event is WhiteBoardStarted) {
         _handleDrawingInit(event);
       }
 
-      if (event is OnDrawEvent) {
+      if (event is WhiteBoardDrawed) {
         _waterbusSdk.updateWhiteBoard(
           event.drawModel,
           DrawActionEnum.updateAdd,
         );
       }
 
-      if (event is OnUndoEvent) {
+      if (event is WhiteBoardUndid) {
         _waterbusSdk.undo();
       }
 
-      if (event is OnRedoEvent) {
+      if (event is WhiteBoardRedid) {
         _waterbusSdk.redo();
       }
 
-      if (event is CleanWhiteBoardEvent) {
+      if (event is WhiteBoardCleaned) {
         _waterbusSdk.cleanWhiteBoard();
       }
 
       // MARK: Options
-      if (event is ChangeColorEvent) {
+      if (event is WhiteBoardColorChanged) {
         _currentPaint = _currentPaint.copyWith(color: event.color);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is ChangeStrokeSizeEvent) {
+      if (event is WhiteBoardStrokeSizeChanged) {
         _currentPaint = _currentPaint.copyWith(size: event.strokeSize);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is ChangeDrawShapesEvent) {
+      if (event is WhiteBoardDrawShapesChanged) {
         _currentPaint = _currentPaint.copyWith(drawShapes: event.shapes);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is ChangePolygonSidesEvent) {
+      if (event is WhiteBoardPolygonSidesChanged) {
         _currentPaint = _currentPaint.copyWith(polygonSides: event.sides);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is ToggleGridEvent) {
+      if (event is WhiteBoardGridToggled) {
         _currentPaint = _currentPaint.copyWith(showGrid: event.showGrid);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
 
-      if (event is ToggleFilledEvent) {
+      if (event is WhiteBoardFilledToggled) {
         _currentPaint = _currentPaint.copyWith(isFilled: event.filled);
-        emit(_getDoneWhiteBoard);
+        emit(_whiteBoardDone);
       }
     });
   }
 
-  GetDoneWhiteBoard get _getDoneWhiteBoard => GetDoneWhiteBoard(
+  WhiteBoardDone get _whiteBoardDone => WhiteBoardDone(
         currentPaint: _currentPaint,
         paints: _paints,
       );
 
   // MARK: Private methods
   void _handleDrawingInit(
-    OnStartWhiteBoardEvent event,
+    WhiteBoardStarted event,
   ) {
     _waterbusSdk.setOnDrawChanged = _callBackDrawChanged;
     _waterbusSdk.startWhiteBoard();
   }
 
   void _callBackDrawChanged(List<DrawModel> paints) {
-    add(OnUpdateBoardEvent(draws: paints));
+    add(WhiteBoardUpdated(draws: paints));
   }
 }

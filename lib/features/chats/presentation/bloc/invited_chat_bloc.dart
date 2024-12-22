@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -19,51 +20,57 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
 
   InvitedChatBloc() : super(InvitedChatInitial()) {
     on<InvitedChatEvent>((event, emit) async {
-      if (event is OnInvitedConversationEvent) {
+      if (event is InvitedChatStarted) {
         if (_invitedConversations.isEmpty && !_isOverInvited) {
           emit(InvitedChatInitial());
           await _getInvitedConversationList();
-          emit(_getDoneChat);
+          emit(_invitedChatDone);
         }
       }
-      if (event is GetInvitedConversationsEvent) {
-        if (state is GettingInvitedChatState || _isOverInvited) return;
+      if (event is InvitedChatFetched) {
+        if (state is InvitedChatInProgress || _isOverInvited) return;
 
-        emit(_gettingInvitedChat);
+        emit(_invitedChatInprogress);
         await _getInvitedConversationList();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
       }
 
-      if (event is RefreshInvitedConversationsEvent) {
+      if (event is InvitedChatRefreshed) {
         _invitedConversations.clear();
         _isOverInvited = false;
 
         await _getInvitedConversationList();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
         event.handleFinish();
       }
 
-      if (event is AcceptInviteEvent) {
-        final Meeting? meeting =
+      if (event is InvitedChatAccepted) {
+        final Result<Meeting> result =
             await _waterbusSdk.acceptInvite(event.meetingId);
 
-        if (meeting != null) {
-          _invitedConversations.removeWhere(
-            (conversation) => conversation.id == event.meetingId,
-          );
-          AppBloc.chatBloc.add(InsertConversationEvent(conversation: meeting));
+        if (result.isSuccess) {
+          final Meeting? meeting = result.value;
 
-          showSnackBarWaterbus(
-            content: Strings.youHaveConfirmedConversation.i18n,
-          );
+          if (meeting != null) {
+            _invitedConversations.removeWhere(
+              (conversation) => conversation.id == event.meetingId,
+            );
+            AppBloc.chatBloc.add(ChatInserted(conversation: meeting));
 
-          AppNavigator.pop();
+            showSnackBarWaterbus(
+              content: Strings.youHaveConfirmedConversation.i18n,
+            );
 
-          emit(_getDoneChat);
+            AppNavigator.pop();
+
+            emit(_invitedChatDone);
+          }
+        } else {
+          // Handle accept invited fail
         }
       }
 
-      if (event is InsertInvitedConversationsEvent) {
+      if (event is InvitedChatInserted) {
         if (!_isOverInvited ||
             (_isOverInvited && _invitedConversations.isEmpty)) {
           final index = _invitedConversations
@@ -75,36 +82,38 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
             _invitedConversations.insert(0, event.invited);
           }
 
-          emit(_getDoneChat);
+          emit(_invitedChatDone);
         }
       }
 
-      if (event is CleanInvitedConversationEvent) {
+      if (event is InvitedChatCleaned) {
         _cleanInvitedChat();
-        emit(_getDoneChat);
+        emit(_invitedChatDone);
       }
     });
   }
 
   // MARK: state
-  GettingInvitedChatState get _gettingInvitedChat => GettingInvitedChatState(
-        invitedConversations: _invitedConversations,
-      );
-  GetDoneInvitedChatState get _getDoneChat => GetDoneInvitedChatState(
-        invitedConversations: _invitedConversations,
-      );
+  InvitedChatInProgress get _invitedChatInprogress =>
+      InvitedChatInProgress(invitedConversations: _invitedConversations);
+  InvitedChatDone get _invitedChatDone =>
+      InvitedChatDone(invitedConversations: _invitedConversations);
 
   // MARK: private methods
   Future<void> _getInvitedConversationList() async {
-    final List<Meeting> result = await _waterbusSdk.getConversations(
+    final Result<List<Meeting>> result = await _waterbusSdk.getConversations(
       skip: _invitedConversations.length,
       status: MemberStatusEnum.inviting.value,
     );
 
-    _invitedConversations.addAll(result);
+    if (result.isSuccess) {
+      final List<Meeting> invitedConversations = result.value ?? [];
 
-    if (result.length < 10) {
-      _isOverInvited = true;
+      _invitedConversations.addAll(invitedConversations);
+
+      if (invitedConversations.length < 10) {
+        _isOverInvited = true;
+      }
     }
   }
 

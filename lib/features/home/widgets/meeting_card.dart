@@ -24,9 +24,12 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-      margin: EdgeInsets.only(bottom: 4.sp),
-      padding: EdgeInsets.all(10.sp),
+      color: SizerUtil.isDesktop
+          ? Colors.transparent
+          : Theme.of(context).scaffoldBackgroundColor,
+      padding: EdgeInsets.all(10.sp).add(
+        EdgeInsets.only(bottom: 4.sp),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,7 +100,7 @@ class MeetingCard extends StatelessWidget {
                     permissions: [Permission.camera, Permission.microphone],
                     callBack: () async {
                       AppBloc.meetingBloc.add(
-                        DisplayDialogMeetingEvent(meeting: meeting),
+                        MeetingDialogDisplayed(meeting: meeting),
                       );
                     },
                   );

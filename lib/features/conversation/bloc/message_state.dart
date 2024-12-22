@@ -4,28 +4,28 @@ abstract class MessageState {}
 
 class MessageInitial extends MessageState {}
 
-class ActiveMessageState extends MessageState {
+class MessageActived extends MessageState {
   final List<MessageModel> messages;
   final MessageModel? messageBeingEdited;
   final bool isOver;
 
-  ActiveMessageState({
+  MessageActived({
     required this.messages,
     required this.messageBeingEdited,
     required this.isOver,
   });
 }
 
-class GettingMessageState extends ActiveMessageState {
-  GettingMessageState({
+class MessageInProgress extends MessageActived {
+  MessageInProgress({
     required super.messages,
     required super.messageBeingEdited,
     required super.isOver,
   });
 }
 
-class GetDoneMessageState extends ActiveMessageState {
-  GetDoneMessageState({
+class MessageDone extends MessageActived {
+  MessageDone({
     required super.messages,
     required super.messageBeingEdited,
     required super.isOver,

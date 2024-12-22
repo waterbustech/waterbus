@@ -2,26 +2,26 @@ part of 'invited_chat_bloc.dart';
 
 abstract class InvitedChatEvent {}
 
-class OnInvitedConversationEvent extends InvitedChatEvent {}
+class InvitedChatStarted extends InvitedChatEvent {}
 
-class GetInvitedConversationsEvent extends InvitedChatEvent {}
+class InvitedChatFetched extends InvitedChatEvent {}
 
-class RefreshInvitedConversationsEvent extends InvitedChatEvent {
+class InvitedChatRefreshed extends InvitedChatEvent {
   final Function handleFinish;
 
-  RefreshInvitedConversationsEvent({required this.handleFinish});
+  InvitedChatRefreshed({required this.handleFinish});
 }
 
-class InsertInvitedConversationsEvent extends InvitedChatEvent {
+class InvitedChatInserted extends InvitedChatEvent {
   final Meeting invited;
 
-  InsertInvitedConversationsEvent({required this.invited});
+  InvitedChatInserted({required this.invited});
 }
 
-class AcceptInviteEvent extends InvitedChatEvent {
+class InvitedChatAccepted extends InvitedChatEvent {
   final int meetingId;
 
-  AcceptInviteEvent({required this.meetingId});
+  InvitedChatAccepted({required this.meetingId});
 }
 
-class CleanInvitedConversationEvent extends InvitedChatEvent {}
+class InvitedChatCleaned extends InvitedChatEvent {}

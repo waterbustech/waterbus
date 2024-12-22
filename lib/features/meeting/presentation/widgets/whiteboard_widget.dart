@@ -39,7 +39,7 @@ class WhiteBoardWidgetState extends State<WhiteBoardWidget>
       duration: 300.milliseconds,
     );
     _currentDraw = CurrentStroke();
-    AppBloc.whiteBoardBloc.add(OnStartWhiteBoardEvent());
+    AppBloc.whiteBoardBloc.add(WhiteBoardStarted());
   }
 
   @override

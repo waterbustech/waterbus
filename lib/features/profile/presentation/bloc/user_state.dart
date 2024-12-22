@@ -9,11 +9,11 @@ sealed class UserState extends Equatable {
 
 final class UserInitial extends UserState {}
 
-class UserGetDone extends UserState {
+class UserDone extends UserState {
   final User user;
   final CheckUsernameStatus checkUsernameStatus;
 
-  const UserGetDone({
+  const UserDone({
     required this.user,
     required this.checkUsernameStatus,
   });

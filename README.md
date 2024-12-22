@@ -2,7 +2,7 @@
 > Waterbus is an open source video conferencing app built on latest WebRTC SDK. Currently, Waterbus is an early release that is subject to the following limitations: it may have limited support, changes may not be compatible with other pre-general availability versions, and availability may change without notice.
 
 <p align="center">
-  <img src="https://github.com/waterbustech/waterbus/blob/main/assets/images/img_app_logo.png?raw=true" width="180px" height=auto alt="Computador"/>
+  <img src="./assets/icons/launcher_icon.png" width="180px" height=auto alt="Computador"/>
 </p>
 
 <div class="badges" align="center">
@@ -161,6 +161,12 @@ flutter build linux
 ```bash
 flutter build web
 ```
+
+## 🙏 Contributors
+
+<a href = "https://github.com/waterbustech/waterbus/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=waterbustech/waterbus"/>
+</a>
 
 ## 💙 Supports
 

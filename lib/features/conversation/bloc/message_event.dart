@@ -2,71 +2,71 @@ part of 'message_bloc.dart';
 
 abstract class MessageEvent {}
 
-class InitialMessageSocketEvent extends MessageEvent {}
+class MessageSocketStarted extends MessageEvent {}
 
-class GetMessageByMeetingIdEvent extends MessageEvent {
+class MessageFetchedByMeeting extends MessageEvent {
   final int meetingId;
   final Function? handleFinish;
 
-  GetMessageByMeetingIdEvent({
+  MessageFetchedByMeeting({
     required this.meetingId,
     this.handleFinish,
   });
 }
 
-class GetMoreMessageEvent extends MessageEvent {}
+class MessageFetched extends MessageEvent {}
 
-class ResendMessageEvent extends MessageEvent {
+class MessageResent extends MessageEvent {
   final MessageModel messageModel;
 
-  ResendMessageEvent({required this.messageModel});
+  MessageResent({required this.messageModel});
 }
 
-class SendMessageEvent extends MessageEvent {
+class MessageSent extends MessageEvent {
   final String data;
   final int meetingId;
 
-  SendMessageEvent({required this.data, required this.meetingId});
+  MessageSent({required this.data, required this.meetingId});
 }
 
-class EditMessageEvent extends MessageEvent {
+class MessageEdited extends MessageEvent {
   final String data;
   final int messageId;
 
-  EditMessageEvent({required this.data, required this.messageId});
+  MessageEdited({required this.data, required this.messageId});
 }
 
-class SelectMessageEditEvent extends MessageEvent {
+class MessageSelected extends MessageEvent {
   final MessageModel message;
 
-  SelectMessageEditEvent({required this.message});
+  MessageSelected({required this.message});
 }
 
-class DeleteMessageEvent extends MessageEvent {
+class MessageDeleted extends MessageEvent {
   final int messageId;
 
-  DeleteMessageEvent({required this.messageId});
+  MessageDeleted({required this.messageId});
 }
 
-class CancelEditMessageEvent extends MessageEvent {}
+class MessageEditingCancelled extends MessageEvent {}
 
-class CleanMessageEvent extends MessageEvent {
+class MessageCleaned extends MessageEvent {
   final List<int> meetingIds;
 
-  CleanMessageEvent({required this.meetingIds});
+  MessageCleaned({required this.meetingIds});
 }
 
-class InsertMessageEvent extends MessageEvent {
+class MessageInserted extends MessageEvent {
   final MessageModel message;
 
-  InsertMessageEvent({required this.message});
+  MessageInserted({required this.message});
 }
 
-class UpdateMessageFromSocketEvent extends MessageEvent {
+class MessageUpdatedViaSocket extends MessageEvent {
   final MessageModel messageModel;
   final bool isDeleted;
 
-  UpdateMessageFromSocketEvent({
+  MessageUpdatedViaSocket({
     required this.messageModel,
     this.isDeleted = false,
   });
