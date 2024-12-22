@@ -139,7 +139,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
                       if (dataEditing) {
                         _messageController.text = '';
                         _requestFocus(isFocus: false);
-                        AppBloc.messageBloc.add(CancelEditMessageEvent());
+                        AppBloc.messageBloc.add(MessageEditingCancelled());
                       } else {
                         _handleSendMessage(
                           messageBeingEdited: messageBeingEdited,

@@ -51,14 +51,14 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     if (widget.isChatScreen) {
       if (_isEditing) {
         AppBloc.chatBloc.add(
-          UpdateConversationEvent(
+          ChatUpdated(
             title: _roomNameController.text,
             password: _passwordController.text,
           ),
         );
       } else {
         AppBloc.chatBloc.add(
-          CreateConversationEvent(
+          ChatCreated(
             title: _roomNameController.text,
             password: _passwordController.text,
           ),
@@ -67,14 +67,14 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     } else {
       if (_isEditing) {
         AppBloc.meetingBloc.add(
-          UpdateMeetingEvent(
+          MeetingUpdated(
             roomName: _roomNameController.text.trim(),
             password: _passwordController.text,
           ),
         );
       } else {
         AppBloc.meetingBloc.add(
-          CreateMeetingEvent(
+          MeetingCreated(
             roomName: _roomNameController.text.trim(),
             password: _passwordController.text,
           ),
@@ -99,7 +99,43 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                handleCreateMeetingButton();
+                if (!(_formStateKey.currentState?.validate() ?? false)) return;
+
+                displayLoadingLayer();
+
+                if (widget.isChatScreen) {
+                  if (_isEditing) {
+                    AppBloc.chatBloc.add(
+                      ChatUpdated(
+                        title: _roomNameController.text,
+                        password: _passwordController.text,
+                      ),
+                    );
+                  } else {
+                    AppBloc.chatBloc.add(
+                      ChatCreated(
+                        title: _roomNameController.text,
+                        password: _passwordController.text,
+                      ),
+                    );
+                  }
+                } else {
+                  if (_isEditing) {
+                    AppBloc.meetingBloc.add(
+                      MeetingUpdated(
+                        roomName: _roomNameController.text.trim(),
+                        password: _passwordController.text,
+                      ),
+                    );
+                  } else {
+                    AppBloc.meetingBloc.add(
+                      MeetingCreated(
+                        roomName: _roomNameController.text.trim(),
+                        password: _passwordController.text,
+                      ),
+                    );
+                  }
+                }
               },
               icon: Icon(
                 PhosphorIcons.check(),
@@ -142,81 +178,6 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
                               return Strings
                                   .passwordMustBeAtLeast6Characters.i18n;
                             }
-              if (widget.isChatScreen) {
-                if (_isEditing) {
-                  AppBloc.chatBloc.add(
-                    ChatUpdated(
-                      title: _roomNameController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
-                } else {
-                  AppBloc.chatBloc.add(
-                    ChatCreated(
-                      title: _roomNameController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
-                }
-              } else {
-                if (_isEditing) {
-                  AppBloc.meetingBloc.add(
-                    MeetingUpdated(
-                      roomName: _roomNameController.text.trim(),
-                      password: _passwordController.text,
-                    ),
-                  );
-                } else {
-                  AppBloc.meetingBloc.add(
-                    MeetingCreated(
-                      roomName: _roomNameController.text.trim(),
-                      password: _passwordController.text,
-                    ),
-                  );
-                }
-              }
-            },
-            icon: Icon(
-              PhosphorIcons.check(),
-              size: 18.sp,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ],
-      ),
-      body: Form(
-        key: _formStateKey,
-        child: Column(
-          children: [
-            const Divider(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 16.sp),
-                      LabelText(label: Strings.roomName.i18n),
-                      TextFieldInput(
-                        validatorForm: (val) {
-                          if (val?.isEmpty ?? true) {
-                            return Strings.invalidName.i18n;
-                          }
-                          return null;
-                        },
-                        hintText: Strings.meetingLabel.i18n,
-                        controller: _roomNameController,
-                      ),
-                      SizedBox(height: 8.sp),
-                      LabelText(label: Strings.password.i18n),
-                      TextFieldInput(
-                        obscureText: true,
-                        validatorForm: (val) {
-                          if (val == null || val.length < 6) {
-                            return Strings
-                                .passwordMustBeAtLeast6Characters.i18n;
-                          }
 
                             return null;
                           },
