@@ -162,6 +162,12 @@ flutter build linux
 flutter build web
 ```
 
+## 🙏 Contributors
+
+<a href = "https://github.com/waterbustech/waterbus/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=waterbustech/waterbus"/>
+</a>
+
 ## 💙 Supports
 
 Support it by joining [stargazers](https://github.com/waterbustech/waterbus/stargazers) for this repository. ⭐
