@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -32,6 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+
     compileSdkVersion 34
 
     buildFeatures {
@@ -68,24 +69,24 @@ android {
     }
 
     signingConfigs {
-       release {
-           storeFile file('waterbus.jks')
-           storePassword "waterbus"
-           keyAlias 'upload'
-           keyPassword "waterbus"
-       }
+        release {
+            storeFile file('waterbus.jks')
+            storePassword "waterbus"
+            keyAlias 'upload'
+            keyPassword "waterbus"
+        }
     }
 
     buildTypes {
         debug {
-            // TODO: Add your own signing config for the release build.
+            // TODO: Add your own signing config for the debug build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             debuggable true                // make app non-debuggable
             crunchPngs true                 // shrink images
-            minifyEnabled true              // obfuscate code and remove unused code
-            shrinkResources true
+            minifyEnabled false              // obfuscate code and remove unused code
+            shrinkResources false
             multiDexEnabled true
         }
 

@@ -807,12 +807,11 @@ packages:
   flutter_rust_bridge:
     dependency: transitive
     description:
-      path: frb_dart
-      ref: HEAD
-      resolved-ref: f58509660e47525398647848b4b462387deae086
-      url: "https://github.com/waterbustech/flutter_rust_bridge.git"
-    source: git
-    version: "2.3.0"
+      name: flutter_rust_bridge
+      sha256: "35c257fc7f98e34c1314d6c145e5ed54e7c94e8a9f469947e31c9298177d546f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   flutter_side_menu:
     dependency: "direct main"
     description:
@@ -859,10 +858,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: "7f1e1d7ce8c3785c15d43e66cdcdedbeb77b4a7ab6987c44fc9dd61186bc98e3"
+      sha256: ffab30061c68c11af2869cea3145054d11be9c11bec9362f46bc25fb56d0423a
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.1+1"
+    version: "0.12.1+2"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1074,6 +1073,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  http_profile:
+    dependency: transitive
+    description:
+      name: http_profile
+      sha256: "7e679e355b09aaee2ab5010915c932cce3f2d1c11c3b2dc177891687014ffa78"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   i18n_extension:
     dependency: "direct main"
     description:
@@ -1715,14 +1722,13 @@ packages:
     source: hosted
     version: "1.0.0"
   rhttp:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: rhttp
-      ref: HEAD
-      resolved-ref: bbec8d9e20c6adb3137de299c247d449d37c3b9f
-      url: "https://github.com/waterbustech/rhttp.git"
-    source: git
-    version: "0.6.1"
+      name: rhttp
+      sha256: "8212cbc816cc3e761eecb8d4dbbaa1eca95de715428320a198a4e7a89acdcd2e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.8"
   rxdart:
     dependency: transitive
     description:
@@ -2379,10 +2385,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      name: waterbus_sdk
-      sha256: "70e2688da2c79f2990f0e4258fc19db834aeaf8beda7f496fd80c2ac8ab5b4e3"
-      url: "https://pub.dev"
-    source: hosted
+      path: "C:\\Users\\LazyCoder\\Documents\\waterbus\\waterbus-flutter-sdk"
+      relative: false
+    source: path
     version: "1.5.2"
   web:
     dependency: "direct overridden"

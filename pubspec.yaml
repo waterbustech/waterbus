@@ -122,10 +122,11 @@ dependencies:
   media_kit_libs_linux: any
 
   # Video call
-  waterbus_sdk: 1.5.2
+  # waterbus_sdk: ^1.5.2
   # waterbus_sdk:
   #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
-   
+  waterbus_sdk:
+    path: /Users/LazyCoder/Documents/waterbus/waterbus-flutter-sdk
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -138,10 +139,10 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
-  rhttp:
-    git:
-      url: https://github.com/waterbustech/rhttp.git
-      path: rhttp
+  # rhttp:
+  #   git:
+  #     url: https://github.com/waterbustech/rhttp.git
+  #     path: rhttp
 
 dev_dependencies:
   # Test

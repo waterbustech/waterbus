@@ -82,7 +82,6 @@ class _InputSendMessageState extends State<InputSendMessage> {
                 _handleSendMessage(
                   messageBeingEdited: messageBeingEdited,
                 );
-                debugPrint("123123");
               },
             },
             child: Container(
