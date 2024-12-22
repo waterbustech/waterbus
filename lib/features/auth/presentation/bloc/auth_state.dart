@@ -6,4 +6,4 @@ class AuthInitial extends AuthState {}
 
 class AuthFailure extends AuthState {}
 
-class AuthSuccess extends AuthState {}
+class AuthSucceeded extends AuthState {}

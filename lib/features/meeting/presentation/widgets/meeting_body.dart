@@ -82,7 +82,7 @@ class _MeetingBodyState extends State<MeetingBody> {
           alignment: Alignment.centerRight,
           child: _isRecordingOnPhone
               ? _buildRecWidget()
-              : Assets.images.imgAppLogo3d.image(height: 30.sp),
+              : Assets.icons.launcherIcon.image(height: 30.sp),
         ),
         leadingWidth: SizerUtil.isDesktop
             ? 50.sp
@@ -211,7 +211,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         onTap: () {
                           if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(ToggleAudioEvent());
+                          AppBloc.meetingBloc.add(MeetingAudioToggled());
                         },
                       ),
                       CallActionButton(
@@ -222,7 +222,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                         onTap: () {
                           if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(ToggleVideoEvent());
+                          AppBloc.meetingBloc.add(MeetingVideoToggled());
                         },
                       ),
                       CallActionButton(
@@ -242,9 +242,11 @@ class _MeetingBodyState extends State<MeetingBody> {
                           if (callState?.mParticipant == null) return;
 
                           if (callState!.mParticipant!.isSharingScreen) {
-                            AppBloc.meetingBloc.add(StopSharingScreenEvent());
+                            AppBloc.meetingBloc
+                                .add(MeetingSharingScreenStoped());
                           } else {
-                            AppBloc.meetingBloc.add(StartSharingScreenEvent());
+                            AppBloc.meetingBloc
+                                .add(MeetingSharingScreenStarted());
                           }
                         },
                       ),
@@ -262,7 +264,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                                   : null,
                           onTap: () {
                             if (callState?.mParticipant == null) return;
-                            AppBloc.meetingBloc.add(ToggleHandRasing());
+                            AppBloc.meetingBloc.add(MeetingHandRasingToggled());
                           },
                         ),
                       if (SizerUtil.isDesktop)
@@ -331,7 +333,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                           backgroundColor: Colors.red,
                           iconColor: mCL,
                           onTap: () {
-                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                            AppBloc.meetingBloc.add(const MeetingLeft());
                           },
                         ),
                     ],
@@ -349,7 +351,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                           backgroundColor: Colors.red,
                           iconColor: mCL,
                           onTap: () {
-                            AppBloc.meetingBloc.add(const LeaveMeetingEvent());
+                            AppBloc.meetingBloc.add(const MeetingLeft());
                           },
                         ),
                       ],

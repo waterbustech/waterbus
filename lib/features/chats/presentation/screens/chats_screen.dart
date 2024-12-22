@@ -27,7 +27,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   void initState() {
     super.initState();
 
-    AppBloc.chatBloc.add(OnChatEvent());
+    AppBloc.chatBloc.add(ChatStarted());
   }
 
   void _handleTapChatItem(Meeting meeting) {
@@ -52,7 +52,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               title: Strings.chat.i18n,
               leading: BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
-                  if (state is UserGetDone) {
+                  if (state is UserDone) {
                     final User user = state.user;
 
                     return Align(
@@ -90,7 +90,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
-          if (state is ActiveChatState) {
+          if (state is ChatActived) {
             return ConversationList(
               onTap: (index) {
                 if (index > state.conversations.length - 1) return;

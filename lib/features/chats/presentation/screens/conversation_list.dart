@@ -46,7 +46,7 @@ class ConversationList extends StatelessWidget {
 
               final List<Meeting> meetings = [];
 
-              if (state is ActiveChatState) {
+              if (state is ChatActived) {
                 meetings.addAll(state.conversations);
               }
 
@@ -57,13 +57,13 @@ class ConversationList extends StatelessWidget {
                       shrinkWrap: true,
                       callBackRefresh: (handleFinish) {
                         AppBloc.chatBloc.add(
-                          RefreshConversationsEvent(handleFinish: handleFinish),
+                          ChatRefreshed(handleFinish: handleFinish),
                         );
                       },
                       callBackLoadMore: () {
-                        AppBloc.chatBloc.add(GetConversationsEvent());
+                        AppBloc.chatBloc.add(ChatFetched());
                       },
-                      isLoadMore: state is GettingChatState,
+                      isLoadMore: state is ChatInProgress,
                       padding: EdgeInsets.only(
                         bottom: SizerUtil.isDesktop ? 25.sp : 70.sp,
                         top: 8.sp,
@@ -84,12 +84,22 @@ class ConversationList extends StatelessWidget {
                                 menuProvider: (_) {
                                   return _menuProvider(meetings[index]);
                                 },
+                                liftBuilder: (context, child) {
+                                  return ChatCard(
+                                    meeting: meetings[index],
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.sp,
+                                      vertical: 8.sp,
+                                    ),
+                                  );
+                                },
                                 child: ChatCard(meeting: meetings[index]),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 58.sp),
-                                child: divider,
-                              ),
+                              if (index < meetings.length - 1)
+                                Padding(
+                                  padding: EdgeInsets.only(left: 58.sp),
+                                  child: divider,
+                                ),
                             ],
                           ),
                         );

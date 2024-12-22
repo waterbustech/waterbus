@@ -34,7 +34,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   void initState() {
     super.initState();
     AppBloc.messageBloc.add(
-      GetMessageByMeetingIdEvent(meetingId: widget.meeting.id),
+      MessageFetchedByMeeting(meetingId: widget.meeting.id),
     );
     _image = _imageHelloMessage;
     _scrollController.addListener(
@@ -42,7 +42,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         if (_scrollController.position.maxScrollExtent > 0 &&
             _scrollController.position.pixels >=
                 _scrollController.position.maxScrollExtent - 2.sp) {
-          AppBloc.messageBloc.add(GetMoreMessageEvent());
+          AppBloc.messageBloc.add(MessageFetched());
         }
       },
     );
@@ -52,7 +52,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   void didUpdateWidget(ConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     AppBloc.messageBloc
-        .add(GetMessageByMeetingIdEvent(meetingId: widget.meeting.id));
+        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
     _image = _imageHelloMessage;
   }
 
@@ -80,14 +80,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     return const ListConversationShimmers();
                   }
 
-                  if (state is ActiveMessageState) {
+                  if (state is MessageActived) {
                     final List<MessageModel> messages = state.messages;
 
                     return messages.isEmpty
                         ? GestureWrapper(
                             onTap: () {
                               AppBloc.messageBloc.add(
-                                SendMessageEvent(
+                                MessageSent(
                                   data: "${Strings.hi.i18n}!",
                                   meetingId: widget.meeting.id,
                                 ),

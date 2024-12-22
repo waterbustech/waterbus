@@ -7,32 +7,32 @@ sealed class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetProfileEvent extends UserEvent {}
+class UserFetched extends UserEvent {}
 
-class UpdateProfileEvent extends UserEvent {
+class UserUpdated extends UserEvent {
   final String fullName;
   final String? bio;
   final String? avatar;
-  const UpdateProfileEvent({
+  const UserUpdated({
     required this.fullName,
     this.avatar,
     this.bio,
   });
 }
 
-class UpdateAvatarEvent extends UserEvent {
+class UserAvatarUpdated extends UserEvent {
   final Uint8List image;
-  const UpdateAvatarEvent({required this.image});
+  const UserAvatarUpdated({required this.image});
 }
 
-class CheckUsernameEvent extends UserEvent {
+class UserUsernameChecked extends UserEvent {
   final String username;
-  const CheckUsernameEvent({required this.username});
+  const UserUsernameChecked({required this.username});
 }
 
-class UpdateUsernameEvent extends UserEvent {
+class UserUsernameUpdated extends UserEvent {
   final String username;
-  const UpdateUsernameEvent({required this.username});
+  const UserUsernameUpdated({required this.username});
 }
 
-class CleanProfileEvent extends UserEvent {}
+class UserCleaned extends UserEvent {}

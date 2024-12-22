@@ -23,7 +23,7 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   void initState() {
     super.initState();
-    AppBloc.recordBloc.add(OnRecordsEvent());
+    AppBloc.recordBloc.add(RecordsStarted());
   }
 
   @override
@@ -51,10 +51,10 @@ class _RecordScreenState extends State<RecordScreen> {
                   physics: const BouncingScrollPhysics(),
                   childShimmer: const SizedBox(),
                   callBackLoadMore: () {
-                    AppBloc.recordBloc.add(GetRecordsEvent());
+                    AppBloc.recordBloc.add(RecordsFetched());
                   },
                   callBackRefresh: (handleFinish) {
-                    AppBloc.recordBloc.add(RefreshRecordsEvent(handleFinish));
+                    AppBloc.recordBloc.add(RecordsRefreshed(handleFinish));
                   },
                   itemCount: records.length,
                   itemBuilder: (context, index) => RecordCard(
