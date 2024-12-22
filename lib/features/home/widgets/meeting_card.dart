@@ -24,7 +24,9 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: SizerUtil.isDesktop
+          ? Colors.transparent
+          : Theme.of(context).scaffoldBackgroundColor,
       padding: EdgeInsets.all(10.sp).add(
         EdgeInsets.only(bottom: 4.sp),
       ),

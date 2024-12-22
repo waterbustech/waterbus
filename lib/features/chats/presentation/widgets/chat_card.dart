@@ -24,6 +24,10 @@ class ChatCard extends StatefulWidget {
 class _ChatCardState extends State<ChatCard> {
   Color? _background;
 
+  Color get _defaultBackgroundColor => SizerUtil.isDesktop
+      ? Colors.transparent
+      : Theme.of(context).scaffoldBackgroundColor;
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -38,7 +42,7 @@ class _ChatCardState extends State<ChatCard> {
         });
       },
       child: Container(
-        color: _background ?? Theme.of(context).scaffoldBackgroundColor,
+        color: _background ?? _defaultBackgroundColor,
         padding: widget.padding ??
             EdgeInsets.symmetric(
               horizontal: 16.sp,
