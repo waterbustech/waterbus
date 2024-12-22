@@ -48,11 +48,11 @@ class WhiteBoardWidgetState extends State<WhiteBoardWidget>
       bindings: {
         const SingleActivator(LogicalKeyboardKey.keyZ, control: true): () =>
             AppBloc.whiteBoardBloc.add(
-              OnUndoEvent(),
+              WhiteBoardUndid(),
             ),
         const SingleActivator(LogicalKeyboardKey.keyY, control: true): () =>
             AppBloc.whiteBoardBloc.add(
-              OnRedoEvent(),
+              WhiteBoardRedid(),
             ),
       },
       child: Focus(

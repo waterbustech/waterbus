@@ -233,270 +233,280 @@ class _MeetingBodyState extends State<MeetingBody> {
                             onTap: () {
                               if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(MeetingAudioToggled());
-                        },
-                      ),
-                      CallActionButton(
-                        icon: callState?.mParticipant == null ||
-                                callState!.mParticipant!.isVideoEnabled
-                            ? PhosphorIcons.camera()
-                            : PhosphorIcons.cameraSlash(),
-                        onTap: () {
-                          if (callState?.mParticipant == null) return;
+                              AppBloc.meetingBloc.add(MeetingAudioToggled());
+                            },
+                          ),
+                          CallActionButton(
+                            icon: callState?.mParticipant == null ||
+                                    callState!.mParticipant!.isVideoEnabled
+                                ? PhosphorIcons.camera()
+                                : PhosphorIcons.cameraSlash(),
+                            onTap: () {
+                              if (callState?.mParticipant == null) return;
 
-                          AppBloc.meetingBloc.add(MeetingVideoToggled());
-                        },
-                      ),
-                      CallActionButton(
-                        icon: PhosphorIcons.monitorArrowUp(
-                          callState!.mParticipant!.isSharingScreen
-                              ? PhosphorIconsStyle.fill
-                              : PhosphorIconsStyle.regular,
-                        ),
-                        iconColor: callState!.mParticipant!.isSharingScreen
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
-                        backgroundColor:
-                            callState!.mParticipant!.isSharingScreen
+                              AppBloc.meetingBloc.add(MeetingVideoToggled());
+                            },
+                          ),
+                          CallActionButton(
+                            icon: PhosphorIcons.monitorArrowUp(
+                              callState!.mParticipant!.isSharingScreen
+                                  ? PhosphorIconsStyle.fill
+                                  : PhosphorIconsStyle.regular,
+                            ),
+                            iconColor: callState!.mParticipant!.isSharingScreen
+                                ? Theme.of(context).colorScheme.primary
+                                : null,
+                            backgroundColor: callState!
+                                    .mParticipant!.isSharingScreen
                                 ? Theme.of(context).colorScheme.primaryContainer
                                 : null,
                             onTap: () {
                               if (callState?.mParticipant == null) return;
 
-                          if (callState!.mParticipant!.isSharingScreen) {
-                            AppBloc.meetingBloc.add(MeetingSharingScreenStoped());
-                          } else {
-                            AppBloc.meetingBloc.add(MeetingSharingScreenStarted());
-                          }
-                        },
-                      ),
-                      if (SizerUtil.isDesktop)
-                        CallActionButton(
-                          icon: callState!.mParticipant!.isHandRaising
-                              ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.hand(),
-                          iconColor: callState!.mParticipant!.isHandRaising
-                              ? Colors.yellow.shade100
-                              : null,
-                          backgroundColor:
-                              callState!.mParticipant!.isHandRaising
-                                  ? Colors.yellow.shade900
+                              if (callState!.mParticipant!.isSharingScreen) {
+                                AppBloc.meetingBloc
+                                    .add(MeetingSharingScreenStoped());
+                              } else {
+                                AppBloc.meetingBloc
+                                    .add(MeetingSharingScreenStarted());
+                              }
+                            },
+                          ),
+                          if (SizerUtil.isDesktop)
+                            CallActionButton(
+                              icon: callState!.mParticipant!.isHandRaising
+                                  ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
+                                  : PhosphorIcons.hand(),
+                              iconColor: callState!.mParticipant!.isHandRaising
+                                  ? Colors.yellow.shade100
                                   : null,
-                          onTap: () {
-                            if (callState?.mParticipant == null) return;
-                            AppBloc.meetingBloc.add(MeetingHandRasingToggled());
-                          },
-                        ),
-                      if (SizerUtil.isDesktop)
-                        CallActionButton(
-                          icon: PhosphorIcons.paintBrush(
-                            _isWhiteBoardOpened
-                                ? PhosphorIconsStyle.fill
-                                : PhosphorIconsStyle.regular,
-                          ),
-                          iconColor: _isWhiteBoardOpened
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
-                          backgroundColor: _isWhiteBoardOpened
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : null,
-                          onTap: () {
-                            setState(() {
-                              _isWhiteBoardOpened = !_isWhiteBoardOpened;
-                            });
-                          },
-                        ),
-                      if (SizerUtil.isDesktop)
-                        CallActionButton(
-                          icon: PhosphorIcons.chatTeardropText(
-                            _isChatOpened
-                                ? PhosphorIconsStyle.fill
-                                : PhosphorIconsStyle.regular,
-                          ),
-                          iconColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
-                          backgroundColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : null,
-                          onTap: () {
-                            setState(() {
-                              _isChatOpened = !_isChatOpened;
-                            });
-                          },
-                        ),
-                      CallActionButton(
-                        icon: PhosphorIcons.dotsThreeOutline(
-                          PhosphorIconsStyle.fill,
-                        ),
-                        onTap: () {
-                          showDialogWaterbus(
-                            onlyShowAsDialog: true,
-                            maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
-                            paddingBottom: SizerUtil.isDesktop ? 80.sp : 20.sp,
-                            paddingHorizontal: 10.sp,
-                            alignment: Alignment.bottomCenter,
-                            child: CallSettingsBottomSheet(
-                              onBeautyFiltersTapped: () {
+                              backgroundColor:
+                                  callState!.mParticipant!.isHandRaising
+                                      ? Colors.yellow.shade900
+                                      : null,
+                              onTap: () {
+                                if (callState?.mParticipant == null) return;
+                                AppBloc.meetingBloc
+                                    .add(MeetingHandRasingToggled());
+                              },
+                            ),
+                          if (SizerUtil.isDesktop)
+                            CallActionButton(
+                              icon: PhosphorIcons.paintBrush(
+                                _isWhiteBoardOpened
+                                    ? PhosphorIconsStyle.fill
+                                    : PhosphorIconsStyle.regular,
+                              ),
+                              iconColor: _isWhiteBoardOpened
+                                  ? Theme.of(context).colorScheme.primary
+                                  : null,
+                              backgroundColor: _isWhiteBoardOpened
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : null,
+                              onTap: () {
                                 setState(() {
-                                  _isFilterSettingsOpened =
-                                      !_isFilterSettingsOpened;
+                                  _isWhiteBoardOpened = !_isWhiteBoardOpened;
                                 });
                               },
                             ),
-                          );
-                        },
-                      ),
-                      if (SizerUtil.isMobile)
-                        CallActionButton(
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.meetingBloc.add(const MeetingLeft());
-                          },
-                        ),
-                    ],
-                  ),
-                ),
-                if (SizerUtil.isDesktop)
-                  Container(
-                    width: 100.sp,
-                    alignment: Alignment.bottomRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CallActionButton(
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.meetingBloc.add(const MeetingLeft());
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: 12.sp),
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: _isFilterSettingsOpened
-                        ? 6
-                        : _isChatOpened
-                            ? 3
-                            : 1,
-                    child: AnimatedSize(
-                      duration: 300.milliseconds,
-                      curve: Curves.easeInOutExpo,
-                      child: SizedBox(
-                        width: _isFilterSettingsOpened
-                            ? 60.w
-                            : _isChatOpened
-                                ? 75.w
-                                : 100.w,
-                        child: _isFilterSettingsOpened
-                            ? Container(
-                                margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                                child: MeetView(
-                                  participants: meeting.participants,
-                                  participantSFU: callState!.mParticipant!
-                                      .copyWith(isSharingScreen: false),
-                                  radius: BorderRadius.zero,
-                                  borderEnabled: false,
-                                ),
-                              )
-                            : Column(
-                                children: [
-                                  Expanded(
-                                    child: MeetingLayout(
-                                      meeting: meeting,
-                                      callState: callState,
-                                      callSetting: callSetting,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: _isWhiteBoardOpened ? 4 : 0,
-                                    child: AnimatedSize(
-                                      duration: 300.milliseconds,
-                                      curve: Curves.easeInOutExpo,
-                                      child: _isWhiteBoardOpened
-                                          ? Container(
-                                              margin: EdgeInsets.only(
-                                                top: 20.sp,
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 20.sp,
-                                              ),
-                                              child: Material(
-                                                clipBehavior: Clip.hardEdge,
-                                                shape: SuperellipseShape(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    20.sp,
-                                                  ),
-                                                ),
-                                                child: const WhiteBoardWidget(),
-                                              ),
-                                            )
-                                          : const SizedBox.shrink(),
-                                    ),
-                                  ),
-                                ],
+                          if (SizerUtil.isDesktop)
+                            CallActionButton(
+                              icon: PhosphorIcons.chatTeardropText(
+                                _isChatOpened
+                                    ? PhosphorIconsStyle.fill
+                                    : PhosphorIconsStyle.regular,
                               ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: _isFilterSettingsOpened
-                        ? 4
-                        : _isChatOpened
-                            ? 1
-                            : 0,
-                    child: AnimatedSize(
-                      duration: 300.milliseconds,
-                      curve: Curves.easeInOutExpo,
-                      child: SizedBox(
-                        width: _isFilterSettingsOpened
-                            ? 40.w
-                            : _isChatOpened
-                                ? 25.w
-                                : 0,
-                        child: AnimatedSwitcher(
-                          duration: 300.milliseconds,
-                          child: _isFilterSettingsOpened
-                              ? BeautyFilterWidget(
-                                  handleClosed: () {
+                              iconColor: _isChatOpened
+                                  ? Theme.of(context).colorScheme.primary
+                                  : null,
+                              backgroundColor: _isChatOpened
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : null,
+                              onTap: () {
+                                setState(() {
+                                  _isChatOpened = !_isChatOpened;
+                                });
+                              },
+                            ),
+                          CallActionButton(
+                            icon: PhosphorIcons.dotsThreeOutline(
+                              PhosphorIconsStyle.fill,
+                            ),
+                            onTap: () {
+                              showDialogWaterbus(
+                                onlyShowAsDialog: true,
+                                maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
+                                paddingBottom:
+                                    SizerUtil.isDesktop ? 80.sp : 20.sp,
+                                paddingHorizontal: 10.sp,
+                                alignment: Alignment.bottomCenter,
+                                child: CallSettingsBottomSheet(
+                                  onBeautyFiltersTapped: () {
                                     setState(() {
-                                      _isFilterSettingsOpened = false;
+                                      _isFilterSettingsOpened =
+                                          !_isFilterSettingsOpened;
                                     });
                                   },
-                                )
-                              : _isChatOpened
-                                  ? ChatInMeeting(
-                                      meeting: meeting,
-                                      onClosePressed: () {
+                                ),
+                              );
+                            },
+                          ),
+                          if (SizerUtil.isMobile)
+                            CallActionButton(
+                              icon: PhosphorIcons.signOut(),
+                              backgroundColor: Colors.red,
+                              onTap: () {
+                                AppBloc.meetingBloc.add(const MeetingLeft());
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (SizerUtil.isDesktop)
+                      Container(
+                        width: 100.sp,
+                        alignment: Alignment.bottomRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CallActionButton(
+                              icon: PhosphorIcons.signOut(),
+                              backgroundColor: Colors.red,
+                              onTap: () {
+                                AppBloc.meetingBloc.add(const MeetingLeft());
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          body: SafeArea(
+            bottom: false,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 12.sp),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: _isFilterSettingsOpened
+                            ? 6
+                            : _isChatOpened
+                                ? 3
+                                : 1,
+                        child: AnimatedSize(
+                          duration: 300.milliseconds,
+                          curve: Curves.easeInOutExpo,
+                          child: SizedBox(
+                            width: _isFilterSettingsOpened
+                                ? 60.w
+                                : _isChatOpened
+                                    ? 75.w
+                                    : 100.w,
+                            child: _isFilterSettingsOpened
+                                ? Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 12.sp),
+                                    child: MeetView(
+                                      participants: meeting.participants,
+                                      participantSFU: callState!.mParticipant!
+                                          .copyWith(isSharingScreen: false),
+                                      radius: BorderRadius.zero,
+                                      borderEnabled: false,
+                                    ),
+                                  )
+                                : Column(
+                                    children: [
+                                      Expanded(
+                                        child: MeetingLayout(
+                                          meeting: meeting,
+                                          callState: callState,
+                                          callSetting: callSetting,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: _isWhiteBoardOpened ? 4 : 0,
+                                        child: AnimatedSize(
+                                          duration: 300.milliseconds,
+                                          curve: Curves.easeInOutExpo,
+                                          child: _isWhiteBoardOpened
+                                              ? Container(
+                                                  margin: EdgeInsets.only(
+                                                    top: 20.sp,
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.sp,
+                                                  ),
+                                                  child: Material(
+                                                    clipBehavior: Clip.hardEdge,
+                                                    shape: SuperellipseShape(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        20.sp,
+                                                      ),
+                                                    ),
+                                                    child:
+                                                        const WhiteBoardWidget(),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        flex: _isFilterSettingsOpened
+                            ? 4
+                            : _isChatOpened
+                                ? 1
+                                : 0,
+                        child: AnimatedSize(
+                          duration: 300.milliseconds,
+                          curve: Curves.easeInOutExpo,
+                          child: SizedBox(
+                            width: _isFilterSettingsOpened
+                                ? 40.w
+                                : _isChatOpened
+                                    ? 25.w
+                                    : 0,
+                            child: AnimatedSwitcher(
+                              duration: 300.milliseconds,
+                              child: _isFilterSettingsOpened
+                                  ? BeautyFilterWidget(
+                                      handleClosed: () {
                                         setState(() {
-                                          _isChatOpened = false;
+                                          _isFilterSettingsOpened = false;
                                         });
                                       },
                                     )
-                                  : const SizedBox(),
+                                  : _isChatOpened
+                                      ? ChatInMeeting(
+                                          meeting: meeting,
+                                          onClosePressed: () {
+                                            setState(() {
+                                              _isChatOpened = false;
+                                            });
+                                          },
+                                        )
+                                      : const SizedBox(),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
 
                 // Build subtitle
                 Positioned(
