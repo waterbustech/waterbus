@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -44,22 +45,28 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
       }
 
       if (event is InvitedChatAccepted) {
-        final Meeting? meeting =
+        final Result<Meeting> result =
             await _waterbusSdk.acceptInvite(event.meetingId);
 
-        if (meeting != null) {
-          _invitedConversations.removeWhere(
-            (conversation) => conversation.id == event.meetingId,
-          );
-          AppBloc.chatBloc.add(ChatInserted(conversation: meeting));
+        if (result.isSuccess) {
+          final Meeting? meeting = result.value;
 
-          showSnackBarWaterbus(
-            content: Strings.youHaveConfirmedConversation.i18n,
-          );
+          if (meeting != null) {
+            _invitedConversations.removeWhere(
+              (conversation) => conversation.id == event.meetingId,
+            );
+            AppBloc.chatBloc.add(ChatInserted(conversation: meeting));
 
-          AppNavigator.pop();
+            showSnackBarWaterbus(
+              content: Strings.youHaveConfirmedConversation.i18n,
+            );
 
-          emit(_invitedChatDone);
+            AppNavigator.pop();
+
+            emit(_invitedChatDone);
+          }
+        } else {
+          // Handle accept invited fail
         }
       }
 
@@ -94,15 +101,19 @@ class InvitedChatBloc extends Bloc<InvitedChatEvent, InvitedChatState> {
 
   // MARK: private methods
   Future<void> _getInvitedConversationList() async {
-    final List<Meeting> result = await _waterbusSdk.getConversations(
+    final Result<List<Meeting>> result = await _waterbusSdk.getConversations(
       skip: _invitedConversations.length,
       status: MemberStatusEnum.inviting.value,
     );
 
-    _invitedConversations.addAll(result);
+    if (result.isSuccess) {
+      final List<Meeting> invitedConversations = result.value ?? [];
 
-    if (result.length < 10) {
-      _isOverInvited = true;
+      _invitedConversations.addAll(invitedConversations);
+
+      if (invitedConversations.length < 10) {
+        _isOverInvited = true;
+      }
     }
   }
 

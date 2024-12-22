@@ -29,10 +29,9 @@ class LogInScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      Assets.images.imgAppLogo.path,
+                      Assets.icons.launcherIcon.path,
                       height: 140.sp,
                     ),
-                    SizedBox(height: 20.sp),
                     SizedBox(
                       width: 250.sp,
                       child: Text(

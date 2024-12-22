@@ -82,7 +82,7 @@ class _MeetingBodyState extends State<MeetingBody> {
           alignment: Alignment.centerRight,
           child: _isRecordingOnPhone
               ? _buildRecWidget()
-              : Assets.images.imgAppLogo3d.image(height: 30.sp),
+              : Assets.icons.launcherIcon.image(height: 30.sp),
         ),
         leadingWidth: SizerUtil.isDesktop
             ? 50.sp

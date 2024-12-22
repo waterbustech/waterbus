@@ -69,7 +69,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   }
 
   Widget _buildHeader(BuildContext context) {
-    final appLogo = Assets.images.imgAppLogo3d.image(height: 30.sp);
+    final appLogo = Assets.icons.launcherIcon.image(height: 30.sp);
 
     return Container(
       margin: EdgeInsets.only(top: 12.sp),

@@ -10,14 +10,19 @@ import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 class ChatCard extends StatefulWidget {
   final Meeting meeting;
-  const ChatCard({super.key, required this.meeting});
+  final EdgeInsetsGeometry? padding;
+  const ChatCard({
+    super.key,
+    required this.meeting,
+    this.padding,
+  });
 
   @override
   State<ChatCard> createState() => _ChatCardState();
 }
 
 class _ChatCardState extends State<ChatCard> {
-  Color _background = Colors.transparent;
+  Color? _background;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +34,16 @@ class _ChatCardState extends State<ChatCard> {
       },
       onExit: (_) {
         setState(() {
-          _background = Colors.transparent;
+          _background = null;
         });
       },
       child: Container(
-        color: _background,
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.sp,
-          vertical: 4.sp,
-        ),
+        color: _background ?? Theme.of(context).scaffoldBackgroundColor,
+        padding: widget.padding ??
+            EdgeInsets.symmetric(
+              horizontal: 16.sp,
+              vertical: 4.sp,
+            ),
         child: Row(
           children: [
             AvatarChat(meeting: widget.meeting),

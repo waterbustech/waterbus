@@ -19,7 +19,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/images/img_app_logo.png
+  image: "assets/icons/launcher_icon.png"
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -37,7 +37,7 @@ flutter_native_splash:
   # set.
   color_dark: "#14171A"
   #background_image_dark: "assets/dark-background.png"
-  image_dark: assets/images/img_app_logo.png
+  image_dark: "assets/icons/launcher_icon.png"
 
   fullscreen: false
   # ios_content_mode: scaleAspectFill
@@ -46,27 +46,27 @@ flutter_native_splash:
   # Android 12 handles the splash screen differently than previous versions.  Please visit
   # https://developer.android.com/guide/topics/ui/splash-screen
   # Following are Android 12 specific parameter.
-  android_12:
-  # The image parameter sets the splash screen icon image.  If this parameter is not specified,
-  # the app's launcher icon will be used instead.
-  # Please note that the splash screen will be clipped to a circle on the center of the screen.
-  # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
-  # 640 pixels in diameter.
-  # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
-  # 768 pixels in diameter.
-    image: assets/icons/launcher_icon_android12.png
+  # android_12:
+  # # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+  # # the app's launcher icon will be used instead.
+  # # Please note that the splash screen will be clipped to a circle on the center of the screen.
+  # # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+  # # 640 pixels in diameter.
+  # # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+  # # 768 pixels in diameter.
+  #   image: assets/icons/launcher_icon_android12.png
 
-  # Splash screen background color.
-    color: "#14171A"
+  # # Splash screen background color.
+  #   color: "#14171A"
 
-  # App icon background color.
-    icon_background_color: "#14171A"
+  # # App icon background color.
+  #   icon_background_color: "#14171A"
 
-  #Dark
-    image_dark: assets/icons/launcher_icon_android12.png
+  # #Dark
+  #   image_dark: assets/icons/launcher_icon_android12.png
 
-  # Splash screen background color dark.
-    color_dark: "#14171A"
+  # # Splash screen background color dark.
+  #   color_dark: "#14171A"
 
-  # App icon background color dark.
-    icon_background_color_dark: "#14171A"
+  # # App icon background color dark.
+  #   icon_background_color_dark: "#14171A"

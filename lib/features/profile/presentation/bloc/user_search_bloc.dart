@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 
@@ -64,15 +65,18 @@ class UserSearchBloc extends Bloc<UserSearchsEvent, UserSearchState> {
   Future<void> _handleSearchUsers() async {
     if (keyword.isEmpty) return;
 
-    final List<User> users = await _waterbusSdk.searchUsers(
+    final Result<List<User>> result = await _waterbusSdk.searchUsers(
       keyword: keyword,
       skip: _userSearchs.length,
     );
 
-    _userSearchs.addAll(users);
+    if (result.isSuccess) {
+      final List<User> users = result.value ?? [];
+      _userSearchs.addAll(users);
 
-    if (users.length < 10) {
-      _isOver = true;
+      if (users.length < 10) {
+        _isOver = true;
+      }
     }
   }
 

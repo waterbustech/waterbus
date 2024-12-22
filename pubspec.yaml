@@ -123,9 +123,8 @@ dependencies:
   media_kit_libs_linux: any
 
   # Video call
-  waterbus_sdk: 1.5.2
-  # waterbus_sdk:
-  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+  waterbus_sdk: ^1.5.3
+   
 
 dependency_overrides: 
   watcher: ^1.1.0
@@ -138,16 +137,12 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
-  rhttp:
-    git:
-      url: https://github.com/waterbustech/rhttp.git
-      path: rhttp
 
 dev_dependencies:
   # Test
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
   mockito: ^5.4.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -169,10 +164,10 @@ dev_dependencies:
 msix_config:
   display_name: Waterbus
   publisher_display_name: Waterbus
-  identity_name: com.facebook.katana
+  identity_name: com.wanted.waterbus
   msix_version: 1.0.0.0
   logo_path: assets\images\logo_rounded.png
-  capabilities: internetClient, location, microphone, webcam
+  capabilities: microphone, webcam
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

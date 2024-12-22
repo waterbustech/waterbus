@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
@@ -66,14 +67,21 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
       );
 
   Future<void> _getArchivedConversationList() async {
-    final List<Meeting> result = await _waterbusSdk.getArchivedConversations(
+    final Result<List<Meeting>> response =
+        await _waterbusSdk.getArchivedConversations(
       skip: _archivedConversations.length,
     );
 
-    _archivedConversations.addAll(result);
+    if (response.isSuccess) {
+      final List<Meeting> result = response.value ?? [];
 
-    if (result.length < 10) {
-      _isOverArchived = true;
+      _archivedConversations.addAll(result);
+
+      if (result.length < 10) {
+        _isOverArchived = true;
+      }
+    } else {
+      // Handle get archived conversation fail
     }
   }
 }
