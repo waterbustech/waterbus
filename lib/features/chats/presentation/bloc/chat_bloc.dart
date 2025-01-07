@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
+import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
 import 'package:waterbus_sdk/types/result.dart';
@@ -11,6 +12,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -20,6 +22,7 @@ import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete
 import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 
 part 'chat_event.dart';
@@ -109,7 +112,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
           AppNavigator.popUntil(Routes.rootRoute);
 
-          showSnackBarWaterbus(content: Strings.addConversationSuccess.i18n);
+          Strings.addConversationSuccess.i18n
+              .showToast(ToastificationType.success);
         }
       }
 
@@ -158,9 +162,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         if (meeting == null) return;
 
         if (meeting.isHost && meeting.members.length > 1) {
-          showSnackBarWaterbus(
-            content: Strings.hostCanNotDeleteConversation.i18n,
-          );
+          Strings.hostCanNotDeleteConversation.i18n
+              .showToast(ToastificationType.error);
         } else {
           await _showBottomSheetSureAction(
             actionText: Strings.leaveTheConversation.i18n,
@@ -250,10 +253,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
             emit(_chatDone);
           } else {
-            showSnackBarWaterbus(content: Strings.uploadImageFail.i18n);
+            Strings.uploadImageFail.i18n.showToast(ToastificationType.error);
           }
         } else {
-          showSnackBarWaterbus(content: Strings.uploadImageFail.i18n);
+          Strings.uploadImageFail.i18n.showToast(ToastificationType.error);
         }
 
         AppNavigator.pop();
@@ -313,7 +316,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (result.isSuccess) {
       return result.value;
     } else {
-      // Toast failure
+      result.error.messageException.showToast(ToastificationType.error);
       return null;
     }
   }
@@ -376,13 +379,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         AppNavigator.pop();
       }
 
-      showSnackBarWaterbus(
-        content: Strings.chatUpdatedSuccessfully.i18n,
-      );
+      Strings.chatUpdatedSuccessfully.i18n
+          .showToast(ToastificationType.success);
     } else {
-      showSnackBarWaterbus(
-        content: Strings.chatUpdateFailed.i18n,
-      );
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -406,11 +406,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (result.isSuccess) {
       _cleanConversationCurrent(meeting.id);
 
-      showSnackBarWaterbus(
-        content: Strings.haveSuccessfullyDeletedConversation.i18n,
-      );
+      Strings.haveSuccessfullyDeletedConversation.i18n
+          .showToast(ToastificationType.success);
     } else {
-      showSnackBarWaterbus(content: Strings.cannotDeleteConversation.i18n);
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -428,12 +427,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         _cleanConversationCurrent(archivedConversation.id);
 
-        showSnackBarWaterbus(content: Strings.haveArchivedConversation.i18n);
+        Strings.haveArchivedConversation.i18n
+            .showToast(ToastificationType.success);
       } else {
-        showSnackBarWaterbus(content: Strings.cannotBeArchived.i18n);
+        Strings.cannotBeArchived.i18n.showToast(ToastificationType.error);
       }
     } else {
-      // Handle archived conversation fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -447,12 +447,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (conversation != null) {
         _cleanConversationCurrent(conversation.id);
 
-        showSnackBarWaterbus(content: Strings.haveLeftConversation.i18n);
+        Strings.haveLeftConversation.i18n.showToast(ToastificationType.success);
       } else {
-        showSnackBarWaterbus(content: Strings.leaveFailedConversation.i18n);
+        Strings.leaveFailedConversation.i18n
+            .showToast(ToastificationType.error);
       }
     } else {
-      // Handle leave conversation fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -471,7 +472,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         _isOver = true;
       }
     } else {
-      // Handle get conversation fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -490,15 +491,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           _conversations[index] = meeting;
         }
 
-        showSnackBarWaterbus(
-          content:
-              "${Strings.youHaveRemoved.i18n} ${event.userModel.fullName} ${Strings.fromTheChat.i18n}",
-        );
+        final String successTitle =
+            "${Strings.youHaveRemoved.i18n} ${event.userModel.fullName} ${Strings.fromTheChat.i18n}";
+
+        successTitle.showToast(ToastificationType.success);
       } else {
-        showSnackBarWaterbus(content: Strings.cannotDeleteMember.i18n);
+        Strings.cannotDeleteMember.i18n.showToast(ToastificationType.error);
       }
     } else {
-      // Handle delete member fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 

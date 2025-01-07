@@ -214,4 +214,31 @@ Map<String, String> english = {
   Strings.signOutOfYourAccount: "Sign out of your account",
   Strings.descriptionArchivedConversation:
       "This conversation has been Archived. You can only review messages from this conversation.",
+
+  // Exception
+  Strings.roomNotFound: "Room not found",
+  Strings.notAllowedToUpdateRoom: "Room updates are not allowed",
+  Strings.wrongPassword: "Passwords do not match",
+  Strings.notAllowToJoinDirectly: "No direct participation is allowed",
+  Strings.notExistsParticipant: "No participants exist",
+  Strings.serverFailure: "System error",
+  Strings.isAlreadyInRoom: "You are already in the chat room",
+  Strings.hostNotFound: "Host not found",
+  Strings.notAllowToAddUser: "Additional participants are not allowed",
+  Strings.hasNotJoinedMeeting: "You have joined the chat room",
+  Strings.memberNotFound: "Member not found",
+  Strings.participantNotFound: "Participant does not exist",
+  Strings.onlyAllowHostStartRecord: "Only the room host can start recording",
+  Strings.onlyAllowHostStopRecord: "Only the room host can stop recording",
+  Strings.notAllowedToLeaveTheRoom: "You are not allowed to leave the room",
+  Strings.onlyHostPermitedToArchivedTheRoom: "Only room owners can Archive",
+
+  // Exception - Message
+  Strings.notAllowedModifyMessage: 'Message editing is not allowed',
+  Strings.messageNotFound: 'Message not found',
+  Strings.messageHasBeenDelete: "Message has been deleted",
+
+  // Exception - User
+  Strings.userNotFound: "User not found",
+  Strings.userIsAlreadyUsed: 'Username is already used',
 };

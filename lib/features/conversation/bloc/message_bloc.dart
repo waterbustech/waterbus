@@ -1,13 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/models/message_status_enum.dart';
 import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 
 part 'message_event.dart';
 part 'message_state.dart';
@@ -221,7 +224,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _messagesMap[_meetingId]?.isOver = true;
       }
     } else {
-      // Handle get message by meetingId fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -249,7 +252,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         }
       }
     } else {
-      // Handle send message fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -276,7 +279,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
       _messageBeingEdited = null;
     } else {
-      // Handle edit message fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -309,7 +312,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _handleDeleteMessage(messageModel: messageModel);
       }
     } else {
-      // Handle delete message fail
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
