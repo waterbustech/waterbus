@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -213,9 +214,8 @@ class CanvasSideBar extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   children: [
                     IconButton(
-                      onPressed: () async {
-                        final Uint8List? pngBytes = await _getBytes();
-                        if (pngBytes != null) _saveFile(pngBytes, 'png');
+                      onPressed: () {
+                        handleSaveButton();
                       },
                       icon: Icon(PhosphorIcons.floppyDisk()),
                     ),
@@ -296,6 +296,11 @@ class CanvasSideBar extends StatelessWidget {
         mimeType: MimeType.png,
       );
     }
+  }
+
+  handleSaveButton() async {
+    final Uint8List? pngBytes = await _getBytes();
+    if (pngBytes != null) _saveFile(pngBytes, 'png');
   }
 
   Future<Uint8List?> _getBytes() async {
