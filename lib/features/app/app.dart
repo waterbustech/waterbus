@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:toastification/toastification.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/constants/constants.dart';
@@ -28,36 +29,38 @@ class _AppState extends State<App> {
         builder: (context, orientation, deviceType) {
           return BlocBuilder<ThemesBloc, ThemesState>(
             builder: (context, theme) {
-              return MaterialApp(
-                title: kAppTitle,
-                navigatorKey: AppNavigator.navigatorKey,
-                debugShowCheckedModeBanner: false,
-                theme: AppTheme.light(colorSeed: theme.props.last).data,
-                darkTheme: AppTheme.dark(colorSeed: theme.props.last).data,
-                themeMode: theme.props.first,
-                initialRoute: Routes.rootRoute,
-                navigatorObservers: [
-                  AppNavigatorObserver(),
-                  NavigatorObserver(),
-                ],
-                onGenerateRoute: (settings) {
-                  return AppNavigator().getRoute(settings);
-                },
-                builder: (context, child) {
-                  return MediaQuery(
-                    data: MediaQuery.of(context).copyWith(
-                      textScaler: TextScaler.noScaling,
-                    ),
-                    child: Builder(
-                      builder: (context) {
-                        SystemChrome.setSystemUIOverlayStyle(
-                          Theme.of(context).appBarTheme.systemOverlayStyle!,
-                        );
-                        return child ?? const SizedBox();
-                      },
-                    ),
-                  );
-                },
+              return ToastificationWrapper(
+                child: MaterialApp(
+                  title: kAppTitle,
+                  navigatorKey: AppNavigator.navigatorKey,
+                  debugShowCheckedModeBanner: false,
+                  theme: AppTheme.light(colorSeed: theme.props.last).data,
+                  darkTheme: AppTheme.dark(colorSeed: theme.props.last).data,
+                  themeMode: theme.props.first,
+                  initialRoute: Routes.rootRoute,
+                  navigatorObservers: [
+                    AppNavigatorObserver(),
+                    NavigatorObserver(),
+                  ],
+                  onGenerateRoute: (settings) {
+                    return AppNavigator().getRoute(settings);
+                  },
+                  builder: (context, child) {
+                    return MediaQuery(
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: TextScaler.noScaling,
+                      ),
+                      child: Builder(
+                        builder: (context) {
+                          SystemChrome.setSystemUIOverlayStyle(
+                            Theme.of(context).appBarTheme.systemOverlayStyle!,
+                          );
+                          return child ?? const SizedBox();
+                        },
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );

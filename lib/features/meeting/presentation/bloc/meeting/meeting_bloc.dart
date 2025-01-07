@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
+import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/types/result.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
@@ -17,10 +18,12 @@ import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
@@ -280,16 +283,16 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         }
 
         if (event is MeetingRecordStarted) {
-          final recordId = await _waterbusSdk.startRecord();
+          final result = await _waterbusSdk.startRecord();
 
-          if (recordId.value != null) {
-            _recordId = recordId.value;
+          if (result.value != null) {
+            _recordId = result.value;
 
             _meetingSound.playSoundRecording();
 
             emit(_joinedMeeting);
           } else {
-            // Toast failure
+            result.error.messageException.showToast(ToastificationType.error);
           }
         }
 
@@ -342,7 +345,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       _localDataSource.insertOrUpdate(meeting);
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(meeting: meeting));
     } else {
-      // Toast failure
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
@@ -375,7 +378,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       return true;
     } else {
-      // Toast failure
+      result.error.messageException.showToast(ToastificationType.error);
       return false;
     }
   }
@@ -389,7 +392,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
     if (result.isSuccess) {
       return result.value;
     } else {
-      // Toast failure
+      result.error.messageException.showToast(ToastificationType.error);
       return null;
     }
   }
@@ -414,7 +417,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
       _currentMeeting = meeting;
     } else {
-      // Toast failure
+      result.error.messageException.showToast(ToastificationType.error);
     }
   }
 

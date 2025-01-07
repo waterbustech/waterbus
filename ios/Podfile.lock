@@ -10,7 +10,7 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - FlutterMacOS
-  - CryptoSwift (1.8.3)
+  - CryptoSwift (1.8.4)
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.9):
@@ -480,7 +480,7 @@ SPEC CHECKSUMS:
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   connectivity_plus: 18382e7311ba19efcaee94442b23b32507b20695
-  CryptoSwift: 967f37cea5a3294d9cce358f78861652155be483
+  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
@@ -552,4 +552,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 477dfdc25b805f780d6bf3c9f5fedc97fbf8eed5
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

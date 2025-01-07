@@ -163,10 +163,6 @@ class $AssetsImagesGen {
   AssetGenImage get imgLogo =>
       const AssetGenImage('assets/images/img_logo.png');
 
-  /// File path: assets/images/login-banner.jpeg.webp
-  AssetGenImage get loginBannerJpeg =>
-      const AssetGenImage('assets/images/login-banner.jpeg.webp');
-
   /// File path: assets/images/logo_rounded.png
   AssetGenImage get logoRounded =>
       const AssetGenImage('assets/images/logo_rounded.png');
@@ -202,7 +198,6 @@ class $AssetsImagesGen {
         imgHelloMessage6,
         imgHelloMessage7,
         imgLogo,
-        loginBannerJpeg,
         logoRounded,
         worldMap
       ];

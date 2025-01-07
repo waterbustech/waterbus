@@ -82,11 +82,11 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.common
-            debuggable false                // make app non-debuggable
-            crunchPngs true                 // shrink images
-            minifyEnabled false             // obfuscate code and remove unused code
-            shrinkResources false        
-            multiDexEnabled true
+            // debuggable false                // make app non-debuggable
+            // crunchPngs true                 // shrink images
+            // minifyEnabled false             // obfuscate code and remove unused code
+            // shrinkResources false        
+            // multiDexEnabled true
         }
 
         release {
