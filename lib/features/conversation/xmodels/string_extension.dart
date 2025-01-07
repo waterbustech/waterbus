@@ -24,6 +24,8 @@ extension StringExtension on String {
     toastification.show(
       title: Text(
         this,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 11.sp,
           color: Theme.of(AppNavigator.context!).textTheme.bodyMedium!.color,
