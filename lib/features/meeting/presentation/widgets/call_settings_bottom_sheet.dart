@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
+import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
@@ -23,10 +25,11 @@ import 'package:waterbus/features/meeting/presentation/widgets/stats_view.dart';
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
 
-  const CallSettingsBottomSheet({
+  CallSettingsBottomSheet({
     super.key,
     required this.onBeautyFiltersTapped,
   });
+  final bool _isWhiteBoardOpened = AppBloc.whiteBoardBloc.state.isOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +177,41 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       );
                     },
                   ),
+                  if (SizerUtil.isMobile)
+                    CallActionButton(
+                      icon: callState!.mParticipant!.isHandRaising
+                          ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
+                          : PhosphorIcons.hand(),
+                      iconColor: callState.mParticipant!.isHandRaising
+                          ? Colors.yellow.shade100
+                          : null,
+                      backgroundColor: callState.mParticipant!.isHandRaising
+                          ? Colors.yellow.shade900
+                          : null,
+                      onTap: () {
+                        if (callState.mParticipant == null) return;
+                        AppBloc.meetingBloc.add(MeetingHandRasingToggled());
+                      },
+                    ),
+                  if (SizerUtil.isMobile)
+                    CallActionButton(
+                      icon: PhosphorIcons.paintBrush(
+                        _isWhiteBoardOpened
+                            ? PhosphorIconsStyle.fill
+                            : PhosphorIconsStyle.regular,
+                      ),
+                      iconColor: _isWhiteBoardOpened
+                          ? Theme.of(context).colorScheme.primary
+                          : null,
+                      backgroundColor: _isWhiteBoardOpened
+                          ? Theme.of(context).colorScheme.primaryContainer
+                          : null,
+                      onTap: () {
+                        AppBloc.whiteBoardBloc.add(
+                          WhiteBoardToggled(),
+                        );
+                      },
+                    ),
                 ],
               ),
             ],

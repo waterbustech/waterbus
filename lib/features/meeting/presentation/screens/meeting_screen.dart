@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_pip_mode/pip_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
@@ -15,34 +16,38 @@ class MeetingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MeetingBloc, MeetingState>(
-      builder: (context, state) {
-        if (state is MeetingPreJoin) {
-          return EnterMeetingPasswordScreen(meeting: state.meeting!);
-        }
+    return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
+      builder: (context, stateWhiteBoard) {
+        return BlocBuilder<MeetingBloc, MeetingState>(
+          builder: (context, state) {
+            if (state is MeetingPreJoin) {
+              return EnterMeetingPasswordScreen(meeting: state.meeting!);
+            }
 
-        if (state is! MeetingJoined || state.meeting == null) {
-          return const SizedBox();
-        }
+            if (state is! MeetingJoined || state.meeting == null) {
+              return const SizedBox();
+            }
 
-        final Meeting meeting = state.meeting!;
-        final CallState? callState = state.callState;
+            final Meeting meeting = state.meeting!;
+            final CallState? callState = state.callState;
 
-        if (WebRTC.platformIsAndroid) {
-          return PipWidget(
-            pipBuilder: callState == null
-                ? null
-                : (context) {
-                    return _buildPipView(context, meeting, callState);
-                  },
-            child: MeetingBody(
+            if (WebRTC.platformIsAndroid) {
+              return PipWidget(
+                pipBuilder: callState == null
+                    ? null
+                    : (context) {
+                        return _buildPipView(context, meeting, callState);
+                      },
+                child: MeetingBody(
+                  state: state,
+                ),
+              );
+            }
+
+            return MeetingBody(
               state: state,
-            ),
-          );
-        }
-
-        return MeetingBody(
-          state: state,
+            );
+          },
         );
       },
     );

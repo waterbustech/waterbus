@@ -17,6 +17,7 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
   List<DrawModel> _paints = [];
   DrawModel _currentPaint = DrawModel(points: const []);
+  bool _isOpen = false;
 
   WhiteBoardBloc() : super(WhiteBoardInitialState()) {
     on<WhiteBoardEvent>((event, emit) {
@@ -42,6 +43,10 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
       if (event is WhiteBoardRedid) {
         _waterbusSdk.redo();
+      }
+
+      if (event is WhiteBoardCleaned) {
+        _waterbusSdk.cleanWhiteBoard();
       }
 
       if (event is WhiteBoardCleaned) {
@@ -78,12 +83,18 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
         _currentPaint = _currentPaint.copyWith(isFilled: event.filled);
         emit(_whiteBoardDone);
       }
+
+      if (event is WhiteBoardToggled) {
+        _isOpen = !_isOpen;
+        emit(_whiteBoardDone);
+      }
     });
   }
 
   WhiteBoardDone get _whiteBoardDone => WhiteBoardDone(
         currentPaint: _currentPaint,
         paints: _paints,
+        isOpen: _isOpen,
       );
 
   // MARK: Private methods
