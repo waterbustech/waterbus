@@ -50,8 +50,8 @@ dependencies:
   connectivity_plus: ^6.1.0
 
   # State management
-  flutter_bloc: ^8.1.6
-  bloc_concurrency: ^0.2.5
+  flutter_bloc: ^9.0.0
+  bloc_concurrency: ^0.3.0
 
   # Dependency Injection
   get_it: ^7.6.8
