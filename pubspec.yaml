@@ -46,7 +46,7 @@ dependencies:
     path: ./packages/auth
 
   # Network
-  dio: ^5.7.0
+  dio: ^5.8.0+1
   connectivity_plus: ^6.1.0
 
   # State management
