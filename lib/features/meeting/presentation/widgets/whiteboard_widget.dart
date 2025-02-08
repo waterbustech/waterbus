@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -25,7 +26,6 @@ class WhiteBoardWidget extends StatefulWidget {
 class WhiteBoardWidgetState extends State<WhiteBoardWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController animationController;
-
   final GlobalKey canvasGlobalKey = GlobalKey();
   ui.Image? backgroundImage;
   List<DrawModel?> historyDraw = [];
@@ -44,38 +44,53 @@ class WhiteBoardWidgetState extends State<WhiteBoardWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: mCL,
-      body: Stack(
-        children: [
-          BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
-            builder: (context, state) {
-              return DrawingCanvas(
-                currentPaint: state.currentPaint,
-                currentStroke: _currentDraw,
-                canvasKey: canvasGlobalKey,
-                backgroundImage: backgroundImage,
-              );
-            },
-          ),
-          Positioned(
-            top: kToolbarHeight - 15,
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0, -2),
-                end: Offset.zero,
-              ).animate(animationController),
-              child: SizedBox(
-                width: 100.w,
-                child: CanvasSideBar(
-                  canvasGlobalKey: canvasGlobalKey,
-                  historyDraw: historyDraw,
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.keyZ, control: true): () =>
+            AppBloc.whiteBoardBloc.add(
+              WhiteBoardUndid(),
+            ),
+        const SingleActivator(LogicalKeyboardKey.keyY, control: true): () =>
+            AppBloc.whiteBoardBloc.add(
+              WhiteBoardRedid(),
+            ),
+      },
+      child: Focus(
+        autofocus: true,
+        child: Scaffold(
+          backgroundColor: mCL,
+          body: Stack(
+            children: [
+              BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
+                builder: (context, state) {
+                  return DrawingCanvas(
+                    currentPaint: state.currentPaint,
+                    currentStroke: _currentDraw,
+                    canvasKey: canvasGlobalKey,
+                    backgroundImage: backgroundImage,
+                  );
+                },
+              ),
+              Positioned(
+                top: kToolbarHeight - 15,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, -2),
+                    end: Offset.zero,
+                  ).animate(animationController),
+                  child: SizedBox(
+                    width: 100.w,
+                    child: CanvasSideBar(
+                      canvasGlobalKey: canvasGlobalKey,
+                      historyDraw: historyDraw,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              _CustomAppBar(animationController: animationController),
+            ],
           ),
-          _CustomAppBar(animationController: animationController),
-        ],
+        ),
       ),
     );
   }
