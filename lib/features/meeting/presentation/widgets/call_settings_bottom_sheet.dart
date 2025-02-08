@@ -24,12 +24,13 @@ import 'package:waterbus/features/meeting/presentation/widgets/stats_view.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
+  final Function onWhiteBoardTapped;
 
-  CallSettingsBottomSheet({
+  const CallSettingsBottomSheet({
     super.key,
     required this.onBeautyFiltersTapped,
+    required this.onWhiteBoardTapped,
   });
-  final bool _isWhiteBoardOpened = AppBloc.whiteBoardBloc.state.isOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
       builder: (context, state) {
         final Meeting? meeting = state.meeting;
         final CallState? callState = state.callState;
+
         final bool isSubtitleEnabled = state.isSubtitleEnabled;
         final bool isRecording = state.isRecording;
 
@@ -196,14 +198,14 @@ class CallSettingsBottomSheet extends StatelessWidget {
                   if (SizerUtil.isMobile)
                     CallActionButton(
                       icon: PhosphorIcons.paintBrush(
-                        _isWhiteBoardOpened
+                        onWhiteBoardTapped()
                             ? PhosphorIconsStyle.fill
                             : PhosphorIconsStyle.regular,
                       ),
-                      iconColor: _isWhiteBoardOpened
+                      iconColor: onWhiteBoardTapped()
                           ? Theme.of(context).colorScheme.primary
                           : null,
-                      backgroundColor: _isWhiteBoardOpened
+                      backgroundColor: onWhiteBoardTapped()
                           ? Theme.of(context).colorScheme.primaryContainer
                           : null,
                       onTap: () {

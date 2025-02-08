@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
@@ -17,7 +17,6 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bottom_sheet.dart';
@@ -41,6 +40,8 @@ class MeetingBody extends StatefulWidget {
 class _MeetingBodyState extends State<MeetingBody> {
   bool _isFilterSettingsOpened = false;
   bool _isChatOpened = false;
+  bool _isWhiteBoardOpened = false;
+
   late Meeting meeting = widget.state.meeting!;
   late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
   late CallState? callState = widget.state.callState;
@@ -50,11 +51,27 @@ class _MeetingBodyState extends State<MeetingBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WhiteBoardBloc, WhiteBoardState>(
-      builder: (context, state) {
-        final bool isWhiteBoardOpened = state.isOpen;
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.keyD, control: true): () {
+          if (callState?.mParticipant == null) return;
 
-        return Scaffold(
+          AppBloc.meetingBloc.add(MeetingAudioToggled());
+        },
+        const SingleActivator(LogicalKeyboardKey.keyE, control: true): () {
+          if (callState?.mParticipant == null) return;
+
+          AppBloc.meetingBloc.add(MeetingVideoToggled());
+        },
+        const SingleActivator(LogicalKeyboardKey.keyH, control: true): () {
+          if (callState?.mParticipant == null) return;
+
+          AppBloc.meetingBloc.add(MeetingHandRasingToggled());
+        },
+      },
+      child: Focus(
+        autofocus: true,
+        child: Scaffold(
           appBar: appBarTitleBack(
             context,
             toolbarHeight: SizerUtil.isDesktop ? 60.sp : null,
@@ -276,23 +293,22 @@ class _MeetingBodyState extends State<MeetingBody> {
                           if (SizerUtil.isDesktop)
                             CallActionButton(
                               icon: PhosphorIcons.paintBrush(
-                                isWhiteBoardOpened
+                                _isWhiteBoardOpened
                                     ? PhosphorIconsStyle.fill
                                     : PhosphorIconsStyle.regular,
                               ),
-                              iconColor: isWhiteBoardOpened
+                              iconColor: _isWhiteBoardOpened
                                   ? Theme.of(context).colorScheme.primary
                                   : null,
-                              backgroundColor: isWhiteBoardOpened
+                              backgroundColor: _isWhiteBoardOpened
                                   ? Theme.of(context)
                                       .colorScheme
                                       .primaryContainer
                                   : null,
                               onTap: () {
-                                debugPrint('Whiteboard Toggled');
-                                AppBloc.whiteBoardBloc.add(
-                                  WhiteBoardToggled(),
-                                );
+                                setState(() {
+                                  _isWhiteBoardOpened = !_isWhiteBoardOpened;
+                                });
                               },
                             ),
                           if (SizerUtil.isDesktop)
@@ -333,6 +349,12 @@ class _MeetingBodyState extends State<MeetingBody> {
                                     setState(() {
                                       _isFilterSettingsOpened =
                                           !_isFilterSettingsOpened;
+                                    });
+                                  },
+                                  onWhiteBoardTapped: () {
+                                    setState(() {
+                                      _isWhiteBoardOpened =
+                                          !_isWhiteBoardOpened;
                                     });
                                   },
                                 ),
@@ -417,11 +439,11 @@ class _MeetingBodyState extends State<MeetingBody> {
                                         ),
                                       ),
                                       Expanded(
-                                        flex: isWhiteBoardOpened ? 4 : 0,
+                                        flex: _isWhiteBoardOpened ? 4 : 0,
                                         child: AnimatedSize(
                                           duration: 300.milliseconds,
                                           curve: Curves.easeInOutExpo,
-                                          child: isWhiteBoardOpened
+                                          child: _isWhiteBoardOpened
                                               ? Container(
                                                   margin: EdgeInsets.only(
                                                     top: 20.sp,
@@ -551,8 +573,8 @@ class _MeetingBodyState extends State<MeetingBody> {
               ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 

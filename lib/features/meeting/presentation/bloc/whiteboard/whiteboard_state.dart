@@ -3,15 +3,13 @@ part of 'whiteboard_bloc.dart';
 class WhiteBoardState extends Equatable {
   final List<DrawModel> paints;
   final DrawModel currentPaint;
-  final bool isOpen;
   const WhiteBoardState({
     required this.paints,
     required this.currentPaint,
-    required this.isOpen,
   });
 
   @override
-  List<Object?> get props => [paints, currentPaint, isOpen];
+  List<Object?> get props => [paints, currentPaint];
 }
 
 final class WhiteBoardInitialState extends WhiteBoardState {
@@ -19,7 +17,6 @@ final class WhiteBoardInitialState extends WhiteBoardState {
       : super(
           currentPaint: DrawModel(points: const []),
           paints: [],
-          isOpen: false,
         );
 }
 
@@ -27,6 +24,5 @@ final class WhiteBoardDone extends WhiteBoardState {
   const WhiteBoardDone({
     required super.currentPaint,
     required super.paints,
-    required super.isOpen,
   });
 }

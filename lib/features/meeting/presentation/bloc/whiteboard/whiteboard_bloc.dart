@@ -94,7 +94,6 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
   WhiteBoardDone get _whiteBoardDone => WhiteBoardDone(
         currentPaint: _currentPaint,
         paints: _paints,
-        isOpen: _isOpen,
       );
 
   // MARK: Private methods
