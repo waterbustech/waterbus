@@ -815,12 +815,11 @@ packages:
   flutter_rust_bridge:
     dependency: transitive
     description:
-      path: frb_dart
-      ref: HEAD
-      resolved-ref: f58509660e47525398647848b4b462387deae086
-      url: "https://github.com/waterbustech/flutter_rust_bridge.git"
-    source: git
-    version: "2.3.0"
+      name: flutter_rust_bridge
+      sha256: "35c257fc7f98e34c1314d6c145e5ed54e7c94e8a9f469947e31c9298177d546f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   flutter_side_menu:
     dependency: "direct main"
     description:
@@ -1082,6 +1081,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  http_profile:
+    dependency: transitive
+    description:
+      name: http_profile
+      sha256: "7e679e355b09aaee2ab5010915c932cce3f2d1c11c3b2dc177891687014ffa78"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   i18n_extension:
     dependency: "direct main"
     description:
@@ -1731,14 +1738,13 @@ packages:
     source: hosted
     version: "1.0.0"
   rhttp:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: rhttp
-      ref: HEAD
-      resolved-ref: bbec8d9e20c6adb3137de299c247d449d37c3b9f
-      url: "https://github.com/waterbustech/rhttp.git"
-    source: git
-    version: "0.6.1"
+      name: rhttp
+      sha256: "8212cbc816cc3e761eecb8d4dbbaa1eca95de715428320a198a4e7a89acdcd2e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.8"
   rxdart:
     dependency: transitive
     description:

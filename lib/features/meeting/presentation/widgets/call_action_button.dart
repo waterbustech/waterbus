@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 
 class CallActionButton extends StatelessWidget {
@@ -46,7 +45,7 @@ class CallActionButton extends StatelessWidget {
             alignment: Alignment.center,
             child: Icon(
               icon,
-              color: iconColor ?? mCL,
+              color: iconColor ?? Theme.of(context).iconTheme.color,
               size: iconSize ?? 18.sp,
             ),
           ),
