@@ -606,8 +606,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         } else if (state is MeetingPreJoin) {
           add(MeetingDisposed());
         }
-      default:
-        break;
     }
   }
 

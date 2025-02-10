@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                         ),
                         color: Theme.of(context)
                             .scaffoldBackgroundColor
-                            .withOpacity(.8),
+                            .withValues(alpha: .8),
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           width: SizerUtil.isDesktop ? 50.w : double.infinity,

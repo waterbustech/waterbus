@@ -393,7 +393,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     if (index != -1) {
       if (event.isUpdateMessage &&
-          _conversations[index].latestMessage?.id != event.message.id) return;
+          _conversations[index].latestMessage?.id != event.message.id) {
+        return;
+      }
 
       _conversations[index].latestMessage = event.message;
     }

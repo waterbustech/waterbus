@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -42,107 +43,154 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
     }
   }
 
+  void handleCreateMeetingButton() {
+    if (!(_formStateKey.currentState?.validate() ?? false)) return;
+
+    displayLoadingLayer();
+
+    if (widget.isChatScreen) {
+      if (_isEditing) {
+        AppBloc.chatBloc.add(
+          ChatUpdated(
+            title: _roomNameController.text,
+            password: _passwordController.text,
+          ),
+        );
+      } else {
+        AppBloc.chatBloc.add(
+          ChatCreated(
+            title: _roomNameController.text,
+            password: _passwordController.text,
+          ),
+        );
+      }
+    } else {
+      if (_isEditing) {
+        AppBloc.meetingBloc.add(
+          MeetingUpdated(
+            roomName: _roomNameController.text.trim(),
+            password: _passwordController.text,
+          ),
+        );
+      } else {
+        AppBloc.meetingBloc.add(
+          MeetingCreated(
+            roomName: _roomNameController.text.trim(),
+            password: _passwordController.text,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarTitleBack(
-        context,
-        title:
-            _isEditing ? Strings.editMeeting.i18n : Strings.createMeeting.i18n,
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (!(_formStateKey.currentState?.validate() ?? false)) return;
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.enter):
+            handleCreateMeetingButton,
+      },
+      child: Scaffold(
+        appBar: appBarTitleBack(
+          context,
+          title: _isEditing
+              ? Strings.editMeeting.i18n
+              : Strings.createMeeting.i18n,
+          actions: [
+            IconButton(
+              onPressed: () {
+                if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
-              displayLoadingLayer();
+                displayLoadingLayer();
 
-              if (widget.isChatScreen) {
-                if (_isEditing) {
-                  AppBloc.chatBloc.add(
-                    ChatUpdated(
-                      title: _roomNameController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
-                } else {
-                  AppBloc.chatBloc.add(
-                    ChatCreated(
-                      title: _roomNameController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
-                }
-              } else {
-                if (_isEditing) {
-                  AppBloc.meetingBloc.add(
-                    MeetingUpdated(
-                      roomName: _roomNameController.text.trim(),
-                      password: _passwordController.text,
-                    ),
-                  );
-                } else {
-                  AppBloc.meetingBloc.add(
-                    MeetingCreated(
-                      roomName: _roomNameController.text.trim(),
-                      password: _passwordController.text,
-                    ),
-                  );
-                }
-              }
-            },
-            icon: Icon(
-              PhosphorIcons.check(),
-              size: 18.sp,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ],
-      ),
-      body: Form(
-        key: _formStateKey,
-        child: Column(
-          children: [
-            const Divider(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 16.sp),
-                      LabelText(label: Strings.roomName.i18n),
-                      TextFieldInput(
-                        validatorForm: (val) {
-                          if (val?.isEmpty ?? true) {
-                            return Strings.invalidName.i18n;
-                          }
-                          return null;
-                        },
-                        hintText: Strings.meetingLabel.i18n,
-                        controller: _roomNameController,
+                if (widget.isChatScreen) {
+                  if (_isEditing) {
+                    AppBloc.chatBloc.add(
+                      ChatUpdated(
+                        title: _roomNameController.text,
+                        password: _passwordController.text,
                       ),
-                      SizedBox(height: 8.sp),
-                      LabelText(label: Strings.password.i18n),
-                      TextFieldInput(
-                        obscureText: true,
-                        validatorForm: (val) {
-                          if (val == null || val.length < 6) {
-                            return Strings
-                                .passwordMustBeAtLeast6Characters.i18n;
-                          }
-
-                          return null;
-                        },
-                        hintText: Strings.password.i18n,
-                        controller: _passwordController,
+                    );
+                  } else {
+                    AppBloc.chatBloc.add(
+                      ChatCreated(
+                        title: _roomNameController.text,
+                        password: _passwordController.text,
                       ),
-                    ],
-                  ),
-                ),
+                    );
+                  }
+                } else {
+                  if (_isEditing) {
+                    AppBloc.meetingBloc.add(
+                      MeetingUpdated(
+                        roomName: _roomNameController.text.trim(),
+                        password: _passwordController.text,
+                      ),
+                    );
+                  } else {
+                    AppBloc.meetingBloc.add(
+                      MeetingCreated(
+                        roomName: _roomNameController.text.trim(),
+                        password: _passwordController.text,
+                      ),
+                    );
+                  }
+                }
+              },
+              icon: Icon(
+                PhosphorIcons.check(),
+                size: 18.sp,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ],
+        ),
+        body: Form(
+          key: _formStateKey,
+          child: Column(
+            children: [
+              const Divider(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 16.sp),
+                        LabelText(label: Strings.roomName.i18n),
+                        TextFieldInput(
+                          validatorForm: (val) {
+                            if (val?.isEmpty ?? true) {
+                              return Strings.invalidName.i18n;
+                            }
+                            return null;
+                          },
+                          hintText: Strings.meetingLabel.i18n,
+                          controller: _roomNameController,
+                        ),
+                        SizedBox(height: 8.sp),
+                        LabelText(label: Strings.password.i18n),
+                        TextFieldInput(
+                          obscureText: true,
+                          validatorForm: (val) {
+                            if (val == null || val.length < 6) {
+                              return Strings
+                                  .passwordMustBeAtLeast6Characters.i18n;
+                            }
+
+                            return null;
+                          },
+                          hintText: Strings.password.i18n,
+                          controller: _passwordController,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

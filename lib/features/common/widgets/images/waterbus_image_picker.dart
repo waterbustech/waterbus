@@ -55,7 +55,7 @@ class WaterbusImagePicker {
         foregroundColor: WidgetStateProperty.resolveWith<Color>(
           (states) {
             if (states.contains(WidgetState.pressed)) {
-              return Colors.black.withOpacity(0.5);
+              return Colors.black.withValues(alpha: 0.5);
             }
             return Colors.black;
           },

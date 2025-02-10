@@ -28,7 +28,10 @@ class ButtonOptionWidget extends StatelessWidget {
       child: Container(
         height: 42.sp,
         alignment: Alignment.center,
-        color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.7),
+        color: Theme.of(context)
+            .colorScheme
+            .surfaceContainer
+            .withValues(alpha: 0.7),
         child: Text(
           text,
           style: TextStyle(

@@ -72,11 +72,11 @@ class MeetView extends StatelessWidget {
                             Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(.5),
+                                .withValues(alpha: .5),
                             Theme.of(context)
                                 .colorScheme
                                 .surfaceContainerHighest
-                                .withOpacity(.5),
+                                .withValues(alpha: .5),
                           ],
                           stops: const [0.1, 0.9],
                         ),
@@ -104,7 +104,7 @@ class MeetView extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(.2),
+                        color: Colors.black.withValues(alpha: .2),
                         shape: BoxShape.circle,
                       ),
                       height: 28.sp,
@@ -128,7 +128,7 @@ class MeetView extends StatelessWidget {
                   color: Theme.of(context)
                       .colorScheme
                       .surfaceContainerHighest
-                      .withOpacity(.6),
+                      .withValues(alpha: .6),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.sp,
