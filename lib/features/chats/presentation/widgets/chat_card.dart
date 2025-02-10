@@ -33,7 +33,8 @@ class _ChatCardState extends State<ChatCard> {
     return MouseRegion(
       onEnter: (_) {
         setState(() {
-          _background = Theme.of(context).colorScheme.primary.withOpacity(.1);
+          _background =
+              Theme.of(context).colorScheme.primary.withValues(alpha: .1);
         });
       },
       onExit: (_) {

@@ -215,4 +215,31 @@ Map<String, String> vietnamese = {
   Strings.signOutOfYourAccount: "Đăng xuất tài khoản",
   Strings.descriptionArchivedConversation:
       "Cuộc trò truyện này đã được Lưu trữ. Bạn chỉ có thể xem lại các tin nhắn của cuộc trò chuyện này.",
+
+  // Exception - Meeting
+  Strings.roomNotFound: "Phòng trò chuyện không tồn tại",
+  Strings.notAllowedToUpdateRoom: "Không được phép cập nhật phòng",
+  Strings.wrongPassword: "Mật khẩu không khớp",
+  Strings.notAllowToJoinDirectly: "Không được phép tham gia trực tiếp",
+  Strings.notExistsParticipant: "Không tồn tại người tham gia",
+  Strings.serverFailure: "Lỗi hệ thống",
+  Strings.isAlreadyInRoom: "Bạn đã ở trong phòng trò chuyện",
+  Strings.hostNotFound: "Chủ phòng không tìm thấy",
+  Strings.notAllowToAddUser: "Không được phép thêm người tham gia",
+  Strings.hasNotJoinedMeeting: "Bạn đã tham gia phòng trò chuyện",
+  Strings.memberNotFound: "Thành viên không tồn tại",
+  Strings.participantNotFound: "Người tham gia không tồn tại",
+  Strings.onlyAllowHostStartRecord: "Chỉ chủ phòng mới có thể bắt đầu ghi",
+  Strings.onlyAllowHostStopRecord: "Chỉ chủ phòng mới có thể dừng ghi",
+  Strings.notAllowedToLeaveTheRoom: "Không được phép dời khỏi phòng",
+  Strings.onlyHostPermitedToArchivedTheRoom: "Chỉ chủ phòng mới có thể Lưu trữ",
+
+  // Exception - Message
+  Strings.notAllowedModifyMessage: 'Không được phép chỉnh sửa tin nhắn',
+  Strings.messageNotFound: 'Tin nhắn không tìm thấy',
+  Strings.messageHasBeenDelete: "Tin nhắn đã được xoá",
+
+  // Exception - User
+  Strings.userNotFound: "Người dùng không tồn tại",
+  Strings.userIsAlreadyUsed: 'Tên tài khoản đã được sử dụng',
 };

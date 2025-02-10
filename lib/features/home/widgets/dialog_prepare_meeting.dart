@@ -86,7 +86,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                         backgroundColor: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(.2),
+                            .withValues(alpha: .2),
                       ),
                       SizedBox(width: 4.sp),
                       GestureWrapper(

@@ -31,7 +31,7 @@ showSnackBarWaterbus({
             color: Theme.of(AppNavigator.context!)
                 .colorScheme
                 .surfaceContainer
-                .withOpacity(0.7),
+                .withValues(alpha: 0.7),
           ),
           child: child ??
               Text(

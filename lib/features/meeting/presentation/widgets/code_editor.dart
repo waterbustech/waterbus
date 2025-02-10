@@ -183,7 +183,7 @@ class _DefaultCodeAutocompleteListViewState
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: index == widget.notifier.value.index
-                    ? Colors.indigo.shade300.withOpacity(.5)
+                    ? Colors.indigo.shade300.withValues(alpha: .5)
                     : null,
                 borderRadius: radius,
               ),

@@ -211,6 +211,34 @@ class Strings {
   static const String signOutOfYourAccount = 'signOutOfYourAccount';
   static const String descriptionArchivedConversation =
       'descriptionArchivedConversation';
+
+  // Exception - Meeting
+  static const String roomNotFound = 'roomNotFound';
+  static const String notAllowedToUpdateRoom = 'notAllowedToUpdateRoom';
+  static const String wrongPassword = 'wrongPassword';
+  static const String notAllowToJoinDirectly = 'notAllowToJoinDirectly';
+  static const String notExistsParticipant = 'notExistsParticipant';
+  static const String serverFailure = 'serverFailure';
+  static const String isAlreadyInRoom = 'isAlreadyInRoom';
+  static const String hostNotFound = 'hostNotFound';
+  static const String notAllowToAddUser = 'notAllowToAddUser';
+  static const String hasNotJoinedMeeting = 'hasNotJoinedMeeting';
+  static const String memberNotFound = 'memberNotFound';
+  static const String participantNotFound = 'participantNotFound';
+  static const String onlyAllowHostStartRecord = 'onlyAllowHostStartRecord';
+  static const String onlyAllowHostStopRecord = 'onlyAllowHostStopRecord';
+  static const String notAllowedToLeaveTheRoom = 'notAllowedToLeaveTheRoom';
+  static const String onlyHostPermitedToArchivedTheRoom =
+      'onlyHostPermitedToArchivedTheRoom';
+
+  // Exception - Message
+  static const String notAllowedModifyMessage = 'notAllowedModifyMessage';
+  static const String messageNotFound = 'messageNotFound';
+  static const String messageHasBeenDelete = 'messageHasBeenDelete';
+
+  // Exception - User
+  static const String userNotFound = 'userNotFound';
+  static const String userIsAlreadyUsed = 'userIsAlreadyUsed';
 }
 
 class MyI18n {

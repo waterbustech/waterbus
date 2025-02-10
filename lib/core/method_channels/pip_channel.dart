@@ -24,7 +24,9 @@ class PipChannel {
     required bool isRemoteCameraEnable,
   }) async {
     if (!Platform.isIOS ||
-        DateTime.now().difference(_latestUpdate).inSeconds <= 2) return;
+        DateTime.now().difference(_latestUpdate).inSeconds <= 2) {
+      return;
+    }
 
     if (_isCreatedPip) {
       if (_currentRemote == remoteStreamId) {

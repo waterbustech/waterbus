@@ -50,11 +50,14 @@ class PreviewCameraCard extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(.5),
+                      Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: .5),
                       Theme.of(context)
                           .colorScheme
                           .surfaceContainerHighest
-                          .withOpacity(.5),
+                          .withValues(alpha: .5),
                     ],
                     stops: const [0.1, 0.9],
                   ),

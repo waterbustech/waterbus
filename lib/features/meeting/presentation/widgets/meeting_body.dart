@@ -200,8 +200,9 @@ class _MeetingBodyState extends State<MeetingBody> {
               height: 58.sp,
               width: double.infinity,
               decoration: BoxDecoration(
-                color:
-                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
+                color: Theme.of(context)
+                    .scaffoldBackgroundColor
+                    .withValues(alpha: 0.7),
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(12.sp),
                 ),
@@ -533,8 +534,8 @@ class _MeetingBodyState extends State<MeetingBody> {
                                       children: [
                                         Flexible(
                                           child: Material(
-                                            color:
-                                                Colors.black.withOpacity(.35),
+                                            color: Colors.black
+                                                .withValues(alpha: .35),
                                             shape: SuperellipseShape(
                                               borderRadius:
                                                   BorderRadius.circular(

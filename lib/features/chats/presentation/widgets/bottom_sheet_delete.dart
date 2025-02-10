@@ -44,7 +44,7 @@ class BottomSheetDelete extends StatelessWidget {
                   color: Theme.of(context)
                       .colorScheme
                       .surfaceContainer
-                      .withOpacity(0.7),
+                      .withValues(alpha: 0.7),
                   child: Text(
                     description ?? Strings.sureDeleteConversation.i18n,
                     textAlign: TextAlign.center,

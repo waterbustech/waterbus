@@ -36,7 +36,7 @@ class MessageSuggestWidget extends StatelessWidget {
                   color: Theme.of(context)
                       .colorScheme
                       .surfaceContainer
-                      .withOpacity(0.7),
+                      .withValues(alpha: 0.7),
                 ),
                 margin: EdgeInsets.only(
                   bottom: SizerUtil.isDesktop
