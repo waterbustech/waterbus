@@ -17,7 +17,6 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
   List<DrawModel> _paints = [];
   DrawModel _currentPaint = DrawModel(points: const []);
-  bool _isOpen = false;
 
   WhiteBoardBloc() : super(WhiteBoardInitialState()) {
     on<WhiteBoardEvent>((event, emit) {
@@ -81,11 +80,6 @@ class WhiteBoardBloc extends Bloc<WhiteBoardEvent, WhiteBoardState> {
 
       if (event is WhiteBoardFilledToggled) {
         _currentPaint = _currentPaint.copyWith(isFilled: event.filled);
-        emit(_whiteBoardDone);
-      }
-
-      if (event is WhiteBoardToggled) {
-        _isOpen = !_isOpen;
         emit(_whiteBoardDone);
       }
     });

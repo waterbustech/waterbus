@@ -15,7 +15,6 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/call_setting_button.dart';
@@ -34,6 +33,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWhiteBoardEnabled = false;
+
     return BlocBuilder<MeetingBloc, MeetingState>(
       builder: (context, state) {
         final Meeting? meeting = state.meeting;
@@ -198,20 +199,19 @@ class CallSettingsBottomSheet extends StatelessWidget {
                   if (SizerUtil.isMobile)
                     CallActionButton(
                       icon: PhosphorIcons.paintBrush(
-                        onWhiteBoardTapped()
+                        isWhiteBoardEnabled
                             ? PhosphorIconsStyle.fill
                             : PhosphorIconsStyle.regular,
                       ),
-                      iconColor: onWhiteBoardTapped()
+                      iconColor: isWhiteBoardEnabled
                           ? Theme.of(context).colorScheme.primary
                           : null,
-                      backgroundColor: onWhiteBoardTapped()
+                      backgroundColor: isWhiteBoardEnabled
                           ? Theme.of(context).colorScheme.primaryContainer
                           : null,
                       onTap: () {
-                        AppBloc.whiteBoardBloc.add(
-                          WhiteBoardToggled(),
-                        );
+                        onWhiteBoardTapped();
+                        isWhiteBoardEnabled = !isWhiteBoardEnabled;
                       },
                     ),
                 ],

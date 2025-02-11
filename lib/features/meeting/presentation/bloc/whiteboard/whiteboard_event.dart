@@ -69,5 +69,3 @@ class WhiteBoardPolygonSidesChanged extends WhiteBoardEvent {
 
   List<Object?> get props => [sides];
 }
-
-class WhiteBoardToggled extends WhiteBoardEvent {}
