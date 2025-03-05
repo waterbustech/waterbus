@@ -28,12 +28,12 @@ class _StatsViewState extends State<StatsView> {
   @override
   void initState() {
     super.initState();
-    WaterbusSdk.onStatsChanged = _handleOnStatsChanged;
+    WaterbusSdk.instance.setStatsChanged = _handleOnStatsChanged;
   }
 
   @override
   void dispose() {
-    WaterbusSdk.onStatsChanged = null;
+    WaterbusSdk.instance.setStatsChanged = null;
     _statsStream.close();
     super.dispose();
   }
