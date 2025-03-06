@@ -1,19 +1,17 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-import 'package:file_saver/file_saver.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:waterbus_sdk/types/enums/draw_shapes.dart';
 import 'package:waterbus_sdk/types/models/draw_model.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/utils/file_saver/index.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/whiteboard/whiteboard_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/color_palette.dart';
@@ -280,27 +278,11 @@ class CanvasSideBar extends StatelessWidget {
         child: VerticalDivider(color: mGB, width: 3),
       );
 
-  Future<void> _saveFile(Uint8List bytes, String extension) async {
-    if (kIsWeb) {
-      html.AnchorElement()
-        ..href = '${Uri.dataFromBytes(bytes, mimeType: 'image/$extension')}'
-        ..download =
-            'FlutterLetsDraw-${DateTime.now().toIso8601String()}.$extension'
-        ..style.display = 'none'
-        ..click();
-    } else {
-      await FileSaver.instance.saveFile(
-        name: 'FlutterLetsDraw-${DateTime.now().toIso8601String()}.$extension',
-        bytes: bytes,
-        ext: extension,
-        mimeType: MimeType.png,
-      );
-    }
-  }
-
   handleSaveButton() async {
     final Uint8List? pngBytes = await _getBytes();
-    if (pngBytes != null) _saveFile(pngBytes, 'png');
+    if (pngBytes != null) {
+      AppFileSaver().saveFile(pngBytes, 'png');
+    }
   }
 
   Future<Uint8List?> _getBytes() async {
