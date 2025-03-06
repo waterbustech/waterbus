@@ -105,7 +105,7 @@ dependencies:
   # Code Editor
   re_editor: ^0.5.0
   re_highlight: ^0.0.3
-  collection: ^1.18.0
+  collection: ^1.19.1
 
   # Media
   image_picker: ^1.1.2
