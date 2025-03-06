@@ -74,7 +74,7 @@ dependencies:
   cached_network_image: ^3.4.1
   phosphor_flutter: ^2.1.0
   flutter_sliding_drawer: ^2.0.0
-  permission_handler: ^11.3.1
+  permission_handler: ^11.4.0
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
   equatable: ^2.0.5
