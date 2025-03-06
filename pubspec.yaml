@@ -99,7 +99,7 @@ dependencies:
   popover: ^0.3.1
   super_context_menu: ^0.8.24
   msix: ^3.16.8
-  toastification: ^2.3.0
+  toastification: ^3.0.1
   web: ^1.1.1
 
   # Code Editor
