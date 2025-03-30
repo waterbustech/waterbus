@@ -121,7 +121,7 @@ dependencies:
   media_kit_libs_ios_video: any
   media_kit_libs_macos_video: any
   media_kit_libs_windows_video: any
-  media_kit_libs_linux: any
+  media_kit_libs_linux: 1.2.1
 
   # Video call
   waterbus_sdk: ^1.6.0
