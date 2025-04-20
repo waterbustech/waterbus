@@ -16,7 +16,7 @@ dependencies:
   firebase_auth: ^5.1.0
 
   # Authenticate
-  google_sign_in: ^6.1.4
+  google_sign_in: ^6.3.0
   google_sign_in_all_platforms:
     git:
       url: https://github.com/waterbustech/sign-in-google-linux.git
