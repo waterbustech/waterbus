@@ -113,7 +113,7 @@ dependencies:
   image_picker_platform_interface: ^2.10.0
   flutter_image_compress: ^2.2.0
   file_saver: ^0.2.14
-  video_player: ^2.9.2
+  video_player: ^2.9.5
   audioplayers: ^6.1.0
   video_player_media_kit: ^1.0.6
   
