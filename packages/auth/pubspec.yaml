@@ -31,7 +31,12 @@ dependencies:
   # Encryption
   crypto: ^3.0.2
 
-  waterbus_sdk: ^1.6.0
+  waterbus_sdk: 
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      ref: migration/v3
+  # waterbus_sdk: 
+  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ const runningMode = "VIDEO";
 let imageSegmenter;
 let segmentationResults;
 let backgroundImage;
+let isModelInitialized = false;
 
 async function initialize() {
   const fileSet = await vision.FilesetResolver.forVisionTasks(
@@ -23,31 +24,34 @@ async function initialize() {
     outputConfidenceMasks: true,
     runningMode: runningMode,
   });
+
+  // Warm-up model to reduce first-frame lag
+  const warmupCanvas = new OffscreenCanvas(256, 256);
+  imageSegmenter.segmentForVideo(warmupCanvas, performance.now(), () => {});
+  isModelInitialized = true;
 }
 
 function maskToBitmap(mask, videoWidth, videoHeight) {
   const dataArray = new Uint8ClampedArray(videoWidth * videoHeight * 4);
   const result = mask.getAsUint8Array();
-  for (let i = 0; i < result.length; i += 1) {
-    dataArray[i * 4] = result[i];
-    dataArray[i * 4 + 1] = result[i];
-    dataArray[i * 4 + 2] = result[i];
-    dataArray[i * 4 + 3] = result[i];
+  for (let i = 0; i < result.length; i++) {
+    const value = result[i];
+    dataArray.set([value, value, value, value], i * 4);
   }
   const dataNew = new ImageData(dataArray, videoWidth, videoHeight);
-
   return createImageBitmap(dataNew);
 }
 
 async function drawVirtualBackground(frame, controller) {
   if (!segmentCanvas || !segmentCtx || !segmentationResults || !frame) return;
 
-  if (segmentationResults?.confidenceMasks) {
+  const mask = segmentationResults?.confidenceMasks?.[0];
+  if (mask) {
+    const bitmap = await maskToBitmap(mask, mask.width, mask.height);
+
+    // Blur the background
     segmentCtx.filter = "blur(10px)";
     segmentCtx.globalCompositeOperation = "copy";
-
-    const mask = segmentationResults?.confidenceMasks[0];
-    const bitmap = await maskToBitmap(mask, mask.width, mask.height);
     segmentCtx.drawImage(
       bitmap,
       0,
@@ -55,6 +59,8 @@ async function drawVirtualBackground(frame, controller) {
       segmentCanvas.width,
       segmentCanvas.height
     );
+
+    // Draw the background image or color
     segmentCtx.filter = "none";
     segmentCtx.globalCompositeOperation = "source-in";
     if (backgroundImage) {
@@ -74,8 +80,10 @@ async function drawVirtualBackground(frame, controller) {
       segmentCtx.fillRect(0, 0, segmentCanvas.width, segmentCanvas.height);
     }
 
+    // Draw the foreground (person)
     segmentCtx.globalCompositeOperation = "destination-over";
   }
+
   segmentCtx.drawImage(frame, 0, 0, segmentCanvas.width, segmentCanvas.height);
 
   const segmentedFrame = new VideoFrame(segmentCanvas, {
@@ -91,18 +99,15 @@ async function setBackgroundImage(base64String) {
     return;
   }
 
-  var img = new Image();
-
+  const img = new Image();
   img.src = "data:image/png;base64," + base64String;
-
   img.onload = function () {
-    var canvas = document.createElement("canvas");
+    const canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
-    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     createImageBitmap(imageData).then((bitmap) => {
       backgroundImage = bitmap;
     });
@@ -110,12 +115,13 @@ async function setBackgroundImage(base64String) {
 }
 
 async function segment(frame, controller) {
+  if (!isModelInitialized) return;
+
   const height = frame.codedHeight;
   const width = frame.codedWidth;
 
   segmentCanvas.height = height;
   segmentCanvas.width = width;
-
   segmentCtx.drawImage(frame, 0, 0, width, height);
 
   if (!backgroundImage) {
@@ -127,8 +133,8 @@ async function segment(frame, controller) {
     return;
   }
 
-  let startTimeMs = performance.now();
-  imageSegmenter?.segmentForVideo(
+  const startTimeMs = performance.now();
+  imageSegmenter.segmentForVideo(
     segmentCanvas,
     startTimeMs,
     (result) => (segmentationResults = result)
@@ -137,7 +143,9 @@ async function segment(frame, controller) {
   drawVirtualBackground(frame, controller);
 }
 
-initialize();
+// Automatically initialize on page load
+document.addEventListener("DOMContentLoaded", initialize);
 
+// Expose functions for external usage
 window.segment = segment;
 window.setBackgroundImage = setBackgroundImage;

@@ -46,8 +46,9 @@ class DefaultImage extends StatelessWidget {
                       shape: shape,
                       border: border,
                       borderRadius: borderRadius,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       image: DecorationImage(
-                        image: AssetImage(Assets.images.imgLogo.path),
+                        image: AssetImage(Assets.icons.launcherIcon.path),
                         fit: shape == BoxShape.circle
                             ? BoxFit.fitHeight
                             : BoxFit.contain,

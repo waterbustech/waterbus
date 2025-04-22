@@ -2,112 +2,280 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:collection/collection.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/models/rtc_participant_stats.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
-typedef StatsData = List<VideoSenderStats>;
+typedef StatsData = RtcParticipantStats;
+typedef StatsChartData = (List<num> jitters, List<num> rtts);
 
 class StatsView extends StatefulWidget {
-  const StatsView({super.key});
+  final CallState? callState;
+  final List<Participant> participants;
+  const StatsView({
+    super.key,
+    required this.callState,
+    required this.participants,
+  });
 
   @override
   State<StatsView> createState() => _StatsViewState();
 }
 
 class _StatsViewState extends State<StatsView> {
-  final StreamController<StatsData> _statsStream =
-      StreamController<StatsData>.broadcast();
-  final StatsData _senderStats = [];
+  final StreamController<StatsChartData> _statsChartController =
+      StreamController.broadcast();
+  final List<num> _roundTimeTrips = [];
+  final List<num> _jitters = [];
+  final List<ParticipantSFU> _participants = [];
+  Stream<StatsData>? _statsStream;
+  String _currentStats = '';
 
   @override
   void initState() {
     super.initState();
-    WaterbusSdk.instance.setStatsChanged = _handleOnStatsChanged;
+
+    _participants.addAll(_sfuParticipants);
+
+    if (_participants.isEmpty) return;
+
+    final statsId =
+        '${_participants.first.ownerId}_${_participants.first.isSharingScreen}';
+    _setStatsStream(_participants.first.webcamStatsStream, statsId);
   }
 
   @override
   void dispose() {
-    WaterbusSdk.instance.setStatsChanged = null;
-    _statsStream.close();
+    _statsChartController.close();
     super.dispose();
   }
 
-  void _handleOnStatsChanged(VideoSenderStats stats) {
-    _senderStats.add(stats);
-    _statsStream.add(_senderStats);
+  void _setStatsStream(
+    Stream<RtcParticipantStats>? stream,
+    String statsId,
+  ) {
+    _roundTimeTrips.clear();
+    _jitters.clear();
+    _currentStats = statsId;
+
+    _statsChartController.sink.add(([], []));
+
+    _statsStream = stream;
+
+    if (mounted) setState(() {});
+
+    _statsStream?.listen((stats) {
+      _roundTimeTrips.add(stats.roundTripTime ?? 0);
+      _jitters.add(stats.jitter ?? 0);
+
+      _statsChartController.sink.add((_jitters, _roundTimeTrips));
+    });
+  }
+
+  List<ParticipantSFU> get _sfuParticipants {
+    final List<ParticipantSFU> participants = [];
+    if (widget.callState?.mParticipant != null) {
+      final ParticipantSFU participant = widget.callState!.mParticipant!;
+
+      participants.add(participant.copyWith(isSharingScreen: false));
+
+      if (participant.isSharingScreen) {
+        participants.add(participant);
+      }
+    }
+
+    final trackParticipants =
+        widget.callState?.participants.values.toList() ?? [];
+
+    for (final ParticipantSFU participant in trackParticipants) {
+      participants.add(participant.copyWith(isSharingScreen: false));
+
+      if (participant.isSharingScreen) {
+        participants.add(participant);
+      }
+    }
+
+    return participants;
+  }
+
+  Participant? _getParticipant(ParticipantSFU participantSFU) {
+    final participants = widget.participants;
+
+    if (participantSFU.ownerId == kIsMine) {
+      return participants.firstWhereOrNull((participant) => participant.isMe);
+    }
+
+    return participants.firstWhereOrNull(
+      (participant) => participant.id.toString() == participantSFU.ownerId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.sp),
+      padding: EdgeInsets.symmetric(vertical: 16.sp),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                Strings.callStats.i18n,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.sp),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  Strings.callStats.i18n,
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  AppNavigator.pop();
-                },
-                icon: Icon(
-                  PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
-                  size: 20.sp,
-                  color: Theme.of(context).colorScheme.primary,
+                IconButton(
+                  onPressed: () {
+                    AppNavigator.pop();
+                  },
+                  icon: Icon(
+                    PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
+                    size: 20.sp,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: 12.sp),
-          StreamBuilder<StatsData>(
-            stream: _statsStream.stream,
-            builder: (context, snapshot) {
-              final VideoSenderStats? stats =
-                  snapshot.hasData ? snapshot.data!.last : null;
+          Expanded(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 160.sp,
+                  height: double.infinity,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: _participants.length,
+                    itemBuilder: (context, index) {
+                      final participant = _getParticipant(_participants[index]);
+                      final statsId =
+                          '${_participants[index].ownerId}_${_participants[index].isSharingScreen}';
 
-              return Row(
-                children: [
-                  _buildStatsCell(
-                    context,
-                    title: Strings.frameSent.i18n,
-                    value: stats?.framesSent.toString() ?? "NaN",
+                      final isSelecting = _currentStats == statsId;
+                      final isMe = _participants[index].ownerId == kIsMine;
+
+                      return GestureWrapper(
+                        onTap: () {
+                          if (isSelecting) return;
+
+                          if (_participants[index].isSharingScreen) {
+                            _setStatsStream(
+                              _participants[index].screenStatsStream,
+                              statsId,
+                            );
+                          } else {
+                            _setStatsStream(
+                              _participants[index].webcamStatsStream,
+                              statsId,
+                            );
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isSelecting
+                                ? Theme.of(context).colorScheme.surfaceContainer
+                                : null,
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.sp,
+                            vertical: 10.sp,
+                          ),
+                          child: Row(
+                            spacing: 10.sp,
+                            children: [
+                              AvatarCard(
+                                urlToImage: participant?.user?.avatar,
+                                size: 26.sp,
+                                label: participant?.user?.userName,
+                              ),
+                              Text(
+                                '${isMe ? 'You' : (participant?.user?.fullName ?? 'Waterbus')} '
+                                '(${_participants[index].isSharingScreen ? 'Screen' : 'Webcam'})',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(width: 20.sp),
-                  _buildStatsCell(
-                    context,
-                    title: Strings.resolution.i18n,
-                    value:
-                        "${stats?.frameWidth ?? 'NaN'}x${stats?.frameHeight ?? 'NaN'}",
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 12.sp),
+                  child: const VerticalDivider(),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 12.sp),
+                        child: StreamBuilder<StatsData>(
+                          stream: _statsStream,
+                          builder: (context, snapshot) {
+                            final stats = snapshot.data;
+
+                            return Row(
+                              children: [
+                                _buildStatsCell(
+                                  context,
+                                  title: 'Packet Losts',
+                                  value: stats?.packetsLost.toString() ?? "NaN",
+                                ),
+                                SizedBox(width: 20.sp),
+                                _buildStatsCell(
+                                  context,
+                                  title: _currentStats.startsWith(kIsMine)
+                                      ? 'Frame Sent'
+                                      : 'Frame Received',
+                                  value: (_currentStats.startsWith(kIsMine)
+                                          ? stats?.framesSent.toString()
+                                          : stats?.framesReceived.toString()) ??
+                                      "NaN",
+                                ),
+                                if (SizerUtil.isDesktop) SizedBox(width: 20.sp),
+                                if (SizerUtil.isDesktop)
+                                  _buildStatsCell(
+                                    context,
+                                    title: "Bitrate",
+                                    value:
+                                        "${stats?.bitrate?.toStringAsFixed(2) ?? "NaN"} Kbps",
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20.sp),
+                      Expanded(
+                        child: _buildStatsChart(context),
+                      ),
+                    ],
                   ),
-                  if (SizerUtil.isDesktop) SizedBox(width: 20.sp),
-                  if (SizerUtil.isDesktop)
-                    _buildStatsCell(
-                      context,
-                      title: "FPS",
-                      value: stats?.framesPerSecond.toString() ?? "NaN",
-                    ),
-                ],
-              );
-            },
-          ),
-          SizedBox(height: 20.sp),
-          SizedBox(
-            width: double.infinity,
-            child: _buildStatsChart(context),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -153,10 +321,15 @@ class _StatsViewState extends State<StatsView> {
   }
 
   Widget _buildStatsChart(BuildContext context) {
-    return StreamBuilder<StatsData>(
-      stream: _statsStream.stream,
+    return StreamBuilder<StatsChartData>(
+      stream: _statsChartController.stream,
       builder: (context, snapshot) {
-        final data = snapshot.data ?? [];
+        final jitters = snapshot.data?.$1 ?? [];
+        final roundTimeTrips = snapshot.data?.$2 ?? [];
+
+        if (jitters.length != roundTimeTrips.length || jitters.isEmpty) {
+          return const SizedBox();
+        }
 
         return SfCartesianChart(
           primaryXAxis: const CategoryAxis(),
@@ -164,21 +337,20 @@ class _StatsViewState extends State<StatsView> {
           legend: const Legend(isVisible: true),
           // Enable tooltip
           tooltipBehavior: TooltipBehavior(enable: true),
-          series: <CartesianSeries<VideoSenderStats, String>>[
-            LineSeries<VideoSenderStats, String>(
-              dataSource: data,
+          series: <CartesianSeries<num, String>>[
+            LineSeries<num, String>(
+              dataSource: roundTimeTrips,
               xValueMapper: (stats, index) => "${index * 2}",
-              yValueMapper: (stats, _) =>
-                  ((stats.roundTripTime ?? 0) * 1000).round(),
+              yValueMapper: (rtt, _) => (rtt * 1000).round(),
               name: Strings.latency.i18n,
               // Enable data label
               dataLabelSettings: const DataLabelSettings(isVisible: true),
             ),
-            LineSeries<VideoSenderStats, String>(
-              dataSource: data,
+            LineSeries<num, String>(
+              dataSource: jitters,
               xValueMapper: (stats, index) => "${index * 2}",
-              yValueMapper: (stats, _) => stats.jitter,
-              name: 'jitter',
+              yValueMapper: (jitter, _) => (jitter * 1000).round(),
+              name: 'jitter (ms)',
               // Enable data label
               dataLabelSettings: const DataLabelSettings(isVisible: true),
             ),

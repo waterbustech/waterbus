@@ -36,8 +36,10 @@ void main(List<String> args) async {
 
       await WaterbusSdk.instance.initializeApp(
         wsUrl: ApiEndpoints.wsUrl,
-        apiUrl: ApiEndpoints.baseUrl,
-        privateMessageKey: "waterbus2024",
+        apiUrl: kIsWeb ? ApiEndpoints.baseUrlForWeb : ApiEndpoints.baseUrl,
+        messageEncryptionKey: "kai@waterbus.tech",
+        webrtcE2eeKey: "kai@waterbus.tech",
+        httpVersionPref: HttpVersionPref.http3,
       );
 
       if (!(Platform.isLinux || Platform.isWindows) || kIsWeb) {

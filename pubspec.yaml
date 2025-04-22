@@ -124,7 +124,12 @@ dependencies:
   media_kit_libs_linux: any
 
   # Video call
-  waterbus_sdk: ^1.6.0
+  waterbus_sdk: 
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      ref: migration/v3
+  # waterbus_sdk: 
+  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
 
 dependency_overrides: 
@@ -132,8 +137,9 @@ dependency_overrides:
   win32: ^5.0.5 
   web: ^1.0.0
   collection: ^1.19.0
-  dio_web_adapter: ^2.0.0
+  dio_web_adapter: ^2.1.1
   isolate_manager: ^5.2.1+1
+  get_it: ^8.0.3
   flutter_image_compress_web:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
@@ -153,8 +159,8 @@ dev_dependencies:
   # rules and activating additional ones.
 
   # Code Generator
-  injectable_generator: ^2.6.2
-  build_runner: ^2.4.13
+  injectable_generator: ^2.7.0
+  build_runner: ^2.4.15
   flutter_gen_runner: ^5.8.0
 
   # Lints
@@ -167,7 +173,7 @@ msix_config:
   publisher_display_name: Waterbus
   identity_name: com.wanted.waterbus
   msix_version: 1.0.0.0
-  logo_path: assets\images\logo_rounded.png
+  logo_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/512-mac.png
   capabilities: microphone, webcam
 
 # For information on the generic Dart part of this file, see the

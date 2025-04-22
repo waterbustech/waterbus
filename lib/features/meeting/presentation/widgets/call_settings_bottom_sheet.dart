@@ -159,8 +159,11 @@ class CallSettingsBottomSheet extends StatelessWidget {
                         duration: 200.milliseconds.inMilliseconds,
                         maxHeight:
                             SizerUtil.isDesktop ? 450.sp : double.infinity,
-                        maxWidth: SizerUtil.isDesktop ? 700.sp : null,
-                        child: const StatsView(),
+                        maxWidth: SizerUtil.isDesktop ? 750.sp : null,
+                        child: StatsView(
+                          callState: callState,
+                          participants: meeting?.participants ?? [],
+                        ),
                       );
                     },
                   ),
