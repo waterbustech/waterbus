@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: "16e298750b6d0af7ce8a3ba7c18c69c3785d11b15ec83f6dcd0ad2a0009b3cab"
+      sha256: e55636ed79578b9abca5fecf9437947798f5ef7456308b5cb85720b793eac92f
       url: "https://pub.dev"
     source: hosted
-    version: "76.0.0"
+    version: "82.0.0"
   _flutterfire_internals:
     dependency: transitive
     description:
@@ -17,19 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.44"
-  _macros:
-    dependency: transitive
-    description: dart
-    source: sdk
-    version: "0.3.3"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "1f14db053a8c23e260789e9b0980fa27f2680dd640932cae5e1137cce0e46e1e"
+      sha256: "13c1e6c6fd460522ea840abec3f677cc226f5fec7872c04ad7b425517ccf54f7"
       url: "https://pub.dev"
     source: hosted
-    version: "6.11.0"
+    version: "7.4.4"
   ansicolor:
     dependency: transitive
     description:
@@ -58,10 +53,10 @@ packages:
     dependency: transitive
     description:
       name: async
-      sha256: d2872f9c19731c2e5f10444b14686eb7cc85c76274bd6c16e1816bff9a3bab63
+      sha256: "758e6d74e971c3e5aceb4110bfd6698efc7f501675bcfe0c775459a8140750eb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.12.0"
+    version: "2.13.0"
   audioplayers:
     dependency: "direct main"
     description:
@@ -505,10 +500,10 @@ packages:
     dependency: transitive
     description:
       name: fake_async
-      sha256: "6a95e56b2449df2273fd8c45a662d6947ce1ebb7aafe80e550a3f68297f3cacc"
+      sha256: "5368f224a74523e8d2e7399ea1638b37aecfca824a3cc4dfdf77bf1fa905ac44"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.2"
+    version: "1.3.3"
   ffi:
     dependency: transitive
     description:
@@ -1234,10 +1229,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.20.2"
   io:
     dependency: transitive
     description:
@@ -1266,10 +1261,10 @@ packages:
     dependency: "direct overridden"
     description:
       name: isolate_manager
-      sha256: "36d2845ac5bc747174ce516fed5196b516c6898cb4e75ece4d05aa8835b7fb57"
+      sha256: "470582fcde05989877f3d7a2dd5ff798249fdf709f14c06bb6c876ae9f51a27d"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.1+1"
+    version: "6.0.0+2"
   js:
     dependency: transitive
     description:
@@ -1290,10 +1285,10 @@ packages:
     dependency: transitive
     description:
       name: leak_tracker
-      sha256: c35baad643ba394b40aac41080300150a4f08fd0fd6a10378f8f7c6bc161acec
+      sha256: "6bb818ecbdffe216e81182c2f0714a2e62b593f4a4f13098713ff1685dfb6ab0"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.8"
+    version: "10.0.9"
   leak_tracker_flutter_testing:
     dependency: transitive
     description:
@@ -1342,14 +1337,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
-  macros:
-    dependency: transitive
-    description:
-      name: macros
-      sha256: "1d9e801cd66f7ea3663c45fc708450db1fa57f988142c64289142c9b7ee80656"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.3-main.0"
   matcher:
     dependency: transitive
     description:
@@ -2125,20 +2112,19 @@ packages:
   syncfusion_flutter_charts:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "09f2fad4272613bd58a3149d2b207e5cfaca060f"
-      url: "https://github.com/waterbustech/syncfusion_flutter_charts.git"
-    source: git
-    version: "25.2.5"
+      name: syncfusion_flutter_charts
+      sha256: e2e1b79b1751104aac3b138278110aa4d0b2516c7a92a92d4ece32f05a24211a
+      url: "https://pub.dev"
+    source: hosted
+    version: "29.1.39"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "266e71319ebf7e7a1b7cf8bf79b5f8ed2730f50d4de4bca6ff670a6b2dbba62a"
+      sha256: "720ea28f0ab8f8c19fc613c20b978e514c7e4e431171fd85ed8da528e01298e0"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.8"
+    version: "29.1.39"
   synchronized:
     dependency: transitive
     description:
@@ -2391,10 +2377,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "0968250880a6c5fe7edc067ed0a13d4bae1577fe2771dcf3010d52c4a9d3ca14"
+      sha256: ddfa8d30d89985b96407efce8acbdd124701f96741f2d981ca860662f1c0dc02
       url: "https://pub.dev"
     source: hosted
-    version: "14.3.1"
+    version: "15.0.0"
   volume_controller:
     dependency: transitive
     description:
@@ -2440,7 +2426,7 @@ packages:
     description:
       path: "."
       ref: "migration/v3"
-      resolved-ref: "3ba7636ea0e00c3d002d6c924bc10003d78050a1"
+      resolved-ref: "0f4a60fb753621dc5765334a5a418f458dd54dae"
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "1.6.0"

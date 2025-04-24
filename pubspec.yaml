@@ -94,8 +94,7 @@ dependencies:
   i18n_extension: ^12.0.1
   pull_to_refresh: ^2.0.0
   super_sliver_list: ^0.4.1
-  syncfusion_flutter_charts:
-    git: https://github.com/waterbustech/syncfusion_flutter_charts.git
+  syncfusion_flutter_charts: ^29.1.39
   popover: ^0.3.1
   super_context_menu: ^0.8.24
   msix: ^3.16.8
@@ -132,13 +131,14 @@ dependencies:
   #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
 
-dependency_overrides: 
+dependency_overrides:
+  intl: ^0.20.2
   watcher: ^1.1.0
   win32: ^5.0.5 
   web: ^1.0.0
   collection: ^1.19.0
   dio_web_adapter: ^2.1.1
-  isolate_manager: ^5.2.1+1
+  isolate_manager: ^6.0.0+2
   get_it: ^8.0.3
   flutter_image_compress_web:
     git:

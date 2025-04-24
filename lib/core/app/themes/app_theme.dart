@@ -64,11 +64,11 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      dialogTheme: DialogTheme(
-        backgroundColor: appColors.background,
-        elevation: 0,
-        shadowColor: Colors.transparent,
-      ),
+      // dialogTheme: DialogTheme(
+      //   backgroundColor: appColors.background,
+      //   elevation: 0,
+      //   shadowColor: Colors.transparent,
+      // ),
       fontFamily: FontFamily.helvetica,
     );
     return AppTheme(
@@ -126,10 +126,10 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      dialogTheme: const DialogTheme(
-        elevation: 0,
-        shadowColor: Colors.transparent,
-      ),
+      // dialogTheme: const DialogTheme(
+      //   elevation: 0,
+      //   shadowColor: Colors.transparent,
+      // ),
       fontFamily: FontFamily.helvetica,
     );
     return AppTheme(

@@ -225,11 +225,11 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   SizedBox(height: 4.sp),
                   Column(
                     children: [
-                      ...WebRTCCodec.values.map<Widget>(
+                      ...RTCVideoCodec.values.map<Widget>(
                         (codec) => SettingCheckboxCard(
                           label: codec.codec.toUpperCase(),
                           enabled: _settings.preferedCodec == codec,
-                          hasDivider: codec != WebRTCCodec.values.last,
+                          hasDivider: codec != RTCVideoCodec.values.last,
                           onTap: () {
                             setState(() {
                               _settings = _settings.copyWith(

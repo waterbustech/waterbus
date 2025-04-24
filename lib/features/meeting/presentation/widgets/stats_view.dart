@@ -209,10 +209,13 @@ class _StatsViewState extends State<StatsView> {
                                 size: 26.sp,
                                 label: participant?.user?.userName,
                               ),
-                              Text(
-                                '${isMe ? 'You' : (participant?.user?.fullName ?? 'Waterbus')} '
-                                '(${_participants[index].isSharingScreen ? 'Screen' : 'Webcam'})',
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Expanded(
+                                child: Text(
+                                  '${isMe ? 'You' : (participant?.user?.fullName ?? 'Waterbus')} '
+                                  '(${_participants[index].isSharingScreen ? 'Screen' : 'Webcam'})',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ),
                             ],
                           ),
