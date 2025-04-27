@@ -98,7 +98,7 @@ dependencies:
     git: https://github.com/waterbustech/syncfusion_flutter_charts.git
   popover: ^0.3.1
   super_context_menu: ^0.8.24
-  msix: ^3.16.8
+  msix: ^3.16.9
   toastification: ^2.3.0
   web: ^1.1.1
 
