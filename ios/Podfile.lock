@@ -9,7 +9,6 @@ PODS:
     - Flutter
   - connectivity_plus (0.0.1):
     - Flutter
-    - FlutterMacOS
   - CryptoSwift (1.8.4)
   - device_info_plus (0.0.1):
     - Flutter
@@ -326,7 +325,7 @@ PODS:
 
 DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
-  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - file_saver (from `.symlinks/plugins/file_saver/ios`)
@@ -406,7 +405,7 @@ EXTERNAL SOURCES:
   audioplayers_darwin:
     :path: ".symlinks/plugins/audioplayers_darwin/ios"
   connectivity_plus:
-    :path: ".symlinks/plugins/connectivity_plus/darwin"
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -479,7 +478,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
-  connectivity_plus: 2256d3e20624a7749ed21653aafe291a46446fee
+  connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   device_info_plus: 71ffc6ab7634ade6267c7a93088ed7e4f74e5896
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
@@ -545,7 +544,7 @@ SPEC CHECKSUMS:
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   volume_controller: ca1cde542ee70fad77d388f82e9616488110942b
-  wakelock_plus: fd58c82b1388f4afe3fe8aa2c856503a262a5b03
+  wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   waterbus_callkit_incoming: 0bcf517b915755a5edcf63db877d22388aa79298
   waterbus_sdk: 85cf0e63efb55488da3eb517722a6018b18d3c86
   WebRTC-SDK: 79942c006ea64f6fb48d7da8a4786dfc820bc1db

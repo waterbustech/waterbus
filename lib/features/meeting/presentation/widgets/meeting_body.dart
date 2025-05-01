@@ -23,7 +23,6 @@ import 'package:waterbus/features/meeting/presentation/widgets/call_settings_bot
 import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_layout.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/whiteboard_widget.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class MeetingBody extends StatefulWidget {
@@ -40,7 +39,6 @@ class MeetingBody extends StatefulWidget {
 class _MeetingBodyState extends State<MeetingBody> {
   bool _isFilterSettingsOpened = false;
   bool _isChatOpened = false;
-  bool _isWhiteBoardOpened = false;
 
   late Meeting meeting = widget.state.meeting!;
   late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
@@ -293,27 +291,6 @@ class _MeetingBodyState extends State<MeetingBody> {
                             ),
                           if (SizerUtil.isDesktop)
                             CallActionButton(
-                              icon: PhosphorIcons.paintBrush(
-                                _isWhiteBoardOpened
-                                    ? PhosphorIconsStyle.fill
-                                    : PhosphorIconsStyle.regular,
-                              ),
-                              iconColor: _isWhiteBoardOpened
-                                  ? Theme.of(context).colorScheme.primary
-                                  : null,
-                              backgroundColor: _isWhiteBoardOpened
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer
-                                  : null,
-                              onTap: () {
-                                setState(() {
-                                  _isWhiteBoardOpened = !_isWhiteBoardOpened;
-                                });
-                              },
-                            ),
-                          if (SizerUtil.isDesktop)
-                            CallActionButton(
                               icon: PhosphorIcons.chatTeardropText(
                                 _isChatOpened
                                     ? PhosphorIconsStyle.fill
@@ -424,44 +401,10 @@ class _MeetingBodyState extends State<MeetingBody> {
                                       borderEnabled: false,
                                     ),
                                   )
-                                : Column(
-                                    children: [
-                                      Expanded(
-                                        child: MeetingLayout(
-                                          meeting: meeting,
-                                          callState: callState,
-                                          callSetting: callSetting,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: _isWhiteBoardOpened ? 4 : 0,
-                                        child: AnimatedSize(
-                                          duration: 300.milliseconds,
-                                          curve: Curves.easeInOutExpo,
-                                          child: _isWhiteBoardOpened
-                                              ? Container(
-                                                  margin: EdgeInsets.only(
-                                                    top: 20.sp,
-                                                  ),
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 20.sp,
-                                                  ),
-                                                  child: Material(
-                                                    clipBehavior: Clip.hardEdge,
-                                                    shape: SuperellipseShape(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        20.sp,
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        const WhiteBoardWidget(),
-                                                  ),
-                                                )
-                                              : const SizedBox.shrink(),
-                                        ),
-                                      ),
-                                    ],
+                                : MeetingLayout(
+                                    meeting: meeting,
+                                    callState: callState,
+                                    callSetting: callSetting,
                                   ),
                           ),
                         ),

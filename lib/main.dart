@@ -39,7 +39,6 @@ void main(List<String> args) async {
         apiUrl: kIsWeb ? ApiEndpoints.baseUrlForWeb : ApiEndpoints.baseUrl,
         messageEncryptionKey: "kai@waterbus.tech",
         webrtcE2eeKey: "kai@waterbus.tech",
-        httpVersionPref: HttpVersionPref.http3,
       );
 
       if (!(Platform.isLinux || Platform.isWindows) || kIsWeb) {

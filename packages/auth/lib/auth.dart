@@ -1,5 +1,3 @@
-library auth;
-
 import 'package:auth/services/auth_service.dart';
 import 'package:auth/services/index.dart';
 import 'package:flutter/widgets.dart';

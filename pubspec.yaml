@@ -123,12 +123,12 @@ dependencies:
   media_kit_libs_linux: any
 
   # Video call
-  waterbus_sdk: 
-    git:
-      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-      ref: 2.0.0-pre
   # waterbus_sdk: 
-  #   path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+  #   git:
+  #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+  #     ref: 2.0.0-pre
+  waterbus_sdk: 
+    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
 
 dependency_overrides:
@@ -149,8 +149,8 @@ dev_dependencies:
   # Test
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.14.1
-  mockito: ^5.4.4
+  flutter_launcher_icons: ^0.14.3
+  mockito: ^5.4.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -164,7 +164,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.8.0
 
   # Lints
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   import_sorter: ^4.6.0
 
 # MSIX config
