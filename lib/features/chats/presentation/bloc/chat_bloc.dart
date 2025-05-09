@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/error/result.dart';
 import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
-import 'package:waterbus_sdk/types/result.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -340,8 +340,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .members
             .indexWhere((member) => member.id == newMember.id);
         if (indexMember != -1) {
-          _conversations[index].members[indexMember].status =
-              MemberStatusEnum.joined;
+          _conversations[index].members[indexMember] = _conversations[index]
+              .members[indexMember]
+              .copyWith(status: MemberStatusEnum.joined);
         }
       }
 
@@ -358,7 +359,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     final Meeting meeting = _conversationCurrent!.copyWith(
       avatar: avatar ?? _conversationCurrent?.avatar,
-      title: title ?? _conversationCurrent?.title,
+      title: title ?? _conversationCurrent?.title ?? "",
     );
 
     final Result<bool> result = await _waterbusSdk.updateConversation(
@@ -397,7 +398,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         return;
       }
 
-      _conversations[index].latestMessage = event.message;
+      _conversations[index] =
+          _conversations[index].copyWith(latestMessage: event.message);
     }
   }
 

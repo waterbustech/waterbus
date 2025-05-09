@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -22,9 +24,9 @@ class CallSettingsLocalDataSourceImpl extends CallSettingsLocalDataSource {
   CallSetting getSettings() {
     final String rawData = hiveBox.get(
       StorageKeys.callSettings,
-      defaultValue: CallSetting().toJson(),
+      defaultValue: jsonEncode(CallSetting().toJson()),
     );
 
-    return CallSetting.fromJson(rawData);
+    return CallSetting.fromJson(jsonDecode(rawData));
   }
 }

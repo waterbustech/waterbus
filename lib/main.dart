@@ -21,7 +21,7 @@ import 'package:waterbus/firebase_options.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();
-  await runZonedGuarded(
+  await runZoned(
     () async {
       final WidgetsBinding widgetsBinding =
           WidgetsFlutterBinding.ensureInitialized();
@@ -64,11 +64,11 @@ void main(List<String> args) async {
         FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       }
     },
-    (error, stackTrace) {
-      debugPrint(error.toString());
+    // (error, stackTrace) {
+    //   debugPrint(error.toString());
 
-      if (!WebRTC.platformIsMobile) return;
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    },
+    //   if (!WebRTC.platformIsMobile) return;
+    //   FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    // },
   );
 }

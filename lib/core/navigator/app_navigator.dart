@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/string_ext.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -36,7 +36,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
-
+    print(settings.name);
     switch (settings.name) {
       case Routes.rootRoute:
         return _buildRoute(

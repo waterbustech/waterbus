@@ -2,9 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/message_status_enum.dart';
-import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
-import 'package:waterbus_sdk/types/result.dart';
+import 'package:waterbus_sdk/types/error/result.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
@@ -106,7 +104,9 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             .indexWhere((message) => message.id == messageModel.id);
 
         if (index != -1) {
-          _messagesByMeetingId[index].status = messageModel.status;
+          _messagesByMeetingId[index] = _messagesByMeetingId[index]
+              .copyWith
+              .call(status: messageModel.status);
         }
 
         emit(_messageDone);
@@ -248,7 +248,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             ChatLatestMessageUpdated(message: message),
           );
         } else {
-          _messagesByMeetingId[index].sendingStatus = SendingStatusEnum.error;
+          _messagesByMeetingId[index] = _messagesByMeetingId[index]
+              .copyWith(sendingStatus: SendingStatusEnum.error);
         }
       }
     } else {
@@ -284,14 +285,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   void _handleEditMessage({required MessageModel messageModel}) {
-    if (_messagesMap[messageModel.meeting] != null) {
-      final int index = _messagesMap[messageModel.meeting]!
-          .messages
+    final CachedMessageByMeetingId? cachedMessageByMeetingId =
+        _messagesMap[messageModel.meeting];
+
+    if (cachedMessageByMeetingId != null) {
+      final int index = cachedMessageByMeetingId.messages
           .indexWhere((message) => message.id == messageModel.id);
 
       if (index != -1) {
-        _messagesMap[messageModel.meeting]?.messages[index].data =
-            messageModel.data;
+        _messagesMap[messageModel.meeting]?.messages[index] =
+            cachedMessageByMeetingId.messages[index]
+                .copyWith(data: messageModel.data);
       }
     }
 
@@ -317,14 +321,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   void _handleDeleteMessage({required MessageModel messageModel}) {
-    if (_messagesMap[messageModel.meeting] != null) {
-      final int index = _messagesMap[messageModel.meeting]!
-          .messages
+    final CachedMessageByMeetingId? cachedMessageByMeetingId =
+        _messagesMap[messageModel.meeting];
+
+    if (cachedMessageByMeetingId != null) {
+      final int index = cachedMessageByMeetingId.messages
           .indexWhere((message) => message.id == messageModel.id);
 
       if (index != -1) {
-        _messagesMap[messageModel.meeting]!.messages[index].status =
-            MessageStatusEnum.inactive;
+        _messagesMap[messageModel.meeting]!.messages[index] =
+            cachedMessageByMeetingId.messages[index]
+                .copyWith(status: MessageStatusEnum.inactive);
       }
     }
 

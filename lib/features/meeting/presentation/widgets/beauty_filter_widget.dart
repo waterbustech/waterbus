@@ -99,7 +99,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.smoothValue,
             (value) {
               setState(() {
-                _beautyFilters.smoothValue = value;
+                _beautyFilters = _beautyFilters.copyWith(smoothValue: value);
               });
             },
           ),
@@ -108,7 +108,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.whiteValue,
             (value) {
               setState(() {
-                _beautyFilters.whiteValue = value;
+                _beautyFilters = _beautyFilters.copyWith(whiteValue: value);
               });
             },
           ),
@@ -117,7 +117,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.thinFaceValue * 10,
             (value) {
               setState(() {
-                _beautyFilters.thinFaceValue = value / 10;
+                _beautyFilters = _beautyFilters.copyWith(thinFaceValue: value);
               });
             },
           ),
@@ -126,7 +126,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.bigEyeValue * 5,
             (value) {
               setState(() {
-                _beautyFilters.bigEyeValue = value / 5;
+                _beautyFilters = _beautyFilters.copyWith(bigEyeValue: value);
               });
             },
           ),
@@ -135,7 +135,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.lipstickValue,
             (value) {
               setState(() {
-                _beautyFilters.lipstickValue = value;
+                _beautyFilters = _beautyFilters.copyWith(lipstickValue: value);
               });
             },
           ),
@@ -144,7 +144,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.blusherValue,
             (value) {
               setState(() {
-                _beautyFilters.blusherValue = value;
+                _beautyFilters = _beautyFilters.copyWith(blusherValue: value);
               });
             },
           ),

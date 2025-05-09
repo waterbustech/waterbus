@@ -41,7 +41,7 @@ class Member extends Equatable {
     return <String, dynamic>{
       'id': id,
       'role': role.value,
-      'user': user.toMap(),
+      'user': user.toJson(),
       'isMe': isMe,
       'status': status.value,
     };
@@ -51,7 +51,7 @@ class Member extends Equatable {
     return Member(
       id: map['id'] as int,
       role: MeetingRoleX.fromValue(map['role'] ?? MeetingRole.attendee.value),
-      user: User.fromMap(map['user'] as Map<String, dynamic>),
+      user: User.fromJson(map['user'] as Map<String, dynamic>),
       isMe: map['isMe'] ?? false,
       status: MemberStatusEnum.fromValue(
         map['status'] ?? MemberStatusEnum.inviting.value,

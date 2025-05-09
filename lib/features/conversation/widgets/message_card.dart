@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import 'package:super_context_menu/super_context_menu.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
