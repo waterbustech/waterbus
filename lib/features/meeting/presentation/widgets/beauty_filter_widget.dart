@@ -27,13 +27,13 @@ class BeautyFilterWidget extends StatefulWidget {
 }
 
 class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
-  late final BeautyFilters _beautyFilters;
+  late BeautyFilters _beautyFilters;
 
   @override
   void initState() {
     super.initState();
 
-    _beautyFilters = AppBloc.beautyFiltersBloc.filters.copyWith();
+    _beautyFilters = AppBloc.beautyFiltersBloc.filters.copyWith.call();
   }
 
   @override
@@ -117,7 +117,8 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.thinFaceValue * 10,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(thinFaceValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(thinFaceValue: value / 10);
               });
             },
           ),
@@ -126,7 +127,8 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
             _beautyFilters.bigEyeValue * 5,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(bigEyeValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(bigEyeValue: value / 5);
               });
             },
           ),
