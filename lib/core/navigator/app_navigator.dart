@@ -36,7 +36,6 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
-    print(settings.name);
     switch (settings.name) {
       case Routes.rootRoute:
         return _buildRoute(

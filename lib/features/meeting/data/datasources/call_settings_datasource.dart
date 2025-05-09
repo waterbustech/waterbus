@@ -17,7 +17,7 @@ class CallSettingsLocalDataSourceImpl extends CallSettingsLocalDataSource {
 
   @override
   void saveSettings(CallSetting setting) {
-    hiveBox.put(StorageKeys.callSettings, setting.toJson());
+    hiveBox.put(StorageKeys.callSettings, jsonEncode(setting.toJson()));
   }
 
   @override

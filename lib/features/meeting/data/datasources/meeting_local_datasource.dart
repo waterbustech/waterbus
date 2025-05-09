@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -39,8 +41,9 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
       StorageKeys.meetings,
       defaultValue: [],
     );
+
     return meetingsList
-        .map((meetingJson) => Meeting.fromJson(meetingJson))
+        .map((meetingJson) => Meeting.fromJson(jsonDecode(meetingJson)))
         .toList();
   }
 
@@ -76,7 +79,7 @@ class MeetingLocalDataSourceImpl extends MeetingLocalDataSource {
   void _saveMeetingsList(List<Meeting> meetings) {
     hiveBox.put(
       StorageKeys.meetings,
-      meetings.map((meeting) => meeting.toJson()).toList(),
+      meetings.map((meeting) => jsonEncode(meeting.toJson())).toList(),
     );
   }
 }
