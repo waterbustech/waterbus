@@ -5,9 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/result.dart';
-import 'package:waterbus_sdk/types/models/conversation_socket_event.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -17,13 +14,13 @@ import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
-import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
@@ -40,7 +37,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (event is ChatStarted) {
         if (_conversations.isEmpty) {
           await _getConversationList();
-          _waterbusSdk.onConversationSocketChanged = _listenConversationSocket;
           emit(_chatDone);
         }
 
@@ -318,35 +314,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     } else {
       result.error.messageException.showToast(ToastificationType.error);
       return null;
-    }
-  }
-
-  void _listenConversationSocket(ConversationSocketEvent socketEvent) {
-    final Meeting? newConversation = socketEvent.conversation;
-    final Member? newMember = socketEvent.member;
-
-    if (socketEvent.event == ConversationEventEnum.newInvitaion) {
-      if (newConversation == null) return;
-      AppBloc.invitedChatBloc
-          .add(InvitedChatInserted(invited: newConversation));
-    } else if (socketEvent.event == ConversationEventEnum.newMemberJoined) {
-      if (newMember == null) return;
-
-      final int index = _conversations
-          .indexWhere((conversation) => conversation.id == newMember.meetingId);
-
-      if (index != -1) {
-        final indexMember = _conversations[index]
-            .members
-            .indexWhere((member) => member.id == newMember.id);
-        if (indexMember != -1) {
-          _conversations[index].members[indexMember] = _conversations[index]
-              .members[indexMember]
-              .copyWith(status: MemberStatusEnum.joined);
-        }
-      }
-
-      add(ChatSocketConversationUpdated());
     }
   }
 

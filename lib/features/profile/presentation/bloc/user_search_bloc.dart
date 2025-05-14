@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/result.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 

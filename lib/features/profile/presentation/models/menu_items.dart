@@ -24,10 +24,6 @@ final List<MenuItemModel> menuItems = [
   //   icon: PhosphorIcons.robot(),
   // ),
   MenuItemModel(
-    title: Strings.storage,
-    icon: PhosphorIcons.record(),
-  ),
-  MenuItemModel(
     title: Strings.archivedChats,
     icon: PhosphorIcons.archive(),
   ),

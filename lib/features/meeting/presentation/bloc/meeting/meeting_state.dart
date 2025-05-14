@@ -8,7 +8,7 @@ abstract class MeetingState extends Equatable {
     this.meeting,
     this.participant,
     this.callState,
-    this.callSetting,
+    this.mediaConfig,
   });
 
   final bool isSubtitleEnabled;
@@ -16,7 +16,7 @@ abstract class MeetingState extends Equatable {
   final Meeting? meeting;
   final Participant? participant;
   final CallState? callState;
-  final CallSetting? callSetting;
+  final MediaConfig? mediaConfig;
   final bool isRecording;
 
   @override
@@ -26,13 +26,13 @@ abstract class MeetingState extends Equatable {
         meeting,
         participant,
         callState,
-        callSetting,
+        mediaConfig,
         identityHashCode(this),
       ];
 }
 
 class MeetingInitial extends MeetingState {
-  const MeetingInitial({super.callSetting});
+  const MeetingInitial({super.mediaConfig});
 }
 
 class MeetingPreJoin extends MeetingState {
@@ -40,7 +40,7 @@ class MeetingPreJoin extends MeetingState {
     required super.meeting,
     required super.participant,
     required super.callState,
-    required super.callSetting,
+    required super.mediaConfig,
   });
 }
 
@@ -51,7 +51,7 @@ class MeetingJoined extends MeetingState {
     required super.meeting,
     required super.participant,
     required super.callState,
-    required super.callSetting,
+    required super.mediaConfig,
     required super.isRecording,
   });
 }

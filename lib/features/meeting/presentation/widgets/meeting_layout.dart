@@ -3,21 +3,21 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class MeetingLayout extends StatelessWidget {
   final Meeting meeting;
-  final CallSetting callSetting;
+  final MediaConfig mediaConfig;
   final CallState? callState;
   const MeetingLayout({
     super.key,
     required this.meeting,
     required this.callState,
-    required this.callSetting,
+    required this.mediaConfig,
   });
 
   List<ParticipantSFU> get _participants {
@@ -60,7 +60,7 @@ class MeetingLayout extends StatelessWidget {
                   context,
                   meeting,
                   callState,
-                  callSetting,
+                  mediaConfig,
                   constraints,
                 )
               : _participants.length > 2
@@ -68,7 +68,7 @@ class MeetingLayout extends StatelessWidget {
                       context,
                       meeting,
                       callState,
-                      callSetting,
+                      mediaConfig,
                       constraints,
                     )
                   : _buildLayoutLess2Users(
@@ -153,7 +153,7 @@ class MeetingLayout extends StatelessWidget {
     BuildContext context,
     Meeting meeting,
     CallState? callState,
-    CallSetting setting,
+    MediaConfig config,
     BoxConstraints constraints,
   ) {
     final crossAxisCount =
@@ -187,7 +187,7 @@ class MeetingLayout extends StatelessWidget {
     BuildContext context,
     Meeting meeting,
     CallState? callState,
-    CallSetting setting,
+    MediaConfig config,
     BoxConstraints constraints,
   ) {
     return ListView.builder(

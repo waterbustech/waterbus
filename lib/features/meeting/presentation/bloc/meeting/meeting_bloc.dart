@@ -12,8 +12,7 @@ import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/result.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -25,7 +24,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
-import 'package:waterbus/features/meeting/data/datasources/call_settings_datasource.dart';
+import 'package:waterbus/features/meeting/data/datasources/media_config_datasource.dart';
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
@@ -37,7 +36,7 @@ part 'meeting_state.dart';
 @injectable
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final MeetingLocalDataSource _localDataSource;
-  final CallSettingsLocalDataSource _callSettingsLocalDataSource;
+  final MediaConfigLocalDataSource _callSettingsLocalDataSource;
   final PipChannel _pipChannel;
   final MeetingSound _meetingSound;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
@@ -49,7 +48,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   bool _isSubtitleEnabled = false;
   Meeting? _currentMeeting;
   Participant? _mParticipant;
-  CallSetting _callSetting = CallSetting();
+  MediaConfig _mediaConfig = MediaConfig();
   Timer? _subtitleTimer;
   int? _recordId;
 
@@ -63,9 +62,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       transformer: sequential(),
       (event, emit) async {
         if (event is MeetingStarted) {
-          _callSetting = _callSettingsLocalDataSource.getSettings();
+          _mediaConfig = _callSettingsLocalDataSource.getSettings();
 
-          _waterbusSdk.changeCallSetting(_callSetting);
+          _waterbusSdk.changeCallSetting(_mediaConfig);
           _waterbusSdk.onEventChangedRegister = _onEventChanged;
           _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
         }
@@ -212,9 +211,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         if (event is MeetingCallSettingsSave) {
           _callSettingsLocalDataSource.saveSettings(event.setting);
 
-          _callSetting = event.setting;
+          _mediaConfig = event.setting;
 
-          _waterbusSdk.changeCallSetting(_callSetting);
+          _waterbusSdk.changeCallSetting(_mediaConfig);
 
           if (state is MeetingJoined) {
             // Hot update settings
@@ -239,7 +238,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
               );
             });
           } else {
-            await _waterbusSdk.disableVirtualBackground();
+            await _waterbusSdk.disableVirtualBg();
           }
         }
 
@@ -281,28 +280,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             emit(_joinedMeeting);
           }
         }
-
-        if (event is MeetingRecordStarted) {
-          final result = await _waterbusSdk.startRecord();
-
-          if (result.value != null) {
-            _recordId = result.value;
-
-            _meetingSound.playSoundRecording();
-
-            emit(_joinedMeeting);
-          } else {
-            result.error.messageException.showToast(ToastificationType.error);
-          }
-        }
-
-        if (event is MeetingRecordStoped) {
-          await _waterbusSdk.stopRecord();
-
-          _recordId = null;
-
-          emit(_joinedMeeting);
-        }
       },
     );
   }
@@ -310,7 +287,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   // MARK: state
 
   MeetingInitial get _meetingInitial => MeetingInitial(
-        callSetting: _callSetting,
+        mediaConfig: _mediaConfig,
       );
 
   MeetingJoined get _joinedMeeting => MeetingJoined(
@@ -319,7 +296,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _waterbusSdk.callState,
-        callSetting: _callSetting,
+        mediaConfig: _mediaConfig,
         isRecording: _recordId != null,
       );
 
@@ -327,7 +304,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         meeting: _currentMeeting,
         participant: _mParticipant,
         callState: _waterbusSdk.callState,
-        callSetting: _callSetting,
+        mediaConfig: _mediaConfig,
       );
 
   // MARK: Private
@@ -645,7 +622,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   }
 
   // MARK: export
-  CallSetting get callSetting => _callSetting;
+  MediaConfig get mediaConfig => _mediaConfig;
 
   String? get currentBackground => _currentBackground;
 }

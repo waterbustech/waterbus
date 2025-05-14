@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/types/models/user_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';

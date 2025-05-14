@@ -7,7 +7,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/enums/audio_level.dart';
 
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';

@@ -38,11 +38,6 @@ final List<SideMenuItem> sideMenuItems = [
     iconData: PhosphorIcons.archive(),
     selectedIconData: PhosphorIcons.archive(IconStyle.fill),
   ),
-  SideMenuItem(
-    label: Strings.storage,
-    iconData: PhosphorIcons.record(),
-    selectedIconData: PhosphorIcons.record(IconStyle.fill),
-  ),
 ];
 
 final List<SideMenuItem> accountMenuItems = [

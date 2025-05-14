@@ -4,7 +4,7 @@ import 'package:auth/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
+import 'package:waterbus_sdk/types/externals/models/index.dart';
 
 class AuthServiceImpl extends AuthService {
   final GoogleSignIn _googleSignIn;

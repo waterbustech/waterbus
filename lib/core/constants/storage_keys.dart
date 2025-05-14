@@ -2,7 +2,7 @@ class StorageKeys {
   // Box
   static const String boxAuth = 'boxAuth-v2';
   static const String boxMeeting = 'boxMeeting-v2';
-  static const String boxCallSettings = 'boxCallSettings-v2';
+  static const String boxMediaConfig = 'boxMediaConfig-v2';
   static const String boxAppSettings = 'boxAppSettings-v2';
 
   // In Box - Auth
@@ -12,7 +12,7 @@ class StorageKeys {
   static const String meetings = 'meetings';
 
   // In Box - Call Settings
-  static const String callSettings = 'call-settings';
+  static const String mediaConfig = 'media-config';
 
   // In Box - App Settings
   static const String language = 'language';

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:waterbus_sdk/types/models/meeting_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/features/meeting/data/datasources/meeting_local_datasource.dart';
 

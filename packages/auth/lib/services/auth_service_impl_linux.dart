@@ -3,7 +3,7 @@ import 'package:auth/services/auth_service.dart';
 import 'package:firedart/auth/firebase_auth.dart';
 import 'package:firedart/auth/token_store.dart';
 import 'package:google_sign_in_all_platforms/google_sign_in_all_platforms.dart';
-import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 class AuthServiceImpl extends AuthService {
   late final FirebaseAuth _firebaseAuth;

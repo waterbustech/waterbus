@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
-import 'package:waterbus_sdk/utils/extensions/string_ext.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -21,14 +19,13 @@ import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_cod
 import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
-import 'package:waterbus/features/record/screens/record_screen.dart';
-import 'package:waterbus/features/record/widgets/video_player_widget.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -87,20 +84,12 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           const NotificationSettingsScreen(),
         );
-      case Routes.storage:
-        return _buildRoute(settings, const RecordScreen());
-      case Routes.videoPlayer:
-        return _buildRoute(
-          settings,
-          VideoPlayerWidget(urlToVideo: arguments?['urlToVideo']),
-        );
-
       // Meeting
       case Routes.meetingRoute:
         return _buildRoute(
           RouteSettings(
             name: '${Routes.meetingRoute}'
-                '${arguments?['meeting'].code.toString().roomCodeFormatted}',
+                '${arguments?['meeting'].code.toString()}',
           ),
           const MeetingScreen(),
         );

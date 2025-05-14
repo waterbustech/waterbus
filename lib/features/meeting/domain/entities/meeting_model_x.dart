@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus_sdk/types/enums/meeting_role.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';

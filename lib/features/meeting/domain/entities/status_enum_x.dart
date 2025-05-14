@@ -1,4 +1,4 @@
-import 'package:waterbus_sdk/types/enums/status_enum.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 

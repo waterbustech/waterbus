@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/features/meeting/domain/entities/meeting_role.dart';
-
 class Member extends Equatable {
   final int id;
   final MeetingRole role;

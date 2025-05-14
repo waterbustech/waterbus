@@ -75,7 +75,7 @@ class MeetingVideoToggled extends MeetingEvent {}
 class MeetingHandRasingToggled extends MeetingEvent {}
 
 class MeetingCallSettingsSave extends MeetingEvent {
-  final CallSetting setting;
+  final MediaConfig setting;
   const MeetingCallSettingsSave({required this.setting});
 }
 

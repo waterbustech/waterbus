@@ -8,7 +8,6 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/models/rtc_participant_stats.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';

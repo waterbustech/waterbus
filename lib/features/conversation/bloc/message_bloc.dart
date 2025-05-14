@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/error/result.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
@@ -230,7 +229,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
   Future<void> _sendMessage(MessageModel messageModel) async {
     final Result<MessageModel?> result = await _waterbusSdk.sendMessage(
-      meetingId: messageModel.meeting,
+      meetingId: messageModel.meeting ?? 0,
       data: messageModel.data,
     );
 

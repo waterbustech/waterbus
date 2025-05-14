@@ -20,7 +20,6 @@ import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
-import '../../features/record/bloc/record/record_bloc.dart' as _i625;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
@@ -76,8 +75,6 @@ _i174.GetIt $initGetIt(
         gh<_i688.CallSettingsLocalDataSource>(),
       ));
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
-  gh.factory<_i625.RecordBloc>(
-      () => _i625.RecordBloc(gh<_i513.FileSaverHelper>()));
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(

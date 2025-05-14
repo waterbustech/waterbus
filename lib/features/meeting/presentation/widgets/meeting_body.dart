@@ -5,8 +5,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
-import 'package:waterbus_sdk/utils/extensions/string_ext.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/helpers/clipboard_utils.dart';
@@ -25,6 +23,7 @@ import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.d
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class MeetingBody extends StatefulWidget {
   final MeetingState state;
@@ -42,7 +41,7 @@ class _MeetingBodyState extends State<MeetingBody> {
   bool _isChatOpened = false;
 
   late Meeting meeting = widget.state.meeting!;
-  late CallSetting callSetting = widget.state.callSetting ?? CallSetting();
+  late MediaConfig mediaConfig = widget.state.mediaConfig ?? MediaConfig();
   late CallState? callState = widget.state.callState;
 
   bool get _isRecordingOnPhone =>
@@ -156,9 +155,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                     ),
                     GestureWrapper(
                       onTap: () {
-                        ClipboardUtils.copy(
-                          meeting.code.toString().roomCodeFormatted,
-                        );
+                        ClipboardUtils.copy(meeting.code.toString());
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: 12.sp),
@@ -177,7 +174,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                               size: 18.sp,
                             ),
                             Text(
-                              ' | ${meeting.code.toString().roomCodeFormatted}',
+                              ' | ${meeting.code.toString()}',
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -405,7 +402,7 @@ class _MeetingBodyState extends State<MeetingBody> {
                                 : MeetingLayout(
                                     meeting: meeting,
                                     callState: callState,
-                                    callSetting: callSetting,
+                                    mediaConfig: mediaConfig,
                                   ),
                           ),
                         ),

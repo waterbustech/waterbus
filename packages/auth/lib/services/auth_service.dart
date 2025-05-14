@@ -1,4 +1,4 @@
-import 'package:waterbus_sdk/types/models/auth_payload_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 abstract class AuthService {
   Future<void> initialize(Function(AuthPayloadModel payload) callback);

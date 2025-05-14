@@ -7,8 +7,8 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 
 class VideoQualityBottomSheet extends StatefulWidget {
-  final VideoQuality quality;
-  final Function(VideoQuality) onChanged;
+  final VideoQualityEnum quality;
+  final Function(VideoQualityEnum) onChanged;
   const VideoQualityBottomSheet({
     super.key,
     required this.quality,
@@ -21,7 +21,7 @@ class VideoQualityBottomSheet extends StatefulWidget {
 }
 
 class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
-  late VideoQuality _quality = widget.quality;
+  late VideoQualityEnum _quality = widget.quality;
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,14 @@ class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
           ),
           SizedBox(height: 12.sp),
           ...List.generate(
-            VideoQuality.values.length,
+            VideoQualityEnum.values.length,
             (index) => SettingCheckboxCard(
-              label: VideoQuality.values[index].label.i18n,
-              enabled: _quality == VideoQuality.values[index],
-              hasDivider: index < VideoQuality.values.length - 1,
+              label: VideoQualityEnum.values[index].name,
+              enabled: _quality == VideoQualityEnum.values[index],
+              hasDivider: index < VideoQualityEnum.values.length - 1,
               onTap: () {
                 setState(() {
-                  _quality = VideoQuality.values[index];
+                  _quality = VideoQualityEnum.values[index];
                 });
                 widget.onChanged(_quality);
               },
