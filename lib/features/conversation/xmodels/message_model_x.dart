@@ -9,7 +9,7 @@ import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/option_model.dart';
 
-extension MessageModelX on MessageModel {
+extension MessageX on Message {
   String get dataX => isDeleted
       ? "${isMe ? Strings.you.i18n : createdBy?.fullName ?? Strings.user.i18n} ${Strings.unsentAMessage.i18n}"
       : data;

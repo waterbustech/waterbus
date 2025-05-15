@@ -15,6 +15,23 @@ extension MeetingModelX on Meeting {
       ? "${latestMessage!.isMe && latestMessage!.status != MessageStatusEnum.inactive ? "${Strings.you.i18n}: " : ""}${latestMessage!.dataX}"
       : Strings.groupCreated.i18n;
 
+  bool get isGroup => memberJoined.length >= 2;
+
+  StatusSeenMessage get statusLastedMessage => StatusSeenMessage.seen;
+
+  List<Member> get memberJoined => members
+      .where((member) => member.status == MemberStatusEnum.joined)
+      .toList();
+
+  StatusMessage get statusMessage => StatusMessage.none;
+
+  int get countUnreadMessage => 10;
+
+  DateTime get updatedAt =>
+      (latestMessage?.updatedAt ?? createdAt ?? DateTime.now()).toLocal();
+
+  String get inviteLink => 'https:/waterbus.tech/meeting/$code';
+
   List<OptionModel> get getOptions {
     final List<OptionModel> options = [];
 

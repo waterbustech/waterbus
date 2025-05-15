@@ -20,7 +20,7 @@ class AuthServiceImpl extends AuthService {
         _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
-  Future<void> initialize(Function(AuthPayloadModel payload) callback) async {
+  Future<void> initialize(Function(AuthPayload payload) callback) async {
     _googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
       bool isAuthorized = account != null;
@@ -40,10 +40,9 @@ class AuthServiceImpl extends AuthService {
           return;
         }
 
-        callback(AuthPayloadModel(
+        callback(AuthPayload(
           fullName: account.displayName ?? 'google.user',
-          googleId: firebaseUserCredential.user?.uid ?? '',
-          email: firebaseUserCredential.user?.email,
+          externalId: firebaseUserCredential.user?.uid ?? '',
         ));
       }
     });
@@ -57,42 +56,12 @@ class AuthServiceImpl extends AuthService {
   }
 
   @override
-  Future<AuthPayloadModel?> signInWithGoogle() async {
-    try {
-      await _googleSignIn.signOut();
-
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
-      final OAuthCredential googleCredential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-      );
-      final UserCredential firebaseUserCredential =
-          await _firebaseAuth.signInWithCredential(googleCredential);
-
-      if (firebaseUserCredential.user == null) {
-        return null;
-      }
-
-      return AuthPayloadModel(
-        fullName: googleUser.displayName ?? 'google.user',
-        googleId: firebaseUserCredential.user?.uid ?? '',
-        email: firebaseUserCredential.user?.email,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
-  @override
-  Future<AuthPayloadModel?> signInAnonymously() async {
+  Future<AuthPayload?> signInAnonymously() async {
     final firebaseUserCredential = await _firebaseAuth.signInAnonymously();
 
-    return AuthPayloadModel(
+    return AuthPayload(
       fullName: firebaseUserCredential.user?.displayName ?? 'Waterbus',
-      appleId: firebaseUserCredential.user?.uid ?? '',
-      email: firebaseUserCredential.user?.email,
+      externalId: firebaseUserCredential.user?.uid ?? '',
     );
   }
 }

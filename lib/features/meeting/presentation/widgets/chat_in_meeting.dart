@@ -103,7 +103,7 @@ class _ChatInMeetingState extends State<ChatInMeeting> {
                     }
 
                     if (state is MessageActived) {
-                      final List<MessageModel> messages = state.messages;
+                      final List<Message> messages = state.messages;
                       return MessageList(
                         messages: messages,
                         scrollController: _scrollController,

@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class MeetingLayout extends StatelessWidget {
   final Meeting meeting;

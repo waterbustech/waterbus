@@ -55,7 +55,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
       ),
       child: BlocBuilder<MessageBloc, MessageState>(
         builder: (context, state) {
-          final MessageModel? messageBeingEdited =
+          final Message? messageBeingEdited =
               state is MessageActived ? state.messageBeingEdited : null;
 
           if (messageBeingEdited != null) {
@@ -186,7 +186,7 @@ class _InputSendMessageState extends State<InputSendMessage> {
     );
   }
 
-  void _handleSendMessage({MessageModel? messageBeingEdited}) {
+  void _handleSendMessage({Message? messageBeingEdited}) {
     if (messageBeingEdited != null) {
       AppBloc.messageBloc.add(
         MessageEdited(

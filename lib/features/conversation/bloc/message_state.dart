@@ -5,8 +5,8 @@ abstract class MessageState {}
 class MessageInitial extends MessageState {}
 
 class MessageActived extends MessageState {
-  final List<MessageModel> messages;
-  final MessageModel? messageBeingEdited;
+  final List<Message> messages;
+  final Message? messageBeingEdited;
   final bool isOver;
 
   MessageActived({

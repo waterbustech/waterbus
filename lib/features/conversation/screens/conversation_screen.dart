@@ -81,7 +81,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   }
 
                   if (state is MessageActived) {
-                    final List<MessageModel> messages = state.messages;
+                    final List<Message> messages = state.messages;
 
                     return messages.isEmpty
                         ? GestureWrapper(

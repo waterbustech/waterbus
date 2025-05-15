@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/helpers/clipboard_utils.dart';
@@ -23,7 +24,6 @@ import 'package:waterbus/features/meeting/presentation/widgets/chat_in_meeting.d
 import 'package:waterbus/features/meeting/presentation/widgets/meet_view.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/meeting_layout.dart';
 import 'package:waterbus/gen/assets.gen.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class MeetingBody extends StatefulWidget {
   final MeetingState state;

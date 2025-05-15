@@ -16,7 +16,6 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../../features/archived/presentation/bloc/archived_bloc.dart' as _i935;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
-import '../../features/chats/presentation/bloc/invited_chat_bloc.dart' as _i262;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
@@ -29,8 +28,8 @@ import '../utils/audio/meeting_sound.dart' as _i89;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
     as _i843;
-import '../../features/meeting/data/datasources/call_settings_datasource.dart'
-    as _i688;
+import '../../features/meeting/data/datasources/media_config_datasource.dart'
+    as _i239;
 import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
     as _i254;
 import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
@@ -58,7 +57,6 @@ _i174.GetIt $initGetIt(
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
-  gh.factory<_i262.InvitedChatBloc>(() => _i262.InvitedChatBloc());
   gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i89.MeetingSound>(() => _i89.MeetingSound());
@@ -66,17 +64,11 @@ _i174.GetIt $initGetIt(
   gh.singleton<_i513.FileSaverHelper>(() => _i513.FileSaverHelper());
   gh.lazySingleton<_i254.MeetingLocalDataSource>(
       () => _i254.MeetingLocalDataSourceImpl());
-  gh.lazySingleton<_i688.CallSettingsLocalDataSource>(
-      () => _i688.CallSettingsLocalDataSourceImpl());
-  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
-        gh<_i921.PipChannel>(),
-        gh<_i89.MeetingSound>(),
-        gh<_i254.MeetingLocalDataSource>(),
-        gh<_i688.CallSettingsLocalDataSource>(),
-      ));
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
+  gh.lazySingleton<_i239.MediaConfigLocalDataSource>(
+      () => _i239.MediaConfigLocalDataSourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
   gh.factory<_i339.ThemesBloc>(
@@ -85,5 +77,11 @@ _i174.GetIt $initGetIt(
       () => _i797.AuthBloc(gh<_i843.UserLocalDataSource>()));
   gh.factory<_i324.RecentJoinedBloc>(
       () => _i324.RecentJoinedBloc(gh<_i254.MeetingLocalDataSource>()));
+  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
+        gh<_i921.PipChannel>(),
+        gh<_i89.MeetingSound>(),
+        gh<_i254.MeetingLocalDataSource>(),
+        gh<_i239.MediaConfigLocalDataSource>(),
+      ));
   return getIt;
 }

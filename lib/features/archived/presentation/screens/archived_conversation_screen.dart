@@ -144,7 +144,7 @@ class _ArchivedConversationScreenState
                   }
 
                   if (state is MessageActived) {
-                    final List<MessageModel> messages = state.messages;
+                    final List<Message> messages = state.messages;
 
                     return CustomScrollView(
                       semanticChildCount: messages.length,

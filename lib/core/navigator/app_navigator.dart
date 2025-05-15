@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -9,7 +10,6 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
-import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
@@ -25,7 +25,6 @@ import 'package:waterbus/features/settings/presentation/screens/notification_set
 import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -125,11 +124,6 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           ArchivedConversationScreen(
             meeting: arguments!['meeting'],
           ),
-        );
-      case Routes.invitedRoute:
-        return _buildRoute(
-          settings,
-          const InvitedChatScreen(),
         );
       case Routes.archivedRoute:
         return _buildRoute(
@@ -321,7 +315,6 @@ extension AppNavigatorX on AppNavigator {
         Routes.settingsCallRoute,
         Routes.langRoute,
         Routes.themeRoute,
-        Routes.invitedRoute,
         Routes.detailGroupRoute,
       ];
 
@@ -348,8 +341,6 @@ extension AppNavigatorX on AppNavigator {
         return const LanguageScreen();
       case Routes.themeRoute:
         return const ThemeScreen();
-      case Routes.invitedRoute:
-        return const InvitedChatScreen();
       case Routes.detailGroupRoute:
         return const DetailGroupScreen();
       default:

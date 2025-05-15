@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
@@ -20,7 +21,6 @@ import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';

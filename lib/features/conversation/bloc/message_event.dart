@@ -17,7 +17,7 @@ class MessageFetchedByMeeting extends MessageEvent {
 class MessageFetched extends MessageEvent {}
 
 class MessageResent extends MessageEvent {
-  final MessageModel messageModel;
+  final Message messageModel;
 
   MessageResent({required this.messageModel});
 }
@@ -37,7 +37,7 @@ class MessageEdited extends MessageEvent {
 }
 
 class MessageSelected extends MessageEvent {
-  final MessageModel message;
+  final Message message;
 
   MessageSelected({required this.message});
 }
@@ -57,13 +57,13 @@ class MessageCleaned extends MessageEvent {
 }
 
 class MessageInserted extends MessageEvent {
-  final MessageModel message;
+  final Message message;
 
   MessageInserted({required this.message});
 }
 
 class MessageUpdatedViaSocket extends MessageEvent {
-  final MessageModel messageModel;
+  final Message messageModel;
   final bool isDeleted;
 
   MessageUpdatedViaSocket({

@@ -8,9 +8,11 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
+import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
 import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
 
 class DialogPrepareMeeting extends StatelessWidget {

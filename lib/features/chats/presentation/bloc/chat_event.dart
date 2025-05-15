@@ -88,7 +88,7 @@ class ChatAvatarUpdated extends ChatEvent {
 class ChatSocketConversationUpdated extends ChatEvent {}
 
 class ChatLatestMessageUpdated extends ChatEvent {
-  final MessageModel message;
+  final Message message;
   final bool isUpdateMessage;
 
   ChatLatestMessageUpdated({

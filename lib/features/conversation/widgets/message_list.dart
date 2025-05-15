@@ -7,7 +7,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
 
 class MessageList extends StatelessWidget {
-  final List<MessageModel> messages;
+  final List<Message> messages;
   final ScrollController scrollController;
   const MessageList({
     super.key,

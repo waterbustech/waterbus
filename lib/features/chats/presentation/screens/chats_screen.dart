@@ -103,25 +103,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
           return const SizedBox();
         },
       ),
-      floatingActionButton: SizerUtil.isDesktop
-          ? null
-          : Container(
-              margin:
-                  EdgeInsets.only(bottom: SizerUtil.isDesktop ? 50.sp : 75.sp),
-              height: 42.sp,
-              width: 42.sp,
-              child: FloatingActionButton(
-                onPressed: () {
-                  AppNavigator().push(Routes.invitedRoute);
-                },
-                backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                child: Icon(
-                  PhosphorIcons.paperPlaneTilt(),
-                  size: 24.sp,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
     );
   }
 }

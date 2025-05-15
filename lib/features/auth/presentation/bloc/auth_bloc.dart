@@ -9,7 +9,6 @@ import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus/features/chats/presentation/bloc/invited_chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -62,7 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onAuthCheck(Emitter<AuthState> emit) async {
-    final User? user = _userLocal.getUser();
+    final User? user = null;
 
     if (user != null) {
       _user = user;
@@ -91,12 +90,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _handleLogin(AuthEvent event) async {
     displayLoadingLayer();
 
-    late final AuthPayloadModel? payload;
+    late final AuthPayload? payload;
 
     switch (event) {
-      case AuthGoogleLogined():
-        payload = await _auth.signInWithGoogle();
-        break;
       case AuthAnonymouslyLoggedIn():
         payload = await _auth.signInAnonymously();
         break;
@@ -131,6 +127,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppBloc.userBloc.add(UserCleaned());
     AppBloc.recentJoinedBloc.add(RecentJoinedCleaned());
     AppBloc.chatBloc.add(ChatCleaned());
-    AppBloc.invitedChatBloc.add(InvitedChatCleaned());
   }
 }

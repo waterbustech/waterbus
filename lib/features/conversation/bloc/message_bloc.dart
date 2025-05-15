@@ -13,7 +13,7 @@ part 'message_event.dart';
 part 'message_state.dart';
 
 class CachedMessageByMeetingId {
-  List<MessageModel> messages;
+  List<Message> messages;
   bool isOver;
 
   CachedMessageByMeetingId({required this.messages, this.isOver = false});
@@ -24,7 +24,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final Map<int, CachedMessageByMeetingId> _messagesMap = {};
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
   int? _meetingId;
-  MessageModel? _messageBeingEdited;
+  Message? _messageBeingEdited;
 
   MessageBloc() : super(MessageInitial()) {
     on<MessageEvent>((event, emit) async {
@@ -74,7 +74,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       }
 
       if (event is MessageSent) {
-        final MessageModel message = MessageModel(
+        final Message message = Message(
           id: DateTime.now().millisecondsSinceEpoch,
           createdBy: AppBloc.userBloc.user,
           data: event.data,
@@ -96,7 +96,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       }
 
       if (event is MessageResent) {
-        final MessageModel messageModel = event.messageModel
+        final Message messageModel = event.messageModel
             .copyWith(sendingStatus: SendingStatusEnum.sending);
 
         final int index = _messagesByMeetingId
@@ -189,12 +189,12 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         isOver: _messagesMap[_meetingId]?.isOver ?? false,
       );
 
-  List<MessageModel> get _messagesByMeetingId {
+  List<Message> get _messagesByMeetingId {
     return _messagesMap[_meetingId]?.messages ?? [];
   }
 
   void _listenMessageSocket(MessageSocketEvent messageSocketEvent) {
-    final MessageModel message = messageSocketEvent.message;
+    final Message message = messageSocketEvent.message;
 
     if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
 
@@ -208,15 +208,14 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _getMessagesByMeetingId(int meetingId) async {
-    final Result<List<MessageModel>> result =
-        await _waterbusSdk.getMessageByRoom(
+    final Result<List<Message>> result = await _waterbusSdk.getMessageByRoom(
       meetingId: meetingId,
       skip: _messagesMap[meetingId]?.messages.length ?? 0,
       limit: defaultLengthOfMessages,
     );
 
     if (result.isSuccess) {
-      final List<MessageModel> messagesReponse = result.value ?? [];
+      final List<Message> messagesReponse = result.value ?? [];
       _messagesMap[meetingId]?.messages.addAll(messagesReponse);
 
       if (messagesReponse.length < defaultLengthOfMessages) {
@@ -227,14 +226,14 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
   }
 
-  Future<void> _sendMessage(MessageModel messageModel) async {
-    final Result<MessageModel?> result = await _waterbusSdk.sendMessage(
+  Future<void> _sendMessage(Message messageModel) async {
+    final Result<Message?> result = await _waterbusSdk.sendMessage(
       meetingId: messageModel.meeting ?? 0,
       data: messageModel.data,
     );
 
     if (result.isSuccess) {
-      final MessageModel? message = result.value;
+      final Message? message = result.value;
 
       final int index = _messagesByMeetingId
           .indexWhere((message) => message.id == messageModel.id);
@@ -256,7 +255,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
   }
 
-  void _handleInsertMessage(MessageModel message) {
+  void _handleInsertMessage(Message message) {
     if (_messagesMap[message.meeting] != null) {
       _messagesMap[message.meeting]?.messages.insert(0, message);
     }
@@ -265,13 +264,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _editMessage(MessageEdited event) async {
-    final Result<MessageModel> result = await _waterbusSdk.editMessage(
+    final Result<Message> result = await _waterbusSdk.editMessage(
       data: event.data,
       messageId: event.messageId,
     );
 
     if (result.isSuccess) {
-      final MessageModel? messageModel = result.value;
+      final Message? messageModel = result.value;
 
       if (messageModel != null) {
         _handleEditMessage(messageModel: messageModel);
@@ -283,7 +282,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
   }
 
-  void _handleEditMessage({required MessageModel messageModel}) {
+  void _handleEditMessage({required Message messageModel}) {
     final CachedMessageByMeetingId? cachedMessageByMeetingId =
         _messagesMap[messageModel.meeting];
 
@@ -304,12 +303,12 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _deleteMessage(MessageDeleted event) async {
-    final Result<MessageModel?> result = await _waterbusSdk.deleteMessage(
+    final Result<Message?> result = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );
 
     if (result.isSuccess) {
-      final MessageModel? messageModel = result.value;
+      final Message? messageModel = result.value;
 
       if (messageModel != null) {
         _handleDeleteMessage(messageModel: messageModel);
@@ -319,7 +318,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
   }
 
-  void _handleDeleteMessage({required MessageModel messageModel}) {
+  void _handleDeleteMessage({required Message messageModel}) {
     final CachedMessageByMeetingId? cachedMessageByMeetingId =
         _messagesMap[messageModel.meeting];
 

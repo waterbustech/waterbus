@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 extension StringExtension on String {
   String formatVietnamese() {
