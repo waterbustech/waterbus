@@ -358,8 +358,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   }
 
   Future<Room?> _handleGetInfoRoom(RoomInfoGot event) async {
-    final Result<Room> result =
-        await _waterbusSdk.getRoomInfo(code: event.roomCode);
+    final Result<Room> result = await _waterbusSdk.getRoomInfo(
+      code: event.roomCode,
+    );
 
     AppNavigator.pop();
 

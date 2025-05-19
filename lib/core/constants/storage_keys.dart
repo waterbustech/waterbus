@@ -1,9 +1,9 @@
 class StorageKeys {
   // Box
-  static const String boxAuth = 'boxAuth-v2';
-  static const String boxRoom = 'boxRoomv2';
-  static const String boxMediaConfig = 'boxMediaConfig-v2';
-  static const String boxAppSettings = 'boxAppSettings-v2';
+  static const String boxAuth = 'boxAuth-v3';
+  static const String boxRoom = 'boxRoom-v3';
+  static const String boxMediaConfig = 'boxMediaConfig-v3';
+  static const String boxAppSettings = 'boxAppSettings-v3';
 
   // In Box - Auth
   static const String user = 'user';

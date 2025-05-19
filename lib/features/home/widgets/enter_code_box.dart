@@ -63,8 +63,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   keyboardType: TextInputType.number,
                   minLines: 1,
                   inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(9),
+                    LengthLimitingTextInputFormatter(12),
                     RoomCodeFormatter(),
                   ],
                   decoration: InputDecoration(

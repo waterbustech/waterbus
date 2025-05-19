@@ -38,7 +38,7 @@ class RoomJoinedWithPassword extends RoomEvent {
 }
 
 class RoomInfoGot extends RoomEvent {
-  final int roomCode;
+  final String roomCode;
   const RoomInfoGot({required this.roomCode});
 }
 

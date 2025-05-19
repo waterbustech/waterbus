@@ -29,9 +29,7 @@ class _EnterMeetingCardState extends State {
     displayLoadingLayer();
 
     AppBloc.roomBloc.add(
-      RoomInfoGot(
-        roomCode: int.parse(_codeController.text.replaceAll('-', '')),
-      ),
+      RoomInfoGot(roomCode: _codeController.text.replaceAll('-', '')),
     );
   }
 
@@ -91,7 +89,7 @@ class _EnterMeetingCardState extends State {
                     left: 16.sp,
                     right: 10.sp,
                   ),
-                  hintTextContent: "123-456-789",
+                  hintTextContent: "abc-abcd-abc",
                   controller: _codeController,
                   onFieldSubmitted: (val) {
                     _onSubmited();

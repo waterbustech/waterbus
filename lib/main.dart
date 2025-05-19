@@ -37,7 +37,7 @@ void main(List<String> args) async {
 
       await WaterbusSdk.instance.initializeApp(
         wsUrl: ApiEndpoints.wsUrl,
-        apiUrl: kIsWeb ? ApiEndpoints.baseUrlForWeb : ApiEndpoints.baseUrl,
+        apiUrl: ApiEndpoints.baseUrl,
         apiKey: apiKey,
         messageEncryptionKey: "kai@waterbus.tech",
         webrtcE2eeKey: "kai@waterbus.tech",
@@ -66,11 +66,5 @@ void main(List<String> args) async {
         FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       }
     },
-    // (error, stackTrace) {
-    //   debugPrint(error.toString());
-
-    //   if (!WebRTC.platformIsMobile) return;
-    //   FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    // },
   );
 }
