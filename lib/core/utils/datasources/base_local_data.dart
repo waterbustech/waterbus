@@ -13,8 +13,8 @@ class BaseLocalData {
 
   static Future<void> openBoxApp() async {
     await Hive.openBox(StorageKeys.boxAuth);
-    await Hive.openBox(StorageKeys.boxMeeting);
-    await Hive.openBox(StorageKeys.boxCallSettings);
+    await Hive.openBox(StorageKeys.boxRoom);
+    await Hive.openBox(StorageKeys.boxMediaConfig);
     await Hive.openBox(StorageKeys.boxAppSettings);
   }
 }

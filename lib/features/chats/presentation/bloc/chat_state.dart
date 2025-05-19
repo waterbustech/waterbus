@@ -5,8 +5,8 @@ abstract class ChatState {}
 class ChatInitial extends ChatState {}
 
 class ChatActived extends ChatState {
-  final List<Meeting> conversations;
-  final Meeting? conversationCurrent;
+  final List<Room> conversations;
+  final Room? conversationCurrent;
 
   ChatActived({
     required this.conversations,

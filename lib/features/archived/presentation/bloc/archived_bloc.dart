@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/result.dart';
 
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -14,7 +13,7 @@ part 'archived_state.dart';
 
 @injectable
 class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
-  final List<Meeting> _archivedConversations = [];
+  final List<Room> _archivedConversations = [];
   bool _isOverArchived = false;
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
@@ -51,10 +50,10 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
         if (_archivedConversations.isEmpty && !_isOverArchived) return;
 
         final int index = _archivedConversations
-            .indexWhere((conversation) => conversation.id == event.meeting.id);
+            .indexWhere((conversation) => conversation.id == event.room.id);
 
         if (index == -1) {
-          _archivedConversations.insert(0, event.meeting);
+          _archivedConversations.insert(0, event.room);
         }
 
         emit(_archivedDone);
@@ -70,13 +69,13 @@ class ArchivedBloc extends Bloc<ArchivedEvent, ArchivedState> {
       );
 
   Future<void> _getArchivedConversationList() async {
-    final Result<List<Meeting>> response =
+    final Result<List<Room>> response =
         await _waterbusSdk.getArchivedConversations(
       skip: _archivedConversations.length,
     );
 
     if (response.isSuccess) {
-      final List<Meeting> result = response.value ?? [];
+      final List<Room> result = response.value ?? [];
 
       _archivedConversations.addAll(result);
 

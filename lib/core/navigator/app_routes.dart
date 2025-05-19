@@ -13,18 +13,15 @@ class Routes {
   static const String langRoute = '/language';
   static const String themeRoute = '/appearance';
   static const String notificationSettings = '/notification-settings';
-  static const String storage = '/storage';
-  static const String videoPlayer = '/video-player';
 
   // Meeting
-  static const String meetingRoute = '/r/';
+  static const String roomRoute = '/r/';
   static const String createMeetingRoute = '/create-meeting';
   static const String enterCodeRoute = '/enter-code';
   static const String backgroundGallery = '/background-gallery';
 
   // Chat
   static const String conversationRoute = '/conversation';
-  static const String invitedRoute = '/invited';
   static const String detailGroupRoute = '/detail-group';
 
   // Others

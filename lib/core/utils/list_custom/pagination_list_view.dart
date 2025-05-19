@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sizer/sizer.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class PaginationListView extends StatefulWidget {
   final int itemCount;

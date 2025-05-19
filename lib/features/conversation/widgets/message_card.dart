@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import 'package:super_context_menu/super_context_menu.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/types/models/sending_status_enum.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -16,8 +15,8 @@ import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart
 import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
 
 class MessageCard extends StatelessWidget {
-  final MessageModel message;
-  final MessageModel? messagePrev;
+  final Message message;
+  final Message? messagePrev;
 
   const MessageCard({super.key, required this.message, this.messagePrev});
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';

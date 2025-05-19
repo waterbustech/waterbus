@@ -12,22 +12,23 @@ import 'package:waterbus/core/helpers/share_utils.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/home/widgets/time_card.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/preview_camera_card.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
+import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.dart';
 
-class DialogPrepareMeeting extends StatelessWidget {
-  final Meeting meeting;
-  final Function() handleJoinMeeting;
-  const DialogPrepareMeeting({
+class DialogPrepareRoom extends StatelessWidget {
+  final Room room;
+  final Function() handleJoinRoom;
+  const DialogPrepareRoom({
     super.key,
-    required this.meeting,
-    required this.handleJoinMeeting,
+    required this.room,
+    required this.handleJoinRoom,
   });
 
   @override
   Widget build(BuildContext context) {
     return CallbackShortcuts(
       bindings: {
-        const SingleActivator(LogicalKeyboardKey.enter): handleJoinMeeting,
+        const SingleActivator(LogicalKeyboardKey.enter): handleJoinRoom,
       },
       child: FocusScope(
         autofocus: true,
@@ -44,7 +45,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                 children: [
                   const PreviewCameraCard(),
                   SizedBox(height: 16.sp),
-                  meeting.isNoOneElse
+                  room.isNoOneElse
                       ? Text(
                           Strings.noParticipantsYet.i18n,
                           style: Theme.of(context)
@@ -53,12 +54,12 @@ class DialogPrepareMeeting extends StatelessWidget {
                               ?.copyWith(fontSize: 11.sp),
                         )
                       : StackAvatar(
-                          label: meeting.members
+                          label: room.members
                               .map(
                                 (user) => user.user.fullName,
                               )
                               .toList(),
-                          images: meeting.members
+                          images: room.members
                               .map(
                                 (user) => user.user.avatar,
                               )
@@ -67,7 +68,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                         ),
                   SizedBox(height: 16.sp),
                   Text(
-                    meeting.title,
+                    room.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -81,7 +82,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                     children: [
                       TimeCard(
                         text: DateFormat('MMMM dd', 'en_US')
-                            .format(meeting.latestJoinedTime),
+                            .format(room.latestJoinedTime),
                         iconData: PhosphorIcons.clock(),
                         backgroundColor: Theme.of(context)
                             .colorScheme
@@ -92,8 +93,8 @@ class DialogPrepareMeeting extends StatelessWidget {
                       GestureWrapper(
                         onTap: () async {
                           await ShareUtils().share(
-                            link: meeting.inviteLink,
-                            description: meeting.title,
+                            link: room.inviteLink,
+                            description: room.title,
                           );
                         },
                         child: TimeCard(
@@ -106,7 +107,7 @@ class DialogPrepareMeeting extends StatelessWidget {
                   ),
                   SizedBox(height: 4.sp),
                   GestureWrapper(
-                    onTap: handleJoinMeeting,
+                    onTap: handleJoinRoom,
                     child: Material(
                       clipBehavior: Clip.hardEdge,
                       shape: SuperellipseShape(

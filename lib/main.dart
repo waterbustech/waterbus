@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:auth/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -21,7 +22,7 @@ import 'package:waterbus/firebase_options.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();
-  await runZonedGuarded(
+  await runZoned(
     () async {
       final WidgetsBinding widgetsBinding =
           WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +38,7 @@ void main(List<String> args) async {
       await WaterbusSdk.instance.initializeApp(
         wsUrl: ApiEndpoints.wsUrl,
         apiUrl: kIsWeb ? ApiEndpoints.baseUrlForWeb : ApiEndpoints.baseUrl,
+        apiKey: apiKey,
         messageEncryptionKey: "kai@waterbus.tech",
         webrtcE2eeKey: "kai@waterbus.tech",
       );
@@ -64,11 +66,11 @@ void main(List<String> args) async {
         FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       }
     },
-    (error, stackTrace) {
-      debugPrint(error.toString());
+    // (error, stackTrace) {
+    //   debugPrint(error.toString());
 
-      if (!WebRTC.platformIsMobile) return;
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    },
+    //   if (!WebRTC.platformIsMobile) return;
+    //   FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    // },
   );
 }

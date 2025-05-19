@@ -19,7 +19,6 @@ Map<String, String> vietnamese = {
   Strings.save: "Lưu",
   Strings.invalidFullName: "Tên đầy đủ không hợp lệ",
   Strings.recent: "Gần đây",
-  Strings.storage: "Bản ghi",
   Strings.talkWithAI: "Trò chuyện AI",
   Strings.archivedChats: "Lưu trữ",
   Strings.settings: "Cài đặt",

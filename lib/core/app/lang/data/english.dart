@@ -19,7 +19,6 @@ Map<String, String> english = {
   Strings.save: "Save",
   Strings.invalidFullName: "Invalid full name",
   Strings.recent: "Recent",
-  Strings.storage: "Records",
   Strings.talkWithAI: "Talk with AI",
   Strings.archivedChats: "Archived",
   Strings.settings: "Settings",

@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
-import 'package:waterbus_sdk/types/models/meeting_model.dart';
-import 'package:waterbus_sdk/types/models/message_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -19,8 +18,8 @@ import 'package:waterbus/features/conversation/widgets/list_conversation_shimmer
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
 
 class ArchivedConversationScreen extends StatefulWidget {
-  final Meeting meeting;
-  const ArchivedConversationScreen({super.key, required this.meeting});
+  final Room room;
+  const ArchivedConversationScreen({super.key, required this.room});
 
   @override
   State<ArchivedConversationScreen> createState() =>
@@ -31,13 +30,12 @@ class _ArchivedConversationScreenState
     extends State<ArchivedConversationScreen> {
   final ScrollController _scrollController = ScrollController();
 
-  Meeting get meeting => widget.meeting;
+  Room get room => widget.room;
 
   @override
   void initState() {
     super.initState();
-    AppBloc.messageBloc
-        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
+    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
 
     _scrollController.addListener(
       () {
@@ -53,8 +51,7 @@ class _ArchivedConversationScreenState
   @override
   void didUpdateWidget(ArchivedConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    AppBloc.messageBloc
-        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
+    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
   }
 
   @override
@@ -99,7 +96,7 @@ class _ArchivedConversationScreenState
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AvatarChat(meeting: meeting, size: 30.sp),
+                          AvatarChat(room: room, size: 30.sp),
                           SizedBox(width: 10.sp),
                           Expanded(
                             child: Column(
@@ -107,7 +104,7 @@ class _ArchivedConversationScreenState
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  meeting.title,
+                                  room.title,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
@@ -118,7 +115,7 @@ class _ArchivedConversationScreenState
                                       ),
                                 ),
                                 Text(
-                                  "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                                  "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                   style: TextStyle(
                                     color: fCL,
                                     height: 0.75.sp,
@@ -145,7 +142,7 @@ class _ArchivedConversationScreenState
                   }
 
                   if (state is MessageActived) {
-                    final List<MessageModel> messages = state.messages;
+                    final List<Message> messages = state.messages;
 
                     return CustomScrollView(
                       semanticChildCount: messages.length,

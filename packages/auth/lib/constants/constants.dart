@@ -1,4 +1,4 @@
-const apiKey = 'AIzaSyC-yqTO2eRZkIGarZaMK_sAriwr6uVeftc';
+const apiKey = 'open@waterbus';
 const List<String> scopes = <String>[
   'email',
 ];

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
@@ -11,18 +10,15 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
-import 'package:waterbus/features/chats/presentation/screens/invited_chat_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
-import 'package:waterbus/features/meeting/presentation/screens/background_gallery.dart';
-import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
-import 'package:waterbus/features/record/screens/record_screen.dart';
-import 'package:waterbus/features/record/widgets/video_player_widget.dart';
+import 'package:waterbus/features/room/presentation/screens/background_gallery.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/room_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
@@ -36,7 +32,6 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
 
   Route<dynamic> getRoute(RouteSettings settings) {
     final Map<String, dynamic>? arguments = _getArguments(settings);
-
     switch (settings.name) {
       case Routes.rootRoute:
         return _buildRoute(
@@ -88,28 +83,20 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           settings,
           const NotificationSettingsScreen(),
         );
-      case Routes.storage:
-        return _buildRoute(settings, const RecordScreen());
-      case Routes.videoPlayer:
-        return _buildRoute(
-          settings,
-          VideoPlayerWidget(urlToVideo: arguments?['urlToVideo']),
-        );
-
       // Meeting
-      case Routes.meetingRoute:
+      case Routes.roomRoute:
         return _buildRoute(
           RouteSettings(
-            name: '${Routes.meetingRoute}'
-                '${arguments?['meeting'].code.toString().roomCodeFormatted}',
+            name: '${Routes.roomRoute}'
+                '${arguments?['room'].code.toString()}',
           ),
-          const MeetingScreen(),
+          const RoomScreen(),
         );
       case Routes.createMeetingRoute:
         return _buildRoute(
           settings,
           CreateMeetingScreen(
-            meeting: arguments?['meeting'],
+            room: arguments?['room'],
             isChatScreen: arguments?['isChatScreen'] ?? false,
           ),
         );
@@ -128,20 +115,15 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           ConversationScreen(
-            meeting: arguments!['meeting'],
+            room: arguments!['room'],
           ),
         );
       case Routes.archivedConversationRoute:
         return _buildRoute(
           settings,
           ArchivedConversationScreen(
-            meeting: arguments!['meeting'],
+            room: arguments!['room'],
           ),
-        );
-      case Routes.invitedRoute:
-        return _buildRoute(
-          settings,
-          const InvitedChatScreen(),
         );
       case Routes.archivedRoute:
         return _buildRoute(
@@ -333,7 +315,6 @@ extension AppNavigatorX on AppNavigator {
         Routes.settingsCallRoute,
         Routes.langRoute,
         Routes.themeRoute,
-        Routes.invitedRoute,
         Routes.detailGroupRoute,
       ];
 
@@ -346,7 +327,7 @@ extension AppNavigatorX on AppNavigator {
         return const EnterMeetingCode();
       case Routes.createMeetingRoute:
         return CreateMeetingScreen(
-          meeting: arguments?['meeting'],
+          room: arguments?['room'],
           isChatScreen: arguments?['isChatScreen'] ?? false,
         );
       case Routes.profileRoute:
@@ -360,8 +341,6 @@ extension AppNavigatorX on AppNavigator {
         return const LanguageScreen();
       case Routes.themeRoute:
         return const ThemeScreen();
-      case Routes.invitedRoute:
-        return const InvitedChatScreen();
       case Routes.detailGroupRoute:
         return const DetailGroupScreen();
       default:

@@ -1,9 +1,5 @@
-// ignore_for_file: depend_on_referenced_packages
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auth/auth.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -61,26 +57,6 @@ class LogInScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        Stack(
-                          children: [
-                            if (kIsWeb)
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(4.sp),
-                                child: Auth().loginRenderWidget(),
-                              ),
-                            IgnorePointer(
-                              ignoring: kIsWeb,
-                              child: ButtonLogin(
-                                title: 'Continue with Google',
-                                iconAsset: Assets.icons.icGoogle.path,
-                                onPressed: () async {
-                                  AppBloc.authBloc.add(AuthGoogleLogined());
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8.sp),
                         ButtonLogin(
                           title: 'Sign in Anonymously',
                           iconAsset: Assets.icons.icIncognito.path,

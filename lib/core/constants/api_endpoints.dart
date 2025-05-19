@@ -1,6 +1,6 @@
 class ApiEndpoints {
   static const String baseUrl =
-      'https://service-v3.waterbus.tech:5998/busapi/v3/'; // HTTP3 for IO Platforms
+      'https://services.waterbus.tech/busapi/v3/'; // HTTP3 for IO Platforms
   static const String baseUrlForWeb =
       'https://service-v3.waterbus.tech/busapi/v3/'; // HTTP2 for Web
   static const String wsUrl = 'https://service-v3.waterbus.tech';

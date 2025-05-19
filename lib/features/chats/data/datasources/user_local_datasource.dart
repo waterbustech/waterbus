@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -25,11 +27,11 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
     if (raw == null) return null;
 
-    return User.fromJson(raw);
+    return User.fromJson(jsonDecode(raw));
   }
 
   @override
   void saveUser(User user) {
-    hiveBox.put(StorageKeys.user, user.toJson());
+    hiveBox.put(StorageKeys.user, jsonEncode(user.toJson()));
   }
 }

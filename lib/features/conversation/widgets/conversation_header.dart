@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/types/models/meeting_model.dart';
+import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -16,8 +16,8 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
 import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
   const ConversationHeader({super.key});
@@ -34,9 +34,9 @@ class ConversationHeader extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is ChatActived) {
-          final Meeting? meeting = state.conversationCurrent;
+          final Room? room = state.conversationCurrent;
 
-          return meeting == null
+          return room == null
               ? const SizedBox()
               : Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.sp),
@@ -66,7 +66,7 @@ class ConversationHeader extends StatelessWidget {
                             AppNavigator().push(
                               Routes.detailGroupRoute,
                               arguments: {
-                                "meeting": meeting,
+                                "meeting": room,
                               },
                             );
                           },
@@ -75,7 +75,7 @@ class ConversationHeader extends StatelessWidget {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AvatarChat(meeting: meeting, size: 30.sp),
+                                AvatarChat(room: room, size: 30.sp),
                                 SizedBox(width: 10.sp),
                                 Expanded(
                                   child: Column(
@@ -84,7 +84,7 @@ class ConversationHeader extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        meeting.title,
+                                        room.title,
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
@@ -95,7 +95,7 @@ class ConversationHeader extends StatelessWidget {
                                             ),
                                       ),
                                       Text(
-                                        "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                                        "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                         style: TextStyle(
                                           color: fCL,
                                           height: 0.75.sp,
@@ -112,14 +112,11 @@ class ConversationHeader extends StatelessWidget {
                       ),
                       SizedBox(width: 20.sp),
                       Visibility(
-                        visible: meeting.isHost,
+                        visible: room.isHost,
                         child: IconButtonCustom(
                           onTap: () {
                             showDialogWaterbus(
-                              child: BottomSheetAddMember(
-                                code: meeting.code,
-                                meetingId: meeting.id,
-                              ),
+                              child: BottomSheetAddMember(roomId: room.id),
                             );
                           },
                           icon: PhosphorIcons.userCirclePlus(),
@@ -131,8 +128,7 @@ class ConversationHeader extends StatelessWidget {
                       SizedBox(width: 10.sp),
                       IconButtonCustom(
                         onTap: () {
-                          AppBloc.meetingBloc
-                              .add(MeetingJoinedEvent(meeting: meeting));
+                          AppBloc.roomBloc.add(RoomJoinedEvent(room: room));
                         },
                         icon:
                             PhosphorIcons.videoCamera(PhosphorIconsStyle.light),

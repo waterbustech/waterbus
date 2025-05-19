@@ -15,7 +15,7 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
@@ -33,12 +33,12 @@ class CallSettingsScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<CallSettingsScreen> {
-  CallSetting _settings = CallSetting();
+  MediaConfig _config = MediaConfig();
 
   @override
   void initState() {
     super.initState();
-    _settings = AppBloc.meetingBloc.callSetting.copyWith();
+    _config = AppBloc.roomBloc.mediaConfig.copyWith();
   }
 
   @override
@@ -71,8 +71,8 @@ class _SettingScreenState extends State<CallSettingsScreen> {
         actions: [
           GestureWrapper(
             onTap: () {
-              AppBloc.meetingBloc.add(
-                MeetingCallSettingsSave(setting: _settings),
+              AppBloc.roomBloc.add(
+                RoomCallSettingsSave(setting: _config),
               );
 
               if (AppNavigator.canPop) {
@@ -114,57 +114,63 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   LabelWidget(label: Strings.general.i18n),
                   SettingSwitchCard(
                     label: Strings.lowBandwidthMode.i18n,
-                    enabled: _settings.isLowBandwidthMode,
+                    enabled: _config.audioConfig.isLowBandwidthMode,
                     hasDivider: false,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings =
-                            _settings.copyWith(isLowBandwidthMode: isEnabled);
+                        _config = _config.copyWith(
+                          audioConfig: _config.audioConfig
+                              .copyWith(isLowBandwidthMode: isEnabled),
+                        );
                       });
                     },
                   ),
                   LabelWidget(label: Strings.audio.i18n),
                   SettingSwitchCard(
                     label: Strings.startWithAudioMuted.i18n,
-                    enabled: _settings.isAudioMuted,
+                    enabled: _config.audioConfig.isAudioMuted,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
-                          isAudioMuted: isEnabled,
+                        _config = _config.copyWith(
+                          audioConfig: _config.audioConfig
+                              .copyWith(isAudioMuted: isEnabled),
                         );
                       });
                     },
                   ),
                   SettingSwitchCard(
                     label: Strings.echoCancellation.i18n,
-                    enabled: _settings.echoCancellationEnabled,
+                    enabled: _config.audioConfig.echoCancellationEnabled,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
-                          echoCancellationEnabled: isEnabled,
+                        _config = _config.copyWith(
+                          audioConfig: _config.audioConfig
+                              .copyWith(echoCancellationEnabled: isEnabled),
                         );
                       });
                     },
                   ),
                   SettingSwitchCard(
                     label: Strings.noiseSuppression.i18n,
-                    enabled: _settings.noiseSuppressionEnabled,
+                    enabled: _config.audioConfig.noiseSuppressionEnabled,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
-                          noiseSuppressionEnabled: isEnabled,
+                        _config = _config.copyWith(
+                          audioConfig: _config.audioConfig
+                              .copyWith(noiseSuppressionEnabled: isEnabled),
                         );
                       });
                     },
                   ),
                   SettingSwitchCard(
                     label: Strings.automaticGainControl.i18n,
-                    enabled: _settings.agcEnabled,
+                    enabled: _config.audioConfig.agcEnabled,
                     hasDivider: false,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
-                          agcEnabled: isEnabled,
+                        _config = _config.copyWith(
+                          audioConfig: _config.audioConfig
+                              .copyWith(agcEnabled: isEnabled),
                         );
                       });
                     },
@@ -172,11 +178,12 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   LabelWidget(label: Strings.video.i18n),
                   SettingSwitchCard(
                     label: Strings.startWithVideoMuted.i18n,
-                    enabled: _settings.isVideoMuted,
+                    enabled: _config.videoConfig.isVideoMuted,
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
-                          isVideoMuted: isEnabled,
+                        _config = _config.copyWith(
+                          videoConfig: _config.videoConfig
+                              .copyWith(isVideoMuted: isEnabled),
                         );
                       });
                     },
@@ -186,11 +193,12 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       showDialogWaterbus(
                         alignment: Alignment.center,
                         child: VideoQualityBottomSheet(
-                          quality: _settings.videoQuality,
+                          quality: _config.videoConfig.videoQuality,
                           onChanged: (quality) {
                             setState(() {
-                              _settings = _settings.copyWith(
-                                videoQuality: quality,
+                              _config = _config.copyWith(
+                                videoConfig: _config.videoConfig
+                                    .copyWith(videoQuality: quality),
                               );
                             });
                           },
@@ -201,21 +209,21 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       label: Strings.videoQuality.i18n,
                       enabled: true,
                       hasDivider: false,
-                      value: _settings.videoQuality.label.i18n,
+                      value: _config.videoConfig.videoQuality.name,
                       onChanged: (isEnabled) {},
                     ),
                   ),
                   LabelWidget(label: Strings.security.i18n),
                   SettingSwitchCard(
                     label: Strings.endToEndEncryption.i18n,
-                    enabled: _settings.e2eeEnabled,
+                    enabled: _config.e2eeEnabled,
                     readonly: AppNavigatorObserver.routeNames.contains(
-                      Routes.meetingRoute,
+                      Routes.roomRoute,
                     ),
                     icon: PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
                     onChanged: (isEnabled) {
                       setState(() {
-                        _settings = _settings.copyWith(
+                        _config = _config.copyWith(
                           e2eeEnabled: isEnabled,
                         );
                       });
@@ -228,12 +236,13 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       ...RTCVideoCodec.values.map<Widget>(
                         (codec) => SettingCheckboxCard(
                           label: codec.codec.toUpperCase(),
-                          enabled: _settings.preferedCodec == codec,
+                          enabled: _config.videoConfig.preferedCodec == codec,
                           hasDivider: codec != RTCVideoCodec.values.last,
                           onTap: () {
                             setState(() {
-                              _settings = _settings.copyWith(
-                                preferedCodec: codec,
+                              _config = _config.copyWith(
+                                videoConfig: _config.videoConfig
+                                    .copyWith(preferedCodec: codec),
                               );
                             });
                           },

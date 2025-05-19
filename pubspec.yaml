@@ -59,7 +59,7 @@ dependencies:
 
   # Storage
   hive: ^2.2.3
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
 
   # Firebase
   firebase_core: ^3.6.0
@@ -74,7 +74,7 @@ dependencies:
   cached_network_image: ^3.4.1
   phosphor_flutter: ^2.1.0
   flutter_sliding_drawer: ^2.0.0
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.0+1
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
   equatable: ^2.0.5
@@ -128,7 +128,7 @@ dependencies:
   #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
   #     ref: 2.0.0-pre
   waterbus_sdk: 
-    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
    
 
 dependency_overrides:
@@ -140,6 +140,9 @@ dependency_overrides:
   dio_web_adapter: ^2.1.1
   isolate_manager: ^6.0.0+2
   get_it: ^8.0.3
+  flutter_plugin_android_lifecycle: ^2.0.28
+  google_sign_in_android: ^6.2.1
+  url_launcher_android: ^6.3.16
   flutter_image_compress_web:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git

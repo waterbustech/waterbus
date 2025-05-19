@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 @singleton
-class MeetingSound {
+class RoomSound {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   Future<void> playSoundJoinRoom() async {

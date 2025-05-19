@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
-import 'package:waterbus/features/meeting/presentation/widgets/e2ee_bottom_sheet.dart';
+import 'package:waterbus/features/room/presentation/widgets/e2ee_bottom_sheet.dart';
 
 class E2eeTitleFooter extends StatelessWidget {
   const E2eeTitleFooter({super.key});

@@ -6,14 +6,14 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 class ChatCard extends StatefulWidget {
-  final Meeting meeting;
+  final Room room;
   final EdgeInsetsGeometry? padding;
   const ChatCard({
     super.key,
-    required this.meeting,
+    required this.room,
     this.padding,
   });
 
@@ -51,7 +51,7 @@ class _ChatCardState extends State<ChatCard> {
             ),
         child: Row(
           children: [
-            AvatarChat(meeting: widget.meeting),
+            AvatarChat(room: widget.room),
             SizedBox(width: 10.sp),
             Expanded(
               child: Column(
@@ -70,14 +70,14 @@ class _ChatCardState extends State<ChatCard> {
                               fontWeight: FontWeight.w600,
                             ),
                             children: [
-                              TextSpan(text: widget.meeting.title.trim()),
+                              TextSpan(text: widget.room.title.trim()),
                             ],
                           ),
                         ),
                       ),
                       Visibility(
                         visible:
-                            widget.meeting.statusMessage == StatusMessage.none,
+                            widget.room.statusMessage == StatusMessage.none,
                         child: RichText(
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
@@ -90,11 +90,11 @@ class _ChatCardState extends State<ChatCard> {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 5.sp),
                                   child: Icon(
-                                    widget.meeting.statusLastedMessage ==
+                                    widget.room.statusLastedMessage ==
                                             StatusSeenMessage.seen
                                         ? PhosphorIcons.checks()
                                         : PhosphorIcons.check(),
-                                    color: widget.meeting.statusLastedMessage ==
+                                    color: widget.room.statusLastedMessage ==
                                             StatusSeenMessage.seen
                                         ? colorGreenLight
                                         : fCL,
@@ -103,7 +103,7 @@ class _ChatCardState extends State<ChatCard> {
                                 ),
                               ),
                               TextSpan(
-                                text: widget.meeting.updateAtText,
+                                text: widget.room.updateAtText,
                               ),
                             ],
                           ),
@@ -116,7 +116,7 @@ class _ChatCardState extends State<ChatCard> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.meeting.latestMessageData,
+                          widget.room.latestMessageData,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -126,35 +126,33 @@ class _ChatCardState extends State<ChatCard> {
                         ),
                       ),
                       SizedBox(width: 10.sp),
-                      widget.meeting.statusMessage == StatusMessage.none &&
-                              widget.meeting.countUnreadMessage != 0
+                      widget.room.statusMessage == StatusMessage.none &&
+                              widget.room.countUnreadMessage != 0
                           ? Container(
-                              margin: widget.meeting.countUnreadMessage > 9
+                              margin: widget.room.countUnreadMessage > 9
                                   ? EdgeInsets.symmetric(
                                       vertical: 3.sp,
                                     )
                                   : null,
-                              padding: widget.meeting.countUnreadMessage > 9
+                              padding: widget.room.countUnreadMessage > 9
                                   ? EdgeInsets.symmetric(
                                       horizontal: 3.sp,
                                       vertical: 2.sp,
                                     )
                                   : EdgeInsets.all(5.sp),
                               decoration: BoxDecoration(
-                                shape: widget.meeting.countUnreadMessage > 9
+                                shape: widget.room.countUnreadMessage > 9
                                     ? BoxShape.rectangle
                                     : BoxShape.circle,
                                 color: Theme.of(context).colorScheme.primary,
-                                borderRadius:
-                                    widget.meeting.countUnreadMessage > 9
-                                        ? BorderRadius.circular(15.sp)
-                                        : null,
+                                borderRadius: widget.room.countUnreadMessage > 9
+                                    ? BorderRadius.circular(15.sp)
+                                    : null,
                               ),
                               child: Text(
-                                widget.meeting.countUnreadMessage > 9
+                                widget.room.countUnreadMessage > 9
                                     ? "+9"
-                                    : widget.meeting.countUnreadMessage
-                                        .toString(),
+                                    : widget.room.countUnreadMessage.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.surface,
                                   fontSize: 8.sp,

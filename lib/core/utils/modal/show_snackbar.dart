@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extensions.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/features/chats/presentation/widgets/glass_morphism_wrapper.dart';
