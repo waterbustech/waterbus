@@ -10,8 +10,8 @@ class AppNavigatorObserver extends NavigatorObserver {
     super.didPush(route, previousRoute);
 
     final String? name =
-        route.settings.name?.startsWith(Routes.meetingRoute) ?? false
-            ? Routes.meetingRoute
+        route.settings.name?.startsWith(Routes.roomRoute) ?? false
+            ? Routes.roomRoute
             : route.settings.name;
 
     routeNames.add(name);

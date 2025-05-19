@@ -6,7 +6,7 @@ import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget child;
@@ -88,8 +88,8 @@ class AppScaffold extends StatelessWidget {
   bool get _canBackward => AppNavigator.canPop;
 
   void _onPopInvoked(bool canPop, _) {
-    if (AppNavigator.currentRoute()?.startsWith(Routes.meetingRoute) ?? false) {
-      AppBloc.meetingBloc.add(const MeetingLeft());
+    if (AppNavigator.currentRoute()?.startsWith(Routes.roomRoute) ?? false) {
+      AppBloc.roomBloc.add(const RoomLeft());
     }
   }
 }

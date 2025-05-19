@@ -5,7 +5,7 @@ abstract class ArchivedState {}
 class ArchivedInitial extends ArchivedState {}
 
 class ArchivedActived extends ArchivedState {
-  final List<Meeting> archivedConversations;
+  final List<Room> archivedConversations;
 
   ArchivedActived({required this.archivedConversations});
 }

@@ -34,11 +34,11 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
     AppBloc.archivedBloc.add(ArchivedStarted());
   }
 
-  void _handleTapArchivedItem(Meeting meeting) {
+  void _handleTapArchivedItem(Room room) {
     AppNavigator().push(
       Routes.archivedConversationRoute,
       arguments: {
-        'meeting': meeting,
+        'room': room,
       },
     );
   }
@@ -81,16 +81,16 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                   return const ShimmerList(child: ShimmerChatCard());
                 }
 
-                final List<Meeting> meetings = [];
+                final List<Room> rooms = [];
 
                 if (state is ArchivedActived) {
-                  meetings.addAll(state.archivedConversations);
+                  rooms.addAll(state.archivedConversations);
                 }
 
-                return meetings.isEmpty
+                return rooms.isEmpty
                     ? const SizedBox()
                     : PaginationListView(
-                        itemCount: meetings.length,
+                        itemCount: rooms.length,
                         shrinkWrap: true,
                         callBackRefresh: (handleFinish) {
                           AppBloc.archivedBloc.add(
@@ -108,18 +108,18 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                           top: 8.sp,
                         ),
                         itemBuilder: (context, index) {
-                          if (index > meetings.length - 1) {
+                          if (index > rooms.length - 1) {
                             return const SizedBox();
                           }
 
                           return GestureWrapper(
                             onTap: () {
-                              _handleTapArchivedItem(meetings[index]);
+                              _handleTapArchivedItem(rooms[index]);
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ChatCard(meeting: meetings[index]),
+                                ChatCard(room: rooms[index]),
                                 Padding(
                                   padding: EdgeInsets.only(left: 58.sp),
                                   child: divider,

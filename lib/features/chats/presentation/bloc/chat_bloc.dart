@@ -20,16 +20,16 @@ import 'package:waterbus/features/chats/presentation/widgets/invited_success_tex
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
 
 @injectable
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  final List<Meeting> _conversations = [];
+  final List<Room> _conversations = [];
   final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
-  Meeting? _conversationCurrent;
+  Room? _conversationCurrent;
   bool _isOver = false;
 
   ChatBloc() : super(ChatInitial()) {
@@ -45,7 +45,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             if (_conversationCurrent == null && _conversations.isNotEmpty) {
               add(
                 ChatCurrentConversationSelected(
-                  meeting: _conversations.first,
+                  room: _conversations.first,
                 ),
               );
             }
@@ -54,13 +54,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatCurrentConversationSelected) {
-        if (event.meeting != null) {
-          _conversationCurrent = event.meeting;
+        if (event.room != null) {
+          _conversationCurrent = event.room;
         } else {
-          if (event.meetingId == null) return;
+          if (event.roomId == null) return;
 
           final index = _conversations
-              .indexWhere((conversation) => conversation.id == event.meetingId);
+              .indexWhere((conversation) => conversation.id == event.roomId);
 
           if (index != -1) {
             _conversationCurrent = _conversations[index];
@@ -99,10 +99,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatCreated) {
-        final Meeting? meeting = await _createConversation(event);
+        final Room? room = await _createConversation(event);
 
-        if (meeting != null) {
-          _conversations.insert(0, meeting);
+        if (room != null) {
+          _conversations.insert(0, room);
 
           emit(_chatDone);
 
@@ -114,23 +114,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatMemberAdded) {
-        final Result<Meeting> response =
-            await _waterbusSdk.addMember(event.code, event.user.id);
+        final Result<Room> response =
+            await _waterbusSdk.addMember(event.roomId, event.user.id);
 
         if (response.isSuccess) {
-          final Meeting? meeting = response.value;
+          final Room? room = response.value;
 
-          if (meeting != null) {
+          if (room != null) {
             final int index = _conversations
-                .indexWhere((conversation) => conversation.id == meeting.id);
+                .indexWhere((conversation) => conversation.id == room.id);
 
             if (index != -1) {
-              _conversations[index] = meeting;
+              _conversations[index] = room;
             }
 
             showSnackBarWaterbus(
               child: InvitedSuccessText(
-                meeting: meeting,
+                room: room,
                 fullname: event.user.fullName,
               ),
             );
@@ -153,11 +153,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatLeft) {
-        final Meeting? meeting = event.meeting ?? _conversationCurrent;
+        final Room? room = event.room ?? _conversationCurrent;
 
-        if (meeting == null) return;
+        if (room == null) return;
 
-        if (meeting.isHost && meeting.members.length > 1) {
+        if (room.isHost && room.members.length > 1) {
           Strings.hostCanNotDeleteConversation.i18n
               .showToast(ToastificationType.error);
         } else {
@@ -165,7 +165,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             actionText: Strings.leaveTheConversation.i18n,
             description: Strings.sureLeaveConversation.i18n,
             handleAction: () async {
-              await _leaveConversation(meeting);
+              await _leaveConversation(room);
 
               AppNavigator.popUntil(Routes.rootRoute);
 
@@ -176,15 +176,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatDeleted) {
-        final Meeting? meeting = event.meeting ?? _conversationCurrent;
+        final Room? room = event.room ?? _conversationCurrent;
 
-        if (meeting == null) return;
+        if (room == null) return;
 
         await _showBottomSheetSureAction(
           actionText: Strings.delete.i18n,
           description: Strings.sureDeleteConversation.i18n,
           handleAction: () async {
-            await _deleteConversation(meeting);
+            await _deleteConversation(room);
 
             AppNavigator.popUntil(Routes.rootRoute);
 
@@ -194,15 +194,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatArchived) {
-        final Meeting? meeting = event.meeting ?? _conversationCurrent;
+        final Room? room = event.room ?? _conversationCurrent;
 
-        if (meeting == null) return;
+        if (room == null) return;
 
         await _showBottomSheetSureAction(
           actionText: Strings.archivedChats.i18n,
           description: Strings.sureArchivedConversation.i18n,
           handleAction: () async {
-            await _archivedConversation(meeting);
+            await _archivedConversation(room);
 
             AppNavigator.popUntil(Routes.rootRoute);
 
@@ -293,7 +293,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         conversationCurrent: _conversationCurrent,
       );
 
-  List<Meeting> get _arrangedConversations {
+  List<Room> get _arrangedConversations {
     _conversations
         .sort((before, after) => after.updatedAt.compareTo(before.updatedAt));
 
@@ -301,11 +301,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   // MARK: private methods
-  Future<Meeting?> _createConversation(
+  Future<Room?> _createConversation(
     ChatCreated event,
   ) async {
-    final Result<Meeting> result = await _waterbusSdk.createRoom(
-      meeting: Meeting(title: event.title),
+    final Result<Room> result = await _waterbusSdk.createRoom(
+      room: Room(title: event.title),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
@@ -324,23 +324,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }) async {
     if (_conversationCurrent == null) return;
 
-    final Meeting meeting = _conversationCurrent!.copyWith(
+    final Room room = _conversationCurrent!.copyWith(
       avatar: avatar ?? _conversationCurrent?.avatar,
       title: title ?? _conversationCurrent?.title ?? "",
     );
 
     final Result<bool> result = await _waterbusSdk.updateConversation(
-      meeting: meeting,
+      room: room,
       password: password,
     );
 
     if (result.isSuccess) {
       final int index = _conversations.indexWhere(
-        (conversation) => conversation.id == meeting.id,
+        (conversation) => conversation.id == room.id,
       );
 
       if (index != -1) {
-        _conversationCurrent = _conversations[index] = meeting;
+        _conversationCurrent = _conversations[index] = room;
       }
 
       if (password != null) {
@@ -356,7 +356,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void _updateLastMessage(ChatLatestMessageUpdated event) {
     final int index = _conversations.indexWhere(
-      (conversation) => conversation.id == event.message.meeting,
+      (conversation) => conversation.id == event.message.roomId,
     );
 
     if (index != -1) {
@@ -370,12 +370,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _deleteConversation(Meeting meeting) async {
-    final Result<bool> result =
-        await _waterbusSdk.deleteConversation(meeting.id);
+  Future<void> _deleteConversation(Room room) async {
+    final Result<bool> result = await _waterbusSdk.deleteConversation(room.id);
 
     if (result.isSuccess) {
-      _cleanConversationCurrent(meeting.id);
+      _cleanConversationCurrent(room.id);
 
       Strings.haveSuccessfullyDeletedConversation.i18n
           .showToast(ToastificationType.success);
@@ -384,16 +383,16 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _archivedConversation(Meeting meeting) async {
-    final Result<Meeting> result =
-        await _waterbusSdk.archivedConversation(meeting.code);
+  Future<void> _archivedConversation(Room room) async {
+    final Result<Room> result =
+        await _waterbusSdk.archivedConversation(room.id);
 
     if (result.isSuccess) {
-      final Meeting? archivedConversation = result.value;
+      final Room? archivedConversation = result.value;
 
       if (archivedConversation != null) {
         AppBloc.archivedBloc.add(
-          ArchivedInserted(meeting: archivedConversation),
+          ArchivedInserted(room: archivedConversation),
         );
 
         _cleanConversationCurrent(archivedConversation.id);
@@ -408,12 +407,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> _leaveConversation(Meeting meeting) async {
-    final Result<Meeting> result =
-        await _waterbusSdk.leaveConversation(meeting.code);
+  Future<void> _leaveConversation(Room room) async {
+    final Result<Room> result = await _waterbusSdk.leaveConversation(room.id);
 
     if (result.isSuccess) {
-      final Meeting? conversation = result.value;
+      final Room? conversation = result.value;
 
       if (conversation != null) {
         _cleanConversationCurrent(conversation.id);
@@ -429,13 +427,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _getConversationList() async {
-    final Result<List<Meeting>> result = await _waterbusSdk.getConversations(
+    final Result<List<Room>> result = await _waterbusSdk.getConversations(
       skip: _conversations.length,
-      status: MemberStatusEnum.joined.value,
     );
 
     if (result.isSuccess) {
-      final List<Meeting> conversationLst = result.value ?? [];
+      final List<Room> conversationLst = result.value ?? [];
 
       _conversations.addAll(conversationLst);
 
@@ -448,18 +445,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _handleDeleteMember(ChatMemberDeleted event) async {
-    final Result<Meeting> result =
-        await _waterbusSdk.deleteMember(event.code, event.userModel.id);
+    final Result<Room> result =
+        await _waterbusSdk.deleteMember(event.roomId, event.userModel.id);
 
     if (result.isSuccess) {
-      final Meeting? meeting = result.value;
+      final Room? room = result.value;
 
-      if (meeting != null) {
+      if (room != null) {
         final int index = _conversations
-            .indexWhere((conversation) => conversation.code == meeting.code);
+            .indexWhere((conversation) => conversation.code == room.code);
 
         if (index != -1) {
-          _conversations[index] = meeting;
+          _conversations[index] = room;
         }
 
         final String successTitle =
@@ -494,5 +491,5 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Meeting? get conversationCurrent => _conversationCurrent;
+  Room? get conversationCurrent => _conversationCurrent;
 }

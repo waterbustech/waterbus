@@ -10,7 +10,7 @@ import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.d
 import 'package:waterbus/gen/assets.gen.dart';
 
 class AddMemberButton extends StatelessWidget {
-  final Meeting conversation;
+  final Room conversation;
   const AddMemberButton({
     super.key,
     required this.conversation,
@@ -21,10 +21,7 @@ class AddMemberButton extends StatelessWidget {
     return GestureWrapper(
       onTap: () {
         showDialogWaterbus(
-          child: BottomSheetAddMember(
-            meetingId: conversation.id,
-            code: conversation.code,
-          ),
+          child: BottomSheetAddMember(roomId: conversation.id),
         );
       },
       child: Container(

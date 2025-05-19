@@ -5,11 +5,11 @@ abstract class MessageEvent {}
 class MessageSocketStarted extends MessageEvent {}
 
 class MessageFetchedByMeeting extends MessageEvent {
-  final int meetingId;
+  final int roomId;
   final Function? handleFinish;
 
   MessageFetchedByMeeting({
-    required this.meetingId,
+    required this.roomId,
     this.handleFinish,
   });
 }
@@ -24,9 +24,9 @@ class MessageResent extends MessageEvent {
 
 class MessageSent extends MessageEvent {
   final String data;
-  final int meetingId;
+  final int roomId;
 
-  MessageSent({required this.data, required this.meetingId});
+  MessageSent({required this.data, required this.roomId});
 }
 
 class MessageEdited extends MessageEvent {

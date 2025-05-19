@@ -6,11 +6,11 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_search_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class AppBloc {
@@ -18,7 +18,7 @@ class AppBloc {
   static final AuthBloc authBloc = getIt<AuthBloc>();
   static final UserBloc userBloc = getIt<UserBloc>();
   static final UserSearchBloc userSearchBloc = getIt<UserSearchBloc>();
-  static final MeetingBloc meetingBloc = getIt<MeetingBloc>();
+  static final RoomBloc roomBloc = getIt<RoomBloc>();
   static final ChatBloc chatBloc = getIt<ChatBloc>();
   static final ArchivedBloc archivedBloc = getIt<ArchivedBloc>();
   static final MessageBloc messageBloc = getIt<MessageBloc>();
@@ -42,8 +42,8 @@ class AppBloc {
     BlocProvider<UserSearchBloc>(
       create: (context) => userSearchBloc,
     ),
-    BlocProvider<MeetingBloc>(
-      create: (context) => meetingBloc,
+    BlocProvider<RoomBloc>(
+      create: (context) => roomBloc,
     ),
     BlocProvider<ChatBloc>(
       create: (context) => chatBloc,
@@ -65,7 +65,7 @@ class AppBloc {
   Future<void> bootstrap() async {
     userBloc.add(UserFetched());
     recentJoinedBloc.add(RecentJoinedStarted());
-    meetingBloc.add(MeetingStarted());
+    roomBloc.add(RoomStarted());
     chatBloc.add(ChatStarted());
     messageBloc.add(MessageSocketStarted());
   }

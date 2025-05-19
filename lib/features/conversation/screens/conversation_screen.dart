@@ -19,8 +19,8 @@ import 'package:waterbus/features/conversation/widgets/message_suggest_widget.da
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ConversationScreen extends StatefulWidget {
-  final Meeting meeting;
-  const ConversationScreen({super.key, required this.meeting});
+  final Room room;
+  const ConversationScreen({super.key, required this.room});
 
   @override
   State<ConversationScreen> createState() => _ConversationScreenState();
@@ -34,7 +34,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   void initState() {
     super.initState();
     AppBloc.messageBloc.add(
-      MessageFetchedByMeeting(meetingId: widget.meeting.id),
+      MessageFetchedByMeeting(roomId: widget.room.id),
     );
     _image = _imageHelloMessage;
     _scrollController.addListener(
@@ -51,8 +51,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   void didUpdateWidget(ConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    AppBloc.messageBloc
-        .add(MessageFetchedByMeeting(meetingId: widget.meeting.id));
+    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
     _image = _imageHelloMessage;
   }
 
@@ -89,7 +88,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               AppBloc.messageBloc.add(
                                 MessageSent(
                                   data: "${Strings.hi.i18n}!",
-                                  meetingId: widget.meeting.id,
+                                  roomId: widget.room.id,
                                 ),
                               );
                             },
@@ -105,7 +104,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 },
               ),
             ),
-            InputSendMessage(meetingId: widget.meeting.id),
+            InputSendMessage(roomId: widget.room.id),
             SizedBox(
               height: SizerUtil.isMobile &&
                       MediaQuery.of(context).viewInsets.bottom == 0

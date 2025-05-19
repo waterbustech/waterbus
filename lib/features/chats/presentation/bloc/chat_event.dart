@@ -13,10 +13,10 @@ class ChatRefreshed extends ChatEvent {
 }
 
 class ChatCurrentConversationSelected extends ChatEvent {
-  final Meeting? meeting;
-  final int? meetingId;
+  final Room? room;
+  final int? roomId;
 
-  ChatCurrentConversationSelected({this.meeting, this.meetingId});
+  ChatCurrentConversationSelected({this.room, this.roomId});
 }
 
 class ChatCurrentConversationCleaned extends ChatEvent {}
@@ -29,46 +29,44 @@ class ChatCreated extends ChatEvent {
 }
 
 class ChatArchived extends ChatEvent {
-  final Meeting? meeting;
+  final Room? room;
 
-  ChatArchived({this.meeting});
+  ChatArchived({this.room});
 }
 
 class ChatDeleted extends ChatEvent {
-  final Meeting? meeting;
+  final Room? room;
 
-  ChatDeleted({this.meeting});
+  ChatDeleted({this.room});
 }
 
 class ChatLeft extends ChatEvent {
-  final Meeting? meeting;
+  final Room? room;
 
-  ChatLeft({this.meeting});
+  ChatLeft({this.room});
 }
 
 class ChatMemberAdded extends ChatEvent {
-  final int code;
   final User user;
-  final int meeting;
+  final int roomId;
 
   ChatMemberAdded({
-    required this.code,
     required this.user,
-    required this.meeting,
+    required this.roomId,
   });
 }
 
 class ChatInserted extends ChatEvent {
-  final Meeting conversation;
+  final Room conversation;
 
   ChatInserted({required this.conversation});
 }
 
 class ChatMemberDeleted extends ChatEvent {
-  final int code;
+  final int roomId;
   final User userModel;
 
-  ChatMemberDeleted({required this.code, required this.userModel});
+  ChatMemberDeleted({required this.roomId, required this.userModel});
 }
 
 class ChatUpdated extends ChatEvent {

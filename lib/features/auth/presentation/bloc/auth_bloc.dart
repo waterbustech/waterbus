@@ -10,8 +10,8 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -61,7 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onAuthCheck(Emitter<AuthState> emit) async {
-    final User? user = null;
+    final User? user = _userLocal.getUser();
 
     if (user != null) {
       _user = user;

@@ -12,13 +12,13 @@ import 'package:waterbus/core/helpers/clipboard_utils.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class MeetingCard extends StatelessWidget {
-  final Meeting meeting;
+  final Room room;
   const MeetingCard({
     super.key,
-    required this.meeting,
+    required this.room,
   });
 
   @override
@@ -34,7 +34,7 @@ class MeetingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            meeting.title,
+            room.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -55,10 +55,10 @@ class MeetingCard extends StatelessWidget {
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       ClipboardUtils.copy(
-                        meeting.code.toString(),
+                        room.code.toString(),
                       );
                     },
-                  text: meeting.code.toString(),
+                  text: room.code.toString(),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     decoration: TextDecoration.underline,
@@ -72,7 +72,7 @@ class MeetingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: meeting.isNoOneElse
+                child: room.isNoOneElse
                     ? Text(
                         Strings.noParticipantsYet.i18n,
                         style: Theme.of(context)
@@ -81,12 +81,12 @@ class MeetingCard extends StatelessWidget {
                             ?.copyWith(fontSize: 11.sp),
                       )
                     : StackAvatar(
-                        label: meeting.members
+                        label: room.members
                             .map(
                               (user) => user.user.fullName,
                             )
                             .toList(),
-                        images: meeting.members
+                        images: room.members
                             .map(
                               (user) => user.user.avatar,
                             )
@@ -99,9 +99,7 @@ class MeetingCard extends StatelessWidget {
                   await WaterbusPermissionHandler().checkGrantedForExecute(
                     permissions: [Permission.camera, Permission.microphone],
                     callBack: () async {
-                      AppBloc.meetingBloc.add(
-                        MeetingDialogDisplayed(meeting: meeting),
-                      );
+                      AppBloc.roomBloc.add(RoomDialogDisplayed(room: room));
                     },
                   );
                 },

@@ -13,12 +13,12 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
-import 'package:waterbus/features/meeting/presentation/screens/background_gallery.dart';
-import 'package:waterbus/features/meeting/presentation/screens/create_meeting_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/enter_meeting_code_screen.dart';
-import 'package:waterbus/features/meeting/presentation/screens/meeting_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/background_gallery.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/room_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
@@ -84,19 +84,19 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
           const NotificationSettingsScreen(),
         );
       // Meeting
-      case Routes.meetingRoute:
+      case Routes.roomRoute:
         return _buildRoute(
           RouteSettings(
-            name: '${Routes.meetingRoute}'
-                '${arguments?['meeting'].code.toString()}',
+            name: '${Routes.roomRoute}'
+                '${arguments?['room'].code.toString()}',
           ),
-          const MeetingScreen(),
+          const RoomScreen(),
         );
       case Routes.createMeetingRoute:
         return _buildRoute(
           settings,
           CreateMeetingScreen(
-            meeting: arguments?['meeting'],
+            room: arguments?['room'],
             isChatScreen: arguments?['isChatScreen'] ?? false,
           ),
         );
@@ -115,14 +115,14 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
         return _buildRoute(
           settings,
           ConversationScreen(
-            meeting: arguments!['meeting'],
+            room: arguments!['room'],
           ),
         );
       case Routes.archivedConversationRoute:
         return _buildRoute(
           settings,
           ArchivedConversationScreen(
-            meeting: arguments!['meeting'],
+            room: arguments!['room'],
           ),
         );
       case Routes.archivedRoute:
@@ -327,7 +327,7 @@ extension AppNavigatorX on AppNavigator {
         return const EnterMeetingCode();
       case Routes.createMeetingRoute:
         return CreateMeetingScreen(
-          meeting: arguments?['meeting'],
+          room: arguments?['room'],
           isChatScreen: arguments?['isChatScreen'] ?? false,
         );
       case Routes.profileRoute:

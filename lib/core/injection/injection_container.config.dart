@@ -19,6 +19,7 @@ import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
 import '../../features/conversation/bloc/message_bloc.dart' as _i819;
 import '../../features/home/bloc/home/home_bloc.dart' as _i430;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
+import '../../features/room/presentation/bloc/room/room_bloc.dart' as _i1030;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
@@ -28,18 +29,16 @@ import '../utils/audio/meeting_sound.dart' as _i89;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
     as _i843;
-import '../../features/meeting/data/datasources/media_config_datasource.dart'
-    as _i239;
-import '../../features/meeting/data/datasources/meeting_local_datasource.dart'
-    as _i254;
-import '../../features/meeting/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
-    as _i861;
-import '../../features/meeting/presentation/bloc/meeting/meeting_bloc.dart'
-    as _i545;
-import '../../features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart'
-    as _i324;
 import '../../features/profile/presentation/bloc/user_search_bloc.dart'
     as _i254;
+import '../../features/room/data/datasources/media_config_datasource.dart'
+    as _i421;
+import '../../features/room/data/datasources/meeting_local_datasource.dart'
+    as _i366;
+import '../../features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
+    as _i291;
+import '../../features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart'
+    as _i211;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -53,35 +52,35 @@ _i174.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
-  gh.factory<_i861.BeautyFiltersBloc>(() => _i861.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
-  gh.singleton<_i89.MeetingSound>(() => _i89.MeetingSound());
+  gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
+  gh.singleton<_i89.RoomSound>(() => _i89.RoomSound());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.singleton<_i513.FileSaverHelper>(() => _i513.FileSaverHelper());
-  gh.lazySingleton<_i254.MeetingLocalDataSource>(
-      () => _i254.MeetingLocalDataSourceImpl());
+  gh.lazySingleton<_i366.RoomLocalDataSource>(
+      () => _i366.RoomLocalDataSourceImpl());
+  gh.lazySingleton<_i421.MediaConfigLocalDataSource>(
+      () => _i421.MediaConfigLocalDataSourceImpl());
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
   gh.lazySingleton<_i193.LanguagesDatasource>(
       () => _i193.LanguagesDatasourceImpl());
-  gh.lazySingleton<_i239.MediaConfigLocalDataSource>(
-      () => _i239.MediaConfigLocalDataSourceImpl());
   gh.lazySingleton<_i843.UserLocalDataSource>(
       () => _i843.UserLocalDataSourceImpl());
+  gh.factory<_i1030.RoomBloc>(() => _i1030.RoomBloc(
+        gh<_i921.PipChannel>(),
+        gh<_i89.RoomSound>(),
+        gh<_i366.RoomLocalDataSource>(),
+        gh<_i421.MediaConfigLocalDataSource>(),
+      ));
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
+  gh.factory<_i211.RecentJoinedBloc>(
+      () => _i211.RecentJoinedBloc(gh<_i366.RoomLocalDataSource>()));
   gh.factory<_i797.AuthBloc>(
       () => _i797.AuthBloc(gh<_i843.UserLocalDataSource>()));
-  gh.factory<_i324.RecentJoinedBloc>(
-      () => _i324.RecentJoinedBloc(gh<_i254.MeetingLocalDataSource>()));
-  gh.factory<_i545.MeetingBloc>(() => _i545.MeetingBloc(
-        gh<_i921.PipChannel>(),
-        gh<_i89.MeetingSound>(),
-        gh<_i254.MeetingLocalDataSource>(),
-        gh<_i239.MediaConfigLocalDataSource>(),
-      ));
   return getIt;
 }

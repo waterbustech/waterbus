@@ -7,12 +7,12 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 
 class InvitedSuccessText extends StatelessWidget {
-  final Meeting meeting;
+  final Room room;
   final String fullname;
 
   const InvitedSuccessText({
     super.key,
-    required this.meeting,
+    required this.room,
     required this.fullname,
   });
 
@@ -36,7 +36,7 @@ class InvitedSuccessText extends StatelessWidget {
           ),
           TextSpan(text: " ${Strings.toJoinConversation.i18n} "),
           TextSpan(
-            text: meeting.title,
+            text: room.title,
             style: const TextStyle(
               fontWeight: FontWeight.w700,
             ),

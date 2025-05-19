@@ -16,7 +16,7 @@ import 'package:waterbus/features/chats/presentation/widgets/conversation_label.
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 class ConversationList extends StatelessWidget {
   final Function(int) onTap;
@@ -44,16 +44,16 @@ class ConversationList extends StatelessWidget {
                 return const ShimmerList(child: ShimmerChatCard());
               }
 
-              final List<Meeting> meetings = [];
+              final List<Room> rooms = [];
 
               if (state is ChatActived) {
-                meetings.addAll(state.conversations);
+                rooms.addAll(state.conversations);
               }
 
-              return meetings.isEmpty
+              return rooms.isEmpty
                   ? const SizedBox()
                   : PaginationListView(
-                      itemCount: meetings.length,
+                      itemCount: rooms.length,
                       shrinkWrap: true,
                       callBackRefresh: (handleFinish) {
                         AppBloc.chatBloc.add(
@@ -69,7 +69,7 @@ class ConversationList extends StatelessWidget {
                         top: 8.sp,
                       ),
                       itemBuilder: (context, index) {
-                        if (index > meetings.length - 1) {
+                        if (index > rooms.length - 1) {
                           return const SizedBox();
                         }
 
@@ -82,20 +82,20 @@ class ConversationList extends StatelessWidget {
                             children: [
                               ContextMenuWidget(
                                 menuProvider: (_) {
-                                  return _menuProvider(meetings[index]);
+                                  return _menuProvider(rooms[index]);
                                 },
                                 liftBuilder: (context, child) {
                                   return ChatCard(
-                                    meeting: meetings[index],
+                                    room: rooms[index],
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 16.sp,
                                       vertical: 8.sp,
                                     ),
                                   );
                                 },
-                                child: ChatCard(meeting: meetings[index]),
+                                child: ChatCard(room: rooms[index]),
                               ),
-                              if (index < meetings.length - 1)
+                              if (index < rooms.length - 1)
                                 Padding(
                                   padding: EdgeInsets.only(left: 58.sp),
                                   child: divider,
@@ -113,7 +113,7 @@ class ConversationList extends StatelessWidget {
     );
   }
 
-  Menu _menuProvider(Meeting conversation) {
+  Menu _menuProvider(Room conversation) {
     return Menu(
       children: List.generate(
         conversation.getOptions.length,

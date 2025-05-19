@@ -105,7 +105,7 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
                               child: GestureWrapper(
                                 child: AvatarChat(
                                   shape: BoxShape.circle,
-                                  meeting: state.conversationCurrent!.copyWith(
+                                  room: state.conversationCurrent!.copyWith(
                                     avatar: state.conversationCurrent!.avatar,
                                   ),
                                   size: 80.sp,

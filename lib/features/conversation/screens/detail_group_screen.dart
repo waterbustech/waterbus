@@ -22,8 +22,8 @@ import 'package:waterbus/features/conversation/widgets/add_member_button.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class DetailGroupScreen extends StatelessWidget {
   const DetailGroupScreen({super.key});
@@ -46,7 +46,7 @@ class DetailGroupScreen extends StatelessWidget {
                       AppNavigator().push(
                         Routes.createMeetingRoute,
                         arguments: {
-                          "meeting": AppBloc.chatBloc.conversationCurrent,
+                          "room": AppBloc.chatBloc.conversationCurrent,
                           "isChatScreen": true,
                         },
                       );
@@ -87,9 +87,9 @@ class DetailGroupScreen extends StatelessWidget {
             flexibleSpace: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
                 if (state is ChatActived) {
-                  final Meeting? meeting = state.conversationCurrent;
+                  final Room? room = state.conversationCurrent;
 
-                  return meeting == null
+                  return room == null
                       ? const SizedBox()
                       : GroupSpaceBarCustom(
                           avatar: GestureWrapper(
@@ -106,18 +106,18 @@ class DetailGroupScreen extends StatelessWidget {
                               );
                             },
                             child: AvatarChat(
-                              meeting: meeting,
+                              room: room,
                               size: 54.sp,
                               shape: BoxShape.circle,
                             ),
                           ),
                           subTitle: Text(
-                            "${meeting.members.length} ${(meeting.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                            "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 10.sp, color: fCL),
                           ),
                           title: Text(
-                            meeting.title,
+                            room.title,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
@@ -151,9 +151,9 @@ class DetailGroupScreen extends StatelessWidget {
                               return;
                             }
 
-                            AppBloc.meetingBloc.add(
-                              MeetingJoinedEvent(
-                                meeting: AppBloc.chatBloc.conversationCurrent!,
+                            AppBloc.roomBloc.add(
+                              RoomJoinedEvent(
+                                room: AppBloc.chatBloc.conversationCurrent!,
                               ),
                             );
                           },
@@ -194,7 +194,7 @@ class DetailGroupScreen extends StatelessWidget {
                     return const SliverToBoxAdapter();
                   }
 
-                  final Meeting conversation = state.conversations
+                  final Room conversation = state.conversations
                           .firstWhereOrNull(
                         (conversation) =>
                             conversation.id == state.conversationCurrent?.id,
@@ -266,7 +266,7 @@ class DetailGroupScreen extends StatelessWidget {
                                             handlePressed: () async {
                                               AppBloc.chatBloc.add(
                                                 ChatMemberDeleted(
-                                                  code: conversation.code,
+                                                  roomId: conversation.id,
                                                   userModel: conversation
                                                       .members[index -
                                                           numberOfWidgetsAdded]

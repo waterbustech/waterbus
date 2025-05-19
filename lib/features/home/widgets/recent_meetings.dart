@@ -13,8 +13,8 @@ import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
 import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
 import 'package:waterbus/features/home/widgets/empty_meet_view.dart';
 import 'package:waterbus/features/home/widgets/meeting_card.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/recent_joined/recent_joined_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class RecentMeetings extends StatelessWidget {
   const RecentMeetings({super.key});
@@ -23,11 +23,11 @@ class RecentMeetings extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecentJoinedBloc, RecentJoinedState>(
       builder: (context, state) {
-        if (state is MeetingInitial) return const SizedBox();
+        if (state is RoomInitial) return const SizedBox();
 
-        final List<Meeting> recentMeetings = state.recentMeetings;
+        final List<Room> recentRooms = state.recentRooms;
 
-        if (recentMeetings.isEmpty) {
+        if (recentRooms.isEmpty) {
           return const EmptyMeetView();
         }
 
@@ -35,29 +35,29 @@ class RecentMeetings extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.only(bottom: 80.sp),
-          itemCount: recentMeetings.length,
+          itemCount: recentRooms.length,
           itemBuilder: (context, index) {
             // First or current created at not equal previous
             final bool hasLabelCreatedAt = index == 0 ||
                 !DateTimeHelper().isEqualTwoDate(
-                  recentMeetings[index - 1].latestJoinedTime,
-                  recentMeetings[index].latestJoinedTime,
+                  recentRooms[index - 1].latestJoinedTime,
+                  recentRooms[index].latestJoinedTime,
                 );
 
             return Column(
               children: [
                 hasLabelCreatedAt
                     ? DateTitleCard(
-                        lastJoinedAt: recentMeetings[index].latestJoinedTime,
+                        lastJoinedAt: recentRooms[index].latestJoinedTime,
                       )
                     : const SizedBox(),
                 ContextMenuWidget(
                   menuProvider: (_) {
-                    return _menuProvider(recentMeetings[index]);
+                    return _menuProvider(recentRooms[index]);
                   },
-                  child: MeetingCard(meeting: recentMeetings[index]),
+                  child: MeetingCard(room: recentRooms[index]),
                 ),
-                index == recentMeetings.length - 1
+                index == recentRooms.length - 1
                     ? const E2eeTitleFooter()
                     : const Divider(thickness: .3, height: .3),
               ],
@@ -68,7 +68,7 @@ class RecentMeetings extends StatelessWidget {
     );
   }
 
-  Menu _menuProvider(Meeting conversation) {
+  Menu _menuProvider(Room conversation) {
     return Menu(
       children: [
         MenuAction(
@@ -78,7 +78,7 @@ class RecentMeetings extends StatelessWidget {
           callback: () {
             AppBloc.recentJoinedBloc.add(
               RecentJoinedRemoved(
-                meetingId: conversation.id,
+                roomId: conversation.id,
               ),
             );
           },

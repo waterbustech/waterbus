@@ -7,9 +7,9 @@ class ArchivedStarted extends ArchivedEvent {}
 class ArchivedDataFetched extends ArchivedEvent {}
 
 class ArchivedInserted extends ArchivedEvent {
-  final Meeting meeting;
+  final Room room;
 
-  ArchivedInserted({required this.meeting});
+  ArchivedInserted({required this.room});
 }
 
 class ArchivedRefreshed extends ArchivedEvent {

@@ -1,0 +1,115 @@
+import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+
+import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
+import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
+
+class PreviewCameraCard extends StatelessWidget {
+  const PreviewCameraCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RoomBloc, RoomState>(
+      builder: (context, state) {
+        final ParticipantSFU? participant = state.callState?.mParticipant;
+
+        // Return skeleton
+        if (participant == null) {
+          return Material(
+            clipBehavior: Clip.hardEdge,
+            shape: SuperellipseShape(
+              borderRadius: BorderRadius.circular(30.sp),
+            ),
+            child: Container(
+              width: 265.sp,
+              height: 200.sp,
+              color: Colors.black,
+            ),
+          );
+        }
+
+        return Stack(
+          children: [
+            Material(
+              clipBehavior: Clip.hardEdge,
+              shape: SuperellipseShape(
+                borderRadius: BorderRadius.circular(30.sp),
+              ),
+              child: Container(
+                width: 265.sp,
+                height: 200.sp,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: .5),
+                      Theme.of(context)
+                          .colorScheme
+                          .surfaceContainerHighest
+                          .withValues(alpha: .5),
+                    ],
+                    stops: const [0.1, 0.9],
+                  ),
+                ),
+                child: participant.isVideoEnabled
+                    ? participant.cameraSource!.mediaView(
+                        objectFit:
+                            RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                        mirror: true,
+                      )
+                    : Container(
+                        alignment: Alignment.center,
+                        child: AvatarCard(
+                          urlToImage: AppBloc.userBloc.user?.avatar,
+                          size: 50.sp,
+                          label: AppBloc.userBloc.user?.fullName,
+                        ),
+                      ),
+              ),
+            ),
+            Positioned(
+              bottom: 10.sp,
+              left: 0.0,
+              right: 0.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CallActionButton(
+                    shape: BoxShape.circle,
+                    icon: participant.isVideoEnabled
+                        ? PhosphorIcons.camera()
+                        : PhosphorIcons.cameraSlash(),
+                    onTap: () {
+                      AppBloc.roomBloc.add(RoomVideoToggled());
+                    },
+                  ),
+                  SizedBox(width: 12.sp),
+                  CallActionButton(
+                    shape: BoxShape.circle,
+                    icon: participant.isAudioEnabled
+                        ? PhosphorIcons.microphone()
+                        : PhosphorIcons.microphoneSlash(),
+                    onTap: () {
+                      AppBloc.roomBloc.add(RoomAudioToggled());
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

@@ -15,7 +15,7 @@ class Routes {
   static const String notificationSettings = '/notification-settings';
 
   // Meeting
-  static const String meetingRoute = '/r/';
+  static const String roomRoute = '/r/';
   static const String createMeetingRoute = '/create-meeting';
   static const String enterCodeRoute = '/enter-code';
   static const String backgroundGallery = '/background-gallery';

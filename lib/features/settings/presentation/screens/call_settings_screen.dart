@@ -15,7 +15,7 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
-import 'package:waterbus/features/meeting/presentation/bloc/meeting/meeting_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
@@ -38,7 +38,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _config = AppBloc.meetingBloc.mediaConfig.copyWith();
+    _config = AppBloc.roomBloc.mediaConfig.copyWith();
   }
 
   @override
@@ -71,8 +71,8 @@ class _SettingScreenState extends State<CallSettingsScreen> {
         actions: [
           GestureWrapper(
             onTap: () {
-              AppBloc.meetingBloc.add(
-                MeetingCallSettingsSave(setting: _config),
+              AppBloc.roomBloc.add(
+                RoomCallSettingsSave(setting: _config),
               );
 
               if (AppNavigator.canPop) {
@@ -218,7 +218,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                     label: Strings.endToEndEncryption.i18n,
                     enabled: _config.e2eeEnabled,
                     readonly: AppNavigatorObserver.routeNames.contains(
-                      Routes.meetingRoute,
+                      Routes.roomRoute,
                     ),
                     icon: PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
                     onChanged: (isEnabled) {

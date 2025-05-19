@@ -12,7 +12,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/widgets/more_action_item.dart';
-import 'package:waterbus/features/meeting/domain/entities/meeting_model_x.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 class DetailGroupButton extends StatelessWidget {
   final IconData icon;

@@ -30,11 +30,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
     AppBloc.chatBloc.add(ChatStarted());
   }
 
-  void _handleTapChatItem(Meeting meeting) {
+  void _handleTapChatItem(Room room) {
     AppNavigator().push(
       Routes.conversationRoute,
       arguments: {
-        'meeting': meeting,
+        'room': room,
       },
     );
   }

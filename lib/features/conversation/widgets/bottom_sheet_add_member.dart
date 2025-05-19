@@ -22,12 +22,10 @@ import 'package:waterbus/features/conversation/widgets/user_card.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_search_bloc.dart';
 
 class BottomSheetAddMember extends StatefulWidget {
-  final int code;
-  final int meetingId;
+  final int roomId;
   const BottomSheetAddMember({
     super.key,
-    required this.code,
-    required this.meetingId,
+    required this.roomId,
   });
 
   @override
@@ -183,8 +181,7 @@ class _BottomSheetAddMemberState extends State<BottomSheetAddMember> {
 
                               AppBloc.chatBloc.add(
                                 ChatMemberAdded(
-                                  meeting: widget.meetingId,
-                                  code: widget.code,
+                                  roomId: widget.roomId,
                                   user: searchs[index],
                                 ),
                               );
