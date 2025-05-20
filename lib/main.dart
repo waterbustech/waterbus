@@ -14,7 +14,7 @@ import 'package:universal_io/io.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
-import 'package:waterbus/core/constants/api_endpoints.dart';
+import 'package:waterbus/core/constants/endpoints.dart';
 import 'package:waterbus/core/helpers/media_kit/index.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
@@ -36,8 +36,8 @@ void main(List<String> args) async {
           1024 * 1024 * 300; // 300 MB
 
       await WaterbusSdk.instance.initializeApp(
-        wsUrl: ApiEndpoints.wsUrl,
-        apiUrl: ApiEndpoints.baseUrl,
+        wsUrl: Endpoints.wsUrl,
+        apiUrl: Endpoints.baseUrl,
         apiKey: apiKey,
         messageEncryptionKey: "kai@waterbus.tech",
         webrtcE2eeKey: "kai@waterbus.tech",
