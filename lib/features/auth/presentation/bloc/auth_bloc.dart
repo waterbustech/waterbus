@@ -73,23 +73,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _handleLogin(AuthEvent event) async {
     displayLoadingLayer();
 
-    late final AuthPayload? payload;
+    late final String payload;
 
     switch (event) {
       case AuthAnonymouslyLoggedIn():
         payload = await _auth.signInAnonymously();
         break;
       default:
-        payload = null;
+        payload = "";
         break;
     }
 
-    if (payload == null) {
+    if (payload.isEmpty) {
       // Pop loading
       AppNavigator.pop();
       return;
     }
-    final Result<User> result = await WaterbusSdk.instance.createToken(payload);
+
+    final Result<User> result = await WaterbusSdk.instance.createToken(
+      AuthPayload(
+        fullName: "Waterbus",
+        externalId: payload,
+      ),
+    );
 
     // Pop loading
     AppNavigator.pop();
