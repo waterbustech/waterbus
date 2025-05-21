@@ -24,21 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   User? _user;
 
   AuthBloc(this._userLocal) : super(AuthInitial()) {
-    _auth.initialize((payload) async {
-      final Result<User> result =
-          await WaterbusSdk.instance.createToken(payload);
-
-      // Pop loading
-      AppNavigator.pop();
-
-      if (result.isSuccess) {
-        _userLocal.saveUser(result.value!);
-        _user = result.value;
-      }
-
-      add(AuthStarted());
-    });
-
     on<AuthEvent>((event, emit) async {
       if (event is AuthStarted) {
         await _onAuthCheck(emit);
@@ -81,8 +66,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   AuthFailure get _authFailure {
-    _auth.signInSilently();
-
     return AuthFailure();
   }
 

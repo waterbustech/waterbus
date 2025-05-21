@@ -18,7 +18,6 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
-import 'package:waterbus/features/conversation/widgets/add_member_button.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
@@ -201,26 +200,20 @@ class DetailGroupScreen extends StatelessWidget {
                       ) ??
                       state.conversationCurrent!;
 
-                  conversation.members.sort(
+                  final List<Member> members =
+                      conversation.members.map((member) => member).toList();
+
+                  members.sort(
                     (a, b) => a.user.id == state.conversationCurrent!.host?.id
                         ? -1
                         : 1,
                   );
 
-                  final int numberOfWidgetsAdded =
-                      state.conversationCurrent!.isHost ? 1 : 0;
-                  final int widgetLength =
-                      conversation.members.length + numberOfWidgetsAdded;
-
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final bool isHost = index - numberOfWidgetsAdded >= 0 &&
-                            conversation.host?.id ==
-                                conversation
-                                    .members[index - numberOfWidgetsAdded]
-                                    .user
-                                    .id;
+                        final bool isHost = index >= 0 &&
+                            conversation.host?.id == members[index].user.id;
 
                         return Container(
                           margin: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -233,16 +226,16 @@ class DetailGroupScreen extends StatelessWidget {
                                 index == 0 ? 12.sp : 0,
                               ),
                               bottom: Radius.circular(
-                                index == widgetLength - 1 ? 12.sp : 0,
+                                index == members.length - 1 ? 12.sp : 0,
                               ),
                             ),
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(
-                                index == widgetLength - 1 ? 12.sp : 0,
+                                index == members.length - 1 ? 12.sp : 0,
                               ),
-                            ), // Bo góc nếu cần
+                            ),
                             child: Slidable(
                               key: ValueKey(conversation.id),
                               enabled:
@@ -267,10 +260,8 @@ class DetailGroupScreen extends StatelessWidget {
                                               AppBloc.chatBloc.add(
                                                 ChatMemberDeleted(
                                                   roomId: conversation.id,
-                                                  userModel: conversation
-                                                      .members[index -
-                                                          numberOfWidgetsAdded]
-                                                      .user,
+                                                  userModel:
+                                                      members[index].user,
                                                 ),
                                               );
                                             },
@@ -288,21 +279,17 @@ class DetailGroupScreen extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.only(
                                   top: 4.sp,
-                                  bottom: index == widgetLength - 1 ? 4.sp : 0,
+                                  bottom:
+                                      index == members.length - 1 ? 4.sp : 0,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    index == 0 && conversation.isHost
-                                        ? AddMemberButton(
-                                            conversation: conversation,
-                                          )
-                                        : MemberCard(
-                                            member: conversation.members[
-                                                index - numberOfWidgetsAdded],
-                                            isHost: isHost,
-                                          ),
-                                    if (index != widgetLength - 1)
+                                    MemberCard(
+                                      member: members[index],
+                                      isHost: isHost,
+                                    ),
+                                    if (index != members.length - 1)
                                       Padding(
                                         padding: EdgeInsets.only(
                                           top: 4.sp,
@@ -317,7 +304,7 @@ class DetailGroupScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      childCount: widgetLength,
+                      childCount: members.length,
                     ),
                   );
                 }

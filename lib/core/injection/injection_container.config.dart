@@ -29,8 +29,6 @@ import '../utils/audio/meeting_sound.dart' as _i89;
 
 import '../../features/chats/data/datasources/user_local_datasource.dart'
     as _i843;
-import '../../features/profile/presentation/bloc/user_search_bloc.dart'
-    as _i254;
 import '../../features/room/data/datasources/media_config_datasource.dart'
     as _i421;
 import '../../features/room/data/datasources/meeting_local_datasource.dart'
@@ -52,12 +50,11 @@ _i174.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
+  gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
-  gh.factory<_i254.UserSearchBloc>(() => _i254.UserSearchBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
-  gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
   gh.singleton<_i89.RoomSound>(() => _i89.RoomSound());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.singleton<_i513.FileSaverHelper>(() => _i513.FileSaverHelper());

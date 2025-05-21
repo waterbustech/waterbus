@@ -16,12 +16,6 @@ dependencies:
   firebase_auth: ^5.1.0
 
   # Authenticate
-  google_sign_in: ^6.1.4
-  google_sign_in_all_platforms:
-    git:
-      url: https://github.com/waterbustech/sign-in-google-linux.git
-      path: 'google_sign_in_all_platforms'
-      ref: 0.0.4+2
   firedart: 
     git:
       url: https://github.com/waterbustech/firedart.git
@@ -36,7 +30,7 @@ dependencies:
   #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
   #     ref: 2.0.0-pre
   waterbus_sdk: 
-    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
 
 dev_dependencies:
   flutter_test:

@@ -10,13 +10,10 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
-import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
-import 'package:waterbus/features/conversation/widgets/bottom_sheet_add_member.dart';
-import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
@@ -111,21 +108,6 @@ class ConversationHeader extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 20.sp),
-                      Visibility(
-                        visible: room.isHost,
-                        child: IconButtonCustom(
-                          onTap: () {
-                            showDialogWaterbus(
-                              child: BottomSheetAddMember(roomId: room.id),
-                            );
-                          },
-                          icon: PhosphorIcons.userCirclePlus(),
-                          sizeIcon: 22.sp,
-                          padding: EdgeInsets.all(3.sp),
-                          margin: EdgeInsets.zero,
-                        ),
-                      ),
-                      SizedBox(width: 10.sp),
                       IconButtonCustom(
                         onTap: () {
                           AppBloc.roomBloc.add(RoomJoinedEvent(room: room));
