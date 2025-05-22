@@ -7,7 +7,6 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
-import 'package:waterbus/features/profile/presentation/bloc/user_search_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
@@ -17,7 +16,6 @@ class AppBloc {
   static final HomeBloc homeBloc = getIt<HomeBloc>();
   static final AuthBloc authBloc = getIt<AuthBloc>();
   static final UserBloc userBloc = getIt<UserBloc>();
-  static final UserSearchBloc userSearchBloc = getIt<UserSearchBloc>();
   static final RoomBloc roomBloc = getIt<RoomBloc>();
   static final ChatBloc chatBloc = getIt<ChatBloc>();
   static final ArchivedBloc archivedBloc = getIt<ArchivedBloc>();
@@ -38,9 +36,6 @@ class AppBloc {
     ),
     BlocProvider<ArchivedBloc>(
       create: (context) => archivedBloc,
-    ),
-    BlocProvider<UserSearchBloc>(
-      create: (context) => userSearchBloc,
     ),
     BlocProvider<RoomBloc>(
       create: (context) => roomBloc,
