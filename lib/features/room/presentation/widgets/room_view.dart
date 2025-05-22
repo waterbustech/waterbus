@@ -13,7 +13,7 @@ import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart'
 
 class RoomView extends StatelessWidget {
   final EdgeInsets? margin;
-  final ParticipantSFU participantSFU;
+  final ParticipantMediaState participantSFU;
   final List<Participant> participants;
   final double avatarSize;
   final double? width;

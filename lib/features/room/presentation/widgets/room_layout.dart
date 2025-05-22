@@ -20,10 +20,10 @@ class RoomLayout extends StatelessWidget {
     required this.mediaConfig,
   });
 
-  List<ParticipantSFU> get _participants {
-    final List<ParticipantSFU> participants = [];
+  List<ParticipantMediaState> get _participants {
+    final List<ParticipantMediaState> participants = [];
     if (callState?.mParticipant != null) {
-      final ParticipantSFU participant = callState!.mParticipant!;
+      final ParticipantMediaState participant = callState!.mParticipant!;
 
       participants.add(participant.copyWith(isSharingScreen: false));
 
@@ -32,7 +32,7 @@ class RoomLayout extends StatelessWidget {
       }
     }
 
-    for (final ParticipantSFU participant
+    for (final ParticipantMediaState participant
         in callState?.participants.values.toList() ?? []) {
       participants.add(participant.copyWith(isSharingScreen: false));
 
@@ -209,7 +209,7 @@ class RoomLayout extends StatelessWidget {
 
   Widget _buildVideoView(
     BuildContext context, {
-    required ParticipantSFU participant,
+    required ParticipantMediaState participant,
     required CallState? callState,
     double? width,
     double avatarSize = 35,

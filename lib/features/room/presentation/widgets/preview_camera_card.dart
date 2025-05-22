@@ -18,7 +18,8 @@ class PreviewCameraCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RoomBloc, RoomState>(
       builder: (context, state) {
-        final ParticipantSFU? participant = state.callState?.mParticipant;
+        final ParticipantMediaState? participant =
+            state.callState?.mParticipant;
 
         // Return skeleton
         if (participant == null) {

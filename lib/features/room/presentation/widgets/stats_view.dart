@@ -35,7 +35,7 @@ class _StatsViewState extends State<StatsView> {
       StreamController.broadcast();
   final List<num> _roundTimeTrips = [];
   final List<num> _jitters = [];
-  final List<ParticipantSFU> _participants = [];
+  final List<ParticipantMediaState> _participants = [];
   Stream<StatsData>? _statsStream;
   String _currentStats = '';
 
@@ -43,7 +43,7 @@ class _StatsViewState extends State<StatsView> {
   void initState() {
     super.initState();
 
-    _participants.addAll(_sfuParticipants);
+    _participants.addAll(_participantMediaStates);
 
     if (_participants.isEmpty) return;
 
@@ -80,10 +80,10 @@ class _StatsViewState extends State<StatsView> {
     });
   }
 
-  List<ParticipantSFU> get _sfuParticipants {
-    final List<ParticipantSFU> participants = [];
+  List<ParticipantMediaState> get _participantMediaStates {
+    final List<ParticipantMediaState> participants = [];
     if (widget.callState?.mParticipant != null) {
-      final ParticipantSFU participant = widget.callState!.mParticipant!;
+      final ParticipantMediaState participant = widget.callState!.mParticipant!;
 
       participants.add(participant.copyWith(isSharingScreen: false));
 
@@ -95,7 +95,7 @@ class _StatsViewState extends State<StatsView> {
     final trackParticipants =
         widget.callState?.participants.values.toList() ?? [];
 
-    for (final ParticipantSFU participant in trackParticipants) {
+    for (final ParticipantMediaState participant in trackParticipants) {
       participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
@@ -106,15 +106,16 @@ class _StatsViewState extends State<StatsView> {
     return participants;
   }
 
-  Participant? _getParticipant(ParticipantSFU participantSFU) {
+  Participant? _getParticipant(ParticipantMediaState participantMediaState) {
     final participants = widget.participants;
 
-    if (participantSFU.ownerId == kIsMine) {
+    if (participantMediaState.ownerId == kIsMine) {
       return participants.firstWhereOrNull((participant) => participant.isMe);
     }
 
     return participants.firstWhereOrNull(
-      (participant) => participant.id.toString() == participantSFU.ownerId,
+      (participant) =>
+          participant.id.toString() == participantMediaState.ownerId,
     );
   }
 

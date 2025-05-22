@@ -504,7 +504,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       return;
     }
 
-    final List<MapEntry<String, ParticipantSFU>> participants =
+    final List<MapEntry<String, ParticipantMediaState>> participants =
         _waterbusSdk.callState.participants.entries.toList();
 
     participants.sort(
@@ -512,7 +512,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           a.value.audioLevel.threshold.compareTo(b.value.audioLevel.threshold),
     );
 
-    final ParticipantSFU participantSFU = participants.first.value;
+    final ParticipantMediaState participantMediaState =
+        participants.first.value;
     final int indexOfParticipant = _currentRoom?.participants.indexWhere(
           (part) => part.id.toString() == participants.first.key,
         ) ??
@@ -524,12 +525,12 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         _currentRoom!.participants[indexOfParticipant];
 
     _pipChannel.startPip(
-      remoteStreamId: participantSFU.cameraSource?.streamId ?? '',
-      peerConnectionId: participantSFU.peerConnection.peerConnectionId,
+      remoteStreamId: participantMediaState.cameraSource?.streamId ?? '',
+      peerConnectionId: participantMediaState.peerConnection.peerConnectionId,
       myAvatar: AppBloc.userBloc.user?.avatar ?? '',
       remoteAvatar: participant.user?.avatar ?? '',
       remoteName: participant.user?.fullName ?? '',
-      isRemoteCameraEnable: participantSFU.isVideoEnabled,
+      isRemoteCameraEnable: participantMediaState.isVideoEnabled,
     );
   }
 
