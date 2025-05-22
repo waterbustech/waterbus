@@ -424,7 +424,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   Future<void> _handleNewParticipant(RoomSomeoneNewJoined event) async {
     if (_currentRoom == null) return;
 
-    final List<Participant> participants = _currentRoom!.participants;
+    final List<Participant> participants =
+        _currentRoom!.participants.map((item) => item).toList();
 
     final int indexOfParticipant = participants.indexWhere(
       (participant) => participant.id == event.participant.id,
@@ -448,7 +449,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   ) async {
     if (_currentRoom == null) return;
 
-    final List<Participant> participants = _currentRoom!.participants;
+    final List<Participant> participants =
+        _currentRoom!.participants.map((item) => item).toList();
 
     final int indexOfParticipant = participants.indexWhere(
       (participant) => participant.id == int.parse(event.participantId),
@@ -575,7 +577,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   void _onSubtitleChanged(Subtitle sub) {
     if (_currentRoom == null) return;
 
-    final List<Participant> participants = _currentRoom!.participants;
+    final List<Participant> participants =
+        _currentRoom!.participants.map((item) => item).toList();
 
     final int indexOfParticipant = participants.indexWhere(
       (participant) => participant.id.toString() == sub.participant,

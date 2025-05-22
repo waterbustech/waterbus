@@ -57,10 +57,7 @@ class _EnterCodeBoxState extends State<EnterCodeBox> {
                   onTap: widget.onTap,
                   controller: widget.controller,
                   onFieldSubmitted: widget.onFieldSubmitted,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                  ),
-                  keyboardType: TextInputType.number,
+                  style: TextStyle(fontSize: 12.sp),
                   minLines: 1,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(12),
