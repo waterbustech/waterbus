@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -23,6 +22,7 @@ import 'package:waterbus/features/room/presentation/widgets/call_settings_bottom
 import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_layout.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
+import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class RoomBody extends StatefulWidget {

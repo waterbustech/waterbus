@@ -1,8 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import 'package:sizer/sizer.dart';
-import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
+
+import 'package:waterbus/core/helpers/date_time_helper.dart';
 
 class TimeDisplay extends StatefulWidget {
   const TimeDisplay({super.key});
