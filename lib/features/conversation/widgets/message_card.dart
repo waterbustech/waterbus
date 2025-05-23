@@ -25,7 +25,7 @@ class MessageCard extends StatelessWidget {
     final bool isDifferentSender =
         messagePrev?.createdBy?.id != message.createdBy?.id;
     return Container(
-      width: 100.w,
+      width: double.infinity,
       margin: EdgeInsets.only(
         top: isDifferentSender ? 12.sp : 4.sp,
       ),
@@ -153,7 +153,7 @@ class MessageCard extends StatelessWidget {
           vertical: 6.sp,
         ),
         constraints: BoxConstraints(
-          maxWidth: SizerUtil.isDesktop ? 45.w : 195.sp,
+          maxWidth: 195.sp,
         ),
         child: Text(
           message.dataX,

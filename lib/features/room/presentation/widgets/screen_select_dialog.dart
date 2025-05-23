@@ -121,12 +121,13 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
     return Material(
       clipBehavior: Clip.hardEdge,
       shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(30.sp),
+        borderRadius: BorderRadius.circular(16.sp),
       ),
       child: Container(
         width: 400.sp,
         height: 450.sp,
         color: Theme.of(context).scaffoldBackgroundColor,
+        padding: EdgeInsets.only(bottom: 8.sp),
         child: Column(
           children: <Widget>[
             Padding(
@@ -151,9 +152,8 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
               ),
             ),
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
-                padding: EdgeInsets.all(10.sp),
                 child: DefaultTabController(
                   length: 2,
                   child: Column(
@@ -186,8 +186,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                           ],
                         ),
                       ),
-                      const Divider(),
-                      SizedBox(height: 2.sp),
+                      const Divider(height: 1, thickness: 1),
                       Expanded(
                         child: TabBarView(
                           children: [
@@ -201,7 +200,10 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                                   }
 
                                   return GridView.count(
-                                    crossAxisSpacing: 8,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.sp,
+                                    ),
+                                    crossAxisSpacing: 8.sp,
                                     crossAxisCount: 2,
                                     children: snapshot.data!
                                         .map(
@@ -230,7 +232,9 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                                   }
 
                                   return GridView.count(
-                                    padding: EdgeInsets.zero,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.sp,
+                                    ),
                                     crossAxisSpacing: 8.sp,
                                     crossAxisCount: 3,
                                     children: snapshot.data!
@@ -279,7 +283,7 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                     shape: SuperellipseShape(
                       borderRadius: BorderRadius.circular(12.sp),
                     ),
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     child: Text(
                       Strings.share.i18n,
                     ),

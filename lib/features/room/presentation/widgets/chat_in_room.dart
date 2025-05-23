@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
+import 'package:waterbus/features/conversation/widgets/message_input_container.dart';
 import 'package:waterbus/features/conversation/widgets/message_list.dart';
 
 class ChatInRoom extends StatefulWidget {
@@ -66,34 +68,45 @@ class _ChatInRoomState extends State<ChatInRoom> {
           SizerUtil.isDesktop ? EdgeInsets.only(right: 16.sp) : EdgeInsets.zero,
       child: Material(
         clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(12.sp),
+        shape: SuperellipseShape(
+          borderRadius: BorderRadius.circular(12.sp),
+        ),
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
         child: Container(
-          padding: EdgeInsets.only(
-            left: 14.sp,
-            right: 4.sp,
-            top: 16.sp,
-          ),
+          padding: EdgeInsets.all(8.sp),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Chats",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
+              Padding(
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: 4.sp,
+                  vertical: 4.sp,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Chats",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      widget.onClosePressed();
-                    },
-                    iconSize: 18.sp,
-                    icon: Icon(PhosphorIcons.x()),
-                  ),
-                ],
+                    GestureWrapper(
+                      onTap: () {
+                        widget.onClosePressed();
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 18.sp,
+                        width: 18.sp,
+                        child: Icon(
+                          PhosphorIcons.x(),
+                          size: 18.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: BlocBuilder<MessageBloc, MessageState>(
@@ -114,7 +127,12 @@ class _ChatInRoomState extends State<ChatInRoom> {
                   },
                 ),
               ),
-              InputSendMessage(roomId: widget.room.id),
+              MessageInputContainer(
+                roomId: widget.room.id,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+                isBorderVisible: false,
+                borderRadius: BorderRadius.circular(12.sp),
+              ),
             ],
           ),
         ),

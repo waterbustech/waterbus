@@ -17,7 +17,6 @@ class RoomView extends StatelessWidget {
   final List<Participant> participants;
   final double avatarSize;
   final double? width;
-  final BorderRadius? radius;
   final bool borderEnabled;
   const RoomView({
     super.key,
@@ -27,7 +26,6 @@ class RoomView extends StatelessWidget {
     this.borderEnabled = true,
     this.margin,
     this.width,
-    this.radius,
   });
 
   @override
@@ -51,7 +49,7 @@ class RoomView extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     width: audioLevel == AudioLevel.kAudioStrong ? 8.sp : 6.sp,
                   ),
-            borderRadius: radius ?? BorderRadius.circular(12.sp),
+            borderRadius: BorderRadius.circular(12.sp),
           ),
           child: SizedBox(
             width: width,

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/externals/models/presigned_url.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
@@ -151,19 +152,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _handleChangeAvatar(UserAvatarUpdated event) async {
-    final Result<String> presignedUrl = await _waterbusSdk.getPresignedUrl();
+    final Result<PresignedUrl> presignedUrl =
+        await _waterbusSdk.getPresignedUrl();
 
     if (presignedUrl.isSuccess) {
-      final Result<String> uploadAvatar = await _waterbusSdk.uploadAvatar(
-        uploadUrl: presignedUrl.value ?? "",
+      final Result<String> sourceAvatar = await _waterbusSdk.uploadAvatar(
+        presignedUrl: presignedUrl.value!.presignedUrl,
+        sourceUrl: presignedUrl.value!.sourceUrl,
         image: event.image,
       );
 
-      if (uploadAvatar.isSuccess) {
+      if (sourceAvatar.isSuccess) {
         await _updateUserProfile(
           UserUpdated(
             fullName: _user!.fullName,
-            avatar: uploadAvatar.value ?? "",
+            avatar: sourceAvatar.value ?? "",
             bio: _user?.bio,
           ),
           ignorePop: true,

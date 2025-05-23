@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/externals/models/presigned_url.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -235,12 +236,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (event is ChatAvatarUpdated) {
         displayLoadingLayer();
 
-        final Result<String> presignedUrl =
+        final Result<PresignedUrl> presignedUrl =
             await WaterbusSdk().getPresignedUrl();
 
         if (presignedUrl.isSuccess) {
           final Result<String> uploadAvatar = await WaterbusSdk().uploadAvatar(
-            uploadUrl: presignedUrl.value ?? "",
+            presignedUrl: presignedUrl.value!.presignedUrl,
+            sourceUrl: presignedUrl.value!.sourceUrl,
             image: event.avatar,
           );
 

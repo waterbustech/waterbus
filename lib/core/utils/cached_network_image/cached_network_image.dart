@@ -78,6 +78,7 @@ class CustomNetworkImage extends StatelessWidget {
           width: width ?? height!,
           margin: margin,
           decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
             shape: shape,
             border: border,
             borderRadius: borderRadius,
@@ -92,7 +93,7 @@ class CustomNetworkImage extends StatelessWidget {
           child: childInAvatar,
         );
       },
-      placeholder: (context, url) => placeHolderWidget ?? _placeHolder,
+      placeholder: (context, url) => placeHolderWidget ?? _placeHolder(context),
       errorWidget: (context, url, error) => placeHolderWidget ?? _defaultImage,
     );
   }
@@ -106,7 +107,13 @@ class CustomNetworkImage extends StatelessWidget {
         defaultAvatar: defaultAvatar,
       );
 
-  Widget get _placeHolder => Container(
+  Widget _placeHolder(BuildContext context) => Container(
+        decoration: BoxDecoration(
+          shape: shape,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        ),
+        height: height ?? width!,
+        width: width ?? height!,
         margin: margin,
         child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.zero,

@@ -29,6 +29,7 @@ class ConversationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10.sp),
         SizerUtil.isDesktop

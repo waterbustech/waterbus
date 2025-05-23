@@ -56,9 +56,6 @@ class RoomScreen extends StatelessWidget {
             participantSFU: callState.mParticipant!,
             participants: room.participants,
             avatarSize: 25.sp,
-            radius: BorderRadius.horizontal(
-              left: Radius.circular(10.sp),
-            ),
           ),
         ),
         if (callState.participants.values.isNotEmpty)
@@ -67,9 +64,6 @@ class RoomScreen extends StatelessWidget {
               participantSFU: callState.participants.values.first,
               participants: room.participants,
               avatarSize: 25.sp,
-              radius: BorderRadius.horizontal(
-                right: Radius.circular(10.sp),
-              ),
             ),
           ),
       ],

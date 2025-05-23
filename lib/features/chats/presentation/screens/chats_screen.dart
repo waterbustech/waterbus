@@ -33,9 +33,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   void _handleTapChatItem(Room room) {
     AppNavigator().push(
       Routes.conversationRoute,
-      arguments: {
-        'room': room,
-      },
+      arguments: {'room': room},
     );
   }
 

@@ -12,8 +12,8 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
-import 'package:waterbus/features/conversation/widgets/input_send_message.dart';
 import 'package:waterbus/features/conversation/widgets/list_conversation_shimmers.dart';
+import 'package:waterbus/features/conversation/widgets/message_input_container.dart';
 import 'package:waterbus/features/conversation/widgets/message_list.dart';
 import 'package:waterbus/features/conversation/widgets/message_suggest_widget.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -104,7 +104,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 },
               ),
             ),
-            InputSendMessage(roomId: widget.room.id),
+            MessageInputContainer(roomId: widget.room.id),
             SizedBox(
               height: SizerUtil.isMobile &&
                       MediaQuery.of(context).viewInsets.bottom == 0

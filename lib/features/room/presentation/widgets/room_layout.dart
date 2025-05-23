@@ -107,9 +107,6 @@ class RoomLayout extends StatelessWidget {
             participants: room.participants,
             participantSFU: _participants.first,
             borderEnabled: _participants.length > 1 || SizerUtil.isMobile,
-            radius: _participants.length == 1 || SizerUtil.isDesktop
-                ? BorderRadius.circular(20.sp)
-                : BorderRadius.vertical(top: Radius.circular(30.sp)),
           ),
         ),
       ),
@@ -129,9 +126,6 @@ class RoomLayout extends StatelessWidget {
                 child: RoomView(
                   participants: room.participants,
                   participantSFU: _participants.last,
-                  radius: SizerUtil.isDesktop
-                      ? BorderRadius.circular(20.sp)
-                      : BorderRadius.vertical(bottom: Radius.circular(30.sp)),
                 ),
               ),
             ),
@@ -213,14 +207,12 @@ class RoomLayout extends StatelessWidget {
     required CallState? callState,
     double? width,
     double avatarSize = 35,
-    BorderRadius? radius,
   }) {
     return RoomView(
       participants: room.participants,
       participantSFU: participant,
       avatarSize: avatarSize,
       width: width,
-      radius: radius,
     );
   }
 

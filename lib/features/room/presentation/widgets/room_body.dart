@@ -20,7 +20,7 @@ import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_settings_bottom_sheet.dart';
-import 'package:waterbus/features/room/presentation/widgets/chat_in_meeting.dart';
+import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_layout.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -393,7 +393,6 @@ class _RoomBodyState extends State<RoomBody> {
                                       participants: room.participants,
                                       participantSFU: callState!.mParticipant!
                                           .copyWith(isSharingScreen: false),
-                                      radius: BorderRadius.zero,
                                       borderEnabled: false,
                                     ),
                                   )

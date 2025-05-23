@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
@@ -281,8 +282,12 @@ extension AppNavigatorX on AppNavigator {
         maxHeight: 100.h,
         maxWidth: 400.sp,
         barrierColor: flagShowingDialog ? Colors.transparent : null,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16.sp),
+        borderRadius: 16.sp,
+        child: Material(
+          clipBehavior: Clip.hardEdge,
+          shape: SuperellipseShape(
+            borderRadius: BorderRadius.circular(16.sp),
+          ),
           child: SizedBox(
             height: !SizerUtil.isLandscape ? 80.h : 90.h,
             child: AppScaffold(
