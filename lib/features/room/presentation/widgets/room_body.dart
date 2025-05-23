@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/helpers/clipboard_utils.dart';
-import 'package:waterbus/core/helpers/date_time_helper.dart';
 import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
 import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
@@ -37,32 +37,54 @@ class RoomBody extends StatefulWidget {
 }
 
 class _RoomBodyState extends State<RoomBody> {
+  late RoomState _state;
+  late Room _room;
+  late MediaConfig _mediaConfig;
+  late CallState? _callState;
+
   bool _isFilterSettingsOpened = false;
   bool _isChatOpened = false;
 
-  late Room room = widget.state.room!;
-  late MediaConfig mediaConfig = widget.state.mediaConfig ?? MediaConfig();
-  late CallState? callState = widget.state.callState;
+  @override
+  void initState() {
+    super.initState();
+    _initValues();
+  }
 
-  bool get _isRecordingOnPhone =>
-      SizerUtil.isMobile && widget.state.isRecording;
+  @override
+  void didUpdateWidget(RoomBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.state == oldWidget.state) return;
+
+    _initValues();
+  }
+
+  void _initValues() {
+    _state = widget.state;
+    _room = _state.room!;
+    _mediaConfig = _state.mediaConfig ?? MediaConfig();
+    _callState = _state.callState;
+  }
+
+  bool get _isRecordingOnPhone => SizerUtil.isMobile && _state.isRecording;
 
   @override
   Widget build(BuildContext context) {
     return CallbackShortcuts(
       bindings: {
         const SingleActivator(LogicalKeyboardKey.keyD, control: true): () {
-          if (callState?.mParticipant == null) return;
+          if (_callState?.mParticipant == null) return;
 
           AppBloc.roomBloc.add(RoomAudioToggled());
         },
         const SingleActivator(LogicalKeyboardKey.keyE, control: true): () {
-          if (callState?.mParticipant == null) return;
+          if (_callState?.mParticipant == null) return;
 
           AppBloc.roomBloc.add(RoomVideoToggled());
         },
         const SingleActivator(LogicalKeyboardKey.keyH, control: true): () {
-          if (callState?.mParticipant == null) return;
+          if (_callState?.mParticipant == null) return;
 
           AppBloc.roomBloc.add(RoomHandRasingToggled());
         },
@@ -79,7 +101,7 @@ class _RoomBodyState extends State<RoomBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    room.title,
+                    _room.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -87,12 +109,7 @@ class _RoomBodyState extends State<RoomBody> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text(
-                    DateTimeHelper().formatDateTime(DateTime.now()),
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                    ),
-                  ),
+                  const TimeDisplay(),
                 ],
               ),
             ),
@@ -131,8 +148,8 @@ class _RoomBodyState extends State<RoomBody> {
                     DeviceUtils().lightImpact();
                   },
                   icon: Icon(
-                    callState?.mParticipant == null ||
-                            callState!.mParticipant!.isSpeakerPhoneEnabled
+                    _callState?.mParticipant == null ||
+                            _callState!.mParticipant!.isSpeakerPhoneEnabled
                         ? PhosphorIcons.speakerHigh()
                         : PhosphorIcons.speakerLow(),
                     size: 18.5.sp,
@@ -144,10 +161,10 @@ class _RoomBodyState extends State<RoomBody> {
                 child: Row(
                   children: [
                     StackAvatar(
-                      label: room.participants
+                      label: _room.participants
                           .map((participant) => participant.user?.fullName)
                           .toList(),
-                      images: room.participants
+                      images: _room.participants
                           .map((participant) => participant.user?.avatar)
                           .toList(),
                       size: 26.sp,
@@ -155,7 +172,7 @@ class _RoomBodyState extends State<RoomBody> {
                     ),
                     GestureWrapper(
                       onTap: () {
-                        ClipboardUtils.copy(room.code.toString());
+                        ClipboardUtils.copy(_room.code.toString());
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: 12.sp),
@@ -174,7 +191,7 @@ class _RoomBodyState extends State<RoomBody> {
                               size: 18.sp,
                             ),
                             Text(
-                              ' | ${room.code.toString()}',
+                              ' | ${_room.code.toString()}',
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -213,7 +230,7 @@ class _RoomBodyState extends State<RoomBody> {
                 child: Row(
                   children: [
                     if (SizerUtil.isDesktop)
-                      widget.state.isRecording
+                      _state.isRecording
                           ? _buildRecWidget()
                           : SizedBox(width: 80.sp),
                     Expanded(
@@ -223,44 +240,44 @@ class _RoomBodyState extends State<RoomBody> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CallActionButton(
-                            icon: callState?.mParticipant == null ||
-                                    callState!.mParticipant!.isAudioEnabled
+                            icon: _callState?.mParticipant == null ||
+                                    _callState!.mParticipant!.isAudioEnabled
                                 ? PhosphorIcons.microphone()
                                 : PhosphorIcons.microphoneSlash(),
                             onTap: () {
-                              if (callState?.mParticipant == null) return;
+                              if (_callState?.mParticipant == null) return;
 
                               AppBloc.roomBloc.add(RoomAudioToggled());
                             },
                           ),
                           CallActionButton(
-                            icon: callState?.mParticipant == null ||
-                                    callState!.mParticipant!.isVideoEnabled
+                            icon: _callState?.mParticipant == null ||
+                                    _callState!.mParticipant!.isVideoEnabled
                                 ? PhosphorIcons.camera()
                                 : PhosphorIcons.cameraSlash(),
                             onTap: () {
-                              if (callState?.mParticipant == null) return;
+                              if (_callState?.mParticipant == null) return;
 
                               AppBloc.roomBloc.add(RoomVideoToggled());
                             },
                           ),
                           CallActionButton(
                             icon: PhosphorIcons.monitorArrowUp(
-                              callState!.mParticipant!.isSharingScreen
+                              _callState!.mParticipant!.isSharingScreen
                                   ? PhosphorIconsStyle.fill
                                   : PhosphorIconsStyle.regular,
                             ),
-                            iconColor: callState!.mParticipant!.isSharingScreen
+                            iconColor: _callState!.mParticipant!.isSharingScreen
                                 ? Theme.of(context).colorScheme.primary
                                 : null,
-                            backgroundColor: callState!
+                            backgroundColor: _callState!
                                     .mParticipant!.isSharingScreen
                                 ? Theme.of(context).colorScheme.primaryContainer
                                 : null,
                             onTap: () {
-                              if (callState?.mParticipant == null) return;
+                              if (_callState?.mParticipant == null) return;
 
-                              if (callState!.mParticipant!.isSharingScreen) {
+                              if (_callState!.mParticipant!.isSharingScreen) {
                                 AppBloc.roomBloc.add(RoomSharingScreenStoped());
                               } else {
                                 AppBloc.roomBloc
@@ -270,18 +287,18 @@ class _RoomBodyState extends State<RoomBody> {
                           ),
                           if (SizerUtil.isDesktop)
                             CallActionButton(
-                              icon: callState!.mParticipant!.isHandRaising
+                              icon: _callState!.mParticipant!.isHandRaising
                                   ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
                                   : PhosphorIcons.hand(),
-                              iconColor: callState!.mParticipant!.isHandRaising
+                              iconColor: _callState!.mParticipant!.isHandRaising
                                   ? Colors.yellow.shade100
                                   : null,
                               backgroundColor:
-                                  callState!.mParticipant!.isHandRaising
+                                  _callState!.mParticipant!.isHandRaising
                                       ? Colors.yellow.shade900
                                       : null,
                               onTap: () {
-                                if (callState?.mParticipant == null) return;
+                                if (_callState?.mParticipant == null) return;
                                 AppBloc.roomBloc.add(RoomHandRasingToggled());
                               },
                             ),
@@ -390,16 +407,16 @@ class _RoomBodyState extends State<RoomBody> {
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 12.sp),
                                     child: RoomView(
-                                      participants: room.participants,
-                                      participantSFU: callState!.mParticipant!
+                                      participants: _room.participants,
+                                      participantSFU: _callState!.mParticipant!
                                           .copyWith(isSharingScreen: false),
                                       borderEnabled: false,
                                     ),
                                   )
                                 : RoomLayout(
-                                    room: room,
-                                    callState: callState,
-                                    mediaConfig: mediaConfig,
+                                    room: _room,
+                                    callState: _callState,
+                                    mediaConfig: _mediaConfig,
                                   ),
                           ),
                         ),
@@ -431,7 +448,7 @@ class _RoomBodyState extends State<RoomBody> {
                                     )
                                   : _isChatOpened
                                       ? ChatInRoom(
-                                          room: room,
+                                          room: _room,
                                           onClosePressed: () {
                                             setState(() {
                                               _isChatOpened = false;
@@ -450,10 +467,10 @@ class _RoomBodyState extends State<RoomBody> {
                 // Build subtitle
                 Positioned(
                   bottom: 20.sp,
-                  child: widget.state.subtitleStream == null
+                  child: _state.subtitleStream == null
                       ? const SizedBox()
                       : StreamBuilder<String>(
-                          stream: widget.state.subtitleStream,
+                          stream: _state.subtitleStream,
                           builder: (context, snapshot) {
                             final String txt = snapshot.data ?? '';
 

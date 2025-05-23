@@ -547,7 +547,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     switch (event.event) {
       case CallbackEvents.shouldBeUpdateState:
         add(RoomDisplayRefreshed());
-
         break;
       case CallbackEvents.raiseHand:
         add(RoomDisplayRefreshed());
