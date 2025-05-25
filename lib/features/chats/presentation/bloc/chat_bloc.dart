@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/externals/models/presigned_url.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -306,11 +305,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<Room?> _createConversation(
     ChatCreated event,
   ) async {
-    final Result<Room> result = await _waterbusSdk.createRoom(
+    final RoomParams params = RoomParams(
       room: Room(title: event.title),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
+
+    final Result<Room> result = await _waterbusSdk.createRoom(params: params);
+
     if (result.isSuccess) {
       return result.value;
     } else {
