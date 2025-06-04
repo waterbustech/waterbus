@@ -3,6 +3,8 @@ githook:
 	chmod +x pre-commit
 	chmod +x pre-push
 	git config core.hooksPath .githooks
+gen_webp:
+	bash tools/convert-webp.sh
 format:
 	dart run import_sorter:main
 	dart format lib/

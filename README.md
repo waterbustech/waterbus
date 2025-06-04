@@ -85,20 +85,10 @@ To compile `Waterbus` from the source code, follow these steps:
 
 ## 🛠️ Building
 
-These commands are intended for maintainers only.
-
 ### Android
-
-Traditional APK
 
 ```bash
 flutter build apk
-```
-
-AppBundle for Google Play
-
-```bash
-flutter build appbundle
 ```
 
 ### iOS
@@ -150,7 +140,7 @@ flutter build linux
 ### Web
 
 ```bash
-flutter build web
+flutter build web --wasm --release
 ```
 
 ## 🙏 Contributors
