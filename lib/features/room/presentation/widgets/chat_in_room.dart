@@ -77,10 +77,7 @@ class _ChatInRoomState extends State<ChatInRoom> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(
-                  horizontal: 4.sp,
-                  vertical: 4.sp,
-                ),
+                padding: EdgeInsets.all(4.sp),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

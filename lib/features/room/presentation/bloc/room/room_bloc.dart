@@ -308,11 +308,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
   // MARK: Private
   Future<void> _handleCreateRoom(RoomCreated event) async {
-    final Result<Room> result = await _waterbusSdk.createRoom(
+    final RoomParams params = RoomParams(
       room: Room(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
+
+    final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
     AppNavigator.popUntil(Routes.rootRoute);
 
@@ -326,11 +328,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   }
 
   Future<bool> _handleJoinRoom(RoomJoinedWithPassword event) async {
-    final Result<Room> result = await _waterbusSdk.joinRoom(
+    final RoomParams params = RoomParams(
       room: _currentRoom!,
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
+
+    final Result<Room> result = await _waterbusSdk.joinRoom(params: params);
 
     if (result.isSuccess) {
       final Room room = result.value!;
@@ -374,12 +378,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
   Future<void> _handleUpdateRoom(RoomUpdated event) async {
     if (_currentRoom == null) return;
-
-    final Result<bool> result = await _waterbusSdk.updateRoom(
+    final RoomParams params = RoomParams(
       room: _currentRoom!.copyWith(title: event.roomName),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
+
+    final Result<bool> result = await _waterbusSdk.updateRoom(params: params);
 
     AppNavigator.pop();
 
