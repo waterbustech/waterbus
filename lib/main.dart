@@ -35,9 +35,11 @@ void main(List<String> args) async {
       final List<Future> futures = [
         ImageUtils().init(),
         WaterbusSdk.instance.initializeApp(
-          wsUrl: Endpoints.wsUrl,
-          apiUrl: Endpoints.baseUrl,
-          apiKey: apiKey,
+          baseUrl: BaseUrl(
+            url: Endpoints.baseUrl,
+            suffixUrl: Endpoints.suffixUrl,
+            apiKey: apiKey,
+          ),
           messageEncryptionKey: "kai@waterbus.tech",
           webrtcE2eeKey: "kai@waterbus.tech",
         ),

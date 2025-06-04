@@ -305,11 +305,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<Room?> _createConversation(
     ChatCreated event,
   ) async {
-    final Result<Room> result = await _waterbusSdk.createRoom(
+    final RoomParams params = RoomParams(
       room: Room(title: event.title),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
+
+    final Result<Room> result = await _waterbusSdk.createRoom(params: params);
+
     if (result.isSuccess) {
       return result.value;
     } else {

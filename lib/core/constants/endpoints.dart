@@ -1,8 +1,8 @@
 class Endpoints {
   // static const String baseUrl = 'https://services.waterbus.tech/busapi/v3/';
   // static const String wsUrl = 'https://services.waterbus.tech';
-  static const String baseUrl = 'http://192.168.1.3:5998/busapi/v3/';
-  static const String wsUrl = 'http://192.168.1.3:5998';
+  static const String baseUrl = 'http://localhost:5998';
+  static const String suffixUrl = '/busapi/v3/';
 
   // Auth
   static const String auth = 'auth';
