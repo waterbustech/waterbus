@@ -23,7 +23,6 @@ import '../../features/room/presentation/bloc/room/room_bloc.dart' as _i1030;
 import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
 import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
 import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
-import '../helpers/saver/file_saver.dart' as _i513;
 import '../method_channels/pip_channel.dart' as _i921;
 import '../utils/audio/meeting_sound.dart' as _i89;
 
@@ -57,7 +56,6 @@ _i174.GetIt $initGetIt(
   gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
   gh.singleton<_i89.RoomSound>(() => _i89.RoomSound());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
-  gh.singleton<_i513.FileSaverHelper>(() => _i513.FileSaverHelper());
   gh.lazySingleton<_i366.RoomLocalDataSource>(
       () => _i366.RoomLocalDataSourceImpl());
   gh.lazySingleton<_i421.MediaConfigLocalDataSource>(

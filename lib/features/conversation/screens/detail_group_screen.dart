@@ -4,19 +4,20 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
@@ -53,7 +54,7 @@ class DetailGroupScreen extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.only(
-                        right: SizerUtil.isDesktop ? 24.sp : 16.sp,
+                        right: context.isDesktop ? 24.sp : 16.sp,
                       ),
                       child: Text(
                         Strings.edit.i18n,

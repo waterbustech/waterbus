@@ -3,14 +3,15 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 
 class MessageInputContainer extends StatefulWidget {
@@ -66,9 +67,9 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
                 )
               : null,
         ),
-        height: SizerUtil.isDesktop ? 48.sp : null,
+        height: context.isDesktop ? 48.sp : null,
         width: 100.w,
-        padding: SizerUtil.isDesktop
+        padding: context.isDesktop
             ? EdgeInsets.zero
             : EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp),
         child: BlocBuilder<MessageBloc, MessageState>(
@@ -172,7 +173,7 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
                                 color: WebRTC.platformIsMobile
                                     ? mCL
                                     : Theme.of(context).colorScheme.primary,
-                                size: SizerUtil.isDesktop ? 20.sp : 18.sp,
+                                size: context.isDesktop ? 20.sp : 18.sp,
                               ),
                             )
                           : Container(
@@ -191,7 +192,7 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
                                 color: WebRTC.platformIsMobile
                                     ? mCL
                                     : Theme.of(context).colorScheme.primary,
-                                size: SizerUtil.isDesktop ? 20.sp : 18.sp,
+                                size: context.isDesktop ? 20.sp : 18.sp,
                               ),
                             ),
                     ),

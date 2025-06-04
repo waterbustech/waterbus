@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class EnterCodeBox extends StatefulWidget {
   final Function()? onTap;

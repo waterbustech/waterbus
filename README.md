@@ -17,11 +17,11 @@
   <a href="https://github.com/waterbustech/waterbus/blob/main/LICENSE">License</a>
 </p>
 
-<img src="./screenshots/waterbus-awesome.gif" width="100%"/>
+<img src="https://github.com/waterbustech/.github/raw/main/profile/images/waterbus-app.gif?raw=true" width="100%"/>
 
 ## 🌤️ About
 
-🤙 This is an Open Source Video Conferencing App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality, and file sharing.
+🤙 The Open Source Video Conferencing App that utilizes Flutter and WebRTC technologies to provide users with a platform to conduct virtual meetings, conferences, and webinars. The app is built to provide seamless audio and video communication, as well as screen sharing, chat functionality.
 
 ## ✨ Why is this so awesome?
 
@@ -29,13 +29,12 @@
 * 🕵🏻 **Anonymous Access**: Join meetings without the need for registration or login.
 * 👥 **Multiple Participants**: `Waterbus` enables high-quality group video calls using `WebRTC SFU`.
 * 💻 **Screen Sharing**: Share your screen with the participants of your call.
-* 🎥 **Video Codec Support**: Supports a wide range of video codecs including `AV1`, `H.264`, `H.265`, `VP8`, and `VP9`.
+* 🎥 **Video Codec Support**: Supports a wide range of video codecs including `AV1`, `H.264`, `VP8`, and `VP9`.
 * 🌌 **Virtual Background**: Enhance your meetings with professional virtual backgrounds.
 * 🖼️ **Picture-in-Picture**: Increase productivity with picture-in-picture multitasking.
 * 🔒 **End-to-End Encryption**: Ensure secure meetings with end-to-end encryption.
 * 💬 **Encrypted Chat**: Communicate privately with encrypted messaging during video calls.
 * 💋 **Beauty Filter**: Using [GPUPixel](https://github.com/pixpark/gpupixel) to implement Beauty Filters
-* 💬 **Subtitles**: Enable subtitles for better accessibility and understanding during calls.
 
 ## 🎯 Goal
 
@@ -73,14 +72,6 @@ If you have suggestions or problems, please [open an issue](https://github.com/w
 > - `AV1` supported on iOS 14 and above, Android 14 and above.
 > - `E2EE` only supported `H264`, `VP8` and `VP9`
 > - `Video codec Android supported`: Check at [Google Site](https://developer.android.com/guide/topics/media/platform/supported-formats#video-codecs)
-
-<details>
-<summary> 🖼️ Online Meeting Diagram</summary>
-
-[![Diagram](./screenshots/waterbus-diagram-dark.png)](https://docs.waterbus.tech#gh-dark-mode-only)
-[![Diagram](./screenshots/waterbus-diagram.png)](https://docs.waterbus.tech#gh-light-mode-only)
-
-</details>
 
 ## 🚀 Getting Started
 
@@ -171,8 +162,6 @@ flutter build web
 ## 💙 Supports
 
 Support it by joining [stargazers](https://github.com/waterbustech/waterbus/stargazers) for this repository. ⭐
-
-<img src="https://githubachievements.com/_next/image?url=%2Fimages%2Fstarstruck%2F1.gif&w=1200&q=75"/>
 
 Also, follow [maintainers](https://github.com/lambiengcode) on GitHub for our next creations!
 

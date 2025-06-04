@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/profile/presentation/models/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
@@ -21,7 +21,7 @@ class MenuDrawerCard extends StatelessWidget {
         children: [
           Icon(
             item.icon,
-            size: SizerUtil.isDesktop ? 21.sp : 18.sp,
+            size: context.isDesktop ? 21.sp : 18.sp,
             color: Theme.of(context).colorScheme.secondary,
           ),
           SizedBox(width: 12.sp),

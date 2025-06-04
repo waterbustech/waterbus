@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
@@ -64,7 +64,8 @@ class PreviewCameraCard extends StatelessWidget {
                   ),
                 ),
                 child: participant.isVideoEnabled
-                    ? participant.cameraSource!.mediaView(
+                    ? WaterbusMediaView(
+                        mediaSource: participant.cameraSource!,
                         objectFit:
                             RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                         mirror: true,

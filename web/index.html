@@ -1,4 +1,6 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+  <head>
     <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -12,123 +14,161 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-    <base href="$FLUTTER_BASE_HREF">
+    <base href="$FLUTTER_BASE_HREF" />
 
-    <meta charset="UTF-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
     <title>Waterbus</title>
-    <meta name="description" content="Open source video conferencing app built on latest WebRTC SDK. Android/iOS/MacOS/Web">
-    <meta name="keywords" content="WebRTC, Video Conferencing, SFU">
-    <meta name="author" content="Waterbus Tech">
+    <meta name="description" content="The Open Source WebRTC SFU." />
+    <meta name="keywords" content="WebRTC, Video Conferencing, SFU" />
+    <meta name="author" content="Waterbus Tech" />
     <!-- iOS meta tags & icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Waterbus">
-    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Waterbus" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 
     <!-- Web Meta -->
-
-    <meta name="google-signin-client_id" content="727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com">
+    <meta
+      name="google-signin-client_id"
+      content="727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com"
+    />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="icons/favicon.ico">
+    <link rel="icon" type="image/png" href="icons/favicon.ico" />
 
     <title>Waterbus</title>
-    <link rel="manifest" href="manifest.json">
-    <meta property="og:description" content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web">
-    <meta property="og:image" content="https://docs.waterbus.tech/img/banner-dark.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Waterbus Open Source">
-    <meta name="twitter:description" content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web">
-    <meta name="twitter:image" content="https://docs.waterbus.tech/img/banner-dark.png">
-    <script>
-      const serviceWorkerVersion = '{{flutter_service_worker_version}}';
-    </script>
-    <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js" defer=""></script>
-    
-    
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" name="viewport">
+    <link rel="manifest" href="manifest.json" />
+    <meta
+      property="og:description"
+      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
+    />
+    <meta
+      property="og:image"
+      content="https://docs.waterbus.tech/img/banner-dark.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Waterbus Open Source" />
+    <meta
+      name="twitter:description"
+      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
+    />
+    <meta
+      name="twitter:image"
+      content="https://docs.waterbus.tech/img/banner-dark.png"
+    />
+
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+      name="viewport"
+    />
     <style id="splash-screen-style">
-    html {
-      height: 100%
-    }
+      html {
+        height: 100%;
+      }
 
-    body {
-      margin: 0;
-      min-height: 100%;
-      background-color: #FFFFFF;
-          background-size: 100% 100%;
-    }
-
-    .center {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-
-    .contain {
-      display:block;
-      width:100%; height:100%;
-      object-fit: contain;
-    }
-
-    .stretch {
-      display:block;
-      width:100%; height:100%;
-    }
-
-    .cover {
-      display:block;
-      width:100%; height:100%;
-      object-fit: cover;
-    }
-
-    .bottom {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      -ms-transform: translate(-50%, 0);
-      transform: translate(-50%, 0);
-    }
-
-    .bottomLeft {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-
-    .bottomRight {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
-
-    @media (prefers-color-scheme: dark) {
       body {
-        background-color: #14171A;
-          }
-    }
-  </style>
-  <script id="splash-screen-script">
-    function removeSplashFromWeb() {
-      document.getElementById("splash")?.remove();
-      document.getElementById("splash-branding")?.remove();
-      document.body.style.background = "transparent";
-    }
-  </script>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-</head>
+        margin: 0;
+        min-height: 100%;
+        background-color: #ffffff;
+        background-size: 100% 100%;
+      }
+
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+
+      .contain {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .stretch {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .cover {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bottom {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        -ms-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+      }
+
+      .bottomLeft {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .bottomRight {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #14171a;
+        }
+      }
+    </style>
+    <script id="splash-screen-script">
+      function removeSplashFromWeb() {
+        document.getElementById("splash")?.remove();
+        document.getElementById("splash-branding")?.remove();
+        document.body.style.background = "transparent";
+      }
+    </script>
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      name="viewport"
+    />
+  </head>
   <body>
-  <picture id="splash">
-      <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
-      <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
-      <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
-  </picture>
-    
+    <picture id="splash">
+      <source
+        srcset="
+          splash/img/light-1x.png 1x,
+          splash/img/light-2x.png 2x,
+          splash/img/light-3x.png 3x,
+          splash/img/light-4x.png 4x
+        "
+        media="(prefers-color-scheme: light)"
+      />
+      <source
+        srcset="
+          splash/img/dark-1x.png 1x,
+          splash/img/dark-2x.png 2x,
+          splash/img/dark-3x.png 3x,
+          splash/img/dark-4x.png 4x
+        "
+        media="(prefers-color-scheme: dark)"
+      />
+      <img
+        class="center"
+        aria-hidden="true"
+        src="splash/img/light-1x.png"
+        alt=""
+      />
+    </picture>
+
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
@@ -150,8 +190,8 @@
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
     </script>
-    <script src="main.js"></script>
+    <script src="flutter_bootstrap.js" async></script>
+    <script src="main.js" async></script>
     <script type="module" src="virtual-background.js"></script>
-  
-
-</body></html>
+  </body>
+</html>

@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/helpers/clipboard_utils.dart';
-import 'package:waterbus/core/helpers/device_utils.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/clipboard_utils.dart';
+import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
@@ -67,7 +68,7 @@ class _RoomBodyState extends State<RoomBody> {
     _callState = _state.callState;
   }
 
-  bool get _isRecordingOnPhone => SizerUtil.isMobile && _state.isRecording;
+  bool get _isRecordingOnPhone => context.isMobile && _state.isRecording;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +95,9 @@ class _RoomBodyState extends State<RoomBody> {
         child: Scaffold(
           appBar: appBarTitleBack(
             context,
-            toolbarHeight: SizerUtil.isDesktop ? 60.sp : null,
+            toolbarHeight: context.isDesktop ? 60.sp : null,
             titleWidget: Padding(
-              padding: EdgeInsets.only(right: SizerUtil.isDesktop ? 16.sp : 0),
+              padding: EdgeInsets.only(right: context.isDesktop ? 16.sp : 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -120,7 +121,7 @@ class _RoomBodyState extends State<RoomBody> {
                   ? _buildRecWidget()
                   : Assets.icons.launcherIcon.image(height: 30.sp),
             ),
-            leadingWidth: SizerUtil.isDesktop
+            leadingWidth: context.isDesktop
                 ? 50.sp
                 : _isRecordingOnPhone
                     ? 65.sp
@@ -157,7 +158,7 @@ class _RoomBodyState extends State<RoomBody> {
                 ),
               ),
               Visibility(
-                visible: SizerUtil.isDesktop,
+                visible: context.isDesktop,
                 child: Row(
                   children: [
                     StackAvatar(
@@ -229,7 +230,7 @@ class _RoomBodyState extends State<RoomBody> {
                 width: double.infinity,
                 child: Row(
                   children: [
-                    if (SizerUtil.isDesktop)
+                    if (context.isDesktop)
                       _state.isRecording
                           ? _buildRecWidget()
                           : SizedBox(width: 80.sp),
@@ -285,7 +286,7 @@ class _RoomBodyState extends State<RoomBody> {
                               }
                             },
                           ),
-                          if (SizerUtil.isDesktop)
+                          if (context.isDesktop)
                             CallActionButton(
                               icon: _callState!.mParticipant!.isHandRaising
                                   ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
@@ -302,7 +303,7 @@ class _RoomBodyState extends State<RoomBody> {
                                 AppBloc.roomBloc.add(RoomHandRasingToggled());
                               },
                             ),
-                          if (SizerUtil.isDesktop)
+                          if (context.isDesktop)
                             CallActionButton(
                               icon: PhosphorIcons.chatTeardropText(
                                 _isChatOpened
@@ -330,9 +331,9 @@ class _RoomBodyState extends State<RoomBody> {
                             onTap: () {
                               showDialogWaterbus(
                                 onlyShowAsDialog: true,
-                                maxWidth: SizerUtil.isDesktop ? 350.sp : 290.sp,
+                                maxWidth: context.isDesktop ? 350.sp : 290.sp,
                                 paddingBottom:
-                                    SizerUtil.isDesktop ? 80.sp : 20.sp,
+                                    context.isDesktop ? 80.sp : 20.sp,
                                 paddingHorizontal: 10.sp,
                                 alignment: Alignment.bottomCenter,
                                 child: CallSettingsBottomSheet(
@@ -346,7 +347,7 @@ class _RoomBodyState extends State<RoomBody> {
                               );
                             },
                           ),
-                          if (SizerUtil.isMobile)
+                          if (context.isMobile)
                             CallActionButton(
                               icon: PhosphorIcons.signOut(),
                               backgroundColor: Colors.red,
@@ -357,7 +358,7 @@ class _RoomBodyState extends State<RoomBody> {
                         ],
                       ),
                     ),
-                    if (SizerUtil.isDesktop)
+                    if (context.isDesktop)
                       Container(
                         width: 100.sp,
                         alignment: Alignment.bottomRight,
@@ -480,7 +481,7 @@ class _RoomBodyState extends State<RoomBody> {
                                     alignment: Alignment.center,
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
-                                          SizerUtil.isDesktop ? 5.w : 16.sp,
+                                          context.isDesktop ? 5.w : 16.sp,
                                     ),
                                     width: 100.w,
                                     child: Row(
@@ -536,21 +537,21 @@ class _RoomBodyState extends State<RoomBody> {
         borderRadius: BorderRadius.circular(20.sp),
       ),
       child: SizedBox(
-        height: SizerUtil.isDesktop ? 40.sp : 30.sp,
-        width: SizerUtil.isDesktop ? 80.sp : 55.sp,
+        height: context.isDesktop ? 40.sp : 30.sp,
+        width: context.isDesktop ? 80.sp : 55.sp,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               PhosphorIcons.record(PhosphorIconsStyle.fill),
-              size: SizerUtil.isDesktop ? 18.sp : 12.sp,
+              size: context.isDesktop ? 18.sp : 12.sp,
             ),
-            SizedBox(width: SizerUtil.isDesktop ? 8.sp : 4.sp),
+            SizedBox(width: context.isDesktop ? 8.sp : 4.sp),
             Text(
               "REC",
               style: TextStyle(
                 color: mCL,
-                fontSize: SizerUtil.isDesktop ? 12.sp : 10.sp,
+                fontSize: context.isDesktop ? 12.sp : 10.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),

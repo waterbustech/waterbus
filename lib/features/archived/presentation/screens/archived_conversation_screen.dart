@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/list_conversation_shimmers.dart';
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
@@ -64,7 +65,7 @@ class _ArchivedConversationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        bottom: SizerUtil.isDesktop,
+        bottom: context.isDesktop,
         child: Column(
           children: [
             SizedBox(height: 5.sp),
@@ -193,7 +194,7 @@ class _ArchivedConversationScreenState
               ),
             ),
             SizedBox(
-              height: !SizerUtil.isDesktop &&
+              height: !context.isDesktop &&
                       MediaQuery.of(context).viewInsets.bottom == 0
                   ? 12.sp
                   : 0.sp,

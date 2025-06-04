@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/app/lang/models/language_model.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SizerUtil.isDesktop
+      backgroundColor: context.isDesktop
           ? Theme.of(context).colorScheme.surfaceContainerLow
           : null,
       appBar: appBarTitleBack(

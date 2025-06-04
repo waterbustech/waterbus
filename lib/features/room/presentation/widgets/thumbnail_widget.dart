@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class ThumbnailWidget extends StatelessWidget {
   const ThumbnailWidget({

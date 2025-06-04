@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class MessageSuggestWidget extends StatelessWidget {
   final String image;
@@ -39,7 +39,7 @@ class MessageSuggestWidget extends StatelessWidget {
                       .withValues(alpha: 0.7),
                 ),
                 margin: EdgeInsets.only(
-                  bottom: SizerUtil.isDesktop
+                  bottom: context.isDesktop
                       ? 200.sp
                       : MediaQuery.of(context).viewPadding.bottom == 0
                           ? 10.sp

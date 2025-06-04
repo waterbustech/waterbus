@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/chats/presentation/widgets/glass_morphism_wrapper.dart';
 import 'package:waterbus/features/chats/presentation/widgets/option_button.dart';
 import 'package:waterbus/features/conversation/xmodels/option_model.dart';
@@ -17,7 +17,7 @@ class BottomChatOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizerUtil.isDesktop ? 330.sp : null,
+      width: context.isDesktop ? 330.sp : null,
       color: Colors.transparent,
       margin: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 10.sp),
       child: Column(

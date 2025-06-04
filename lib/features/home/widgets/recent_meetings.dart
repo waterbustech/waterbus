@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:super_context_menu/super_context_menu.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/helpers/date_time_helper.dart';
+import 'package:waterbus/core/utils/date_time_utils.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/home/widgets/date_titlle_card.dart';
 import 'package:waterbus/features/home/widgets/e2ee_title_footer.dart';
@@ -39,7 +39,7 @@ class RecentMeetings extends StatelessWidget {
           itemBuilder: (context, index) {
             // First or current created at not equal previous
             final bool hasLabelCreatedAt = index == 0 ||
-                !DateTimeHelper().isEqualTwoDate(
+                !DateTimeUtils().isEqualTwoDate(
                   recentRooms[index - 1].latestJoinedTime,
                   recentRooms[index].latestJoinedTime,
                 );

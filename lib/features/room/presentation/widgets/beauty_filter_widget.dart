@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -43,7 +44,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 12.sp),
-          if (SizerUtil.isDesktop)
+          if (context.isDesktop)
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

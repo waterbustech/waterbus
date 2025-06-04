@@ -1,5 +1,5 @@
 name: waterbus
-description: Built on WebRTC SDK M128. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
 repository: https://github.com/waterbustech/waterbus
 # The following line prevents the package from being accidentally published to
@@ -58,7 +58,7 @@ dependencies:
   injectable: ^2.5.0
 
   # Storage
-  hive: ^2.2.3
+  hive_ce: ^2.11.3
   path_provider: ^2.1.5
 
   # Firebase
@@ -68,6 +68,8 @@ dependencies:
   firebase_performance: ^0.10.0+8
 
   # Utils
+  flutter_localizations:
+    sdk: flutter
   lottie: ^3.1.3
   flutter_native_splash: ^2.4.2
   superellipse_shape: ^0.2.0
@@ -87,10 +89,6 @@ dependencies:
   flutter_advanced_segment: ^3.0.2
   flutter_slidable: ^4.0.0
   flutter_side_menu: ^0.5.41
-  sizer: 
-    path: ./packages/sizer
-  flutter_localizations:
-    sdk: flutter
   i18n_extension: ^12.0.1
   pull_to_refresh: ^2.0.0
   super_sliver_list: ^0.4.1
@@ -100,17 +98,14 @@ dependencies:
   msix: ^3.16.8
   toastification: ^2.3.0
   web: ^1.1.1
-
-  # Code Editor
-  re_editor: ^0.5.0
-  re_highlight: ^0.0.3
   collection: ^1.18.0
 
   # Media
   image_picker: ^1.1.2
   image_picker_android: ^0.8.12+17
   image_picker_platform_interface: ^2.10.0
-  flutter_image_compress: ^2.2.0
+  simple_native_image_compress: ^3.0.0
+  flutter_image_compress: ^2.4.0
   file_saver: ^0.2.14
   video_player: ^2.9.2
   audioplayers: ^6.1.0

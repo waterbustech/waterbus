@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
+import 'package:waterbus/core/navigator/transition_page_route.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
@@ -158,7 +160,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
     RouteSettings routeSettings,
     Widget builder,
   ) {
-    return MaterialPageRoute(
+    return WaterbusTransitionPageRoute(
       builder: (context) => AppScaffold(
         child: builder,
       ),
@@ -235,7 +237,7 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
   static NavigatorState _currentState(String? route) {
     late NavigatorState stateByContext;
 
-    if (SizerUtil.isDesktop &&
+    if (context!.isDesktop &&
         homeState != null &&
         getRouteDesktop(route ?? "")) {
       stateByContext = homeState!;
@@ -289,7 +291,7 @@ extension AppNavigatorX on AppNavigator {
             borderRadius: BorderRadius.circular(16.sp),
           ),
           child: SizedBox(
-            height: !SizerUtil.isLandscape ? 80.h : 90.h,
+            height: !AppNavigator.context!.isLandscape ? 80.h : 90.h,
             child: AppScaffold(
               child: getWidgetByRoute(
                 route: route,
@@ -307,7 +309,7 @@ extension AppNavigatorX on AppNavigator {
   }
 
   bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-    if (SizerUtil.isMobile) return false;
+    if (AppNavigator.context!.isMobile) return false;
 
     return popupInstrealOfScreen.contains(route);
   }

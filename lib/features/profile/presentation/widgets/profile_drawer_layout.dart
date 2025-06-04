@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/profile/presentation/models/menu_items.dart';
 import 'package:waterbus/features/profile/presentation/widgets/list_menu_drawer.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_header.dart';

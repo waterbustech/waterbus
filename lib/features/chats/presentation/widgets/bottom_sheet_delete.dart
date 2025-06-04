@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/chats/presentation/widgets/glass_morphism_wrapper.dart';
 import 'package:waterbus/features/chats/presentation/widgets/option_button.dart';
 
@@ -21,8 +21,8 @@ class BottomSheetDelete extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 12.sp,
-        horizontal: SizerUtil.isDesktop
-            ? SizerUtil.isLandscape
+        horizontal: context.isDesktop
+            ? context.isLandscape
                 ? 12.w
                 : 20.w
             : 10.sp,

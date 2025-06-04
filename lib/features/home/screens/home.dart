@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/home/bloc/home/home_bloc.dart';
 import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
 
         return Scaffold(
           extendBody: true,
-          bottomNavigationBar: SizerUtil.isDesktop
+          bottomNavigationBar: context.isDesktop
               ? const SizedBox()
               : SafeArea(
                   bottom: false,
@@ -64,7 +65,7 @@ class _HomeState extends State<Home> {
                             .withValues(alpha: .8),
                         alignment: Alignment.bottomCenter,
                         child: Container(
-                          width: SizerUtil.isDesktop ? 50.w : double.infinity,
+                          width: context.isDesktop ? 50.w : double.infinity,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

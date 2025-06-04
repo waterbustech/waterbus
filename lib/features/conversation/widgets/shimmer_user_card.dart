@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
-import 'package:waterbus/core/utils/shimmers/fade_shimmer.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';
 
 class ShimmerUserCard extends StatelessWidget {
   const ShimmerUserCard({super.key});
@@ -36,13 +36,13 @@ class ShimmerUserCard extends StatelessWidget {
                     children: [
                       FadeShimmer(
                         height: 12.sp,
-                        width: SizerUtil.isDesktop ? 245.sp : 70.w,
+                        width: context.isDesktop ? 245.sp : 70.w,
                         fadeTheme: FadeTheme.lightReverse,
                       ),
                       SizedBox(height: 4.sp),
                       FadeShimmer(
                         height: 10.5.sp,
-                        width: SizerUtil.isDesktop ? 140.sp : 40.w,
+                        width: context.isDesktop ? 140.sp : 40.w,
                         fadeTheme: FadeTheme.lightReverse,
                       ),
                     ],
