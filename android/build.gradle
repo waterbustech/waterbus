@@ -27,9 +27,8 @@ allprojects {
                 }
 
                 def groupsToConfigure = [
-                        // "com.fluttercandies.flutter_image_compress",
                         "com.example.waterbus_callkit_incoming",
-                        "com.mix1009.android_path_provider"
+//                        "io.flutter.plugins.pathprovider"
                 ]
 
                 if (groupsToConfigure.contains(project.group)) {

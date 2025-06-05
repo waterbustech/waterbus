@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i18n_extension/i18n_extension.dart';
 import 'package:toastification/toastification.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
@@ -32,6 +33,8 @@ class _AppState extends State<App> {
               return ToastificationWrapper(
                 child: MaterialApp(
                   title: kAppTitle,
+                  locale: I18n.locale,
+                  supportedLocales: I18n.supportedLocales,
                   navigatorKey: AppNavigator.navigatorKey,
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.light(

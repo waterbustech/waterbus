@@ -88,7 +88,7 @@ class _GroupSpaceBarCustomState extends State<GroupSpaceBarCustom> {
             final double scaleValueAvatar =
                 Tween<double>(begin: expandedTitleScale, end: 1.0).transform(v);
             final Matrix4 scaleTransformAvatar = Matrix4.identity()
-              ..scaleByDouble(scaleValueAvatar, scaleValueAvatar, 1.0, 1.0);
+              ..scale(scaleValueAvatar, scaleValueAvatar, 1.0);
 
             children.add(
               _FlexibleSpaceHeaderOpacity(
@@ -128,7 +128,7 @@ class _GroupSpaceBarCustomState extends State<GroupSpaceBarCustom> {
           final double scaleValue =
               Tween<double>(begin: expandedTitleScale, end: 1.0).transform(t);
           final Matrix4 scaleTransform = Matrix4.identity()
-            ..scaleByDouble(scaleValue, scaleValue, 1.0, 1.0);
+            ..scale(scaleValue, scaleValue, 1.0);
 
           children.add(
             Container(
@@ -165,7 +165,7 @@ class _GroupSpaceBarCustomState extends State<GroupSpaceBarCustom> {
                 Tween<double>(begin: expandedSubTitleScale, end: 1)
                     .transform(t);
             final Matrix4 scaleTransform = Matrix4.identity()
-              ..scaleByDouble(scaleSubTitleValue, scaleSubTitleValue, 1.0, 1.0);
+              ..scale(scaleSubTitleValue, scaleSubTitleValue, 1.0);
 
             children.add(
               Container(

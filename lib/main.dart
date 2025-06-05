@@ -15,7 +15,6 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/constants/endpoints.dart';
-import 'package:waterbus/core/utils/media_kit/index.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
@@ -29,8 +28,6 @@ void main(List<String> args) async {
       FlutterNativeSplash.preserve(
         widgetsBinding: widgetsBinding,
       );
-
-      initializeMediaKit();
 
       final List<Future> futures = [
         ImageUtils().init(),
@@ -64,6 +61,7 @@ void main(List<String> args) async {
       runApp(
         I18n(
           initialLocale: LanguageService().getLocale().locale,
+          supportedLocales: ['en-US'.asLocale, 'vi-VN'.asLocale],
           child: const App(),
         ),
       );

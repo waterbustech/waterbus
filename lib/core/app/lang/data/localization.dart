@@ -245,14 +245,14 @@ class MyI18n {
         vietnamese.keys.map(
           (element) => MapEntry(
             element,
-            {'vi_vn': vietnamese[element]!, 'en_us': english[element]!},
+            {'vi-VN': vietnamese[element]!, 'en-US': english[element]!},
           ),
         ),
       );
 }
 
 extension Localization on String {
-  static final _t = Translations.byId('vi_vn', MyI18n().getTranslation);
+  static final _t = Translations.byId('vi-VN', MyI18n().getTranslation);
 
   String get i18n => localize(this, _t);
 
