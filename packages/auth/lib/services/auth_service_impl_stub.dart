@@ -10,6 +10,11 @@ class AuthServiceImpl extends AuthService {
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
+  Future<void> initialize() async {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<String> signInAnonymously() async {
     final firebaseUserCredential = await _firebaseAuth.signInAnonymously();
 

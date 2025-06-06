@@ -35,7 +35,7 @@ void main(List<String> args) async {
           baseUrl: BaseUrl(
             url: Endpoints.baseUrl,
             suffixUrl: Endpoints.suffixUrl,
-            apiKey: apiKey,
+            apiKey: 'open@waterbus',
           ),
           messageEncryptionKey: "kai@waterbus.tech",
           webrtcE2eeKey: "kai@waterbus.tech",
