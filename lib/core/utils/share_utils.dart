@@ -13,14 +13,16 @@ class ShareUtils {
   }) async {
     DeviceUtils().lightImpact();
 
-    await Share.share(
-      link,
-      subject: title,
-      sharePositionOrigin: Rect.fromLTWH(
-        0,
-        0,
-        100.w,
-        10.h,
+    await SharePlus.instance.share(
+      ShareParams(
+        text: link,
+        title: title,
+        sharePositionOrigin: Rect.fromLTWH(
+          0,
+          0,
+          100.w,
+          10.h,
+        ),
       ),
     );
   }

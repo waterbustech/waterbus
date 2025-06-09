@@ -46,7 +46,9 @@ extension StringExtension on String {
         width: 1.sp,
       ),
       closeOnClick: true,
-      closeButtonShowType: CloseButtonShowType.none,
+      closeButton: ToastCloseButton(
+        showType: CloseButtonShowType.none,
+      ),
     );
   }
 }

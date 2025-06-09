@@ -113,7 +113,7 @@ dependencies:
   #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
   #     ref: 2.0.0-pre
   waterbus_sdk: 
-    path: /home/lambiengcode/Documents/waterbus-flutter-sdk
+    path: C:\Users\lambi\Documents\waterbus-flutter-sdk
    
 
 dependency_overrides:
@@ -171,7 +171,7 @@ msix_config:
   publisher_display_name: Waterbus
   identity_name: com.wanted.waterbus
   msix_version: 1.0.0.0
-  logo_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/512-mac.png
+  logo_path: assets/images/logo_rounded_2.png
   capabilities: microphone, webcam
 
 # For information on the generic Dart part of this file, see the

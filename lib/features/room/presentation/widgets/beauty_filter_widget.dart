@@ -97,57 +97,61 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
           ),
           _buildSliderButton(
             Strings.smooth.i18n,
-            _beautyFilters.smoothValue,
+            _beautyFilters.smoothValue * 10,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(smoothValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(smoothValue: value / 10);
               });
             },
           ),
           _buildSliderButton(
             Strings.white.i18n,
-            _beautyFilters.whiteValue,
+            _beautyFilters.whiteValue * 20,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(whiteValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(whiteValue: value / 20);
               });
             },
           ),
           _buildSliderButton(
             Strings.thinFace.i18n,
-            _beautyFilters.thinFaceValue * 10,
+            _beautyFilters.thinFaceValue * 200,
             (value) {
               setState(() {
                 _beautyFilters =
-                    _beautyFilters.copyWith(thinFaceValue: value / 10);
+                    _beautyFilters.copyWith(thinFaceValue: value / 200);
               });
             },
           ),
           _buildSliderButton(
             Strings.bigEyes.i18n,
-            _beautyFilters.bigEyeValue * 5,
+            _beautyFilters.bigEyeValue * 100,
             (value) {
               setState(() {
                 _beautyFilters =
-                    _beautyFilters.copyWith(bigEyeValue: value / 5);
+                    _beautyFilters.copyWith(bigEyeValue: value / 100);
               });
             },
           ),
           _buildSliderButton(
             Strings.lipstick.i18n,
-            _beautyFilters.lipstickValue,
+            _beautyFilters.lipstickValue * 10,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(lipstickValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(lipstickValue: value / 10);
               });
             },
           ),
           _buildSliderButton(
             Strings.blusher.i18n,
-            _beautyFilters.blusherValue,
+            _beautyFilters.blusherValue * 10,
             (value) {
               setState(() {
-                _beautyFilters = _beautyFilters.copyWith(blusherValue: value);
+                _beautyFilters =
+                    _beautyFilters.copyWith(blusherValue: value / 10);
               });
             },
           ),
@@ -170,6 +174,7 @@ class _BeautyFilterWidgetState extends State<BeautyFilterWidget> {
               ),
         ),
         Slider(
+          max: 10,
           value: value,
           activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (val) {

@@ -651,12 +651,11 @@ packages:
   firedart:
     dependency: transitive
     description:
-      path: "."
-      ref: "0.9.8+1"
-      resolved-ref: "487db10bc30b65a72a34c019337d71867d546eb9"
-      url: "https://github.com/waterbustech/firedart.git"
-    source: git
-    version: "0.9.8+1"
+      name: firedart
+      sha256: bf9ea24bf70567b5e4596bbceb2b7325c3167f10555ca757ef1f887af42b300a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.8"
   fixnum:
     dependency: transitive
     description:
@@ -857,7 +856,7 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      path: "/home/lambiengcode/Documents/flutter-webrtc-plus"
+      path: "C:\\Users\\lambi\\Documents\\flutter-webrtc-plus"
       relative: false
     source: path
     version: "0.14.1+1"
@@ -2175,7 +2174,7 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/home/lambiengcode/Documents/waterbus-flutter-sdk"
+      path: "C:\\Users\\lambi\\Documents\\waterbus-flutter-sdk"
       relative: false
     source: path
     version: "1.6.0"
