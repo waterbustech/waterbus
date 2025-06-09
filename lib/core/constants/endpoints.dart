@@ -1,7 +1,7 @@
 class Endpoints {
   // static const String baseUrl = 'https://services.waterbus.tech/busapi/v3/';
   // static const String wsUrl = 'https://services.waterbus.tech';
-  static const String baseUrl = 'https://e92d-27-75-184-247.ngrok-free.app';
+  static const String baseUrl = 'http://localhost:5998';
   static const String suffixUrl = '/busapi/v3/';
 
   // Auth
