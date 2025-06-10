@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_text_field.dart';
@@ -86,7 +87,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
                       color: Colors.transparent,
                     ),
                     padding: EdgeInsets.all(12.sp).add(
-                      EdgeInsets.only(right: SizerUtil.isDesktop ? 12.sp : 0),
+                      EdgeInsets.only(right: context.isDesktop ? 12.sp : 0),
                     ),
                     child: Text(
                       Strings.done.i18n,

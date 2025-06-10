@@ -24,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   User? _user;
 
   AuthBloc(this._userLocal) : super(AuthInitial()) {
+    _auth.initialize();
     on<AuthEvent>((event, emit) async {
       if (event is AuthStarted) {
         await _onAuthCheck(emit);

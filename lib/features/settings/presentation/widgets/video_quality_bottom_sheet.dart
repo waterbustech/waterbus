@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
 
 class VideoQualityBottomSheet extends StatefulWidget {

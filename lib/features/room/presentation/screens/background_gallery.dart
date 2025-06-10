@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class BackgroundGalleryScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
   }
 
   List<String> get backgroundAssets =>
-      SizerUtil.isDesktop ? desktopBackgrounds : backgrounds;
+      context.isDesktop ? desktopBackgrounds : backgrounds;
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +58,10 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: SizerUtil.isDesktop ? (100.w / 250.sp).round() : 3,
+          crossAxisCount: context.isDesktop ? (100.w / 250.sp).round() : 3,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2.sp,
-          childAspectRatio: SizerUtil.isDesktop ? 1.78 : 0.66,
+          childAspectRatio: context.isDesktop ? 1.78 : 0.66,
         ),
         itemCount: backgroundAssets.length + 1,
         itemBuilder: (context, index) {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class SettingRowButton extends StatelessWidget {
   final String title;
@@ -69,8 +70,7 @@ class SettingRowButton extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        fontWeight:
-                            SizerUtil.isDesktop ? null : FontWeight.w500,
+                        fontWeight: context.isDesktop ? null : FontWeight.w500,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                     ),
@@ -78,7 +78,7 @@ class SettingRowButton extends StatelessWidget {
                   if (value != null)
                     Padding(
                       padding: EdgeInsets.only(
-                        right: SizerUtil.isDesktop ? 6.sp : 3.sp,
+                        right: context.isDesktop ? 6.sp : 3.sp,
                       ),
                       child: Text(
                         value ?? "",
@@ -95,7 +95,7 @@ class SettingRowButton extends StatelessWidget {
                     child: Icon(
                       PhosphorIcons.caretRight(),
                       color: colorGray3,
-                      size: SizerUtil.isDesktop ? 14.sp : null,
+                      size: context.isDesktop ? 14.sp : null,
                     ),
                   ),
                 ],

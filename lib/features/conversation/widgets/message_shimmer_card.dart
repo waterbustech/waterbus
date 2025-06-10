@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
-import 'package:waterbus/core/utils/shimmers/fade_shimmer.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';
 
 class MessageShimmerCard extends StatelessWidget {
   final bool isMe;
@@ -40,7 +40,7 @@ class MessageShimmerCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.sp),
           ),
           constraints:
-              BoxConstraints(maxWidth: SizerUtil.isDesktop ? 45.w : 195.sp),
+              BoxConstraints(maxWidth: context.isDesktop ? 45.w : 195.sp),
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 12.sp),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +55,7 @@ class MessageShimmerCard extends StatelessWidget {
               numberOfRow == 2 ? SizedBox(height: 8.sp) : Container(),
               numberOfRow == 2
                   ? FadeShimmer(
-                      width: SizerUtil.isDesktop ? 25.w : 125.sp,
+                      width: context.isDesktop ? 25.w : 125.sp,
                       height: 12.sp,
                       highlightColor:
                           Theme.of(context).textTheme.bodyMedium!.color,

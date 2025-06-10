@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
@@ -58,7 +59,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
 
   @override
   Widget build(BuildContext context) {
-    final double widthButton = SizerUtil.isMobile
+    final double widthButton = context.isMobile
         ? 100.w
         : _getFirstLineWidth(
             text: _readyJoinText(context),

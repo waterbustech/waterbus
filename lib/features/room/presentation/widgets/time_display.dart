@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
-import 'package:waterbus/core/helpers/date_time_helper.dart';
+import 'package:waterbus/core/utils/date_time_utils.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class TimeDisplay extends StatefulWidget {
   const TimeDisplay({super.key});
@@ -16,6 +16,7 @@ class TimeDisplay extends StatefulWidget {
 
 class _TimeDisplayState extends State<TimeDisplay> {
   Timer? _timer;
+  Timer? _firstTimer;
   DateTime _currentTime = DateTime.now();
 
   @override
@@ -29,7 +30,7 @@ class _TimeDisplayState extends State<TimeDisplay> {
 
     final secondsUntilNextMinute = 60 - now.second;
 
-    Timer(Duration(seconds: secondsUntilNextMinute), () {
+    _firstTimer = Timer(Duration(seconds: secondsUntilNextMinute), () {
       setState(() {
         _currentTime = DateTime.now();
       });
@@ -45,13 +46,14 @@ class _TimeDisplayState extends State<TimeDisplay> {
   @override
   void dispose() {
     _timer?.cancel();
+    _firstTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      DateTimeHelper().formatDateTime(_currentTime),
+      DateTimeUtils().formatDateTime(_currentTime),
       style: TextStyle(
         fontSize: 11.sp,
       ),

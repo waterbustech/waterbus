@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 
 class StackAvatar extends StatelessWidget {

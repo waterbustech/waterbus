@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/drop_down/drop_down_button.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
@@ -51,23 +52,22 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double previewCameraWidth = SizerUtil.isDesktop ? 52.w : 60.w;
-    final double previewCameraHeight = SizerUtil.isDesktop
+    final double previewCameraWidth = context.isDesktop ? 52.w : 60.w;
+    final double previewCameraHeight = context.isDesktop
         ? previewCameraWidth / 16 * 9
         : previewCameraWidth / 3 * 4;
 
     return Scaffold(
       body: Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: SizerUtil.isDesktop ? 8.w : 12.sp),
+            EdgeInsets.symmetric(horizontal: context.isDesktop ? 8.w : 12.sp),
         child: Center(
           child: SingleChildScrollView(
-            physics:
-                SizerUtil.isDesktop ? NeverScrollableScrollPhysics() : null,
+            physics: context.isDesktop ? NeverScrollableScrollPhysics() : null,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: SizerUtil.isDesktop ? 0 : 50.sp),
+                SizedBox(height: context.isDesktop ? 0 : 50.sp),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -75,7 +75,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       height: previewCameraHeight,
                       width: previewCameraWidth,
                     ),
-                    if (SizerUtil.isDesktop)
+                    if (context.isDesktop)
                       Expanded(
                         child: JoinRoomActions(
                           room: widget.room,
@@ -85,7 +85,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   ],
                 ),
                 SizedBox(height: 18.sp),
-                if (SizerUtil.isDesktop)
+                if (context.isDesktop)
                   Row(
                     children: [
                       if (_audioInputs.isNotEmpty)
@@ -138,7 +138,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                         ),
                     ],
                   ),
-                if (SizerUtil.isMobile)
+                if (context.isMobile)
                   Padding(
                     padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
                     child: JoinRoomActions(
@@ -162,7 +162,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
     required IconData icon,
   }) {
     return Container(
-      width: SizerUtil.isDesktop ? 15.w : 100.w,
+      width: context.isDesktop ? 15.w : 100.w,
       padding: EdgeInsets.symmetric(horizontal: 4.sp, vertical: 6.sp),
       child: showDropdownButton<MediaDeviceInfo>(
         data: mediaDeviceInfos,

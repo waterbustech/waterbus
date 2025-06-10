@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -11,14 +10,16 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/home_app.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _currentTab = Strings.recent;
 
   void _handleToggleDrawer() {
-    if (SizerUtil.isDesktop) return;
+    if (context.isDesktop) return;
 
     _sideMenuKey.toggle();
   }
@@ -84,11 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SlidingDrawer(
       key: _sideMenuKey,
-      ignorePointer: SizerUtil.isDesktop,
+      ignorePointer: context.isDesktop,
       drawerBuilder: (_) =>
-          SizerUtil.isDesktop ? const SizedBox() : _buildDrawable(),
+          context.isDesktop ? const SizedBox() : _buildDrawable(),
       contentBuilder: (_) => Scaffold(
-        appBar: SizerUtil.isDesktop
+        appBar: context.isDesktop
             ? null
             : appBarTitleBack(
                 context,
@@ -150,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
         body: Row(
           children: [
-            if (SizerUtil.isDesktop)
+            if (context.isDesktop)
               Container(
                 padding: EdgeInsets.all(10.sp),
                 color: Theme.of(context).colorScheme.outlineVariant,
@@ -172,14 +173,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             Expanded(
               child: ColoredBox(
-                color: SizerUtil.isDesktop
+                color: context.isDesktop
                     ? Theme.of(context).colorScheme.outlineVariant
                     : Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   children: [
                     _buildHeader(context),
                     Expanded(
-                      child: SizerUtil.isDesktop
+                      child: context.isDesktop
                           ? Container(
                               margin:
                                   EdgeInsets.only(bottom: 10.sp, right: 10.sp),
@@ -251,8 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final margin = EdgeInsets.only(
       top: 10.sp,
       bottom: 12.sp,
-      left: SizerUtil.isDesktop ? 0 : 10.sp,
-      right: SizerUtil.isDesktop ? 0 : 10.sp,
+      left: context.isDesktop ? 0 : 10.sp,
+      right: context.isDesktop ? 0 : 10.sp,
     );
 
     switch (_currentTab) {
@@ -260,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return EnterCodeBox(
           margin: margin,
           hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
-          suffixWidget: SizerUtil.isDesktop ? _buildCreateMeetingButton : null,
+          suffixWidget: context.isDesktop ? _buildCreateMeetingButton : null,
           onTap: () {
             AppNavigator().push(Routes.enterCodeRoute);
           },

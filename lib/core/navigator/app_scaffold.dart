@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
@@ -22,7 +21,7 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizerUtil.isMinimunSizeSupport
+    return SizerUtils.instance.isMinimunSizeSupport
         ? const SizeNotSupportedWidget()
         : Scaffold(
             appBar: _appBar(context),

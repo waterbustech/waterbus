@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
@@ -18,7 +18,7 @@ class LogInScreen extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: SizerUtil.isDesktop ? 330.sp : 100.w,
+              width: context.isDesktop ? 330.sp : 100.w,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.sp),
                 child: Column(

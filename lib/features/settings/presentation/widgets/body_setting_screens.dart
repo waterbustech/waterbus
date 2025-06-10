@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -11,9 +10,11 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -35,8 +36,8 @@ class BodySettingScreens extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.sp).add(
           EdgeInsets.only(
-            top: SizerUtil.isDesktop ? 12.sp : 0,
-            bottom: SizerUtil.isDesktop ? 20.sp : 75.sp,
+            top: context.isDesktop ? 12.sp : 0,
+            bottom: context.isDesktop ? 20.sp : 75.sp,
           ),
         ),
         child: Column(
@@ -45,10 +46,10 @@ class BodySettingScreens extends StatelessWidget {
               builder: (context, state) {
                 final User? user = state is UserDone ? state.user : null;
 
-                return SizerUtil.isDesktop
+                return context.isDesktop
                     ? GestureWrapper(
                         onTap: () {
-                          if (SizerUtil.isDesktop) {
+                          if (context.isDesktop) {
                             onTap?.call(profileTab);
                           } else {
                             AppNavigator().push(Routes.profileRoute);
@@ -126,7 +127,7 @@ class BodySettingScreens extends StatelessWidget {
                                   child: Icon(
                                     PhosphorIcons.caretRight(),
                                     color: colorGray3,
-                                    size: SizerUtil.isDesktop ? 14.sp : null,
+                                    size: context.isDesktop ? 14.sp : null,
                                   ),
                                 ),
                               ],
@@ -185,7 +186,7 @@ class BodySettingScreens extends StatelessWidget {
               },
             ),
             SizedBox(height: 20.sp),
-            if (SizerUtil.isMobile) ...[
+            if (context.isMobile) ...[
               SettingRowButton(
                 onTap: () {
                   AppNavigator().push(Routes.profileRoute);
@@ -207,7 +208,7 @@ class BodySettingScreens extends StatelessWidget {
             ),
             SettingRowButton(
               onTap: () {
-                if (SizerUtil.isDesktop) {
+                if (context.isDesktop) {
                   onTap?.call(appearanceTab);
                 } else {
                   AppNavigator().push(Routes.themeRoute);
@@ -221,7 +222,7 @@ class BodySettingScreens extends StatelessWidget {
             ),
             SettingRowButton(
               onTap: () {
-                if (SizerUtil.isDesktop) {
+                if (context.isDesktop) {
                   onTap?.call(languageTab);
                 } else {
                   AppNavigator().push(Routes.langRoute);
@@ -236,7 +237,7 @@ class BodySettingScreens extends StatelessWidget {
             SizedBox(height: 18.sp),
             SettingRowButton(
               onTap: () {
-                if (SizerUtil.isDesktop) {
+                if (context.isDesktop) {
                   onTap?.call(callAndMeetingTab);
                 } else {
                   AppNavigator().push(Routes.settingsCallRoute);

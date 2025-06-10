@@ -11,19 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   universal_io: ^2.2.2
-
-  # Firebase
-  firebase_auth: ^5.1.0
-
-  # Authenticate
-  firedart: 
-    git:
-      url: https://github.com/waterbustech/firedart.git
-      path: '.'
-      ref: 0.9.8+1
-
-  # Encryption
-  crypto: ^3.0.2
+  firebase_auth: ^5.5.4
+  firedart: ^0.9.8
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:sizer/sizer.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class TextFieldInput extends StatelessWidget {
   final String? Function(String?)? validatorForm;

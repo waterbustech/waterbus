@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -24,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
             return Container(
               padding: EdgeInsets.only(
                 left: 20.sp,
-                top: SizerUtil.isDesktop ? 20.sp : 0,
+                top: context.isDesktop ? 20.sp : 0,
                 bottom: 16.sp,
               ),
               child: Column(
@@ -37,7 +38,7 @@ class ProfileHeader extends StatelessWidget {
                     children: [
                       AvatarCard(
                         urlToImage: user.avatar,
-                        size: SizerUtil.isDesktop ? 35.sp : 30.sp,
+                        size: context.isDesktop ? 35.sp : 30.sp,
                         label: user.fullName,
                       ),
                       IconButton(

@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -10,6 +9,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
@@ -40,7 +40,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           emit(_chatDone);
         }
 
-        if (SizerUtil.isDesktop) {
+        if (AppNavigator.context!.isDesktop) {
           Future.delayed(1.seconds, () {
             if (_conversationCurrent == null && _conversations.isNotEmpty) {
               add(
@@ -487,7 +487,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     );
 
     if (_conversationCurrent?.id == meetingId) {
-      if (SizerUtil.isDesktop && _conversations.isNotEmpty) {
+      if (AppNavigator.context!.isDesktop && _conversations.isNotEmpty) {
         _conversationCurrent = _conversations.first;
       } else {
         _conversationCurrent = null;

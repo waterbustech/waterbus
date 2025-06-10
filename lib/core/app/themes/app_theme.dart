@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:universal_io/io.dart';
-
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/types/enums/color_seed.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/gen/fonts.gen.dart';
 
 class AppTheme {
@@ -13,7 +12,10 @@ class AppTheme {
     required this.data,
   });
 
-  factory AppTheme.light({ColorSeed colorSeed = ColorSeed.blue}) {
+  factory AppTheme.light({
+    ColorSeed colorSeed = ColorSeed.blue,
+    List<ThemeExtension> extensions = const [],
+  }) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
@@ -46,11 +48,11 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
               ? Brightness.light
               : Brightness.dark,
           statusBarIconBrightness: Brightness.light ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
               ? Brightness.light
               : Brightness.dark,
         ),
@@ -64,19 +66,18 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      // dialogTheme: DialogTheme(
-      //   backgroundColor: appColors.background,
-      //   elevation: 0,
-      //   shadowColor: Colors.transparent,
-      // ),
       fontFamily: FontFamily.helvetica,
+      extensions: extensions,
     );
     return AppTheme(
       data: themeData,
     );
   }
 
-  factory AppTheme.dark({ColorSeed colorSeed = ColorSeed.blue}) {
+  factory AppTheme.dark({
+    ColorSeed colorSeed = ColorSeed.blue,
+    List<ThemeExtension> extensions = const [],
+  }) {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
       colorSchemeSeed: colorSeed.color,
@@ -108,11 +109,11 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
               ? Brightness.light
               : Brightness.dark,
           statusBarIconBrightness: Brightness.dark ==
-                  (Platform.isAndroid ? Brightness.dark : Brightness.light)
+                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
               ? Brightness.light
               : Brightness.dark,
         ),
@@ -126,11 +127,8 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      // dialogTheme: const DialogTheme(
-      //   elevation: 0,
-      //   shadowColor: Colors.transparent,
-      // ),
       fontFamily: FontFamily.helvetica,
+      extensions: extensions,
     );
     return AppTheme(
       data: themeData,

@@ -1,37 +1,52 @@
-import 'dart:core';
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/constants/avatar_colors.dart';
-import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 
 class DefaultAvatarModel {
   final String keyword;
   final Color backgroundColor;
+  final List<Color>? gradientColors;
+  final bool useGradient;
 
-  DefaultAvatarModel({
+  const DefaultAvatarModel({
     required this.keyword,
     required this.backgroundColor,
+    this.gradientColors,
+    this.useGradient = false,
   });
 
-  factory DefaultAvatarModel.fromFullName(String name) {
-    return DefaultAvatarModel(
-      keyword: name.trim().substring(0, 1),
-      backgroundColor: generateColorFromName(name.trim().substring(0, 1)),
-    );
-  }
-
-  static DefaultAvatarModel defaultAvatarConstant = DefaultAvatarModel(
-    keyword: 'A',
-    backgroundColor: generateColorFromName('A'),
-  );
-
-  static Color generateColorFromName(String? keyword) {
-    if (keyword == null || keyword.isEmpty) {
-      return ConstantColor.colorDefault;
+  factory DefaultAvatarModel.fromFullName(String fullName) {
+    if (fullName.isEmpty) {
+      return DefaultAvatarModel(
+        keyword: '?',
+        backgroundColor: ConstantColor.colorDefault,
+      );
     }
 
-    final String lastName = keyword.toUpperCase().formatVietnamese()[0];
+    // Extract initials (first letter of each word, max 2)
+    final words = fullName.trim().split(RegExp(r'\s+'));
+    String initials = '';
 
-    return ConstantColor.colorIntial[lastName] ?? ConstantColor.colorDefault;
+    if (words.length == 1) {
+      initials = words[0].substring(0, 1).toUpperCase();
+    } else {
+      initials = words
+          .take(2)
+          .map((word) => word.substring(0, 1).toUpperCase())
+          .join();
+    }
+
+    // Get gradient colors based on first initial
+    final firstInitial = initials[0].toUpperCase();
+    final gradientColors = ConstantColor.colorGradientsByInitial[firstInitial];
+    final fallbackColor =
+        ConstantColor.colorIntial[firstInitial] ?? ConstantColor.colorDefault;
+
+    return DefaultAvatarModel(
+      keyword: initials,
+      backgroundColor: fallbackColor,
+      gradientColors: gradientColors,
+      useGradient: gradientColors != null,
+    );
   }
 }

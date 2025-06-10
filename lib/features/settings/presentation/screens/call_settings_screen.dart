@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/helpers/device_utils.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';
@@ -44,7 +45,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SizerUtil.isDesktop
+      backgroundColor: context.isDesktop
           ? Theme.of(context).colorScheme.surfaceContainerLow
           : null,
       appBar: appBarTitleBack(
@@ -88,7 +89,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 color: Colors.transparent,
               ),
               padding: EdgeInsets.all(12.sp)
-                  .add(EdgeInsets.only(right: SizerUtil.isDesktop ? 12.sp : 0)),
+                  .add(EdgeInsets.only(right: context.isDesktop ? 12.sp : 0)),
               child: Text(
                 Strings.save.i18n,
                 style: TextStyle(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
-import 'package:waterbus/core/utils/shimmers/fade_shimmer.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';
 
 class ShimmerChatCard extends StatelessWidget {
   const ShimmerChatCard({super.key});
@@ -36,7 +36,7 @@ class ShimmerChatCard extends StatelessWidget {
                         children: [
                           FadeShimmer(
                             height: 12.sp,
-                            width: SizerUtil.isDesktop ? 145.sp : 50.w,
+                            width: context.isDesktop ? 145.sp : 50.w,
                             fadeTheme: FadeTheme.lightReverse,
                           ),
                           const Spacer(),
@@ -65,7 +65,7 @@ class ShimmerChatCard extends StatelessWidget {
                         children: [
                           FadeShimmer(
                             height: 10.5.sp,
-                            width: SizerUtil.isDesktop ? 100.sp : 30.w,
+                            width: context.isDesktop ? 100.sp : 30.w,
                             fadeTheme: FadeTheme.lightReverse,
                           ),
                           const Spacer(),
@@ -84,7 +84,7 @@ class ShimmerChatCard extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: SizerUtil.isDesktop ? 74.sp : 66.sp,
+            left: context.isDesktop ? 74.sp : 66.sp,
           ),
           child: divider,
         ),

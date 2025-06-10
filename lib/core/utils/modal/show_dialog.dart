@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/slide.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
@@ -29,7 +30,7 @@ Future showDialogWaterbus({
 }) async {
   final BuildContext context = AppNavigator.context!;
 
-  if (SizerUtil.isMobile && !onlyShowAsDialog) {
+  if (context.isMobile && !onlyShowAsDialog) {
     return showBottomSheetWaterbus(
       context: context,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/utils/appbar/app_bar_title_back.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
 
@@ -14,14 +14,14 @@ class NotificationSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SizerUtil.isDesktop
+      backgroundColor: context.isDesktop
           ? Theme.of(context).colorScheme.surfaceContainerLow
           : null,
       appBar: appBarTitleBack(
         context,
         title: Strings.notifications.i18n,
         leadingWidth: 60.sp,
-        isVisibleBackButton: SizerUtil.isMobile,
+        isVisibleBackButton: context.isMobile,
       ),
       body: Column(
         children: [

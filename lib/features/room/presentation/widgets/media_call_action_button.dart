@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class MediaCallActionButton extends StatelessWidget {
   final IconData icon;

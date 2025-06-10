@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 
 class ProfileTextField extends StatelessWidget {
@@ -35,7 +35,7 @@ class ProfileTextField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       margin: margin,
       contentPadding: EdgeInsets.symmetric(
-        vertical: SizerUtil.isDesktop ? 12.sp : 10.sp,
+        vertical: context.isDesktop ? 12.sp : 10.sp,
         horizontal: 12.sp,
       ),
       inputFormatters: inputFormatters,

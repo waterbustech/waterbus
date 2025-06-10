@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class ConversationLabel extends StatelessWidget {
   const ConversationLabel({super.key});

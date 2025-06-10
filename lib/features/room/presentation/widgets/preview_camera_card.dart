@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/preview_action_button.dart';
@@ -52,35 +53,36 @@ class PreviewCameraCard extends StatelessWidget {
                 height: height ?? 200.sp,
                 decoration: BoxDecoration(color: Colors.black),
                 child: participant.isVideoEnabled
-                    ? participant.cameraSource!.mediaView(
+                    ? WaterbusMediaView(
+                        mediaSource: participant.cameraSource!,
                         objectFit:
                             RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                         mirror: true,
                       )
                     : Container(
                         padding: EdgeInsets.only(
-                          bottom: SizerUtil.isDesktop ? 0 : 12.sp,
+                          bottom: context.isDesktop ? 0 : 12.sp,
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           "Camera is off",
                           style: TextStyle(
                             color: mCL,
-                            fontSize: SizerUtil.isDesktop ? 16.sp : 14.sp,
+                            fontSize: context.isDesktop ? 16.sp : 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
               ),
             ),
-            if (SizerUtil.isDesktop)
+            if (context.isDesktop)
               Positioned(
                 bottom: 18.sp,
                 right: 16.sp,
                 child: PreviewActionButton(
                   shape: BoxShape.circle,
-                  iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
-                  boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                  iconSize: context.isDesktop ? 20.sp : 16.sp,
+                  boxSize: context.isDesktop ? 44.sp : 35.sp,
                   icon: PhosphorIcons.selectionBackground(),
                   iconColor: mCL,
                   onTap: () {
@@ -97,8 +99,8 @@ class PreviewCameraCard extends StatelessWidget {
                 children: [
                   PreviewActionButton(
                     shape: BoxShape.circle,
-                    iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
-                    boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                    iconSize: context.isDesktop ? 20.sp : 16.sp,
+                    boxSize: context.isDesktop ? 44.sp : 35.sp,
                     iconColor: mCL,
                     borderColor:
                         participant.isAudioEnabled ? null : Colors.redAccent,
@@ -112,21 +114,21 @@ class PreviewCameraCard extends StatelessWidget {
                     },
                   ),
                   SizedBox(width: 8.sp),
-                  if (SizerUtil.isMobile)
+                  if (context.isMobile)
                     PreviewActionButton(
                       shape: BoxShape.circle,
-                      iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
-                      boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                      iconSize: context.isDesktop ? 20.sp : 16.sp,
+                      boxSize: context.isDesktop ? 44.sp : 35.sp,
                       icon: PhosphorIcons.selectionBackground(),
                       iconColor: mCL,
                       onTap: () {
                         AppNavigator().push(Routes.backgroundGallery);
                       },
                     ),
-                  SizedBox(width: SizerUtil.isMobile ? 4.sp : 0),
+                  SizedBox(width: context.isMobile ? 4.sp : 0),
                   PreviewActionButton(
-                    iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
-                    boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                    iconSize: context.isDesktop ? 20.sp : 16.sp,
+                    boxSize: context.isDesktop ? 44.sp : 35.sp,
                     iconColor: mCL,
                     backgroundColor:
                         participant.isVideoEnabled ? null : Colors.redAccent,

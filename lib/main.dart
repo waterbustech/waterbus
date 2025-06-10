@@ -3,19 +3,18 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auth/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:i18n_extension/i18n_extension.dart';
-import 'package:universal_io/io.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/application.dart';
 import 'package:waterbus/core/constants/endpoints.dart';
-import 'package:waterbus/core/helpers/media_kit/index.dart';
+import 'package:waterbus/core/utils/image_utils.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/firebase_options.dart';
@@ -24,32 +23,33 @@ void main(List<String> args) async {
   usePathUrlStrategy();
   await runZoned(
     () async {
-      final WidgetsBinding widgetsBinding =
-          WidgetsFlutterBinding.ensureInitialized();
+      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(
         widgetsBinding: widgetsBinding,
       );
 
-      initializeMediaKit();
-
-      PaintingBinding.instance.imageCache.maximumSizeBytes =
-          1024 * 1024 * 300; // 300 MB
-
-      await WaterbusSdk.instance.initializeApp(
-        baseUrl: BaseUrl(
-          url: Endpoints.baseUrl,
-          suffixUrl: Endpoints.suffixUrl,
-          apiKey: apiKey,
+      final List<Future> futures = [
+        ImageUtils().init(),
+        WaterbusSdk.instance.initializeApp(
+          baseUrl: BaseUrl(
+            url: Endpoints.baseUrl,
+            suffixUrl: Endpoints.suffixUrl,
+            apiKey: 'open@waterbus',
+          ),
+          messageEncryptionKey: "kai@waterbus.tech",
+          webrtcE2eeKey: "kai@waterbus.tech",
         ),
-        messageEncryptionKey: "kai@waterbus.tech",
-        webrtcE2eeKey: "kai@waterbus.tech",
-      );
+      ];
 
-      if (!(Platform.isLinux || Platform.isWindows) || kIsWeb) {
-        await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+      if (kIsWeb || !(PlatformUtils.isLinux || PlatformUtils.isWindows)) {
+        futures.add(
+          Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          ),
         );
       }
+
+      await Future.wait(futures);
 
       await Application.initialAppLication();
 
@@ -60,6 +60,7 @@ void main(List<String> args) async {
       runApp(
         I18n(
           initialLocale: LanguageService().getLocale().locale,
+          supportedLocales: ['en-US'.asLocale, 'vi-VN'.asLocale],
           child: const App(),
         ),
       );

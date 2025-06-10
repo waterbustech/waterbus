@@ -1,5 +1,5 @@
 name: waterbus
-description: Built on WebRTC SDK M128. Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
+description: Waterbus is a cutting-edge mobile app developed with WebRTC SFU and Flutter, offering top-tier video and audio calls, screen sharing, and chat capabilities. Ideal for seamless communication and collaboration among remote teams.
 homepage: https://docs.waterbus.tech
 repository: https://github.com/waterbustech/waterbus
 # The following line prevents the package from being accidentally published to
@@ -18,11 +18,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.3.0+8
+version: 2.0.0+10
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.32.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -47,29 +47,29 @@ dependencies:
 
   # Network
   dio: ^5.7.0
-  connectivity_plus: ^6.1.0
 
   # State management
-  flutter_bloc: ^8.1.6
-  bloc_concurrency: ^0.2.5
+  flutter_bloc: ^9.1.1
+  bloc_concurrency: ^0.3.0
 
   # Dependency Injection
-  get_it: ^7.6.8
+  get_it: ^8.0.3
   injectable: ^2.5.0
 
   # Storage
-  hive: ^2.2.3
-  path_provider: ^2.1.5
+  hive_ce: ^2.11.3
 
   # Firebase
-  firebase_core: ^3.6.0
-  firebase_auth: ^5.3.1
-  firebase_crashlytics: ^4.1.3
-  firebase_performance: ^0.10.0+8
+  firebase_core: ^3.13.1
+  firebase_auth: ^5.5.4
+  firebase_crashlytics: ^4.3.6
+  firebase_performance: ^0.10.1+6
 
   # Utils
-  lottie: ^3.1.3
-  flutter_native_splash: ^2.4.2
+  flutter_localizations:
+    sdk: flutter
+  lottie: ^3.3.1
+  flutter_native_splash: ^2.4.6
   superellipse_shape: ^0.2.0
   cached_network_image: ^3.4.1
   phosphor_flutter: ^2.1.0
@@ -77,51 +77,36 @@ dependencies:
   permission_handler: ^12.0.0+1
   flutter_staggered_grid_view: ^0.7.0
   intl: ^0.19.0
-  equatable: ^2.0.5
-  share_plus: ^10.1.1
-  simple_pip_mode: ^1.0.0
-  file_picker: ^8.1.3
+  equatable: ^2.0.7
+  share_plus: ^11.0.0
+  simple_pip_mode: ^1.1.0
+  file_picker: ^10.1.9
   flutter_colorpicker: ^1.1.0
   universal_io: ^2.2.2
   url_launcher: ^6.3.1
-  flutter_advanced_segment: ^3.0.2
+  flutter_advanced_segment: ^3.1.0
   flutter_slidable: ^4.0.0
   flutter_side_menu: ^0.5.41
-  sizer: 
-    path: ./packages/sizer
-  flutter_localizations:
-    sdk: flutter
-  i18n_extension: ^12.0.1
+  i18n_extension: ^15.0.5
   pull_to_refresh: ^2.0.0
   super_sliver_list: ^0.4.1
-  syncfusion_flutter_charts: ^29.1.39
+  syncfusion_flutter_charts: ^29.2.8
   popover: ^0.3.1
   super_context_menu: ^0.8.24
-  msix: ^3.16.8
-  toastification: ^2.3.0
+  msix: ^3.16.9
+  toastification: ^3.0.2
   web: ^1.1.1
-  dropdown_button2: ^2.3.9
-
-  # Code Editor
-  re_editor: ^0.5.0
-  re_highlight: ^0.0.3
   collection: ^1.18.0
+  dropdown_button2: ^2.3.9
 
   # Media
   image_picker: ^1.1.2
-  image_picker_android: ^0.8.12+17
-  image_picker_platform_interface: ^2.10.0
-  flutter_image_compress: ^2.2.0
+  image_picker_android: ^0.8.12+23
+  image_picker_platform_interface: ^2.10.1
+  simple_native_image_compress: ^3.0.0
+  flutter_image_compress: ^2.4.0
   file_saver: ^0.2.14
-  video_player: ^2.9.2
   audioplayers: ^6.1.0
-  video_player_media_kit: ^1.0.5
-  
-  media_kit_libs_android_video: any
-  media_kit_libs_ios_video: any
-  media_kit_libs_macos_video: any
-  media_kit_libs_windows_video: any
-  media_kit_libs_linux: any
 
   # Video call
   # waterbus_sdk: 
@@ -133,6 +118,7 @@ dependencies:
    
 
 dependency_overrides:
+  archive: ^4.0.7
   intl: ^0.20.2
   watcher: ^1.1.0
   win32: ^5.0.5 
@@ -147,6 +133,16 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
+  super_native_extensions:
+    git:
+      url: https://github.com/superlistapp/super_native_extensions.git
+      ref: refs/pull/525/head
+      path: super_native_extensions
+  irondash_engine_context:
+    git:
+      url: https://github.com/irondash/irondash.git
+      ref: refs/pull/66/head
+      path: engine_context/dart
 
 dev_dependencies:
   # Test
@@ -176,7 +172,7 @@ msix_config:
   publisher_display_name: Waterbus
   identity_name: com.wanted.waterbus
   msix_version: 1.0.0.0
-  logo_path: macos/Runner/Assets.xcassets/AppIcon.appiconset/512-mac.png
+  logo_path: assets/images/logo_rounded_2.png
   capabilities: microphone, webcam
 
 # For information on the generic Dart part of this file, see the

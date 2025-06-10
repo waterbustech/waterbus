@@ -48,6 +48,7 @@ static void my_application_activate(GApplication* application) {
   }
 
   gtk_window_set_default_size(window, 1280, 800);
+  gtk_window_set_icon_from_file(GTK_WINDOW(window),"assets/images/logo_rounded_2.png",NULL);
   GdkGeometry hints;
   hints.min_width = 1280;
   hints.min_height = 800;

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/message_input_container.dart';
 import 'package:waterbus/features/conversation/widgets/message_list.dart';
@@ -65,7 +66,7 @@ class _ChatInRoomState extends State<ChatInRoom> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          SizerUtil.isDesktop ? EdgeInsets.only(right: 16.sp) : EdgeInsets.zero,
+          context.isDesktop ? EdgeInsets.only(right: 16.sp) : EdgeInsets.zero,
       child: Material(
         clipBehavior: Clip.hardEdge,
         shape: SuperellipseShape(

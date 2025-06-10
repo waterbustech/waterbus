@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 extension StringExtension on String {
   String formatVietnamese() {
@@ -35,7 +36,9 @@ extension StringExtension on String {
       backgroundColor: Theme.of(AppNavigator.context!).scaffoldBackgroundColor,
       autoCloseDuration: 2000.milliseconds,
       type: type,
-      alignment: SizerUtil.isDesktop ? Alignment.topRight : Alignment.topCenter,
+      alignment: AppNavigator.context!.isDesktop
+          ? Alignment.topRight
+          : Alignment.topCenter,
       style: ToastificationStyle.flat,
       showProgressBar: false,
       borderSide: BorderSide(
@@ -43,7 +46,9 @@ extension StringExtension on String {
         width: 1.sp,
       ),
       closeOnClick: true,
-      closeButtonShowType: CloseButtonShowType.none,
+      closeButton: ToastCloseButton(
+        showType: CloseButtonShowType.none,
+      ),
     );
   }
 

@@ -3,13 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
 import 'package:waterbus/features/conversation/widgets/list_conversation_shimmers.dart';
@@ -65,7 +66,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        bottom: SizerUtil.isDesktop,
+        bottom: context.isDesktop,
         child: Column(
           children: [
             SizedBox(height: 5.sp),
@@ -106,7 +107,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             ),
             MessageInputContainer(roomId: widget.room.id),
             SizedBox(
-              height: SizerUtil.isMobile &&
+              height: context.isMobile &&
                       MediaQuery.of(context).viewInsets.bottom == 0
                   ? 10.sp
                   : 0.sp,

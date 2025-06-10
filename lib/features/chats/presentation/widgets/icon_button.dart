@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sizer/sizer.dart';
-
-import 'package:waterbus/core/utils/gesture/gesture_wrapper.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class IconButtonCustom extends StatelessWidget {
   final IconData icon;

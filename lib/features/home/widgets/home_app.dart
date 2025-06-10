@@ -8,6 +8,7 @@ import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
@@ -38,8 +39,14 @@ class _HomeAppScreenState extends State<HomeAppScreen> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          theme: AppTheme.light(colorSeed: theme.props.last).data,
-          darkTheme: AppTheme.dark(colorSeed: theme.props.last).data,
+          theme: AppTheme.light(
+            colorSeed: theme.props.last,
+            extensions: [context.sizer],
+          ).data,
+          darkTheme: AppTheme.dark(
+            colorSeed: theme.props.last,
+            extensions: [context.sizer],
+          ).data,
           themeMode: theme.props.first,
           onGenerateRoute: AppNavigator().getRoute,
           navigatorObservers: [
