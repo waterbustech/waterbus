@@ -110,7 +110,8 @@ class ConversationHeader extends StatelessWidget {
                       SizedBox(width: 20.sp),
                       IconButtonCustom(
                         onTap: () {
-                          AppBloc.roomBloc.add(RoomJoinedEvent(room: room));
+                          AppBloc.roomBloc
+                              .add(RoomJoinedEvent(room: room, isMember: true));
                         },
                         icon:
                             PhosphorIcons.videoCamera(PhosphorIconsStyle.light),

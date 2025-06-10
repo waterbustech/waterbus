@@ -6,13 +6,17 @@ import 'package:sizer/sizer.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
+import 'package:waterbus/features/room/presentation/widgets/preview_action_button.dart';
 
 class PreviewCameraCard extends StatelessWidget {
-  const PreviewCameraCard({super.key});
+  final double? height;
+  final double? width;
+  const PreviewCameraCard({super.key, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +33,8 @@ class PreviewCameraCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(30.sp),
             ),
             child: Container(
-              width: 265.sp,
-              height: 200.sp,
+              width: width ?? 265.sp,
+              height: height ?? 200.sp,
               color: Colors.black,
             ),
           );
@@ -44,25 +48,9 @@ class PreviewCameraCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.sp),
               ),
               child: Container(
-                width: 265.sp,
-                height: 200.sp,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: .5),
-                      Theme.of(context)
-                          .colorScheme
-                          .surfaceContainerHighest
-                          .withValues(alpha: .5),
-                    ],
-                    stops: const [0.1, 0.9],
-                  ),
-                ),
+                width: width ?? 265.sp,
+                height: height ?? 200.sp,
+                decoration: BoxDecoration(color: Colors.black),
                 child: participant.isVideoEnabled
                     ? participant.cameraSource!.mediaView(
                         objectFit:
@@ -70,34 +58,52 @@ class PreviewCameraCard extends StatelessWidget {
                         mirror: true,
                       )
                     : Container(
+                        padding: EdgeInsets.only(
+                          bottom: SizerUtil.isDesktop ? 0 : 12.sp,
+                        ),
                         alignment: Alignment.center,
-                        child: AvatarCard(
-                          urlToImage: AppBloc.userBloc.user?.avatar,
-                          size: 50.sp,
-                          label: AppBloc.userBloc.user?.fullName,
+                        child: Text(
+                          "Camera is off",
+                          style: TextStyle(
+                            color: mCL,
+                            fontSize: SizerUtil.isDesktop ? 16.sp : 14.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
               ),
             ),
+            if (SizerUtil.isDesktop)
+              Positioned(
+                bottom: 18.sp,
+                right: 16.sp,
+                child: PreviewActionButton(
+                  shape: BoxShape.circle,
+                  iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
+                  boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                  icon: PhosphorIcons.selectionBackground(),
+                  iconColor: mCL,
+                  onTap: () {
+                    AppNavigator().push(Routes.backgroundGallery);
+                  },
+                ),
+              ),
             Positioned(
-              bottom: 10.sp,
+              bottom: 18.sp,
               left: 0.0,
               right: 0.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CallActionButton(
+                  PreviewActionButton(
                     shape: BoxShape.circle,
-                    icon: participant.isVideoEnabled
-                        ? PhosphorIcons.camera()
-                        : PhosphorIcons.cameraSlash(),
-                    onTap: () {
-                      AppBloc.roomBloc.add(RoomVideoToggled());
-                    },
-                  ),
-                  SizedBox(width: 12.sp),
-                  CallActionButton(
-                    shape: BoxShape.circle,
+                    iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
+                    boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                    iconColor: mCL,
+                    borderColor:
+                        participant.isAudioEnabled ? null : Colors.redAccent,
+                    backgroundColor:
+                        participant.isAudioEnabled ? null : Colors.redAccent,
                     icon: participant.isAudioEnabled
                         ? PhosphorIcons.microphone()
                         : PhosphorIcons.microphoneSlash(),
@@ -105,7 +111,43 @@ class PreviewCameraCard extends StatelessWidget {
                       AppBloc.roomBloc.add(RoomAudioToggled());
                     },
                   ),
+                  SizedBox(width: 8.sp),
+                  if (SizerUtil.isMobile)
+                    PreviewActionButton(
+                      shape: BoxShape.circle,
+                      iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
+                      boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                      icon: PhosphorIcons.selectionBackground(),
+                      iconColor: mCL,
+                      onTap: () {
+                        AppNavigator().push(Routes.backgroundGallery);
+                      },
+                    ),
+                  SizedBox(width: SizerUtil.isMobile ? 4.sp : 0),
+                  PreviewActionButton(
+                    iconSize: SizerUtil.isDesktop ? 20.sp : 16.sp,
+                    boxSize: SizerUtil.isDesktop ? 44.sp : 35.sp,
+                    iconColor: mCL,
+                    backgroundColor:
+                        participant.isVideoEnabled ? null : Colors.redAccent,
+                    borderColor:
+                        participant.isVideoEnabled ? null : Colors.redAccent,
+                    icon: participant.isVideoEnabled
+                        ? PhosphorIcons.videoCamera()
+                        : PhosphorIcons.videoCameraSlash(),
+                    onTap: () {
+                      AppBloc.roomBloc.add(RoomVideoToggled());
+                    },
+                  ),
                 ],
+              ),
+            ),
+            Positioned(
+              top: 12.5.sp,
+              left: 12.5.sp,
+              child: Text(
+                AppBloc.userBloc.user?.fullName ?? "",
+                style: TextStyle(fontSize: 12.5.sp, color: mCU),
               ),
             ),
           ],

@@ -11,6 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:sizer/sizer.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -23,7 +24,6 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
-import 'package:waterbus/features/home/widgets/dialog_prepare_meeting.dart';
 import 'package:waterbus/features/room/data/datasources/media_config_datasource.dart';
 import 'package:waterbus/features/room/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
@@ -51,6 +51,11 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   MediaConfig _mediaConfig = MediaConfig();
   Timer? _subtitleTimer;
   int? _recordId;
+  final List<MediaDeviceInfo> audioInputs = [];
+  final List<MediaDeviceInfo> videoInputs = [];
+  final List<MediaDeviceInfo> audioOutputs = [];
+  MediaDeviceInfo? audioInputSeleted;
+  MediaDeviceInfo? videoInputSeleted;
 
   RoomBloc(
     this._pipChannel,
@@ -64,7 +69,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomStarted) {
           _mediaConfig = _callSettingsLocalDataSource.getSettings();
 
-          _waterbusSdk.changeCallSetting(_mediaConfig);
+          _waterbusSdk.changeCallSettings(_mediaConfig);
           _waterbusSdk.onEventChangedRegister = _onEventChanged;
           _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
         }
@@ -82,48 +87,32 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomJoinedEvent) {
-          // Will be take the Room object in recent joined
           _currentRoom = event.room;
 
-          final int indexOfMember = _currentRoom!.members.indexWhere(
-            (member) =>
-                member.user.id == AppBloc.userBloc.user?.id &&
-                member.status.value > MemberStatusEnum.inviting.value,
+          displayLoadingLayer();
+
+          final bool isJoinSucceed = await _handleJoinRoom(
+            RoomJoinedWithPassword(
+              isMember: event.isMember,
+              password: event.password ?? '',
+            ),
           );
-
-          final bool isMember = indexOfMember != -1;
-          // Will join directly if the participant is room member
-          if (isMember) {
-            displayLoadingLayer();
-            add(const RoomJoinedWithPassword(isMember: true));
-            return;
-          }
-
-          emit(_preJoinRoom);
-          AppNavigator().push(
-            Routes.roomRoute,
-            arguments: {'room': _currentRoom},
-          );
-        }
-
-        if (event is RoomJoinedWithPassword) {
-          if (_currentRoom == null) return;
-
-          final bool isJoinSucceed = await _handleJoinRoom(event);
 
           AppNavigator.pop();
 
           if (isJoinSucceed) {
+            if (AppNavigatorObserver.currentRouteName == Routes.lobbyRoute) {
+              AppNavigator.popUntil(Routes.rootRoute);
+            }
+
             emit(_joinedRoom);
 
-            _roomSound.playSoundJoinRoom();
+            AppNavigator().push(
+              Routes.roomRoute,
+              arguments: {'room': _currentRoom},
+            );
 
-            if (event.isMember) {
-              AppNavigator().push(
-                Routes.roomRoute,
-                arguments: {'room': _currentRoom},
-              );
-            }
+            _roomSound.playSoundJoinRoom();
           }
         }
 
@@ -193,6 +182,30 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           }
         }
 
+        if (event is RoomAudioDeviceToggled) {
+          await _waterbusSdk.toggleAudioInputDevice(
+            deviceId: event.mediaDeviceInfo.deviceId,
+          );
+          audioInputSeleted = event.mediaDeviceInfo;
+          if (state is RoomJoined) {
+            emit(_joinedRoom);
+          } else if (state is RoomPreJoin) {
+            emit(_preJoinRoom);
+          }
+        }
+
+        if (event is RoomVideoDeviceToggled) {
+          await _waterbusSdk.toggleVideoInputDevice(
+            deviceId: event.mediaDeviceInfo.deviceId,
+          );
+          audioInputSeleted = event.mediaDeviceInfo;
+          if (state is RoomJoined) {
+            emit(_joinedRoom);
+          } else if (state is RoomPreJoin) {
+            emit(_preJoinRoom);
+          }
+        }
+
         if (event is RoomHandRasingToggled) {
           _waterbusSdk.toggleRaiseHand();
 
@@ -211,8 +224,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           _callSettingsLocalDataSource.saveSettings(event.setting);
 
           _mediaConfig = event.setting;
-
-          _waterbusSdk.changeCallSetting(_mediaConfig);
 
           if (state is RoomJoined) {
             // Hot update settings
@@ -477,26 +488,23 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   Future<void> _displayDialogJoinRoom(Room room) async {
     await _waterbusSdk.prepareMedia();
 
-    bool isDismissWithoutJoin = true;
+    final Map<String, List<MediaDeviceInfo>> audioInputResponse =
+        await _getAllMediaDevices();
 
-    showDialogWaterbus(
-      alignment: Alignment.bottomCenter,
-      paddingBottom: 56.sp,
-      onlyShowAsDialog: true,
-      child: DialogPrepareRoom(
-        room: room,
-        handleJoinRoom: () {
-          isDismissWithoutJoin = false;
+    final int indexOfMember = room.members.indexWhere(
+      (member) => member.user.id == AppBloc.userBloc.user?.id,
+    );
 
-          AppNavigator.popUntil(Routes.rootRoute);
-          add(RoomJoinedEvent(room: room));
-        },
-      ),
-    ).then((value) {
-      if (isDismissWithoutJoin) {
-        add(RoomDisposed());
-      }
-    });
+    final bool isMember = indexOfMember != -1;
+
+    AppNavigator().push(
+      Routes.lobbyRoute,
+      arguments: {
+        "room": room,
+        "audioInputResponse": audioInputResponse,
+        "isMember": isMember,
+      },
+    );
   }
 
   Future<void> startPiP() async {
@@ -601,6 +609,39 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       _subtitle.add("");
       _subtitleTimer?.cancel();
     });
+  }
+
+  Future<Map<String, List<MediaDeviceInfo>>> _getAllMediaDevices() async {
+    final devices = await navigator.mediaDevices.enumerateDevices();
+
+    audioInputs.clear();
+    videoInputs.clear();
+    audioOutputs.clear();
+
+    for (final device in devices) {
+      switch (device.kind) {
+        case 'audioinput':
+          audioInputs.add(device);
+          break;
+        case 'audiooutput':
+          audioOutputs.add(device);
+
+          break;
+        case 'videoinput':
+          videoInputs.add(device);
+
+          break;
+      }
+    }
+
+    audioInputSeleted = audioInputs.firstOrNull;
+    videoInputSeleted = videoInputs.firstOrNull;
+
+    return {
+      'audioinput': audioInputs,
+      'audiooutput': audioOutputs,
+      'videoinput': videoInputs,
+    };
   }
 
   Future<void> _dispose() async {

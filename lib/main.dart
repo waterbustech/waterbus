@@ -19,7 +19,6 @@ import 'package:waterbus/core/helpers/media_kit/index.dart';
 import 'package:waterbus/features/app/app.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/firebase_options.dart';
-import 'package:waterbus_sdk/types/externals/models/base_url.dart';
 
 void main(List<String> args) async {
   usePathUrlStrategy();

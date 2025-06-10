@@ -32,6 +32,7 @@ class TextFieldInput extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? margin;
   final Function()? onEditingComplete;
+  final TextAlign textAlign;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
@@ -62,6 +63,7 @@ class TextFieldInput extends StatelessWidget {
     this.contentPadding,
     this.margin,
     this.onEditingComplete,
+    this.textAlign = TextAlign.start,
   });
   @override
   Widget build(BuildContext context) {
@@ -89,6 +91,7 @@ class TextFieldInput extends StatelessWidget {
               : Theme.of(context).textTheme.titleMedium?.color,
           height: height,
         ),
+        textAlign: textAlign,
         cursorColor: Theme.of(context).colorScheme.primary,
         keyboardType: textInputType ?? TextInputType.multiline,
         onChanged: onChanged,

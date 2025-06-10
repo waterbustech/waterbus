@@ -1,10 +1,4 @@
 PODS:
-  - AppAuth (1.7.6):
-    - AppAuth/Core (= 1.7.6)
-    - AppAuth/ExternalUserAgent (= 1.7.6)
-  - AppAuth/Core (1.7.6)
-  - AppAuth/ExternalUserAgent (1.7.6):
-    - AppAuth/Core
   - audioplayers_darwin (0.0.1):
     - Flutter
   - connectivity_plus (0.0.1):
@@ -172,14 +166,6 @@ PODS:
   - flutter_webrtc_plus (0.9.36):
     - Flutter
     - WebRTC-SDK (= 125.6422.06)
-  - google_sign_in_all_platforms_mobile (0.0.1):
-    - Flutter
-  - google_sign_in_ios (0.0.1):
-    - AppAuth (>= 1.7.4)
-    - Flutter
-    - FlutterMacOS
-    - GoogleSignIn (~> 7.1)
-    - GTMSessionFetcher (>= 3.4.0)
   - GoogleAppMeasurement (11.2.0):
     - GoogleAppMeasurement/AdIdSupport (= 11.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
@@ -203,10 +189,6 @@ PODS:
   - GoogleDataTransport (10.1.0):
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
-  - GoogleSignIn (7.1.0):
-    - AppAuth (< 2.0, >= 1.7.3)
-    - GTMAppAuth (< 5.0, >= 4.1.1)
-    - GTMSessionFetcher/Core (~> 3.3)
   - GoogleUtilities/AppDelegateSwizzler (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -234,14 +216,7 @@ PODS:
   - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GTMAppAuth (4.1.1):
-    - AppAuth/Core (~> 1.7)
-    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
-  - GTMSessionFetcher (3.5.0):
-    - GTMSessionFetcher/Full (= 3.5.0)
   - GTMSessionFetcher/Core (3.5.0)
-  - GTMSessionFetcher/Full (3.5.0):
-    - GTMSessionFetcher/Core
   - image_picker_ios (0.0.1):
     - Flutter
   - irondash_engine_context (0.0.1):
@@ -297,9 +272,6 @@ PODS:
     - SDWebImage/Core (~> 5.17)
   - share_plus (0.0.1):
     - Flutter
-  - shared_preferences_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
   - sqflite (0.0.3):
     - Flutter
     - FlutterMacOS
@@ -338,8 +310,6 @@ DEPENDENCIES:
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_webrtc_plus (from `.symlinks/plugins/flutter_webrtc_plus/ios`)
-  - google_sign_in_all_platforms_mobile (from `.symlinks/plugins/google_sign_in_all_platforms_mobile/ios`)
-  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - irondash_engine_context (from `.symlinks/plugins/irondash_engine_context/ios`)
   - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
@@ -352,7 +322,6 @@ DEPENDENCIES:
   - rhttp (from `.symlinks/plugins/rhttp/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
   - super_native_extensions (from `.symlinks/plugins/super_native_extensions/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -364,7 +333,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AppAuth
     - CryptoSwift
     - DKImagePickerController
     - DKPhotoGallery
@@ -386,9 +354,7 @@ SPEC REPOS:
     - FirebaseSharedSwift
     - GoogleAppMeasurement
     - GoogleDataTransport
-    - GoogleSignIn
     - GoogleUtilities
-    - GTMAppAuth
     - GTMSessionFetcher
     - libwebp
     - Mantle
@@ -428,10 +394,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_webrtc_plus:
     :path: ".symlinks/plugins/flutter_webrtc_plus/ios"
-  google_sign_in_all_platforms_mobile:
-    :path: ".symlinks/plugins/google_sign_in_all_platforms_mobile/ios"
-  google_sign_in_ios:
-    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   irondash_engine_context:
@@ -456,8 +418,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/screen_brightness_ios/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
-  shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
     :path: ".symlinks/plugins/sqflite/darwin"
   super_native_extensions:
@@ -476,7 +436,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/waterbus_sdk/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
@@ -509,13 +468,9 @@ SPEC CHECKSUMS:
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
   flutter_webrtc_plus: eb76faf6d55815fca45783a077445a28588e6c96
-  google_sign_in_all_platforms_mobile: 14062cc28e3432a927ebf2fa5dbdba85c157951b
-  google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
   GoogleAppMeasurement: 76d4f8b36b03bd8381fa9a7fe2cc7f99c0a2e93a
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
-  GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   irondash_engine_context: 3458bf979b90d616ffb8ae03a150bafe2e860cc9
@@ -537,7 +492,6 @@ SPEC CHECKSUMS:
   SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   super_native_extensions: 4916b3c627a9c7fffdc48a23a9eca0b1ac228fa7
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
