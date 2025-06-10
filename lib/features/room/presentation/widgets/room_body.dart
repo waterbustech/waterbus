@@ -97,7 +97,7 @@ class _RoomBodyState extends State<RoomBody> {
               top: buttonPosition.dy - deviceLst.length * 36.sp - 5.sp,
               child: Material(
                 color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10.sp),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: List.generate(deviceLst.length, (index) {
@@ -118,9 +118,9 @@ class _RoomBodyState extends State<RoomBody> {
                                   .withValues(alpha: 0.2)
                               : Colors.transparent,
                           borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(index == 0 ? 12.sp : 0),
+                            top: Radius.circular(index == 0 ? 10.sp : 0),
                             bottom: Radius.circular(
-                              index == deviceLst.length - 1 ? 12.sp : 0,
+                              index == deviceLst.length - 1 ? 10.sp : 0,
                             ),
                           ),
                         ),
