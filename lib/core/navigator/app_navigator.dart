@@ -16,6 +16,7 @@ import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
+import 'package:waterbus/features/home/screens/lobby_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/room/presentation/screens/background_gallery.dart';
@@ -94,6 +95,15 @@ class AppNavigator extends RouteObserver<PageRoute<dynamic>> {
                 '${arguments?['room'].code.toString()}',
           ),
           const RoomScreen(),
+        );
+      case Routes.lobbyRoute:
+        return _buildRoute(
+          settings,
+          LobbyScreen(
+            room: arguments!['room'],
+            isMember: arguments['isMember'] ?? false,
+            audioInputResponse: arguments['audioInputResponse'] ?? {},
+          ),
         );
       case Routes.createMeetingRoute:
         return _buildRoute(

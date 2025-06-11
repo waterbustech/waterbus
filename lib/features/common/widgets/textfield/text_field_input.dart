@@ -32,6 +32,8 @@ class TextFieldInput extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? margin;
   final Function()? onEditingComplete;
+  final TextAlign textAlign;
+  final BorderRadius? borderRadius;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
@@ -62,6 +64,8 @@ class TextFieldInput extends StatelessWidget {
     this.contentPadding,
     this.margin,
     this.onEditingComplete,
+    this.textAlign = TextAlign.start,
+    this.borderRadius,
   });
   @override
   Widget build(BuildContext context) {
@@ -87,8 +91,8 @@ class TextFieldInput extends StatelessWidget {
           color: isAvailable
               ? Theme.of(context).textTheme.bodyMedium?.color
               : Theme.of(context).textTheme.titleMedium?.color,
-          height: height,
         ),
+        textAlign: textAlign,
         cursorColor: Theme.of(context).colorScheme.primary,
         keyboardType: textInputType ?? TextInputType.multiline,
         onChanged: onChanged,
@@ -125,17 +129,7 @@ class TextFieldInput extends StatelessWidget {
                 fontSize: 12.sp,
               ),
           isDense: maxLines == 1,
-          contentPadding: contentPadding ??
-              (maxLines == 1
-                  ? contentPadding ??
-                      EdgeInsets.symmetric(
-                        vertical: 11.sp,
-                        horizontal: 10.sp,
-                      )
-                  : EdgeInsets.symmetric(
-                      vertical: 8.sp,
-                      horizontal: 10.sp,
-                    )),
+          contentPadding: _getContentPadding,
           suffix: suffixIcon == null
               ? null
               : Padding(
@@ -151,12 +145,22 @@ class TextFieldInput extends StatelessWidget {
 
   OutlineInputBorder _outlineInputBorder(BuildContext context) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6.sp),
+      borderRadius: borderRadius ?? BorderRadius.circular(6.sp),
       borderSide: borderSide ??
           BorderSide(
             color: Theme.of(context).dividerColor,
-            width: 0.5,
           ),
+    );
+  }
+
+  EdgeInsetsGeometry get _getContentPadding {
+    if (contentPadding != null) return contentPadding!;
+
+    final verticalPadding = height != null ? ((height! - 12.sp) / 2) : 11.0;
+
+    return EdgeInsets.symmetric(
+      horizontal: 10,
+      vertical: verticalPadding,
     );
   }
 }

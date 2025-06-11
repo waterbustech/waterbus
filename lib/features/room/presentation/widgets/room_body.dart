@@ -21,6 +21,7 @@ import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget
 import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_settings_bottom_sheet.dart';
 import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
+import 'package:waterbus/features/room/presentation/widgets/media_call_action_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_layout.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
 import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
@@ -43,6 +44,15 @@ class _RoomBodyState extends State<RoomBody> {
   late MediaConfig _mediaConfig;
   late CallState? _callState;
 
+  final List<MediaDeviceInfo> _audioInputs = [];
+  final List<MediaDeviceInfo> _audioOutputs = [];
+  final List<MediaDeviceInfo> _videoInputs = [];
+  final GlobalKey _audioInputButtonKey = GlobalKey();
+  final GlobalKey _videoInputButtonKey = GlobalKey();
+
+  OverlayEntry? _overlay;
+  MediaDeviceInfo? _audioInputSelected;
+  MediaDeviceInfo? _videoInputSelected;
   bool _isFilterSettingsOpened = false;
   bool _isChatOpened = false;
 
@@ -50,6 +60,101 @@ class _RoomBodyState extends State<RoomBody> {
   void initState() {
     super.initState();
     _initValues();
+    _audioInputs.addAll(AppBloc.roomBloc.audioInputs);
+    _videoInputs.addAll(AppBloc.roomBloc.videoInputs);
+    _audioOutputs.addAll(AppBloc.roomBloc.audioOutputs);
+
+    _audioInputSelected = AppBloc.roomBloc.audioInputSeleted;
+    _videoInputSelected = AppBloc.roomBloc.videoInputSeleted;
+  }
+
+  void _showMicrophoneMenu(
+    BuildContext context, {
+    required List<MediaDeviceInfo> deviceLst,
+    required GlobalKey key,
+    required MediaDeviceInfo? deviceInfoSelected,
+    required Function(MediaDeviceInfo)? onSelectDevice,
+    required Function() removeOverlay,
+  }) {
+    if (_overlay != null) return;
+
+    final RenderBox renderBox =
+        key.currentContext!.findRenderObject() as RenderBox;
+
+    final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);
+
+    _overlay = OverlayEntry(
+      builder: (context) {
+        return Stack(
+          children: [
+            GestureDetector(
+              onTap: removeOverlay,
+              behavior: HitTestBehavior.translucent,
+              child: Container(color: Colors.transparent),
+            ),
+            Positioned(
+              left: buttonPosition.dx,
+              top: buttonPosition.dy - deviceLst.length * 36.sp - 5.sp,
+              child: Material(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                borderRadius: BorderRadius.circular(10.sp),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(deviceLst.length, (index) {
+                    return GestureWrapper(
+                      onTap: () => onSelectDevice?.call(deviceLst[index]),
+                      child: Container(
+                        width: 250.sp,
+                        height: 36.sp,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.sp,
+                          vertical: 8.sp,
+                        ),
+                        decoration: BoxDecoration(
+                          color: deviceLst[index] == deviceInfoSelected
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withValues(alpha: 0.2)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(index == 0 ? 10.sp : 0),
+                            bottom: Radius.circular(
+                              index == deviceLst.length - 1 ? 10.sp : 0,
+                            ),
+                          ),
+                        ),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          deviceLst[index].label,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (_overlay != null) {
+      Overlay.of(context).insert(_overlay!);
+    }
+  }
+
+  void _removeOverlay() {
+    _overlay?.remove();
+    _overlay = null;
   }
 
   @override
@@ -240,26 +345,94 @@ class _RoomBodyState extends State<RoomBody> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CallActionButton(
-                            icon: _callState?.mParticipant == null ||
-                                    _callState!.mParticipant!.isAudioEnabled
-                                ? PhosphorIcons.microphone()
-                                : PhosphorIcons.microphoneSlash(),
+                          MediaCallActionButton(
+                            key: _audioInputButtonKey,
                             onTap: () {
-                              if (_callState?.mParticipant == null) return;
+                              if (_callState?.mParticipant == null) {
+                                return;
+                              }
 
                               AppBloc.roomBloc.add(RoomAudioToggled());
                             },
-                          ),
-                          CallActionButton(
                             icon: _callState?.mParticipant == null ||
-                                    _callState!.mParticipant!.isVideoEnabled
-                                ? PhosphorIcons.camera()
-                                : PhosphorIcons.cameraSlash(),
+                                    _callState!.mParticipant!.isAudioEnabled
+                                ? PhosphorIcons.microphone(
+                                    PhosphorIconsStyle.fill,
+                                  )
+                                : PhosphorIcons.microphoneSlash(
+                                    PhosphorIconsStyle.fill,
+                                  ),
+                            title: 'Microphone',
+                            onSelectMediaDevice: () {
+                              if (_overlay != null) {
+                                return _removeOverlay();
+                              }
+
+                              _showMicrophoneMenu(
+                                context,
+                                deviceLst: _audioInputs,
+                                key: _audioInputButtonKey,
+                                deviceInfoSelected: _audioInputSelected,
+                                onSelectDevice: (option) {
+                                  setState(() {
+                                    _audioInputSelected = option;
+                                    _removeOverlay();
+                                  });
+
+                                  if (_audioInputSelected == null) return;
+
+                                  AppBloc.roomBloc.add(
+                                    RoomAudioDeviceToggled(
+                                      mediaDeviceInfo: _audioInputSelected!,
+                                    ),
+                                  );
+                                },
+                                removeOverlay: _removeOverlay,
+                              );
+                            },
+                          ),
+                          MediaCallActionButton(
+                            key: _videoInputButtonKey,
                             onTap: () {
                               if (_callState?.mParticipant == null) return;
 
                               AppBloc.roomBloc.add(RoomVideoToggled());
+                            },
+                            icon: _callState?.mParticipant == null ||
+                                    _callState!.mParticipant!.isVideoEnabled
+                                ? PhosphorIcons.videoCamera(
+                                    PhosphorIconsStyle.fill,
+                                  )
+                                : PhosphorIcons.videoCameraSlash(
+                                    PhosphorIconsStyle.fill,
+                                  ),
+                            title: 'Camera',
+                            onSelectMediaDevice: () {
+                              if (_overlay != null) {
+                                return _removeOverlay();
+                              }
+
+                              _showMicrophoneMenu(
+                                context,
+                                deviceLst: _videoInputs,
+                                key: _videoInputButtonKey,
+                                onSelectDevice: (option) {
+                                  setState(() {
+                                    _removeOverlay();
+                                    _videoInputSelected = option;
+                                  });
+
+                                  if (_videoInputSelected == null) return;
+
+                                  AppBloc.roomBloc.add(
+                                    RoomVideoDeviceToggled(
+                                      mediaDeviceInfo: _videoInputSelected!,
+                                    ),
+                                  );
+                                },
+                                removeOverlay: _removeOverlay,
+                                deviceInfoSelected: _videoInputSelected,
+                              );
                             },
                           ),
                           CallActionButton(

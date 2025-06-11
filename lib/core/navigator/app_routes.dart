@@ -19,6 +19,7 @@ class Routes {
   static const String createMeetingRoute = '/create-meeting';
   static const String enterCodeRoute = '/enter-code';
   static const String backgroundGallery = '/background-gallery';
+  static const String lobbyRoute = '/lobby';
 
   // Chat
   static const String conversationRoute = '/conversation';

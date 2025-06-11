@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
-class CallActionButton extends StatelessWidget {
+class PreviewActionButton extends StatelessWidget {
   final IconData icon;
   final Function() onTap;
   final Color? backgroundColor;
   final Color? iconColor;
+  final Color? borderColor;
   final double? iconSize;
   final BoxShape shape;
   final double? boxSize;
-  const CallActionButton({
+  const PreviewActionButton({
     super.key,
     required this.icon,
     required this.onTap,
     this.backgroundColor,
     this.iconColor,
+    this.borderColor,
     this.iconSize,
     this.shape = BoxShape.rectangle,
     this.boxSize,
@@ -35,22 +35,18 @@ class CallActionButton extends StatelessWidget {
           : EdgeInsets.only(left: 8.sp),
       child: GestureWrapper(
         onTap: onTap,
-        child: Material(
-          clipBehavior: Clip.hardEdge,
-          shape: shape == BoxShape.circle || context.isMobile
-              ? const CircleBorder()
-              : SuperellipseShape(
-                  borderRadius: BorderRadius.circular(20.sp),
-                ),
-          color:
-              backgroundColor ?? Theme.of(context).colorScheme.onInverseSurface,
-          child: Container(
-            alignment: Alignment.center,
-            child: Icon(
-              icon,
-              color: iconColor ?? Theme.of(context).iconTheme.color,
-              size: iconSize ?? 18.sp,
-            ),
+        child: Container(
+          padding: EdgeInsets.all(8.sp),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border.all(color: borderColor ?? mCL),
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: Icon(
+            icon,
+            color: iconColor ?? Theme.of(context).iconTheme.color,
+            size: iconSize ?? 16.sp,
           ),
         ),
       ),

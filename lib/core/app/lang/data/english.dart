@@ -129,6 +129,9 @@ Map<String, String> english = {
       "Updated personal information successfully!",
   Strings.updateUsernameSuccessfully: "Updated username successful!",
   Strings.createdAt: "Created at",
+  Strings.readyToJoin: "Ready to join?",
+  Strings.joinNow: "Join now",
+  Strings.leave: "Leave",
 
   // Settings screen
   Strings.myProfile: "My Profile",

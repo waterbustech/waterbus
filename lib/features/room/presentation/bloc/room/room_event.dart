@@ -25,7 +25,13 @@ class RoomUpdated extends RoomEvent {
 
 class RoomJoinedEvent extends RoomEvent {
   final Room room;
-  const RoomJoinedEvent({required this.room});
+  final bool isMember;
+  final String? password;
+  const RoomJoinedEvent({
+    required this.room,
+    this.isMember = false,
+    this.password,
+  });
 }
 
 class RoomJoinedWithPassword extends RoomEvent {
@@ -70,13 +76,32 @@ class RoomSharingScreenStoped extends RoomEvent {}
 
 class RoomAudioToggled extends RoomEvent {}
 
+class RoomAudioDeviceToggled extends RoomEvent {
+  final MediaDeviceInfo mediaDeviceInfo;
+
+  const RoomAudioDeviceToggled({required this.mediaDeviceInfo});
+}
+
+class RoomVideoDeviceToggled extends RoomEvent {
+  final MediaDeviceInfo mediaDeviceInfo;
+
+  const RoomVideoDeviceToggled({required this.mediaDeviceInfo});
+}
+
 class RoomVideoToggled extends RoomEvent {}
 
 class RoomHandRasingToggled extends RoomEvent {}
 
 class RoomCallSettingsSave extends RoomEvent {
   final MediaConfig setting;
-  const RoomCallSettingsSave({required this.setting});
+  final String? audioDeviceId;
+  final String? videoDeviceId;
+
+  const RoomCallSettingsSave({
+    required this.setting,
+    this.audioDeviceId,
+    this.videoDeviceId,
+  });
 }
 
 class RoomVirtualBackgroundApplied extends RoomEvent {

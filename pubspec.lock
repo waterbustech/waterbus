@@ -480,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  dropdown_button2:
+    dependency: "direct main"
+    description:
+      name: dropdown_button2
+      sha256: b0fe8d49a030315e9eef6c7ac84ca964250155a6224d491c1365061bc974a9e1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.9"
   equatable:
     dependency: "direct main"
     description:
@@ -857,10 +865,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc_plus
-      sha256: "7e3fe0ec5c0ac9a83f37201350951a3bf3144920c15a6c344252cd9e02d4cc4c"
+      sha256: "62b86c91d0c21be9f15d78283af9e7883667033608d5f045b9497a13d926d78c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.1+3"
+    version: "0.14.1+4"
   freezed_annotation:
     dependency: transitive
     description:
@@ -2175,9 +2183,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk"
-      relative: false
-    source: path
+      path: "."
+      ref: "migration/v3"
+      resolved-ref: aab21da4f1780869cc5c682802c79919a9cf966d
+      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
+    source: git
     version: "1.6.0"
   web:
     dependency: "direct main"

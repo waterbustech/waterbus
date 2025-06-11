@@ -110,6 +110,9 @@ class Strings {
   static const String saved = 'saved';
   static const String copied = 'copied';
   static const String createdAt = 'createdAt';
+  static const String readyToJoin = 'readyToJoin';
+  static const String joinNow = 'joinNow';
+  static const String leave = 'leave';
 
   // Profile screen
   static const String profile = 'profile';

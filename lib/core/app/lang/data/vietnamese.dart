@@ -106,6 +106,9 @@ Map<String, String> vietnamese = {
   Strings.saved: "Đã lưu",
   Strings.copied: "Đã sao chép",
   Strings.createdAt: "Tạo lúc",
+  Strings.readyToJoin: "Sẵn sàng tham gia?",
+  Strings.joinNow: "Tham gia ngay",
+  Strings.leave: "Thoát",
 
   // Profile screen
   Strings.profile: "Hồ sơ",

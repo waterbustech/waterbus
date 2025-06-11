@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:waterbus/core/utils/image_resizer/index.dart';
 
 class ImageUtils {

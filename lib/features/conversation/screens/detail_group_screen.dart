@@ -154,6 +154,7 @@ class DetailGroupScreen extends StatelessWidget {
                             AppBloc.roomBloc.add(
                               RoomJoinedEvent(
                                 room: AppBloc.chatBloc.conversationCurrent!,
+                                isMember: true,
                               ),
                             );
                           },

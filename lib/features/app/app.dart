@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:toastification/toastification.dart';
 
@@ -35,6 +36,11 @@ class _AppState extends State<App> {
                   title: kAppTitle,
                   locale: I18n.locale,
                   supportedLocales: I18n.supportedLocales,
+                  localizationsDelegates: [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
                   navigatorKey: AppNavigator.navigatorKey,
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.light(
