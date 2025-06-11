@@ -59,6 +59,7 @@ void main(List<String> args) async {
 
       runApp(
         I18n(
+          autoSaveLocale: true,
           initialLocale: LanguageService().getLocale().locale,
           supportedLocales: ['en-US'.asLocale, 'vi-VN'.asLocale],
           child: const App(),

@@ -12,6 +12,7 @@ import 'package:waterbus/core/utils/clipboard_utils.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
@@ -95,7 +96,7 @@ class MeetingCard extends StatelessWidget {
                         size: 20.sp,
                       ),
               ),
-              GestureDetector(
+              GestureWrapper(
                 onTap: () async {
                   await WaterbusPermissionHandler().checkGrantedForExecute(
                     permissions: [Permission.camera, Permission.microphone],

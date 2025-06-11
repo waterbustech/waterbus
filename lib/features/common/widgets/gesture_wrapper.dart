@@ -72,7 +72,10 @@ class _GestureWrapperState extends State<GestureWrapper> {
               }
             }
           : null,
-      child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
+      ),
     );
   }
 }

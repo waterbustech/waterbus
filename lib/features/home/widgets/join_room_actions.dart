@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -13,7 +14,6 @@ import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-import 'package:waterbus/gen/fonts.gen.dart';
 
 class JoinRoomActions extends StatefulWidget {
   final Room room;
@@ -35,7 +35,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
 
   Text _readyJoinText(BuildContext context) {
     return Text(
-      widget.isMember ? 'Ready to join?' : 'Join with password!',
+      Strings.readyToJoin.i18n,
       style: TextStyle(
         fontSize: 22.sp,
         color: Theme.of(context).textTheme.bodyMedium!.color,
@@ -43,28 +43,9 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
     );
   }
 
-  double _getFirstLineWidth({required Text text, required double maxWidth}) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: text.data,
-        style: text.style?.copyWith(fontFamily: FontFamily.helvetica),
-      ),
-      maxLines: 1,
-      textScaler: TextScaler.linear(1),
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: maxWidth);
-
-    return textPainter.size.width;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final double widthButton = context.isMobile
-        ? 100.w
-        : _getFirstLineWidth(
-            text: _readyJoinText(context),
-            maxWidth: 40.w,
-          );
+    final double widthButton = context.isMobile ? 100.w : 230.sp;
 
     return Form(
       key: _formStateKey,
@@ -72,25 +53,30 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _readyJoinText(context),
-          if (!widget.isMember)
-            Padding(
-              padding: EdgeInsets.only(top: 16.sp),
-              child: SizedBox(
-                width: widthButton,
-                child: TextFieldInput(
-                  autofocus: true,
-                  hintStyle: TextStyle(
-                    color: Theme.of(context).textTheme.labelSmall?.color,
-                    fontSize: 12.sp,
+          widget.isMember
+              ? SizedBox(height: 20.sp)
+              : Padding(
+                  padding: EdgeInsets.only(top: 16.sp, bottom: 12.sp),
+                  child: SizedBox(
+                    width: widthButton,
+                    child: TextFieldInput(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).textTheme.bodyMedium!.color!,
+                      ),
+                      borderRadius: BorderRadius.circular(4.sp),
+                      height: 36.sp,
+                      autofocus: true,
+                      hintStyle: TextStyle(
+                        color: Theme.of(context).textTheme.labelSmall?.color,
+                        fontSize: 12.sp,
+                      ),
+                      obscureText: true,
+                      validatorForm: (val) => null,
+                      hintText: Strings.password.i18n,
+                      controller: _passwordController,
+                    ),
                   ),
-                  obscureText: true,
-                  validatorForm: (val) => null,
-                  hintText: Strings.password.i18n,
-                  controller: _passwordController,
                 ),
-              ),
-            ),
-          SizedBox(height: 20.sp),
           GestureWrapper(
             onTap: () {
               if (!widget.isMember && _passwordController.text.length < 6) {
@@ -107,48 +93,41 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                 ),
               );
             },
-            child: Container(
-              width: widthButton,
-              padding: EdgeInsets.symmetric(vertical: 10.sp),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.sp),
+            child: Material(
+              shape: SuperellipseShape(
+                borderRadius: BorderRadiusGeometry.circular(10.sp),
               ),
-              child: Center(
-                child: Text(
-                  'Join now',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    color: mCL,
+              clipBehavior: Clip.hardEdge,
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: SizedBox(
+                height: 36.sp,
+                width: widthButton,
+                child: Center(
+                  child: Text(
+                    Strings.joinNow.i18n,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: mCL,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 14.sp),
+          SizedBox(height: 12.sp),
           GestureWrapper(
             onTap: () {
               AppBloc.roomBloc.add(RoomDisposed());
               AppNavigator.pop();
             },
-            child: Container(
-              width: widthButton,
-              padding: EdgeInsets.symmetric(vertical: 8.5.sp),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).textTheme.bodyMedium!.color!,
-                ),
-                borderRadius: BorderRadius.circular(20.sp),
-              ),
-              child: Center(
-                child: Text(
-                  "Leave",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).textTheme.bodyMedium!.color,
-                  ),
+            child: Center(
+              child: Text(
+                Strings.leave.i18n,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onErrorContainer,
                 ),
               ),
             ),

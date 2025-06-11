@@ -114,7 +114,9 @@ dependencies:
   #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
   #     ref: 2.0.0-pre
   waterbus_sdk: 
-    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      ref: migration/v3
    
 
 dependency_overrides:

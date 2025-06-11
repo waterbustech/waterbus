@@ -69,7 +69,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomStarted) {
           _mediaConfig = _callSettingsLocalDataSource.getSettings();
 
-          _waterbusSdk.changeCallSettings(_mediaConfig);
+          _waterbusSdk.updateMediaConfig(_mediaConfig);
           _waterbusSdk.onEventChangedRegister = _onEventChanged;
           _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
         }
@@ -183,7 +183,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomAudioDeviceToggled) {
-          await _waterbusSdk.toggleAudioInputDevice(
+          await _waterbusSdk.changeAudioInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
           audioInputSeleted = event.mediaDeviceInfo;
@@ -195,7 +195,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomVideoDeviceToggled) {
-          await _waterbusSdk.toggleVideoInputDevice(
+          await _waterbusSdk.changeVideoInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
           audioInputSeleted = event.mediaDeviceInfo;
