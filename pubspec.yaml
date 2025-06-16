@@ -65,6 +65,10 @@ dependencies:
   firebase_crashlytics: ^4.3.6
   firebase_performance: ^0.10.1+6
 
+  # Go router
+  go_router: ^15.2.0
+  go_router_builder: ^3.0.0
+
   # Utils
   flutter_localizations:
     sdk: flutter

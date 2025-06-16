@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -43,7 +43,7 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
         leadingWidth: 60.sp,
         leading: GestureWrapper(
           onTap: () {
-            AppNavigator.pop();
+            AppRouter.pop();
           },
           child: Center(
             child: Text(

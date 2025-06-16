@@ -6,8 +6,7 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -58,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ? const SizedBox()
             : GestureWrapper(
                 onTap: () {
-                  AppNavigator.pop();
+                  AppRouter.pop();
                 },
                 child: Center(
                   child: Text(
@@ -163,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 GestureWrapper(
                                   onTap: () {
-                                    AppNavigator().push(Routes.usernameRoute);
+                                    UsernameRoute().push(context);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(

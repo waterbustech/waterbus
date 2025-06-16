@@ -6,8 +6,7 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -40,10 +39,10 @@ class ConversationHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Visibility(
-                        visible: AppNavigator.canPop,
+                        visible: AppRouter.canPop,
                         child: GestureWrapper(
                           onTap: () {
-                            AppNavigator.pop();
+                            AppRouter.pop();
                           },
                           child: Container(
                             color: Colors.transparent,
@@ -60,12 +59,7 @@ class ConversationHeader extends StatelessWidget {
                       Expanded(
                         child: GestureWrapper(
                           onTap: () {
-                            AppNavigator().push(
-                              Routes.detailGroupRoute,
-                              arguments: {
-                                "meeting": room,
-                              },
-                            );
+                            DetailGroupRoute().push(context);
                           },
                           child: ColoredBox(
                             color: Colors.transparent,

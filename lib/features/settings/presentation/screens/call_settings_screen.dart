@@ -4,9 +4,9 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -56,7 +56,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
             ? const SizedBox()
             : GestureWrapper(
                 onTap: () {
-                  AppNavigator.pop();
+                  AppRouter.pop();
                 },
                 child: Center(
                   child: Text(
@@ -76,10 +76,10 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 RoomCallSettingsSave(setting: _config),
               );
 
-              if (AppNavigator.canPop) {
+              if (AppRouter.canPop) {
                 DeviceUtils().lightImpact();
 
-                AppNavigator.pop();
+                AppRouter.pop();
               } else {
                 showDialogDone(text: Strings.saved.i18n);
               }

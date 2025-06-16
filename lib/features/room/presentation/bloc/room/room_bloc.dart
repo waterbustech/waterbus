@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
@@ -14,9 +15,8 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -98,19 +98,12 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             ),
           );
 
-          AppNavigator.pop();
+          AppRouter.pop();
 
           if (isJoinSucceed) {
-            if (AppNavigatorObserver.currentRouteName == Routes.lobbyRoute) {
-              AppNavigator.popUntil(Routes.rootRoute);
-            }
-
             emit(_joinedRoom);
 
-            AppNavigator().push(
-              Routes.roomRoute,
-              arguments: {'room': _currentRoom},
-            );
+            RoomRoute().replace(AppRouter.context!);
 
             _roomSound.playSoundJoinRoom();
           }
@@ -327,7 +320,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
-    AppNavigator.popUntil(Routes.rootRoute);
+    if (AppRouter.context != null) {
+      RootRoute().go(AppRouter.context!);
+    }
 
     if (result.isSuccess) {
       final Room room = result.value!;
@@ -377,7 +372,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       code: event.roomCode,
     );
 
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (result.isSuccess) {
       return result.value;
@@ -397,13 +392,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<bool> result = await _waterbusSdk.updateRoom(params: params);
 
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (result.isSuccess) {
       final Room room = _currentRoom!.copyWith(title: event.roomName);
       _localDataSource.insertOrUpdate(room);
 
-      AppNavigator.pop();
+      AppRouter.pop();
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));
 
       _currentRoom = room;
@@ -432,8 +427,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    if (AppNavigator.currentRoute() == Routes.roomRoute) {
-      AppNavigator.pop();
+    if (AppRouter.currentRoute() == Routes.roomRoute) {
+      AppRouter.pop();
     }
   }
 
@@ -497,9 +492,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final bool isMember = indexOfMember != -1;
 
-    AppNavigator().push(
+    AppRouter.context!.push(
       Routes.lobbyRoute,
-      arguments: {
+      extra: {
         "room": room,
         "audioInputResponse": audioInputResponse,
         "isMember": isMember,

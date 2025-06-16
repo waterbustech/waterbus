@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
@@ -28,7 +28,7 @@ Future showDialogWaterbus({
   AlignmentGeometry? alignment,
   String routeName = Routes.dialogRoute,
 }) async {
-  final BuildContext context = AppNavigator.context!;
+  final BuildContext context = AppRouter.context!;
 
   if (context.isMobile && !onlyShowAsDialog) {
     return showBottomSheetWaterbus(
@@ -61,7 +61,7 @@ Future showDialogWaterbus({
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
     transitionDuration: Duration(milliseconds: duration),
-    context: AppNavigator.context!,
+    context: AppRouter.context!,
     pageBuilder: (context, __, ___) {
       return Dialog(
         alignment: alignment,
@@ -75,7 +75,7 @@ Future showDialogWaterbus({
           bottom: paddingBottom,
         ),
         backgroundColor: backgroundColor ??
-            Theme.of(AppNavigator.context!).dialogTheme.backgroundColor,
+            Theme.of(AppRouter.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
           child: GestureWrapper(

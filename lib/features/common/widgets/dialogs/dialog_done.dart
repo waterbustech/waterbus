@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/gen/assets.gen.dart';
@@ -16,14 +16,14 @@ Future showDialogDone({
 }) {
   if (timeForDismiss != null) {
     Future.delayed(timeForDismiss.milliseconds, () {
-      AppNavigator.pop();
+      AppRouter.pop();
     });
   }
 
   DeviceUtils().lightImpact();
 
   return showDialog(
-    context: AppNavigator.context!,
+    context: AppRouter.context!,
     barrierColor: Colors.transparent,
     builder: (context) {
       return Material(

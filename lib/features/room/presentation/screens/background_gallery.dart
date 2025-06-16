@@ -4,7 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -44,7 +44,7 @@ class _BackgroundGalleryScreenState extends State<BackgroundGalleryScreen> {
               AppBloc.roomBloc.add(
                 RoomVirtualBackgroundApplied(_currentBackground),
               );
-              AppNavigator.pop();
+              AppRouter.pop();
             },
             icon: Icon(
               PhosphorIcons.check(),

@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 
 enum FadeTheme { light, dark, lightReverse }
 
@@ -137,7 +137,7 @@ extension ColorX on FadeTheme? {
         case FadeTheme.dark:
           return const Color(0xff3A3E3F);
         case FadeTheme.lightReverse:
-          return Theme.of(AppNavigator.context!).brightness == Brightness.dark
+          return Theme.of(AppRouter.context!).brightness == Brightness.dark
               ? const Color(0xff393e47)
               : const Color(0xffEAEAEA);
         default:
@@ -155,7 +155,7 @@ extension ColorX on FadeTheme? {
         case FadeTheme.dark:
           return const Color(0xff2A2C2E);
         case FadeTheme.lightReverse:
-          return Theme.of(AppNavigator.context!).brightness == Brightness.dark
+          return Theme.of(AppRouter.context!).brightness == Brightness.dark
               ? const Color(0xff3d3d5c)
               : const Color(0xFFD6DFDC);
         default:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 
 Future showBottomSheetWaterbus({
   required BuildContext context,

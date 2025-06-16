@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
@@ -84,10 +84,10 @@ class AppScaffold extends StatelessWidget {
     );
   }
 
-  bool get _canBackward => AppNavigator.canPop;
+  bool get _canBackward => AppRouter.canPop;
 
   void _onPopInvoked(bool canPop, _) {
-    if (AppNavigator.currentRoute()?.startsWith(Routes.roomRoute) ?? false) {
+    if (AppRouter.currentRoute()?.startsWith(Routes.roomRoute) ?? false) {
       AppBloc.roomBloc.add(const RoomLeft());
     }
   }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -32,10 +32,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   void _handleTapChatItem(Room room) {
-    AppNavigator().push(
-      Routes.conversationRoute,
-      arguments: {'room': room},
-    );
+    context.push(Routes.conversationRoute, extra: {'room': room});
   }
 
   @override
@@ -72,11 +69,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
-                      AppNavigator().push(
+                      context.push(
                         Routes.createMeetingRoute,
-                        arguments: {
-                          'isChatScreen': true,
-                        },
+                        extra: {'isChatScreen': true},
                       );
                     },
                     icon: Icon(

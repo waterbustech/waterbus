@@ -4,8 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -86,8 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     if (payload.isEmpty) {
-      // Pop loading
-      AppNavigator.pop();
+      AppRouter.pop();
       return;
     }
 
@@ -99,7 +97,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     // Pop loading
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (result.isSuccess) {
       _userLocal.saveUser(result.value!);
@@ -111,7 +109,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _userLocal.clearUser();
     await WaterbusSdk.instance.deleteToken();
 
-    AppNavigator.popUntil(Routes.rootRoute);
+    if (AppRouter.context != null) {
+      RootRoute().go(AppRouter.context!);
+    }
 
     _user = null;
     AppBloc.userBloc.add(UserCleaned());

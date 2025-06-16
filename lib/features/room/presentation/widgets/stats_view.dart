@@ -9,7 +9,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
@@ -141,7 +141,7 @@ class _StatsViewState extends State<StatsView> {
                 ),
                 IconButton(
                   onPressed: () {
-                    AppNavigator.pop();
+                    AppRouter.pop();
                   },
                   icon: Icon(
                     PhosphorIcons.xCircle(PhosphorIconsStyle.fill),

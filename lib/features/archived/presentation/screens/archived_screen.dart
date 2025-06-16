@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:waterbus_sdk/types/externals/models/index.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -36,12 +36,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
   }
 
   void _handleTapArchivedItem(Room room) {
-    AppNavigator().push(
-      Routes.archivedConversationRoute,
-      arguments: {
-        'room': room,
-      },
-    );
+    context.push(Routes.archivedConversationRoute, extra: {'room': room});
   }
 
   @override

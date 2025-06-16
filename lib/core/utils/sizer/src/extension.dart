@@ -15,7 +15,7 @@ extension SizerExt on num {
   /// density and aspect ratio
   double get sp => SizerUtils.instance.sp(this);
 
-  BuildContext? get _context => AppNavigator.context;
+  BuildContext? get _context => AppRouter.context;
 
   Size get _size {
     if (_context != null) {

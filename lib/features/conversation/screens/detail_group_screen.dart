@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -43,11 +44,11 @@ class DetailGroupScreen extends StatelessWidget {
                   message: Strings.editMeeting.i18n,
                   child: GestureWrapper(
                     onTap: () {
-                      AppNavigator().push(
+                      context.push(
                         Routes.createMeetingRoute,
-                        arguments: {
-                          "room": AppBloc.chatBloc.conversationCurrent,
-                          "isChatScreen": true,
+                        extra: {
+                          'room': AppBloc.chatBloc.conversationCurrent,
+                          'isChatScreen': true,
                         },
                       );
                     },
@@ -70,7 +71,7 @@ class DetailGroupScreen extends StatelessWidget {
             ],
             leading: GestureWrapper(
               onTap: () {
-                AppNavigator.pop();
+                AppRouter.pop();
               },
               child: Tooltip(
                 message: Strings.back.i18n,
@@ -250,7 +251,7 @@ class DetailGroupScreen extends StatelessWidget {
                                   SlidableAction(
                                     onPressed: (context) async {
                                       await showBottomSheetWaterbus(
-                                        context: AppNavigator.context!,
+                                        context: AppRouter.context!,
                                         enableDrag: false,
                                         builder: (context) {
                                           return BottomSheetDelete(

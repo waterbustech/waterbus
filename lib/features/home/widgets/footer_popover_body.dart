@@ -4,8 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -30,7 +29,7 @@ class FooterPopoverBody extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
           title: Strings.viewPersonalInformation.i18n,
           onTap: () {
-            AppNavigator().push(Routes.profileRoute);
+            ProfileRoute().push(context);
           },
         ),
         _footerPopoverButton(
@@ -56,7 +55,7 @@ class FooterPopoverBody extends StatelessWidget {
   }) {
     return GestureWrapper(
       onTap: () {
-        AppNavigator.pop();
+        AppRouter.pop();
         onTap.call();
       },
       child: Container(

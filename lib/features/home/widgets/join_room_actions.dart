@@ -6,7 +6,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -119,7 +119,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
           GestureWrapper(
             onTap: () {
               AppBloc.roomBloc.add(RoomDisposed());
-              AppNavigator.pop();
+              AppRouter.pop();
             },
             child: Center(
               child: Text(
