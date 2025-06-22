@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/core/constants/constants.dart';
 
+import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
@@ -18,7 +18,6 @@ import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/screens/home.dart';
-import 'package:waterbus/features/home/screens/home_screen.dart';
 import 'package:waterbus/features/home/screens/lobby_screen.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
@@ -306,127 +305,9 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
       );
 }
 
-class ChatHomeRoute extends WaterbusBaseRoute with _$ChatHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      const ChatsScreen();
-}
-
-class RecentHomeRoute extends WaterbusBaseRoute with _$RecentHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      const RecentMeetings();
-}
-
-class NotificationSettingsHomeRoute extends WaterbusBaseRoute
-    with _$NotificationSettingsHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      const NotificationSettingsScreen();
-}
-
-class ThemeHomeRoute extends WaterbusBaseRoute with _$ThemeHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) => ThemeScreen(
-        isSettingDesktop:
-            (state.extra as Map<String, dynamic>?)?['isSettingDesktop'] ??
-                false,
-      );
-}
-
-class ArchivedHomeRoute extends WaterbusBaseRoute with _$ArchivedHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      ArchivedScreen();
-}
-
-class LangHomeRoute extends WaterbusBaseRoute with _$LangHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      LanguageScreen(
-        isSettingDesktop:
-            (state.extra as Map<String, dynamic>?)?['isSettingDesktop'] ??
-                false,
-      );
-}
-
-class SettingsCallHomeRoute extends WaterbusBaseRoute
-    with _$SettingsCallHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      CallSettingsScreen(
-        isSettingDesktop:
-            (state.extra as Map<String, dynamic>?)?['isSettingDesktop'] ??
-                false,
-      );
-}
-
-class LicenseHomeRoute extends WaterbusBaseRoute with _$LicenseHomeRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) => LicensePage(
-        applicationIcon: Image.asset(
-          Assets.icons.launcherIcon.path,
-          height: 35.sp,
-        ),
-        applicationVersion: kAppVersion,
-      );
-}
-
-@TypedShellRoute<SplitShellRoute>(
-  routes: [
-    TypedGoRoute<ChatHomeRoute>(
-      path: "${Routes.home}${Routes.chatRoute}",
-      name: "${Routes.home}${Routes.chatRoute}",
-    ),
-    TypedGoRoute<RecentHomeRoute>(
-      path: "${Routes.home}${Routes.recentRoute}",
-      name: "${Routes.home}${Routes.recentRoute}",
-    ),
-    TypedGoRoute<NotificationSettingsHomeRoute>(
-      path: "${Routes.home}${Routes.notificationSettings}",
-      name: "${Routes.home}${Routes.notificationSettings}",
-    ),
-    TypedGoRoute<ThemeHomeRoute>(
-      path: "${Routes.home}${Routes.themeRoute}",
-      name: "${Routes.home}${Routes.themeRoute}",
-    ),
-    TypedGoRoute<ArchivedHomeRoute>(
-      path: "${Routes.home}${Routes.archivedRoute}",
-      name: "${Routes.home}${Routes.archivedRoute}",
-    ),
-    TypedGoRoute<LangHomeRoute>(
-      path: "${Routes.home}${Routes.langRoute}",
-      name: "${Routes.home}${Routes.langRoute}",
-    ),
-    TypedGoRoute<SettingsCallHomeRoute>(
-      path: "${Routes.home}${Routes.settingsCallRoute}",
-      name: "${Routes.home}${Routes.settingsCallRoute}",
-    ),
-    TypedGoRoute<LicenseHomeRoute>(
-      path: "${Routes.home}${Routes.licensesRoute}",
-      name: "${Routes.home}${Routes.licensesRoute}",
-    ),
-  ],
-)
-class SplitShellRoute extends ShellRouteData {
-  static final GlobalKey<NavigatorState> $navigatorKey =
-      AppRouter._navigatorHomeKey;
-
-  @override
-  Widget builder(
-    BuildContext context,
-    GoRouterState state,
-    Widget navigator,
-  ) {
-    return HomePage(sideMenuKey: sideMenuKey, child: navigator);
-  }
-}
-
 class AppRouter {
   static final GlobalKey<NavigatorState> _rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
-  static final GlobalKey<NavigatorState> _navigatorHomeKey =
-      GlobalKey<NavigatorState>(debugLabel: "_navigatorHomeKey");
 
   late final GoRouter router;
   static final AppRouter instance = AppRouter._internal();
@@ -434,9 +315,9 @@ class AppRouter {
   AppRouter._internal() {
     router = GoRouter(
       routes: $appRoutes,
-      observers: [AppNavigatorObserver(), NavigatorObserver()],
+      observers: [AppNavigatorObserver()],
       navigatorKey: _rootNavigatorKey,
-      initialLocation: "${Routes.home}${Routes.recentRoute}",
+      initialLocation: Routes.rootRoute,
     );
   }
 
@@ -447,20 +328,14 @@ class AppRouter {
   }
 
   static bool getRouteDesktop(String route) => [
-        Routes.conversationRoute,
-        Routes.archivedConversationRoute,
+        Routes.home + Routes.conversationRoute,
+        Routes.home + Routes.archivedConversationRoute,
       ].contains(route);
 
   static NavigatorState _currentState(String? route) {
     late NavigatorState stateByContext;
 
-    if (context!.isDesktop &&
-        homeState != null &&
-        getRouteDesktop(route ?? "")) {
-      stateByContext = homeState!;
-    } else {
-      stateByContext = state;
-    }
+    stateByContext = state;
 
     return stateByContext;
   }
@@ -472,11 +347,7 @@ class AppRouter {
 
   static BuildContext? get context => _rootNavigatorKey.currentContext;
 
-  static BuildContext? get homeContext => _navigatorHomeKey.currentContext;
-
   static NavigatorState get state => _rootNavigatorKey.currentState!;
-
-  static NavigatorState? get homeState => _navigatorHomeKey.currentState;
 }
 
 bool middlewareRouter(

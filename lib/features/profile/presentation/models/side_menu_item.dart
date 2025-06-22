@@ -28,11 +28,6 @@ final List<SideMenuItem> sideMenuItems = [
     iconData: PhosphorIcons.chatsTeardrop(),
     selectedIconData: PhosphorIcons.chatsTeardrop(IconStyle.fill),
   ),
-  // SideMenuItem(
-  //   label: Strings.talkWithAI,
-  //   iconData: PhosphorIcons.robot(),
-  //   selectedIconData: PhosphorIcons.robot(IconStyle.fill),
-  // ),
   SideMenuItem(
     label: Strings.archivedChats,
     iconData: PhosphorIcons.archive(),
