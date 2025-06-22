@@ -2207,11 +2207,9 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "migration/v3"
-      resolved-ref: aab21da4f1780869cc5c682802c79919a9cf966d
-      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
-    source: git
+      path: "/Users/tranthaituan/Documents/Work/waterbus-flutter-sdk"
+      relative: false
+    source: path
     version: "1.6.0"
   web:
     dependency: "direct main"
