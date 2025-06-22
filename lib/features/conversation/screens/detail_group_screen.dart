@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -44,7 +43,7 @@ class DetailGroupScreen extends StatelessWidget {
                   message: Strings.editMeeting.i18n,
                   child: GestureWrapper(
                     onTap: () {
-                      context.push(
+                      AppRouter.push(
                         Routes.createMeetingRoute,
                         extra: {
                           'room': AppBloc.chatBloc.conversationCurrent,

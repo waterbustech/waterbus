@@ -36,21 +36,147 @@ import 'package:waterbus/gen/assets.gen.dart';
 
 part 'app_router.g.dart';
 
-Page<T> buildWaterbusPage<T>({
-  required Widget child,
-  required GoRouterState state,
-}) {
-  return CustomTransitionPage<T>(
-    key: state.pageKey,
-    child: AppScaffold(child: child),
-    transitionDuration:
-        kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
-    reverseTransitionDuration:
-        kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(opacity: animation, child: child);
-    },
-  );
+class AppRouter {
+  static final GlobalKey<NavigatorState> _rootNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
+
+  late final GoRouter router;
+  static final AppRouter instance = AppRouter._internal();
+
+  AppRouter._internal() {
+    router = GoRouter(
+      routes: $appRoutes,
+      observers: [AppNavigatorObserver()],
+      navigatorKey: _rootNavigatorKey,
+      initialLocation: Routes.rootRoute,
+    );
+  }
+
+  static void pop() {
+    if (!canPop) return;
+
+    _currentState(AppNavigatorObserver.currentRoute).pop();
+  }
+
+  static bool getRouteDesktop(String route) => [
+        Routes.home + Routes.conversationRoute,
+        Routes.home + Routes.archivedConversationRoute,
+      ].contains(route);
+
+  static NavigatorState _currentState(String? route) {
+    late NavigatorState stateByContext;
+
+    stateByContext = state;
+
+    return stateByContext;
+  }
+
+  static bool get canPop =>
+      _currentState(AppNavigatorObserver.currentRoute).canPop();
+
+  static BuildContext? get context => _rootNavigatorKey.currentContext;
+
+  static NavigatorState get state => _rootNavigatorKey.currentState!;
+
+  static Future? push<T>(
+    String route, {
+    Object? extra,
+    bool forceRootState = false,
+  }) {
+    final bool hasMatchConditions = _middlewareRouter(route, extra);
+
+    if (hasMatchConditions) return null;
+
+    return context?.push(route, extra: extra);
+  }
+
+  static bool _middlewareRouter(
+    String route,
+    Object? arguments,
+  ) {
+    if (_shouldBeShowPopupInstrealOfScreen(route: route)) {
+      bool flagShowingDialog = false;
+      for (final String? routeName in AppNavigatorObserver.routeNames) {
+        if (routeName != null && _popupInstrealOfScreen.contains(routeName)) {
+          flagShowingDialog = true;
+          break;
+        }
+      }
+
+      showDialogWaterbus(
+        routeName: route,
+        duration: 200,
+        maxHeight: 100.h,
+        maxWidth: 400.sp,
+        barrierColor: flagShowingDialog ? Colors.transparent : null,
+        borderRadius: 16.sp,
+        child: Material(
+          clipBehavior: Clip.hardEdge,
+          shape: SuperellipseShape(
+            borderRadius: BorderRadius.circular(16.sp),
+          ),
+          child: SizedBox(
+            height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
+            child: AppScaffold(
+              child: _getWidgetByRoute(
+                route: route,
+                arguments: arguments as Map<String, dynamic>?,
+              ),
+            ),
+          ),
+        ),
+      );
+      return true;
+    }
+    return false;
+  }
+
+  static bool _shouldBeShowPopupInstrealOfScreen({required String route}) {
+    if (AppRouter.context?.isMobile ?? true) return false;
+
+    return _popupInstrealOfScreen.contains(route);
+  }
+
+  static List<String> get _popupInstrealOfScreen => [
+        Routes.enterCodeRoute,
+        Routes.createMeetingRoute,
+        Routes.profileRoute,
+        Routes.usernameRoute,
+        Routes.settingsCallRoute,
+        Routes.langRoute,
+        Routes.themeRoute,
+        Routes.detailGroupRoute,
+      ];
+
+  static Widget _getWidgetByRoute({
+    required String route,
+    Map<String, dynamic>? arguments,
+  }) {
+    switch (route) {
+      case Routes.enterCodeRoute:
+        return const EnterMeetingCode();
+      case Routes.createMeetingRoute:
+        return CreateMeetingScreen(
+          room: arguments?['room'],
+          isChatScreen: arguments?['isChatScreen'] ?? false,
+        );
+      case Routes.profileRoute:
+        return const ProfileScreen();
+
+      case Routes.usernameRoute:
+        return const UserNameScreen();
+      case Routes.settingsCallRoute:
+        return const CallSettingsScreen();
+      case Routes.langRoute:
+        return const LanguageScreen();
+      case Routes.themeRoute:
+        return const ThemeScreen();
+      case Routes.detailGroupRoute:
+        return const DetailGroupScreen();
+      default:
+        return const SizedBox();
+    }
+  }
 }
 
 abstract class WaterbusBaseRoute extends GoRouteData {
@@ -61,6 +187,23 @@ abstract class WaterbusBaseRoute extends GoRouteData {
     return buildWaterbusPage(
       child: buildContent(context, state),
       state: state,
+    );
+  }
+
+  Page<T> buildWaterbusPage<T>({
+    required Widget child,
+    required GoRouterState state,
+  }) {
+    return CustomTransitionPage<T>(
+      key: state.pageKey,
+      child: AppScaffold(child: child),
+      transitionDuration:
+          kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
+      reverseTransitionDuration:
+          kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }
@@ -303,139 +446,4 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
         ),
         applicationVersion: kAppVersion,
       );
-}
-
-class AppRouter {
-  static final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
-
-  late final GoRouter router;
-  static final AppRouter instance = AppRouter._internal();
-
-  AppRouter._internal() {
-    router = GoRouter(
-      routes: $appRoutes,
-      observers: [AppNavigatorObserver()],
-      navigatorKey: _rootNavigatorKey,
-      initialLocation: Routes.rootRoute,
-    );
-  }
-
-  static void pop() {
-    if (!canPop) return;
-
-    _currentState(AppNavigatorObserver.currentRouteName).pop();
-  }
-
-  static bool getRouteDesktop(String route) => [
-        Routes.home + Routes.conversationRoute,
-        Routes.home + Routes.archivedConversationRoute,
-      ].contains(route);
-
-  static NavigatorState _currentState(String? route) {
-    late NavigatorState stateByContext;
-
-    stateByContext = state;
-
-    return stateByContext;
-  }
-
-  static bool get canPop =>
-      _currentState(AppNavigatorObserver.currentRouteName).canPop();
-
-  static String? currentRoute() => AppNavigatorObserver.currentRouteName;
-
-  static BuildContext? get context => _rootNavigatorKey.currentContext;
-
-  static NavigatorState get state => _rootNavigatorKey.currentState!;
-}
-
-bool middlewareRouter(
-  String route,
-  Object? arguments,
-) {
-  if (shouldBeShowPopupInstrealOfScreen(route: route)) {
-    bool flagShowingDialog = false;
-    for (final String? routeName in AppNavigatorObserver.routeNames) {
-      if (routeName != null && popupInstrealOfScreen.contains(routeName)) {
-        flagShowingDialog = true;
-        break;
-      }
-    }
-
-    showDialogWaterbus(
-      routeName: route,
-      duration: 200,
-      maxHeight: 100.h,
-      maxWidth: 400.sp,
-      barrierColor: flagShowingDialog ? Colors.transparent : null,
-      borderRadius: 16.sp,
-      child: Material(
-        clipBehavior: Clip.hardEdge,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(16.sp),
-        ),
-        child: SizedBox(
-          height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
-          child: AppScaffold(
-            child: getWidgetByRoute(
-              route: route,
-              arguments: arguments as Map<String, dynamic>?,
-            ),
-          ),
-        ),
-      ),
-    );
-
-    return true;
-  }
-
-  return false;
-}
-
-bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-  if (AppRouter.context?.isMobile ?? true) return false;
-
-  return popupInstrealOfScreen.contains(route);
-}
-
-List<String> get popupInstrealOfScreen => [
-      Routes.enterCodeRoute,
-      Routes.createMeetingRoute,
-      Routes.profileRoute,
-      Routes.usernameRoute,
-      Routes.settingsCallRoute,
-      Routes.langRoute,
-      Routes.themeRoute,
-      Routes.detailGroupRoute,
-    ];
-
-Widget getWidgetByRoute({
-  required String route,
-  Map<String, dynamic>? arguments,
-}) {
-  switch (route) {
-    case Routes.enterCodeRoute:
-      return const EnterMeetingCode();
-    case Routes.createMeetingRoute:
-      return CreateMeetingScreen(
-        room: arguments?['room'],
-        isChatScreen: arguments?['isChatScreen'] ?? false,
-      );
-    case Routes.profileRoute:
-      return const ProfileScreen();
-
-    case Routes.usernameRoute:
-      return const UserNameScreen();
-    case Routes.settingsCallRoute:
-      return const CallSettingsScreen();
-    case Routes.langRoute:
-      return const LanguageScreen();
-    case Routes.themeRoute:
-      return const ThemeScreen();
-    case Routes.detailGroupRoute:
-      return const DetailGroupScreen();
-    default:
-      return const SizedBox();
-  }
 }

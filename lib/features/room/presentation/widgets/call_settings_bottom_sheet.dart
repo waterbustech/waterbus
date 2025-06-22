@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -56,7 +57,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     onTap: () {
                       AppRouter.pop();
 
-                      SettingsCallRoute().push(context);
+                      AppRouter.push(Routes.callSettingsRoute);
                     },
                   ),
                   if (context.isMobile)

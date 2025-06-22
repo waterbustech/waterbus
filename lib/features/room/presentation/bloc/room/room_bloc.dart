@@ -15,6 +15,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
+import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
@@ -427,7 +428,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    if (AppRouter.currentRoute() == Routes.roomRoute) {
+    if (AppNavigatorObserver.currentRoute == Routes.roomRoute) {
       AppRouter.pop();
     }
   }

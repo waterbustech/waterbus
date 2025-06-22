@@ -42,7 +42,7 @@ class AppNavigatorObserver extends NavigatorObserver {
   }
 
   // Static
-  static String? get currentRouteName => routeNames.lastWhere(
+  static String? get currentRoute => routeNames.lastWhere(
         (route) => route != null && route.isNotEmpty,
         orElse: () => null,
       );

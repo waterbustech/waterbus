@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
-import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
@@ -138,13 +138,13 @@ class _HomeScreenState extends State<HomeScreen> {
               AppBloc.authBloc.add(AuthLoggedOut());
               break;
             case Strings.profile:
-              context.push(Routes.profileRoute);
+              AppRouter.push(Routes.profileRoute);
               break;
             case Strings.archivedChats:
-              context.push(Routes.archivedRoute);
+              AppRouter.push(Routes.archivedRoute);
               break;
             case Strings.settings:
-              context.push(Routes.settingsCallRoute);
+              AppRouter.push(Routes.settingsCallRoute);
               break;
             case Strings.licenses:
               if (!mounted) return;
@@ -183,7 +183,7 @@ Widget _buildHeader(BuildContext context, String route) {
         suffixWidget:
             context.isDesktop ? buildCreateMeetingButton(context, route) : null,
         onTap: () {
-          context.push(Routes.enterCodeRoute);
+          AppRouter.push(Routes.enterCodeRoute);
         },
       );
     case Strings.archivedChats:
@@ -208,7 +208,7 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
   return GestureWrapper(
     onTap: () async {
       if (route == Strings.chat) {
-        context.push(
+        AppRouter.push(
           Routes.createMeetingRoute,
           extra: {'isChatScreen ': route == Strings.chat},
         );
@@ -216,7 +216,7 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
         await WaterbusPermissionHandler().checkGrantedForExecute(
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
-            context.push(Routes.createMeetingRoute);
+            AppRouter.push(Routes.createMeetingRoute);
           },
         );
       }

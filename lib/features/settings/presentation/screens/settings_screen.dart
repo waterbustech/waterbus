@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
@@ -34,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
               actions: [
                 GestureWrapper(
                   onTap: () {
-                    ProfileRoute().push(context);
+                    AppRouter.push(Routes.profileRoute);
                   },
                   child: Container(
                     decoration: const BoxDecoration(

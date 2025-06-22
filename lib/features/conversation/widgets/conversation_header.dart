@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -59,7 +60,7 @@ class ConversationHeader extends StatelessWidget {
                       Expanded(
                         child: GestureWrapper(
                           onTap: () {
-                            DetailGroupRoute().push(context);
+                            AppRouter.push(Routes.detailGroupRoute);
                           },
                           child: ColoredBox(
                             color: Colors.transparent,

@@ -67,7 +67,6 @@ dependencies:
 
   # Go router
   go_router: ^15.2.0
-  go_router_builder: ^3.0.0
 
   # Utils
   flutter_localizations:
@@ -165,6 +164,7 @@ dev_dependencies:
   injectable_generator: ^2.7.0
   build_runner: ^2.4.15
   flutter_gen_runner: ^5.8.0
+  go_router_builder: ^2.3.0
 
   # Lints
   flutter_lints: ^5.0.0

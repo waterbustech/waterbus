@@ -9,6 +9,7 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -51,7 +52,7 @@ class BodySettingScreens extends StatelessWidget {
                           if (context.isDesktop) {
                             onTap?.call(profileTab);
                           } else {
-                            ProfileRoute().push(context);
+                            AppRouter.push(Routes.profileRoute);
                           }
                         },
                         child: Material(
@@ -188,7 +189,7 @@ class BodySettingScreens extends StatelessWidget {
             if (context.isMobile) ...[
               SettingRowButton(
                 onTap: () {
-                  ProfileRoute().push(context);
+                  AppRouter.push(Routes.profileRoute);
                 },
                 title: Strings.myProfile.i18n,
                 icon: PhosphorIcons.userCircle(PhosphorIconsStyle.fill),
@@ -210,7 +211,7 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(appearanceTab);
                 } else {
-                  ThemeRoute().push(context);
+                  AppRouter.push(Routes.themeRoute);
                 }
               },
               isLast: false,
@@ -224,7 +225,7 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(languageTab);
                 } else {
-                  LangRoute().push(context);
+                  AppRouter.push(Routes.langRoute);
                 }
               },
               title: Strings.language.i18n,
@@ -239,7 +240,7 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(callAndMeetingTab);
                 } else {
-                  SettingsCallRoute().push(context);
+                  AppRouter.push(Routes.callSettingsRoute);
                 }
               },
               title: Strings.callAndMeeting.i18n,
