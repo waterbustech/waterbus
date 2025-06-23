@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: use_build_context_synchronously
+
+>>>>>>> b100c95e3e9d0f412699de02c56e4fdf7adf20eb
 import 'package:flutter/material.dart';
 
 import 'package:superellipse_shape/superellipse_shape.dart';
