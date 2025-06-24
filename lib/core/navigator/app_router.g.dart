@@ -12,7 +12,7 @@ List<RouteBase> get $appRoutes => [
       $loginRoute,
       $profileRoute,
       $usernameRoute,
-      $settingsCallRoute,
+      $callSettingsRoute,
       $settingsRoute,
       $privacyRoute,
       $notificationSettingsRoute,
@@ -173,19 +173,19 @@ mixin _$UsernameRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $settingsCallRoute => GoRouteData.$route(
-      path: '/call-setting',
-      name: '/call-setting',
-      factory: _$SettingsCallRoute._fromState,
+RouteBase get $callSettingsRoute => GoRouteData.$route(
+      path: '/callSettings',
+      name: '/callSettings',
+      factory: _$CallSettingsRoute._fromState,
     );
 
-mixin _$SettingsCallRoute on GoRouteData {
-  static SettingsCallRoute _fromState(GoRouterState state) =>
-      SettingsCallRoute();
+mixin _$CallSettingsRoute on GoRouteData {
+  static CallSettingsRoute _fromState(GoRouterState state) =>
+      CallSettingsRoute();
 
   @override
   String get location => GoRouteData.$location(
-        '/call-setting',
+        '/callSettings',
       );
 
   @override
@@ -288,8 +288,8 @@ mixin _$NotificationSettingsRoute on GoRouteData {
 }
 
 RouteBase get $roomRoute => GoRouteData.$route(
-      path: '/r',
-      name: '/r',
+      path: '/room',
+      name: '/room',
       factory: _$RoomRoute._fromState,
     );
 
@@ -298,7 +298,7 @@ mixin _$RoomRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/r',
+        '/room',
       );
 
   @override

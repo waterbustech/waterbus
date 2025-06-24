@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
@@ -45,17 +44,6 @@ enum HomePageEnum {
             ),
             applicationVersion: kAppVersion,
           ),
-      };
-
-  String get route => switch (this) {
-        HomePageEnum.recentMeeting => Routes.recentRoute,
-        HomePageEnum.chat => Routes.chatRoute,
-        HomePageEnum.notifications => Routes.notificationSettings,
-        HomePageEnum.appearance => Routes.themeRoute,
-        HomePageEnum.archivedChats => Routes.archivedRoute,
-        HomePageEnum.language => Routes.langRoute,
-        HomePageEnum.callSettings => Routes.callSettingsRoute,
-        HomePageEnum.licenses => Routes.licensesRoute,
       };
 }
 
