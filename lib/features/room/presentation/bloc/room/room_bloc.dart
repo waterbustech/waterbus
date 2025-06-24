@@ -100,11 +100,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           );
 
           AppRouter.pop();
-
           if (isJoinSucceed) {
             emit(_joinedRoom);
-
-            RoomRoute().replace(AppRouter.context!);
+            if (AppNavigatorObserver.currentRoute == Routes.lobbyRoute) {
+              RoomRoute().pushReplacement(AppRouter.context!);
+            } else {
+              RoomRoute().push(AppRouter.context!);
+            }
 
             _roomSound.playSoundJoinRoom();
           }
@@ -321,9 +323,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
-    if (AppRouter.context != null) {
-      RootRoute().go(AppRouter.context!);
-    }
+    AppRouter.popUntil();
 
     if (result.isSuccess) {
       final Room room = result.value!;

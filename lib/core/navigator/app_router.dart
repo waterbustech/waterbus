@@ -55,24 +55,18 @@ class AppRouter {
   static void pop() {
     if (!canPop) return;
 
-    _currentState(AppNavigatorObserver.currentRoute).pop();
+    state.pop();
   }
 
-  static bool getRouteDesktop(String route) => [
-        Routes.home + Routes.conversationRoute,
-        Routes.home + Routes.archivedConversationRoute,
-      ].contains(route);
+  static bool get canPop => state.canPop();
 
-  static NavigatorState _currentState(String? route) {
-    late NavigatorState stateByContext;
+  static void popUntil<T>({String routeName = Routes.rootRoute}) {
+    state.popUntil((route) {
+      if (route.isFirst) return true;
 
-    stateByContext = state;
-
-    return stateByContext;
+      return route.settings.name == routeName;
+    });
   }
-
-  static bool get canPop =>
-      _currentState(AppNavigatorObserver.currentRoute).canPop();
 
   static BuildContext? get context => _rootNavigatorKey.currentContext;
 
@@ -142,7 +136,7 @@ class AppRouter {
         Routes.createMeetingRoute,
         Routes.profileRoute,
         Routes.usernameRoute,
-        Routes.settingsCallRoute,
+        Routes.callSettingsRoute,
         Routes.langRoute,
         Routes.themeRoute,
         Routes.detailGroupRoute,
@@ -165,7 +159,7 @@ class AppRouter {
 
       case Routes.usernameRoute:
         return const UserNameScreen();
-      case Routes.settingsCallRoute:
+      case Routes.callSettingsRoute:
         return const CallSettingsScreen();
       case Routes.langRoute:
         return const LanguageScreen();
@@ -195,6 +189,7 @@ abstract class WaterbusBaseRoute extends GoRouteData {
     required GoRouterState state,
   }) {
     return CustomTransitionPage<T>(
+      name: state.name,
       key: state.pageKey,
       child: AppScaffold(child: child),
       transitionDuration:
@@ -252,11 +247,11 @@ class UsernameRoute extends WaterbusBaseRoute with _$UsernameRoute {
       const UserNameScreen();
 }
 
-@TypedGoRoute<SettingsCallRoute>(
-  path: Routes.settingsCallRoute,
-  name: Routes.settingsCallRoute,
+@TypedGoRoute<CallSettingsRoute>(
+  path: Routes.callSettingsRoute,
+  name: Routes.callSettingsRoute,
 )
-class SettingsCallRoute extends WaterbusBaseRoute with _$SettingsCallRoute {
+class CallSettingsRoute extends WaterbusBaseRoute with _$CallSettingsRoute {
   @override
   Widget buildContent(BuildContext context, GoRouterState state) =>
       const CallSettingsScreen();
@@ -447,141 +442,3 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
         applicationVersion: kAppVersion,
       );
 }
-<<<<<<< HEAD
-=======
-
-class AppRouter {
-  static final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
-
-  late final GoRouter router;
-  static final AppRouter instance = AppRouter._internal();
-
-  AppRouter._internal() {
-    router = GoRouter(
-      routes: $appRoutes,
-      observers: [AppNavigatorObserver()],
-      navigatorKey: _rootNavigatorKey,
-      initialLocation: Routes.rootRoute,
-    );
-  }
-
-  static void pop() {
-    if (!canPop) return;
-
-    _currentState(AppNavigatorObserver.currentRouteName).pop();
-  }
-
-  static bool getRouteDesktop(String route) => [
-        Routes.home + Routes.conversationRoute,
-        Routes.home + Routes.archivedConversationRoute,
-      ].contains(route);
-
-  static NavigatorState _currentState(String? route) {
-    late NavigatorState stateByContext;
-
-    stateByContext = state;
-
-    return stateByContext;
-  }
-
-  static bool get canPop =>
-      _currentState(AppNavigatorObserver.currentRouteName).canPop();
-
-  static String? currentRoute() => AppNavigatorObserver.currentRouteName;
-
-  static BuildContext? get context => _rootNavigatorKey.currentContext;
-
-  static NavigatorState get state => _rootNavigatorKey.currentState!;
-}
-
-bool middlewareRouter(
-  String route,
-  Object? arguments,
-) {
-  if (shouldBeShowPopupInstrealOfScreen(route: route)) {
-    bool flagShowingDialog = false;
-    for (final String? routeName in AppNavigatorObserver.routeNames) {
-      if (routeName != null && popupInstrealOfScreen.contains(routeName)) {
-        flagShowingDialog = true;
-        break;
-      }
-    }
-
-    showDialogWaterbus(
-      routeName: route,
-      duration: 200,
-      maxHeight: 100.h,
-      maxWidth: 400.sp,
-      barrierColor: flagShowingDialog ? Colors.transparent : null,
-      borderRadius: 16.sp,
-      child: Material(
-        clipBehavior: Clip.hardEdge,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(16.sp),
-        ),
-        child: SizedBox(
-          height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
-          child: AppScaffold(
-            child: getWidgetByRoute(
-              route: route,
-              arguments: arguments as Map<String, dynamic>?,
-            ),
-          ),
-        ),
-      ),
-    );
-
-    return true;
-  }
-
-  return false;
-}
-
-bool shouldBeShowPopupInstrealOfScreen({required String route}) {
-  if (AppRouter.context?.isMobile ?? true) return false;
-
-  return popupInstrealOfScreen.contains(route);
-}
-
-List<String> get popupInstrealOfScreen => [
-      Routes.enterCodeRoute,
-      Routes.createMeetingRoute,
-      Routes.profileRoute,
-      Routes.usernameRoute,
-      Routes.settingsCallRoute,
-      Routes.langRoute,
-      Routes.themeRoute,
-      Routes.detailGroupRoute,
-    ];
-
-Widget getWidgetByRoute({
-  required String route,
-  Map<String, dynamic>? arguments,
-}) {
-  switch (route) {
-    case Routes.enterCodeRoute:
-      return const EnterMeetingCode();
-    case Routes.createMeetingRoute:
-      return CreateMeetingScreen(
-        room: arguments?['room'],
-        isChatScreen: arguments?['isChatScreen'] ?? false,
-      );
-    case Routes.profileRoute:
-      return const ProfileScreen();
-
-    case Routes.usernameRoute:
-      return const UserNameScreen();
-    case Routes.settingsCallRoute:
-      return const CallSettingsScreen();
-    case Routes.langRoute:
-      return const LanguageScreen();
-    case Routes.themeRoute:
-      return const ThemeScreen();
-    case Routes.detailGroupRoute:
-      return const DetailGroupScreen();
-    default:
-      return const SizedBox();
-  }
-}
->>>>>>> b100c95e3e9d0f412699de02c56e4fdf7adf20eb

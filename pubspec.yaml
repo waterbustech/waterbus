@@ -60,10 +60,10 @@ dependencies:
   hive_ce: ^2.11.3
 
   # Firebase
-  firebase_core: ^3.13.1
-  firebase_auth: ^5.5.4
-  firebase_crashlytics: ^4.3.6
-  firebase_performance: ^0.10.1+6
+  firebase_core: ^3.14.0
+  firebase_auth: ^5.6.0
+  firebase_crashlytics: ^4.3.7
+  firebase_performance: ^0.10.1+7
 
   # Go router
   go_router: ^15.2.0
@@ -95,12 +95,14 @@ dependencies:
   super_sliver_list: ^0.4.1
   syncfusion_flutter_charts: ^29.2.8
   popover: ^0.3.1
-  super_context_menu: ^0.8.24
+  super_context_menu: ^0.9.1
   msix: ^3.16.9
   toastification: ^3.0.2
   web: ^1.1.1
   collection: ^1.18.0
   dropdown_button2: ^2.3.9
+  irondash_engine_context: ^0.5.5
+  super_native_extensions: ^0.9.1
 
   # Media
   image_picker: ^1.1.2
@@ -136,16 +138,6 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
-  super_native_extensions:
-    git:
-      url: https://github.com/superlistapp/super_native_extensions.git
-      ref: refs/pull/525/head
-      path: super_native_extensions
-  irondash_engine_context:
-    git:
-      url: https://github.com/irondash/irondash.git
-      ref: refs/pull/66/head
-      path: engine_context/dart
 
 dev_dependencies:
   # Test
@@ -164,7 +156,7 @@ dev_dependencies:
   injectable_generator: ^2.7.0
   build_runner: ^2.4.15
   flutter_gen_runner: ^5.8.0
-  go_router_builder: ^2.3.0
+  go_router_builder: ^3.0.1
 
   # Lints
   flutter_lints: ^5.0.0

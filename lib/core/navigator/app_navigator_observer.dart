@@ -33,11 +33,14 @@ class AppNavigatorObserver extends NavigatorObserver {
 
   @override
   void didRemove(Route route, Route? previousRoute) {
-    super.didRemove(route, previousRoute);
-
-    final int indexOfRoute = routeNames.indexOf(route.settings.name ?? '');
-    if (indexOfRoute != -1) {
-      routeNames.removeRange(indexOfRoute, routeNames.length);
+    if (route.settings.name == Routes.lobbyRoute) {
+      return;
+    } else {
+      super.didRemove(route, previousRoute);
+      final int indexOfRoute = routeNames.indexOf(route.settings.name ?? '');
+      if (indexOfRoute != -1) {
+        routeNames.removeRange(indexOfRoute, routeNames.length);
+      }
     }
   }
 
