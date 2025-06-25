@@ -172,7 +172,9 @@ class _RoomViewState extends State<RoomView>
         onTap: () {
           final textureId = widget.participantSFU.cameraSource?.textureId;
           if (textureId != null) {
-            WaterbusSdk.instance.setPiPEnabled(textureId: textureId.toString());
+            WaterbusSdk.instance.setPictureInPictureEnabled(
+              textureId: textureId.toString(),
+            );
           }
         },
         child: Container(

@@ -114,8 +114,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (event is ChatMemberAdded) {
-        final Result<Room> response =
-            await _waterbusSdk.addMember(event.roomId, event.user.id);
+        final Result<Room> response = await _waterbusSdk.addMember(
+          roomId: event.roomId,
+          userId: event.user.id,
+        );
 
         if (response.isSuccess) {
           final Room? room = response.value;
@@ -375,7 +377,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _deleteConversation(Room room) async {
-    final Result<bool> result = await _waterbusSdk.deleteConversation(room.id);
+    final Result<bool> result = await _waterbusSdk.deleteConversation(
+      conversationId: room.id,
+    );
 
     if (result.isSuccess) {
       _cleanConversationCurrent(room.id);
@@ -388,8 +392,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _archivedConversation(Room room) async {
-    final Result<Room> result =
-        await _waterbusSdk.archivedConversation(room.id);
+    final Result<Room> result = await _waterbusSdk.archiveConversation(
+      roomId: room.id,
+    );
 
     if (result.isSuccess) {
       final Room? archivedConversation = result.value;
@@ -412,7 +417,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _leaveConversation(Room room) async {
-    final Result<Room> result = await _waterbusSdk.leaveConversation(room.id);
+    final Result<Room> result = await _waterbusSdk.leaveConversation(
+      roomId: room.id,
+    );
 
     if (result.isSuccess) {
       final Room? conversation = result.value;
@@ -449,8 +456,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _handleDeleteMember(ChatMemberDeleted event) async {
-    final Result<Room> result =
-        await _waterbusSdk.deleteMember(event.roomId, event.userModel.id);
+    final Result<Room> result = await _waterbusSdk.removeMember(
+      roomId: event.roomId,
+      userId: event.userModel.id,
+    );
 
     if (result.isSuccess) {
       final Room? room = result.value;
