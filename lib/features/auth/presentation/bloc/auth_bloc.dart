@@ -92,7 +92,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     final Result<User> result = await WaterbusSdk.instance.createToken(
-      AuthPayload(
+      payload: AuthPayload(
         fullName: "Waterbus",
         externalId: payload,
       ),

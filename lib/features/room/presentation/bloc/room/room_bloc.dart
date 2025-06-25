@@ -248,7 +248,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
               );
             });
           } else {
-            await _waterbusSdk.disableVirtualBg();
+            await _waterbusSdk.disableVirtualBackground();
           }
         }
 
