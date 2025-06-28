@@ -31,7 +31,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   final TextEditingController _roomNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late final _isEditing = widget.room != null;
+  late final bool _isEditing = widget.room != null;
 
   @override
   void initState() {

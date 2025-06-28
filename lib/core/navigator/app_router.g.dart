@@ -288,8 +288,8 @@ mixin _$NotificationSettingsRoute on GoRouteData {
 }
 
 RouteBase get $roomRoute => GoRouteData.$route(
-      path: '/room',
-      name: '/room',
+      path: '/r',
+      name: '/r',
       factory: _$RoomRoute._fromState,
     );
 
@@ -298,7 +298,7 @@ mixin _$RoomRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/room',
+        '/r',
       );
 
   @override
@@ -322,11 +322,20 @@ RouteBase get $lobbyRoute => GoRouteData.$route(
     );
 
 mixin _$LobbyRoute on GoRouteData {
-  static LobbyRoute _fromState(GoRouterState state) => LobbyRoute();
+  static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
+        room: state.uri.queryParameters['room']!,
+        isMember: _$boolConverter(state.uri.queryParameters['is-member']!)!,
+      );
+
+  LobbyRoute get _self => this as LobbyRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/lobby',
+        queryParams: {
+          'room': _self.room,
+          'is-member': _self.isMember.toString(),
+        },
       );
 
   @override
@@ -341,6 +350,17 @@ mixin _$LobbyRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }
 
 RouteBase get $createMeetingRoute => GoRouteData.$route(
@@ -436,12 +456,18 @@ RouteBase get $conversationRoute => GoRouteData.$route(
     );
 
 mixin _$ConversationRoute on GoRouteData {
-  static ConversationRoute _fromState(GoRouterState state) =>
-      ConversationRoute();
+  static ConversationRoute _fromState(GoRouterState state) => ConversationRoute(
+        room: state.uri.queryParameters['room']!,
+      );
+
+  ConversationRoute get _self => this as ConversationRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/conversation',
+        queryParams: {
+          'room': _self.room,
+        },
       );
 
   @override
@@ -466,11 +492,18 @@ RouteBase get $archivedConversationRoute => GoRouteData.$route(
 
 mixin _$ArchivedConversationRoute on GoRouteData {
   static ArchivedConversationRoute _fromState(GoRouterState state) =>
-      ArchivedConversationRoute();
+      ArchivedConversationRoute(
+        room: state.uri.queryParameters['room']!,
+      );
+
+  ArchivedConversationRoute get _self => this as ArchivedConversationRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/archived-conversation',
+        queryParams: {
+          'room': _self.room,
+        },
       );
 
   @override

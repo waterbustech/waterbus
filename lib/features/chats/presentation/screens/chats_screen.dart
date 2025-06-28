@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   void _handleTapChatItem(Room room) {
-    AppRouter.push(Routes.conversationRoute, extra: {'room': room});
+    ConversationRoute(room: jsonEncode(room.toJson())).push(context);
   }
 
   @override

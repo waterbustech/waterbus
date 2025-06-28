@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
@@ -483,24 +483,14 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
   Future<void> _displayDialogJoinRoom(Room room) async {
     await _waterbusSdk.prepareMedia();
-
-    final Map<String, List<MediaDeviceInfo>> audioInputResponse =
-        await _getAllMediaDevices();
+    await _getAllMediaDevices();
 
     final int indexOfMember = room.members.indexWhere(
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    final bool isMember = indexOfMember != -1;
-
-    AppRouter.context!.push(
-      Routes.lobbyRoute,
-      extra: {
-        "room": room,
-        "audioInputResponse": audioInputResponse,
-        "isMember": isMember,
-      },
-    );
+    LobbyRoute(isMember: indexOfMember != -1, room: jsonEncode(room))
+        .push(AppRouter.context!);
   }
 
   Future<void> startPiP() async {

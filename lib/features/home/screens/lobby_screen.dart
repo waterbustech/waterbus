@@ -16,14 +16,8 @@ import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.
 class LobbyScreen extends StatefulWidget {
   final Room room;
   final bool isMember;
-  final Map<String, List<MediaDeviceInfo>>? audioInputResponse;
 
-  const LobbyScreen({
-    super.key,
-    required this.room,
-    required this.isMember,
-    required this.audioInputResponse,
-  });
+  const LobbyScreen({super.key, required this.room, required this.isMember});
 
   @override
   State<LobbyScreen> createState() => _LobbyScreenState();
@@ -41,9 +35,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
   void initState() {
     super.initState();
 
-    _audioInputs.addAll(widget.audioInputResponse?['audioinput'] ?? []);
-    _audioOutputs.addAll(widget.audioInputResponse?['audiooutput'] ?? []);
-    _videoInputs.addAll(widget.audioInputResponse?['videoinput'] ?? []);
+    final RoomBloc roomBloc = AppBloc.roomBloc;
+
+    _audioInputs.addAll(roomBloc.audioInputs);
+    _audioOutputs.addAll(roomBloc.audioOutputs);
+    _videoInputs.addAll(roomBloc.videoInputs);
 
     _audioInput = _audioInputs.firstOrNull;
     _audioOutput = _audioOutputs.firstOrNull;
