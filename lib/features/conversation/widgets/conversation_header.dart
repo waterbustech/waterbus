@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -17,7 +18,8 @@ import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
-  const ConversationHeader({super.key});
+  final Function()? onBackScreen;
+  const ConversationHeader({super.key, required this.onBackScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,14 @@ class ConversationHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Visibility(
-                        visible: AppRouter.canPop,
+                        visible: AppRouter.canPop || context.isDesktop,
                         child: GestureWrapper(
                           onTap: () {
-                            AppRouter.pop();
+                            if (context.isDesktop) {
+                              onBackScreen?.call();
+                            } else {
+                              AppRouter.pop();
+                            }
                           },
                           child: Container(
                             color: Colors.transparent,

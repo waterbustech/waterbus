@@ -36,6 +36,7 @@ import 'package:waterbus/features/settings/presentation/screens/settings_screen.
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 part 'app_router.g.dart';
 
@@ -195,10 +196,8 @@ abstract class WaterbusBaseRoute extends GoRouteData {
       name: state.name,
       key: state.pageKey,
       child: AppScaffold(child: child),
-      transitionDuration:
-          kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
-      reverseTransitionDuration:
-          kIsWeb ? Duration.zero : const Duration(milliseconds: 200),
+      transitionDuration: (kIsWeb ? 0 : 200).milliseconds,
+      reverseTransitionDuration: (kIsWeb ? 0 : 200).milliseconds,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
       },

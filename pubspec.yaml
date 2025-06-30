@@ -103,6 +103,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   irondash_engine_context: ^0.5.5
   super_native_extensions: ^0.9.1
+  easy_animated_indexed_stack: ^0.0.3
 
   # Media
   image_picker: ^1.1.2
