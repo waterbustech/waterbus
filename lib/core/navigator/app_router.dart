@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
+import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_navigator_observer.dart';
@@ -35,8 +37,6 @@ import 'package:waterbus/features/settings/presentation/screens/privacy_screen.d
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
-import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 part 'app_router.g.dart';
 
@@ -78,7 +78,7 @@ class AppRouter {
 
   static Future? push<T>(
     String route, {
-    Object? extra,
+    Map<String, dynamic>? extra,
     bool forceRootState = false,
   }) {
     final bool hasMatchConditions = _middlewareRouter(route, extra);
@@ -88,10 +88,7 @@ class AppRouter {
     return context?.push(route, extra: extra);
   }
 
-  static bool _middlewareRouter(
-    String route,
-    Object? arguments,
-  ) {
+  static bool _middlewareRouter(String route, Map<String, dynamic>? extra) {
     if (_shouldBeShowPopupInstrealOfScreen(route: route)) {
       bool flagShowingDialog = false;
       for (final String? routeName in AppNavigatorObserver.routeNames) {
@@ -116,10 +113,7 @@ class AppRouter {
           child: SizedBox(
             height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
             child: AppScaffold(
-              child: _getWidgetByRoute(
-                route: route,
-                arguments: arguments as Map<String, dynamic>?,
-              ),
+              child: _getWidgetByRoute(route: route, extra: extra),
             ),
           ),
         ),
@@ -148,19 +142,18 @@ class AppRouter {
 
   static Widget _getWidgetByRoute({
     required String route,
-    Map<String, dynamic>? arguments,
+    Map<String, dynamic>? extra,
   }) {
     switch (route) {
       case Routes.enterCodeRoute:
         return const EnterMeetingCode();
       case Routes.createMeetingRoute:
         return CreateMeetingScreen(
-          room: arguments?['room'],
-          isChatScreen: arguments?['isChatScreen'] ?? false,
+          room: extra?['room'],
+          isChatScreen: extra?['isChatScreen'] ?? false,
         );
       case Routes.profileRoute:
         return const ProfileScreen();
-
       case Routes.usernameRoute:
         return const UserNameScreen();
       case Routes.callSettingsRoute:
@@ -307,18 +300,23 @@ class RoomRoute extends WaterbusBaseRoute with _$RoomRoute {
   }
 }
 
-@TypedGoRoute<LobbyRoute>(path: Routes.lobbyRoute, name: Routes.lobbyRoute)
+@TypedGoRoute<LobbyRoute>(
+  path: "${Routes.lobbyRoute}/:code",
+  name: Routes.lobbyRoute,
+)
 class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
-  final String room;
+  final String? code;
+  final String? room;
   final bool isMember;
 
-  LobbyRoute({required this.room, required this.isMember});
+  LobbyRoute({this.code, this.room, this.isMember = false});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
     return LobbyScreen(
-      room: Room.fromJson(jsonDecode(room)),
+      room: room != null ? Room.fromJson(jsonDecode(room!)) : null,
       isMember: isMember,
+      code: code,
     );
   }
 }

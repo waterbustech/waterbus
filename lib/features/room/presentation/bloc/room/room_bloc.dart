@@ -90,7 +90,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomJoinedEvent) {
           _currentRoom = event.room;
 
-          displayLoadingLayer();
+          if (!event.isDirectJoinLink) {
+            displayLoadingLayer();
+          }
 
           final bool isJoinSucceed = await _handleJoinRoom(
             RoomJoinedWithPassword(
@@ -113,7 +115,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomInfoGot) {
-          final Room? room = await _handleGetInfoRoom(event);
+          final Room? room = await _handleGetInfoRoom(event.roomCode);
 
           if (room != null) {
             await _displayDialogJoinRoom(room);
@@ -286,12 +288,38 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             emit(_joinedRoom);
           }
         }
+
+        if (event is RoomPrepareLobby) {
+          displayLoadingLayer();
+          await _waterbusSdk.prepareMedia();
+          final mediaDeviceList = await _getAllMediaDevices();
+          AppRouter.pop();
+
+          if (state is! RoomPreJoin) {
+            emit(_preJoinRoom);
+          }
+
+          event.handleUpdate.call(mediaDeviceList);
+        }
+
+        if (event is RoomAttemptJoin) {
+          final Room? room = await _handleGetInfoRoom(event.code);
+
+          if (room != null) {
+            add(
+              RoomJoinedEvent(
+                room: room,
+                password: event.password,
+                isDirectJoinLink: true,
+              ),
+            );
+          }
+        }
       },
     );
   }
 
   // MARK: state
-
   RoomInitial get _roomInitial => RoomInitial(
         mediaConfig: _mediaConfig,
       );
@@ -368,10 +396,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
   }
 
-  Future<Room?> _handleGetInfoRoom(RoomInfoGot event) async {
-    final Result<Room> result = await _waterbusSdk.getRoomInfo(
-      code: event.roomCode,
-    );
+  Future<Room?> _handleGetInfoRoom(String roomCode) async {
+    final Result<Room> result = await _waterbusSdk.getRoomInfo(code: roomCode);
 
     AppRouter.pop();
 
@@ -429,7 +455,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
 
     if (AppNavigatorObserver.currentRoute == Routes.roomRoute) {
-      AppRouter.pop();
+      RootRoute().go(AppRouter.context!);
     }
   }
 
@@ -482,9 +508,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   }
 
   Future<void> _displayDialogJoinRoom(Room room) async {
-    await _waterbusSdk.prepareMedia();
-    await _getAllMediaDevices();
-
     final int indexOfMember = room.members.indexWhere(
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );

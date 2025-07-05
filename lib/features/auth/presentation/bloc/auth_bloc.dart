@@ -11,6 +11,7 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,6 +20,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLocalDataSource _userLocal;
   final Auth _auth = Auth();
+  final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   User? _user;
 
@@ -29,8 +31,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _onAuthCheck(emit);
       }
 
-      if (event is AuthGoogleLogined || event is AuthAnonymouslyLoggedIn) {
-        await _handleLogin(event);
+      if (event is AuthLoggedIn) {
+        await _handleLogin();
 
         if (_user != null) emit(_authSuccess);
       }
@@ -42,6 +44,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(_authFailure);
         }
       }
+
+      if (event is AuthLoggedInWithNewLobby) {
+        if (_user == null) {
+          await _handleLogin(fullname: event.fullname);
+
+          if (_user != null) emit(_authSuccess);
+        }
+
+        if (_waterbusSdk.isWsConnected) {
+          AppBloc.roomBloc.add(
+            RoomAttemptJoin(code: event.code, password: event.password),
+          );
+        } else {
+          _waterbusSdk.reconnectWs(
+            callbackConnected: () {
+              AppBloc.roomBloc.add(
+                RoomAttemptJoin(code: event.code, password: event.password),
+              );
+            },
+          );
+        }
+      }
     });
   }
 
@@ -50,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (user != null) {
       _user = user;
-      await WaterbusSdk.instance.renewToken();
+      await _waterbusSdk.renewToken();
     }
 
     FlutterNativeSplash.remove();
@@ -70,34 +94,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   // MARK: Private methods
-  Future<void> _handleLogin(AuthEvent event) async {
+  Future<void> _handleLogin({String? fullname}) async {
     displayLoadingLayer();
 
-    late final String payload;
-
-    switch (event) {
-      case AuthAnonymouslyLoggedIn():
-        payload = await _auth.signInAnonymously();
-        break;
-      default:
-        payload = "";
-        break;
-    }
+    final String payload = await _auth.signInAnonymously();
 
     if (payload.isEmpty) {
       AppRouter.pop();
       return;
     }
 
-    final Result<User> result = await WaterbusSdk.instance.createToken(
-      AuthPayload(
-        fullName: "Waterbus",
-        externalId: payload,
-      ),
+    final Result<User> result = await _waterbusSdk.createToken(
+      AuthPayload(fullName: fullname ?? "Waterbus", externalId: payload),
     );
 
-    // Pop loading
-    AppRouter.pop();
+    if (fullname == null) {
+      AppRouter.pop();
+    }
 
     if (result.isSuccess) {
       _userLocal.saveUser(result.value!);
@@ -107,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _handleLogOut() async {
     _userLocal.clearUser();
-    await WaterbusSdk.instance.deleteToken();
+    await _waterbusSdk.deleteToken();
 
     AppRouter.popUntil();
 

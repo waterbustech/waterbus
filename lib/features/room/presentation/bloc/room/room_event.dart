@@ -27,10 +27,12 @@ class RoomJoinedEvent extends RoomEvent {
   final Room room;
   final bool isMember;
   final String? password;
+  final bool isDirectJoinLink;
   const RoomJoinedEvent({
     required this.room,
     this.isMember = false,
     this.password,
+    this.isDirectJoinLink = false,
   });
 }
 
@@ -68,6 +70,18 @@ class RoomSomeoneNewJoined extends RoomEvent {
 class RoomSomeoneLeft extends RoomEvent {
   final String participantId;
   const RoomSomeoneLeft({required this.participantId});
+}
+
+class RoomPrepareLobby extends RoomEvent {
+  final Function(Map<String, List<MediaDeviceInfo>>) handleUpdate;
+  const RoomPrepareLobby(this.handleUpdate);
+}
+
+class RoomAttemptJoin extends RoomEvent {
+  final String code;
+  final String password;
+
+  const RoomAttemptJoin({required this.code, required this.password});
 }
 
 class RoomSharingScreenStarted extends RoomEvent {}

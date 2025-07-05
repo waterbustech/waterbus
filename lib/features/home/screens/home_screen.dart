@@ -210,7 +210,7 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
       if (route == Strings.chat) {
         AppRouter.push(
           Routes.createMeetingRoute,
-          extra: {'isChatScreen ': route == Strings.chat},
+          extra: {'isChatScreen': route == Strings.chat},
         );
       } else {
         await WaterbusPermissionHandler().checkGrantedForExecute(

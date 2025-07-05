@@ -14,10 +14,11 @@ import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.dart';
 
 class LobbyScreen extends StatefulWidget {
-  final Room room;
+  final Room? room;
+  final String? code;
   final bool isMember;
 
-  const LobbyScreen({super.key, required this.room, required this.isMember});
+  const LobbyScreen({super.key, this.room, this.isMember = false, this.code});
 
   @override
   State<LobbyScreen> createState() => _LobbyScreenState();
@@ -35,15 +36,23 @@ class _LobbyScreenState extends State<LobbyScreen> {
   void initState() {
     super.initState();
 
-    final RoomBloc roomBloc = AppBloc.roomBloc;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      AppBloc.roomBloc.add(
+        RoomPrepareLobby((val) {
+          final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
 
-    _audioInputs.addAll(roomBloc.audioInputs);
-    _audioOutputs.addAll(roomBloc.audioOutputs);
-    _videoInputs.addAll(roomBloc.videoInputs);
+          _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
+          _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
+          _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
 
-    _audioInput = _audioInputs.firstOrNull;
-    _audioOutput = _audioOutputs.firstOrNull;
-    _videoInput = _videoInputs.firstOrNull;
+          _audioInput = _audioInputs.firstOrNull;
+          _audioOutput = _audioOutputs.firstOrNull;
+          _videoInput = _videoInputs.firstOrNull;
+
+          setState(() {});
+        }),
+      );
+    });
   }
 
   @override
@@ -75,6 +84,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       Expanded(
                         child: JoinRoomActions(
                           room: widget.room,
+                          code: widget.code,
                           isMember: widget.isMember,
                         ),
                       ),

@@ -61,7 +61,7 @@ class LogInScreen extends StatelessWidget {
                           title: 'Sign in Anonymously',
                           iconAsset: Assets.icons.icIncognito.path,
                           onPressed: () async {
-                            AppBloc.authBloc.add(AuthAnonymouslyLoggedIn());
+                            AppBloc.authBloc.add(AuthLoggedIn());
                           },
                         ),
                       ],

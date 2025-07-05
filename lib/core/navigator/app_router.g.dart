@@ -316,25 +316,28 @@ mixin _$RoomRoute on GoRouteData {
 }
 
 RouteBase get $lobbyRoute => GoRouteData.$route(
-      path: '/lobby',
+      path: '/lobby/:code',
       name: '/lobby',
       factory: _$LobbyRoute._fromState,
     );
 
 mixin _$LobbyRoute on GoRouteData {
   static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
-        room: state.uri.queryParameters['room']!,
-        isMember: _$boolConverter(state.uri.queryParameters['is-member']!)!,
+        code: state.pathParameters['code'],
+        room: state.uri.queryParameters['room'],
+        isMember: _$convertMapValue(
+                'is-member', state.uri.queryParameters, _$boolConverter) ??
+            false,
       );
 
   LobbyRoute get _self => this as LobbyRoute;
 
   @override
   String get location => GoRouteData.$location(
-        '/lobby',
+        '/lobby/${Uri.encodeComponent(_self.code ?? '')}',
         queryParams: {
-          'room': _self.room,
-          'is-member': _self.isMember.toString(),
+          if (_self.room != null) 'room': _self.room,
+          if (_self.isMember != false) 'is-member': _self.isMember.toString(),
         },
       );
 
@@ -350,6 +353,15 @@ mixin _$LobbyRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
 }
 
 bool _$boolConverter(String value) {
