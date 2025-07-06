@@ -120,7 +120,9 @@ dependencies:
   #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
   #     ref: 2.0.0-pre
   waterbus_sdk: 
-    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
+    git: 
+      url: https://github.com/waterbustech/waterbus-flutter-sdk
+      ref: expose/sdk-socket-methods
    
 
 dependency_overrides:
