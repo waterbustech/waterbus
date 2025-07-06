@@ -35,8 +35,10 @@ enum HomePageEnum {
         HomePageEnum.appearance => const ThemeScreen(isSettingDesktop: true),
         HomePageEnum.archivedChats => const ArchivedScreen(),
         HomePageEnum.language => const LanguageScreen(isSettingDesktop: true),
-        HomePageEnum.callSettings =>
-          const CallSettingsScreen(isSettingDesktop: true),
+        HomePageEnum.callSettings => const CallSettingsScreen(
+            isSettingDesktop: true,
+            isInRoom: false,
+          ),
         HomePageEnum.licenses => LicensePage(
             applicationIcon: Image.asset(
               Assets.icons.launcherIcon.path,

@@ -8,17 +8,20 @@ class CallSettingButton extends StatelessWidget {
   final String lable;
   final Function() onTap;
   final Color? color;
+  final String? tooltipMessage;
   const CallSettingButton({
     super.key,
     required this.icon,
     required this.lable,
     required this.onTap,
     this.color,
+    this.tooltipMessage,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureWrapper(
+      tooltipMessage: tooltipMessage,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(

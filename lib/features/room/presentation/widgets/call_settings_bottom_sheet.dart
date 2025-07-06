@@ -57,7 +57,10 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     onTap: () {
                       AppRouter.pop();
 
-                      AppRouter.push(Routes.callSettingsRoute);
+                      AppRouter.push(
+                        Routes.callSettingsRoute,
+                        extra: {"isInRoom": true},
+                      );
                     },
                   ),
                   if (context.isMobile)

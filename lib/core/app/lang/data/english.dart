@@ -132,6 +132,18 @@ Map<String, String> english = {
   Strings.readyToJoin: "Ready to join?",
   Strings.joinNow: "Join now",
   Strings.leave: "Leave",
+  Strings.audioSettings: "Audio settings",
+  Strings.micOff: "Turn off microphone",
+  Strings.micOn: "Turn on microphone",
+  Strings.cameraOff: "Turn off camera",
+  Strings.cameraOn: "Turn on camera",
+  Strings.videoSettings: "Video settings",
+  Strings.raiseHand: "Raise hand",
+  Strings.chatWithEveryone: "Chat with everyone",
+  Strings.moreOptions: "More options",
+  Strings.leaveCall: "Leave call",
+  Strings.camera: "Camera",
+  Strings.shareScreen: "Share screen",
 
   // Settings screen
   Strings.myProfile: "My Profile",

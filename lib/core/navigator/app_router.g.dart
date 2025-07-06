@@ -30,6 +30,7 @@ List<RouteBase> get $appRoutes => [
       $chatRoute,
       $recentRoute,
       $licenseRoute,
+      $roomCodeRoute,
     ];
 
 RouteBase get $rootRoute => GoRouteData.$route(
@@ -316,14 +317,13 @@ mixin _$RoomRoute on GoRouteData {
 }
 
 RouteBase get $lobbyRoute => GoRouteData.$route(
-      path: '/lobby/:code',
+      path: '/lobby',
       name: '/lobby',
       factory: _$LobbyRoute._fromState,
     );
 
 mixin _$LobbyRoute on GoRouteData {
   static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
-        code: state.pathParameters['code'],
         room: state.uri.queryParameters['room'],
         isMember: _$convertMapValue(
                 'is-member', state.uri.queryParameters, _$boolConverter) ??
@@ -334,7 +334,7 @@ mixin _$LobbyRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/lobby/${Uri.encodeComponent(_self.code ?? '')}',
+        '/lobby',
         queryParams: {
           if (_self.room != null) 'room': _self.room,
           if (_self.isMember != false) 'is-member': _self.isMember.toString(),
@@ -712,6 +712,38 @@ mixin _$LicenseRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/licenses',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $roomCodeRoute => GoRouteData.$route(
+      path: '/:code',
+      name: '/:code',
+      factory: _$RoomCodeRoute._fromState,
+    );
+
+mixin _$RoomCodeRoute on GoRouteData {
+  static RoomCodeRoute _fromState(GoRouterState state) => RoomCodeRoute(
+        code: state.pathParameters['code']!,
+      );
+
+  RoomCodeRoute get _self => this as RoomCodeRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/${Uri.encodeComponent(_self.code)}',
       );
 
   @override

@@ -9,7 +9,6 @@ import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
@@ -50,7 +49,6 @@ class AppRouter {
   AppRouter._internal() {
     router = GoRouter(
       routes: $appRoutes,
-      observers: [AppNavigatorObserver()],
       navigatorKey: _rootNavigatorKey,
       initialLocation: Routes.rootRoute,
     );
@@ -72,6 +70,8 @@ class AppRouter {
     });
   }
 
+  String get currentRoute => router.state.path ?? "";
+
   static BuildContext? get context => _rootNavigatorKey.currentContext;
 
   static NavigatorState get state => _rootNavigatorKey.currentState!;
@@ -90,20 +90,12 @@ class AppRouter {
 
   static bool _middlewareRouter(String route, Map<String, dynamic>? extra) {
     if (_shouldBeShowPopupInstrealOfScreen(route: route)) {
-      bool flagShowingDialog = false;
-      for (final String? routeName in AppNavigatorObserver.routeNames) {
-        if (routeName != null && _popupInstrealOfScreen.contains(routeName)) {
-          flagShowingDialog = true;
-          break;
-        }
-      }
-
       showDialogWaterbus(
         routeName: route,
         duration: 200,
         maxHeight: 100.h,
         maxWidth: 400.sp,
-        barrierColor: flagShowingDialog ? Colors.transparent : null,
+        barrierColor: Colors.transparent,
         borderRadius: 16.sp,
         child: Material(
           clipBehavior: Clip.hardEdge,
@@ -157,7 +149,9 @@ class AppRouter {
       case Routes.usernameRoute:
         return const UserNameScreen();
       case Routes.callSettingsRoute:
-        return const CallSettingsScreen();
+        return CallSettingsScreen(
+          isInRoom: extra?['isInRoom'] ?? false,
+        );
       case Routes.langRoute:
         return const LanguageScreen();
       case Routes.themeRoute:
@@ -254,7 +248,9 @@ class UsernameRoute extends WaterbusBaseRoute with _$UsernameRoute {
 class CallSettingsRoute extends WaterbusBaseRoute with _$CallSettingsRoute {
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
-    return const CallSettingsScreen();
+    return CallSettingsScreen(
+      isInRoom: (state.extra as Map<String, dynamic>?)?['isInRoom'] ?? false,
+    );
   }
 }
 
@@ -301,22 +297,20 @@ class RoomRoute extends WaterbusBaseRoute with _$RoomRoute {
 }
 
 @TypedGoRoute<LobbyRoute>(
-  path: "${Routes.lobbyRoute}/:code",
+  path: Routes.lobbyRoute,
   name: Routes.lobbyRoute,
 )
 class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
-  final String? code;
   final String? room;
   final bool isMember;
 
-  LobbyRoute({this.code, this.room, this.isMember = false});
+  LobbyRoute({this.room, this.isMember = false});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
     return LobbyScreen(
       room: room != null ? Room.fromJson(jsonDecode(room!)) : null,
       isMember: isMember,
-      code: code,
     );
   }
 }
@@ -329,12 +323,13 @@ class CreateMeetingRoute extends WaterbusBaseRoute with _$CreateMeetingRoute {
   CreateMeetingRoute();
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) =>
-      CreateMeetingScreen(
-        room: (state.extra as Map<String, dynamic>?)?['room'],
-        isChatScreen:
-            (state.extra as Map<String, dynamic>?)?['isChatScreen'] ?? false,
-      );
+  Widget buildContent(BuildContext context, GoRouterState state) {
+    return CreateMeetingScreen(
+      room: (state.extra as Map<String, dynamic>?)?['room'],
+      isChatScreen:
+          (state.extra as Map<String, dynamic>?)?['isChatScreen'] ?? false,
+    );
+  }
 }
 
 @TypedGoRoute<EnterCodeRoute>(
@@ -471,5 +466,19 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
       ),
       applicationVersion: kAppVersion,
     );
+  }
+}
+
+@TypedGoRoute<RoomCodeRoute>(
+  path: "${Routes.rootRoute}:code",
+  name: "${Routes.rootRoute}:code",
+)
+class RoomCodeRoute extends WaterbusBaseRoute with _$RoomCodeRoute {
+  final String code;
+
+  RoomCodeRoute({required this.code});
+  @override
+  Widget buildContent(BuildContext context, GoRouterState state) {
+    return LobbyScreen(code: code);
   }
 }

@@ -113,6 +113,18 @@ class Strings {
   static const String readyToJoin = 'readyToJoin';
   static const String joinNow = 'joinNow';
   static const String leave = 'leave';
+  static const String audioSettings = "audioSettings";
+  static const String micOff = "micOff";
+  static const String micOn = "micOn";
+  static const String cameraOff = "cameraOff";
+  static const String cameraOn = "cameraOn";
+  static const String videoSettings = "videoSettings";
+  static const String raiseHand = "raiseHand";
+  static const String chatWithEveryone = "chatWithEveryone";
+  static const String moreOptions = "moreOptions";
+  static const String leaveCall = "leaveCall";
+  static const String camera = "camera";
+  static const String shareScreen = "shareScreen";
 
   // Profile screen
   static const String profile = 'profile';

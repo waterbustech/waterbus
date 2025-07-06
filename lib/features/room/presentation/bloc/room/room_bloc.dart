@@ -15,7 +15,6 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
@@ -55,8 +54,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   final List<MediaDeviceInfo> audioInputs = [];
   final List<MediaDeviceInfo> videoInputs = [];
   final List<MediaDeviceInfo> audioOutputs = [];
-  MediaDeviceInfo? audioInputSeleted;
-  MediaDeviceInfo? videoInputSeleted;
+  MediaDeviceInfo? audioInputSelected;
+  MediaDeviceInfo? videoInputSelected;
 
   RoomBloc(
     this._pipChannel,
@@ -104,7 +103,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           AppRouter.pop();
           if (isJoinSucceed) {
             emit(_joinedRoom);
-            if (AppNavigatorObserver.currentRoute == Routes.lobbyRoute) {
+            if (AppRouter.instance.currentRoute == Routes.lobbyRoute) {
               RoomRoute().pushReplacement(AppRouter.context!);
             } else {
               RoomRoute().push(AppRouter.context!);
@@ -184,7 +183,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           await _waterbusSdk.changeAudioInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
-          audioInputSeleted = event.mediaDeviceInfo;
+
+          audioInputSelected = event.mediaDeviceInfo;
+
           if (state is RoomJoined) {
             emit(_joinedRoom);
           } else if (state is RoomPreJoin) {
@@ -196,7 +197,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           await _waterbusSdk.changeVideoInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
-          audioInputSeleted = event.mediaDeviceInfo;
+
+          videoInputSelected = event.mediaDeviceInfo;
+
           if (state is RoomJoined) {
             emit(_joinedRoom);
           } else if (state is RoomPreJoin) {
@@ -454,7 +457,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    if (AppNavigatorObserver.currentRoute == Routes.roomRoute) {
+    if (AppRouter.instance.currentRoute == Routes.roomRoute) {
       RootRoute().go(AppRouter.context!);
     }
   }
@@ -643,8 +646,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       }
     }
 
-    audioInputSeleted = audioInputs.firstOrNull;
-    videoInputSeleted = videoInputs.firstOrNull;
+    audioInputSelected = audioInputs.firstOrNull;
+    videoInputSelected = videoInputs.firstOrNull;
 
     return {
       'audioinput': audioInputs,

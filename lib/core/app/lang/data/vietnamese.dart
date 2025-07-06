@@ -109,6 +109,18 @@ Map<String, String> vietnamese = {
   Strings.readyToJoin: "Sẵn sàng tham gia?",
   Strings.joinNow: "Tham gia ngay",
   Strings.leave: "Thoát",
+  Strings.audioSettings: "Chế độ cài đặt âm thanh",
+  Strings.micOff: "Tắt micro",
+  Strings.micOn: "Bật micro",
+  Strings.cameraOff: "Tắt máy ảnh",
+  Strings.cameraOn: "Bật máy ảnh",
+  Strings.videoSettings: "Cài đặt Video",
+  Strings.raiseHand: "Dơ tay phát biểu",
+  Strings.chatWithEveryone: "Trò chuyện với mọi người",
+  Strings.moreOptions: "Tuỳ chọn khác",
+  Strings.leaveCall: "Rời khỏi cuộc gọi",
+  Strings.camera: "Máy ảnh",
+  Strings.shareScreen: "Chia sẻ màn hình",
 
   // Profile screen
   Strings.profile: "Hồ sơ",
