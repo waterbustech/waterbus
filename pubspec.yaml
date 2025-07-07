@@ -141,6 +141,7 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
+  flutter_webrtc_plus: ^0.14.1+5
 
 dev_dependencies:
   # Test

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -89,10 +87,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomJoinedEvent) {
           _currentRoom = event.room;
 
-          if (!event.isDirectJoinLink) {
-            displayLoadingLayer();
-          }
-
           final bool isJoinSucceed = await _handleJoinRoom(
             RoomJoinedWithPassword(
               isMember: event.isMember,
@@ -100,14 +94,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             ),
           );
 
-          AppRouter.pop();
           if (isJoinSucceed) {
             emit(_joinedRoom);
-            if (AppRouter.instance.currentRoute == Routes.lobbyRoute) {
-              RoomRoute().pushReplacement(AppRouter.context!);
-            } else {
-              RoomRoute().push(AppRouter.context!);
-            }
+            RoomRoute(code: _currentRoom?.code ?? '').go(AppRouter.context!);
 
             _roomSound.playSoundJoinRoom();
           }
@@ -309,13 +298,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           final Room? room = await _handleGetInfoRoom(event.code);
 
           if (room != null) {
-            add(
-              RoomJoinedEvent(
-                room: room,
-                password: event.password,
-                isDirectJoinLink: true,
-              ),
-            );
+            add(RoomJoinedEvent(room: room, password: event.password));
           }
         }
       },
@@ -457,9 +440,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    if (AppRouter.instance.currentRoute == Routes.roomRoute) {
-      RootRoute().go(AppRouter.context!);
-    }
+    RootRoute().go(AppRouter.context!);
   }
 
   Future<void> _handleNewParticipant(RoomSomeoneNewJoined event) async {
@@ -515,8 +496,10 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    LobbyRoute(isMember: indexOfMember != -1, room: jsonEncode(room.toJson()))
-        .push(AppRouter.context!);
+    LobbyRoute(
+      code: room.code!,
+      $extra: LobbyScreenExtras(isMember: indexOfMember != -1, room: room),
+    ).push(AppRouter.context!);
   }
 
   Future<void> startPiP() async {
@@ -672,4 +655,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   MediaConfig get mediaConfig => _mediaConfig;
 
   String? get currentBackground => _currentBackground;
+
+  Room? get currentRoom => _currentRoom;
 }

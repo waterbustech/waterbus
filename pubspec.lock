@@ -870,13 +870,13 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_webrtc_plus:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: flutter_webrtc_plus
-      sha256: "62b86c91d0c21be9f15d78283af9e7883667033608d5f045b9497a13d926d78c"
+      sha256: "28d4d2c91e0b572e2fa3e5996c8135282ade9dea1e98a16840c20bc931b4632a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.1+4"
+    version: "0.14.1+5"
   freezed_annotation:
     dependency: transitive
     description:

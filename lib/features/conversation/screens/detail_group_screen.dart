@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
@@ -50,12 +48,7 @@ class DetailGroupScreen extends StatelessWidget {
                       if (context.isMobile) {
                         CreateMeetingRoute(
                           isChatScreen: true,
-                          room: AppBloc.chatBloc.conversationCurrent == null
-                              ? null
-                              : jsonEncode(
-                                  AppBloc.chatBloc.conversationCurrent
-                                      ?.toJson(),
-                                ),
+                          $extra: AppBloc.chatBloc.conversationCurrent,
                         );
                       } else {
                         showScreenAsDialog(

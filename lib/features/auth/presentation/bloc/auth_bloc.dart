@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
 
-      if (event is AuthLoggedInWithNewLobby) {
+      if (event is AuthLoggedInAndJoinedRoom) {
         if (_user == null) {
           await _handleLogin(fullname: event.fullname);
 

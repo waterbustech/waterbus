@@ -18,7 +18,6 @@ class Routes {
 
   // Meeting
   static const String recentRoute = '/recent';
-  static const String roomRoute = '/r';
   static const String createMeetingRoute = '/create-meeting';
   static const String enterCodeRoute = '/enter-code';
   static const String backgroundGallery = '/background-gallery';

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
-import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget child;
@@ -87,8 +84,8 @@ class AppScaffold extends StatelessWidget {
   bool get _canBackward => AppRouter.canPop;
 
   void _onPopInvoked(bool canPop, _) {
-    if (AppRouter.instance.currentRoute.startsWith(Routes.roomRoute)) {
-      AppBloc.roomBloc.add(const RoomLeft());
-    }
+    // if (AppRouter.instance.currentRoute.startsWith(Routes.roomRoute)) {
+    //   AppBloc.roomBloc.add(const RoomLeft());
+    // }
   }
 }

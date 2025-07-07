@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
@@ -96,6 +97,10 @@ abstract class WaterbusBaseRoute extends GoRouteData {
       transitionDuration: (kIsWeb ? 0 : 200).milliseconds,
       reverseTransitionDuration: (kIsWeb ? 0 : 200).milliseconds,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        if (kIsWeb) {
+          return child;
+        }
+
         return FadeTransition(opacity: animation, child: child);
       },
     );
@@ -200,29 +205,22 @@ class NotificationSettingsRoute extends WaterbusBaseRoute
   }
 }
 
-@TypedGoRoute<RoomRoute>(path: Routes.roomRoute, name: Routes.roomRoute)
-class RoomRoute extends WaterbusBaseRoute with _$RoomRoute {
-  @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
-    return const RoomScreen();
-  }
-}
-
 @TypedGoRoute<LobbyRoute>(
-  path: Routes.lobbyRoute,
-  name: Routes.lobbyRoute,
+  path: '${Routes.lobbyRoute}/:code',
+  name: '${Routes.lobbyRoute}/:code',
 )
 class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
-  final String? room;
-  final bool isMember;
+  final String code;
+  final LobbyScreenExtras $extra;
 
-  LobbyRoute({this.room, this.isMember = false});
+  LobbyRoute({required this.code, required this.$extra});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
     return LobbyScreen(
-      room: room != null ? Room.fromJson(jsonDecode(room!)) : null,
-      isMember: isMember,
+      room: $extra.room,
+      isMember: $extra.isMember,
+      code: code,
     );
   }
 }
@@ -232,15 +230,15 @@ class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
   name: Routes.createMeetingRoute,
 )
 class CreateMeetingRoute extends WaterbusBaseRoute with _$CreateMeetingRoute {
-  final String? room;
+  final Room? $extra;
   final bool isChatScreen;
 
-  CreateMeetingRoute({this.room, this.isChatScreen = false});
+  CreateMeetingRoute({this.$extra, this.isChatScreen = false});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
     return CreateMeetingScreen(
-      room: room != null ? jsonDecode(room!) : null,
+      room: $extra,
       isChatScreen: isChatScreen,
     );
   }
@@ -383,16 +381,30 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
   }
 }
 
-@TypedGoRoute<RoomCodeRoute>(
+@TypedGoRoute<RoomRoute>(
   path: "${Routes.rootRoute}:code",
   name: "${Routes.rootRoute}:code",
 )
-class RoomCodeRoute extends WaterbusBaseRoute with _$RoomCodeRoute {
+class RoomRoute extends WaterbusBaseRoute with _$RoomRoute {
   final String code;
 
-  RoomCodeRoute({required this.code});
+  RoomRoute({required this.code});
+
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
-    return LobbyScreen(code: code);
+    if (AppBloc.roomBloc.currentRoom == null) {
+      scheduleMicrotask(() {
+        LobbyRoute(code: code, $extra: LobbyScreenExtras()).go(context);
+      });
+    }
+
+    return const RoomScreen();
   }
+}
+
+class LobbyScreenExtras {
+  final Room? room;
+  final bool isMember;
+
+  LobbyScreenExtras({this.room, this.isMember = false});
 }

@@ -15,10 +15,15 @@ import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.
 
 class LobbyScreen extends StatefulWidget {
   final Room? room;
-  final String? code;
+  final String code;
   final bool isMember;
 
-  const LobbyScreen({super.key, this.room, this.isMember = false, this.code});
+  const LobbyScreen({
+    super.key,
+    this.room,
+    this.isMember = false,
+    required this.code,
+  });
 
   @override
   State<LobbyScreen> createState() => _LobbyScreenState();

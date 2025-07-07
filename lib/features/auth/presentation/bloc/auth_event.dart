@@ -6,12 +6,12 @@ class AuthStarted extends AuthEvent {}
 
 class AuthLoggedIn extends AuthEvent {}
 
-class AuthLoggedInWithNewLobby extends AuthEvent {
+class AuthLoggedInAndJoinedRoom extends AuthEvent {
   final String code;
   final String password;
   final String? fullname;
 
-  AuthLoggedInWithNewLobby({
+  AuthLoggedInAndJoinedRoom({
     required this.code,
     this.fullname,
     required this.password,
