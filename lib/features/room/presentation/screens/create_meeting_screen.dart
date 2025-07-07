@@ -19,7 +19,7 @@ class CreateMeetingScreen extends StatefulWidget {
   final bool isChatScreen;
   const CreateMeetingScreen({
     super.key,
-    required this.room,
+    this.room,
     this.isChatScreen = false,
   });
 

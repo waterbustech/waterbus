@@ -9,9 +9,9 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
@@ -43,13 +43,13 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
   }
 
   void _handleTapArchivedItem(Room room) {
-    if (context.isDesktop) {
+    if (PlatformUtils.isDesktop) {
       setState(() {
         _room = room;
         _currentIndex = 1;
       });
     } else {
-      AppRouter.push(Routes.archivedConversationRoute, extra: {'room': room});
+      ArchivedConversationRoute($extra: room).push(context);
     }
   }
 

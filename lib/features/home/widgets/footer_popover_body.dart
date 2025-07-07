@@ -6,10 +6,13 @@ import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 
 class FooterPopoverBody extends StatelessWidget {
   const FooterPopoverBody({
@@ -30,7 +33,14 @@ class FooterPopoverBody extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
           title: Strings.viewPersonalInformation.i18n,
           onTap: () {
-            AppRouter.push(Routes.profileRoute);
+            if (PlatformUtils.isMobile) {
+              ProfileRoute().push(context);
+            } else {
+              showScreenAsDialog(
+                route: Routes.profileRoute,
+                child: ProfileScreen(),
+              );
+            }
           },
         ),
         _footerPopoverButton(

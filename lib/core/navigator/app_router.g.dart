@@ -181,12 +181,20 @@ RouteBase get $callSettingsRoute => GoRouteData.$route(
     );
 
 mixin _$CallSettingsRoute on GoRouteData {
-  static CallSettingsRoute _fromState(GoRouterState state) =>
-      CallSettingsRoute();
+  static CallSettingsRoute _fromState(GoRouterState state) => CallSettingsRoute(
+        isInRoom: _$convertMapValue(
+                'is-in-room', state.uri.queryParameters, _$boolConverter) ??
+            false,
+      );
+
+  CallSettingsRoute get _self => this as CallSettingsRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/callSettings',
+        queryParams: {
+          if (_self.isInRoom != false) 'is-in-room': _self.isInRoom.toString(),
+        },
       );
 
   @override
@@ -201,6 +209,26 @@ mixin _$CallSettingsRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }
 
 RouteBase get $settingsRoute => GoRouteData.$route(
@@ -355,26 +383,6 @@ mixin _$LobbyRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-T? _$convertMapValue<T>(
-  String key,
-  Map<String, String> map,
-  T? Function(String) converter,
-) {
-  final value = map[key];
-  return value == null ? null : converter(value);
-}
-
-bool _$boolConverter(String value) {
-  switch (value) {
-    case 'true':
-      return true;
-    case 'false':
-      return false;
-    default:
-      throw UnsupportedError('Cannot convert "$value" into a bool.');
-  }
-}
-
 RouteBase get $createMeetingRoute => GoRouteData.$route(
       path: '/create-meeting',
       name: '/create-meeting',
@@ -383,11 +391,23 @@ RouteBase get $createMeetingRoute => GoRouteData.$route(
 
 mixin _$CreateMeetingRoute on GoRouteData {
   static CreateMeetingRoute _fromState(GoRouterState state) =>
-      CreateMeetingRoute();
+      CreateMeetingRoute(
+        room: state.uri.queryParameters['room'],
+        isChatScreen: _$convertMapValue(
+                'is-chat-screen', state.uri.queryParameters, _$boolConverter) ??
+            false,
+      );
+
+  CreateMeetingRoute get _self => this as CreateMeetingRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/create-meeting',
+        queryParams: {
+          if (_self.room != null) 'room': _self.room,
+          if (_self.isChatScreen != false)
+            'is-chat-screen': _self.isChatScreen.toString(),
+        },
       );
 
   @override
@@ -469,7 +489,7 @@ RouteBase get $conversationRoute => GoRouteData.$route(
 
 mixin _$ConversationRoute on GoRouteData {
   static ConversationRoute _fromState(GoRouterState state) => ConversationRoute(
-        room: state.uri.queryParameters['room']!,
+        $extra: state.extra as Room,
       );
 
   ConversationRoute get _self => this as ConversationRoute;
@@ -477,23 +497,22 @@ mixin _$ConversationRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/conversation',
-        queryParams: {
-          'room': _self.room,
-        },
       );
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $archivedConversationRoute => GoRouteData.$route(
@@ -505,7 +524,7 @@ RouteBase get $archivedConversationRoute => GoRouteData.$route(
 mixin _$ArchivedConversationRoute on GoRouteData {
   static ArchivedConversationRoute _fromState(GoRouterState state) =>
       ArchivedConversationRoute(
-        room: state.uri.queryParameters['room']!,
+        $extra: state.extra as Room,
       );
 
   ArchivedConversationRoute get _self => this as ArchivedConversationRoute;
@@ -513,23 +532,22 @@ mixin _$ArchivedConversationRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/archived-conversation',
-        queryParams: {
-          'room': _self.room,
-        },
       );
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $archivedRoute => GoRouteData.$route(

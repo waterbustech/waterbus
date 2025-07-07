@@ -20,6 +20,7 @@ import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget
 import 'package:waterbus/features/room/presentation/widgets/call_setting_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
 import 'package:waterbus/features/room/presentation/widgets/stats_view.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
@@ -56,11 +57,14 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     lable: Strings.settings.i18n,
                     onTap: () {
                       AppRouter.pop();
-
-                      AppRouter.push(
-                        Routes.callSettingsRoute,
-                        extra: {"isInRoom": true},
-                      );
+                      if (context.isMobile) {
+                        CallSettingsRoute(isInRoom: true).push(context);
+                      } else {
+                        showScreenAsDialog(
+                          route: Routes.callSettingsRoute,
+                          child: CallSettingsScreen(isInRoom: true),
+                        );
+                      }
                     },
                   ),
                   if (context.isMobile)

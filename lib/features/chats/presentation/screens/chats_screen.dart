@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +11,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -21,6 +20,7 @@ import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -49,7 +49,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         _currentIndex = 1;
       });
     } else {
-      ConversationRoute(room: jsonEncode(room.toJson())).push(context);
+      ConversationRoute($extra: room).push(context);
     }
   }
 
@@ -109,10 +109,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {
-                      AppRouter.push(
-                        Routes.createMeetingRoute,
-                        extra: {'isChatScreen': true},
-                      );
+                      if (context.isMobile) {
+                        CreateMeetingRoute(isChatScreen: true).push(context);
+                      } else {
+                        showScreenAsDialog(
+                          route: Routes.createMeetingRoute,
+                          child: CreateMeetingScreen(isChatScreen: true),
+                        );
+                      }
                     },
                     icon: Icon(
                       PhosphorIcons.plus(),

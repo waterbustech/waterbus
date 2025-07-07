@@ -515,7 +515,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    LobbyRoute(isMember: indexOfMember != -1, room: jsonEncode(room))
+    LobbyRoute(isMember: indexOfMember != -1, room: jsonEncode(room.toJson()))
         .push(AppRouter.context!);
   }
 

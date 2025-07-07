@@ -13,9 +13,12 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
@@ -24,8 +27,12 @@ import 'package:waterbus/features/home/screens/home_desktop_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -138,17 +145,37 @@ class _HomeScreenState extends State<HomeScreen> {
               AppBloc.authBloc.add(AuthLoggedOut());
               break;
             case Strings.profile:
-              AppRouter.push(Routes.profileRoute);
+              if (PlatformUtils.isMobile) {
+                ProfileRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.profileRoute,
+                  child: ProfileScreen(),
+                );
+              }
               break;
             case Strings.archivedChats:
-              AppRouter.push(Routes.archivedRoute);
+              if (PlatformUtils.isMobile) {
+                ArchivedRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.archivedRoute,
+                  child: ArchivedScreen(),
+                );
+              }
               break;
             case Strings.settings:
-              AppRouter.push(Routes.callSettingsRoute);
+              if (PlatformUtils.isMobile) {
+                CallSettingsRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.callSettingsRoute,
+                  child: CallSettingsScreen(isInRoom: false),
+                );
+              }
               break;
             case Strings.licenses:
               if (!mounted) return;
-
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
@@ -183,7 +210,14 @@ Widget _buildHeader(BuildContext context, String route) {
         suffixWidget:
             context.isDesktop ? buildCreateMeetingButton(context, route) : null,
         onTap: () {
-          AppRouter.push(Routes.enterCodeRoute);
+          if (context.isMobile) {
+            EnterCodeRoute().push(context);
+          } else {
+            showScreenAsDialog(
+              route: Routes.enterCodeRoute,
+              child: EnterMeetingCode(),
+            );
+          }
         },
       );
     case Strings.archivedChats:
@@ -208,15 +242,28 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
   return GestureWrapper(
     onTap: () async {
       if (route == Strings.chat) {
-        AppRouter.push(
-          Routes.createMeetingRoute,
-          extra: {'isChatScreen': route == Strings.chat},
-        );
+        if (context.isMobile) {
+          CreateMeetingRoute(isChatScreen: route == Strings.chat).push(context);
+        } else {
+          showScreenAsDialog(
+            route: Routes.createMeetingRoute,
+            child: CreateMeetingScreen(
+              isChatScreen: route == Strings.chat,
+            ),
+          );
+        }
       } else {
         await WaterbusPermissionHandler().checkGrantedForExecute(
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
-            AppRouter.push(Routes.createMeetingRoute);
+            if (context.isMobile) {
+              CreateMeetingRoute().push(context);
+            } else {
+              showScreenAsDialog(
+                route: Routes.createMeetingRoute,
+                child: CreateMeetingScreen(),
+              );
+            }
           },
         );
       }

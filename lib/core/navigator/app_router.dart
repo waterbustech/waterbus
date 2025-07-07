@@ -4,15 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
-import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
@@ -75,93 +72,6 @@ class AppRouter {
   static BuildContext? get context => _rootNavigatorKey.currentContext;
 
   static NavigatorState get state => _rootNavigatorKey.currentState!;
-
-  static Future? push<T>(
-    String route, {
-    Map<String, dynamic>? extra,
-    bool forceRootState = false,
-  }) {
-    final bool hasMatchConditions = _middlewareRouter(route, extra);
-
-    if (hasMatchConditions) return null;
-
-    return context?.push(route, extra: extra);
-  }
-
-  static bool _middlewareRouter(String route, Map<String, dynamic>? extra) {
-    if (_shouldBeShowPopupInstrealOfScreen(route: route)) {
-      showDialogWaterbus(
-        routeName: route,
-        duration: 200,
-        maxHeight: 100.h,
-        maxWidth: 400.sp,
-        barrierColor: Colors.transparent,
-        borderRadius: 16.sp,
-        child: Material(
-          clipBehavior: Clip.hardEdge,
-          shape: SuperellipseShape(
-            borderRadius: BorderRadius.circular(16.sp),
-          ),
-          child: SizedBox(
-            height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
-            child: AppScaffold(
-              child: _getWidgetByRoute(route: route, extra: extra),
-            ),
-          ),
-        ),
-      );
-      return true;
-    }
-    return false;
-  }
-
-  static bool _shouldBeShowPopupInstrealOfScreen({required String route}) {
-    if (AppRouter.context?.isMobile ?? true) return false;
-
-    return _popupInstrealOfScreen.contains(route);
-  }
-
-  static List<String> get _popupInstrealOfScreen => [
-        Routes.enterCodeRoute,
-        Routes.createMeetingRoute,
-        Routes.profileRoute,
-        Routes.usernameRoute,
-        Routes.callSettingsRoute,
-        Routes.langRoute,
-        Routes.themeRoute,
-        Routes.detailGroupRoute,
-      ];
-
-  static Widget _getWidgetByRoute({
-    required String route,
-    Map<String, dynamic>? extra,
-  }) {
-    switch (route) {
-      case Routes.enterCodeRoute:
-        return const EnterMeetingCode();
-      case Routes.createMeetingRoute:
-        return CreateMeetingScreen(
-          room: extra?['room'],
-          isChatScreen: extra?['isChatScreen'] ?? false,
-        );
-      case Routes.profileRoute:
-        return const ProfileScreen();
-      case Routes.usernameRoute:
-        return const UserNameScreen();
-      case Routes.callSettingsRoute:
-        return CallSettingsScreen(
-          isInRoom: extra?['isInRoom'] ?? false,
-        );
-      case Routes.langRoute:
-        return const LanguageScreen();
-      case Routes.themeRoute:
-        return const ThemeScreen();
-      case Routes.detailGroupRoute:
-        return const DetailGroupScreen();
-      default:
-        return const SizedBox();
-    }
-  }
 }
 
 abstract class WaterbusBaseRoute extends GoRouteData {
@@ -246,11 +156,13 @@ class UsernameRoute extends WaterbusBaseRoute with _$UsernameRoute {
   name: Routes.callSettingsRoute,
 )
 class CallSettingsRoute extends WaterbusBaseRoute with _$CallSettingsRoute {
+  final bool isInRoom;
+
+  CallSettingsRoute({this.isInRoom = false});
+
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
-    return CallSettingsScreen(
-      isInRoom: (state.extra as Map<String, dynamic>?)?['isInRoom'] ?? false,
-    );
+    return CallSettingsScreen(isInRoom: isInRoom);
   }
 }
 
@@ -320,14 +232,16 @@ class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
   name: Routes.createMeetingRoute,
 )
 class CreateMeetingRoute extends WaterbusBaseRoute with _$CreateMeetingRoute {
-  CreateMeetingRoute();
+  final String? room;
+  final bool isChatScreen;
+
+  CreateMeetingRoute({this.room, this.isChatScreen = false});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
     return CreateMeetingScreen(
-      room: (state.extra as Map<String, dynamic>?)?['room'],
-      isChatScreen:
-          (state.extra as Map<String, dynamic>?)?['isChatScreen'] ?? false,
+      room: room != null ? jsonDecode(room!) : null,
+      isChatScreen: isChatScreen,
     );
   }
 }
@@ -360,13 +274,13 @@ class BackgroundGalleryRoute extends WaterbusBaseRoute
   name: Routes.conversationRoute,
 )
 class ConversationRoute extends WaterbusBaseRoute with _$ConversationRoute {
-  final String room;
+  final Room $extra;
 
-  ConversationRoute({required this.room});
+  ConversationRoute({required this.$extra});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
-    return ConversationScreen(room: Room.fromJson(jsonDecode(room)));
+    return ConversationScreen(room: $extra);
   }
 }
 
@@ -376,13 +290,13 @@ class ConversationRoute extends WaterbusBaseRoute with _$ConversationRoute {
 )
 class ArchivedConversationRoute extends WaterbusBaseRoute
     with _$ArchivedConversationRoute {
-  final String room;
+  final Room $extra;
 
-  ArchivedConversationRoute({required this.room});
+  ArchivedConversationRoute({required this.$extra});
 
   @override
   Widget buildContent(BuildContext context, GoRouterState state) {
-    return ArchivedConversationScreen(room: Room.fromJson(jsonDecode(room)));
+    return ArchivedConversationScreen(room: $extra);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
@@ -12,6 +14,7 @@ import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -24,6 +27,7 @@ import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.da
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
 
 class DetailGroupScreen extends StatelessWidget {
   const DetailGroupScreen({super.key});
@@ -43,13 +47,25 @@ class DetailGroupScreen extends StatelessWidget {
                   message: Strings.editMeeting.i18n,
                   child: GestureWrapper(
                     onTap: () {
-                      AppRouter.push(
-                        Routes.createMeetingRoute,
-                        extra: {
-                          'room': AppBloc.chatBloc.conversationCurrent,
-                          'isChatScreen': true,
-                        },
-                      );
+                      if (context.isMobile) {
+                        CreateMeetingRoute(
+                          isChatScreen: true,
+                          room: AppBloc.chatBloc.conversationCurrent == null
+                              ? null
+                              : jsonEncode(
+                                  AppBloc.chatBloc.conversationCurrent
+                                      ?.toJson(),
+                                ),
+                        );
+                      } else {
+                        showScreenAsDialog(
+                          route: Routes.createMeetingRoute,
+                          child: CreateMeetingScreen(
+                            isChatScreen: true,
+                            room: AppBloc.chatBloc.conversationCurrent,
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       alignment: Alignment.center,
