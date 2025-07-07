@@ -132,21 +132,22 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                     password: _passwordController.text,
                   ),
                 );
-              }
+              } else {
+                if (widget.code != null) {
+                  if (_fullNameController.text.isEmpty) {
+                    Strings.invalidName.i18n
+                        .showToast(ToastificationType.error);
+                    return;
+                  }
 
-              if (widget.code != null) {
-                if (_fullNameController.text.isEmpty) {
-                  Strings.invalidName.i18n.showToast(ToastificationType.error);
-                  return;
+                  AppBloc.authBloc.add(
+                    AuthLoggedInAndJoinedRoom(
+                      code: widget.code!,
+                      password: _passwordController.text,
+                      fullname: _fullNameController.text,
+                    ),
+                  );
                 }
-
-                AppBloc.authBloc.add(
-                  AuthLoggedInWithNewLobby(
-                    code: widget.code!,
-                    password: _passwordController.text,
-                    fullname: _fullNameController.text,
-                  ),
-                );
               }
             },
             child: Material(

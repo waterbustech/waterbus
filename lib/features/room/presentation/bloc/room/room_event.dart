@@ -27,12 +27,10 @@ class RoomJoinedEvent extends RoomEvent {
   final Room room;
   final bool isMember;
   final String? password;
-  final bool isDirectJoinLink;
   const RoomJoinedEvent({
     required this.room,
     this.isMember = false,
     this.password,
-    this.isDirectJoinLink = false,
   });
 }
 

@@ -76,6 +76,16 @@ class _GestureWrapperState extends State<GestureWrapper> {
           : null,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
+        onEnter: (_) {
+          setState(() {
+            _enable = true;
+          });
+        },
+        onExit: (_) {
+          setState(() {
+            _enable = false;
+          });
+        },
         child: widget.tooltipMessage != null
             ? Tooltip(
                 message: widget.tooltipMessage,

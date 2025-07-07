@@ -60,6 +60,8 @@ class _AppState extends State<App> {
                           SystemChrome.setSystemUIOverlayStyle(
                             Theme.of(context).appBarTheme.systemOverlayStyle!,
                           );
+
+                          
                           return child ?? const SizedBox();
                         },
                       ),

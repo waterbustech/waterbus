@@ -284,7 +284,7 @@ class _RoomBodyState extends State<RoomBody> {
                     GestureWrapper(
                       tooltipMessage: Strings.copy.i18n,
                       onTap: () {
-                        ClipboardUtils.copy(_room.code.toString());
+                        ClipboardUtils.copyMeetLink(_room.code.toString());
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: 12.sp),

@@ -16,7 +16,6 @@ List<RouteBase> get $appRoutes => [
       $settingsRoute,
       $privacyRoute,
       $notificationSettingsRoute,
-      $roomRoute,
       $lobbyRoute,
       $createMeetingRoute,
       $enterCodeRoute,
@@ -30,7 +29,7 @@ List<RouteBase> get $appRoutes => [
       $chatRoute,
       $recentRoute,
       $licenseRoute,
-      $roomCodeRoute,
+      $roomRoute,
     ];
 
 RouteBase get $rootRoute => GoRouteData.$route(
@@ -288,91 +287,39 @@ mixin _$NotificationSettingsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $roomRoute => GoRouteData.$route(
-      path: '/r',
-      name: '/r',
-      factory: _$RoomRoute._fromState,
-    );
-
-mixin _$RoomRoute on GoRouteData {
-  static RoomRoute _fromState(GoRouterState state) => RoomRoute();
-
-  @override
-  String get location => GoRouteData.$location(
-        '/r',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
 RouteBase get $lobbyRoute => GoRouteData.$route(
-      path: '/lobby',
-      name: '/lobby',
+      path: '/lobby/:code',
+      name: '/lobby/:code',
       factory: _$LobbyRoute._fromState,
     );
 
 mixin _$LobbyRoute on GoRouteData {
   static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
-        room: state.uri.queryParameters['room'],
-        isMember: _$convertMapValue(
-                'is-member', state.uri.queryParameters, _$boolConverter) ??
-            false,
+        code: state.pathParameters['code']!,
+        $extra: state.extra as LobbyScreenExtras,
       );
 
   LobbyRoute get _self => this as LobbyRoute;
 
   @override
   String get location => GoRouteData.$location(
-        '/lobby',
-        queryParams: {
-          if (_self.room != null) 'room': _self.room,
-          if (_self.isMember != false) 'is-member': _self.isMember.toString(),
-        },
+        '/lobby/${Uri.encodeComponent(_self.code)}',
       );
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-T? _$convertMapValue<T>(
-  String key,
-  Map<String, String> map,
-  T? Function(String) converter,
-) {
-  final value = map[key];
-  return value == null ? null : converter(value);
-}
-
-bool _$boolConverter(String value) {
-  switch (value) {
-    case 'true':
-      return true;
-    case 'false':
-      return false;
-    default:
-      throw UnsupportedError('Cannot convert "$value" into a bool.');
-  }
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $createMeetingRoute => GoRouteData.$route(
@@ -728,18 +675,18 @@ mixin _$LicenseRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $roomCodeRoute => GoRouteData.$route(
+RouteBase get $roomRoute => GoRouteData.$route(
       path: '/:code',
       name: '/:code',
-      factory: _$RoomCodeRoute._fromState,
+      factory: _$RoomRoute._fromState,
     );
 
-mixin _$RoomCodeRoute on GoRouteData {
-  static RoomCodeRoute _fromState(GoRouterState state) => RoomCodeRoute(
+mixin _$RoomRoute on GoRouteData {
+  static RoomRoute _fromState(GoRouterState state) => RoomRoute(
         code: state.pathParameters['code']!,
       );
 
-  RoomCodeRoute get _self => this as RoomCodeRoute;
+  RoomRoute get _self => this as RoomRoute;
 
   @override
   String get location => GoRouteData.$location(
