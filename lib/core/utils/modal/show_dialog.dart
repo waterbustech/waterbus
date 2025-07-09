@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
@@ -36,7 +34,7 @@ Future showDialogWaterbus({
       context: context,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (context) {
-        return GestureWrapper(child: child);
+        return child;
       },
     );
   }
@@ -79,14 +77,12 @@ Future showDialogWaterbus({
             Theme.of(AppRouter.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
-          child: GestureWrapper(
-            child: Container(
-              constraints: BoxConstraints(
-                maxHeight: maxHeight,
-                maxWidth: maxWidth ?? 330.sp,
-              ),
-              child: child,
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: maxHeight,
+              maxWidth: maxWidth ?? 330.sp,
             ),
+            child: child,
           ),
         ),
       );
@@ -118,9 +114,7 @@ Future showScreenAsDialog({
       ),
       child: SizedBox(
         height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
-        child: AppScaffold(
-          child: child,
-        ),
+        child: child,
       ),
     ),
   );

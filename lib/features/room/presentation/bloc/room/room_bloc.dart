@@ -337,7 +337,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
-    AppRouter.popUntil();
+    RootRoute().go(AppRouter.context!);
 
     if (result.isSuccess) {
       final Room room = result.value!;

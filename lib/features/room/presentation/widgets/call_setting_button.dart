@@ -21,7 +21,6 @@ class CallSettingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureWrapper(
-      tooltipMessage: tooltipMessage,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(

@@ -14,7 +14,7 @@ class CallActionButton extends StatelessWidget {
   final double? iconSize;
   final BoxShape shape;
   final double? boxSize;
-  final String tooltipMessage;
+  final String? tooltipMessage;
   const CallActionButton({
     super.key,
     required this.icon,
@@ -24,11 +24,20 @@ class CallActionButton extends StatelessWidget {
     this.iconSize,
     this.shape = BoxShape.rectangle,
     this.boxSize,
-    required this.tooltipMessage,
+    this.tooltipMessage,
   });
 
   @override
   Widget build(BuildContext context) {
+    return tooltipMessage != null && !context.isMobile
+        ? Tooltip(
+            message: tooltipMessage,
+            child: _bodyCallActionButton(context),
+          )
+        : _bodyCallActionButton(context);
+  }
+
+  Container _bodyCallActionButton(BuildContext context) {
     return Container(
       height: boxSize ?? 42.sp,
       width: boxSize ?? 42.sp,
@@ -36,7 +45,6 @@ class CallActionButton extends StatelessWidget {
           ? EdgeInsets.zero
           : EdgeInsets.only(left: 8.sp),
       child: GestureWrapper(
-        tooltipMessage: tooltipMessage,
         onTap: onTap,
         child: Material(
           clipBehavior: Clip.hardEdge,

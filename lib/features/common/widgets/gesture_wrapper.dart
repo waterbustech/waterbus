@@ -6,7 +6,6 @@ class GestureWrapper extends StatefulWidget {
   final Function? onLongPress;
   final Widget child;
   final bool isCloseKeyboard;
-  final String? tooltipMessage;
 
   const GestureWrapper({
     super.key,
@@ -14,7 +13,6 @@ class GestureWrapper extends StatefulWidget {
     this.onTap,
     this.onSecondaryTap,
     this.onLongPress,
-    this.tooltipMessage,
     this.isCloseKeyboard = true,
   });
 
@@ -86,12 +84,7 @@ class _GestureWrapperState extends State<GestureWrapper> {
             _enable = false;
           });
         },
-        child: widget.tooltipMessage != null
-            ? Tooltip(
-                message: widget.tooltipMessage,
-                child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
-              )
-            : Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
+        child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
       ),
     );
   }

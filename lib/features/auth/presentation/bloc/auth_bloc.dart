@@ -122,7 +122,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _userLocal.clearUser();
     await _waterbusSdk.deleteToken();
 
-    AppRouter.popUntil();
+    RootRoute().go(AppRouter.context!);
 
     _user = null;
     AppBloc.userBloc.add(UserCleaned());

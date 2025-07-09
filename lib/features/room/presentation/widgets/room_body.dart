@@ -281,37 +281,9 @@ class _RoomBodyState extends State<RoomBody> {
                       size: 26.sp,
                       maxImages: 4,
                     ),
-                    GestureWrapper(
-                      tooltipMessage: Strings.copy.i18n,
-                      onTap: () {
-                        ClipboardUtils.copyMeetLink(_room.code.toString());
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: 12.sp),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.sp,
-                          vertical: 8.sp,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.sp),
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              PhosphorIcons.linkSimpleHorizontal(),
-                              size: 18.sp,
-                            ),
-                            Text(
-                              ' | ${_room.code.toString()}',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    Tooltip(
+                      message: Strings.copy.i18n,
+                      child: _copyMeetingWidget(context),
                     ),
                     SizedBox(width: 8.sp),
                   ],
@@ -713,6 +685,40 @@ class _RoomBodyState extends State<RoomBody> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  GestureWrapper _copyMeetingWidget(BuildContext context) {
+    return GestureWrapper(
+      onTap: () {
+        ClipboardUtils.copyMeetLink(_room.code.toString());
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 12.sp),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.sp,
+          vertical: 8.sp,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.sp),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              PhosphorIcons.linkSimpleHorizontal(),
+              size: 18.sp,
+            ),
+            Text(
+              ' | ${_room.code.toString()}',
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ),
     );

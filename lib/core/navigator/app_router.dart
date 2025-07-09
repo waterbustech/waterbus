@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:waterbus_sdk/types/index.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_scaffold.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -60,14 +57,6 @@ class AppRouter {
 
   static bool get canPop => state.canPop();
 
-  static void popUntil<T>({String routeName = Routes.rootRoute}) {
-    state.popUntil((route) {
-      if (route.isFirst) return true;
-
-      return route.settings.name == routeName;
-    });
-  }
-
   String get currentRoute => router.state.path ?? "";
 
   static BuildContext? get context => _rootNavigatorKey.currentContext;
@@ -75,42 +64,42 @@ class AppRouter {
   static NavigatorState get state => _rootNavigatorKey.currentState!;
 }
 
-abstract class WaterbusBaseRoute extends GoRouteData {
-  Widget buildContent(BuildContext context, GoRouterState state);
+// abstract class GoRouteData extends GoRouteData {
+//   Widget build(BuildContext context, GoRouterState state);
 
-  @override
-  Page buildPage(BuildContext context, GoRouterState state) {
-    return buildWaterbusPage(
-      child: buildContent(context, state),
-      state: state,
-    );
-  }
+//   @override
+//   Page buildPage(BuildContext context, GoRouterState state) {
+//     return buildWaterbusPage(
+//       child: buildContent(context, state),
+//       state: state,
+//     );
+//   }
 
-  Page<T> buildWaterbusPage<T>({
-    required Widget child,
-    required GoRouterState state,
-  }) {
-    return CustomTransitionPage<T>(
-      name: state.name,
-      key: state.pageKey,
-      child: AppScaffold(child: child),
-      transitionDuration: (kIsWeb ? 0 : 200).milliseconds,
-      reverseTransitionDuration: (kIsWeb ? 0 : 200).milliseconds,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        if (kIsWeb) {
-          return child;
-        }
+// Page<T> buildWaterbusPage<T>({
+//   required Widget child,
+//   required GoRouterState state,
+// }) {
+//   return CustomTransitionPage<T>(
+//     name: state.name,
+//     key: state.pageKey,
+//     child: child,
+//     transitionDuration: (kIsWeb ? 0 : 200).milliseconds,
+//     reverseTransitionDuration: (kIsWeb ? 0 : 200).milliseconds,
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       if (kIsWeb) {
+//         return child;
+//       }
 
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
-  }
-}
+//       return FadeTransition(opacity: animation, child: child);
+//     },
+//   );
+// }
+// }
 
 @TypedGoRoute<RootRoute>(path: Routes.rootRoute, name: Routes.rootRoute)
-class RootRoute extends WaterbusBaseRoute with _$RootRoute {
+class RootRoute extends GoRouteData with _$RootRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const Home();
   }
 }
@@ -119,17 +108,17 @@ class RootRoute extends WaterbusBaseRoute with _$RootRoute {
   path: Routes.authenticationRoute,
   name: Routes.authenticationRoute,
 )
-class AuthenticationRoute extends WaterbusBaseRoute with _$AuthenticationRoute {
+class AuthenticationRoute extends GoRouteData with _$AuthenticationRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const Scaffold();
   }
 }
 
 @TypedGoRoute<LoginRoute>(path: Routes.loginRoute, name: Routes.loginRoute)
-class LoginRoute extends WaterbusBaseRoute with _$LoginRoute {
+class LoginRoute extends GoRouteData with _$LoginRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const LogInScreen();
   }
 }
@@ -138,9 +127,9 @@ class LoginRoute extends WaterbusBaseRoute with _$LoginRoute {
   path: Routes.profileRoute,
   name: Routes.profileRoute,
 )
-class ProfileRoute extends WaterbusBaseRoute with _$ProfileRoute {
+class ProfileRoute extends GoRouteData with _$ProfileRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const ProfileScreen();
   }
 }
@@ -149,9 +138,9 @@ class ProfileRoute extends WaterbusBaseRoute with _$ProfileRoute {
   path: Routes.usernameRoute,
   name: Routes.usernameRoute,
 )
-class UsernameRoute extends WaterbusBaseRoute with _$UsernameRoute {
+class UsernameRoute extends GoRouteData with _$UsernameRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const UserNameScreen();
   }
 }
@@ -160,13 +149,13 @@ class UsernameRoute extends WaterbusBaseRoute with _$UsernameRoute {
   path: Routes.callSettingsRoute,
   name: Routes.callSettingsRoute,
 )
-class CallSettingsRoute extends WaterbusBaseRoute with _$CallSettingsRoute {
+class CallSettingsRoute extends GoRouteData with _$CallSettingsRoute {
   final bool isInRoom;
 
   CallSettingsRoute({this.isInRoom = false});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return CallSettingsScreen(isInRoom: isInRoom);
   }
 }
@@ -175,9 +164,9 @@ class CallSettingsRoute extends WaterbusBaseRoute with _$CallSettingsRoute {
   path: Routes.settingsRoute,
   name: Routes.settingsRoute,
 )
-class SettingsRoute extends WaterbusBaseRoute with _$SettingsRoute {
+class SettingsRoute extends GoRouteData with _$SettingsRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const SettingsScreen();
   }
 }
@@ -186,9 +175,9 @@ class SettingsRoute extends WaterbusBaseRoute with _$SettingsRoute {
   path: Routes.privacyRoute,
   name: Routes.privacyRoute,
 )
-class PrivacyRoute extends WaterbusBaseRoute with _$PrivacyRoute {
+class PrivacyRoute extends GoRouteData with _$PrivacyRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const PrivacyScreen();
   }
 }
@@ -197,10 +186,10 @@ class PrivacyRoute extends WaterbusBaseRoute with _$PrivacyRoute {
   path: Routes.notificationSettings,
   name: Routes.notificationSettings,
 )
-class NotificationSettingsRoute extends WaterbusBaseRoute
+class NotificationSettingsRoute extends GoRouteData
     with _$NotificationSettingsRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const NotificationSettingsScreen();
   }
 }
@@ -209,14 +198,14 @@ class NotificationSettingsRoute extends WaterbusBaseRoute
   path: '${Routes.lobbyRoute}/:code',
   name: '${Routes.lobbyRoute}/:code',
 )
-class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
+class LobbyRoute extends GoRouteData with _$LobbyRoute {
   final String code;
   final LobbyScreenExtras $extra;
 
   LobbyRoute({required this.code, required this.$extra});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return LobbyScreen(
       room: $extra.room,
       isMember: $extra.isMember,
@@ -229,14 +218,14 @@ class LobbyRoute extends WaterbusBaseRoute with _$LobbyRoute {
   path: Routes.createMeetingRoute,
   name: Routes.createMeetingRoute,
 )
-class CreateMeetingRoute extends WaterbusBaseRoute with _$CreateMeetingRoute {
+class CreateMeetingRoute extends GoRouteData with _$CreateMeetingRoute {
   final Room? $extra;
   final bool isChatScreen;
 
   CreateMeetingRoute({this.$extra, this.isChatScreen = false});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return CreateMeetingScreen(
       room: $extra,
       isChatScreen: isChatScreen,
@@ -248,9 +237,9 @@ class CreateMeetingRoute extends WaterbusBaseRoute with _$CreateMeetingRoute {
   path: Routes.enterCodeRoute,
   name: Routes.enterCodeRoute,
 )
-class EnterCodeRoute extends WaterbusBaseRoute with _$EnterCodeRoute {
+class EnterCodeRoute extends GoRouteData with _$EnterCodeRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const EnterMeetingCode();
   }
 }
@@ -259,10 +248,9 @@ class EnterCodeRoute extends WaterbusBaseRoute with _$EnterCodeRoute {
   path: Routes.backgroundGallery,
   name: Routes.backgroundGallery,
 )
-class BackgroundGalleryRoute extends WaterbusBaseRoute
-    with _$BackgroundGalleryRoute {
+class BackgroundGalleryRoute extends GoRouteData with _$BackgroundGalleryRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const BackgroundGalleryScreen();
   }
 }
@@ -271,13 +259,13 @@ class BackgroundGalleryRoute extends WaterbusBaseRoute
   path: Routes.conversationRoute,
   name: Routes.conversationRoute,
 )
-class ConversationRoute extends WaterbusBaseRoute with _$ConversationRoute {
+class ConversationRoute extends GoRouteData with _$ConversationRoute {
   final Room $extra;
 
   ConversationRoute({required this.$extra});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return ConversationScreen(room: $extra);
   }
 }
@@ -286,14 +274,14 @@ class ConversationRoute extends WaterbusBaseRoute with _$ConversationRoute {
   path: Routes.archivedConversationRoute,
   name: Routes.archivedConversationRoute,
 )
-class ArchivedConversationRoute extends WaterbusBaseRoute
+class ArchivedConversationRoute extends GoRouteData
     with _$ArchivedConversationRoute {
   final Room $extra;
 
   ArchivedConversationRoute({required this.$extra});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return ArchivedConversationScreen(room: $extra);
   }
 }
@@ -302,9 +290,9 @@ class ArchivedConversationRoute extends WaterbusBaseRoute
   path: Routes.archivedRoute,
   name: Routes.archivedRoute,
 )
-class ArchivedRoute extends WaterbusBaseRoute with _$ArchivedRoute {
+class ArchivedRoute extends GoRouteData with _$ArchivedRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const ArchivedScreen();
   }
 }
@@ -313,9 +301,9 @@ class ArchivedRoute extends WaterbusBaseRoute with _$ArchivedRoute {
   path: Routes.langRoute,
   name: Routes.langRoute,
 )
-class LangRoute extends WaterbusBaseRoute with _$LangRoute {
+class LangRoute extends GoRouteData with _$LangRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const LanguageScreen();
   }
 }
@@ -324,9 +312,9 @@ class LangRoute extends WaterbusBaseRoute with _$LangRoute {
   path: Routes.themeRoute,
   name: Routes.themeRoute,
 )
-class ThemeRoute extends WaterbusBaseRoute with _$ThemeRoute {
+class ThemeRoute extends GoRouteData with _$ThemeRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const ThemeScreen();
   }
 }
@@ -335,9 +323,9 @@ class ThemeRoute extends WaterbusBaseRoute with _$ThemeRoute {
   path: Routes.detailGroupRoute,
   name: Routes.detailGroupRoute,
 )
-class DetailGroupRoute extends WaterbusBaseRoute with _$DetailGroupRoute {
+class DetailGroupRoute extends GoRouteData with _$DetailGroupRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const DetailGroupScreen();
   }
 }
@@ -346,9 +334,9 @@ class DetailGroupRoute extends WaterbusBaseRoute with _$DetailGroupRoute {
   path: Routes.chatRoute,
   name: Routes.chatRoute,
 )
-class ChatRoute extends WaterbusBaseRoute with _$ChatRoute {
+class ChatRoute extends GoRouteData with _$ChatRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const ChatsScreen();
   }
 }
@@ -357,9 +345,9 @@ class ChatRoute extends WaterbusBaseRoute with _$ChatRoute {
   path: Routes.recentRoute,
   name: Routes.recentRoute,
 )
-class RecentRoute extends WaterbusBaseRoute with _$RecentRoute {
+class RecentRoute extends GoRouteData with _$RecentRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return const RecentMeetings();
   }
 }
@@ -368,9 +356,9 @@ class RecentRoute extends WaterbusBaseRoute with _$RecentRoute {
   path: Routes.licensesRoute,
   name: Routes.licensesRoute,
 )
-class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
+class LicenseRoute extends GoRouteData with _$LicenseRoute {
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     return LicensePage(
       applicationIcon: Image.asset(
         Assets.icons.launcherIcon.path,
@@ -385,13 +373,13 @@ class LicenseRoute extends WaterbusBaseRoute with _$LicenseRoute {
   path: "${Routes.rootRoute}:code",
   name: "${Routes.rootRoute}:code",
 )
-class RoomRoute extends WaterbusBaseRoute with _$RoomRoute {
+class RoomRoute extends GoRouteData with _$RoomRoute {
   final String code;
 
   RoomRoute({required this.code});
 
   @override
-  Widget buildContent(BuildContext context, GoRouterState state) {
+  Widget build(BuildContext context, GoRouterState state) {
     if (AppBloc.roomBloc.currentRoom == null) {
       scheduleMicrotask(() {
         LobbyRoute(code: code, $extra: LobbyScreenExtras()).go(context);

@@ -105,7 +105,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
           emit(_chatDone);
 
-          AppRouter.popUntil();
+          RootRoute().go(AppRouter.context!);
 
           Strings.addConversationSuccess.i18n
               .showToast(ToastificationType.success);
@@ -166,7 +166,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             handleAction: () async {
               await _leaveConversation(room);
 
-              AppRouter.popUntil();
+              RootRoute().go(AppRouter.context!);
 
               add(ChatSocketConversationUpdated());
             },
@@ -185,7 +185,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _deleteConversation(room);
 
-            AppRouter.popUntil();
+            RootRoute().go(AppRouter.context!);
 
             add(ChatSocketConversationUpdated());
           },
@@ -203,7 +203,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _archivedConversation(room);
 
-            AppRouter.popUntil();
+            RootRoute().go(AppRouter.context!);
 
             add(ChatSocketConversationUpdated());
           },
