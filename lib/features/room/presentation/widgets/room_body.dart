@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -17,6 +16,7 @@ import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';

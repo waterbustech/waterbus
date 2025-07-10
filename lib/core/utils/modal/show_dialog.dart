@@ -34,7 +34,14 @@ Future showDialogWaterbus({
       context: context,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (context) {
-        return child;
+        return GestureDetector(
+          onTap: () {
+            if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+          },
+          child: child,
+        );
       },
     );
   }
@@ -77,12 +84,19 @@ Future showDialogWaterbus({
             Theme.of(AppRouter.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: maxHeight,
-              maxWidth: maxWidth ?? 330.sp,
+          child: GestureDetector(
+            onTap: () {
+              if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            },
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: maxHeight,
+                maxWidth: maxWidth ?? 330.sp,
+              ),
+              child: child,
             ),
-            child: child,
           ),
         ),
       );

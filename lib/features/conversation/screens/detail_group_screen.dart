@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -21,6 +20,7 @@ import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
