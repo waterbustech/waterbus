@@ -55,6 +55,15 @@ class AppRouter {
     state.pop();
   }
 
+  static void popUntilToRoot() {
+    if (AppRouter.instance.currentRoute == Routes.rootRoute) {
+      Navigator.of(context!, rootNavigator: true)
+          .popUntil((route) => route.isFirst);
+    } else {
+      RootRoute().go(context!);
+    }
+  }
+
   static bool get canPop => state.canPop();
 
   String get currentRoute => router.state.path ?? "";
@@ -63,38 +72,6 @@ class AppRouter {
 
   static NavigatorState get state => _rootNavigatorKey.currentState!;
 }
-
-// abstract class GoRouteData extends GoRouteData {
-//   Widget build(BuildContext context, GoRouterState state);
-
-//   @override
-//   Page buildPage(BuildContext context, GoRouterState state) {
-//     return buildWaterbusPage(
-//       child: buildContent(context, state),
-//       state: state,
-//     );
-//   }
-
-// Page<T> buildWaterbusPage<T>({
-//   required Widget child,
-//   required GoRouterState state,
-// }) {
-//   return CustomTransitionPage<T>(
-//     name: state.name,
-//     key: state.pageKey,
-//     child: child,
-//     transitionDuration: (kIsWeb ? 0 : 200).milliseconds,
-//     reverseTransitionDuration: (kIsWeb ? 0 : 200).milliseconds,
-//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//       if (kIsWeb) {
-//         return child;
-//       }
-
-//       return FadeTransition(opacity: animation, child: child);
-//     },
-//   );
-// }
-// }
 
 @TypedGoRoute<RootRoute>(path: Routes.rootRoute, name: Routes.rootRoute)
 class RootRoute extends GoRouteData with _$RootRoute {

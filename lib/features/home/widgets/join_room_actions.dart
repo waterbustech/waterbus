@@ -176,7 +176,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
           GestureWrapper(
             onTap: () {
               AppBloc.roomBloc.add(RoomDisposed());
-              RootRoute().go(AppRouter.context!);
+              AppRouter.popUntilToRoot();
             },
             child: Center(
               child: Text(

@@ -104,9 +104,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           _conversations.insert(0, room);
 
           emit(_chatDone);
-
-          RootRoute().go(AppRouter.context!);
-
+          AppRouter.popUntilToRoot();
           Strings.addConversationSuccess.i18n
               .showToast(ToastificationType.success);
         }
@@ -166,7 +164,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             handleAction: () async {
               await _leaveConversation(room);
 
-              RootRoute().go(AppRouter.context!);
+              AppRouter.popUntilToRoot();
 
               add(ChatSocketConversationUpdated());
             },
@@ -185,7 +183,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _deleteConversation(room);
 
-            RootRoute().go(AppRouter.context!);
+            AppRouter.popUntilToRoot();
 
             add(ChatSocketConversationUpdated());
           },
@@ -203,7 +201,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _archivedConversation(room);
 
-            RootRoute().go(AppRouter.context!);
+            AppRouter.popUntilToRoot();
 
             add(ChatSocketConversationUpdated());
           },

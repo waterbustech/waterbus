@@ -337,7 +337,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
-    RootRoute().go(AppRouter.context!);
+    AppRouter.popUntilToRoot();
 
     if (result.isSuccess) {
       final Room room = result.value!;
@@ -440,7 +440,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    RootRoute().go(AppRouter.context!);
+    AppRouter.popUntilToRoot();
   }
 
   Future<void> _handleNewParticipant(RoomSomeoneNewJoined event) async {
