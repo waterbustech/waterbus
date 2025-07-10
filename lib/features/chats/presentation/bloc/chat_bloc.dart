@@ -39,7 +39,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           emit(_chatDone);
         }
 
-        if (AppRouter.context!.isDesktop) {
+        if (AppRouter.context?.isDesktop ?? false) {
           Future.delayed(1.seconds, () {
             if (_conversationCurrent == null && _conversations.isNotEmpty) {
               add(

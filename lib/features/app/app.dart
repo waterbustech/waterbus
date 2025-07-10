@@ -11,6 +11,7 @@ import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class App extends StatefulWidget {
@@ -61,8 +62,24 @@ class _AppState extends State<App> {
                             Theme.of(context).appBarTheme.systemOverlayStyle!,
                           );
 
-                          
-                          return child ?? const SizedBox();
+                          return SizerUtils.instance.isMinimunSizeSupport
+                              ? const SizeNotSupportedWidget()
+                              : Scaffold(
+                                  extendBody: true,
+                                  body: SafeArea(
+                                    top: false,
+                                    bottom: false,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (_isKeyboardVisible) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        }
+                                      },
+                                      child: child ?? const SizedBox(),
+                                    ),
+                                  ),
+                                );
                         },
                       ),
                     );
@@ -75,4 +92,7 @@ class _AppState extends State<App> {
       ),
     );
   }
+
+  bool get _isKeyboardVisible =>
+      FocusManager.instance.primaryFocus?.hasFocus ?? false;
 }

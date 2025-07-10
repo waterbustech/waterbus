@@ -6,6 +6,7 @@ import 'package:waterbus/core/types/extensions/context_extensions.dart';
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
 
 class MediaCallActionButton extends StatelessWidget {
@@ -51,7 +52,7 @@ class MediaCallActionButton extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Tooltip(
+                  child: TooltipWrapper(
                     message: settingTooltipMessage,
                     child: GestureWrapper(
                       onTap: onTap,
@@ -67,7 +68,7 @@ class MediaCallActionButton extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Tooltip(
+                  child: TooltipWrapper(
                     message: tooltipMessage,
                     child: GestureWrapper(
                       onTap: onSelectMediaDevice,

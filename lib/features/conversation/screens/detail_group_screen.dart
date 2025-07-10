@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -41,7 +42,7 @@ class DetailGroupScreen extends StatelessWidget {
             expandedHeight: 155.sp,
             actions: [
               if (AppBloc.chatBloc.conversationCurrent?.isHost ?? false)
-                Tooltip(
+                TooltipWrapper(
                   message: Strings.editMeeting.i18n,
                   child: GestureWrapper(
                     onTap: () {
@@ -81,7 +82,7 @@ class DetailGroupScreen extends StatelessWidget {
               onTap: () {
                 AppRouter.pop();
               },
-              child: Tooltip(
+              child: TooltipWrapper(
                 message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,

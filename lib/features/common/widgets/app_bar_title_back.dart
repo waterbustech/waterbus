@@ -6,6 +6,7 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 
 AppBar appBarTitleBack(
   BuildContext context, {
@@ -56,7 +57,7 @@ AppBar appBarTitleBack(
                   AppRouter.pop();
                 }
               },
-              child: Tooltip(
+              child: TooltipWrapper(
                 message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,

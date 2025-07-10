@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_animated_indexed_stack/easy_animated_indexed_stack.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -105,7 +106,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 },
               ),
               actions: [
-                Tooltip(
+                TooltipWrapper(
                   message: Strings.createRoom.i18n,
                   child: IconButton(
                     onPressed: () {

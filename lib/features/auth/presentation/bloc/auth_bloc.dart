@@ -47,22 +47,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (event is AuthLoggedInAndJoinedRoom) {
         if (_user == null) {
-          await _handleLogin(fullname: event.fullname);
-
-          if (_user != null) emit(_authSuccess);
-        }
-
-        if (_waterbusSdk.isWsConnected) {
-          AppBloc.roomBloc.add(
-            RoomAttemptJoin(code: event.code, password: event.password),
-          );
-        } else {
-          _waterbusSdk.reconnectWs(
+          await _handleLogin(
+            fullname: event.fullname,
             callbackConnected: () {
               AppBloc.roomBloc.add(
                 RoomAttemptJoin(code: event.code, password: event.password),
               );
             },
+          );
+
+          if (_user != null) emit(_authSuccess);
+        } else {
+          AppBloc.roomBloc.add(
+            RoomAttemptJoin(code: event.code, password: event.password),
           );
         }
       }
@@ -94,7 +91,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   // MARK: Private methods
-  Future<void> _handleLogin({String? fullname}) async {
+  Future<void> _handleLogin({
+    String? fullname,
+    Function()? callbackConnected,
+  }) async {
     displayLoadingLayer();
 
     final String payload = await _auth.signInAnonymously();
@@ -106,6 +106,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final Result<User> result = await _waterbusSdk.createToken(
       AuthPayload(fullName: fullname ?? "Waterbus", externalId: payload),
+      callbackConnected: callbackConnected,
     );
 
     if (fullname == null) {
