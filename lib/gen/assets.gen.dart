@@ -49,16 +49,16 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    colorPicker,
-    icAddMembers,
-    icCheck,
-    icGithub,
-    icGoogle,
-    icIncognito,
-    icNewMeeting,
-    launcherIcon,
-    launcherIconAndroid12,
-  ];
+        colorPicker,
+        icAddMembers,
+        icCheck,
+        icGithub,
+        icGoogle,
+        icIncognito,
+        icNewMeeting,
+        launcherIcon,
+        launcherIconAndroid12,
+      ];
 }
 
 class $AssetsImagesGen {
@@ -177,35 +177,35 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    background1Jpg,
-    background2Jpg,
-    background3Jpg,
-    background4Jpg,
-    background5Jpg,
-    background6Jpg,
-    dash,
-    desktopBackground1Jpg,
-    desktopBackground2Jpg,
-    desktopBackground3Jpg,
-    desktopBackground4Jpg,
-    desktopBackground5Jpg,
-    desktopBackground6Jpg,
-    desktopBackground7Jpg,
-    desktopBackground8Jpg,
-    desktopBackground9Jpg,
-    imgAppLogo,
-    imgHelloMessage1,
-    imgHelloMessage2,
-    imgHelloMessage3,
-    imgHelloMessage4,
-    imgHelloMessage5,
-    imgHelloMessage6,
-    imgHelloMessage7,
-    imgLogo,
-    logoRounded,
-    logoRounded2,
-    worldMap,
-  ];
+        background1Jpg,
+        background2Jpg,
+        background3Jpg,
+        background4Jpg,
+        background5Jpg,
+        background6Jpg,
+        dash,
+        desktopBackground1Jpg,
+        desktopBackground2Jpg,
+        desktopBackground3Jpg,
+        desktopBackground4Jpg,
+        desktopBackground5Jpg,
+        desktopBackground6Jpg,
+        desktopBackground7Jpg,
+        desktopBackground8Jpg,
+        desktopBackground9Jpg,
+        imgAppLogo,
+        imgHelloMessage1,
+        imgHelloMessage2,
+        imgHelloMessage3,
+        imgHelloMessage4,
+        imgHelloMessage5,
+        imgHelloMessage6,
+        imgHelloMessage7,
+        imgLogo,
+        logoRounded,
+        logoRounded2,
+        worldMap,
+      ];
 }
 
 class $AssetsLottiesGen {
@@ -226,11 +226,11 @@ class $AssetsLottiesGen {
 
   /// List of all assets
   List<String> get values => [
-    beautyFiltersLottie,
-    broadcastLottie,
-    requestZoomOutLottie,
-    unlockLottie,
-  ];
+        beautyFiltersLottie,
+        broadcastLottie,
+        requestZoomOutLottie,
+        unlockLottie,
+      ];
 }
 
 class $AssetsSoundsGen {
