@@ -191,21 +191,35 @@ class LobbyRoute extends GoRouteData with _$LobbyRoute {
   }
 }
 
-@TypedGoRoute<CreateMeetingRoute>(
-  path: Routes.createMeetingRoute,
-  name: Routes.createMeetingRoute,
+@TypedGoRoute<NewRoomRoute>(
+  path: Routes.newRoomRoute,
+  name: Routes.newRoomRoute,
 )
-class CreateMeetingRoute extends GoRouteData with _$CreateMeetingRoute {
-  final Room? $extra;
+class NewRoomRoute extends GoRouteData with _$NewRoomRoute {
   final bool isChatScreen;
 
-  CreateMeetingRoute({this.$extra, this.isChatScreen = false});
+  NewRoomRoute({this.isChatScreen = false});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return CreateMeetingScreen(
-      room: $extra,
+    return MeetingFormScreen(isChatScreen: isChatScreen);
+  }
+}
+
+@TypedGoRoute<UpdateRoomRoute>(
+  path: Routes.updateRoomRoute,
+  name: Routes.updateRoomRoute,
+)
+class UpdateRoomRoute extends GoRouteData with _$UpdateRoomRoute {
+  final bool isChatScreen;
+
+  UpdateRoomRoute({this.isChatScreen = false});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return MeetingFormScreen(
       isChatScreen: isChatScreen,
+      isEdit: true,
     );
   }
 }

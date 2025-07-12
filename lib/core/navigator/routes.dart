@@ -18,7 +18,8 @@ class Routes {
 
   // Meeting
   static const String recentRoute = '/recent';
-  static const String createMeetingRoute = '/create-meeting';
+  static const String updateRoomRoute = '/room/update';
+  static const String newRoomRoute = '/room/new';
   static const String enterCodeRoute = '/enter-code';
   static const String backgroundGallery = '/background-gallery';
   static const String lobbyRoute = '/lobby';
@@ -27,11 +28,6 @@ class Routes {
   static const String chatRoute = '/chat';
   static const String conversationRoute = '/conversation';
   static const String detailGroupRoute = '/detail-group';
-
-  // Others
-  static const String dialogRoute = '/dialog';
-  static const String bottomSheetRoute = '/bottom-sheet-route';
-  static const String loadingRoute = '/loading';
 
   // Archived
   static const String archivedRoute = '/archived';

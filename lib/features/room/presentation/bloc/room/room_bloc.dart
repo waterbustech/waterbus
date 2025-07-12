@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -342,6 +343,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     if (result.isSuccess) {
       final Room room = result.value!;
       _localDataSource.insertOrUpdate(room);
+      AppBloc.chatBloc.add(ChatInserted(conversation: room));
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));
     } else {
       result.error.messageException.showToast(ToastificationType.error);

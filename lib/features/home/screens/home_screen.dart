@@ -243,11 +243,11 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
     onTap: () async {
       if (route == Strings.chat) {
         if (context.isMobile) {
-          CreateMeetingRoute(isChatScreen: route == Strings.chat).push(context);
+          NewRoomRoute(isChatScreen: route == Strings.chat).push(context);
         } else {
           showScreenAsDialog(
-            route: Routes.createMeetingRoute,
-            child: CreateMeetingScreen(
+            route: Routes.updateRoomRoute,
+            child: MeetingFormScreen(
               isChatScreen: route == Strings.chat,
             ),
           );
@@ -257,11 +257,11 @@ Widget buildCreateMeetingButton(BuildContext context, String route) {
           permissions: [Permission.camera, Permission.microphone],
           callBack: () async {
             if (context.isMobile) {
-              CreateMeetingRoute().push(context);
+              NewRoomRoute().push(context);
             } else {
               showScreenAsDialog(
-                route: Routes.createMeetingRoute,
-                child: CreateMeetingScreen(),
+                route: Routes.updateRoomRoute,
+                child: MeetingFormScreen(),
               );
             }
           },

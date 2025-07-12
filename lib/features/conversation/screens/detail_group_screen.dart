@@ -47,16 +47,13 @@ class DetailGroupScreen extends StatelessWidget {
                   child: GestureWrapper(
                     onTap: () {
                       if (context.isMobile) {
-                        CreateMeetingRoute(
-                          isChatScreen: true,
-                          $extra: AppBloc.chatBloc.conversationCurrent,
-                        );
+                        UpdateRoomRoute(isChatScreen: true).push(context);
                       } else {
                         showScreenAsDialog(
-                          route: Routes.createMeetingRoute,
-                          child: CreateMeetingScreen(
+                          route: Routes.updateRoomRoute,
+                          child: MeetingFormScreen(
                             isChatScreen: true,
-                            room: AppBloc.chatBloc.conversationCurrent,
+                            isEdit: true,
                           ),
                         );
                       }

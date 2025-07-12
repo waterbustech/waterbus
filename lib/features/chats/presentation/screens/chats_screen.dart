@@ -111,11 +111,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   child: IconButton(
                     onPressed: () {
                       if (context.isMobile) {
-                        CreateMeetingRoute(isChatScreen: true).push(context);
+                        NewRoomRoute(isChatScreen: true).push(context);
                       } else {
                         showScreenAsDialog(
-                          route: Routes.createMeetingRoute,
-                          child: CreateMeetingScreen(isChatScreen: true),
+                          route: Routes.updateRoomRoute,
+                          child: MeetingFormScreen(isChatScreen: true),
                         );
                       }
                     },

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/navigator/routes.dart';
-
 Future showBottomSheetWaterbus({
   required BuildContext context,
   required Widget Function(BuildContext) builder,
@@ -11,7 +9,6 @@ Future showBottomSheetWaterbus({
   bool enableDrag = true,
 }) {
   return showModalBottomSheet(
-    routeSettings: const RouteSettings(name: Routes.bottomSheetRoute),
     context: context,
     isScrollControlled: isScrollControlled,
     backgroundColor: backgroundColor ?? Colors.transparent,

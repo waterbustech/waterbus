@@ -17,7 +17,8 @@ List<RouteBase> get $appRoutes => [
       $privacyRoute,
       $notificationSettingsRoute,
       $lobbyRoute,
-      $createMeetingRoute,
+      $newRoomRoute,
+      $updateRoomRoute,
       $enterCodeRoute,
       $backgroundGalleryRoute,
       $conversationRoute,
@@ -350,26 +351,24 @@ mixin _$LobbyRoute on GoRouteData {
       context.replace(location, extra: _self.$extra);
 }
 
-RouteBase get $createMeetingRoute => GoRouteData.$route(
-      path: '/create-meeting',
-      name: '/create-meeting',
-      factory: _$CreateMeetingRoute._fromState,
+RouteBase get $newRoomRoute => GoRouteData.$route(
+      path: '/room/new',
+      name: '/room/new',
+      factory: _$NewRoomRoute._fromState,
     );
 
-mixin _$CreateMeetingRoute on GoRouteData {
-  static CreateMeetingRoute _fromState(GoRouterState state) =>
-      CreateMeetingRoute(
+mixin _$NewRoomRoute on GoRouteData {
+  static NewRoomRoute _fromState(GoRouterState state) => NewRoomRoute(
         isChatScreen: _$convertMapValue(
                 'is-chat-screen', state.uri.queryParameters, _$boolConverter) ??
             false,
-        $extra: state.extra as Room?,
       );
 
-  CreateMeetingRoute get _self => this as CreateMeetingRoute;
+  NewRoomRoute get _self => this as NewRoomRoute;
 
   @override
   String get location => GoRouteData.$location(
-        '/create-meeting',
+        '/room/new',
         queryParams: {
           if (_self.isChatScreen != false)
             'is-chat-screen': _self.isChatScreen.toString(),
@@ -377,19 +376,55 @@ mixin _$CreateMeetingRoute on GoRouteData {
       );
 
   @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+  void go(BuildContext context) => context.go(location);
 
   @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
+      context.pushReplacement(location);
 
   @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $updateRoomRoute => GoRouteData.$route(
+      path: '/room/update',
+      name: '/room/update',
+      factory: _$UpdateRoomRoute._fromState,
+    );
+
+mixin _$UpdateRoomRoute on GoRouteData {
+  static UpdateRoomRoute _fromState(GoRouterState state) => UpdateRoomRoute(
+        isChatScreen: _$convertMapValue(
+                'is-chat-screen', state.uri.queryParameters, _$boolConverter) ??
+            false,
+      );
+
+  UpdateRoomRoute get _self => this as UpdateRoomRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/room/update',
+        queryParams: {
+          if (_self.isChatScreen != false)
+            'is-chat-screen': _self.isChatScreen.toString(),
+        },
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $enterCodeRoute => GoRouteData.$route(

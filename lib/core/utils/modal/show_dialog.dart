@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
@@ -25,7 +24,6 @@ Future showDialogWaterbus({
   double? maxWidth,
   bool onlyShowAsDialog = false,
   AlignmentGeometry? alignment,
-  String routeName = Routes.dialogRoute,
 }) async {
   final BuildContext context = AppRouter.context!;
 
@@ -63,7 +61,6 @@ Future showDialogWaterbus({
   }
 
   return await showGeneralDialog(
-    routeSettings: RouteSettings(name: routeName),
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
     transitionDuration: Duration(milliseconds: duration),
@@ -115,7 +112,6 @@ Future showScreenAsDialog({
   required Widget child,
 }) {
   return showDialogWaterbus(
-    routeName: route,
     duration: 200,
     maxHeight: 100.h,
     maxWidth: 400.sp,
