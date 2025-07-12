@@ -5,7 +5,7 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
@@ -29,14 +29,14 @@ extension StringExtension on String {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 11.sp,
-          color: Theme.of(AppNavigator.context!).textTheme.bodyMedium!.color,
+          color: Theme.of(AppRouter.context!).textTheme.bodyMedium!.color,
         ),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 12.sp),
-      backgroundColor: Theme.of(AppNavigator.context!).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(AppRouter.context!).scaffoldBackgroundColor,
       autoCloseDuration: 2000.milliseconds,
       type: type,
-      alignment: AppNavigator.context!.isDesktop
+      alignment: AppRouter.context!.isDesktop
           ? Alignment.topRight
           : Alignment.topCenter,
       style: ToastificationStyle.flat,

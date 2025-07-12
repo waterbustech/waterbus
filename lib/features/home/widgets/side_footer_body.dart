@@ -4,7 +4,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:popover/popover.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/navigator/app_routes.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/home/widgets/footer_popover_body.dart';
@@ -22,7 +21,6 @@ class SideFooterBody extends StatelessWidget {
 
   Future<Object?> _handleShowInformationOptions(BuildContext context) {
     return showPopover(
-      routeSettings: const RouteSettings(name: Routes.dialogRoute),
       context: context,
       bodyBuilder: (context) => const FooterPopoverBody(),
       width: 200.sp,

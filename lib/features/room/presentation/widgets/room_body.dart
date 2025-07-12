@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/clipboard_utils.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
@@ -15,6 +16,7 @@ import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/home/widgets/stack_avatar.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
@@ -64,8 +66,8 @@ class _RoomBodyState extends State<RoomBody> {
     _videoInputs.addAll(AppBloc.roomBloc.videoInputs);
     _audioOutputs.addAll(AppBloc.roomBloc.audioOutputs);
 
-    _audioInputSelected = AppBloc.roomBloc.audioInputSeleted;
-    _videoInputSelected = AppBloc.roomBloc.videoInputSeleted;
+    _audioInputSelected = AppBloc.roomBloc.audioInputSelected;
+    _videoInputSelected = AppBloc.roomBloc.videoInputSelected;
   }
 
   void _showMicrophoneMenu(
@@ -174,23 +176,28 @@ class _RoomBodyState extends State<RoomBody> {
   }
 
   bool get _isRecordingOnPhone => context.isMobile && _state.isRecording;
+  bool get _currentUserMedia => _callState?.mParticipant == null;
+  bool get _isSpeakerPhoneEnabled =>
+      _callState!.mParticipant!.isSpeakerPhoneEnabled;
+  bool get _isVideoEnabled => _callState!.mParticipant!.isVideoEnabled;
+  bool get _isAudioEnabled => _callState!.mParticipant!.isAudioEnabled;
 
   @override
   Widget build(BuildContext context) {
     return CallbackShortcuts(
       bindings: {
         const SingleActivator(LogicalKeyboardKey.keyD, control: true): () {
-          if (_callState?.mParticipant == null) return;
+          if (_currentUserMedia) return;
 
           AppBloc.roomBloc.add(RoomAudioToggled());
         },
         const SingleActivator(LogicalKeyboardKey.keyE, control: true): () {
-          if (_callState?.mParticipant == null) return;
+          if (_currentUserMedia) return;
 
           AppBloc.roomBloc.add(RoomVideoToggled());
         },
         const SingleActivator(LogicalKeyboardKey.keyH, control: true): () {
-          if (_callState?.mParticipant == null) return;
+          if (_currentUserMedia) return;
 
           AppBloc.roomBloc.add(RoomHandRasingToggled());
         },
@@ -254,8 +261,7 @@ class _RoomBodyState extends State<RoomBody> {
                     DeviceUtils().lightImpact();
                   },
                   icon: Icon(
-                    _callState?.mParticipant == null ||
-                            _callState!.mParticipant!.isSpeakerPhoneEnabled
+                    _currentUserMedia || _isSpeakerPhoneEnabled
                         ? PhosphorIcons.speakerHigh()
                         : PhosphorIcons.speakerLow(),
                     size: 18.5.sp,
@@ -276,34 +282,38 @@ class _RoomBodyState extends State<RoomBody> {
                       size: 26.sp,
                       maxImages: 4,
                     ),
-                    GestureWrapper(
-                      onTap: () {
-                        ClipboardUtils.copy(_room.code.toString());
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: 12.sp),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.sp,
-                          vertical: 8.sp,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.sp),
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              PhosphorIcons.linkSimpleHorizontal(),
-                              size: 18.sp,
-                            ),
-                            Text(
-                              ' | ${_room.code.toString()}',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
+                    TooltipWrapper(
+                      message: Strings.copy.i18n,
+                      child: GestureWrapper(
+                        onTap: () {
+                          ClipboardUtils.copyMeetLink(_room.code.toString());
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(left: 12.sp),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.sp,
+                            vertical: 8.sp,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.sp),
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                PhosphorIcons.linkSimpleHorizontal(),
+                                size: 18.sp,
                               ),
-                            ),
-                          ],
+                              Text(
+                                ' | ${_room.code.toString()}',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -348,14 +358,13 @@ class _RoomBodyState extends State<RoomBody> {
                           MediaCallActionButton(
                             key: _audioInputButtonKey,
                             onTap: () {
-                              if (_callState?.mParticipant == null) {
+                              if (_currentUserMedia) {
                                 return;
                               }
 
                               AppBloc.roomBloc.add(RoomAudioToggled());
                             },
-                            icon: _callState?.mParticipant == null ||
-                                    _callState!.mParticipant!.isAudioEnabled
+                            icon: _currentUserMedia || _isAudioEnabled
                                 ? PhosphorIcons.microphone(
                                     PhosphorIconsStyle.fill,
                                   )
@@ -364,9 +373,7 @@ class _RoomBodyState extends State<RoomBody> {
                                   ),
                             title: 'Microphone',
                             onSelectMediaDevice: () {
-                              if (_overlay != null) {
-                                return _removeOverlay();
-                              }
+                              if (_overlay != null) return _removeOverlay();
 
                               _showMicrophoneMenu(
                                 context,
@@ -390,23 +397,25 @@ class _RoomBodyState extends State<RoomBody> {
                                 removeOverlay: _removeOverlay,
                               );
                             },
+                            settingTooltipMessage: Strings.audioSettings.i18n,
+                            tooltipMessage:
+                                "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
                           ),
                           MediaCallActionButton(
                             key: _videoInputButtonKey,
                             onTap: () {
-                              if (_callState?.mParticipant == null) return;
+                              if (_currentUserMedia) return;
 
                               AppBloc.roomBloc.add(RoomVideoToggled());
                             },
-                            icon: _callState?.mParticipant == null ||
-                                    _callState!.mParticipant!.isVideoEnabled
+                            icon: _currentUserMedia || _isVideoEnabled
                                 ? PhosphorIcons.videoCamera(
                                     PhosphorIconsStyle.fill,
                                   )
                                 : PhosphorIcons.videoCameraSlash(
                                     PhosphorIconsStyle.fill,
                                   ),
-                            title: 'Camera',
+                            title: Strings.camera.i18n,
                             onSelectMediaDevice: () {
                               if (_overlay != null) {
                                 return _removeOverlay();
@@ -434,8 +443,12 @@ class _RoomBodyState extends State<RoomBody> {
                                 deviceInfoSelected: _videoInputSelected,
                               );
                             },
+                            settingTooltipMessage: Strings.videoSettings.i18n,
+                            tooltipMessage:
+                                "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
                           ),
                           CallActionButton(
+                            tooltipMessage: Strings.shareScreen.i18n,
                             icon: PhosphorIcons.monitorArrowUp(
                               _callState!.mParticipant!.isSharingScreen
                                   ? PhosphorIconsStyle.fill
@@ -449,7 +462,7 @@ class _RoomBodyState extends State<RoomBody> {
                                 ? Theme.of(context).colorScheme.primaryContainer
                                 : null,
                             onTap: () {
-                              if (_callState?.mParticipant == null) return;
+                              if (_currentUserMedia) return;
 
                               if (_callState!.mParticipant!.isSharingScreen) {
                                 AppBloc.roomBloc.add(RoomSharingScreenStoped());
@@ -461,6 +474,8 @@ class _RoomBodyState extends State<RoomBody> {
                           ),
                           if (context.isDesktop)
                             CallActionButton(
+                              tooltipMessage:
+                                  "${Strings.raiseHand.i18n} (ctrl + h)",
                               icon: _callState!.mParticipant!.isHandRaising
                                   ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
                                   : PhosphorIcons.hand(),
@@ -472,12 +487,14 @@ class _RoomBodyState extends State<RoomBody> {
                                       ? Colors.yellow.shade900
                                       : null,
                               onTap: () {
-                                if (_callState?.mParticipant == null) return;
+                                if (_currentUserMedia) return;
+
                                 AppBloc.roomBloc.add(RoomHandRasingToggled());
                               },
                             ),
                           if (context.isDesktop)
                             CallActionButton(
+                              tooltipMessage: Strings.chatWithEveryone.i18n,
                               icon: PhosphorIcons.chatTeardropText(
                                 _isChatOpened
                                     ? PhosphorIconsStyle.fill
@@ -498,6 +515,7 @@ class _RoomBodyState extends State<RoomBody> {
                               },
                             ),
                           CallActionButton(
+                            tooltipMessage: Strings.moreOptions.i18n,
                             icon: PhosphorIcons.dotsThreeOutline(
                               PhosphorIconsStyle.fill,
                             ),
@@ -522,6 +540,7 @@ class _RoomBodyState extends State<RoomBody> {
                           ),
                           if (context.isMobile)
                             CallActionButton(
+                              tooltipMessage: Strings.leaveCall.i18n,
                               icon: PhosphorIcons.signOut(),
                               backgroundColor: Colors.red,
                               onTap: () {
@@ -539,6 +558,7 @@ class _RoomBodyState extends State<RoomBody> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CallActionButton(
+                              tooltipMessage: Strings.leaveCall.i18n,
                               icon: PhosphorIcons.signOut(),
                               backgroundColor: Colors.red,
                               onTap: () {

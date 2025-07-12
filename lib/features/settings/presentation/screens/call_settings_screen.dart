@@ -4,9 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -23,10 +21,12 @@ import 'package:waterbus/features/settings/presentation/widgets/setting_switch_c
 import 'package:waterbus/features/settings/presentation/widgets/video_quality_bottom_sheet.dart';
 
 class CallSettingsScreen extends StatefulWidget {
+  final bool isInRoom;
   final bool isSettingDesktop;
   const CallSettingsScreen({
     super.key,
     this.isSettingDesktop = false,
+    required this.isInRoom,
   });
 
   @override
@@ -56,7 +56,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
             ? const SizedBox()
             : GestureWrapper(
                 onTap: () {
-                  AppNavigator.pop();
+                  AppRouter.pop();
                 },
                 child: Center(
                   child: Text(
@@ -76,10 +76,10 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                 RoomCallSettingsSave(setting: _config),
               );
 
-              if (AppNavigator.canPop) {
+              if (AppRouter.canPop) {
                 DeviceUtils().lightImpact();
 
-                AppNavigator.pop();
+                AppRouter.pop();
               } else {
                 showDialogDone(text: Strings.saved.i18n);
               }
@@ -218,9 +218,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                   SettingSwitchCard(
                     label: Strings.endToEndEncryption.i18n,
                     enabled: _config.e2eeEnabled,
-                    readonly: AppNavigatorObserver.routeNames.contains(
-                      Routes.roomRoute,
-                    ),
+                    readonly: widget.isInRoom,
                     icon: PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
                     onChanged: (isEnabled) {
                       setState(() {

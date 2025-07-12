@@ -10,13 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -54,8 +53,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   final List<MediaDeviceInfo> audioInputs = [];
   final List<MediaDeviceInfo> videoInputs = [];
   final List<MediaDeviceInfo> audioOutputs = [];
-  MediaDeviceInfo? audioInputSeleted;
-  MediaDeviceInfo? videoInputSeleted;
+  MediaDeviceInfo? audioInputSelected;
+  MediaDeviceInfo? videoInputSelected;
 
   RoomBloc(
     this._pipChannel,
@@ -89,8 +88,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomJoinedEvent) {
           _currentRoom = event.room;
 
-          displayLoadingLayer();
-
           final bool isJoinSucceed = await _handleJoinRoom(
             RoomJoinedWithPassword(
               isMember: event.isMember,
@@ -98,26 +95,16 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             ),
           );
 
-          AppNavigator.pop();
-
           if (isJoinSucceed) {
-            if (AppNavigatorObserver.currentRouteName == Routes.lobbyRoute) {
-              AppNavigator.popUntil(Routes.rootRoute);
-            }
-
             emit(_joinedRoom);
-
-            AppNavigator().push(
-              Routes.roomRoute,
-              arguments: {'room': _currentRoom},
-            );
+            RoomRoute(code: _currentRoom?.code ?? '').go(AppRouter.context!);
 
             _roomSound.playSoundJoinRoom();
           }
         }
 
         if (event is RoomInfoGot) {
-          final Room? room = await _handleGetInfoRoom(event);
+          final Room? room = await _handleGetInfoRoom(event.roomCode);
 
           if (room != null) {
             await _displayDialogJoinRoom(room);
@@ -186,7 +173,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           await _waterbusSdk.changeAudioInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
-          audioInputSeleted = event.mediaDeviceInfo;
+
+          audioInputSelected = event.mediaDeviceInfo;
+
           if (state is RoomJoined) {
             emit(_joinedRoom);
           } else if (state is RoomPreJoin) {
@@ -198,7 +187,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           await _waterbusSdk.changeVideoInputDevice(
             deviceId: event.mediaDeviceInfo.deviceId,
           );
-          audioInputSeleted = event.mediaDeviceInfo;
+
+          videoInputSelected = event.mediaDeviceInfo;
+
           if (state is RoomJoined) {
             emit(_joinedRoom);
           } else if (state is RoomPreJoin) {
@@ -290,12 +281,32 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             emit(_joinedRoom);
           }
         }
+
+        if (event is RoomPrepareLobby) {
+          displayLoadingLayer();
+          await _waterbusSdk.prepareMedia();
+          final mediaDeviceList = await _getAllMediaDevices();
+          AppRouter.pop();
+
+          if (state is! RoomPreJoin) {
+            emit(_preJoinRoom);
+          }
+
+          event.handleUpdate.call(mediaDeviceList);
+        }
+
+        if (event is RoomAttemptJoin) {
+          final Room? room = await _handleGetInfoRoom(event.code);
+
+          if (room != null) {
+            add(RoomJoinedEvent(room: room, password: event.password));
+          }
+        }
       },
     );
   }
 
   // MARK: state
-
   RoomInitial get _roomInitial => RoomInitial(
         mediaConfig: _mediaConfig,
       );
@@ -327,11 +338,12 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<Room> result = await _waterbusSdk.createRoom(params: params);
 
-    AppNavigator.popUntil(Routes.rootRoute);
+    AppRouter.popUntilToRoot();
 
     if (result.isSuccess) {
       final Room room = result.value!;
       _localDataSource.insertOrUpdate(room);
+      AppBloc.chatBloc.add(ChatInserted(conversation: room));
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));
     } else {
       result.error.messageException.showToast(ToastificationType.error);
@@ -372,12 +384,10 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
   }
 
-  Future<Room?> _handleGetInfoRoom(RoomInfoGot event) async {
-    final Result<Room> result = await _waterbusSdk.getRoomInfo(
-      code: event.roomCode,
-    );
+  Future<Room?> _handleGetInfoRoom(String roomCode) async {
+    final Result<Room> result = await _waterbusSdk.getRoomInfo(code: roomCode);
 
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (result.isSuccess) {
       return result.value;
@@ -397,13 +407,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     final Result<bool> result = await _waterbusSdk.updateRoom(params: params);
 
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (result.isSuccess) {
       final Room room = _currentRoom!.copyWith(title: event.roomName);
       _localDataSource.insertOrUpdate(room);
 
-      AppNavigator.pop();
+      AppRouter.pop();
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));
 
       _currentRoom = room;
@@ -432,9 +442,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       await _waterbusSdk.leaveRoom();
     }
 
-    if (AppNavigator.currentRoute() == Routes.roomRoute) {
-      AppNavigator.pop();
-    }
+    AppRouter.popUntilToRoot();
   }
 
   Future<void> _handleNewParticipant(RoomSomeoneNewJoined event) async {
@@ -486,25 +494,14 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   }
 
   Future<void> _displayDialogJoinRoom(Room room) async {
-    await _waterbusSdk.prepareMedia();
-
-    final Map<String, List<MediaDeviceInfo>> audioInputResponse =
-        await _getAllMediaDevices();
-
     final int indexOfMember = room.members.indexWhere(
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    final bool isMember = indexOfMember != -1;
-
-    AppNavigator().push(
-      Routes.lobbyRoute,
-      arguments: {
-        "room": room,
-        "audioInputResponse": audioInputResponse,
-        "isMember": isMember,
-      },
-    );
+    LobbyRoute(
+      code: room.code!,
+      $extra: LobbyScreenExtras(isMember: indexOfMember != -1, room: room),
+    ).push(AppRouter.context!);
   }
 
   Future<void> startPiP() async {
@@ -634,8 +631,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       }
     }
 
-    audioInputSeleted = audioInputs.firstOrNull;
-    videoInputSeleted = videoInputs.firstOrNull;
+    audioInputSelected = audioInputs.firstOrNull;
+    videoInputSelected = videoInputs.firstOrNull;
 
     return {
       'audioinput': audioInputs,
@@ -660,4 +657,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   MediaConfig get mediaConfig => _mediaConfig;
 
   String? get currentBackground => _currentBackground;
+
+  Room? get currentRoom => _currentRoom;
 }

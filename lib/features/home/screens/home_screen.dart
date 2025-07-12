@@ -1,36 +1,38 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/permission_handler.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/home/screens/home_desktop_screen.dart';
 import 'package:waterbus/features/home/widgets/enter_code_box.dart';
-import 'package:waterbus/features/home/widgets/home_app.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
-import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,62 +43,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<SlidingDrawerState> _sideMenuKey =
+  final GlobalKey<SlidingDrawerState> sideMenuKey =
       GlobalKey<SlidingDrawerState>();
-
-  String _currentTab = Strings.recent;
 
   void _handleToggleDrawer() {
     if (context.isDesktop) return;
 
-    _sideMenuKey.toggle();
-  }
-
-  Widget _getCurrentTab() {
-    switch (_currentTab) {
-      case Strings.recent:
-        return const RecentMeetings();
-      case Strings.chat:
-        return const ChatsScreen();
-      case Strings.notifications:
-        return const NotificationSettingsScreen();
-      case Strings.appearance:
-        return const ThemeScreen(isSettingDesktop: true);
-      case Strings.archivedChats:
-        return const ArchivedScreen();
-      case Strings.language:
-        return const LanguageScreen(isSettingDesktop: true);
-      case Strings.callSettings:
-        return const CallSettingsScreen(isSettingDesktop: true);
-      case Strings.licenses:
-        return LicensePage(
-          applicationIcon: Image.asset(
-            Assets.icons.launcherIcon.path,
-            height: 35.sp,
-          ),
-          applicationVersion: kAppVersion,
-        );
-      default:
-        return Container();
-    }
+    sideMenuKey.toggle();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SlidingDrawer(
-      key: _sideMenuKey,
-      ignorePointer: context.isDesktop,
-      drawerBuilder: (_) =>
-          context.isDesktop ? const SizedBox() : _buildDrawable(),
-      contentBuilder: (_) => Scaffold(
-        appBar: context.isDesktop
-            ? null
-            : appBarTitleBack(
+    return context.isDesktop
+        ? HomeDesktopScreen(header: _buildHeader)
+        : SlidingDrawer(
+            key: sideMenuKey,
+            drawerBuilder: (_) => _buildDrawable(),
+            contentBuilder: (_) => Scaffold(
+              appBar: appBarTitleBack(
                 context,
                 centerTitle: false,
                 isVisibleBackButton: false,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                titleWidget: _sideMenuKey.currentState?.isOpen ?? false
+                titleWidget: sideMenuKey.currentState?.isOpen ?? false
                     ? null
                     : BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
@@ -147,65 +116,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const SizedBox();
                         },
                       ),
-                actions: [_buildCreateMeetingButton],
+                actions: [
+                  buildCreateMeetingButton(context, Strings.recent),
+                ],
               ),
-        body: Row(
-          children: [
-            if (context.isDesktop)
-              Container(
-                padding: EdgeInsets.all(10.sp),
-                color: Theme.of(context).colorScheme.outlineVariant,
-                child: Material(
-                  shape: SuperellipseShape(
-                    borderRadius: BorderRadius.circular(25.sp),
-                  ),
-                  clipBehavior: Clip.hardEdge,
-                  child: SideMenuWidget(
-                    onTabChanged: (tabLabel) {
-                      AppNavigator.popUntilHomeContext();
-
-                      setState(() {
-                        _currentTab = tabLabel;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            Expanded(
-              child: ColoredBox(
-                color: context.isDesktop
-                    ? Theme.of(context).colorScheme.outlineVariant
-                    : Theme.of(context).scaffoldBackgroundColor,
+              body: ColoredBox(
+                color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   children: [
-                    _buildHeader(context),
-                    Expanded(
-                      child: context.isDesktop
-                          ? Container(
-                              margin:
-                                  EdgeInsets.only(bottom: 10.sp, right: 10.sp),
-                              child: Material(
-                                shape: SuperellipseShape(
-                                  borderRadius: BorderRadius.circular(25.sp),
-                                ),
-                                clipBehavior: Clip.hardEdge,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .surfaceContainerLow,
-                                child:
-                                    HomeAppScreen(homeScreen: _getCurrentTab()),
-                              ),
-                            )
-                          : _getCurrentTab(),
-                    ),
+                    _buildHeader(context, Strings.recent),
+                    Expanded(child: RecentMeetings()),
                   ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Widget _buildDrawable() {
@@ -213,24 +138,44 @@ class _HomeScreenState extends State<HomeScreen> {
       onTapItem: (item) {
         _handleToggleDrawer();
 
-        Future.delayed(const Duration(milliseconds: 300), () {
+        Future.delayed(300.milliseconds, () {
           switch (item.title) {
             case Strings.logout:
               displayLoadingLayer();
               AppBloc.authBloc.add(AuthLoggedOut());
               break;
             case Strings.profile:
-              AppNavigator().push(Routes.profileRoute);
+              if (PlatformUtils.isMobile) {
+                ProfileRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.profileRoute,
+                  child: ProfileScreen(),
+                );
+              }
               break;
             case Strings.archivedChats:
-              AppNavigator().push(Routes.archivedRoute);
+              if (PlatformUtils.isMobile) {
+                ArchivedRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.archivedRoute,
+                  child: ArchivedScreen(),
+                );
+              }
               break;
             case Strings.settings:
-              AppNavigator().push(Routes.settingsCallRoute);
+              if (PlatformUtils.isMobile) {
+                CallSettingsRoute().push(context);
+              } else {
+                showScreenAsDialog(
+                  route: Routes.callSettingsRoute,
+                  child: CallSettingsScreen(isInRoom: false),
+                );
+              }
               break;
             case Strings.licenses:
               if (!mounted) return;
-
               showLicensePage(
                 context: context,
                 applicationIcon: Image.asset(
@@ -247,77 +192,96 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+}
 
-  Widget _buildHeader(BuildContext context) {
-    final margin = EdgeInsets.only(
-      top: 10.sp,
-      bottom: 12.sp,
-      left: context.isDesktop ? 0 : 10.sp,
-      right: context.isDesktop ? 0 : 10.sp,
-    );
+Widget _buildHeader(BuildContext context, String route) {
+  final margin = EdgeInsets.only(
+    top: 10.sp,
+    bottom: 12.sp,
+    left: context.isDesktop ? 0 : 10.sp,
+    right: 10.sp,
+  );
 
-    switch (_currentTab) {
-      case Strings.recent:
-        return EnterCodeBox(
-          margin: margin,
-          hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
-          suffixWidget: context.isDesktop ? _buildCreateMeetingButton : null,
-          onTap: () {
-            AppNavigator().push(Routes.enterCodeRoute);
-          },
-        );
-      case Strings.archivedChats:
-        return EnterCodeBox(
-          margin: margin,
-          hintTextContent: Strings.search.i18n,
-          onTap: () {},
-        );
-      case Strings.chat:
-        return EnterCodeBox(
-          margin: margin,
-          hintTextContent: Strings.search.i18n,
-          suffixWidget: _buildCreateMeetingButton,
-          onTap: () {},
-        );
-      default:
-        return SizedBox(height: 10.sp);
-    }
+  switch (route) {
+    case Strings.recent:
+      return EnterCodeBox(
+        margin: margin,
+        hintTextContent: Strings.enterCodeToJoinMeeting.i18n,
+        suffixWidget:
+            context.isDesktop ? buildCreateMeetingButton(context, route) : null,
+        onTap: () {
+          if (context.isMobile) {
+            EnterCodeRoute().push(context);
+          } else {
+            showScreenAsDialog(
+              route: Routes.enterCodeRoute,
+              child: EnterMeetingCode(),
+            );
+          }
+        },
+      );
+    case Strings.archivedChats:
+      return EnterCodeBox(
+        margin: margin,
+        hintTextContent: Strings.search.i18n,
+        onTap: () {},
+      );
+    case Strings.chat:
+      return EnterCodeBox(
+        margin: margin,
+        hintTextContent: Strings.search.i18n,
+        suffixWidget: buildCreateMeetingButton(context, route),
+        onTap: () {},
+      );
+    default:
+      return SizedBox(height: 10.sp);
   }
+}
 
-  Widget get _buildCreateMeetingButton {
-    return GestureWrapper(
-      onTap: () async {
-        if (_currentTab == Strings.chat) {
-          AppNavigator().push(
-            Routes.createMeetingRoute,
-            arguments: {
-              'isChatScreen': _currentTab == Strings.chat,
-            },
-          );
+Widget buildCreateMeetingButton(BuildContext context, String route) {
+  return GestureWrapper(
+    onTap: () async {
+      if (route == Strings.chat) {
+        if (context.isMobile) {
+          NewRoomRoute(isChatScreen: route == Strings.chat).push(context);
         } else {
-          await WaterbusPermissionHandler().checkGrantedForExecute(
-            permissions: [Permission.camera, Permission.microphone],
-            callBack: () async {
-              AppNavigator().push(Routes.createMeetingRoute);
-            },
+          showScreenAsDialog(
+            route: Routes.updateRoomRoute,
+            child: MeetingFormScreen(
+              isChatScreen: route == Strings.chat,
+            ),
           );
         }
-      },
-      child: Container(
-        width: 36.sp,
-        height: 36.sp,
-        margin: EdgeInsets.only(right: 16.sp),
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-          shape: BoxShape.circle,
-        ),
-        alignment: Alignment.centerRight,
-        child: Image.asset(
-          Assets.icons.icNewMeeting.path,
-          height: 22.sp,
-          fit: BoxFit.fitHeight,
-        ),
+      } else {
+        await WaterbusPermissionHandler().checkGrantedForExecute(
+          permissions: [Permission.camera, Permission.microphone],
+          callBack: () async {
+            if (context.isMobile) {
+              NewRoomRoute().push(context);
+            } else {
+              showScreenAsDialog(
+                route: Routes.updateRoomRoute,
+                child: MeetingFormScreen(),
+              );
+            }
+          },
+        );
+      }
+    },
+    child: Container(
+      width: 36.sp,
+      height: 36.sp,
+      margin: EdgeInsets.only(right: 16.sp),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        shape: BoxShape.circle,
       ),
-    );
-  }
+      alignment: Alignment.centerRight,
+      child: Image.asset(
+        Assets.icons.icNewMeeting.path,
+        height: 22.sp,
+        fit: BoxFit.fitHeight,
+      ),
+    ),
+  );
 }

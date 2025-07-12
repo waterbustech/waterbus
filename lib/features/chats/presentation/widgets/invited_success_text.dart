@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class InvitedSuccessText extends StatelessWidget {
@@ -23,7 +23,7 @@ class InvitedSuccessText extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       text: TextSpan(
         style: TextStyle(
-          color: Theme.of(AppNavigator.context!).textTheme.bodyMedium!.color,
+          color: Theme.of(AppRouter.context!).textTheme.bodyMedium!.color,
           fontSize: 10.sp,
         ),
         children: [

@@ -56,9 +56,7 @@ class MeetingCard extends StatelessWidget {
                 TextSpan(
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      ClipboardUtils.copy(
-                        room.code.toString(),
-                      );
+                      ClipboardUtils.copyMeetLink(room.code.toString());
                     },
                   text: room.code.toString(),
                   style: TextStyle(

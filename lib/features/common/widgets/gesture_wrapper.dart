@@ -74,6 +74,16 @@ class _GestureWrapperState extends State<GestureWrapper> {
           : null,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
+        onEnter: (_) {
+          setState(() {
+            _enable = true;
+          });
+        },
+        onExit: (_) {
+          setState(() {
+            _enable = false;
+          });
+        },
         child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
       ),
     );

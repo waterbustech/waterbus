@@ -70,6 +70,18 @@ class RoomSomeoneLeft extends RoomEvent {
   const RoomSomeoneLeft({required this.participantId});
 }
 
+class RoomPrepareLobby extends RoomEvent {
+  final Function(Map<String, List<MediaDeviceInfo>>) handleUpdate;
+  const RoomPrepareLobby(this.handleUpdate);
+}
+
+class RoomAttemptJoin extends RoomEvent {
+  final String code;
+  final String password;
+
+  const RoomAttemptJoin({required this.code, required this.password});
+}
+
 class RoomSharingScreenStarted extends RoomEvent {}
 
 class RoomSharingScreenStoped extends RoomEvent {}

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -19,8 +19,13 @@ import 'package:waterbus/features/conversation/widgets/list_conversation_shimmer
 import 'package:waterbus/features/conversation/widgets/message_card.dart';
 
 class ArchivedConversationScreen extends StatefulWidget {
-  final Room room;
-  const ArchivedConversationScreen({super.key, required this.room});
+  final Room? room;
+  final Function()? onBackScreen;
+  const ArchivedConversationScreen({
+    super.key,
+    this.room,
+    this.onBackScreen,
+  });
 
   @override
   State<ArchivedConversationScreen> createState() =>
@@ -31,12 +36,12 @@ class _ArchivedConversationScreenState
     extends State<ArchivedConversationScreen> {
   final ScrollController _scrollController = ScrollController();
 
-  Room get room => widget.room;
-
   @override
   void initState() {
     super.initState();
-    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
+    if (widget.room != null) {
+      AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room!.id));
+    }
 
     _scrollController.addListener(
       () {
@@ -52,7 +57,10 @@ class _ArchivedConversationScreenState
   @override
   void didUpdateWidget(ArchivedConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
+
+    if (widget.room != null) {
+      AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room!.id));
+    }
   }
 
   @override
@@ -63,6 +71,8 @@ class _ArchivedConversationScreenState
 
   @override
   Widget build(BuildContext context) {
+    if (widget.room == null) return SizedBox();
+
     return Scaffold(
       body: SafeArea(
         bottom: context.isDesktop,
@@ -74,10 +84,14 @@ class _ArchivedConversationScreenState
               child: Row(
                 children: [
                   Visibility(
-                    visible: AppNavigator.canPop,
+                    visible: context.canPop() || context.isDesktop,
                     child: GestureWrapper(
                       onTap: () {
-                        AppNavigator.pop();
+                        if (context.isDesktop) {
+                          widget.onBackScreen?.call();
+                        } else {
+                          context.pop();
+                        }
                       },
                       child: Container(
                         color: Colors.transparent,
@@ -97,7 +111,7 @@ class _ArchivedConversationScreenState
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AvatarChat(room: room, size: 30.sp),
+                          AvatarChat(room: widget.room!, size: 30.sp),
                           SizedBox(width: 10.sp),
                           Expanded(
                             child: Column(
@@ -105,7 +119,7 @@ class _ArchivedConversationScreenState
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  room.title,
+                                  widget.room!.title,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
@@ -116,7 +130,7 @@ class _ArchivedConversationScreenState
                                       ),
                                 ),
                                 Text(
-                                  "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                                  "${widget.room!.members.length} ${(widget.room!.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
                                   style: TextStyle(
                                     color: fCL,
                                     height: 0.75.sp,

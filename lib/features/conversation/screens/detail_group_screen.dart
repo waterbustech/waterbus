@@ -8,10 +8,11 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
@@ -19,11 +20,13 @@ import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/conversation/widgets/detail_group_button.dart';
 import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.dart';
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
+import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
 
 class DetailGroupScreen extends StatelessWidget {
   const DetailGroupScreen({super.key});
@@ -39,17 +42,21 @@ class DetailGroupScreen extends StatelessWidget {
             expandedHeight: 155.sp,
             actions: [
               if (AppBloc.chatBloc.conversationCurrent?.isHost ?? false)
-                Tooltip(
+                TooltipWrapper(
                   message: Strings.editMeeting.i18n,
                   child: GestureWrapper(
                     onTap: () {
-                      AppNavigator().push(
-                        Routes.createMeetingRoute,
-                        arguments: {
-                          "room": AppBloc.chatBloc.conversationCurrent,
-                          "isChatScreen": true,
-                        },
-                      );
+                      if (context.isMobile) {
+                        UpdateRoomRoute(isChatScreen: true).push(context);
+                      } else {
+                        showScreenAsDialog(
+                          route: Routes.updateRoomRoute,
+                          child: MeetingFormScreen(
+                            isChatScreen: true,
+                            isEdit: true,
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -70,9 +77,9 @@ class DetailGroupScreen extends StatelessWidget {
             ],
             leading: GestureWrapper(
               onTap: () {
-                AppNavigator.pop();
+                AppRouter.pop();
               },
-              child: Tooltip(
+              child: TooltipWrapper(
                 message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,
@@ -250,7 +257,7 @@ class DetailGroupScreen extends StatelessWidget {
                                   SlidableAction(
                                     onPressed: (context) async {
                                       await showBottomSheetWaterbus(
-                                        context: AppNavigator.context!,
+                                        context: AppRouter.context!,
                                         enableDrag: false,
                                         builder: (context) {
                                           return BottomSheetDelete(

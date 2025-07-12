@@ -20,8 +20,9 @@ import 'package:waterbus/features/conversation/widgets/message_suggest_widget.da
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ConversationScreen extends StatefulWidget {
-  final Room room;
-  const ConversationScreen({super.key, required this.room});
+  final Room? room;
+  final Function()? onBackScreen;
+  const ConversationScreen({super.key, this.room, this.onBackScreen});
 
   @override
   State<ConversationScreen> createState() => _ConversationScreenState();
@@ -34,9 +35,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   void initState() {
     super.initState();
-    AppBloc.messageBloc.add(
-      MessageFetchedByMeeting(roomId: widget.room.id),
-    );
+    if (widget.room != null) {
+      AppBloc.messageBloc.add(
+        MessageFetchedByMeeting(roomId: widget.room!.id),
+      );
+    }
+
     _image = _imageHelloMessage;
     _scrollController.addListener(
       () {
@@ -52,7 +56,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   void didUpdateWidget(ConversationScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room.id));
+    if (widget.room != null) {
+      AppBloc.messageBloc.add(MessageFetchedByMeeting(roomId: widget.room!.id));
+    }
+
     _image = _imageHelloMessage;
   }
 
@@ -64,13 +71,15 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.room == null) return SizedBox();
+
     return Scaffold(
       body: SafeArea(
         bottom: context.isDesktop,
         child: Column(
           children: [
             SizedBox(height: 5.sp),
-            const ConversationHeader(),
+            ConversationHeader(onBackScreen: widget.onBackScreen),
             SizedBox(height: 5.sp),
             divider,
             Expanded(
@@ -89,7 +98,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               AppBloc.messageBloc.add(
                                 MessageSent(
                                   data: "${Strings.hi.i18n}!",
-                                  roomId: widget.room.id,
+                                  roomId: widget.room!.id,
                                 ),
                               );
                             },
@@ -105,7 +114,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 },
               ),
             ),
-            MessageInputContainer(roomId: widget.room.id),
+            MessageInputContainer(roomId: widget.room!.id),
             SizedBox(
               height: context.isMobile &&
                       MediaQuery.of(context).viewInsets.bottom == 0

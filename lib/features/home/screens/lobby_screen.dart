@@ -14,15 +14,15 @@ import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.dart';
 
 class LobbyScreen extends StatefulWidget {
-  final Room room;
+  final Room? room;
+  final String code;
   final bool isMember;
-  final Map<String, List<MediaDeviceInfo>>? audioInputResponse;
 
   const LobbyScreen({
     super.key,
-    required this.room,
-    required this.isMember,
-    required this.audioInputResponse,
+    this.room,
+    this.isMember = false,
+    required this.code,
   });
 
   @override
@@ -41,13 +41,23 @@ class _LobbyScreenState extends State<LobbyScreen> {
   void initState() {
     super.initState();
 
-    _audioInputs.addAll(widget.audioInputResponse?['audioinput'] ?? []);
-    _audioOutputs.addAll(widget.audioInputResponse?['audiooutput'] ?? []);
-    _videoInputs.addAll(widget.audioInputResponse?['videoinput'] ?? []);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      AppBloc.roomBloc.add(
+        RoomPrepareLobby((val) {
+          final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
 
-    _audioInput = _audioInputs.firstOrNull;
-    _audioOutput = _audioOutputs.firstOrNull;
-    _videoInput = _videoInputs.firstOrNull;
+          _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
+          _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
+          _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
+
+          _audioInput = _audioInputs.firstOrNull;
+          _audioOutput = _audioOutputs.firstOrNull;
+          _videoInput = _videoInputs.firstOrNull;
+
+          setState(() {});
+        }),
+      );
+    });
   }
 
   @override
@@ -79,6 +89,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       Expanded(
                         child: JoinRoomActions(
                           room: widget.room,
+                          code: widget.code,
                           isMember: widget.isMember,
                         ),
                       ),

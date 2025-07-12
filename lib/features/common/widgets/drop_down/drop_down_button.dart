@@ -4,7 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 Widget showDropdownButton<T>({
@@ -17,7 +17,7 @@ Widget showDropdownButton<T>({
   double? width,
 }) {
   return Theme(
-    data: Theme.of(AppNavigator.context!).copyWith(
+    data: Theme.of(AppRouter.context!).copyWith(
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
@@ -52,7 +52,7 @@ Widget showDropdownButton<T>({
           icon: PhosphorIcon(
             PhosphorIcons.caretUpDown(),
             size: 12.sp,
-            color: Theme.of(AppNavigator.context!).textTheme.bodyMedium!.color,
+            color: Theme.of(AppRouter.context!).textTheme.bodyMedium!.color,
           ),
           iconSize: 12.sp,
         ),
@@ -60,16 +60,16 @@ Widget showDropdownButton<T>({
           width: 250.sp,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.sp),
-            color: Theme.of(AppNavigator.context!).colorScheme.surfaceContainer,
+            color: Theme.of(AppRouter.context!).colorScheme.surfaceContainer,
             boxShadow: [
               BoxShadow(
                 offset: Offset(1, 1),
                 blurRadius: 4,
                 spreadRadius: 0.4,
-                color: Theme.of(AppNavigator.context!).brightness ==
-                        Brightness.dark
-                    ? Colors.black12.withValues(alpha: 0.2)
-                    : mCU.withValues(alpha: 0.8),
+                color:
+                    Theme.of(AppRouter.context!).brightness == Brightness.dark
+                        ? Colors.black12.withValues(alpha: 0.2)
+                        : mCU.withValues(alpha: 0.8),
               ),
             ],
           ),

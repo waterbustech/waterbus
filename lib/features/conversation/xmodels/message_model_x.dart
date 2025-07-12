@@ -2,7 +2,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
@@ -35,7 +35,7 @@ extension MessageX on Message {
           isDanger: true,
           handlePressed: () {
             showBottomSheetWaterbus(
-              context: AppNavigator.context!,
+              context: AppRouter.context!,
               enableDrag: false,
               builder: (context) {
                 return BottomSheetDelete(

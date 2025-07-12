@@ -6,18 +6,22 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
-  const ConversationHeader({super.key});
+  final Function()? onBackScreen;
+  const ConversationHeader({super.key, required this.onBackScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +44,14 @@ class ConversationHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Visibility(
-                        visible: AppNavigator.canPop,
+                        visible: AppRouter.canPop || context.isDesktop,
                         child: GestureWrapper(
                           onTap: () {
-                            AppNavigator.pop();
+                            if (context.isDesktop) {
+                              onBackScreen?.call();
+                            } else {
+                              AppRouter.pop();
+                            }
                           },
                           child: Container(
                             color: Colors.transparent,
@@ -60,12 +68,14 @@ class ConversationHeader extends StatelessWidget {
                       Expanded(
                         child: GestureWrapper(
                           onTap: () {
-                            AppNavigator().push(
-                              Routes.detailGroupRoute,
-                              arguments: {
-                                "meeting": room,
-                              },
-                            );
+                            if (context.isMobile) {
+                              DetailGroupRoute().push(context);
+                            } else {
+                              showScreenAsDialog(
+                                route: Routes.archivedRoute,
+                                child: DetailGroupScreen(),
+                              );
+                            }
                           },
                           child: ColoredBox(
                             color: Colors.transparent,

@@ -7,8 +7,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
@@ -40,7 +39,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           emit(_chatDone);
         }
 
-        if (AppNavigator.context!.isDesktop) {
+        if (AppRouter.context?.isDesktop ?? false) {
           Future.delayed(1.seconds, () {
             if (_conversationCurrent == null && _conversations.isNotEmpty) {
               add(
@@ -105,9 +104,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           _conversations.insert(0, room);
 
           emit(_chatDone);
-
-          AppNavigator.popUntil(Routes.rootRoute);
-
+          AppRouter.popUntilToRoot();
           Strings.addConversationSuccess.i18n
               .showToast(ToastificationType.success);
         }
@@ -167,7 +164,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             handleAction: () async {
               await _leaveConversation(room);
 
-              AppNavigator.popUntil(Routes.rootRoute);
+              AppRouter.popUntilToRoot();
 
               add(ChatSocketConversationUpdated());
             },
@@ -186,7 +183,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _deleteConversation(room);
 
-            AppNavigator.popUntil(Routes.rootRoute);
+            AppRouter.popUntilToRoot();
 
             add(ChatSocketConversationUpdated());
           },
@@ -204,7 +201,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           handleAction: () async {
             await _archivedConversation(room);
 
-            AppNavigator.popUntil(Routes.rootRoute);
+            AppRouter.popUntilToRoot();
 
             add(ChatSocketConversationUpdated());
           },
@@ -216,7 +213,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           title: event.title,
           password: event.password,
         );
-        AppNavigator.pop();
+        AppRouter.pop();
         emit(_chatDone);
       }
 
@@ -256,7 +253,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           Strings.uploadImageFail.i18n.showToast(ToastificationType.error);
         }
 
-        AppNavigator.pop();
+        AppRouter.pop();
       }
 
       if (event is ChatSocketConversationUpdated) {
@@ -271,7 +268,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     required Function() handleAction,
   }) async {
     await showBottomSheetWaterbus(
-      context: AppNavigator.context!,
+      context: AppRouter.context!,
       enableDrag: false,
       builder: (context) {
         return BottomSheetDelete(
@@ -348,7 +345,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
 
       if (password != null) {
-        AppNavigator.pop();
+        AppRouter.pop();
       }
 
       Strings.chatUpdatedSuccessfully.i18n
@@ -487,7 +484,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     );
 
     if (_conversationCurrent?.id == meetingId) {
-      if (AppNavigator.context!.isDesktop && _conversations.isNotEmpty) {
+      if (AppRouter.context!.isDesktop && _conversations.isNotEmpty) {
         _conversationCurrent = _conversations.first;
       } else {
         _conversationCurrent = null;

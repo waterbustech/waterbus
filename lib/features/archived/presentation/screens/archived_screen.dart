@@ -1,17 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:easy_animated_indexed_stack/easy_animated_indexed_stack.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waterbus_sdk/types/externals/models/index.dart';
 import 'package:waterbus_sdk/types/index.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart';
+import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
 import 'package:waterbus/features/common/styles/style.dart';
@@ -28,6 +32,9 @@ class ArchivedScreen extends StatefulWidget {
 }
 
 class _ArchivedScreenState extends State<ArchivedScreen> {
+  Room? _room;
+  int _currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -36,16 +43,40 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
   }
 
   void _handleTapArchivedItem(Room room) {
-    AppNavigator().push(
-      Routes.archivedConversationRoute,
-      arguments: {
-        'room': room,
-      },
-    );
+    if (PlatformUtils.isDesktop) {
+      setState(() {
+        _room = room;
+        _currentIndex = 1;
+      });
+    } else {
+      ArchivedConversationRoute($extra: room).push(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    return EasyAnimatedIndexedStack(
+      index: _currentIndex,
+      duration: kIsWeb ? Duration.zero : 200.milliseconds,
+      animationBuilder: (context, animation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      children: [
+        _bodyArchivedScreen(context),
+        ArchivedConversationScreen(
+          room: _room,
+          onBackScreen: () {
+            setState(() {
+              _currentIndex = 0;
+              _room = null;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Scaffold _bodyArchivedScreen(BuildContext context) {
     return Scaffold(
       backgroundColor: context.isDesktop
           ? Theme.of(context).colorScheme.surfaceContainerLow

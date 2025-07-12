@@ -1,11 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/constants/endpoints.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 
 /// A Flutter Clipboard Plugin.
 class ClipboardUtils {
+  static Future<void> copyMeetLink(String code) async {
+    if (code.isNotEmpty) {
+      DeviceUtils().lightImpact();
+
+      final uri = Uri.base;
+      final domain = kIsWeb ? uri.origin : Endpoints.webDomain;
+
+      await Clipboard.setData(ClipboardData(text: '$domain/$code'));
+      showDialogDone(text: Strings.copied.i18n);
+      return;
+    } else {
+      throw 'Please enter a string';
+    }
+  }
+
   /// copy receives a string text and saves to Clipboard
   /// returns void
   static Future<void> copy(String text) async {

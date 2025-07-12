@@ -5,6 +5,7 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 
 class CallActionButton extends StatelessWidget {
   final IconData icon;
@@ -14,6 +15,7 @@ class CallActionButton extends StatelessWidget {
   final double? iconSize;
   final BoxShape shape;
   final double? boxSize;
+  final String? tooltipMessage;
   const CallActionButton({
     super.key,
     required this.icon,
@@ -23,10 +25,18 @@ class CallActionButton extends StatelessWidget {
     this.iconSize,
     this.shape = BoxShape.rectangle,
     this.boxSize,
+    this.tooltipMessage,
   });
 
   @override
   Widget build(BuildContext context) {
+    return TooltipWrapper(
+      message: tooltipMessage,
+      child: _bodyCallActionButton(context),
+    );
+  }
+
+  Container _bodyCallActionButton(BuildContext context) {
     return Container(
       height: boxSize ?? 42.sp,
       width: boxSize ?? 42.sp,

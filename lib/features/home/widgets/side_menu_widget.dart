@@ -79,40 +79,46 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
           : Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    appLogo,
-                    SizedBox(width: 6.sp),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 4.5.sp),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Waterbus',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                Flexible(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      appLogo,
+                      SizedBox(width: 6.sp),
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 4.5.sp),
+                          child: RichText(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Waterbus',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                                TextSpan(
+                                  text: '\t\t$kAppVersion',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        fontSize: 8.sp,
+                                      ),
+                                ),
+                              ],
                             ),
-                            TextSpan(
-                              text: '\t\t$kAppVersion',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    fontSize: 8.sp,
-                                  ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 IconButton(
                   onPressed: () {

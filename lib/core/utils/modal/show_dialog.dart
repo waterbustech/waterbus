@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,
@@ -26,16 +24,22 @@ Future showDialogWaterbus({
   double? maxWidth,
   bool onlyShowAsDialog = false,
   AlignmentGeometry? alignment,
-  String routeName = Routes.dialogRoute,
 }) async {
-  final BuildContext context = AppNavigator.context!;
+  final BuildContext context = AppRouter.context!;
 
   if (context.isMobile && !onlyShowAsDialog) {
     return showBottomSheetWaterbus(
       context: context,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (context) {
-        return GestureWrapper(child: child);
+        return GestureDetector(
+          onTap: () {
+            if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+          },
+          child: child,
+        );
       },
     );
   }
@@ -57,11 +61,10 @@ Future showDialogWaterbus({
   }
 
   return await showGeneralDialog(
-    routeSettings: RouteSettings(name: routeName),
     barrierLabel: "Barrier",
     barrierDismissible: dismissible,
     transitionDuration: Duration(milliseconds: duration),
-    context: AppNavigator.context!,
+    context: AppRouter.context!,
     pageBuilder: (context, __, ___) {
       return Dialog(
         alignment: alignment,
@@ -75,10 +78,15 @@ Future showDialogWaterbus({
           bottom: paddingBottom,
         ),
         backgroundColor: backgroundColor ??
-            Theme.of(AppNavigator.context!).dialogTheme.backgroundColor,
+            Theme.of(AppRouter.context!).dialogTheme.backgroundColor,
         child: PopScope(
           canPop: dismissible,
-          child: GestureWrapper(
+          child: GestureDetector(
+            onTap: () {
+              if (FocusManager.instance.primaryFocus?.hasFocus ?? false) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            },
             child: Container(
               constraints: BoxConstraints(
                 maxHeight: maxHeight,
@@ -96,5 +104,28 @@ Future showDialogWaterbus({
         child: child,
       );
     },
+  );
+}
+
+Future showScreenAsDialog({
+  required String route,
+  required Widget child,
+}) {
+  return showDialogWaterbus(
+    duration: 200,
+    maxHeight: 100.h,
+    maxWidth: 400.sp,
+    barrierColor: Colors.transparent,
+    borderRadius: 16.sp,
+    child: Material(
+      clipBehavior: Clip.hardEdge,
+      shape: SuperellipseShape(
+        borderRadius: BorderRadius.circular(16.sp),
+      ),
+      child: SizedBox(
+        height: !AppRouter.context!.isLandscape ? 80.h : 90.h,
+        child: child,
+      ),
+    ),
   );
 }

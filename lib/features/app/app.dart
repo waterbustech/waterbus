@@ -8,11 +8,10 @@ import 'package:toastification/toastification.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_navigator_observer.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class App extends StatefulWidget {
@@ -32,7 +31,8 @@ class _AppState extends State<App> {
           return BlocBuilder<ThemesBloc, ThemesState>(
             builder: (context, theme) {
               return ToastificationWrapper(
-                child: MaterialApp(
+                child: MaterialApp.router(
+                  routerConfig: AppRouter.instance.router,
                   title: kAppTitle,
                   locale: I18n.locale,
                   supportedLocales: I18n.supportedLocales,
@@ -41,7 +41,6 @@ class _AppState extends State<App> {
                     GlobalWidgetsLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,
                   ],
-                  navigatorKey: AppNavigator.navigatorKey,
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.light(
                     colorSeed: theme.props.last,
@@ -52,14 +51,6 @@ class _AppState extends State<App> {
                     extensions: [sizerExtension],
                   ).data,
                   themeMode: theme.props.first,
-                  initialRoute: Routes.rootRoute,
-                  navigatorObservers: [
-                    AppNavigatorObserver(),
-                    NavigatorObserver(),
-                  ],
-                  onGenerateRoute: (settings) {
-                    return AppNavigator().getRoute(settings);
-                  },
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(
@@ -70,7 +61,25 @@ class _AppState extends State<App> {
                           SystemChrome.setSystemUIOverlayStyle(
                             Theme.of(context).appBarTheme.systemOverlayStyle!,
                           );
-                          return child ?? const SizedBox();
+
+                          return SizerUtils.instance.isMinimunSizeSupport
+                              ? const SizeNotSupportedWidget()
+                              : Scaffold(
+                                  extendBody: true,
+                                  body: SafeArea(
+                                    top: false,
+                                    bottom: false,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (_isKeyboardVisible) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        }
+                                      },
+                                      child: child ?? const SizedBox(),
+                                    ),
+                                  ),
+                                );
                         },
                       ),
                     );
@@ -83,4 +92,7 @@ class _AppState extends State<App> {
       ),
     );
   }
+
+  bool get _isKeyboardVisible =>
+      FocusManager.instance.primaryFocus?.hasFocus ?? false;
 }

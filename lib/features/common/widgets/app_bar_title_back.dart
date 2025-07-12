@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 
 AppBar appBarTitleBack(
   BuildContext context, {
@@ -53,10 +54,10 @@ AppBar appBarTitleBack(
                 if (onBackPressed != null) {
                   onBackPressed();
                 } else {
-                  AppNavigator.pop();
+                  AppRouter.pop();
                 }
               },
-              child: Tooltip(
+              child: TooltipWrapper(
                 message: Strings.back.i18n,
                 child: Container(
                   alignment: Alignment.center,

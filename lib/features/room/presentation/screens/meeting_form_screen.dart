@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -14,31 +13,31 @@ import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/label_text.dart';
 
-class CreateMeetingScreen extends StatefulWidget {
-  final Room? room;
+class MeetingFormScreen extends StatefulWidget {
   final bool isChatScreen;
-  const CreateMeetingScreen({
+  final bool isEdit;
+  const MeetingFormScreen({
     super.key,
-    required this.room,
     this.isChatScreen = false,
+    this.isEdit = false,
   });
 
   @override
-  State<CreateMeetingScreen> createState() => _CreateMeetingScreenState();
+  State<MeetingFormScreen> createState() => _MeetingFormScreenState();
 }
 
-class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
+class _MeetingFormScreenState extends State<MeetingFormScreen> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   final TextEditingController _roomNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late final _isEditing = widget.room != null;
+  late final bool _isEditing = widget.isEdit;
 
   @override
   void initState() {
     super.initState();
 
     if (AppBloc.userBloc.user?.fullName != null) {
-      _roomNameController.text = widget.room?.title ??
+      _roomNameController.text = AppBloc.chatBloc.conversationCurrent?.title ??
           '${Strings.meetingWith.i18n} ${AppBloc.userBloc.user!.fullName}';
     }
   }

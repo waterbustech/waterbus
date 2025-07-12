@@ -6,8 +6,8 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
@@ -20,6 +20,7 @@ import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget
 import 'package:waterbus/features/room/presentation/widgets/call_setting_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
 import 'package:waterbus/features/room/presentation/widgets/stats_view.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
@@ -55,9 +56,15 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     icon: PhosphorIcons.gearSix(),
                     lable: Strings.settings.i18n,
                     onTap: () {
-                      AppNavigator.pop();
-
-                      AppNavigator().push(Routes.settingsCallRoute);
+                      AppRouter.pop();
+                      if (context.isMobile) {
+                        CallSettingsRoute(isInRoom: true).push(context);
+                      } else {
+                        showScreenAsDialog(
+                          route: Routes.callSettingsRoute,
+                          child: CallSettingsScreen(isInRoom: true),
+                        );
+                      }
                     },
                   ),
                   if (context.isMobile)
@@ -67,7 +74,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       onTap: () {
                         if (room == null) return;
 
-                        AppNavigator.pop();
+                        AppRouter.pop();
 
                         showDialogWaterbus(
                           child: SizedBox(
@@ -75,7 +82,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                             child: ChatInRoom(
                               room: room,
                               onClosePressed: () {
-                                AppNavigator.pop();
+                                AppRouter.pop();
                               },
                             ),
                           ),
@@ -86,7 +93,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     icon: PhosphorIcons.fire(),
                     lable: Strings.beautyFilters.i18n,
                     onTap: () {
-                      AppNavigator.pop();
+                      AppRouter.pop();
 
                       if (context.isDesktop) {
                         onBeautyFiltersTapped();
@@ -113,9 +120,9 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     icon: PhosphorIcons.selectionBackground(),
                     lable: Strings.virtualBackground.i18n,
                     onTap: () {
-                      AppNavigator.pop();
+                      AppRouter.pop();
 
-                      AppNavigator().push(Routes.backgroundGallery);
+                      BackgroundGalleryRoute().push(context);
                     },
                   ),
                   CallSettingButton(
@@ -153,7 +160,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     icon: PhosphorIcons.chartPieSlice(),
                     lable: Strings.callStats.i18n,
                     onTap: () {
-                      AppNavigator.pop();
+                      AppRouter.pop();
 
                       showDialogWaterbus(
                         alignment: Alignment.center,

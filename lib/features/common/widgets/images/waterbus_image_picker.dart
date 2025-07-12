@@ -9,7 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/image_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -29,9 +29,9 @@ class WaterbusImagePicker {
     return TextButton(
       onPressed: () async {
         try {
-          AppNavigator.pop();
+          AppRouter.pop();
           final XFile? image = await _getImage(
-            context: AppNavigator.context,
+            context: AppRouter.context,
             source: source,
           );
 
@@ -44,7 +44,7 @@ class WaterbusImagePicker {
 
             handleFinish(resizedImage);
 
-            AppNavigator.pop();
+            AppRouter.pop();
           }
         } catch (exception) {
           debugPrint(exception.toString());

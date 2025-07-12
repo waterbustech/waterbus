@@ -8,17 +8,23 @@ import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_row_button.dart';
 
 class BodySettingScreens extends StatelessWidget {
@@ -52,7 +58,14 @@ class BodySettingScreens extends StatelessWidget {
                           if (context.isDesktop) {
                             onTap?.call(profileTab);
                           } else {
-                            AppNavigator().push(Routes.profileRoute);
+                            if (PlatformUtils.isMobile) {
+                              ProfileRoute().push(context);
+                            } else {
+                              showScreenAsDialog(
+                                route: Routes.profileRoute,
+                                child: ProfileScreen(),
+                              );
+                            }
                           }
                         },
                         child: Material(
@@ -189,7 +202,14 @@ class BodySettingScreens extends StatelessWidget {
             if (context.isMobile) ...[
               SettingRowButton(
                 onTap: () {
-                  AppNavigator().push(Routes.profileRoute);
+                  if (PlatformUtils.isMobile) {
+                    ProfileRoute().push(context);
+                  } else {
+                    showScreenAsDialog(
+                      route: Routes.profileRoute,
+                      child: ProfileScreen(),
+                    );
+                  }
                 },
                 title: Strings.myProfile.i18n,
                 icon: PhosphorIcons.userCircle(PhosphorIconsStyle.fill),
@@ -199,7 +219,7 @@ class BodySettingScreens extends StatelessWidget {
             ],
             SettingRowButton(
               onTap: () {
-                AppNavigator().push(Routes.notificationSettings);
+                NotificationSettingsRoute().push(context);
               },
               title: Strings.notifications.i18n,
               isLast: false,
@@ -211,7 +231,14 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(appearanceTab);
                 } else {
-                  AppNavigator().push(Routes.themeRoute);
+                  if (PlatformUtils.isMobile) {
+                    ThemeRoute().push(context);
+                  } else {
+                    showScreenAsDialog(
+                      route: Routes.themeRoute,
+                      child: ThemeScreen(),
+                    );
+                  }
                 }
               },
               isLast: false,
@@ -225,7 +252,14 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(languageTab);
                 } else {
-                  AppNavigator().push(Routes.langRoute);
+                  if (PlatformUtils.isMobile) {
+                    LangRoute().push(context);
+                  } else {
+                    showScreenAsDialog(
+                      route: Routes.langRoute,
+                      child: LanguageScreen(),
+                    );
+                  }
                 }
               },
               title: Strings.language.i18n,
@@ -240,7 +274,14 @@ class BodySettingScreens extends StatelessWidget {
                 if (context.isDesktop) {
                   onTap?.call(callAndMeetingTab);
                 } else {
-                  AppNavigator().push(Routes.settingsCallRoute);
+                  if (PlatformUtils.isMobile) {
+                    CallSettingsRoute().push(context);
+                  } else {
+                    showScreenAsDialog(
+                      route: Routes.callSettingsRoute,
+                      child: CallSettingsScreen(isInRoom: false),
+                    );
+                  }
                 }
               },
               title: Strings.callAndMeeting.i18n,

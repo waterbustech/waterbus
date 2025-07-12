@@ -8,7 +8,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
@@ -101,7 +101,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       Strings.updateUsernameSuccessfully.i18n
           .showToast(ToastificationType.success);
 
-      AppNavigator.pop();
+      AppRouter.pop();
     } else {
       result.error.messageException.showToast(ToastificationType.error);
     }
@@ -130,10 +130,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ),
     );
 
-    AppNavigator.pop();
+    AppRouter.pop();
 
     if (!ignorePop) {
-      AppNavigator.pop();
+      AppRouter.pop();
     }
 
     if (result.isSuccess) {

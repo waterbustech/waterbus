@@ -167,6 +167,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoRounded =>
       const AssetGenImage('assets/images/logo_rounded.png');
 
+  /// File path: assets/images/logo_rounded_2.png
+  AssetGenImage get logoRounded2 =>
+      const AssetGenImage('assets/images/logo_rounded_2.png');
+
   /// File path: assets/images/world-map.png
   AssetGenImage get worldMap =>
       const AssetGenImage('assets/images/world-map.png');
@@ -199,6 +203,7 @@ class $AssetsImagesGen {
         imgHelloMessage7,
         imgLogo,
         logoRounded,
+        logoRounded2,
         worldMap,
       ];
 }

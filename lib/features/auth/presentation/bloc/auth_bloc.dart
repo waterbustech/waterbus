@@ -4,14 +4,14 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
+import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -20,6 +20,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLocalDataSource _userLocal;
   final Auth _auth = Auth();
+  final WaterbusSdk _waterbusSdk = WaterbusSdk.instance;
 
   User? _user;
 
@@ -30,8 +31,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _onAuthCheck(emit);
       }
 
-      if (event is AuthGoogleLogined || event is AuthAnonymouslyLoggedIn) {
-        await _handleLogin(event);
+      if (event is AuthLoggedIn) {
+        await _handleLogin();
 
         if (_user != null) emit(_authSuccess);
       }
@@ -43,6 +44,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(_authFailure);
         }
       }
+
+      if (event is AuthLoggedInAndJoinedRoom) {
+        if (_user == null) {
+          await _handleLogin(
+            fullname: event.fullname,
+            callbackConnected: () {
+              AppBloc.roomBloc.add(
+                RoomAttemptJoin(code: event.code, password: event.password),
+              );
+            },
+          );
+
+          if (_user != null) emit(_authSuccess);
+        } else {
+          AppBloc.roomBloc.add(
+            RoomAttemptJoin(code: event.code, password: event.password),
+          );
+        }
+      }
     });
   }
 
@@ -51,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (user != null) {
       _user = user;
-      await WaterbusSdk.instance.renewToken();
+      await _waterbusSdk.renewToken();
     }
 
     FlutterNativeSplash.remove();
@@ -71,35 +91,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   // MARK: Private methods
-  Future<void> _handleLogin(AuthEvent event) async {
+  Future<void> _handleLogin({
+    String? fullname,
+    Function()? callbackConnected,
+  }) async {
     displayLoadingLayer();
 
-    late final String payload;
-
-    switch (event) {
-      case AuthAnonymouslyLoggedIn():
-        payload = await _auth.signInAnonymously();
-        break;
-      default:
-        payload = "";
-        break;
-    }
+    final String payload = await _auth.signInAnonymously();
 
     if (payload.isEmpty) {
-      // Pop loading
-      AppNavigator.pop();
+      AppRouter.pop();
       return;
     }
 
-    final Result<User> result = await WaterbusSdk.instance.createToken(
-      AuthPayload(
-        fullName: "Waterbus",
-        externalId: payload,
-      ),
+    final Result<User> result = await _waterbusSdk.createToken(
+      AuthPayload(fullName: fullname ?? "Waterbus", externalId: payload),
+      callbackConnected: callbackConnected,
     );
 
-    // Pop loading
-    AppNavigator.pop();
+    if (fullname == null) {
+      AppRouter.pop();
+    }
 
     if (result.isSuccess) {
       _userLocal.saveUser(result.value!);
@@ -109,9 +121,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _handleLogOut() async {
     _userLocal.clearUser();
-    await WaterbusSdk.instance.deleteToken();
+    await _waterbusSdk.deleteToken();
 
-    AppNavigator.popUntil(Routes.rootRoute);
+    AppRouter.popUntilToRoot();
 
     _user = null;
     AppBloc.userBloc.add(UserCleaned());

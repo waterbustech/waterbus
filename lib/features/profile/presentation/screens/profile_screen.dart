@@ -6,9 +6,10 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/navigator/app_navigator.dart';
-import 'package:waterbus/core/navigator/app_routes.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
+import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_text_field.dart';
 
@@ -58,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ? const SizedBox()
             : GestureWrapper(
                 onTap: () {
-                  AppNavigator.pop();
+                  AppRouter.pop();
                 },
                 child: Center(
                   child: Text(
@@ -163,7 +165,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 GestureWrapper(
                                   onTap: () {
-                                    AppNavigator().push(Routes.usernameRoute);
+                                    if (context.isMobile) {
+                                      UsernameRoute().push(context);
+                                    } else {
+                                      showScreenAsDialog(
+                                        route: Routes.usernameRoute,
+                                        child: UserNameScreen(),
+                                      );
+                                    }
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
