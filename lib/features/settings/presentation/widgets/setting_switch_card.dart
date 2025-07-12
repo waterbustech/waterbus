@@ -75,7 +75,7 @@ class _SettingSwitchCardState extends State<SettingSwitchCard> {
                 )
               : Switch(
                   value: _isEnabled,
-                  activeColor: Theme.of(context).colorScheme.primary,
+                  activeThumbColor: Theme.of(context).colorScheme.primary,
                   thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
                     (states) {
                       if (states.contains(WidgetState.selected)) {

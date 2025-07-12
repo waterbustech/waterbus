@@ -207,7 +207,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 
   Future<void> _getMessagesByRoomId(int roomId) async {
-    final Result<List<Message>> result = await _waterbusSdk.getMessageByRoom(
+    final Result<List<Message>> result = await _waterbusSdk.getMessages(
       roomId: roomId,
       skip: _messagesMap[roomId]?.messages.length ?? 0,
       limit: defaultLengthOfMessages,

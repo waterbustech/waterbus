@@ -21,7 +21,7 @@ import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/meeting_form_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});

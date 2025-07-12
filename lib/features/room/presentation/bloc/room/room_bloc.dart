@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
-import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/types/externals/models/join_room_params.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/method_channels/pip_channel.dart';
@@ -21,6 +21,7 @@ import 'package:waterbus/core/utils/audio/meeting_sound.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/room/data/datasources/media_config_datasource.dart';
@@ -239,7 +240,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
               );
             });
           } else {
-            await _waterbusSdk.disableVirtualBg();
+            await _waterbusSdk.disableVirtualBackground();
           }
         }
 
@@ -351,8 +352,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   }
 
   Future<bool> _handleJoinRoom(RoomJoinedWithPassword event) async {
-    final RoomParams params = RoomParams(
-      room: _currentRoom!,
+    final JoinRoomParams params = JoinRoomParams(
+      roomId: _currentRoom!.id,
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );

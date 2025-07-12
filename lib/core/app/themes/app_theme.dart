@@ -7,6 +7,21 @@ import 'package:waterbus/core/types/enums/color_seed.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/gen/fonts.gen.dart';
 
+class NoTransitionsBuilder extends PageTransitionsBuilder {
+  const NoTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child;
+  }
+}
+
 class AppTheme {
   AppTheme({
     required this.data,
@@ -24,7 +39,12 @@ class AppTheme {
         labelMedium: TextStyle(color: fCD),
       ),
       pageTransitionsTheme: kIsWeb
-          ? null
+          ? PageTransitionsTheme(
+              builders: {
+                for (final platform in TargetPlatform.values)
+                  platform: const NoTransitionsBuilder(),
+              },
+            )
           : const PageTransitionsTheme(
               builders: {
                 TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -86,7 +106,12 @@ class AppTheme {
         labelMedium: TextStyle(color: mCU),
       ),
       pageTransitionsTheme: kIsWeb
-          ? null
+          ? PageTransitionsTheme(
+              builders: {
+                for (final platform in TargetPlatform.values)
+                  platform: const NoTransitionsBuilder(),
+              },
+            )
           : const PageTransitionsTheme(
               builders: {
                 TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

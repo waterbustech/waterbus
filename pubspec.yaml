@@ -115,14 +115,7 @@ dependencies:
   audioplayers: ^6.1.0
 
   # Video call
-  # waterbus_sdk: 
-  #   git:
-  #     url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-  #     ref: 2.0.0-pre
-  waterbus_sdk: 
-    git: 
-      url: https://github.com/waterbustech/waterbus-flutter-sdk
-      ref: feat/add-callbackConnected-to-createToken
+  waterbus_sdk: ^2.0.0
    
 
 dependency_overrides:

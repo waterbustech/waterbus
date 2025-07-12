@@ -26,7 +26,7 @@ import 'package:waterbus/features/conversation/widgets/group_space_bar_custom.da
 import 'package:waterbus/features/conversation/widgets/member_card.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/meeting_form_screen.dart';
 
 class DetailGroupScreen extends StatelessWidget {
   const DetailGroupScreen({super.key});

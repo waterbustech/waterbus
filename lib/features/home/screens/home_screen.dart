@@ -30,8 +30,8 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/profile/presentation/widgets/profile_drawer_layout.dart';
-import 'package:waterbus/features/room/presentation/screens/create_meeting_screen.dart';
 import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_screen.dart';
+import 'package:waterbus/features/room/presentation/screens/meeting_form_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
