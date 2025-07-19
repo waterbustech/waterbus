@@ -35,30 +35,20 @@ class $AssetsIconsGen {
   AssetGenImage get icIncognito =>
       const AssetGenImage('assets/icons/ic_incognito.png');
 
-  /// File path: assets/icons/ic_new_meeting.png
-  AssetGenImage get icNewMeeting =>
-      const AssetGenImage('assets/icons/ic_new_meeting.png');
-
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
 
-  /// File path: assets/icons/launcher_icon_android12.png
-  AssetGenImage get launcherIconAndroid12 =>
-      const AssetGenImage('assets/icons/launcher_icon_android12.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
-        colorPicker,
-        icAddMembers,
-        icCheck,
-        icGithub,
-        icGoogle,
-        icIncognito,
-        icNewMeeting,
-        launcherIcon,
-        launcherIconAndroid12,
-      ];
+    colorPicker,
+    icAddMembers,
+    icCheck,
+    icGithub,
+    icGoogle,
+    icIncognito,
+    launcherIcon,
+  ];
 }
 
 class $AssetsImagesGen {
@@ -87,9 +77,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/background-6.jpg.webp
   AssetGenImage get background6Jpg =>
       const AssetGenImage('assets/images/background-6.jpg.webp');
-
-  /// File path: assets/images/dash.gif
-  AssetGenImage get dash => const AssetGenImage('assets/images/dash.gif');
 
   /// File path: assets/images/desktop-background-1.jpg.webp
   AssetGenImage get desktopBackground1Jpg =>
@@ -127,10 +114,6 @@ class $AssetsImagesGen {
   AssetGenImage get desktopBackground9Jpg =>
       const AssetGenImage('assets/images/desktop-background-9.jpg.webp');
 
-  /// File path: assets/images/img_app_logo.png
-  AssetGenImage get imgAppLogo =>
-      const AssetGenImage('assets/images/img_app_logo.png');
-
   /// File path: assets/images/img_hello_message_1.gif
   AssetGenImage get imgHelloMessage1 =>
       const AssetGenImage('assets/images/img_hello_message_1.gif');
@@ -159,14 +142,6 @@ class $AssetsImagesGen {
   AssetGenImage get imgHelloMessage7 =>
       const AssetGenImage('assets/images/img_hello_message_7.gif');
 
-  /// File path: assets/images/img_logo.png
-  AssetGenImage get imgLogo =>
-      const AssetGenImage('assets/images/img_logo.png');
-
-  /// File path: assets/images/logo_rounded.png
-  AssetGenImage get logoRounded =>
-      const AssetGenImage('assets/images/logo_rounded.png');
-
   /// File path: assets/images/logo_rounded_2.png
   AssetGenImage get logoRounded2 =>
       const AssetGenImage('assets/images/logo_rounded_2.png');
@@ -177,35 +152,31 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        background1Jpg,
-        background2Jpg,
-        background3Jpg,
-        background4Jpg,
-        background5Jpg,
-        background6Jpg,
-        dash,
-        desktopBackground1Jpg,
-        desktopBackground2Jpg,
-        desktopBackground3Jpg,
-        desktopBackground4Jpg,
-        desktopBackground5Jpg,
-        desktopBackground6Jpg,
-        desktopBackground7Jpg,
-        desktopBackground8Jpg,
-        desktopBackground9Jpg,
-        imgAppLogo,
-        imgHelloMessage1,
-        imgHelloMessage2,
-        imgHelloMessage3,
-        imgHelloMessage4,
-        imgHelloMessage5,
-        imgHelloMessage6,
-        imgHelloMessage7,
-        imgLogo,
-        logoRounded,
-        logoRounded2,
-        worldMap,
-      ];
+    background1Jpg,
+    background2Jpg,
+    background3Jpg,
+    background4Jpg,
+    background5Jpg,
+    background6Jpg,
+    desktopBackground1Jpg,
+    desktopBackground2Jpg,
+    desktopBackground3Jpg,
+    desktopBackground4Jpg,
+    desktopBackground5Jpg,
+    desktopBackground6Jpg,
+    desktopBackground7Jpg,
+    desktopBackground8Jpg,
+    desktopBackground9Jpg,
+    imgHelloMessage1,
+    imgHelloMessage2,
+    imgHelloMessage3,
+    imgHelloMessage4,
+    imgHelloMessage5,
+    imgHelloMessage6,
+    imgHelloMessage7,
+    logoRounded2,
+    worldMap,
+  ];
 }
 
 class $AssetsLottiesGen {
@@ -226,11 +197,11 @@ class $AssetsLottiesGen {
 
   /// List of all assets
   List<String> get values => [
-        beautyFiltersLottie,
-        broadcastLottie,
-        requestZoomOutLottie,
-        unlockLottie,
-      ];
+    beautyFiltersLottie,
+    broadcastLottie,
+    requestZoomOutLottie,
+    unlockLottie,
+  ];
 }
 
 class $AssetsSoundsGen {
@@ -259,10 +230,6 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
   static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
-  static const String welcome = 'assets/welcome.java';
-
-  /// List of all assets
-  static List<String> get values => [welcome];
 }
 
 class AssetGenImage {

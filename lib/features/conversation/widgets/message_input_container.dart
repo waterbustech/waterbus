@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
@@ -19,10 +20,12 @@ class MessageInputContainer extends StatefulWidget {
   final bool isBorderVisible;
   final Color? backgroundColor;
   final BorderRadius borderRadius;
+  final bool isChatInMeeting;
   const MessageInputContainer({
     super.key,
     required this.roomId,
     this.isBorderVisible = true,
+    this.isChatInMeeting = false,
     this.backgroundColor,
     this.borderRadius = BorderRadius.zero,
   });
@@ -55,23 +58,22 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
       shape: SuperellipseShape(
         borderRadius: widget.borderRadius,
       ),
-      color: widget.backgroundColor,
+      color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           border: widget.isBorderVisible
               ? Border(
                   top: BorderSide(
-                    width: 0.4,
                     color: Theme.of(context).dividerColor,
                   ),
                 )
               : null,
         ),
-        height: context.isDesktop ? 48.sp : null,
+        height:
+            context.isDesktop ? (widget.isChatInMeeting ? 60.sp : 49.sp) : null,
+        alignment: Alignment.center,
         width: 100.w,
-        padding: context.isDesktop
-            ? EdgeInsets.zero
-            : EdgeInsets.symmetric(horizontal: 16.sp, vertical: 10.sp),
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             final Message? messageBeingEdited =
@@ -104,15 +106,21 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
                 },
               },
               child: Container(
-                padding: EdgeInsets.only(left: 6.sp, right: 2.75.sp),
+                padding: EdgeInsets.only(right: 2.75.sp),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
+                  border: widget.isChatInMeeting
+                      ? Border.all(
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : null,
                   color: WebRTC.platformIsMobile
                       ? Theme.of(context).colorScheme.surfaceContainerHighest
                       : Colors.transparent,
-                  borderRadius: WebRTC.platformIsMobile
-                      ? BorderRadius.circular(30.sp)
-                      : BorderRadius.zero,
+                  borderRadius:
+                      WebRTC.platformIsMobile && !widget.isChatInMeeting
+                          ? BorderRadius.circular(30.sp)
+                          : BorderRadius.zero,
                 ),
                 child: Row(
                   children: [
@@ -152,50 +160,65 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
                         },
                       ),
                     ),
-                    GestureWrapper(
-                      isCloseKeyboard: false,
-                      onTap: () {
-                        if (dataEditing) {
-                          _messageController.text = '';
-                          _requestFocus(isFocus: false);
-                          AppBloc.messageBloc.add(MessageEditingCancelled());
-                        } else {
-                          _handleSendMessage(
-                            messageBeingEdited: messageBeingEdited,
-                          );
-                        }
-                      },
-                      child: dataEditing
-                          ? Padding(
-                              padding: EdgeInsets.all(7.sp),
-                              child: Icon(
-                                PhosphorIcons.x(),
-                                color: WebRTC.platformIsMobile
-                                    ? mCL
-                                    : Theme.of(context).colorScheme.primary,
-                                size: context.isDesktop ? 20.sp : 18.sp,
-                              ),
-                            )
-                          : Container(
-                              decoration: WebRTC.platformIsMobile
-                                  ? BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      shape: BoxShape.circle,
-                                    )
-                                  : null,
-                              padding: EdgeInsets.all(7.sp),
-                              child: Icon(
-                                PhosphorIcons.paperPlaneRight(
-                                  PhosphorIconsStyle.fill,
+                    if (widget.isChatInMeeting)
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 4.sp),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        padding: EdgeInsets.all(8.sp),
+                        child: Icon(
+                          LucideIcons.arrowUp,
+                          size: 14.sp,
+                        ),
+                      ),
+                    if (!widget.isChatInMeeting)
+                      GestureWrapper(
+                        isCloseKeyboard: false,
+                        onTap: () {
+                          if (dataEditing) {
+                            _messageController.text = '';
+                            _requestFocus(isFocus: false);
+                            AppBloc.messageBloc.add(MessageEditingCancelled());
+                          } else {
+                            _handleSendMessage(
+                              messageBeingEdited: messageBeingEdited,
+                            );
+                          }
+                        },
+                        child: dataEditing
+                            ? Padding(
+                                padding: EdgeInsets.all(7.sp),
+                                child: Icon(
+                                  PhosphorIcons.x(),
+                                  color: WebRTC.platformIsMobile
+                                      ? mCL
+                                      : Theme.of(context).colorScheme.primary,
+                                  size: context.isDesktop ? 20.sp : 18.sp,
                                 ),
-                                color: WebRTC.platformIsMobile
-                                    ? mCL
-                                    : Theme.of(context).colorScheme.primary,
-                                size: context.isDesktop ? 20.sp : 18.sp,
+                              )
+                            : Container(
+                                decoration: WebRTC.platformIsMobile
+                                    ? BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        shape: BoxShape.circle,
+                                      )
+                                    : null,
+                                padding: EdgeInsets.all(7.sp),
+                                child: Icon(
+                                  PhosphorIcons.paperPlaneRight(
+                                    PhosphorIconsStyle.fill,
+                                  ),
+                                  color: WebRTC.platformIsMobile
+                                      ? mCL
+                                      : Theme.of(context).colorScheme.primary,
+                                  size: context.isDesktop ? 20.sp : 18.sp,
+                                ),
                               ),
-                            ),
-                    ),
+                      ),
                   ],
                 ),
               ),

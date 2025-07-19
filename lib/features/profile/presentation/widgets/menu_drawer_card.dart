@@ -28,7 +28,7 @@ class MenuDrawerCard extends StatelessWidget {
           Text(
             item.title.i18n,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 15.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w700,
                   color: Theme.of(context).colorScheme.secondary,
                 ),

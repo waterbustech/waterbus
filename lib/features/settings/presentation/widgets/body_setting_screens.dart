@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
@@ -23,8 +24,8 @@ import 'package:waterbus/features/profile/presentation/screens/profile_screen.da
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/lang/language_service.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_row_button.dart';
 
 class BodySettingScreens extends StatelessWidget {
@@ -212,7 +213,7 @@ class BodySettingScreens extends StatelessWidget {
                   }
                 },
                 title: Strings.myProfile.i18n,
-                icon: PhosphorIcons.userCircle(PhosphorIconsStyle.fill),
+                icon: LucideIcons.circleUser,
                 iconBackground: colorRedCustom,
               ),
               SizedBox(height: 18.sp),
@@ -223,7 +224,7 @@ class BodySettingScreens extends StatelessWidget {
               },
               title: Strings.notifications.i18n,
               isLast: false,
-              icon: PhosphorIcons.bell(PhosphorIconsStyle.fill),
+              icon: LucideIcons.bell,
               iconBackground: colorRedOrange,
             ),
             SettingRowButton(
@@ -236,7 +237,7 @@ class BodySettingScreens extends StatelessWidget {
                   } else {
                     showScreenAsDialog(
                       route: Routes.themeRoute,
-                      child: ThemeScreen(),
+                      child: ThemeSelectorScreen(),
                     );
                   }
                 }
@@ -244,7 +245,7 @@ class BodySettingScreens extends StatelessWidget {
               isLast: false,
               isFirst: false,
               title: Strings.appearance.i18n,
-              icon: PhosphorIcons.circleHalf(PhosphorIconsStyle.fill),
+              icon: LucideIcons.paintbrush,
               iconBackground: colorCyan,
             ),
             SettingRowButton(
@@ -257,7 +258,7 @@ class BodySettingScreens extends StatelessWidget {
                   } else {
                     showScreenAsDialog(
                       route: Routes.langRoute,
-                      child: LanguageScreen(),
+                      child: LanguageSelectorScreen(),
                     );
                   }
                 }
@@ -265,7 +266,7 @@ class BodySettingScreens extends StatelessWidget {
               title: Strings.language.i18n,
               isFirst: false,
               value: LanguageService().getLocale().base,
-              icon: PhosphorIcons.globe(),
+              icon: LucideIcons.globe,
               iconBackground: colorPurple,
             ),
             SizedBox(height: 18.sp),
@@ -285,7 +286,7 @@ class BodySettingScreens extends StatelessWidget {
                 }
               },
               title: Strings.callAndMeeting.i18n,
-              icon: PhosphorIcons.videoCamera(PhosphorIconsStyle.fill),
+              icon: LucideIcons.video,
               iconBackground: colorActive,
             ),
             SizedBox(height: 18.sp),
@@ -293,7 +294,7 @@ class BodySettingScreens extends StatelessWidget {
               onTap: () {},
               isLast: false,
               title: Strings.serverConfiguration.i18n,
-              icon: PhosphorIcons.hardDrives(PhosphorIconsStyle.fill),
+              icon: LucideIcons.serverCog,
               iconBackground: Colors.deepOrange,
             ),
             SettingRowButton(
@@ -301,7 +302,7 @@ class BodySettingScreens extends StatelessWidget {
               isFirst: false,
               isLast: false,
               title: Strings.clearCache.i18n,
-              icon: PhosphorIcons.database(PhosphorIconsStyle.fill),
+              icon: LucideIcons.database,
               iconBackground: Colors.indigoAccent,
             ),
             SettingRowButton(
@@ -309,7 +310,7 @@ class BodySettingScreens extends StatelessWidget {
               isFirst: false,
               title: 'Waterbus ${Strings.version.i18n}',
               value: kAppVersion,
-              icon: PhosphorIcons.desktop(PhosphorIconsStyle.fill),
+              icon: LucideIcons.monitor,
               iconBackground: colorCyan,
             ),
           ],

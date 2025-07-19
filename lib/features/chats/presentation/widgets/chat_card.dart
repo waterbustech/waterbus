@@ -126,44 +126,6 @@ class _ChatCardState extends State<ChatCard> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10.sp),
-                      widget.room.statusMessage == StatusMessage.none &&
-                              widget.room.countUnreadMessage != 0
-                          ? Container(
-                              margin: widget.room.countUnreadMessage > 9
-                                  ? EdgeInsets.symmetric(
-                                      vertical: 3.sp,
-                                    )
-                                  : null,
-                              padding: widget.room.countUnreadMessage > 9
-                                  ? EdgeInsets.symmetric(
-                                      horizontal: 3.sp,
-                                      vertical: 2.sp,
-                                    )
-                                  : EdgeInsets.all(5.sp),
-                              decoration: BoxDecoration(
-                                shape: widget.room.countUnreadMessage > 9
-                                    ? BoxShape.rectangle
-                                    : BoxShape.circle,
-                                color: Theme.of(context).colorScheme.primary,
-                                borderRadius: widget.room.countUnreadMessage > 9
-                                    ? BorderRadius.circular(15.sp)
-                                    : null,
-                              ),
-                              child: Text(
-                                widget.room.countUnreadMessage > 9
-                                    ? "+9"
-                                    : widget.room.countUnreadMessage.toString(),
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  fontSize: 8.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                          : SizedBox(
-                              height: 19.sp,
-                            ),
                     ],
                   ),
                 ],

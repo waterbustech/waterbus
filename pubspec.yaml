@@ -104,6 +104,8 @@ dependencies:
   irondash_engine_context: ^0.5.5
   super_native_extensions: ^0.9.1
   easy_animated_indexed_stack: ^0.0.3
+  google_fonts: ^6.2.1
+  lucide_icons_flutter: ^3.0.7
 
   # Media
   image_picker: ^1.1.2
@@ -115,7 +117,8 @@ dependencies:
   audioplayers: ^6.1.0
 
   # Video call
-  waterbus_sdk: ^2.0.0
+  waterbus_sdk:
+    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
    
 
 dependency_overrides:
@@ -134,7 +137,6 @@ dependency_overrides:
     git:
       url: https://github.com/myxzlpltk/flutter_image_compress.git
       path: packages/flutter_image_compress_web
-  flutter_webrtc_plus: ^0.14.1+5
 
 dev_dependencies:
   # Test
@@ -185,7 +187,6 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lotties/
-    - assets/welcome.java
     - assets/sounds/
 
   # assets:
@@ -218,58 +219,38 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family: Helvetica
-      fonts:
-        - asset: assets/fonts/helvetica/helvetica-neue-light.ttf
-          weight: 300
-        - asset: assets/fonts/helvetica/helvetica-neue-regular.ttf
-          weight: 400
-        - asset: assets/fonts/helvetica/helvetica-neue-regular.ttf
-          weight: 600
-        - asset: assets/fonts/helvetica/helvetica-neue-medium.ttf
-          weight: 700
-    - family: Pixelify
-      fonts:
-        - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
-          weight: 300
-        - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/pixelify/PixelifySans-Medium.ttf
-          weight: 600
-        - asset: assets/fonts/pixelify/PixelifySans-SemiBold.ttf
-          weight: 700
-        - asset: assets/fonts/pixelify/PixelifySans-Bold.ttf
-          weight: 800
-    - family: UbuntuMono
-      fonts:
-        - asset: assets/fonts/ubuntu-mono/UbuntuMono-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/ubuntu-mono/UbuntuMono-Bold.ttf
-          weight: 700
-    - family: AnonymousPro
-      fonts:
-        - asset: assets/fonts/anonymous-pro/AnonymousPro-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/anonymous-pro/AnonymousPro-Bold.ttf
-          weight: 700
-    - family: FiraPro
-      fonts:
-        - asset: assets/fonts/fira-pro/static/FiraCode-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/fira-pro/static/FiraCode-Bold.ttf
-          weight: 700
-    - family: JetbrainsMono
-      fonts:
-        - asset: assets/fonts/jetbrains-mono/static/JetBrainsMono-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/jetbrains-mono/static/JetBrainsMono-Bold.ttf
-          weight: 700
-    - family: SourceCodePro
-      fonts:
-        - asset: assets/fonts/source-code-pro/static/SourceCodePro-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/source-code-pro/static/SourceCodePro-Bold.ttf
-          weight: 700
+  - family: GeistMono
+    fonts:
+      - asset: assets/fonts/geist-mono/GeistMono-Thin.ttf
+        weight: 100
+      - asset: assets/fonts/geist-mono/GeistMono-ExtraLight.ttf
+        weight: 200
+      - asset: assets/fonts/geist-mono/GeistMono-Light.ttf
+        weight: 300
+      - asset: assets/fonts/geist-mono/GeistMono-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/geist-mono/GeistMono-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/geist-mono/GeistMono-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/geist-mono/GeistMono-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/geist-mono/GeistMono-ExtraBold.ttf
+        weight: 800
+      - asset: assets/fonts/geist-mono/GeistMono-Black.ttf
+        weight: 900
+  - family: Pixelify
+    fonts:
+      - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
+        weight: 300
+      - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/pixelify/PixelifySans-Medium.ttf
+        weight: 600
+      - asset: assets/fonts/pixelify/PixelifySans-SemiBold.ttf
+        weight: 700
+      - asset: assets/fonts/pixelify/PixelifySans-Bold.ttf
+        weight: 800
 
 import_sorter:
   comments: false

@@ -48,7 +48,7 @@ class ProfileTextField extends StatelessWidget {
         fontWeight: FontWeight.w500,
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7.sp),
+        borderRadius: BorderRadius.circular(2.sp),
         borderSide: BorderSide.none,
       ),
       fillColor: Theme.of(context).colorScheme.onInverseSurface,

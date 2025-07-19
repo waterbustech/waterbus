@@ -74,11 +74,11 @@ class _ChatInRoomState extends State<ChatInRoom> {
         ),
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
         child: Container(
-          padding: EdgeInsets.all(8.sp),
+          padding: EdgeInsets.all(4.sp),
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(4.sp),
+                padding: EdgeInsets.all(12.sp),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -129,6 +129,7 @@ class _ChatInRoomState extends State<ChatInRoom> {
                 roomId: widget.room.id,
                 backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
                 isBorderVisible: false,
+                isChatInMeeting: true,
                 borderRadius: BorderRadius.circular(12.sp),
               ),
             ],

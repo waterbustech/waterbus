@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:popover/popover.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -23,11 +23,11 @@ class SideFooterBody extends StatelessWidget {
     return showPopover(
       context: context,
       bodyBuilder: (context) => const FooterPopoverBody(),
-      width: 200.sp,
-      radius: 12.sp,
+      width: 232.sp,
+      radius: 2.sp,
       barrierColor: Colors.black38,
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-      arrowHeight: 10.sp,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      arrowHeight: 8.sp,
       arrowWidth: 16.sp,
     );
   }
@@ -38,22 +38,12 @@ class SideFooterBody extends StatelessWidget {
       onTap: () {
         _handleShowInformationOptions(context);
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 10.sp,
-          vertical: 8.sp,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40.sp),
-          border: Border.all(
-            width: 1.sp,
-            color: Theme.of(context).colorScheme.secondaryContainer,
-          ),
-        ),
+      child: Padding(
+        padding: EdgeInsets.all(8.sp),
         child: Row(
+          spacing: 10.sp,
           children: [
             userAvatar,
-            SizedBox(width: 6.sp),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +71,7 @@ class SideFooterBody extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.sp),
-              child: Icon(PhosphorIcons.dotsThree()),
+              child: Icon(LucideIcons.ellipsis),
             ),
           ],
         ),

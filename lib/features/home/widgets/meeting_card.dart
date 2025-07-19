@@ -1,9 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -103,37 +102,40 @@ class MeetingCard extends StatelessWidget {
                     },
                   );
                 },
-                child: Material(
-                  shape: SuperellipseShape(
-                    borderRadius: BorderRadius.circular(25.sp),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .surfaceContainerHighest
+                        .withValues(alpha: .1),
+                    border: Border.all(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: .2),
+                    ),
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  color: Theme.of(context).colorScheme.surfaceTint,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.sp,
-                      vertical: 7.sp,
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 4.sp),
-                        Text(
-                          Strings.join.i18n,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                fontSize: 10.sp,
-                                color: Theme.of(context).colorScheme.surface,
-                              ),
-                        ),
-                        SizedBox(width: 4.sp),
-                        Icon(
-                          PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
-                          size: 12.sp,
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                      ],
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        Strings.join.i18n.toUpperCase(),
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  letterSpacing: 1.1,
+                                  fontSize: 12,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                      ),
+                      const SizedBox(width: 6),
+                      Icon(
+                        LucideIcons.arrowRight,
+                        size: 14,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ],
                   ),
                 ),
               ),

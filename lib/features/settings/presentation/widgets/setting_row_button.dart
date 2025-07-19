@@ -58,7 +58,8 @@ class SettingRowButton extends StatelessWidget {
                         child: Icon(
                           icon,
                           color: mCL,
-                          size: 20.sp,
+                          size: 18.sp,
+                          fill: 1.0,
                         ),
                       ),
                     ),

@@ -25,11 +25,10 @@ import 'package:waterbus/features/room/presentation/screens/enter_meeting_code_s
 import 'package:waterbus/features/room/presentation/screens/meeting_form_screen.dart';
 import 'package:waterbus/features/room/presentation/screens/room_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/privacy_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 part 'app_router.g.dart';
@@ -148,17 +147,6 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute {
   }
 }
 
-@TypedGoRoute<PrivacyRoute>(
-  path: Routes.privacyRoute,
-  name: Routes.privacyRoute,
-)
-class PrivacyRoute extends GoRouteData with _$PrivacyRoute {
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const PrivacyScreen();
-  }
-}
-
 @TypedGoRoute<NotificationSettingsRoute>(
   path: Routes.notificationSettings,
   name: Routes.notificationSettings,
@@ -179,7 +167,7 @@ class LobbyRoute extends GoRouteData with _$LobbyRoute {
   final String code;
   final LobbyScreenExtras $extra;
 
-  LobbyRoute({required this.code, required this.$extra});
+  LobbyRoute({required this.code, this.$extra = const LobbyScreenExtras()});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -295,7 +283,7 @@ class ArchivedRoute extends GoRouteData with _$ArchivedRoute {
 class LangRoute extends GoRouteData with _$LangRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const LanguageScreen();
+    return const LanguageSelectorScreen();
   }
 }
 
@@ -306,7 +294,7 @@ class LangRoute extends GoRouteData with _$LangRoute {
 class ThemeRoute extends GoRouteData with _$ThemeRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const ThemeScreen();
+    return const ThemeSelectorScreen();
   }
 }
 
@@ -385,5 +373,5 @@ class LobbyScreenExtras {
   final Room? room;
   final bool isMember;
 
-  LobbyScreenExtras({this.room, this.isMember = false});
+  const LobbyScreenExtras({this.room, this.isMember = false});
 }

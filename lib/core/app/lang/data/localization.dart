@@ -88,7 +88,7 @@ class Strings {
   static const String enterPassword = 'enterPassword';
   static const String createMeeting = 'createMeeting';
   static const String editMeeting = 'editMeeting';
-  static const String giveUsStar = 'Give us star';
+  static const String supportUs = 'supportUs';
   static const String callSettings = 'callSettings';
   static const String online = 'online';
   static const String meetingWith = 'meetingWith';
@@ -125,6 +125,17 @@ class Strings {
   static const String leaveCall = "leaveCall";
   static const String camera = "camera";
   static const String shareScreen = "shareScreen";
+  static const String roomTitle = "roomTitle";
+  static const String passwordOptional = "passwordOptional";
+  static const String maxParticipants = "maxParticipants";
+  static const String nameOrTitleHint = "nameOrTitleHint";
+  static const String passwordHint = "passwordHint";
+  static const String maxHint = "maxHint";
+  static const String roomTitleEmpty = "roomTitleEmpty";
+  static const String roomType = "roomType";
+  static const String videoConferencing = "videoConferencing";
+  static const String liveStreaming = "liveStreaming";
+  static const String streamingProtocol = "streamingProtocol";
 
   // Profile screen
   static const String profile = 'profile';

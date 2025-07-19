@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -29,7 +28,7 @@ class FooterPopoverBody extends StatelessWidget {
         SizedBox(height: 8.sp),
         _footerPopoverButton(
           context: context,
-          icon: PhosphorIcons.userCircle(),
+          icon: LucideIcons.circleUserRound,
           color: Theme.of(context).colorScheme.secondary,
           title: Strings.viewPersonalInformation.i18n,
           onTap: () {
@@ -45,7 +44,7 @@ class FooterPopoverBody extends StatelessWidget {
         ),
         _footerPopoverButton(
           context: context,
-          icon: PhosphorIcons.signOut(),
+          icon: LucideIcons.logOut,
           color: colorRedRemove,
           title: Strings.signOutOfYourAccount.i18n,
           onTap: () {
@@ -71,22 +70,21 @@ class FooterPopoverBody extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 16.sp,
+          horizontal: 12.sp,
           vertical: 8.sp,
         ),
         child: Row(
+          spacing: 8.sp,
           children: [
             Icon(
               icon,
               size: 16.sp,
               color: color,
             ),
-            SizedBox(width: 8.sp),
             Text(
               title,
               style: TextStyle(
-                fontSize: 11.5.sp,
-                fontWeight: FontWeight.w700,
+                fontSize: 11.sp,
                 color: color,
               ),
             ),

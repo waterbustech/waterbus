@@ -1,9 +1,9 @@
 class StorageKeys {
   // Box
-  static const String boxAuth = 'boxAuth-v3';
-  static const String boxRoom = 'boxRoom-v3';
-  static const String boxMediaConfig = 'boxMediaConfig-v3';
-  static const String boxAppSettings = 'boxAppSettings-v3';
+  static const String boxAuth = 'box-auth-v3';
+  static const String boxRoom = 'box-room-v3';
+  static const String boxMediaConfig = 'box-media-config-v3';
+  static const String boxAppSettings = 'box-app-settings-v3';
 
   // In Box - Auth
   static const String user = 'user';
@@ -17,5 +17,5 @@ class StorageKeys {
   // In Box - App Settings
   static const String language = 'language';
   static const String theme = 'theme';
-  static const String colorSeed = 'colorSeed';
+  static const String colorSeed = 'color-seed';
 }

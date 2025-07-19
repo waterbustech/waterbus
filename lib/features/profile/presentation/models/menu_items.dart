@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 
@@ -17,26 +16,26 @@ class MenuItemModel {
 final List<MenuItemModel> menuItems = [
   MenuItemModel(
     title: Strings.profile,
-    icon: PhosphorIcons.userCircle(),
+    icon: LucideIcons.circleUser,
   ),
   // MenuItemModel(
   //   title: Strings.talkWithAI,
-  //   icon: PhosphorIcons.robot(),
+  //   icon: LucideIcons.robot,
   // ),
   MenuItemModel(
     title: Strings.archivedChats,
-    icon: PhosphorIcons.archive(),
+    icon: LucideIcons.archive,
   ),
   MenuItemModel(
     title: Strings.settings,
-    icon: PhosphorIcons.slidersHorizontal(),
+    icon: LucideIcons.slidersHorizontal,
   ),
   MenuItemModel(
     title: Strings.licenses,
-    icon: PhosphorIcons.signature(),
+    icon: LucideIcons.badgeCheck,
   ),
   MenuItemModel(
     title: Strings.logout,
-    icon: PhosphorIcons.signOut(),
+    icon: LucideIcons.logOut,
   ),
 ];

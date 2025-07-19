@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -22,8 +21,8 @@ class E2eeBottomSheet extends StatelessWidget {
         children: [
           SizedBox(height: 40.sp),
           Image.asset(
-            Assets.images.imgLogo.path,
-            width: 200.sp,
+            Assets.images.logoRounded2.path,
+            width: 50.sp,
             fit: BoxFit.fitWidth,
           ),
           SizedBox(height: 16.sp),
@@ -49,12 +48,12 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 20.sp),
           E2eeLabelLine(
-            icon: PhosphorIcons.videoCamera(),
+            icon: LucideIcons.video,
             label: Strings.audioAndVideoCalls.i18n,
           ),
           SizedBox(height: 8.sp),
           E2eeLabelLine(
-            icon: PhosphorIcons.chatsTeardrop(),
+            icon: LucideIcons.messageCircle,
             label: Strings.textMessages.i18n,
           ),
           SizedBox(height: 40.sp),

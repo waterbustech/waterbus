@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/room/presentation/widgets/e2ee_bottom_sheet.dart';
@@ -18,16 +18,16 @@ class E2eeTitleFooter extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 9.25.sp,
+                fontSize: context.isMobile ? 8.sp : 9.5.sp,
               ),
           children: [
             WidgetSpan(
               child: Padding(
                 padding: EdgeInsets.only(right: 4.sp),
                 child: Icon(
-                  PhosphorIcons.lock(PhosphorIconsStyle.fill),
+                  LucideIcons.globeLock,
                   color: Theme.of(context).colorScheme.surfaceTint,
-                  size: 10.sp,
+                  size: 12.sp,
                 ),
               ),
             ),

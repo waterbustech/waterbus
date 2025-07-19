@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
@@ -25,45 +23,19 @@ class ProfileHeader extends StatelessWidget {
             return Container(
               padding: EdgeInsets.only(
                 left: 20.sp,
-                top: context.isDesktop ? 20.sp : 0,
+                top: context.isDesktop ? 20.sp : 4.sp,
                 bottom: 16.sp,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AvatarCard(
-                        urlToImage: user.avatar,
-                        size: context.isDesktop ? 35.sp : 30.sp,
-                        label: user.fullName,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          AppBloc.themesBloc.add(
-                            ThemeChanged(
-                              mode: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? PhosphorIcons.sun(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.moonStars(
-                                  PhosphorIconsStyle.fill,
-                                ),
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ],
+                  AvatarCard(
+                    urlToImage: user.avatar,
+                    size: context.isDesktop ? 35.sp : 30.sp,
+                    label: user.fullName,
                   ),
-                  SizedBox(height: 12.sp),
+                  SizedBox(height: 6.sp),
                   Text(
                     user.fullName,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(

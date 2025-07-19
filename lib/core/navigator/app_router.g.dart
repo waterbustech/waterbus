@@ -14,7 +14,6 @@ List<RouteBase> get $appRoutes => [
       $usernameRoute,
       $callSettingsRoute,
       $settingsRoute,
-      $privacyRoute,
       $notificationSettingsRoute,
       $lobbyRoute,
       $newRoomRoute,
@@ -243,34 +242,6 @@ mixin _$SettingsRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/settings',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $privacyRoute => GoRouteData.$route(
-      path: '/privacy',
-      name: '/privacy',
-      factory: _$PrivacyRoute._fromState,
-    );
-
-mixin _$PrivacyRoute on GoRouteData {
-  static PrivacyRoute _fromState(GoRouterState state) => PrivacyRoute();
-
-  @override
-  String get location => GoRouteData.$location(
-        '/privacy',
       );
 
   @override

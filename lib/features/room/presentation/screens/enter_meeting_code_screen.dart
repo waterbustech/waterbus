@@ -8,7 +8,7 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
-import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/enter_room_code_field.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class EnterMeetingCode extends StatefulWidget {
@@ -80,7 +80,7 @@ class _EnterMeetingCardState extends State {
                       ),
                 ),
                 SizedBox(height: 24.sp),
-                EnterCodeBox(
+                EnterRoomCodeField(
                   margin: EdgeInsets.zero,
                   contentPadding: EdgeInsets.only(
                     left: 16.sp,

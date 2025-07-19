@@ -79,9 +79,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   Scaffold _bodyChatScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.isDesktop
-          ? Theme.of(context).colorScheme.surfaceContainerLow
-          : null,
       appBar: context.isDesktop
           ? null
           : appBarTitleBack(

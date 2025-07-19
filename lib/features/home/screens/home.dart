@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -71,25 +71,16 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.presentation(),
-                                iconDataSelected: PhosphorIcons.presentation(
-                                  PhosphorIconsStyle.fill,
-                                ),
+                                iconData: LucideIcons.presentation,
                                 label: Strings.home.i18n,
                               ),
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.chatsTeardrop(),
-                                iconDataSelected: PhosphorIcons.chatsTeardrop(
-                                  PhosphorIconsStyle.fill,
-                                ),
+                                iconData: LucideIcons.messagesSquare,
                                 label: Strings.chat.i18n,
                                 index: 1,
                               ),
                               _buildItemBottomBar(
-                                iconData: PhosphorIcons.gear(),
-                                iconDataSelected: PhosphorIcons.gear(
-                                  PhosphorIconsStyle.fill,
-                                ),
+                                iconData: LucideIcons.cog,
                                 label: Strings.settings.i18n,
                                 index: 2,
                               ),
@@ -112,7 +103,6 @@ class _HomeState extends State<Home> {
 
   Widget _buildItemBottomBar({
     required IconData iconData,
-    required IconData iconDataSelected,
     required String label,
     int index = 0,
   }) {
@@ -131,7 +121,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Icon(
-                    currentIndex == index ? iconDataSelected : iconData,
+                    iconData,
                     size: 20.sp,
                     color: currentIndex == index
                         ? Theme.of(context).colorScheme.primary

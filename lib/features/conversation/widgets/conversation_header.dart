@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -123,7 +124,7 @@ class ConversationHeader extends StatelessWidget {
                           AppBloc.roomBloc
                               .add(RoomJoinedEvent(room: room, isMember: true));
                         },
-                        icon: PhosphorIcons.broadcast(PhosphorIconsStyle.fill),
+                        icon: LucideIcons.video,
                         sizeIcon: 22.sp,
                         padding: EdgeInsets.all(3.sp),
                         margin: EdgeInsets.zero,

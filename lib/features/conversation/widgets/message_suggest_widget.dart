@@ -33,10 +33,7 @@ class MessageSuggestWidget extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.sp),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceContainer
-                      .withValues(alpha: 0.7),
+                  color: Theme.of(context).colorScheme.surfaceContainerHigh,
                 ),
                 margin: EdgeInsets.only(
                   bottom: context.isDesktop

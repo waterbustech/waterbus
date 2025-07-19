@@ -9,9 +9,9 @@ import 'package:waterbus/features/archived/presentation/screens/archived_screen.
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/home/widgets/recent_meetings.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_screen.dart';
+import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 enum HomePageEnum {
@@ -32,9 +32,11 @@ enum HomePageEnum {
         HomePageEnum.recentMeeting => const RecentMeetings(),
         HomePageEnum.chat => const ChatsScreen(),
         HomePageEnum.notifications => const NotificationSettingsScreen(),
-        HomePageEnum.appearance => const ThemeScreen(isSettingDesktop: true),
+        HomePageEnum.appearance =>
+          const ThemeSelectorScreen(isSettingDesktop: true),
         HomePageEnum.archivedChats => const ArchivedScreen(),
-        HomePageEnum.language => const LanguageScreen(isSettingDesktop: true),
+        HomePageEnum.language =>
+          const LanguageSelectorScreen(isSettingDesktop: true),
         HomePageEnum.callSettings => const CallSettingsScreen(
             isSettingDesktop: true,
             isInRoom: false,

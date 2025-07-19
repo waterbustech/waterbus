@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:super_context_menu/super_context_menu.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -121,52 +120,41 @@ class MessageCard extends StatelessWidget {
     );
   }
 
-  Material _messageBody(BuildContext context) {
-    return Material(
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.sp),
-          topRight: Radius.circular(16.sp),
-          bottomRight: messagePrev?.isMe == message.isMe
-              ? Radius.circular(16.sp)
-              : !message.isMe
-                  ? Radius.zero
-                  : Radius.circular(16.sp),
-          bottomLeft: Radius.circular(16.sp),
-        ),
-        side: message.isDeleted
-            ? BorderSide(
+  Widget _messageBody(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2.sp),
+        border: message.isDeleted
+            ? Border.all(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? colorGray3
                     : colorGray2,
               )
-            : BorderSide.none,
+            : null,
+        color: message.isDeleted
+            ? Colors.transparent
+            : message.isMe
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
-      color: message.isDeleted
-          ? Colors.transparent
-          : message.isMe
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 10.sp,
-          vertical: 6.sp,
-        ),
-        constraints: BoxConstraints(
-          maxWidth: 195.sp,
-        ),
-        child: Text(
-          message.dataX,
-          style: TextStyle(
-            color: message.isDeleted
-                ? Theme.of(context).brightness == Brightness.dark
-                    ? colorGray3
-                    : colorGray2
-                : message.isMe
-                    ? Theme.of(context).colorScheme.surface
-                    : null,
-            fontSize: message.isDeleted ? 11.sp : 12.sp,
-          ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.sp,
+        vertical: 6.sp,
+      ),
+      constraints: BoxConstraints(
+        maxWidth: 195.sp,
+      ),
+      child: Text(
+        message.dataX,
+        style: TextStyle(
+          color: message.isDeleted
+              ? Theme.of(context).brightness == Brightness.dark
+                  ? colorGray3
+                  : colorGray2
+              : message.isMe
+                  ? Theme.of(context).colorScheme.surface
+                  : null,
+          fontSize: message.isDeleted ? 11.sp : 12.sp,
         ),
       ),
     );

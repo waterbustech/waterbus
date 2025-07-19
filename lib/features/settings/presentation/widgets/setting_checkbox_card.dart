@@ -53,7 +53,7 @@ class SettingCheckboxCard extends StatelessWidget {
             enabled
                 ? Icon(
                     PhosphorIcons.check(),
-                    color: Colors.green,
+                    color: Theme.of(context).colorScheme.primary,
                     size: 16.sp,
                   )
                 : const SizedBox(),

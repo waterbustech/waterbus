@@ -43,11 +43,9 @@ class _AppState extends State<App> {
                   ],
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.light(
-                    colorSeed: theme.props.last,
                     extensions: [sizerExtension],
                   ).data,
                   darkTheme: AppTheme.dark(
-                    colorSeed: theme.props.last,
                     extensions: [sizerExtension],
                   ).data,
                   themeMode: theme.props.first,
@@ -62,24 +60,21 @@ class _AppState extends State<App> {
                             Theme.of(context).appBarTheme.systemOverlayStyle!,
                           );
 
-                          return SizerUtils.instance.isMinimunSizeSupport
-                              ? const SizeNotSupportedWidget()
-                              : Scaffold(
-                                  extendBody: true,
-                                  body: SafeArea(
-                                    top: false,
-                                    bottom: false,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        if (_isKeyboardVisible) {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                        }
-                                      },
-                                      child: child ?? const SizedBox(),
-                                    ),
-                                  ),
-                                );
+                          return SizeNotSupportedWidget(
+                            child: SafeArea(
+                              top: false,
+                              bottom: false,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (_isKeyboardVisible) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  }
+                                },
+                                child: child ?? const SizedBox(),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     );

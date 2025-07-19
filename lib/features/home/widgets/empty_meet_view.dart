@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -30,35 +30,31 @@ class EmptyMeetView extends StatelessWidget {
             onTap: () async {
               await launchUrl(Uri.parse(kGithubRepo));
             },
-            child: Material(
-              shape: SuperellipseShape(
-                borderRadius: BorderRadius.circular(20.sp),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
-              clipBehavior: Clip.hardEdge,
-              color: Colors.yellow,
-              child: Container(
-                width: 120.sp,
-                padding: EdgeInsets.symmetric(vertical: 5.sp),
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Assets.icons.icGithub.image(
-                      width: 20.sp,
-                      height: 20.sp,
-                    ),
-                    SizedBox(width: 6.sp),
-                    Text(
-                      Strings.giveUsStar.i18n,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: 2.sp),
-                  ],
-                ),
+              padding: EdgeInsets.symmetric(
+                vertical: 8.sp,
+                horizontal: 16.sp,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 8.sp,
+                children: [
+                  Icon(
+                    LucideIcons.sparkles,
+                    size: 14.sp,
+                    fill: 1,
+                  ),
+                  Text(
+                    Strings.supportUs.i18n,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          letterSpacing: 1.1,
+                          fontSize: 12,
+                        ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -120,7 +120,7 @@ Future showScreenAsDialog({
     child: Material(
       clipBehavior: Clip.hardEdge,
       shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(16.sp),
+        borderRadius: BorderRadius.circular(0),
       ),
       child: SizedBox(
         height: !AppRouter.context!.isLandscape ? 80.h : 90.h,

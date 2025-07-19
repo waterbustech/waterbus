@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/types/enums/color_seed.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/gen/fonts.gen.dart';
 
@@ -28,12 +27,10 @@ class AppTheme {
   });
 
   factory AppTheme.light({
-    ColorSeed colorSeed = ColorSeed.blue,
     List<ThemeExtension> extensions = const [],
   }) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
-      colorSchemeSeed: colorSeed.color,
       cardColor: Colors.black.withValues(alpha: .04),
       textTheme: TextTheme(
         labelMedium: TextStyle(color: fCD),
@@ -86,7 +83,7 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      fontFamily: FontFamily.helvetica,
+      fontFamily: FontFamily.geistMono,
       extensions: extensions,
     );
     return AppTheme(
@@ -95,12 +92,12 @@ class AppTheme {
   }
 
   factory AppTheme.dark({
-    ColorSeed colorSeed = ColorSeed.blue,
     List<ThemeExtension> extensions = const [],
   }) {
     final appColors = AppColor.dark();
     final themeData = ThemeData(
-      colorSchemeSeed: colorSeed.color,
+      scaffoldBackgroundColor: const Color(0xff171717),
+      colorSchemeSeed: const Color(0xFFD7A0FF),
       cardColor: mGD,
       textTheme: TextTheme(
         labelMedium: TextStyle(color: mCU),
@@ -152,7 +149,7 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      fontFamily: FontFamily.helvetica,
+      fontFamily: FontFamily.geistMono,
       extensions: extensions,
     );
     return AppTheme(

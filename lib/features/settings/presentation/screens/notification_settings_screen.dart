@@ -14,15 +14,14 @@ class NotificationSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.isDesktop
-          ? Theme.of(context).colorScheme.surfaceContainerLow
+      appBar: context.isMobile
+          ? appBarTitleBack(
+              context,
+              title: Strings.notifications.i18n,
+              leadingWidth: 60.sp,
+              isVisibleBackButton: context.isMobile,
+            )
           : null,
-      appBar: appBarTitleBack(
-        context,
-        title: Strings.notifications.i18n,
-        leadingWidth: 60.sp,
-        isVisibleBackButton: context.isMobile,
-      ),
       body: Column(
         children: [
           divider,

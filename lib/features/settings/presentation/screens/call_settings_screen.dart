@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:toastification/toastification.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -45,63 +47,63 @@ class _SettingScreenState extends State<CallSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.isDesktop
-          ? Theme.of(context).colorScheme.surfaceContainerLow
-          : null,
-      appBar: appBarTitleBack(
-        context,
-        title: Strings.callSettings.i18n,
-        leadingWidth: 60.sp,
-        leading: widget.isSettingDesktop
-            ? const SizedBox()
-            : GestureWrapper(
-                onTap: () {
-                  AppRouter.pop();
-                },
-                child: Center(
-                  child: Text(
-                    Strings.cancel.i18n,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
+      appBar: context.isMobile
+          ? appBarTitleBack(
+              context,
+              title: Strings.callSettings.i18n,
+              leadingWidth: 60.sp,
+              leading: widget.isSettingDesktop
+                  ? const SizedBox()
+                  : GestureWrapper(
+                      onTap: () {
+                        AppRouter.pop();
+                      },
+                      child: Center(
+                        child: Text(
+                          Strings.cancel.i18n,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+              actions: [
+                GestureWrapper(
+                  onTap: () {
+                    AppBloc.roomBloc.add(
+                      RoomCallSettingsSave(setting: _config),
+                    );
+
+                    if (AppRouter.canPop) {
+                      DeviceUtils().lightImpact();
+
+                      AppRouter.pop();
+                    } else {
+                      showDialogDone(text: Strings.saved.i18n);
+                    }
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    padding: EdgeInsets.all(12.sp).add(
+                      EdgeInsets.only(right: context.isDesktop ? 12.sp : 0),
+                    ),
+                    child: Text(
+                      Strings.save.i18n,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-        actions: [
-          GestureWrapper(
-            onTap: () {
-              AppBloc.roomBloc.add(
-                RoomCallSettingsSave(setting: _config),
-              );
-
-              if (AppRouter.canPop) {
-                DeviceUtils().lightImpact();
-
-                AppRouter.pop();
-              } else {
-                showDialogDone(text: Strings.saved.i18n);
-              }
-            },
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              padding: EdgeInsets.all(12.sp)
-                  .add(EdgeInsets.only(right: context.isDesktop ? 12.sp : 0)),
-              child: Text(
-                Strings.save.i18n,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+              ],
+            )
+          : null,
       body: Column(
         children: [
           divider,
@@ -249,6 +251,59 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       ),
                     ],
                   ),
+                  if (context.isDesktop)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureWrapper(
+                        onTap: () {
+                          AppBloc.roomBloc.add(
+                            RoomCallSettingsSave(setting: _config),
+                          );
+
+                          if (AppRouter.canPop) {
+                            DeviceUtils().lightImpact();
+
+                            AppRouter.pop();
+                          } else {
+                            Strings.saved.i18n.showToast(
+                              ToastificationType.success,
+                            );
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.sp).add(
+                            EdgeInsets.only(
+                              top: 12.sp,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .outline
+                                  .withValues(alpha: .2),
+                            ),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10.sp,
+                            horizontal: 50.sp,
+                          ),
+                          child: Text(
+                            Strings.save.i18n.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                  letterSpacing: 1.1,
+                                  fontSize: 12,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
                   SizedBox(height: 10.h),
                 ],
               ),

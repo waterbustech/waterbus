@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
-import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
+import 'package:waterbus/features/common/widgets/textfield/shadcn_text_field.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-import 'package:waterbus/features/room/presentation/widgets/label_text.dart';
+
+enum RoomType { videoConferencing, liveStreaming }
+
+enum StreamingProtocol { sfu, hls, moq }
 
 class MeetingFormScreen extends StatefulWidget {
   final bool isChatScreen;
@@ -30,7 +31,19 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   final TextEditingController _roomNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _maxParticipantsController =
+      TextEditingController();
+
   late final bool _isEditing = widget.isEdit;
+  RoomType _selectedRoomType = RoomType.videoConferencing;
+  StreamingProtocol _selectedProtocol = StreamingProtocol.sfu;
+
+  // Mono Style Colors
+  final Color _foregroundColor = const Color(0xFFF4F4F5); // main foreground
+  final Color _cardColor = const Color(0xFF1F1F23); // surface/card
+  final Color _primaryColor = const Color(0xFFD4D4D8); // neutral foreground
+  final Color _secondaryColor = const Color(0xFF71717A); // subtle foreground
+  final Color _borderColor = const Color(0xFF27272A); // border surface
 
   @override
   void initState() {
@@ -42,24 +55,28 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
     }
   }
 
-  void handleCreateMeetingButton() {
+  void _handleFormSubmission() {
     if (!(_formStateKey.currentState?.validate() ?? false)) return;
 
     displayLoadingLayer();
+
+    final roomName = _roomNameController.text.trim();
+    final password = _passwordController.text;
+    // final maxParticipants = int.tryParse(_maxParticipantsController.text);
 
     if (widget.isChatScreen) {
       if (_isEditing) {
         AppBloc.chatBloc.add(
           ChatUpdated(
-            title: _roomNameController.text,
-            password: _passwordController.text,
+            title: roomName,
+            password: password,
           ),
         );
       } else {
         AppBloc.chatBloc.add(
           ChatCreated(
-            title: _roomNameController.text,
-            password: _passwordController.text,
+            title: roomName,
+            password: password,
           ),
         );
       }
@@ -67,15 +84,15 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
       if (_isEditing) {
         AppBloc.roomBloc.add(
           RoomUpdated(
-            roomName: _roomNameController.text.trim(),
-            password: _passwordController.text,
+            roomName: roomName,
+            password: password,
           ),
         );
       } else {
         AppBloc.roomBloc.add(
           RoomCreated(
-            roomName: _roomNameController.text.trim(),
-            password: _passwordController.text,
+            roomName: roomName,
+            password: password,
           ),
         );
       }
@@ -84,114 +101,202 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CallbackShortcuts(
-      bindings: {
-        const SingleActivator(LogicalKeyboardKey.enter):
-            handleCreateMeetingButton,
-      },
-      child: Scaffold(
-        appBar: appBarTitleBack(
-          context,
-          title: _isEditing
-              ? Strings.editMeeting.i18n
-              : Strings.createMeeting.i18n,
-          actions: [
-            IconButton(
-              onPressed: () {
-                if (!(_formStateKey.currentState?.validate() ?? false)) return;
+    final textTheme = Theme.of(context).textTheme;
 
-                displayLoadingLayer();
-
-                if (widget.isChatScreen) {
-                  if (_isEditing) {
-                    AppBloc.chatBloc.add(
-                      ChatUpdated(
-                        title: _roomNameController.text,
-                        password: _passwordController.text,
-                      ),
-                    );
-                  } else {
-                    AppBloc.chatBloc.add(
-                      ChatCreated(
-                        title: _roomNameController.text,
-                        password: _passwordController.text,
-                      ),
-                    );
-                  }
-                } else {
-                  if (_isEditing) {
-                    AppBloc.roomBloc.add(
-                      RoomUpdated(
-                        roomName: _roomNameController.text.trim(),
-                        password: _passwordController.text,
-                      ),
-                    );
-                  } else {
-                    AppBloc.roomBloc.add(
-                      RoomCreated(
-                        roomName: _roomNameController.text.trim(),
-                        password: _passwordController.text,
-                      ),
-                    );
-                  }
-                }
-              },
-              icon: Icon(
-                PhosphorIcons.check(),
-                size: 18.sp,
-                color: Theme.of(context).colorScheme.primary,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        primaryColor: _primaryColor,
+        hintColor: _secondaryColor,
+        dividerColor: _borderColor,
+        textTheme: textTheme,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: _primaryColor,
+              secondary: _secondaryColor,
+              surface: _cardColor,
+              onSecondary: _foregroundColor,
+              onSurface: _foregroundColor,
+              error: Colors.red,
+            ),
+      ),
+      child: CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.enter):
+              _handleFormSubmission,
+        },
+        child: Scaffold(
+          appBar: appBarTitleBack(
+            context,
+            titleWidget: Text(
+              _isEditing
+                  ? Strings.editMeeting.i18n
+                  : Strings.createMeeting.i18n,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: _foregroundColor,
               ),
             ),
-          ],
-        ),
-        body: Form(
-          key: _formStateKey,
-          child: Column(
-            children: [
-              const Divider(),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 16.sp),
-                        LabelText(label: Strings.roomName.i18n),
-                        TextFieldInput(
-                          validatorForm: (val) {
-                            if (val?.isEmpty ?? true) {
-                              return Strings.invalidName.i18n;
-                            }
-                            return null;
-                          },
-                          hintText: Strings.meetingLabel.i18n,
-                          controller: _roomNameController,
-                        ),
-                        SizedBox(height: 8.sp),
-                        LabelText(label: Strings.password.i18n),
-                        TextFieldInput(
-                          obscureText: true,
-                          validatorForm: (val) {
-                            if (val == null || val.length < 6) {
-                              return Strings
-                                  .passwordMustBeAtLeast6Characters.i18n;
-                            }
-
-                            return null;
-                          },
-                          hintText: Strings.password.i18n,
-                          controller: _passwordController,
-                        ),
-                      ],
-                    ),
-                  ),
+            actions: [
+              IconButton(
+                onPressed: _handleFormSubmission,
+                icon: Icon(
+                  PhosphorIcons.check(),
+                  size: 20.sp,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
           ),
+          body: Form(
+            key: _formStateKey,
+            child: Column(
+              children: [
+                const Divider(height: 1),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 24.sp),
+                        ShadcnTextField(
+                          controller: _roomNameController,
+                          label: Strings.roomTitle.i18n,
+                          hint: Strings.nameOrTitleHint.i18n,
+                          validator: (val) {
+                            if (val?.isEmpty ?? true) {
+                              return Strings.roomTitleEmpty.i18n;
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 12.sp),
+                        ShadcnTextField(
+                          controller: _passwordController,
+                          label: Strings.passwordOptional.i18n,
+                          hint: Strings.passwordHint.i18n,
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 12.sp),
+                        _buildDropdown<RoomType>(
+                          label: Strings.roomType.i18n,
+                          value: _selectedRoomType,
+                          items: RoomType.values,
+                          onChanged: (value) {
+                            if (value != null) {
+                              setState(() {
+                                _selectedRoomType = value;
+                              });
+                            }
+                          },
+                          itemBuilder: (type) {
+                            return Text(
+                              type == RoomType.videoConferencing
+                                  ? Strings.videoConferencing.i18n
+                                  : Strings.liveStreaming.i18n,
+                            );
+                          },
+                        ),
+                        if (_selectedRoomType == RoomType.liveStreaming) ...[
+                          SizedBox(height: 12.sp),
+                          _buildDropdown<StreamingProtocol>(
+                            label: Strings.streamingProtocol.i18n,
+                            value: _selectedProtocol,
+                            items: StreamingProtocol.values,
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedProtocol = value;
+                                });
+                              }
+                            },
+                            itemBuilder: (protocol) {
+                              return Text(protocol.name.toUpperCase());
+                            },
+                          ),
+                        ],
+                        SizedBox(height: 12.sp),
+                        ShadcnTextField(
+                          controller: _maxParticipantsController,
+                          label: Strings.maxParticipants.i18n,
+                          hint: Strings.maxHint.i18n,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                        ),
+                        SizedBox(height: 24.sp),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildDropdown<T>({
+    required String label,
+    required T value,
+    required List<T> items,
+    required ValueChanged<T?> onChanged,
+    required Widget Function(T) itemBuilder,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: _secondaryColor,
+          ),
+        ),
+        SizedBox(height: 8.sp),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 0.sp),
+          decoration: BoxDecoration(
+            color: Theme.of(context)
+                .colorScheme
+                .surfaceContainerHighest
+                .withValues(alpha: .1),
+            borderRadius: BorderRadius.zero,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outline.withValues(
+                    alpha: 0.3,
+                  ),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<T>(
+              focusColor: Colors.transparent,
+              value: value,
+              isExpanded: true,
+              icon: Icon(
+                PhosphorIcons.caretDown(),
+                size: 14.sp,
+                color: _secondaryColor,
+              ),
+              onChanged: onChanged,
+              dropdownColor: _cardColor,
+              style: TextStyle(
+                fontSize: 12,
+                color: _foregroundColor,
+              ),
+              items: items.map<DropdownMenuItem<T>>((item) {
+                return DropdownMenuItem<T>(
+                  value: item,
+                  child: itemBuilder(item),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

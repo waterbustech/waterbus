@@ -11,12 +11,11 @@ import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
-import 'package:waterbus/features/chats/presentation/widgets/conversation_label.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/shimmers/shimmer_list.dart';
-import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/enter_room_code_field.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 class ConversationList extends StatelessWidget {
@@ -33,12 +32,11 @@ class ConversationList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10.sp),
-        context.isDesktop
-            ? const ConversationLabel()
-            : EnterCodeBox(
-                hintTextContent: Strings.search.i18n,
-                onTap: () {},
-              ),
+        if (!context.isDesktop)
+          EnterRoomCodeField(
+            hintTextContent: Strings.search.i18n,
+            onTap: () {},
+          ),
         Expanded(
           child: BlocBuilder<ChatBloc, ChatState>(
             builder: (context, state) {

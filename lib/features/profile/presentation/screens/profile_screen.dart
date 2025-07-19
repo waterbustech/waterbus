@@ -146,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 25.sp),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.sp),
+                              borderRadius: BorderRadius.circular(2.sp),
                               color: Theme.of(context)
                                   .colorScheme
                                   .onInverseSurface,
@@ -176,12 +176,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 10.sp,
+                                      horizontal: 14.sp,
                                       vertical:
                                           context.isDesktop ? 8.sp : 10.sp,
                                     ),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(7.sp),
+                                      borderRadius: BorderRadius.circular(2.sp),
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onInverseSurface,
@@ -272,7 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 vertical: context.isDesktop ? 8.sp : 10.sp,
                               ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.sp),
+                                borderRadius: BorderRadius.circular(2.sp),
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onInverseSurface,

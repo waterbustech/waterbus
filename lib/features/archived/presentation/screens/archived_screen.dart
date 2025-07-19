@@ -22,7 +22,7 @@ import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/shimmers/shimmer_list.dart';
-import 'package:waterbus/features/home/widgets/enter_code_box.dart';
+import 'package:waterbus/features/home/widgets/enter_room_code_field.dart';
 
 class ArchivedScreen extends StatefulWidget {
   const ArchivedScreen({super.key});
@@ -78,9 +78,6 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
 
   Scaffold _bodyArchivedScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.isDesktop
-          ? Theme.of(context).colorScheme.surfaceContainerLow
-          : null,
       appBar: context.isDesktop
           ? null
           : appBarTitleBack(
@@ -91,21 +88,11 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10.sp),
-          context.isDesktop
-              ? Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
-                  child: Text(
-                    Strings.archivedChats.i18n,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 15.sp,
-                        ),
-                  ),
-                )
-              : EnterCodeBox(
-                  hintTextContent: Strings.search.i18n,
-                  onTap: () {},
-                ),
+          if (!context.isDesktop)
+            EnterRoomCodeField(
+              hintTextContent: Strings.search.i18n,
+              onTap: () {},
+            ),
           Expanded(
             child: BlocBuilder<ArchivedBloc, ArchivedState>(
               builder: (context, state) {

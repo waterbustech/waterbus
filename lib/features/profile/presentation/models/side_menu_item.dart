@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -9,56 +10,46 @@ typedef IconStyle = PhosphorIconsStyle;
 class SideMenuItem {
   final String label;
   final IconData iconData;
-  final IconData selectedIconData;
   SideMenuItem({
     required this.label,
     required this.iconData,
-    required this.selectedIconData,
   });
 }
 
 final List<SideMenuItem> sideMenuItems = [
   SideMenuItem(
     label: Strings.recent,
-    iconData: PhosphorIcons.presentationChart(),
-    selectedIconData: PhosphorIcons.presentationChart(IconStyle.fill),
+    iconData: LucideIcons.ratio,
   ),
   SideMenuItem(
     label: Strings.chat,
-    iconData: PhosphorIcons.chatsTeardrop(),
-    selectedIconData: PhosphorIcons.chatsTeardrop(IconStyle.fill),
+    iconData: LucideIcons.messageCircle,
   ),
   SideMenuItem(
     label: Strings.archivedChats,
-    iconData: PhosphorIcons.archive(),
-    selectedIconData: PhosphorIcons.archive(IconStyle.fill),
+    iconData: LucideIcons.archive,
   ),
 ];
 
 final List<SideMenuItem> accountMenuItems = [
   SideMenuItem(
     label: Strings.notifications,
-    iconData: PhosphorIcons.bell(),
-    selectedIconData: PhosphorIcons.bell(IconStyle.fill),
+    iconData: LucideIcons.bell,
   ),
   SideMenuItem(
     label: Strings.appearance,
-    iconData: PhosphorIcons.circleHalf(),
-    selectedIconData: PhosphorIcons.circleHalf(IconStyle.fill),
+    iconData: LucideIcons.paintbrush,
   ),
   SideMenuItem(
     label: Strings.language,
-    iconData: PhosphorIcons.translate(),
-    selectedIconData: PhosphorIcons.translate(PhosphorIconsStyle.bold),
+    iconData: LucideIcons.globe,
   ),
   SideMenuItem(
     label: Strings.callSettings,
-    iconData: PhosphorIcons.videoCamera(),
-    selectedIconData: PhosphorIcons.videoCamera(IconStyle.fill),
+    iconData: LucideIcons.video,
   ),
   SideMenuItem(
     label: Strings.licenses,
-    iconData: PhosphorIcons.signature(),
-    selectedIconData: PhosphorIcons.signature(IconStyle.bold),
+    iconData: LucideIcons.badgeCheck,
   ),
 ];
