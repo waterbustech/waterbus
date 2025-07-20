@@ -53,7 +53,7 @@ class MediaCallActionButton extends StatelessWidget {
               children: [
                 Expanded(
                   child: TooltipWrapper(
-                    message: settingTooltipMessage,
+                    message: tooltipMessage,
                     child: GestureWrapper(
                       onTap: onTap,
                       child: ColoredBox(
@@ -69,7 +69,7 @@ class MediaCallActionButton extends StatelessWidget {
                 ),
                 Expanded(
                   child: TooltipWrapper(
-                    message: tooltipMessage,
+                    message: settingTooltipMessage,
                     child: GestureWrapper(
                       onTap: onSelectMediaDevice,
                       child: Material(
