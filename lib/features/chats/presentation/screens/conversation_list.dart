@@ -19,7 +19,7 @@ import 'package:waterbus/features/home/widgets/enter_room_code_field.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 class ConversationList extends StatelessWidget {
-  final Function(int) onTap;
+  final Function(Room room) onTap;
 
   const ConversationList({
     super.key,
@@ -75,7 +75,7 @@ class ConversationList extends StatelessWidget {
 
                         return GestureWrapper(
                           onTap: () {
-                            onTap.call(index);
+                            onTap.call(rooms[index]);
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

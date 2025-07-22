@@ -38,7 +38,7 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
     return Container(
       margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 10.sp),
       child: Row(
-        spacing: 24.sp,
+        spacing: 12.sp,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
@@ -65,19 +65,24 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
                     fontSize: 11.sp,
                   ),
                   filled: true,
-                  fillColor: Theme.of(context).brightness == Brightness.dark
-                      ? Theme.of(context).colorScheme.surfaceContainerHigh
-                      : Theme.of(context).colorScheme.surfaceDim,
+                  fillColor: Theme.of(context)
+                      .colorScheme
+                      .surfaceContainerHighest
+                      .withValues(alpha: 0.1),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(2.sp),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(2.sp),
+                    borderSide: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.3),
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.circular(2.sp),
                     borderSide: widget.onTap != null
                         ? BorderSide.none
                         : BorderSide(

@@ -41,14 +41,14 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    colorPicker,
-    icAddMembers,
-    icCheck,
-    icGithub,
-    icGoogle,
-    icIncognito,
-    launcherIcon,
-  ];
+        colorPicker,
+        icAddMembers,
+        icCheck,
+        icGithub,
+        icGoogle,
+        icIncognito,
+        launcherIcon,
+      ];
 }
 
 class $AssetsImagesGen {
@@ -142,41 +142,41 @@ class $AssetsImagesGen {
   AssetGenImage get imgHelloMessage7 =>
       const AssetGenImage('assets/images/img_hello_message_7.gif');
 
-  /// File path: assets/images/logo_rounded_2.png
-  AssetGenImage get logoRounded2 =>
-      const AssetGenImage('assets/images/logo_rounded_2.png');
+  /// File path: assets/images/logo_rounded.png
+  AssetGenImage get logoRounded =>
+      const AssetGenImage('assets/images/logo_rounded.png');
 
-  /// File path: assets/images/world-map.png
-  AssetGenImage get worldMap =>
-      const AssetGenImage('assets/images/world-map.png');
+  /// File path: assets/images/place_holder.png
+  AssetGenImage get placeHolder =>
+      const AssetGenImage('assets/images/place_holder.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    background1Jpg,
-    background2Jpg,
-    background3Jpg,
-    background4Jpg,
-    background5Jpg,
-    background6Jpg,
-    desktopBackground1Jpg,
-    desktopBackground2Jpg,
-    desktopBackground3Jpg,
-    desktopBackground4Jpg,
-    desktopBackground5Jpg,
-    desktopBackground6Jpg,
-    desktopBackground7Jpg,
-    desktopBackground8Jpg,
-    desktopBackground9Jpg,
-    imgHelloMessage1,
-    imgHelloMessage2,
-    imgHelloMessage3,
-    imgHelloMessage4,
-    imgHelloMessage5,
-    imgHelloMessage6,
-    imgHelloMessage7,
-    logoRounded2,
-    worldMap,
-  ];
+        background1Jpg,
+        background2Jpg,
+        background3Jpg,
+        background4Jpg,
+        background5Jpg,
+        background6Jpg,
+        desktopBackground1Jpg,
+        desktopBackground2Jpg,
+        desktopBackground3Jpg,
+        desktopBackground4Jpg,
+        desktopBackground5Jpg,
+        desktopBackground6Jpg,
+        desktopBackground7Jpg,
+        desktopBackground8Jpg,
+        desktopBackground9Jpg,
+        imgHelloMessage1,
+        imgHelloMessage2,
+        imgHelloMessage3,
+        imgHelloMessage4,
+        imgHelloMessage5,
+        imgHelloMessage6,
+        imgHelloMessage7,
+        logoRounded,
+        placeHolder,
+      ];
 }
 
 class $AssetsLottiesGen {
@@ -197,11 +197,11 @@ class $AssetsLottiesGen {
 
   /// List of all assets
   List<String> get values => [
-    beautyFiltersLottie,
-    broadcastLottie,
-    requestZoomOutLottie,
-    unlockLottie,
-  ];
+        beautyFiltersLottie,
+        broadcastLottie,
+        requestZoomOutLottie,
+        unlockLottie,
+      ];
 }
 
 class $AssetsSoundsGen {

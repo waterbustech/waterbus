@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:popover/popover.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
@@ -69,10 +69,8 @@ class SideFooterBody extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.sp),
-              child: Icon(LucideIcons.ellipsis),
-            ),
+            SizedBox(width: 8.sp),
+            Icon(LucideIcons.chevronDown200),
           ],
         ),
       ),

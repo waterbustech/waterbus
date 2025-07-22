@@ -107,10 +107,8 @@ class LogInScreen extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
-                child: Assets.images.worldMap.image(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                alignment: Alignment.center,
+                child: Assets.images.placeHolder.image(width: 600.sp),
               ),
             ),
           ],

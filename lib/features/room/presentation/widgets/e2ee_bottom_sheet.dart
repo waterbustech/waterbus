@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -21,7 +22,7 @@ class E2eeBottomSheet extends StatelessWidget {
         children: [
           SizedBox(height: 40.sp),
           Image.asset(
-            Assets.images.logoRounded2.path,
+            Assets.images.logoRounded.path,
             width: 50.sp,
             fit: BoxFit.fitWidth,
           ),

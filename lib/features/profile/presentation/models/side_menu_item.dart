@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -19,7 +19,7 @@ class SideMenuItem {
 final List<SideMenuItem> sideMenuItems = [
   SideMenuItem(
     label: Strings.recent,
-    iconData: LucideIcons.ratio,
+    iconData: LucideIcons.proportions,
   ),
   SideMenuItem(
     label: Strings.chat,

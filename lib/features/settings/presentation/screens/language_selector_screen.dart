@@ -48,7 +48,11 @@ class _LanguageSelectorScreenState extends State<LanguageSelectorScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.sp),
-                color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                      alpha: Theme.of(context).brightness == Brightness.light
+                          ? 1
+                          : 0.25,
+                    ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,

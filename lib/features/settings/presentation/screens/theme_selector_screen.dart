@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
@@ -83,40 +82,36 @@ class ThemeSelectorScreen extends StatelessWidget {
       onTap: () {
         AppBloc.themesBloc.add(ThemeChanged(mode: theme));
       },
-      child: Padding(
-        padding: EdgeInsets.only(right: 8.sp),
-        child: Material(
-          color: Colors.transparent,
-          shape: SuperellipseShape(
-            borderRadius: BorderRadius.circular(10.sp),
-            side: BorderSide(
-              width: currentMode == theme ? 2 : 1,
-              color: currentMode == theme
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.grey,
-            ),
+      child: Container(
+        margin: EdgeInsets.only(right: 8.sp),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2.sp),
+          border: Border.all(
+            width: currentMode == theme ? 2 : 1,
+            color: currentMode == theme
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).dividerColor,
           ),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.sp,
-              vertical: 8.sp,
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.sp),
-              child: Row(
-                children: [
-                  Icon(_getIconData(theme), size: 16.sp),
-                  SizedBox(width: 5.sp),
-                  Text(
-                    theme.name.i18n,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontSize: 10.sp),
-                  ),
-                ],
+          color: Colors.transparent,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.sp,
+          vertical: 8.sp,
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.sp),
+          child: Row(
+            children: [
+              Icon(_getIconData(theme), size: 16.sp),
+              SizedBox(width: 5.sp),
+              Text(
+                theme.name.i18n,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(fontSize: 10.sp),
               ),
-            ),
+            ],
           ),
         ),
       ),

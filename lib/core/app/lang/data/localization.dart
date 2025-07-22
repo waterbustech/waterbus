@@ -196,7 +196,7 @@ class Strings {
   static const String sureArchivedConversation = 'sureArchivedConversation';
   static const String member = 'member';
   static const String members = 'members';
-  static const String groupCreated = 'grounpCreated';
+  static const String groupCreated = 'groupCreated';
   static const String sending = 'sending';
   static const String canNotSend = 'canNotSend';
   static const String resend = 'resend';

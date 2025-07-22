@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -28,7 +29,7 @@ final List<MenuItemModel> menuItems = [
   ),
   MenuItemModel(
     title: Strings.settings,
-    icon: LucideIcons.slidersHorizontal,
+    icon: LucideIcons.settings2,
   ),
   MenuItemModel(
     title: Strings.licenses,
