@@ -277,11 +277,25 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 36.sp,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(2.sp),
-          color: Theme.of(context).colorScheme.surfaceContainerHigh,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 1.2,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF44475A).withValues(alpha: .5),
+              offset: const Offset(0, 2),
+              blurRadius: 2,
+              spreadRadius: 0.5,
+            ),
+            BoxShadow(
+              color: const Color(0xFF6272A4).withValues(alpha: .2),
+              offset: const Offset(0, 1),
+              blurRadius: 1,
+              spreadRadius: 0.3,
+            ),
+          ],
         ),
         alignment: Alignment.center,
         child: Icon(

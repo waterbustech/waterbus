@@ -219,26 +219,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-  - family: GeistMono
-    fonts:
-      - asset: assets/fonts/geist-mono/GeistMono-Thin.ttf
-        weight: 100
-      - asset: assets/fonts/geist-mono/GeistMono-ExtraLight.ttf
-        weight: 200
-      - asset: assets/fonts/geist-mono/GeistMono-Light.ttf
-        weight: 300
-      - asset: assets/fonts/geist-mono/GeistMono-Regular.ttf
-        weight: 400
-      - asset: assets/fonts/geist-mono/GeistMono-Medium.ttf
-        weight: 500
-      - asset: assets/fonts/geist-mono/GeistMono-SemiBold.ttf
-        weight: 600
-      - asset: assets/fonts/geist-mono/GeistMono-Bold.ttf
-        weight: 700
-      - asset: assets/fonts/geist-mono/GeistMono-ExtraBold.ttf
-        weight: 800
-      - asset: assets/fonts/geist-mono/GeistMono-Black.ttf
-        weight: 900
   - family: Pixelify
     fonts:
       - asset: assets/fonts/pixelify/PixelifySans-Regular.ttf

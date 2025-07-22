@@ -90,9 +90,23 @@ class ThemeSelectorScreen extends StatelessWidget {
             width: currentMode == theme ? 2 : 1,
             color: currentMode == theme
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).dividerColor,
+                : Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
           ),
-          color: Colors.transparent,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF44475A).withValues(alpha: .5),
+              offset: const Offset(0, 2),
+              blurRadius: 2,
+              spreadRadius: 0.5,
+            ),
+            BoxShadow(
+              color: const Color(0xFF6272A4).withValues(alpha: .2),
+              offset: const Offset(0, 1),
+              blurRadius: 1,
+              spreadRadius: 0.3,
+            ),
+          ],
         ),
         padding: EdgeInsets.symmetric(
           horizontal: 16.sp,

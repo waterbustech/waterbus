@@ -2,9 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:waterbus/core/app/colors/app_color.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
-import 'package:waterbus/gen/fonts.gen.dart';
 
 class _DraculaColors {
   const _DraculaColors();
@@ -41,6 +42,8 @@ class AppTheme {
   }) {
     final appColors = AppColor.light();
     final themeData = ThemeData(
+      brightness: Brightness.light,
+      fontFamily: GoogleFonts.firaCode().fontFamily,
       cardColor: Colors.black.withValues(alpha: .04),
       textTheme: TextTheme(
         labelMedium: TextStyle(color: fCD),
@@ -58,7 +61,6 @@ class AppTheme {
                 TargetPlatform.android: CupertinoPageTransitionsBuilder(),
               },
             ),
-      brightness: Brightness.light,
       snackBarTheme: SnackBarThemeData(
         backgroundColor: appColors.error,
         behavior: SnackBarBehavior.floating,
@@ -93,7 +95,6 @@ class AppTheme {
         space: 0,
         thickness: .4,
       ),
-      fontFamily: FontFamily.geistMono,
       extensions: extensions,
     );
     return AppTheme(
@@ -105,9 +106,8 @@ class AppTheme {
     List<ThemeExtension> extensions = const [],
   }) {
     final themeData = ThemeData(
-      // --- General ---
       brightness: Brightness.dark,
-      fontFamily: FontFamily.geistMono,
+      fontFamily: GoogleFonts.firaCode().fontFamily,
       scaffoldBackgroundColor: _DraculaColors.background,
       // Use the iconic Dracula Purple as the seed for the color scheme.
       // This will generate complementary shades for things like buttons, sliders, etc.

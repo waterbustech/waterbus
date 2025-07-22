@@ -18,11 +18,10 @@ class EmptyMeetView extends StatelessWidget {
     return SizedBox(
       width: 100.w,
       child: Column(
-        spacing: 20.sp,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Assets.images.placeHolder.image(
-            width: context.isDesktop ? 600.sp : 300.sp,
+            width: context.isDesktop ? 350.sp : 200.sp,
           ),
           Padding(
             padding: EdgeInsetsGeometry.symmetric(horizontal: 20.sp),
@@ -42,6 +41,7 @@ class EmptyMeetView extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 20.sp),
           GestureWrapper(
             onTap: () async {
               await launchUrl(Uri.parse(kGithubRepo));
@@ -49,6 +49,14 @@ class EmptyMeetView extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(2.sp),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black54,
+                    blurRadius: 12,
+                    offset: Offset(0, 6),
+                  ),
+                ],
               ),
               padding: EdgeInsets.symmetric(
                 vertical: 8.sp,
@@ -62,9 +70,10 @@ class EmptyMeetView extends StatelessWidget {
                     LucideIcons.sparkles,
                     size: 14.sp,
                     fill: 1,
+                    color: const Color(0xFFF1FA8C),
                   ),
                   Text(
-                    Strings.supportUs.i18n,
+                    Strings.supportUs.i18n.toUpperCase(),
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           letterSpacing: 1.1,
                           fontSize: 12,

@@ -42,7 +42,24 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF44475A).withValues(alpha: .5),
+                    offset: const Offset(0, 2),
+                    blurRadius: 2,
+                    spreadRadius: 0.5,
+                  ),
+                  BoxShadow(
+                    color: const Color(0xFF6272A4).withValues(alpha: .2),
+                    offset: const Offset(0, 1),
+                    blurRadius: 1,
+                    spreadRadius: 0.3,
+                  ),
+                ],
+              ),
               width: 100.w,
               height: 36.sp,
               child: TextFormField(
@@ -65,10 +82,7 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
                     fontSize: 11.sp,
                   ),
                   filled: true,
-                  fillColor: Theme.of(context)
-                      .colorScheme
-                      .surfaceContainerHighest
-                      .withValues(alpha: 0.1),
+                  fillColor: Colors.transparent,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(2.sp),
                   ),
