@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
 
+import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/home/xmodels/home_page_enum.dart';

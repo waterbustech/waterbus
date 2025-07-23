@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:toastification/toastification.dart';
-import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
@@ -16,6 +15,7 @@ import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_checkbox_card.dart';

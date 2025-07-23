@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
