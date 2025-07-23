@@ -148,9 +148,9 @@ class $AssetsImagesGen {
   AssetGenImage get logoRounded =>
       const AssetGenImage('assets/images/logo_rounded.png');
 
-  /// File path: assets/images/place_holder.png
+  /// File path: assets/images/place_holder.gif
   AssetGenImage get placeHolder =>
-      const AssetGenImage('assets/images/place_holder.png');
+      const AssetGenImage('assets/images/place_holder.gif');
 
   /// List of all assets
   List<AssetGenImage> get values => [
