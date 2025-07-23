@@ -54,6 +54,12 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
     _fullNameController.text = AppBloc.userBloc.user?.fullName ?? "Waterbus";
   }
 
+  bool get _isMemberInRecentRooms {
+    return AppBloc.recentJoinedBloc.recentRooms
+            .indexWhere((room) => room.code == widget.code) !=
+        -1;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double widthButton = context.isMobile ? 100.w : 230.sp;
@@ -92,7 +98,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               );
             },
           ),
-          widget.isMember
+          widget.isMember || _isMemberInRecentRooms
               ? SizedBox(height: 20.sp)
               : Padding(
                   padding: EdgeInsets.only(bottom: 12.sp),

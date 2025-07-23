@@ -165,15 +165,16 @@ class NotificationSettingsRoute extends GoRouteData
 )
 class LobbyRoute extends GoRouteData with _$LobbyRoute {
   final String code;
-  final LobbyScreenExtras $extra;
+  final Room? $extra;
+  final bool? isMember;
 
-  LobbyRoute({required this.code, this.$extra = const LobbyScreenExtras()});
+  LobbyRoute({required this.code, this.$extra, this.isMember});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LobbyScreen(
-      room: $extra.room,
-      isMember: $extra.isMember,
+      room: $extra,
+      isMember: isMember ?? false,
       code: code,
     );
   }
@@ -361,17 +362,10 @@ class RoomRoute extends GoRouteData with _$RoomRoute {
   Widget build(BuildContext context, GoRouterState state) {
     if (AppBloc.roomBloc.currentRoom == null) {
       scheduleMicrotask(() {
-        LobbyRoute(code: code, $extra: LobbyScreenExtras()).go(context);
+        LobbyRoute(code: code);
       });
     }
 
     return const RoomScreen();
   }
-}
-
-class LobbyScreenExtras {
-  final Room? room;
-  final bool isMember;
-
-  const LobbyScreenExtras({this.room, this.isMember = false});
 }

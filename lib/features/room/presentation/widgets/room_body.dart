@@ -181,6 +181,7 @@ class _RoomBodyState extends State<RoomBody> {
       _callState!.mParticipant!.isSpeakerPhoneEnabled;
   bool get _isVideoEnabled => _callState!.mParticipant!.isVideoEnabled;
   bool get _isAudioEnabled => _callState!.mParticipant!.isAudioEnabled;
+  bool get _isHandRaising => _callState!.mParticipant!.isHandRaising;
 
   @override
   Widget build(BuildContext context) {
@@ -476,16 +477,15 @@ class _RoomBodyState extends State<RoomBody> {
                             CallActionButton(
                               tooltipMessage:
                                   "${Strings.raiseHand.i18n} (ctrl + h)",
-                              icon: _callState!.mParticipant!.isHandRaising
+                              icon: _isHandRaising
                                   ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
                                   : PhosphorIcons.hand(),
-                              iconColor: _callState!.mParticipant!.isHandRaising
+                              iconColor: _isHandRaising
                                   ? Colors.yellow.shade100
                                   : null,
-                              backgroundColor:
-                                  _callState!.mParticipant!.isHandRaising
-                                      ? Colors.yellow.shade900
-                                      : null,
+                              backgroundColor: _isHandRaising
+                                  ? Colors.yellow.shade900
+                                  : null,
                               onTap: () {
                                 if (_currentUserMedia) return;
 

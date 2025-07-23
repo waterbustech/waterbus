@@ -499,10 +499,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    LobbyRoute(
-      code: room.code!,
-      $extra: LobbyScreenExtras(isMember: indexOfMember != -1, room: room),
-    ).push(AppRouter.context!);
+    LobbyRoute(code: room.code!, $extra: room, isMember: indexOfMember != -1)
+        .push(AppRouter.context!);
   }
 
   Future<void> startPiP() async {
