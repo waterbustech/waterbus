@@ -20,8 +20,7 @@ class DateTitleCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceDim.withValues(
-              alpha:
-                  Theme.of(context).brightness == Brightness.light ? 1 : 0.25,
+              alpha: 0.25,
             ),
       ),
       alignment: Alignment.centerLeft,

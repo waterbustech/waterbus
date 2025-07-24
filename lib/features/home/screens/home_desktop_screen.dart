@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/home/widgets/side_menu_widget.dart';
 import 'package:waterbus/features/home/xmodels/home_page_enum.dart';
@@ -43,7 +44,7 @@ class _HomeDesktopScreenState extends State<HomeDesktopScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 54.sp,
+                      height: PlatformUtils.isMacOS ? 60.sp : 54.sp,
                       padding: EdgeInsetsGeometry.only(left: 16.sp),
                       child: Row(
                         spacing: 60.sp,

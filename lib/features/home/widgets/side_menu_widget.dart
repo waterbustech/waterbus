@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/home/widgets/side_footer_body.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -76,7 +77,9 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
     return Container(
       height: 50.sp,
-      margin: EdgeInsets.only(top: 4.sp),
+      margin: EdgeInsets.only(
+        top: PlatformUtils.isMacOS ? 10.sp : 4.sp,
+      ),
       padding: EdgeInsets.all(12.sp),
       child: _isCollapsed
           ? appLogo

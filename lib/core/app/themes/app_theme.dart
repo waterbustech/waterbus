@@ -4,9 +4,34 @@ import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/utils/platform_utils.dart';
+class AppColor {
+  final Color background;
+  final Color error;
+  final Color contentText1;
+  final Color divider;
 
+  AppColor({
+    required this.background,
+    required this.error,
+    required this.contentText1,
+    required this.divider,
+  });
+
+  factory AppColor.light() {
+    return AppColor(
+      background: _SolarizedLightColors.base3,
+      error: _SolarizedLightColors.red,
+      contentText1: _SolarizedLightColors.base00,
+      divider: _SolarizedLightColors.base2,
+    );
+  }
+}
+
+class PlatformUtils {
+  static bool get isAndroid => defaultTargetPlatform == TargetPlatform.android;
+}
+
+// --- Dracula Theme Colors ---
 class _DraculaColors {
   const _DraculaColors();
 
@@ -15,6 +40,18 @@ class _DraculaColors {
   static const Color foreground = Color(0xFFF8F8F2);
   static const Color purple = Color(0xFFBD93F9);
   static const Color red = Color(0xFFFF5555);
+}
+
+// --- Solarized Light Theme Colors ---
+class _SolarizedLightColors {
+  const _SolarizedLightColors();
+
+  static const Color base3 = Color(0xFFFDF6E3);
+  static const Color base2 = Color(0xFFEEE8D5);
+  static const Color base00 = Color(0xFF657B83);
+  static const Color base01 = Color(0xFF586E75);
+  static const Color red = Color(0xFFDC322F);
+  static const Color blue = Color(0xFF268BD2);
 }
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
@@ -40,14 +77,66 @@ class AppTheme {
   factory AppTheme.light({
     List<ThemeExtension> extensions = const [],
   }) {
-    final appColors = AppColor.light();
     final themeData = ThemeData(
       brightness: Brightness.light,
       fontFamily: GoogleFonts.firaCode().fontFamily,
-      cardColor: Colors.black.withValues(alpha: .04),
-      textTheme: TextTheme(
-        labelMedium: TextStyle(color: fCD),
+      scaffoldBackgroundColor: _SolarizedLightColors.base3,
+      // Use a complementary blue as the seed for the color scheme.
+      colorSchemeSeed: _SolarizedLightColors.blue,
+      // Use a slightly darker off-white for cards to distinguish them.
+      cardColor: _SolarizedLightColors.base2,
+      // Use the main text color for readability.
+      textTheme: const TextTheme(
+        labelMedium: TextStyle(color: _SolarizedLightColors.base00),
+        bodyLarge: TextStyle(color: _SolarizedLightColors.base00),
+        bodyMedium: TextStyle(color: _SolarizedLightColors.base01),
       ),
+      dividerColor: Colors.grey.shade400,
+      dividerTheme: DividerThemeData(
+        color: Colors.grey.shade400,
+        space: 0,
+        thickness: 1,
+      ),
+
+      // --- App Bar ---
+      appBarTheme: AppBarTheme(
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: _SolarizedLightColors.base3,
+        // Set status bar icons to dark for contrast with the light background.
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        iconTheme: IconThemeData(
+          color: _SolarizedLightColors.base01,
+        ),
+        titleTextStyle: TextStyle(
+          color: _SolarizedLightColors.base00,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          fontFamily: GoogleFonts.firaCode().fontFamily,
+        ),
+      ),
+
+      // --- Components ---
+      snackBarTheme: const SnackBarThemeData(
+        backgroundColor:
+            _SolarizedLightColors.red, // Use Solarized red for errors.
+        behavior: SnackBarBehavior.floating,
+        contentTextStyle: TextStyle(color: _SolarizedLightColors.base3),
+      ),
+      bottomSheetTheme: ThemeData.light().bottomSheetTheme.copyWith(
+            backgroundColor: _SolarizedLightColors.base2,
+            elevation: 0,
+            modalElevation: 0,
+            modalBackgroundColor: _SolarizedLightColors.base3,
+            modalBarrierColor:
+                _SolarizedLightColors.base01.withValues(alpha: .2),
+          ),
+
+      // --- Page Transitions ---
       pageTransitionsTheme: kIsWeb
           ? PageTransitionsTheme(
               builders: {
@@ -61,40 +150,8 @@ class AppTheme {
                 TargetPlatform.android: CupertinoPageTransitionsBuilder(),
               },
             ),
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: appColors.error,
-        behavior: SnackBarBehavior.floating,
-      ),
-      bottomSheetTheme: ThemeData.dark().bottomSheetTheme.copyWith(
-            elevation: 0,
-            modalElevation: 0,
-            modalBarrierColor: Colors.blueGrey.withValues(alpha: .2),
-          ),
-      appBarTheme: AppBarTheme(
-        scrolledUnderElevation: 0,
-        surfaceTintColor: appColors.background,
-        backgroundColor: appColors.background,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.light ==
-                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
-          statusBarIconBrightness: Brightness.light ==
-                  (PlatformUtils.isAndroid ? Brightness.dark : Brightness.light)
-              ? Brightness.light
-              : Brightness.dark,
-        ),
-        iconTheme: IconThemeData(
-          color: appColors.contentText1,
-        ),
-      ),
-      dividerColor: appColors.divider,
-      dividerTheme: DividerThemeData(
-        color: appColors.divider,
-        space: 0,
-        thickness: .4,
-      ),
+
+      // --- Extensions ---
       extensions: extensions,
     );
     return AppTheme(
@@ -110,7 +167,6 @@ class AppTheme {
       fontFamily: GoogleFonts.firaCode().fontFamily,
       scaffoldBackgroundColor: _DraculaColors.background,
       // Use the iconic Dracula Purple as the seed for the color scheme.
-      // This will generate complementary shades for things like buttons, sliders, etc.
       colorSchemeSeed: _DraculaColors.purple,
       // Use a slightly lighter background color for cards to make them pop.
       cardColor: _DraculaColors.currentLine,

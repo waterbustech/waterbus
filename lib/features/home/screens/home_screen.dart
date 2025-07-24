@@ -277,7 +277,9 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 36.sp,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(2.sp),
-          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          color: Theme.of(context).brightness == Brightness.light
+              ? Theme.of(context).colorScheme.surfaceBright
+              : Theme.of(context).colorScheme.surfaceContainerHighest,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 1.2,

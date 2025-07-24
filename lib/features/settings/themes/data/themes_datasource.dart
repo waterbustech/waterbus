@@ -28,7 +28,7 @@ class ThemesDatasourceImpl extends ThemesDatasource {
 
     return ThemeMode.values.firstWhere(
       (theme) => theme.name == themeLabel,
-      orElse: () => ThemeMode.system,
+      orElse: () => ThemeMode.dark,
     );
   }
 }
