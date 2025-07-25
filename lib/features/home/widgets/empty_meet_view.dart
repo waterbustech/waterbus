@@ -70,7 +70,9 @@ class EmptyMeetView extends StatelessWidget {
                     LucideIcons.sparkles,
                     size: 14.sp,
                     fill: 1,
-                    color: const Color(0xFFF1FA8C),
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? const Color(0xFF0077D9)
+                        : const Color(0xFFF1FA8C),
                   ),
                   Text(
                     Strings.supportUs.i18n.toUpperCase(),

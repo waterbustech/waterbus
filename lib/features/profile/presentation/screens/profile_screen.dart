@@ -149,26 +149,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               borderRadius: BorderRadius.circular(2.sp),
                               color: Theme.of(context).brightness ==
                                       Brightness.light
-                                  ? Theme.of(context).colorScheme.surfaceBright
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerLowest
                                   : Theme.of(context)
                                       .colorScheme
                                       .surfaceContainerHighest,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF44475A)
-                                      .withValues(alpha: .5),
-                                  offset: const Offset(0, 2),
-                                  blurRadius: 2,
-                                  spreadRadius: 0.5,
-                                ),
-                                BoxShadow(
-                                  color: const Color(0xFF6272A4)
-                                      .withValues(alpha: .2),
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 1,
-                                  spreadRadius: 0.3,
-                                ),
-                              ],
                             ),
                             child: Column(
                               children: [
@@ -295,26 +281,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Brightness.light
                                     ? Theme.of(context)
                                         .colorScheme
-                                        .surfaceBright
+                                        .surfaceContainerLowest
                                     : Theme.of(context)
                                         .colorScheme
                                         .surfaceContainerHighest,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFF44475A)
-                                        .withValues(alpha: .5),
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 2,
-                                    spreadRadius: 0.5,
-                                  ),
-                                  BoxShadow(
-                                    color: const Color(0xFF6272A4)
-                                        .withValues(alpha: .2),
-                                    offset: const Offset(0, 1),
-                                    blurRadius: 1,
-                                    spreadRadius: 0.3,
-                                  ),
-                                ],
                               ),
                               child: Center(
                                 child: Text(
