@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+    <base href="/" />
+
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="The Open Source WebRTC SFU." />
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Waterbus" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icons/favicon.ico" />
+
+    <title>Waterbus</title>
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Retro Loader Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* General body styling */
+      body {
+        margin: 0;
+        background-color: #282a36;
+        color: #f8f8f2;
+        font-family: "VT323", monospace;
+        overflow: hidden;
+      }
+
+      /* Main container to center the content */
+      .main-container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #282a36;
+      }
+
+      /* The main loader container, keeping the original ID */
+      #progress-bar-container {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        border: 4px solid #44475a;
+        padding: 20px;
+        background-color: #21222c;
+        box-shadow: 8px 8px 0px #191a21;
+      }
+
+      /* Retro bat icon styling */
+      #retro-icon {
+        width: 64px;
+        height: 64px;
+        image-rendering: pixelated; /* Ensures the SVG looks sharp and blocky */
+      }
+
+      /* Loading text styling */
+      .loading-text-container {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        color: #f1fa8c;
+        text-shadow: 2px 2px 0 #000;
+      }
+
+      /* Blinking cursor effect */
+      .blinking-cursor {
+        animation: blink 1s step-end infinite;
+        margin-left: 8px;
+        font-size: 28px;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Progress bar outer shell */
+      .progress-bar-shell {
+        width: 100%;
+        height: 24px;
+        border: 2px solid #44475a;
+        background-color: #191a21;
+        padding: 4px;
+      }
+
+      /* The actual progress bar that fills up */
+      #progress-bar {
+        width: 0%;
+        height: 100%;
+        background-color: #bd93f9;
+        transition: width 0.1s linear; /* Smooth transition for filling effect */
+      }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <!-- Retro Loader HTML Structure -->
+    <div class="main-container">
+      <div id="progress-bar-container">
+        <!-- Retro bat icon using SVG -->
+        <svg
+          id="retro-icon"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+        >
+          <path
+            fill="#f8f8f2"
+            d="M4 5H3v1H2v1h1v1h1V7h1V6H5V5zM12 5h1v1h1v1h-1v1h-1V7h-1V6h1V5z"
+          />
+          <path fill="#f8f8f2" d="M8 4h1v1h1v1h1v2H5V6h1V5h1V4h1z" />
+          <path fill="#f8f8f2" d="M1 7h1v1H1zM14 7h1v1h-1z" />
+          <path fill="#f8f8f2" d="M3 8H2v1h1v1h1v1h8V9h1V8h-1V7H4v1H3z" />
+        </svg>
+
+        <div class="loading-text-container">
+          <span>LOADING</span>
+          <span class="blinking-cursor">_</span>
+        </div>
+
+        <!-- Horizontal progress bar -->
+        <div class="progress-bar-shell">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <script defer type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCg0POxwRZjYzVd4u571rkyObRdOHC3rvw",
+        authDomain: "waterbus-71cf5.firebaseapp.com",
+        projectId: "waterbus-71cf5",
+        storageBucket: "waterbus-71cf5.appspot.com",
+        messagingSenderId: "727554668212",
+        appId: "1:727554668212:web:6624269d0494b187b989e1",
+        measurementId: "G-3RWKDX1N14",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+    <script defer src="flutter_bootstrap.js" async></script>
+    <script src="main.js" async></script>
+    <script type="module" src="virtual-background.js"></script>
+  </body>
+</html>
