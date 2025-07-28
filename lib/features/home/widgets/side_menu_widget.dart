@@ -151,7 +151,11 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
             icon: Icon(item.value.iconData, size: 17.sp),
-            selectedIcon: Icon(item.value.iconData, size: 18.sp, fill: 1,),
+            selectedIcon: Icon(
+              item.value.iconData,
+              size: 18.sp,
+              fill: 1,
+            ),
           ),
         )
         .toList();
