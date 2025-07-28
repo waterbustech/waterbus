@@ -297,8 +297,7 @@ mixin _$LobbyRoute on GoRouteData {
   static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
         code: state.pathParameters['code']!,
         isMember: _$convertMapValue(
-                'is-member', state.uri.queryParameters, _$boolConverter) ??
-            false,
+            'is-member', state.uri.queryParameters, _$boolConverter),
         $extra: state.extra as Room?,
       );
 
@@ -308,7 +307,7 @@ mixin _$LobbyRoute on GoRouteData {
   String get location => GoRouteData.$location(
         '/lobby/${Uri.encodeComponent(_self.code)}',
         queryParams: {
-          if (_self.isMember != false) 'is-member': _self.isMember.toString(),
+          if (_self.isMember != null) 'is-member': _self.isMember!.toString(),
         },
       );
 

@@ -10,6 +10,7 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
+import 'package:waterbus/features/settings/presentation/bloc/notification_setting_bloc.dart';
 import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class AppBloc {
@@ -22,6 +23,8 @@ class AppBloc {
   static final MessageBloc messageBloc = getIt<MessageBloc>();
   static final RecentJoinedBloc recentJoinedBloc = getIt<RecentJoinedBloc>();
   static final BeautyFiltersBloc beautyFiltersBloc = getIt<BeautyFiltersBloc>();
+  static final NotificationSettingBloc notificationSettingBloc =
+      getIt<NotificationSettingBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
 
   static final List<BlocProvider> providers = [
@@ -55,6 +58,9 @@ class AppBloc {
     BlocProvider<ThemesBloc>(
       create: (context) => themesBloc,
     ),
+    BlocProvider<NotificationSettingBloc>(
+      create: (context) => notificationSettingBloc,
+    ),
   ];
 
   Future<void> bootstrap() async {
@@ -63,6 +69,7 @@ class AppBloc {
     roomBloc.add(RoomStarted());
     chatBloc.add(ChatStarted());
     messageBloc.add(MessageSocketStarted());
+    notificationSettingBloc.add(NotificationSettingGet());
   }
 
   ///Singleton factory
