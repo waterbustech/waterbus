@@ -6,10 +6,10 @@ import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
-class MessageSuggestWidget extends StatelessWidget {
+class GreetingMessageWidget extends StatelessWidget {
   final String image;
 
-  const MessageSuggestWidget({
+  const GreetingMessageWidget({
     super.key,
     required this.image,
   });
@@ -33,7 +33,9 @@ class MessageSuggestWidget extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.sp),
-                  color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                  color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                        alpha: 0.25,
+                      ),
                 ),
                 margin: EdgeInsets.only(
                   bottom: context.isDesktop

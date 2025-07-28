@@ -89,23 +89,23 @@ class _RoomViewState extends State<RoomView>
           return ValueListenableBuilder<SuperellipseShape>(
             valueListenable: _shapeNotifier,
             builder: (context, shape, _) {
-              return Material(
-                clipBehavior: Clip.hardEdge,
-                type: MaterialType.card,
-                color: Theme.of(context).colorScheme.onInverseSurface,
-                shape: shape,
-                child: SizedBox(
-                  width: widget.width,
-                  child: Container(
-                    margin: widget.margin,
-                    child: Stack(
-                      children: [
-                        _buildMainContent(),
-                        if (kIsWeb) _buildPiPButton(),
-                        _buildNameLabel(),
-                        _buildHandRaiseIndicator(),
-                      ],
-                    ),
+              return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                        alpha: 0.25,
+                      ),
+                  borderRadius: BorderRadius.circular(2.sp),
+                ),
+                width: widget.width,
+                child: Container(
+                  margin: widget.margin,
+                  child: Stack(
+                    children: [
+                      _buildMainContent(),
+                      if (kIsWeb) _buildPiPButton(),
+                      _buildNameLabel(),
+                      _buildHandRaiseIndicator(),
+                    ],
                   ),
                 ),
               );

@@ -314,7 +314,7 @@ class _StatsViewState extends State<StatsView> {
                 style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).colorScheme.surfaceBright,
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                 ),
               ),
             ],

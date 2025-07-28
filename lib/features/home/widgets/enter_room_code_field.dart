@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/styles/style.dart';
 
 class EnterRoomCodeField extends StatefulWidget {
   final Function()? onTap;
@@ -38,11 +39,17 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
     return Container(
       margin: widget.margin ?? EdgeInsets.symmetric(horizontal: 10.sp),
       child: Row(
-        spacing: 24.sp,
+        spacing: 12.sp,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Theme.of(context).colorScheme.surfaceContainer
+                    : Theme.of(context).colorScheme.surfaceContainerHighest,
+                boxShadow: kDefaultShadow(context),
+              ),
               width: 100.w,
               height: 36.sp,
               child: TextFormField(
@@ -65,17 +72,21 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
                     fontSize: 11.sp,
                   ),
                   filled: true,
-                  fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+                  fillColor: Colors.transparent,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(2.sp),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(2.sp),
+                    borderSide: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.3),
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.circular(2.sp),
                     borderSide: widget.onTap != null
                         ? BorderSide.none
                         : BorderSide(

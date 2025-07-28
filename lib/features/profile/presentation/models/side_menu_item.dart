@@ -19,7 +19,7 @@ class SideMenuItem {
 final List<SideMenuItem> sideMenuItems = [
   SideMenuItem(
     label: Strings.recent,
-    iconData: LucideIcons.ratio,
+    iconData: LucideIcons.proportions,
   ),
   SideMenuItem(
     label: Strings.chat,

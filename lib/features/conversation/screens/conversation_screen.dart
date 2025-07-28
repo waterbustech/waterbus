@@ -13,10 +13,10 @@ import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/widgets/conversation_header.dart';
+import 'package:waterbus/features/conversation/widgets/greeting_message_widget.dart';
 import 'package:waterbus/features/conversation/widgets/list_conversation_shimmers.dart';
 import 'package:waterbus/features/conversation/widgets/message_input_container.dart';
 import 'package:waterbus/features/conversation/widgets/message_list.dart';
-import 'package:waterbus/features/conversation/widgets/message_suggest_widget.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -102,7 +102,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                 ),
                               );
                             },
-                            child: MessageSuggestWidget(image: _image),
+                            child: GreetingMessageWidget(image: _image),
                           )
                         : MessageList(
                             messages: messages,

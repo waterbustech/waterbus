@@ -62,102 +62,131 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double previewCameraWidth = context.isDesktop ? 52.w : 60.w;
-    final double previewCameraHeight = context.isDesktop
-        ? previewCameraWidth / 16 * 9
-        : previewCameraWidth / 3 * 4;
+    final double previewCameraWidth = context.isDesktop ? 50.w : 60.w;
 
     return Scaffold(
       body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: context.isDesktop ? 8.w : 12.sp),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.isDesktop ? 8.w : 12.sp,
+        ),
         child: Center(
-          child: SingleChildScrollView(
-            physics: context.isDesktop ? NeverScrollableScrollPhysics() : null,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: context.isDesktop ? 0 : 50.sp),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PreviewCameraCard(
-                      height: previewCameraHeight,
-                      width: previewCameraWidth,
-                    ),
-                    if (context.isDesktop)
-                      Expanded(
-                        child: JoinRoomActions(
-                          room: widget.room,
-                          code: widget.code,
-                          isMember: widget.isMember,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1600),
+            child: SingleChildScrollView(
+              physics:
+                  context.isDesktop ? NeverScrollableScrollPhysics() : null,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: context.isDesktop ? 0 : 50.sp),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 800.sp,
+                        ),
+                        width: previewCameraWidth,
+                        child: AspectRatio(
+                          aspectRatio: context.isDesktop ? 16 / 9 : 3 / 4,
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return PreviewCameraCard(
+                                width: constraints.maxWidth,
+                                height: constraints.maxHeight,
+                              );
+                            },
+                          ),
                         ),
                       ),
-                  ],
-                ),
-                SizedBox(height: 18.sp),
-                if (context.isDesktop)
-                  Row(
-                    children: [
-                      if (_audioInputs.isNotEmpty)
-                        _mediaDeviceButton(
-                          icon: PhosphorIcons.microphone(),
-                          currentData: _audioInput!,
-                          context: context,
-                          onChanged: (val) {
-                            if (val == null) return;
-
-                            setState(() {
-                              _audioInput = val;
-                            });
-
-                            AppBloc.roomBloc.add(
-                              RoomAudioDeviceToggled(mediaDeviceInfo: val),
-                            );
-                          },
-                          mediaDeviceInfos: _audioInputs,
-                        ),
-                      if (_audioOutputs.isNotEmpty)
-                        _mediaDeviceButton(
-                          icon: PhosphorIcons.speakerHigh(),
-                          currentData: _audioOutput!,
-                          context: context,
-                          onChanged: (val) {
-                            setState(() {
-                              _audioOutput = val;
-                            });
-                          },
-                          mediaDeviceInfos: _audioOutputs,
-                        ),
-                      if (_videoInputs.isNotEmpty)
-                        _mediaDeviceButton(
-                          icon: PhosphorIcons.videoCamera(),
-                          currentData: _videoInput!,
-                          context: context,
-                          onChanged: (val) {
-                            if (val == null) return;
-
-                            setState(() {
-                              _videoInput = val;
-                            });
-
-                            AppBloc.roomBloc.add(
-                              RoomVideoDeviceToggled(mediaDeviceInfo: val),
-                            );
-                          },
-                          mediaDeviceInfos: _videoInputs,
+                      if (context.isDesktop)
+                        Expanded(
+                          child: JoinRoomActions(
+                            room: widget.room,
+                            code: widget.code,
+                            isMember: widget.isMember,
+                          ),
                         ),
                     ],
                   ),
-                if (context.isMobile)
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
-                    child: JoinRoomActions(
-                      room: widget.room,
-                      isMember: widget.isMember,
+                  SizedBox(height: 18.sp),
+                  if (context.isDesktop)
+                    Row(
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 800.sp,
+                          ),
+                          child: Row(
+                            children: [
+                              if (_audioInputs.isNotEmpty)
+                                _mediaDeviceButton(
+                                  icon: PhosphorIcons.microphone(),
+                                  currentData: _audioInput!,
+                                  context: context,
+                                  onChanged: (val) {
+                                    if (val == null) return;
+
+                                    setState(() {
+                                      _audioInput = val;
+                                    });
+
+                                    AppBloc.roomBloc.add(
+                                      RoomAudioDeviceToggled(
+                                        mediaDeviceInfo: val,
+                                      ),
+                                    );
+                                  },
+                                  mediaDeviceInfos: _audioInputs,
+                                ),
+                              if (_audioOutputs.isNotEmpty)
+                                _mediaDeviceButton(
+                                  icon: PhosphorIcons.speakerHigh(),
+                                  currentData: _audioOutput!,
+                                  context: context,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _audioOutput = val;
+                                    });
+                                  },
+                                  mediaDeviceInfos: _audioOutputs,
+                                ),
+                              if (_videoInputs.isNotEmpty)
+                                _mediaDeviceButton(
+                                  icon: PhosphorIcons.videoCamera(),
+                                  currentData: _videoInput!,
+                                  context: context,
+                                  onChanged: (val) {
+                                    if (val == null) return;
+
+                                    setState(() {
+                                      _videoInput = val;
+                                    });
+
+                                    AppBloc.roomBloc.add(
+                                      RoomVideoDeviceToggled(
+                                        mediaDeviceInfo: val,
+                                      ),
+                                    );
+                                  },
+                                  mediaDeviceInfos: _videoInputs,
+                                ),
+                            ],
+                          ),
+                        ),
+                        if (context.isDesktop) const Spacer(),
+                      ],
                     ),
-                  ),
-              ],
+                  if (context.isMobile)
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
+                      child: JoinRoomActions(
+                        room: widget.room,
+                        isMember: widget.isMember,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
@@ -173,8 +202,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
     required IconData icon,
   }) {
     return Container(
-      width: context.isDesktop ? 15.w : 100.w,
-      padding: EdgeInsets.symmetric(horizontal: 4.sp, vertical: 6.sp),
+      width: context.isDesktop ? 160.sp : 100.w,
+      margin: EdgeInsets.symmetric(horizontal: 4.sp, vertical: 6.sp),
       child: showDropdownButton<MediaDeviceInfo>(
         data: mediaDeviceInfos,
         onChanged: onChanged,

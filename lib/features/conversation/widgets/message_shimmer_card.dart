@@ -36,7 +36,9 @@ class MessageShimmerCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: isMe
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.surfaceContainerHighest,
+                : Theme.of(context).colorScheme.surfaceDim.withValues(
+                      alpha: 0.25,
+                    ),
             borderRadius: BorderRadius.circular(10.sp),
           ),
           constraints:

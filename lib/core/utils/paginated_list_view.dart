@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
@@ -59,7 +58,10 @@ class PaginatedListView extends StatefulWidget {
 
 class _PaginatedListViewState extends State<PaginatedListView> {
   late ScrollController _scrollController = ScrollController();
-  final RefreshController _refreshController = RefreshController();
+  final RefreshController _refreshController = RefreshController(
+    initialLoadStatus: LoadStatus.idle,
+    initialRefreshStatus: RefreshStatus.completed,
+  );
 
   @override
   void initState() {
@@ -112,7 +114,7 @@ class _PaginatedListViewState extends State<PaginatedListView> {
         header: WaterDropHeader(
           refresh: const CupertinoActivityIndicator(),
           complete: const SizedBox(),
-          completeDuration: 100.milliseconds,
+          completeDuration: 0.milliseconds,
         ),
         onRefresh: () async {
           if (widget.callBackRefresh != null) {
@@ -217,7 +219,7 @@ class _PaginatedListViewState extends State<PaginatedListView> {
         slivers: [
           SliverPadding(
             padding: widget.padding ?? EdgeInsets.zero,
-            sliver: SuperSliverList(
+            sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   if (widget.isLoadMore && index == widget.itemCount) {

@@ -29,7 +29,7 @@ final List<MenuItemModel> menuItems = [
   ),
   MenuItemModel(
     title: Strings.settings,
-    icon: LucideIcons.slidersHorizontal,
+    icon: LucideIcons.settings2,
   ),
   MenuItemModel(
     title: Strings.licenses,

@@ -15,6 +15,7 @@ class ProfileTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validatorForm;
   final FocusNode? focusNode;
+  final Color? filledColor;
 
   const ProfileTextField({
     super.key,
@@ -26,6 +27,7 @@ class ProfileTextField extends StatelessWidget {
     this.inputFormatters,
     this.validatorForm,
     this.focusNode,
+    this.filledColor,
   });
 
   @override
@@ -51,8 +53,14 @@ class ProfileTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(2.sp),
         borderSide: BorderSide.none,
       ),
-      fillColor: Theme.of(context).colorScheme.onInverseSurface,
+      fillColor: filledColor ?? _defaultFillColor(context),
       controller: controller,
     );
+  }
+
+  Color _defaultFillColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? Theme.of(context).colorScheme.surfaceContainerLowest
+        : Theme.of(context).colorScheme.surfaceContainerHighest;
   }
 }

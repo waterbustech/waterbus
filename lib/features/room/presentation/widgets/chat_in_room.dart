@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
@@ -67,73 +66,70 @@ class _ChatInRoomState extends State<ChatInRoom> {
     return Padding(
       padding:
           context.isDesktop ? EdgeInsets.only(right: 16.sp) : EdgeInsets.zero,
-      child: Material(
-        clipBehavior: Clip.hardEdge,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(12.sp),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                alpha: 0.25,
+              ),
+          borderRadius: BorderRadius.circular(2.sp),
         ),
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
-        child: Container(
-          padding: EdgeInsets.all(4.sp),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(12.sp),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Chats",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
+        padding: EdgeInsets.all(4.sp),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(12.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Chats",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  GestureWrapper(
+                    onTap: () {
+                      widget.onClosePressed();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 18.sp,
+                      width: 18.sp,
+                      child: Icon(
+                        PhosphorIcons.x(),
+                        size: 18.sp,
                       ),
                     ),
-                    GestureWrapper(
-                      onTap: () {
-                        widget.onClosePressed();
-                      },
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 18.sp,
-                        width: 18.sp,
-                        child: Icon(
-                          PhosphorIcons.x(),
-                          size: 18.sp,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: BlocBuilder<MessageBloc, MessageState>(
-                  builder: (context, state) {
-                    if (state is MessageInitial) {
-                      return const SizedBox();
-                    }
-
-                    if (state is MessageActived) {
-                      final List<Message> messages = state.messages;
-                      return MessageList(
-                        messages: messages,
-                        scrollController: _scrollController,
-                      );
-                    }
-
+            ),
+            Expanded(
+              child: BlocBuilder<MessageBloc, MessageState>(
+                builder: (context, state) {
+                  if (state is MessageInitial) {
                     return const SizedBox();
-                  },
-                ),
+                  }
+
+                  if (state is MessageActived) {
+                    final List<Message> messages = state.messages;
+                    return MessageList(
+                      messages: messages,
+                      scrollController: _scrollController,
+                    );
+                  }
+
+                  return const SizedBox();
+                },
               ),
-              MessageInputContainer(
-                roomId: widget.room.id,
-                backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-                isBorderVisible: false,
-                isChatInMeeting: true,
-                borderRadius: BorderRadius.circular(12.sp),
-              ),
-            ],
-          ),
+            ),
+            MessageInputContainer(
+              roomId: widget.room.id,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+              borderRadius: BorderRadius.circular(12.sp),
+            ),
+          ],
         ),
       ),
     );

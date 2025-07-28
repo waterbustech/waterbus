@@ -78,7 +78,7 @@ Future showDialogWaterbus({
           bottom: paddingBottom,
         ),
         backgroundColor: backgroundColor ??
-            Theme.of(AppRouter.context!).dialogTheme.backgroundColor,
+            Theme.of(AppRouter.context!).scaffoldBackgroundColor,
         child: PopScope(
           canPop: dismissible,
           child: GestureDetector(

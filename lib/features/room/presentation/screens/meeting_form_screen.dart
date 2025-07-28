@@ -40,13 +40,6 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
   RoomType _selectedRoomType = RoomType.videoConferencing;
   StreamingProtocol _selectedProtocol = StreamingProtocol.sfu;
 
-  // Mono Style Colors
-  final Color _foregroundColor = const Color(0xFFF4F4F5); // main foreground
-  final Color _cardColor = const Color(0xFF1F1F23); // surface/card
-  final Color _primaryColor = const Color(0xFFD4D4D8); // neutral foreground
-  final Color _secondaryColor = const Color(0xFF71717A); // subtle foreground
-  final Color _borderColor = const Color(0xFF27272A); // border surface
-
   @override
   void initState() {
     super.initState();
@@ -104,137 +97,116 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Theme(
-      data: Theme.of(context).copyWith(
-        primaryColor: _primaryColor,
-        hintColor: _secondaryColor,
-        dividerColor: _borderColor,
-        textTheme: textTheme,
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: _primaryColor,
-              secondary: _secondaryColor,
-              surface: _cardColor,
-              onSecondary: _foregroundColor,
-              onSurface: _foregroundColor,
-              error: Colors.red,
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.enter): _handleFormSubmission,
+      },
+      child: Scaffold(
+        appBar: appBarTitleBack(
+          context,
+          titleWidget: Text(
+            _isEditing ? Strings.editMeeting.i18n : Strings.createMeeting.i18n,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
-      ),
-      child: CallbackShortcuts(
-        bindings: {
-          const SingleActivator(LogicalKeyboardKey.enter):
-              _handleFormSubmission,
-        },
-        child: Scaffold(
-          appBar: appBarTitleBack(
-            context,
-            titleWidget: Text(
-              _isEditing
-                  ? Strings.editMeeting.i18n
-                  : Strings.createMeeting.i18n,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color: _foregroundColor,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: _handleFormSubmission,
-                icon: Icon(
-                  PhosphorIcons.check(),
-                  size: 20.sp,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ],
           ),
-          body: Form(
-            key: _formStateKey,
-            child: Column(
-              children: [
-                const Divider(height: 1),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 24.sp),
-                        ShadcnTextField(
-                          controller: _roomNameController,
-                          label: Strings.roomTitle.i18n,
-                          hint: Strings.nameOrTitleHint.i18n,
-                          validator: (val) {
-                            if (val?.isEmpty ?? true) {
-                              return Strings.roomTitleEmpty.i18n;
-                            }
-                            return null;
-                          },
-                        ),
+          actions: [
+            IconButton(
+              onPressed: _handleFormSubmission,
+              icon: Icon(
+                PhosphorIcons.check(),
+                size: 20.sp,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ],
+        ),
+        body: Form(
+          key: _formStateKey,
+          child: Column(
+            children: [
+              const Divider(height: 1),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 24.sp),
+                      ShadcnTextField(
+                        controller: _roomNameController,
+                        label: Strings.roomTitle.i18n,
+                        hint: Strings.nameOrTitleHint.i18n,
+                        validator: (val) {
+                          if (val?.isEmpty ?? true) {
+                            return Strings.roomTitleEmpty.i18n;
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 12.sp),
+                      ShadcnTextField(
+                        controller: _passwordController,
+                        label: Strings.passwordOptional.i18n,
+                        hint: Strings.passwordHint.i18n,
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 12.sp),
+                      _buildDropdown<RoomType>(
+                        label: Strings.roomType.i18n,
+                        value: _selectedRoomType,
+                        items: RoomType.values,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              _selectedRoomType = value;
+                            });
+                          }
+                        },
+                        itemBuilder: (type) {
+                          return Text(
+                            type == RoomType.videoConferencing
+                                ? Strings.videoConferencing.i18n
+                                : Strings.liveStreaming.i18n,
+                          );
+                        },
+                      ),
+                      if (_selectedRoomType == RoomType.liveStreaming) ...[
                         SizedBox(height: 12.sp),
-                        ShadcnTextField(
-                          controller: _passwordController,
-                          label: Strings.passwordOptional.i18n,
-                          hint: Strings.passwordHint.i18n,
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 12.sp),
-                        _buildDropdown<RoomType>(
-                          label: Strings.roomType.i18n,
-                          value: _selectedRoomType,
-                          items: RoomType.values,
+                        _buildDropdown<StreamingProtocol>(
+                          label: Strings.streamingProtocol.i18n,
+                          value: _selectedProtocol,
+                          items: StreamingProtocol.values,
                           onChanged: (value) {
                             if (value != null) {
                               setState(() {
-                                _selectedRoomType = value;
+                                _selectedProtocol = value;
                               });
                             }
                           },
-                          itemBuilder: (type) {
-                            return Text(
-                              type == RoomType.videoConferencing
-                                  ? Strings.videoConferencing.i18n
-                                  : Strings.liveStreaming.i18n,
-                            );
+                          itemBuilder: (protocol) {
+                            return Text(protocol.name.toUpperCase());
                           },
                         ),
-                        if (_selectedRoomType == RoomType.liveStreaming) ...[
-                          SizedBox(height: 12.sp),
-                          _buildDropdown<StreamingProtocol>(
-                            label: Strings.streamingProtocol.i18n,
-                            value: _selectedProtocol,
-                            items: StreamingProtocol.values,
-                            onChanged: (value) {
-                              if (value != null) {
-                                setState(() {
-                                  _selectedProtocol = value;
-                                });
-                              }
-                            },
-                            itemBuilder: (protocol) {
-                              return Text(protocol.name.toUpperCase());
-                            },
-                          ),
-                        ],
-                        SizedBox(height: 12.sp),
-                        ShadcnTextField(
-                          controller: _maxParticipantsController,
-                          label: Strings.maxParticipants.i18n,
-                          hint: Strings.maxHint.i18n,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
-                        SizedBox(height: 24.sp),
                       ],
-                    ),
+                      SizedBox(height: 12.sp),
+                      ShadcnTextField(
+                        controller: _maxParticipantsController,
+                        label: Strings.maxParticipants.i18n,
+                        hint: Strings.maxHint.i18n,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                      SizedBox(height: 24.sp),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -256,7 +228,7 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: _secondaryColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         SizedBox(height: 8.sp),
@@ -282,13 +254,13 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
               icon: Icon(
                 PhosphorIcons.caretDown(),
                 size: 14.sp,
-                color: _secondaryColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               onChanged: onChanged,
-              dropdownColor: _cardColor,
+              dropdownColor: Theme.of(context).colorScheme.surface,
               style: TextStyle(
                 fontSize: 12,
-                color: _foregroundColor,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               items: items.map<DropdownMenuItem<T>>((item) {
                 return DropdownMenuItem<T>(

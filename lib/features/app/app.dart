@@ -48,7 +48,8 @@ class _AppState extends State<App> {
                   darkTheme: AppTheme.dark(
                     extensions: [sizerExtension],
                   ).data,
-                  themeMode: theme.props.first,
+                  themeMode:
+                      theme is ThemesStateInitial ? theme.mode : ThemeMode.dark,
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(

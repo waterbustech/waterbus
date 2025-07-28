@@ -147,9 +147,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2.sp),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onInverseSurface,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerLowest
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerHighest,
                             ),
                             child: Column(
                               children: [
@@ -157,10 +162,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   controller: _fullNameController,
                                   hintText: Strings.fullname.i18n,
                                   margin: EdgeInsets.zero,
+                                  filledColor: Colors.transparent,
                                 ),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.sp),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.sp,
+                                  ),
                                   child: divider,
                                 ),
                                 GestureWrapper(
@@ -182,9 +189,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2.sp),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onInverseSurface,
                                     ),
                                     child: Row(
                                       children: [
@@ -273,9 +277,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2.sp),
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onInverseSurface,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .surfaceContainerLowest
+                                    : Theme.of(context)
+                                        .colorScheme
+                                        .surfaceContainerHighest,
                               ),
                               child: Center(
                                 child: Text(

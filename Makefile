@@ -14,3 +14,5 @@ build-runner:
 	dart run build_runner build -d
 	dart run import_sorter:main
 	dart fix --apply
+build-web:
+	flutter build web --wasm --release --optimization-level=4

@@ -124,19 +124,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ],
             ),
-      body: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
-          if (state is ChatActived) {
-            return ConversationList(
-              onTap: (index) {
-                if (index > state.conversations.length - 1) return;
-
-                _handleTapChatItem(state.conversations[index]);
-              },
-            );
-          }
-
-          return const SizedBox();
+      body: ConversationList(
+        onTap: (room) {
+          _handleTapChatItem(room);
         },
       ),
     );

@@ -18,158 +18,140 @@
 
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-    <title>Waterbus</title>
     <meta name="description" content="The Open Source WebRTC SFU." />
-    <meta name="keywords" content="WebRTC, Video Conferencing, SFU" />
-    <meta name="author" content="Waterbus Tech" />
+
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Waterbus" />
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 
-    <!-- Web Meta -->
-    <meta
-      name="google-signin-client_id"
-      content="727554668212-292n8fha44s1tmj0s3d0fqv0qv75bm9r.apps.googleusercontent.com"
-    />
-
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="icons/favicon.ico" />
 
     <title>Waterbus</title>
     <link rel="manifest" href="manifest.json" />
-    <meta
-      property="og:description"
-      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
-    />
-    <meta
-      property="og:image"
-      content="https://docs.waterbus.tech/img/banner-dark.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Waterbus Open Source" />
-    <meta
-      name="twitter:description"
-      content="Open source video conferencing app built on latest WebRTC SDK Android/iOS/MacOS/Web"
-    />
-    <meta
-      name="twitter:image"
-      content="https://docs.waterbus.tech/img/banner-dark.png"
+
+    <!-- Retro Loader Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
     />
 
-    <meta
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
-      name="viewport"
-    />
-    <style id="splash-screen-style">
-      html {
-        height: 100%;
-      }
-
+    <style>
+      /* General body styling */
       body {
         margin: 0;
-        min-height: 100%;
-        background-color: #ffffff;
-        background-size: 100% 100%;
+        background-color: #282a36;
+        color: #f8f8f2;
+        font-family: "VT323", monospace;
+        overflow: hidden;
       }
 
-      .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+      /* Main container to center the content */
+      .main-container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #282a36;
       }
 
-      .contain {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+      /* The main loader container, keeping the original ID */
+      #progress-bar-container {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        border: 4px solid #44475a;
+        padding: 20px;
+        background-color: #21222c;
+        box-shadow: 8px 8px 0px #191a21;
       }
 
-      .stretch {
-        display: block;
-        width: 100%;
-        height: 100%;
+      /* Retro bat icon styling */
+      #retro-icon {
+        width: 64px;
+        height: 64px;
+        image-rendering: pixelated; /* Ensures the SVG looks sharp and blocky */
       }
 
-      .cover {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      /* Loading text styling */
+      .loading-text-container {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        color: #f1fa8c;
+        text-shadow: 2px 2px 0 #000;
       }
 
-      .bottom {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        -ms-transform: translate(-50%, 0);
-        transform: translate(-50%, 0);
+      /* Blinking cursor effect */
+      .blinking-cursor {
+        animation: blink 1s step-end infinite;
+        margin-left: 8px;
+        font-size: 28px;
       }
 
-      .bottomLeft {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-      }
-
-      .bottomRight {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #14171a;
+      @keyframes blink {
+        50% {
+          opacity: 0;
         }
       }
-    </style>
-    <script id="splash-screen-script">
-      function removeSplashFromWeb() {
-        document.getElementById("splash")?.remove();
-        document.getElementById("splash-branding")?.remove();
-        document.body.style.background = "transparent";
-      }
-    </script>
-    <meta
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-      name="viewport"
-    />
-  </head>
-  <body>
-    <picture id="splash">
-      <source
-        srcset="
-          splash/img/light-1x.png 1x,
-          splash/img/light-2x.png 2x,
-          splash/img/light-3x.png 3x,
-          splash/img/light-4x.png 4x
-        "
-        media="(prefers-color-scheme: light)"
-      />
-      <source
-        srcset="
-          splash/img/dark-1x.png 1x,
-          splash/img/dark-2x.png 2x,
-          splash/img/dark-3x.png 3x,
-          splash/img/dark-4x.png 4x
-        "
-        media="(prefers-color-scheme: dark)"
-      />
-      <img
-        class="center"
-        aria-hidden="true"
-        src="splash/img/light-1x.png"
-        alt=""
-      />
-    </picture>
 
-    <script type="module">
+      /* Progress bar outer shell */
+      .progress-bar-shell {
+        width: 100%;
+        height: 24px;
+        border: 2px solid #44475a;
+        background-color: #191a21;
+        padding: 4px;
+      }
+
+      /* The actual progress bar that fills up */
+      #progress-bar {
+        width: 0%;
+        height: 100%;
+        background-color: #bd93f9;
+        transition: width 0.1s linear; /* Smooth transition for filling effect */
+      }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <!-- Retro Loader HTML Structure -->
+    <div class="main-container">
+      <div id="progress-bar-container">
+        <!-- Retro bat icon using SVG -->
+        <svg
+          id="retro-icon"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+        >
+          <path
+            fill="#f8f8f2"
+            d="M4 5H3v1H2v1h1v1h1V7h1V6H5V5zM12 5h1v1h1v1h-1v1h-1V7h-1V6h1V5z"
+          />
+          <path fill="#f8f8f2" d="M8 4h1v1h1v1h1v2H5V6h1V5h1V4h1z" />
+          <path fill="#f8f8f2" d="M1 7h1v1H1zM14 7h1v1h-1z" />
+          <path fill="#f8f8f2" d="M3 8H2v1h1v1h1v1h8V9h1V8h-1V7H4v1H3z" />
+        </svg>
+
+        <div class="loading-text-container">
+          <span>LOADING</span>
+          <span class="blinking-cursor">_</span>
+        </div>
+
+        <!-- Horizontal progress bar -->
+        <div class="progress-bar-shell">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <script defer type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
       // TODO: Add SDKs for Firebase products that you want to use
@@ -190,7 +172,7 @@
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
     </script>
-    <script src="flutter_bootstrap.js" async></script>
+    <script defer src="flutter_bootstrap.js" async></script>
     <script src="main.js" async></script>
     <script type="module" src="virtual-background.js"></script>
   </body>

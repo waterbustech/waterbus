@@ -6,6 +6,7 @@ import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
+import 'package:waterbus/features/home/widgets/empty_meet_view.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -106,11 +107,13 @@ class LogInScreen extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
-                child: Assets.images.worldMap.image(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                      alpha: Theme.of(context).brightness == Brightness.light
+                          ? 1
+                          : 0.25,
+                    ),
+                alignment: Alignment.center,
+                child: const EmptyMeetView(),
               ),
             ),
           ],

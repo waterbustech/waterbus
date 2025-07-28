@@ -7,6 +7,7 @@ import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/home/widgets/side_footer_body.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -43,9 +44,9 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
           SideMenuItemDataDivider(
             padding: EdgeInsetsDirectional.symmetric(vertical: 0.sp),
             divider: Divider(
-              color: Colors.grey.shade700,
-              height: .5,
-              thickness: .5,
+              color: Theme.of(context).dividerColor,
+              height: 1,
+              thickness: 1,
             ),
           ),
           ..._buildListItem(context, sideMenuItems),
@@ -72,11 +73,13 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   }
 
   Widget _buildHeader(BuildContext context) {
-    final appLogo = Assets.images.logoRounded2.image(height: 24.sp);
+    final appLogo = Assets.images.logoRounded.image(height: 24.sp);
 
     return Container(
       height: 50.sp,
-      margin: EdgeInsets.only(top: 4.sp),
+      margin: EdgeInsets.only(
+        top: PlatformUtils.isMacOS ? 10.sp : 4.sp,
+      ),
       padding: EdgeInsets.all(12.sp),
       child: _isCollapsed
           ? appLogo
@@ -181,12 +184,12 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
         return Container(
           decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: Theme.of(context).dividerColor,
-              ),
+            borderRadius: BorderRadius.circular(2.sp),
+            border: Border.all(
+              color: Theme.of(context).dividerColor,
             ),
           ),
+          margin: EdgeInsets.all(8.sp),
           padding: EdgeInsets.symmetric(horizontal: 6.sp),
           child: SideFooterBody(
             userAvatar: userAvatar,

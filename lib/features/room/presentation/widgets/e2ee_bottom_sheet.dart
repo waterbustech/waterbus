@@ -22,7 +22,7 @@ class E2eeBottomSheet extends StatelessWidget {
         children: [
           SizedBox(height: 40.sp),
           Image.asset(
-            Assets.images.logoRounded2.path,
+            Assets.images.logoRounded.path,
             width: 50.sp,
             fit: BoxFit.fitWidth,
           ),
