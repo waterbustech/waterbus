@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,10 +24,12 @@ import 'package:waterbus/features/settings/presentation/screens/call_settings_sc
 
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
+  final Function onVirtualBackground;
 
   const CallSettingsBottomSheet({
     super.key,
     required this.onBeautyFiltersTapped,
+    required this.onVirtualBackground,
   });
 
   @override
@@ -86,7 +89,7 @@ class CallSettingsBottomSheet extends StatelessWidget {
                         );
                       },
                     ),
-                  if (context.isMobile)
+                  if (!kIsWeb)
                     CallSettingButton(
                       icon: PhosphorIcons.fire(),
                       lable: Strings.beautyFilters.i18n,
@@ -121,7 +124,11 @@ class CallSettingsBottomSheet extends StatelessWidget {
                     onTap: () {
                       AppRouter.pop();
 
-                      BackgroundGalleryRoute().push(context);
+                      if (context.isMobile) {
+                        BackgroundGalleryRoute().push(context);
+                      } else {
+                        onVirtualBackground.call();
+                      }
                     },
                   ),
                   CallSettingButton(

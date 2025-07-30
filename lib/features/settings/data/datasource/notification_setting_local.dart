@@ -15,7 +15,8 @@ class NotificationSettingLocalImpl extends NotificationSettingLocal {
 
   @override
   NotificationSettings get getNotificationSettings {
-    final rawList = _hiveBox.get(StorageKeys.notificationSettings);
+    final rawList =
+        _hiveBox.get(StorageKeys.notificationSettings, defaultValue: {});
 
     return NotificationSettings.fromJson(rawList);
   }

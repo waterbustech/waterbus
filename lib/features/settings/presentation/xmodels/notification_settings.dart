@@ -42,11 +42,11 @@ class NotificationSettings {
 
   factory NotificationSettings.fromMap(Map<String, dynamic> map) {
     return NotificationSettings(
-      newMessage: map['newMessage'] as bool,
-      newInvitation: map['newInvitation'] as bool,
-      participantJoined: map['participantJoined'] as bool,
-      participantLeft: map['participantLeft'] as bool,
-      participantRaiseHand: map['participantRaiseHand'] as bool,
+      newMessage: map['newMessage'] ?? true,
+      newInvitation: map['newInvitation'] ?? true,
+      participantJoined: map['participantJoined'] ?? true,
+      participantLeft: map['participantLeft'] ?? true,
+      participantRaiseHand: map['participantRaiseHand'] ?? true,
     );
   }
 
