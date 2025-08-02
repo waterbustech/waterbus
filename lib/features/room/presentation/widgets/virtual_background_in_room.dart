@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -55,7 +54,7 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    Strings.virtualBackground.i18n,
+                    "Background",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -79,9 +78,14 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 12.sp),
+              child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.zero,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 2.sp,
+                ),
                 itemCount: backgroundAssets.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -96,8 +100,6 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
                         );
                       },
                       child: Container(
-                        height: 120.sp,
-                        margin: EdgeInsets.only(bottom: 10.sp),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 0.5,
@@ -127,8 +129,6 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
                       );
                     },
                     child: Container(
-                      height: 120.sp,
-                      margin: EdgeInsets.only(bottom: 10.sp),
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.sp,

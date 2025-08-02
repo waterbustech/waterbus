@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus/features/room/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
@@ -55,7 +56,8 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
   }
 
   bool get _isMemberInRecentRooms {
-    return AppBloc.recentJoinedBloc.recentRooms
+    return RoomLocalDataSourceImpl()
+            .rooms
             .indexWhere((room) => room.code == widget.code) !=
         -1;
   }
@@ -98,7 +100,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               );
             },
           ),
-          widget.isMember || _isMemberInRecentRooms
+          _isHidePasswordTextField
               ? SizedBox(height: 20.sp)
               : Padding(
                   padding: EdgeInsets.only(bottom: 12.sp),
@@ -124,7 +126,8 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                 ),
           GestureWrapper(
             onTap: () {
-              if (!widget.isMember && _passwordController.text.length < 6) {
+              if (!_isHidePasswordTextField &&
+                  _passwordController.text.length < 6) {
                 Strings.passwordMustBeAtLeast6Characters.i18n
                     .showToast(ToastificationType.error);
                 return;
@@ -199,4 +202,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
       ),
     );
   }
+
+  bool get _isHidePasswordTextField =>
+      widget.isMember || _isMemberInRecentRooms;
 }

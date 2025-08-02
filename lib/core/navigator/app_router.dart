@@ -362,7 +362,7 @@ class RoomRoute extends GoRouteData with _$RoomRoute {
   Widget build(BuildContext context, GoRouterState state) {
     if (AppBloc.roomBloc.currentRoom == null) {
       scheduleMicrotask(() {
-        LobbyRoute(code: code);
+        LobbyRoute(code: code).go(context);
       });
     }
 
