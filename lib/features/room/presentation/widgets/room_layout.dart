@@ -119,7 +119,7 @@ class _RoomLayoutState extends State<RoomLayout>
     if (widget.callState?.mParticipant != null) {
       final p = widget.callState!.mParticipant!;
       buffer.write(
-        '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}',
+        '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}_${p.isHandRaising}',
       );
     }
 
@@ -127,7 +127,7 @@ class _RoomLayoutState extends State<RoomLayout>
     for (final p
         in widget.callState?.participants.values ?? <ParticipantMediaState>[]) {
       buffer.write(
-        '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}',
+        '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}}_${p.isHandRaising}',
       );
     }
 

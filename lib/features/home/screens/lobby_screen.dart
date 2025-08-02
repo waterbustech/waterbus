@@ -66,12 +66,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.isDesktop ? 8.w : 12.sp,
-        ),
+        padding:
+            EdgeInsets.symmetric(horizontal: context.isDesktop ? 8.w : 12.sp),
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 1600),
+            constraints: BoxConstraints(maxWidth: 1600.sp),
             child: SingleChildScrollView(
               physics:
                   context.isDesktop ? NeverScrollableScrollPhysics() : null,
@@ -113,68 +112,58 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   if (context.isDesktop)
                     Row(
                       children: [
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: 800.sp,
+                        if (_audioInputs.isNotEmpty)
+                          _mediaDeviceButton(
+                            icon: PhosphorIcons.microphone(),
+                            currentData: _audioInput!,
+                            context: context,
+                            onChanged: (val) {
+                              if (val == null) return;
+
+                              setState(() {
+                                _audioInput = val;
+                              });
+
+                              AppBloc.roomBloc.add(
+                                RoomAudioDeviceToggled(
+                                  mediaDeviceInfo: val,
+                                ),
+                              );
+                            },
+                            mediaDeviceInfos: _audioInputs,
                           ),
-                          child: Row(
-                            children: [
-                              if (_audioInputs.isNotEmpty)
-                                _mediaDeviceButton(
-                                  icon: PhosphorIcons.microphone(),
-                                  currentData: _audioInput!,
-                                  context: context,
-                                  onChanged: (val) {
-                                    if (val == null) return;
-
-                                    setState(() {
-                                      _audioInput = val;
-                                    });
-
-                                    AppBloc.roomBloc.add(
-                                      RoomAudioDeviceToggled(
-                                        mediaDeviceInfo: val,
-                                      ),
-                                    );
-                                  },
-                                  mediaDeviceInfos: _audioInputs,
-                                ),
-                              if (_audioOutputs.isNotEmpty)
-                                _mediaDeviceButton(
-                                  icon: PhosphorIcons.speakerHigh(),
-                                  currentData: _audioOutput!,
-                                  context: context,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      _audioOutput = val;
-                                    });
-                                  },
-                                  mediaDeviceInfos: _audioOutputs,
-                                ),
-                              if (_videoInputs.isNotEmpty)
-                                _mediaDeviceButton(
-                                  icon: PhosphorIcons.videoCamera(),
-                                  currentData: _videoInput!,
-                                  context: context,
-                                  onChanged: (val) {
-                                    if (val == null) return;
-
-                                    setState(() {
-                                      _videoInput = val;
-                                    });
-
-                                    AppBloc.roomBloc.add(
-                                      RoomVideoDeviceToggled(
-                                        mediaDeviceInfo: val,
-                                      ),
-                                    );
-                                  },
-                                  mediaDeviceInfos: _videoInputs,
-                                ),
-                            ],
+                        if (_audioOutputs.isNotEmpty)
+                          _mediaDeviceButton(
+                            icon: PhosphorIcons.speakerHigh(),
+                            currentData: _audioOutput!,
+                            context: context,
+                            onChanged: (val) {
+                              setState(() {
+                                _audioOutput = val;
+                              });
+                            },
+                            mediaDeviceInfos: _audioOutputs,
                           ),
-                        ),
-                        if (context.isDesktop) const Spacer(),
+                        if (_videoInputs.isNotEmpty)
+                          _mediaDeviceButton(
+                            icon: PhosphorIcons.videoCamera(),
+                            currentData: _videoInput!,
+                            context: context,
+                            onChanged: (val) {
+                              if (val == null) return;
+
+                              setState(() {
+                                _videoInput = val;
+                              });
+
+                              AppBloc.roomBloc.add(
+                                RoomVideoDeviceToggled(
+                                  mediaDeviceInfo: val,
+                                ),
+                              );
+                            },
+                            mediaDeviceInfos: _videoInputs,
+                          ),
                       ],
                     ),
                   if (context.isMobile)

@@ -45,8 +45,9 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
     super.initState();
 
     if (AppBloc.userBloc.user?.fullName != null) {
-      _roomNameController.text = AppBloc.chatBloc.conversationCurrent?.title ??
-          '${Strings.meetingWith.i18n} ${AppBloc.userBloc.user!.fullName}';
+      _roomNameController.text = _isEditing
+          ? AppBloc.chatBloc.conversationCurrent?.title ?? ""
+          : '${Strings.meetingWith.i18n} ${AppBloc.userBloc.user!.fullName}';
     }
   }
 

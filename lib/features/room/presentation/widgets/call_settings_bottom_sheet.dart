@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,6 @@ import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/share_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
@@ -24,10 +24,12 @@ import 'package:waterbus/features/settings/presentation/screens/call_settings_sc
 
 class CallSettingsBottomSheet extends StatelessWidget {
   final Function onBeautyFiltersTapped;
+  final Function onVirtualBackground;
 
   const CallSettingsBottomSheet({
     super.key,
     required this.onBeautyFiltersTapped,
+    required this.onVirtualBackground,
   });
 
   @override
@@ -36,8 +38,6 @@ class CallSettingsBottomSheet extends StatelessWidget {
       builder: (context, state) {
         final Room? room = state.room;
         final CallState? callState = state.callState;
-        final bool isSubtitleEnabled = state.isSubtitleEnabled;
-        final bool isRecording = state.isRecording;
 
         return Container(
           padding: EdgeInsets.only(top: 16.sp),
@@ -89,73 +89,48 @@ class CallSettingsBottomSheet extends StatelessWidget {
                         );
                       },
                     ),
-                  CallSettingButton(
-                    icon: PhosphorIcons.fire(),
-                    lable: Strings.beautyFilters.i18n,
-                    onTap: () {
-                      AppRouter.pop();
+                  if (!kIsWeb)
+                    CallSettingButton(
+                      icon: PhosphorIcons.fire(),
+                      lable: Strings.beautyFilters.i18n,
+                      onTap: () {
+                        AppRouter.pop();
 
-                      if (context.isDesktop) {
-                        onBeautyFiltersTapped();
-                      } else {
-                        showBottomSheetWaterbus(
-                          context: context,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainerLow,
-                          builder: (context) => SizedBox(
-                            width: double.infinity,
-                            height: 80.h,
-                            child: BeautyFilterWidget(
-                              participant: room?.participants.firstWhere(
-                                (participant) => participant.isMe,
+                        if (context.isDesktop) {
+                          onBeautyFiltersTapped();
+                        } else {
+                          showBottomSheetWaterbus(
+                            context: context,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerLow,
+                            builder: (context) => SizedBox(
+                              width: double.infinity,
+                              height: 80.h,
+                              child: BeautyFilterWidget(
+                                participant: room?.participants.firstWhere(
+                                  (participant) => participant.isMe,
+                                ),
+                                callState: callState,
                               ),
-                              callState: callState,
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                          );
+                        }
+                      },
+                    ),
                   CallSettingButton(
                     icon: PhosphorIcons.selectionBackground(),
                     lable: Strings.virtualBackground.i18n,
                     onTap: () {
                       AppRouter.pop();
 
-                      BackgroundGalleryRoute().push(context);
+                      if (context.isMobile) {
+                        BackgroundGalleryRoute().push(context);
+                      } else {
+                        onVirtualBackground.call();
+                      }
                     },
                   ),
-                  CallSettingButton(
-                    icon: PhosphorIcons.subtitles(
-                      isSubtitleEnabled
-                          ? PhosphorIconsStyle.fill
-                          : PhosphorIconsStyle.regular,
-                    ),
-                    lable: Strings.subtitle.i18n,
-                    color: isSubtitleEnabled
-                        ? Theme.of(context).colorScheme.primaryContainer
-                        : null,
-                    onTap: () {
-                      AppBloc.roomBloc.add(const RoomSubtitleToggled());
-                    },
-                  ),
-                  if (room?.isHost ?? false)
-                    CallSettingButton(
-                      icon: PhosphorIcons.record(
-                        isRecording
-                            ? PhosphorIconsStyle.fill
-                            : PhosphorIconsStyle.regular,
-                      ),
-                      lable: Strings.record.i18n,
-                      color: isRecording ? Colors.redAccent : null,
-                      onTap: () {
-                        if (isRecording) {
-                          AppBloc.roomBloc.add(const RoomRecordStoped());
-                        } else {
-                          AppBloc.roomBloc.add(const RoomRecordStarted());
-                        }
-                      },
-                    ),
                   CallSettingButton(
                     icon: PhosphorIcons.chartPieSlice(),
                     lable: Strings.callStats.i18n,
