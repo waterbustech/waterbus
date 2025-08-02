@@ -54,7 +54,7 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Background",
+                    "Backgrounds",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -85,6 +85,7 @@ class _VirtualBackgroundInRoomState extends State<VirtualBackgroundInRoom> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 2,
                   crossAxisSpacing: 2.sp,
+                  childAspectRatio: 16 / 9,
                 ),
                 itemCount: backgroundAssets.length + 1,
                 itemBuilder: (context, index) {
