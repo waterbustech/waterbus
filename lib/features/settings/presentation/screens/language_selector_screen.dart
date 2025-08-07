@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/app/lang/models/language_model.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
-import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
+import 'package:waterbus/features/settings/domain/entities/language.dart';
+import 'package:waterbus/features/settings/domain/repositories/language_repository.dart';
 
 class LanguageSelectorScreen extends StatefulWidget {
   final bool isSettingDesktop;
@@ -21,11 +22,13 @@ class LanguageSelectorScreen extends StatefulWidget {
 }
 
 class _LanguageSelectorScreenState extends State<LanguageSelectorScreen> {
+  final LanguageRepository _repository = LanguageRepositoryImpl();
+
   void _handleChangeLanguage(BuildContext context, Language language) {
-    if (language == LanguageService().getLocale()) return;
+    if (language == _repository.getLocale()) return;
 
     I18n.of(context).locale = language.locale;
-    LanguageService().saveLocale(language.langCode);
+    _repository.saveLocale(language.langCode);
 
     setState(() {});
   }
@@ -102,7 +105,7 @@ class _LanguageSelectorScreenState extends State<LanguageSelectorScreen> {
                                     ],
                                   ),
                                 ),
-                                LanguageService().getLocale().langCode ==
+                                _repository.getLocale().langCode ==
                                         Language.values[index].langCode
                                     ? Icon(
                                         PhosphorIcons.check(),

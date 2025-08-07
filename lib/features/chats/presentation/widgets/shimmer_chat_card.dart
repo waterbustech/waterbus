@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';

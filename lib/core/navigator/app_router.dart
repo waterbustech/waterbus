@@ -13,11 +13,11 @@ import 'package:waterbus/features/archived/presentation/screens/archived_convers
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
-import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
-import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
-import 'package:waterbus/features/home/screens/home.dart';
-import 'package:waterbus/features/home/screens/lobby_screen.dart';
-import 'package:waterbus/features/home/widgets/recent_meetings.dart';
+import 'package:waterbus/features/conversation/presentation/screens/conversation_screen.dart';
+import 'package:waterbus/features/conversation/presentation/screens/detail_group_screen.dart';
+import 'package:waterbus/features/home/presentation/screens/home.dart';
+import 'package:waterbus/features/home/presentation/screens/lobby_screen.dart';
+import 'package:waterbus/features/home/presentation/widgets/recent_meetings.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/room/presentation/screens/background_gallery.dart';

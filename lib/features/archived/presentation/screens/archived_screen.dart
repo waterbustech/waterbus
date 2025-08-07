@@ -7,9 +7,9 @@ import 'package:waterbus_sdk/types/externals/models/index.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -22,7 +22,7 @@ import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/shimmers/shimmer_list.dart';
-import 'package:waterbus/features/home/widgets/enter_room_code_field.dart';
+import 'package:waterbus/features/home/presentation/widgets/enter_room_code_field.dart';
 
 class ArchivedScreen extends StatefulWidget {
   const ArchivedScreen({super.key});

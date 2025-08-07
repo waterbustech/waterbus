@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/image_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/chats/presentation/widgets/glass_morphism_wrapper.dart';
 import 'package:waterbus/features/chats/presentation/widgets/option_button.dart';
-import 'package:waterbus/features/conversation/xmodels/option_model.dart';
+import 'package:waterbus/features/conversation/domain/entities/option_model.dart';
 
 class BottomChatOptions extends StatelessWidget {
   final List<OptionModel> options;

@@ -6,11 +6,11 @@ import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/extensions/failure_x.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/types/extensions/failure_x.dart';
-import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
+import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
 
 part 'user_event.dart';

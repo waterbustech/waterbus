@@ -7,11 +7,11 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -22,7 +22,7 @@ import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.da
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
@@ -265,7 +265,7 @@ class BodySettingScreens extends StatelessWidget {
               },
               title: Strings.language.i18n,
               isFirst: false,
-              value: LanguageService().getLocale().base,
+              value: LanguageRepositoryImpl().getLocale().base,
               icon: LucideIcons.globe,
               iconBackground: colorPurple,
             ),

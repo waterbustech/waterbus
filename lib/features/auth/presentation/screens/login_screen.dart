@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/auth/presentation/widgets/button_login.dart';
-import 'package:waterbus/features/home/widgets/empty_meet_view.dart';
+import 'package:waterbus/features/home/presentation/widgets/empty_meet_view.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class LogInScreen extends StatelessWidget {

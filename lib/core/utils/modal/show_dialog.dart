@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:superellipse_shape/superellipse_shape.dart';
 
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
-import 'package:waterbus/core/types/slide.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+
+enum Slide {
+  left,
+  top,
+  bot,
+  right,
+  fade,
+}
 
 Future showDialogWaterbus({
   Slide slideFrom = Slide.bot,

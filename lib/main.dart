@@ -17,7 +17,7 @@ import 'package:waterbus/core/constants/endpoints.dart';
 import 'package:waterbus/core/utils/image_utils.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/features/app/app.dart';
-import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
 import 'package:waterbus/firebase_options.dart';
 
 void main(List<String> args) async {
@@ -60,7 +60,7 @@ void main(List<String> args) async {
       runApp(
         I18n(
           autoSaveLocale: true,
-          initialLocale: LanguageService().getLocale().locale,
+          initialLocale: LanguageRepositoryImpl().getLocale().locale,
           supportedLocales: ['en-US'.asLocale, 'vi-VN'.asLocale],
           child: const App(),
         ),

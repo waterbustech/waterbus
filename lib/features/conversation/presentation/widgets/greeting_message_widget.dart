@@ -1,0 +1,78 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
+import 'package:waterbus/core/utils/sizer/sizer.dart';
+
+class GreetingMessageWidget extends StatelessWidget {
+  final String image;
+
+  const GreetingMessageWidget({
+    super.key,
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.circular(16.sp),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: Theme.of(context).brightness == Brightness.dark ? 12 : 6,
+          sigmaY: Theme.of(context).brightness == Brightness.dark ? 12 : 6,
+        ),
+        child: SizedBox(
+          width: 200.sp,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.sp),
+                  color: Theme.of(context).colorScheme.surfaceDim.withValues(
+                        alpha: 0.25,
+                      ),
+                ),
+                margin: EdgeInsets.only(
+                  bottom: context.isDesktop
+                      ? 200.sp
+                      : MediaQuery.of(context).viewPadding.bottom == 0
+                          ? 10.sp
+                          : 165.sp,
+                ),
+                padding: EdgeInsets.all(12.sp),
+                child: Column(
+                  children: [
+                    Text(
+                      '${Strings.noMesssagesHereYet.i18n}...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.5.sp,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                    ),
+                    SizedBox(height: 2.sp),
+                    Text(
+                      Strings.sendMessageOrTapOnTheGreetingBelow.i18n,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                    ),
+                    Image.asset(image, width: 120.sp, height: 125.sp),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

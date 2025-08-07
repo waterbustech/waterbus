@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/features/conversation/xmodels/default_avatar_model.dart';
+import 'package:waterbus/features/conversation/domain/entities/default_avatar_model.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class DefaultImage extends StatelessWidget {
