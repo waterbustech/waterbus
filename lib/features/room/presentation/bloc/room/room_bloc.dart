@@ -201,7 +201,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomHandRasingToggled) {
           _waterbusSdk.toggleRaiseHand();
 
-          if (_waterbusSdk.callState.mParticipant?.isHandRaising ?? false) {
+          if (_isHandRaising) {
             _roomSound.playSoundRaiseHand();
           }
 
@@ -330,6 +330,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       );
 
   // MARK: Private
+  bool get _isHandRaising =>
+      _waterbusSdk.callState.mParticipant?.isHandRaising ?? false;
+
   Future<void> _handleCreateRoom(RoomCreated event) async {
     final RoomParams params = RoomParams(
       room: Room(title: event.roomName),
@@ -499,10 +502,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
 
-    LobbyRoute(
-      code: room.code!,
-      $extra: LobbyScreenExtras(isMember: indexOfMember != -1, room: room),
-    ).push(AppRouter.context!);
+    LobbyRoute(code: room.code!, $extra: room, isMember: indexOfMember != -1)
+        .push(AppRouter.context!);
   }
 
   Future<void> startPiP() async {

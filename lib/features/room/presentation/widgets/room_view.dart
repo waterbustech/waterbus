@@ -336,18 +336,15 @@ class _RoomViewState extends State<RoomView>
   }
 
   bool get _isVideoEnabled {
-    return widget.participantSFU.isSharingScreen ||
-        widget.participantSFU.isVideoEnabled;
+    return _isScreenSharing || widget.participantSFU.isVideoEnabled;
   }
 
   bool get _isAudioEnabled {
-    return !widget.participantSFU.isSharingScreen &&
-        widget.participantSFU.isAudioEnabled;
+    return !_isScreenSharing && widget.participantSFU.isAudioEnabled;
   }
 
   bool get _isRaisingHand {
-    return !widget.participantSFU.isSharingScreen &&
-        widget.participantSFU.isHandRaising;
+    return !_isScreenSharing && widget.participantSFU.isHandRaising;
   }
 
   bool get _isScreenSharing {

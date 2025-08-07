@@ -18,4 +18,5 @@ class StorageKeys {
   static const String language = 'language';
   static const String theme = 'theme';
   static const String colorSeed = 'color-seed';
+  static const String notificationSettings = 'notification-settings';
 }

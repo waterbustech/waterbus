@@ -8,10 +8,7 @@ import 'package:waterbus/features/home/xmodels/home_page_enum.dart';
 
 class HomeDesktopScreen extends StatefulWidget {
   final Widget Function(BuildContext, String) header;
-  const HomeDesktopScreen({
-    super.key,
-    required this.header,
-  });
+  const HomeDesktopScreen({super.key, required this.header});
 
   @override
   State<HomeDesktopScreen> createState() => _HomeDesktopScreenState();

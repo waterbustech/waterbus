@@ -15,6 +15,7 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
+import 'package:waterbus/features/room/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class JoinRoomActions extends StatefulWidget {
@@ -52,6 +53,13 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
   void initState() {
     super.initState();
     _fullNameController.text = AppBloc.userBloc.user?.fullName ?? "Waterbus";
+  }
+
+  bool get _isMemberInRecentRooms {
+    return RoomLocalDataSourceImpl()
+            .rooms
+            .indexWhere((room) => room.code == widget.code) !=
+        -1;
   }
 
   @override
@@ -92,7 +100,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               );
             },
           ),
-          widget.isMember
+          _isHidePasswordTextField
               ? SizedBox(height: 20.sp)
               : Padding(
                   padding: EdgeInsets.only(bottom: 12.sp),
@@ -118,7 +126,8 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                 ),
           GestureWrapper(
             onTap: () {
-              if (!widget.isMember && _passwordController.text.length < 6) {
+              if (!_isHidePasswordTextField &&
+                  _passwordController.text.length < 6) {
                 Strings.passwordMustBeAtLeast6Characters.i18n
                     .showToast(ToastificationType.error);
                 return;
@@ -193,4 +202,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
       ),
     );
   }
+
+  bool get _isHidePasswordTextField =>
+      widget.isMember || _isMemberInRecentRooms;
 }

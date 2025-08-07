@@ -36,6 +36,10 @@ import '../../features/room/presentation/bloc/beauty_filters/beauty_filters_bloc
     as _i291;
 import '../../features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i211;
+import '../../features/settings/data/datasource/notification_setting_local.dart'
+    as _i953;
+import '../../features/settings/presentation/bloc/notification_setting_bloc.dart'
+    as _i469;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -58,6 +62,8 @@ _i174.GetIt $initGetIt(
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i366.RoomLocalDataSource>(
       () => _i366.RoomLocalDataSourceImpl());
+  gh.lazySingleton<_i953.NotificationSettingLocal>(
+      () => _i953.NotificationSettingLocalImpl());
   gh.lazySingleton<_i421.MediaConfigLocalDataSource>(
       () => _i421.MediaConfigLocalDataSourceImpl());
   gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
@@ -71,6 +77,8 @@ _i174.GetIt $initGetIt(
         gh<_i366.RoomLocalDataSource>(),
         gh<_i421.MediaConfigLocalDataSource>(),
       ));
+  gh.factory<_i469.NotificationSettingBloc>(() =>
+      _i469.NotificationSettingBloc(gh<_i953.NotificationSettingLocal>()));
   gh.factory<_i339.ThemesBloc>(
       () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
   gh.factory<_i211.RecentJoinedBloc>(

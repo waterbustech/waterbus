@@ -296,7 +296,9 @@ RouteBase get $lobbyRoute => GoRouteData.$route(
 mixin _$LobbyRoute on GoRouteData {
   static LobbyRoute _fromState(GoRouterState state) => LobbyRoute(
         code: state.pathParameters['code']!,
-        $extra: state.extra as LobbyScreenExtras,
+        isMember: _$convertMapValue(
+            'is-member', state.uri.queryParameters, _$boolConverter),
+        $extra: state.extra as Room?,
       );
 
   LobbyRoute get _self => this as LobbyRoute;
@@ -304,6 +306,9 @@ mixin _$LobbyRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/lobby/${Uri.encodeComponent(_self.code)}',
+        queryParams: {
+          if (_self.isMember != null) 'is-member': _self.isMember!.toString(),
+        },
       );
 
   @override
