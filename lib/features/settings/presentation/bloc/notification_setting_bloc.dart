@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:waterbus/features/settings/data/datasource/notification_setting_local.dart';
-import 'package:waterbus/features/settings/presentation/xmodels/notification_settings.dart';
+import 'package:waterbus/features/settings/domain/entities/notification_settings.dart';
 
 part 'notification_setting_event.dart';
 part 'notification_setting_state.dart';

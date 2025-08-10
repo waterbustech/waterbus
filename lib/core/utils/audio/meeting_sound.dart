@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/settings/domain/entities/notification_settings.dart';
-import 'package:waterbus/features/settings/presentation/xmodels/notification_settings.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 @singleton

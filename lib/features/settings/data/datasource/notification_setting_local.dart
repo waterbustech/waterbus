@@ -2,7 +2,7 @@ import 'package:hive_ce/hive.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:waterbus/core/constants/storage_keys.dart';
-import 'package:waterbus/features/settings/presentation/xmodels/notification_settings.dart';
+import 'package:waterbus/features/settings/domain/entities/notification_settings.dart';
 
 abstract class NotificationSettingLocal {
   NotificationSettings get getNotificationSettings;
