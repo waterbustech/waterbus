@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
+import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class DeviceSelector extends StatelessWidget {

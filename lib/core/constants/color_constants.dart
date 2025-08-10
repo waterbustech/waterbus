@@ -1,5 +1,54 @@
 import 'package:flutter/material.dart';
 
+const Color colorBlack = Color(0xFF121212);
+const Color colorPrimaryBlack = Color(0xFF14171A);
+const Color colorBlackGlassmorphism = Color(0xFF292929);
+const Color colorDarkGrey = Color(0xFF657786);
+const Color colorPrimary = Color(0xFF1DA1F2);
+const Color colorTitle = Color(0xFF2C3D50);
+
+const Color colorHigh = Colors.redAccent;
+final Color colorMedium = Colors.amber.shade700;
+const Color colorLow = colorPrimary;
+const Color colorCompleted = Colors.green;
+const Color colorFailed = colorDarkGrey;
+const Color colorActive = Color(0xFF00D72F);
+const Color colorGreenLight = Color(0xFF009E60);
+const Color colorAttendance = Color(0xFF0CCF4C);
+
+const Color colorBlueGrey = Color(0xFF455A64);
+const Color colorBlueGreyDark = Color(0xFF1E2224);
+const Color colorBlueGreyIos = Color(0xFF1C1F2E);
+const Color colorGray2 = Color(0xFFACACB9);
+const Color colorGray3 = Color(0xFF6B6B74);
+const Color colorGray4 = Color(0xFF9595A4);
+const Color colorCyan = Color(0xFF00B3FF);
+const Color colorBlue = Color(0xFF0080FF);
+const Color colorPurple = Color(0xFFC848FF);
+const Color colorRedCustom = Color(0xFFFF1D61);
+const Color colorRedOrange = Color(0xFFEF4704);
+const Color colorRedRemove = Color(0xFFF85E53);
+
+const Color colorGreyWhite = Color(0x4dE3E3E3);
+const Color colorGreyWhite2 = Color(0xFFE3E3E3);
+
+const Color colorBlack1 = Color(0xFF0d0d0d);
+
+final Color colorRedTitle = Colors.red.shade800;
+final Color bgNotifyFail = Colors.red.shade100;
+
+Color mC = Colors.grey.shade100;
+Color mCL = Colors.white;
+Color mCM = Colors.grey.shade200;
+Color mCU = Colors.grey.shade300;
+Color mCH = Colors.grey.shade400;
+Color mGB = Colors.grey.shade500;
+Color mGD = Colors.grey.shade900;
+Color mCD = Colors.black.withValues(alpha: 0.075);
+Color mCC = Colors.green.withValues(alpha: 0.65);
+Color fCD = Colors.grey.shade700;
+Color fCL = Colors.grey;
+
 class ColorConstants {
   static const colorDefault = Color(0xFF717171);
 
