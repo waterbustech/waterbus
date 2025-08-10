@@ -4,23 +4,11 @@ import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 extension StringExtension on String {
-  String formatVietnamese() {
-    var result = this;
-    for (int i = 0; i < vietnameseRegex.length; i++) {
-      result = result.replaceAll(
-        vietnameseRegex[i],
-        i > vietnamese.length - 1 ? '' : vietnamese[i],
-      );
-    }
-    return result;
-  }
-
   void showToast(ToastificationType type) {
     toastification.show(
       title: Text(
