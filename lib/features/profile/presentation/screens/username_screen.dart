@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';

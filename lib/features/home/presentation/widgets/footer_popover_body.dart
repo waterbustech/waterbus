@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';

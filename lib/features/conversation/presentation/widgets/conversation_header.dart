@@ -6,8 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
