@@ -6,7 +6,6 @@ class NotificationSettings {
   final bool participantJoined;
   final bool participantLeft;
   final bool participantRaiseHand;
-
   NotificationSettings({
     this.newMessage = true,
     this.newInvitation = true,

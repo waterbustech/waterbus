@@ -12,6 +12,7 @@ import 'package:waterbus/features/settings/domain/entities/notification_settings
 import 'package:waterbus/features/settings/presentation/bloc/notification_setting/notification_setting_bloc.dart';
 import 'package:waterbus/features/settings/presentation/widgets/label_widget.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_switch_card.dart';
+import 'package:waterbus/features/settings/presentation/xmodels/notification_settings.dart';
 
 class NotificationSettingsScreen extends StatelessWidget {
   const NotificationSettingsScreen({super.key});

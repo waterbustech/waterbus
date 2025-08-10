@@ -10,8 +10,8 @@ import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-import 'package:waterbus/features/settings/presentation/bloc/notification_setting/notification_setting_bloc.dart';
-import 'package:waterbus/features/settings/presentation/bloc/themes/themes_bloc.dart';
+import 'package:waterbus/features/settings/presentation/bloc/notification_setting_bloc.dart';
+import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
 
 class AppBloc {
   static final HomeBloc homeBloc = getIt<HomeBloc>();

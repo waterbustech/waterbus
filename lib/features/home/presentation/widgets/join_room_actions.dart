@@ -14,8 +14,8 @@ import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
-import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
-import 'package:waterbus/features/room/data/datasources/meeting_local_data_source.dart';
+import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
+import 'package:waterbus/features/room/data/datasources/meeting_local_datasource.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class JoinRoomActions extends StatefulWidget {
