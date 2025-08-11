@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:waterbus/features/settings/data/datasource/themes_datasource.dart';
+import 'package:waterbus/features/settings/data/datasource/themes_local_data_source.dart';
 
 part 'themes_event.dart';
 part 'themes_state.dart';
