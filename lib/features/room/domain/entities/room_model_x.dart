@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus/features/conversation/xmodels/message_model_x.dart';
-import 'package:waterbus/features/conversation/xmodels/option_model.dart';
-import 'package:waterbus/features/settings/lang/language_service.dart';
+import 'package:waterbus/features/conversation/domain/entities/message_model_x.dart';
+import 'package:waterbus/features/conversation/domain/entities/option_model.dart';
+import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
 
 extension RoomModelX on Room {
   String get latestMessageData => latestMessage != null
@@ -90,7 +90,7 @@ extension RoomModelX on Room {
       return DateFormat("HH:mm").format(updatedAt);
     } else {
       return DateFormat(
-        LanguageService().getIsLanguage("vi") ? 'dd MMM' : 'dd/MM',
+        LanguageRepositoryImpl().getIsLanguage("vi") ? 'dd MMM' : 'dd/MM',
       ).format(updatedAt);
     }
   }

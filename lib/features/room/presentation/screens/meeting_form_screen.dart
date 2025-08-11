@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';

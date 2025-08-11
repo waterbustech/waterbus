@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
-import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
+import 'package:waterbus/features/settings/presentation/bloc/themes/themes_bloc.dart';
 
 class ThemeSelectorScreen extends StatelessWidget {
   final bool isSettingDesktop;

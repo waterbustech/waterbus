@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class PaginatedListView extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/room/presentation/widgets/e2ee_label_line.dart';
 import 'package:waterbus/gen/assets.gen.dart';

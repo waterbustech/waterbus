@@ -5,7 +5,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gridview/custom_delegate.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';

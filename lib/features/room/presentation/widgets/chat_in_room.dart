@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
-import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus/features/conversation/widgets/message_input_container.dart';
-import 'package:waterbus/features/conversation/widgets/message_list.dart';
+import 'package:waterbus/features/conversation/presentation/bloc/message_bloc.dart';
+import 'package:waterbus/features/conversation/presentation/widgets/message_input_container.dart';
+import 'package:waterbus/features/conversation/presentation/widgets/message_list.dart';
 
 class ChatInRoom extends StatefulWidget {
   final Room room;

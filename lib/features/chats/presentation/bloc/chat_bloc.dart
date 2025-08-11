@@ -6,10 +6,10 @@ import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
+import 'package:waterbus/core/extensions/failure_x.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
-import 'package:waterbus/core/types/extensions/failure_x.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
 import 'package:waterbus/core/utils/modal/show_snackbar.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -17,8 +17,8 @@ import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart'
 import 'package:waterbus/features/chats/presentation/widgets/bottom_sheet_delete.dart';
 import 'package:waterbus/features/chats/presentation/widgets/invited_success_text.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
-import 'package:waterbus/features/conversation/bloc/message_bloc.dart';
-import 'package:waterbus/features/conversation/xmodels/string_extension.dart';
+import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
+import 'package:waterbus/features/conversation/presentation/bloc/message_bloc.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 
 part 'chat_event.dart';
@@ -264,24 +264,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
   }
 
-  Future<void> _showBottomSheetSureAction({
-    required String actionText,
-    required String description,
-    required Function() handleAction,
-  }) async {
-    await showBottomSheetWaterbus(
-      context: AppRouter.context!,
-      enableDrag: false,
-      builder: (context) {
-        return BottomSheetDelete(
-          actionText: actionText,
-          description: description,
-          handlePressed: handleAction,
-        );
-      },
-    );
-  }
-
   // MARK: state
   ChatInProgress get _chatInProgress => ChatInProgress(
         conversations: _arrangedConversations,
@@ -301,6 +283,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   // MARK: private methods
+  Future<void> _showBottomSheetSureAction({
+    required String actionText,
+    required String description,
+    required Function() handleAction,
+  }) async {
+    await showBottomSheetWaterbus(
+      context: AppRouter.context!,
+      enableDrag: false,
+      builder: (context) {
+        return BottomSheetDelete(
+          actionText: actionText,
+          description: description,
+          handlePressed: handleAction,
+        );
+      },
+    );
+  }
+
   Future<Room?> _createConversation(
     ChatCreated event,
   ) async {

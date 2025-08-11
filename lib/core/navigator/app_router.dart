@@ -13,11 +13,11 @@ import 'package:waterbus/features/archived/presentation/screens/archived_convers
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
-import 'package:waterbus/features/conversation/screens/conversation_screen.dart';
-import 'package:waterbus/features/conversation/screens/detail_group_screen.dart';
-import 'package:waterbus/features/home/screens/home.dart';
-import 'package:waterbus/features/home/screens/lobby_screen.dart';
-import 'package:waterbus/features/home/widgets/recent_meetings.dart';
+import 'package:waterbus/features/conversation/presentation/screens/conversation_screen.dart';
+import 'package:waterbus/features/conversation/presentation/screens/detail_group_screen.dart';
+import 'package:waterbus/features/home/presentation/screens/home.dart';
+import 'package:waterbus/features/home/presentation/screens/lobby_screen.dart';
+import 'package:waterbus/features/home/presentation/widgets/recent_meetings.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/room/presentation/screens/background_gallery.dart';
@@ -27,7 +27,6 @@ import 'package:waterbus/features/room/presentation/screens/room_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/notification_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/settings_screen.dart';
 import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -133,17 +132,6 @@ class CallSettingsRoute extends GoRouteData with _$CallSettingsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return CallSettingsScreen(isInRoom: isInRoom);
-  }
-}
-
-@TypedGoRoute<SettingsRoute>(
-  path: Routes.settingsRoute,
-  name: Routes.settingsRoute,
-)
-class SettingsRoute extends GoRouteData with _$SettingsRoute {
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const SettingsScreen();
   }
 }
 

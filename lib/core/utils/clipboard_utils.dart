@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/endpoints.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';

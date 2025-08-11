@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
 
 enum CheckUsernameStatus {
   none,

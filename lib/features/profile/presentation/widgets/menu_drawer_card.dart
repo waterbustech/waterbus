@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:waterbus/core/app/lang/data/localization.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/profile/presentation/models/menu_items.dart';
+import 'package:waterbus/features/profile/domain/entities/menu_items.dart';
 
 class MenuDrawerCard extends StatelessWidget {
   final MenuItemModel item;

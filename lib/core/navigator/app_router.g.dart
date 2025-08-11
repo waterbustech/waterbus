@@ -13,7 +13,6 @@ List<RouteBase> get $appRoutes => [
       $profileRoute,
       $usernameRoute,
       $callSettingsRoute,
-      $settingsRoute,
       $notificationSettingsRoute,
       $lobbyRoute,
       $newRoomRoute,
@@ -228,34 +227,6 @@ bool _$boolConverter(String value) {
     default:
       throw UnsupportedError('Cannot convert "$value" into a bool.');
   }
-}
-
-RouteBase get $settingsRoute => GoRouteData.$route(
-      path: '/settings',
-      name: '/settings',
-      factory: _$SettingsRoute._fromState,
-    );
-
-mixin _$SettingsRoute on GoRouteData {
-  static SettingsRoute _fromState(GoRouterState state) => SettingsRoute();
-
-  @override
-  String get location => GoRouteData.$location(
-        '/settings',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $notificationSettingsRoute => GoRouteData.$route(

@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/core/app/colors/app_color.dart';
-import 'package:waterbus/core/app/lang/data/localization.dart';
+import 'package:waterbus/core/app/languages/localization.dart';
+import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/constants/constants.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/navigator/routes.dart';
-import 'package:waterbus/core/types/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -22,19 +20,11 @@ import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.da
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/screens/profile_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
-import 'package:waterbus/features/settings/lang/language_service.dart';
-import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/language_selector_screen.dart';
-import 'package:waterbus/features/settings/presentation/screens/theme_selector_screen.dart';
+import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
 import 'package:waterbus/features/settings/presentation/widgets/setting_row_button.dart';
 
 class BodySettingScreens extends StatelessWidget {
-  final Function(String)? onTap;
-
-  const BodySettingScreens({
-    super.key,
-    this.onTap,
-  });
+  const BodySettingScreens({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,150 +43,50 @@ class BodySettingScreens extends StatelessWidget {
               builder: (context, state) {
                 final User? user = state is UserDone ? state.user : null;
 
-                return context.isDesktop
-                    ? GestureWrapper(
+                return Column(
+                  children: [
+                    Align(
+                      child: GestureWrapper(
                         onTap: () {
-                          if (context.isDesktop) {
-                            onTap?.call(profileTab);
-                          } else {
-                            if (PlatformUtils.isMobile) {
-                              ProfileRoute().push(context);
-                            } else {
-                              showScreenAsDialog(
-                                route: Routes.profileRoute,
-                                child: ProfileScreen(),
+                          WaterbusImagePicker().openImagePicker(
+                            context: context,
+                            handleFinish: (image) {
+                              displayLoadingLayer();
+
+                              AppBloc.userBloc.add(
+                                UserAvatarUpdated(image: image),
                               );
-                            }
-                          }
+                            },
+                          );
                         },
-                        child: Material(
-                          clipBehavior: Clip.hardEdge,
-                          shape: SuperellipseShape(
-                            borderRadius: BorderRadius.circular(25.sp),
-                          ),
-                          color: Theme.of(context).colorScheme.onInverseSurface,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.sp,
-                              vertical: 10.sp,
-                            ),
-                            child: Row(
-                              children: [
-                                GestureWrapper(
-                                  onTap: () {
-                                    WaterbusImagePicker().openImagePicker(
-                                      context: context,
-                                      handleFinish: (image) {
-                                        displayLoadingLayer();
-
-                                        AppBloc.userBloc.add(
-                                          UserAvatarUpdated(image: image),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: AvatarCard(
-                                    urlToImage: user?.avatar,
-                                    size: 50.sp,
-                                    label: user?.fullName,
-                                  ),
-                                ),
-                                SizedBox(width: 8.sp),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 6.sp),
-                                        child: Text(
-                                          user?.fullName ?? "",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .color,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        "@${user?.userName ?? ""}",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .color,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 6.sp),
-                                  child: Icon(
-                                    PhosphorIcons.caretRight(),
-                                    color: colorGray3,
-                                    size: context.isDesktop ? 14.sp : null,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        child: AvatarCard(
+                          urlToImage: user?.avatar,
+                          size: 70.sp,
+                          label: user?.fullName,
                         ),
-                      )
-                    : Column(
-                        children: [
-                          Align(
-                            child: GestureWrapper(
-                              onTap: () {
-                                WaterbusImagePicker().openImagePicker(
-                                  context: context,
-                                  handleFinish: (image) {
-                                    displayLoadingLayer();
-
-                                    AppBloc.userBloc.add(
-                                      UserAvatarUpdated(image: image),
-                                    );
-                                  },
-                                );
-                              },
-                              child: AvatarCard(
-                                urlToImage: user?.avatar,
-                                size: 70.sp,
-                                label: user?.fullName,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 6.sp, bottom: 2.sp),
-                            child: Text(
-                              user?.fullName ?? "",
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .color,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            "@${user?.userName ?? ""}",
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w700,
-                              color:
-                                  Theme.of(context).textTheme.titleSmall!.color,
-                            ),
-                          ),
-                        ],
-                      );
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 6.sp, bottom: 2.sp),
+                      child: Text(
+                        user?.fullName ?? "",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "@${user?.userName ?? ""}",
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).textTheme.titleSmall!.color,
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
             SizedBox(height: 20.sp),
@@ -229,18 +119,7 @@ class BodySettingScreens extends StatelessWidget {
             ),
             SettingRowButton(
               onTap: () {
-                if (context.isDesktop) {
-                  onTap?.call(appearanceTab);
-                } else {
-                  if (PlatformUtils.isMobile) {
-                    ThemeRoute().push(context);
-                  } else {
-                    showScreenAsDialog(
-                      route: Routes.themeRoute,
-                      child: ThemeSelectorScreen(),
-                    );
-                  }
-                }
+                ThemeRoute().push(context);
               },
               isLast: false,
               isFirst: false,
@@ -250,40 +129,18 @@ class BodySettingScreens extends StatelessWidget {
             ),
             SettingRowButton(
               onTap: () {
-                if (context.isDesktop) {
-                  onTap?.call(languageTab);
-                } else {
-                  if (PlatformUtils.isMobile) {
-                    LangRoute().push(context);
-                  } else {
-                    showScreenAsDialog(
-                      route: Routes.langRoute,
-                      child: LanguageSelectorScreen(),
-                    );
-                  }
-                }
+                LangRoute().push(context);
               },
               title: Strings.language.i18n,
               isFirst: false,
-              value: LanguageService().getLocale().base,
+              value: LanguageRepositoryImpl().getLocale().base,
               icon: LucideIcons.globe,
               iconBackground: colorPurple,
             ),
             SizedBox(height: 18.sp),
             SettingRowButton(
               onTap: () {
-                if (context.isDesktop) {
-                  onTap?.call(callAndMeetingTab);
-                } else {
-                  if (PlatformUtils.isMobile) {
-                    CallSettingsRoute().push(context);
-                  } else {
-                    showScreenAsDialog(
-                      route: Routes.callSettingsRoute,
-                      child: CallSettingsScreen(isInRoom: false),
-                    );
-                  }
-                }
+                CallSettingsRoute().push(context);
               },
               title: Strings.callAndMeeting.i18n,
               icon: LucideIcons.video,

@@ -12,7 +12,7 @@ import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
-import 'package:waterbus/features/settings/themes/bloc/themes_bloc.dart';
+import 'package:waterbus/features/settings/presentation/bloc/themes/themes_bloc.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

@@ -6,7 +6,7 @@ import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/chats/data/datasources/user_local_datasource.dart';
+import 'package:waterbus/features/chats/data/datasources/user_local_data_source.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';

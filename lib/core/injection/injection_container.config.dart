@@ -16,30 +16,42 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../../features/archived/presentation/bloc/archived_bloc.dart' as _i935;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
-import '../../features/conversation/bloc/message_bloc.dart' as _i819;
-import '../../features/home/bloc/home/home_bloc.dart' as _i430;
+import '../../features/home/presentation/bloc/home/home_bloc.dart' as _i495;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
 import '../../features/room/presentation/bloc/room/room_bloc.dart' as _i1030;
-import '../../features/settings/lang/datasource/lang_datasource.dart' as _i193;
-import '../../features/settings/themes/bloc/themes_bloc.dart' as _i339;
-import '../../features/settings/themes/data/themes_datasource.dart' as _i455;
 import '../method_channels/pip_channel.dart' as _i921;
 import '../utils/audio/meeting_sound.dart' as _i89;
 
-import '../../features/chats/data/datasources/user_local_datasource.dart'
-    as _i843;
-import '../../features/room/data/datasources/media_config_datasource.dart'
-    as _i421;
-import '../../features/room/data/datasources/meeting_local_datasource.dart'
-    as _i366;
+import '../../features/chats/data/datasources/user_local_data_source.dart'
+    as _i839;
+import '../../features/conversation/presentation/bloc/message_bloc.dart'
+    as _i738;
+import '../../features/room/data/datasources/media_config_data_source.dart'
+    as _i1036;
+import '../../features/room/data/datasources/meeting_local_data_source.dart'
+    as _i583;
 import '../../features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
     as _i291;
 import '../../features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart'
     as _i211;
+import '../../features/settings/data/datasource/language_local_data_source.dart'
+    as _i1010;
 import '../../features/settings/data/datasource/notification_setting_local.dart'
     as _i953;
+import '../../features/settings/data/datasource/notification_setting_local_data_source.dart'
+    as _i140;
+import '../../features/settings/data/datasource/themes_datasource.dart'
+    as _i247;
+import '../../features/settings/data/repositories/language_repository.dart'
+    as _i498;
+import '../../features/settings/domain/repositories/language_repository.dart'
+    as _i233;
+import '../../features/settings/presentation/bloc/notification_setting/notification_setting_bloc.dart'
+    as _i1051;
 import '../../features/settings/presentation/bloc/notification_setting_bloc.dart'
     as _i469;
+import '../../features/settings/presentation/bloc/themes/themes_bloc.dart'
+    as _i947;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -52,38 +64,46 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.factory<_i430.HomeBloc>(() => _i430.HomeBloc());
   gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
-  gh.factory<_i819.MessageBloc>(() => _i819.MessageBloc());
+  gh.factory<_i495.HomeBloc>(() => _i495.HomeBloc());
+  gh.factory<_i738.MessageBloc>(() => _i738.MessageBloc());
   gh.singleton<_i89.RoomSound>(() => _i89.RoomSound());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
-  gh.lazySingleton<_i366.RoomLocalDataSource>(
-      () => _i366.RoomLocalDataSourceImpl());
+  gh.lazySingleton<_i140.NotificationSettingLocalDataSource>(
+      () => _i140.NotificationSettingLocalImpl());
+  gh.lazySingleton<_i583.RoomLocalDataSource>(
+      () => _i583.RoomLocalDataSourceImpl());
+  gh.lazySingleton<_i233.LanguageRepository>(
+      () => _i498.LanguageRepositoryImpl());
   gh.lazySingleton<_i953.NotificationSettingLocal>(
       () => _i953.NotificationSettingLocalImpl());
-  gh.lazySingleton<_i421.MediaConfigLocalDataSource>(
-      () => _i421.MediaConfigLocalDataSourceImpl());
-  gh.lazySingleton<_i455.ThemesDatasource>(() => _i455.ThemesDatasourceImpl());
-  gh.lazySingleton<_i193.LanguagesDatasource>(
-      () => _i193.LanguagesDatasourceImpl());
-  gh.lazySingleton<_i843.UserLocalDataSource>(
-      () => _i843.UserLocalDataSourceImpl());
+  gh.lazySingleton<_i247.ThemesLocalDataSource>(
+      () => _i247.ThemesDatasourceImpl());
+  gh.lazySingleton<_i1036.MediaConfigLocalDataSource>(
+      () => _i1036.MediaConfigLocalDataSourceImpl());
+  gh.factory<_i1051.NotificationSettingBloc>(() =>
+      _i1051.NotificationSettingBloc(
+          gh<_i140.NotificationSettingLocalDataSource>()));
+  gh.lazySingleton<_i839.UserLocalDataSource>(
+      () => _i839.UserLocalDataSourceImpl());
+  gh.lazySingleton<_i1010.LanguageLocalDataSource>(
+      () => _i1010.LanguageLocalDataSourceImpl());
+  gh.factory<_i469.NotificationSettingBloc>(() =>
+      _i469.NotificationSettingBloc(gh<_i953.NotificationSettingLocal>()));
+  gh.factory<_i797.AuthBloc>(
+      () => _i797.AuthBloc(gh<_i839.UserLocalDataSource>()));
+  gh.factory<_i947.ThemesBloc>(
+      () => _i947.ThemesBloc(gh<_i247.ThemesLocalDataSource>()));
+  gh.factory<_i211.RecentJoinedBloc>(
+      () => _i211.RecentJoinedBloc(gh<_i583.RoomLocalDataSource>()));
   gh.factory<_i1030.RoomBloc>(() => _i1030.RoomBloc(
         gh<_i921.PipChannel>(),
         gh<_i89.RoomSound>(),
-        gh<_i366.RoomLocalDataSource>(),
-        gh<_i421.MediaConfigLocalDataSource>(),
+        gh<_i583.RoomLocalDataSource>(),
+        gh<_i1036.MediaConfigLocalDataSource>(),
       ));
-  gh.factory<_i469.NotificationSettingBloc>(() =>
-      _i469.NotificationSettingBloc(gh<_i953.NotificationSettingLocal>()));
-  gh.factory<_i339.ThemesBloc>(
-      () => _i339.ThemesBloc(gh<_i455.ThemesDatasource>()));
-  gh.factory<_i211.RecentJoinedBloc>(
-      () => _i211.RecentJoinedBloc(gh<_i366.RoomLocalDataSource>()));
-  gh.factory<_i797.AuthBloc>(
-      () => _i797.AuthBloc(gh<_i843.UserLocalDataSource>()));
   return getIt;
 }
