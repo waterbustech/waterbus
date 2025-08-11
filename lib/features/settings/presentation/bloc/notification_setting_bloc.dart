@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:waterbus/features/settings/data/datasource/notification_setting_local.dart';
+import 'package:waterbus/features/settings/data/datasource/notification_setting_local_data_source.dart';
 import 'package:waterbus/features/settings/domain/entities/notification_settings.dart';
 
 part 'notification_setting_event.dart';
@@ -13,7 +13,7 @@ class NotificationSettingBloc
     extends Bloc<NotificationSettingEvent, NotificationSettingState> {
   NotificationSettings settings = NotificationSettings();
 
-  final NotificationSettingLocal _notificationSettingLocal;
+  final NotificationSettingLocalDataSource _notificationSettingLocal;
   NotificationSettingBloc(this._notificationSettingLocal)
       : super(
           NotificationSettingInitial(NotificationSettings()),

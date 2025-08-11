@@ -264,24 +264,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
   }
 
-  Future<void> _showBottomSheetSureAction({
-    required String actionText,
-    required String description,
-    required Function() handleAction,
-  }) async {
-    await showBottomSheetWaterbus(
-      context: AppRouter.context!,
-      enableDrag: false,
-      builder: (context) {
-        return BottomSheetDelete(
-          actionText: actionText,
-          description: description,
-          handlePressed: handleAction,
-        );
-      },
-    );
-  }
-
   // MARK: state
   ChatInProgress get _chatInProgress => ChatInProgress(
         conversations: _arrangedConversations,
@@ -301,6 +283,24 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   // MARK: private methods
+  Future<void> _showBottomSheetSureAction({
+    required String actionText,
+    required String description,
+    required Function() handleAction,
+  }) async {
+    await showBottomSheetWaterbus(
+      context: AppRouter.context!,
+      enableDrag: false,
+      builder: (context) {
+        return BottomSheetDelete(
+          actionText: actionText,
+          description: description,
+          handlePressed: handleAction,
+        );
+      },
+    );
+  }
+
   Future<Room?> _createConversation(
     ChatCreated event,
   ) async {
