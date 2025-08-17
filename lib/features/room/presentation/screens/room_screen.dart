@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_pip_mode/pip_widget.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' as sdk;
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
@@ -20,15 +20,15 @@ class RoomScreen extends StatelessWidget {
           return const SizedBox();
         }
 
-        final Room room = state.room!;
-        final CallState? callState = state.callState;
+        final sdk.Room room = state.room!;
+        final sdk.RoomState? roomState = state.roomState;
 
-        if (WebRTC.platformIsAndroid) {
+        if (sdk.WebRTC.platformIsAndroid) {
           return PipWidget(
-            pipBuilder: callState == null
+            pipBuilder: roomState == null
                 ? null
                 : (context) {
-                    return _buildPipView(context, room, callState);
+                    return _buildPipView(context, room, roomState);
                   },
             child: RoomBody(state: state),
           );
@@ -41,23 +41,24 @@ class RoomScreen extends StatelessWidget {
 
   Widget _buildPipView(
     BuildContext context,
-    Room room,
-    CallState callState,
+    sdk.Room room,
+    sdk.RoomState roomState,
   ) {
     return Row(
       children: [
-        Expanded(
-          child: RoomView(
-            participantSFU: callState.mParticipant!,
-            participants: room.participants,
-            avatarSize: 25.sp,
-          ),
-        ),
-        if (callState.participants.values.isNotEmpty)
+        if (roomState.localParticipant != null)
           Expanded(
             child: RoomView(
-              participantSFU: callState.participants.values.first,
-              participants: room.participants,
+              participantSFU: roomState.localParticipant!,
+              participants: roomState.participants,
+              avatarSize: 25.sp,
+            ),
+          ),
+        if (roomState.participants.isNotEmpty)
+          Expanded(
+            child: RoomView(
+              participantSFU: roomState.participants.first,
+              participants: roomState.participants,
               avatarSize: 25.sp,
             ),
           ),

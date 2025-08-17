@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_animated_indexed_stack/easy_animated_indexed_stack.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:waterbus_sdk/types/externals/models/index.dart';
 import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 

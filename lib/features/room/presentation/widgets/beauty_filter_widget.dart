@@ -14,7 +14,7 @@ import 'package:waterbus/gen/fonts.gen.dart';
 
 class BeautyFilterWidget extends StatefulWidget {
   final Participant? participant;
-  final CallState? callState;
+  final RoomState? callState;
   final Function? handleClosed;
   const BeautyFilterWidget({
     super.key,

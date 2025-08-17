@@ -19,11 +19,11 @@ typedef StatsData = RtcParticipantStats;
 typedef StatsChartData = (List<num> jitters, List<num> rtts);
 
 class StatsView extends StatefulWidget {
-  final CallState? callState;
+  final RoomState? roomState;
   final List<Participant> participants;
   const StatsView({
     super.key,
-    required this.callState,
+    required this.roomState,
     required this.participants,
   });
 
@@ -36,7 +36,7 @@ class _StatsViewState extends State<StatsView> {
       StreamController.broadcast();
   final List<num> _roundTimeTrips = [];
   final List<num> _jitters = [];
-  final List<ParticipantMediaState> _participants = [];
+  final List<Participant> _participants = [];
   Stream<StatsData>? _statsStream;
   String _currentStats = '';
 
@@ -81,10 +81,10 @@ class _StatsViewState extends State<StatsView> {
     });
   }
 
-  List<ParticipantMediaState> get _participantMediaStates {
-    final List<ParticipantMediaState> participants = [];
-    if (widget.callState?.mParticipant != null) {
-      final ParticipantMediaState participant = widget.callState!.mParticipant!;
+  List<Participant> get _participantMediaStates {
+    final List<Participant> participants = [];
+    if (widget.roomState?.localParticipant != null) {
+      final LocalParticipant participant = widget.roomState!.localParticipant!;
 
       participants.add(participant.copyWith(isSharingScreen: false));
 
@@ -94,9 +94,9 @@ class _StatsViewState extends State<StatsView> {
     }
 
     final trackParticipants =
-        widget.callState?.participants.values.toList() ?? [];
+        widget.roomState?.remoteParticipants.values.toList() ?? [];
 
-    for (final ParticipantMediaState participant in trackParticipants) {
+    for (final RemoteParticipant participant in trackParticipants) {
       participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
@@ -107,7 +107,7 @@ class _StatsViewState extends State<StatsView> {
     return participants;
   }
 
-  Participant? _getParticipant(ParticipantMediaState participantMediaState) {
+  Participant? _getParticipant(Participant participantMediaState) {
     final participants = widget.participants;
 
     if (participantMediaState.ownerId == kIsMine) {
@@ -116,7 +116,7 @@ class _StatsViewState extends State<StatsView> {
 
     return participants.firstWhereOrNull(
       (participant) =>
-          participant.id.toString() == participantMediaState.ownerId,
+          participant.info.id.toString() == participantMediaState.ownerId,
     );
   }
 
@@ -170,6 +170,7 @@ class _StatsViewState extends State<StatsView> {
 
                       final isSelecting = _currentStats == statsId;
                       final isMe = _participants[index].ownerId == kIsMine;
+                      final user = participant?.info.user;
 
                       return GestureWrapper(
                         onTap: () {
@@ -206,13 +207,13 @@ class _StatsViewState extends State<StatsView> {
                             spacing: 10.sp,
                             children: [
                               AvatarCard(
-                                urlToImage: participant?.user?.avatar,
+                                urlToImage: user?.avatar,
                                 size: 26.sp,
-                                label: participant?.user?.userName,
+                                label: user?.userName,
                               ),
                               Expanded(
                                 child: Text(
-                                  '${isMe ? 'You' : (participant?.user?.fullName ?? 'Waterbus')} '
+                                  '${isMe ? 'You' : (user?.fullName ?? 'Waterbus')} '
                                   '(${_participants[index].isSharingScreen ? 'Screen' : 'Webcam'})',
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context).textTheme.bodyMedium,

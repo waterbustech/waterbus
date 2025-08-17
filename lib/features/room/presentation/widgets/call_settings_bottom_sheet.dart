@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -36,8 +35,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RoomBloc, RoomState>(
       builder: (context, state) {
-        final Room? room = state.room;
-        final CallState? callState = state.callState;
+        final room = state.room;
+        final roomState = state.roomState;
 
         return Container(
           padding: EdgeInsets.only(top: 16.sp),
@@ -108,10 +107,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
                               width: double.infinity,
                               height: 80.h,
                               child: BeautyFilterWidget(
-                                participant: room?.participants.firstWhere(
-                                  (participant) => participant.isMe,
-                                ),
-                                callState: callState,
+                                participant: roomState?.localParticipant,
+                                callState: roomState,
                               ),
                             ),
                           );
@@ -143,8 +140,8 @@ class CallSettingsBottomSheet extends StatelessWidget {
                         maxHeight: context.isDesktop ? 450.sp : double.infinity,
                         maxWidth: context.isDesktop ? 750.sp : null,
                         child: StatsView(
-                          callState: callState,
-                          participants: room?.participants ?? [],
+                          roomState: roomState,
+                          participants: roomState?.participants ?? [],
                         ),
                       );
                     },

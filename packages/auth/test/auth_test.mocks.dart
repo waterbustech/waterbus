@@ -496,7 +496,6 @@ class MockFirebaseAuth extends _i1.Mock implements _i4.FirebaseAuth {
         )),
       ) as _i5.Future<_i4.ConfirmationResult>);
 
-  @override
   _i5.Future<_i4.UserCredential> signInWithPopup(_i3.AuthProvider? provider) =>
       (super.noSuchMethod(
         Invocation.method(

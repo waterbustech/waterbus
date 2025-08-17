@@ -41,7 +41,7 @@ extension MessageX on Message {
                 return BottomSheetDelete(
                   description: Strings.sureDeleteMessage.i18n,
                   handlePressed: () {
-                    AppBloc.messageBloc.add(MessageDeleted(messageId: id));
+                    AppBloc.messageBloc.add(MessageDelete(messageId: id));
                   },
                 );
               },

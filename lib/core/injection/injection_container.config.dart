@@ -36,12 +36,10 @@ import '../../features/room/presentation/bloc/recent_joined/recent_joined_bloc.d
     as _i211;
 import '../../features/settings/data/datasource/language_local_data_source.dart'
     as _i1010;
-import '../../features/settings/data/datasource/notification_setting_local.dart'
-    as _i953;
 import '../../features/settings/data/datasource/notification_setting_local_data_source.dart'
     as _i140;
-import '../../features/settings/data/datasource/themes_datasource.dart'
-    as _i247;
+import '../../features/settings/data/datasource/themes_local_data_source.dart'
+    as _i213;
 import '../../features/settings/data/repositories/language_repository.dart'
     as _i498;
 import '../../features/settings/domain/repositories/language_repository.dart'
@@ -64,26 +62,28 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
+  gh.factory<_i495.HomeBloc>(() => _i495.HomeBloc());
   gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());
   gh.factory<_i935.ArchivedBloc>(() => _i935.ArchivedBloc());
-  gh.factory<_i495.HomeBloc>(() => _i495.HomeBloc());
   gh.factory<_i738.MessageBloc>(() => _i738.MessageBloc());
   gh.singleton<_i89.RoomSound>(() => _i89.RoomSound());
   gh.singleton<_i921.PipChannel>(() => _i921.PipChannel());
   gh.lazySingleton<_i140.NotificationSettingLocalDataSource>(
       () => _i140.NotificationSettingLocalImpl());
+  gh.lazySingleton<_i213.ThemesLocalDataSource>(
+      () => _i213.ThemesDatasourceImpl());
+  gh.factory<_i947.ThemesBloc>(
+      () => _i947.ThemesBloc(gh<_i213.ThemesLocalDataSource>()));
   gh.lazySingleton<_i583.RoomLocalDataSource>(
       () => _i583.RoomLocalDataSourceImpl());
   gh.lazySingleton<_i233.LanguageRepository>(
       () => _i498.LanguageRepositoryImpl());
-  gh.lazySingleton<_i953.NotificationSettingLocal>(
-      () => _i953.NotificationSettingLocalImpl());
-  gh.lazySingleton<_i247.ThemesLocalDataSource>(
-      () => _i247.ThemesDatasourceImpl());
   gh.lazySingleton<_i1036.MediaConfigLocalDataSource>(
       () => _i1036.MediaConfigLocalDataSourceImpl());
+  gh.factory<_i469.NotificationSettingBloc>(() => _i469.NotificationSettingBloc(
+      gh<_i140.NotificationSettingLocalDataSource>()));
   gh.factory<_i1051.NotificationSettingBloc>(() =>
       _i1051.NotificationSettingBloc(
           gh<_i140.NotificationSettingLocalDataSource>()));
@@ -91,12 +91,8 @@ _i174.GetIt $initGetIt(
       () => _i839.UserLocalDataSourceImpl());
   gh.lazySingleton<_i1010.LanguageLocalDataSource>(
       () => _i1010.LanguageLocalDataSourceImpl());
-  gh.factory<_i469.NotificationSettingBloc>(() =>
-      _i469.NotificationSettingBloc(gh<_i953.NotificationSettingLocal>()));
   gh.factory<_i797.AuthBloc>(
       () => _i797.AuthBloc(gh<_i839.UserLocalDataSource>()));
-  gh.factory<_i947.ThemesBloc>(
-      () => _i947.ThemesBloc(gh<_i247.ThemesLocalDataSource>()));
   gh.factory<_i211.RecentJoinedBloc>(
       () => _i211.RecentJoinedBloc(gh<_i583.RoomLocalDataSource>()));
   gh.factory<_i1030.RoomBloc>(() => _i1030.RoomBloc(

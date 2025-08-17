@@ -13,7 +13,7 @@ import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart'
 
 class RoomView extends StatefulWidget {
   final EdgeInsets? margin;
-  final ParticipantMediaState participantSFU;
+  final Participant participantSFU;
   final List<Participant> participants;
   final double avatarSize;
   final double? width;
@@ -157,9 +157,9 @@ class _RoomViewState extends State<RoomView>
         ),
       ),
       child: AvatarCard(
-        urlToImage: participant?.user?.avatar,
+        urlToImage: participant?.info.user?.avatar,
         size: widget.avatarSize,
-        label: participant?.user?.fullName,
+        label: participant?.info.user?.fullName,
       ),
     );
   }
@@ -217,7 +217,7 @@ class _RoomViewState extends State<RoomView>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                participant?.user?.fullName ?? "",
+                participant?.info.user?.fullName ?? "",
                 style: TextStyle(
                   color:
                       participant?.isMe ?? false ? Colors.yellow : Colors.white,
@@ -316,7 +316,7 @@ class _RoomViewState extends State<RoomView>
       );
     } else {
       _cachedParticipant = widget.participants.firstWhereOrNull(
-        (participant) => participant.id.toString() == currentId,
+        (participant) => participant.toString() == currentId,
       );
     }
 

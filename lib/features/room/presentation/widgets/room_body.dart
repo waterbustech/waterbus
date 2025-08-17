@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
+import 'package:waterbus_sdk/types/index.dart' as sdk;
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -44,8 +45,7 @@ class RoomBody extends StatefulWidget {
 class _RoomBodyState extends State<RoomBody> {
   late RoomState _state;
   late Room _room;
-  late MediaConfig _mediaConfig;
-  late CallState? _callState;
+  late sdk.RoomState _roomState;
 
   final List<MediaDeviceInfo> _audioInputs = [];
   final List<MediaDeviceInfo> _audioOutputs = [];
@@ -173,17 +173,17 @@ class _RoomBodyState extends State<RoomBody> {
   void _initValues() {
     _state = widget.state;
     _room = _state.room!;
-    _mediaConfig = _state.mediaConfig ?? MediaConfig();
-    _callState = _state.callState;
+    _roomState = _state.roomState!;
   }
 
-  bool get _isRecordingOnPhone => context.isMobile && _state.isRecording;
-  bool get _currentUserMedia => _callState?.mParticipant == null;
+  bool get _currentUserMedia => _localParticipant == null;
+  Participant? get _localParticipant => _roomState.localParticipant;
   bool get _isSpeakerPhoneEnabled =>
-      _callState!.mParticipant!.isSpeakerPhoneEnabled;
-  bool get _isVideoEnabled => _callState!.mParticipant!.isVideoEnabled;
-  bool get _isAudioEnabled => _callState!.mParticipant!.isAudioEnabled;
-  bool get _isHandRaising => _callState!.mParticipant!.isHandRaising;
+      _localParticipant?.isSpeakerPhoneEnabled ?? false;
+  bool get _isVideoEnabled => _localParticipant?.isVideoEnabled ?? false;
+  bool get _isAudioEnabled => _localParticipant?.isAudioEnabled ?? false;
+  bool get _isHandRaising => _localParticipant?.isHandRaising ?? false;
+  bool get _isSharingScreen => _localParticipant?.isSharingScreen ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -238,15 +238,9 @@ class _RoomBodyState extends State<RoomBody> {
         centerTitle: false,
         leading: Align(
           alignment: Alignment.centerRight,
-          child: _isRecordingOnPhone
-              ? _buildRecWidget()
-              : Assets.icons.launcherIcon.image(height: 30.sp),
+          child: Assets.icons.launcherIcon.image(height: 30.sp),
         ),
-        leadingWidth: context.isDesktop
-            ? 50.sp
-            : _isRecordingOnPhone
-                ? 65.sp
-                : 40.sp,
+        leadingWidth: context.isDesktop ? 50.sp : 40.sp,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
@@ -412,21 +406,20 @@ class _RoomBodyState extends State<RoomBody> {
                       CallActionButton(
                         tooltipMessage: Strings.shareScreen.i18n,
                         icon: PhosphorIcons.monitorArrowUp(
-                          _callState!.mParticipant!.isSharingScreen
+                          _isSharingScreen
                               ? PhosphorIconsStyle.fill
                               : PhosphorIconsStyle.regular,
                         ),
-                        iconColor: _callState!.mParticipant!.isSharingScreen
+                        iconColor: _isSharingScreen
                             ? Theme.of(context).colorScheme.primary
                             : null,
-                        backgroundColor:
-                            _callState!.mParticipant!.isSharingScreen
-                                ? Theme.of(context).colorScheme.primaryContainer
-                                : null,
+                        backgroundColor: _isSharingScreen
+                            ? Theme.of(context).colorScheme.primaryContainer
+                            : null,
                         onTap: () {
                           if (_currentUserMedia) return;
 
-                          if (_callState!.mParticipant!.isSharingScreen) {
+                          if (_isSharingScreen) {
                             AppBloc.roomBloc.add(RoomSharingScreenStoped());
                           } else {
                             AppBloc.roomBloc.add(RoomSharingScreenStarted());
@@ -556,20 +549,19 @@ class _RoomBodyState extends State<RoomBody> {
                       curve: Curves.easeInOutExpo,
                       child: SizedBox(
                         width: (100 - _getRightPanelWidth).w,
-                        child: _isFilterSettingsOpened
+                        child: _isFilterSettingsOpened && _currentUserMedia
                             ? Container(
                                 margin: EdgeInsets.symmetric(horizontal: 12.sp),
                                 child: RoomView(
-                                  participants: _room.participants,
-                                  participantSFU: _callState!.mParticipant!
+                                  participants: _roomState.participants,
+                                  participantSFU: _roomState.localParticipant!
                                       .copyWith(isSharingScreen: false),
                                   borderEnabled: false,
                                 ),
                               )
                             : RoomLayout(
                                 room: _room,
-                                callState: _callState,
-                                mediaConfig: _mediaConfig,
+                                roomState: _roomState,
                               ),
                       ),
                     ),

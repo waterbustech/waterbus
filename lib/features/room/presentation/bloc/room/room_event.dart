@@ -61,7 +61,7 @@ class RoomDialogDisplayed extends RoomEvent {
 }
 
 class RoomSomeoneNewJoined extends RoomEvent {
-  final Participant participant;
+  final ParticipantInfo participant;
   const RoomSomeoneNewJoined({required this.participant});
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus_sdk/core/events/waterbus_event_system.dart' as sdk;
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/constants/constants.dart';
@@ -29,7 +30,9 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc() : super(MessageInitial()) {
     on<MessageEvent>((event, emit) async {
       if (event is MessageSocketStarted) {
-        _waterbusSdk.onMessageSocketChanged = _listenMessageSocket;
+        _waterbusSdk.on<sdk.MessageEvent>().listen((event) {
+          _listenMessage.call(event);
+        });
       }
 
       if (event is MessageFetchedByMeeting) {
@@ -126,7 +129,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         emit(_messageDone);
       }
 
-      if (event is MessageDeleted) {
+      if (event is MessageDelete) {
         await _deleteMessage(event);
 
         emit(_messageDone);
@@ -192,18 +195,43 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     return _messagesMap[_meetingId]?.messages ?? [];
   }
 
-  void _listenMessageSocket(MessageSocketEvent messageSocketEvent) {
-    final Message message = messageSocketEvent.message;
-
-    if (message.createdBy?.id == AppBloc.userBloc.user?.id) return;
-
-    if (messageSocketEvent.event == MessageEventEnum.create) {
-      add(MessageInserted(message: message));
-    } else if (messageSocketEvent.event == MessageEventEnum.update) {
-      add(MessageUpdatedViaSocket(messageModel: message));
-    } else {
-      add(MessageUpdatedViaSocket(messageModel: message, isDeleted: true));
+  void _listenMessage(sdk.MessageEvent messageEvent) {
+    if (messageEvent is sdk.MessageReceived) {
+      _onListenMessageSocketEvent(
+        messageModel: messageEvent.message,
+        handle: () {
+          add(MessageInserted(message: messageEvent.message));
+        },
+      );
+    } else if (messageEvent is sdk.MessageUpdated) {
+      _onListenMessageSocketEvent(
+        messageModel: messageEvent.message,
+        handle: () {
+          add(MessageUpdatedViaSocket(messageModel: messageEvent.message));
+        },
+      );
+    } else if (messageEvent is sdk.MessageDeleted) {
+      _onListenMessageSocketEvent(
+        messageModel: messageEvent.message,
+        handle: () {
+          add(
+            MessageUpdatedViaSocket(
+              messageModel: messageEvent.message,
+              isDeleted: true,
+            ),
+          );
+        },
+      );
     }
+  }
+
+  void _onListenMessageSocketEvent({
+    required Message messageModel,
+    required Function handle,
+  }) {
+    if (messageModel.createdBy?.id == AppBloc.userBloc.user?.id) return;
+
+    handle.call();
   }
 
   Future<void> _getMessagesByRoomId(int roomId) async {
@@ -301,7 +329,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
   }
 
-  Future<void> _deleteMessage(MessageDeleted event) async {
+  Future<void> _deleteMessage(MessageDelete event) async {
     final Result<Message?> result = await _waterbusSdk.deleteMessage(
       messageId: event.messageId,
     );

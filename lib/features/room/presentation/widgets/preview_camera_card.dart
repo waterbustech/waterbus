@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
 
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
@@ -22,8 +22,7 @@ class PreviewCameraCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RoomBloc, RoomState>(
       builder: (context, state) {
-        final ParticipantMediaState? participant =
-            state.callState?.mParticipant;
+        final participant = state.roomState?.localParticipant;
 
         // Return skeleton
         if (participant == null) {
