@@ -118,8 +118,10 @@ dependencies:
 
   # Video call
   waterbus_sdk:
-    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
-
+    git:
+      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
+      ref: fix/update-room-create-request-data
+      
 dependency_overrides:
   archive: ^4.0.7
   intl: ^0.20.2

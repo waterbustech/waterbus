@@ -7,6 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -40,7 +41,7 @@ class _RoomViewState extends State<RoomView>
   String? _cachedParticipantId;
 
   // Memoized getters with caching
-  late final ValueNotifier<SuperellipseShape> _shapeNotifier;
+  late final ValueNotifier<Decoration> _shapeNotifier;
   late final ValueNotifier<bool> _shouldDisplayVideoNotifier;
 
   @override
@@ -86,16 +87,11 @@ class _RoomViewState extends State<RoomView>
             _shouldDisplayVideoNotifier.value = shouldDisplay;
           }
 
-          return ValueListenableBuilder<SuperellipseShape>(
+          return ValueListenableBuilder<Decoration>(
             valueListenable: _shapeNotifier,
             builder: (context, shape, _) {
               return Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceDim.withValues(
-                        alpha: 0.25,
-                      ),
-                  borderRadius: BorderRadius.circular(2.sp),
-                ),
+                decoration: shape,
                 width: widget.width,
                 child: Container(
                   margin: widget.margin,
@@ -281,17 +277,20 @@ class _RoomViewState extends State<RoomView>
   }
 
   // Memoized shape computation
-  SuperellipseShape _computeShape(AudioLevel audioLevel) {
-    return SuperellipseShape(
-      side: !widget.borderEnabled ||
+  Decoration _computeShape(AudioLevel audioLevel) {
+    return BoxDecoration(
+      border: !widget.borderEnabled ||
               _isScreenSharing ||
               audioLevel == AudioLevel.kSilence
-          ? BorderSide.none
-          : BorderSide(
-              color: Theme.of(context).colorScheme.primary,
-              width: audioLevel == AudioLevel.kAudioStrong ? 8.sp : 6.sp,
+          ? null
+          : Border.all(
+              color: Theme.of(AppRouter.context!).colorScheme.primary,
+              width: audioLevel == AudioLevel.kAudioStrong ? 4.sp : 2.sp,
             ),
-      borderRadius: BorderRadius.circular(12.sp),
+      color: Theme.of(AppRouter.context!).colorScheme.surfaceDim.withValues(
+            alpha: 0.25,
+          ),
+      borderRadius: BorderRadius.circular(2.sp),
     );
   }
 
