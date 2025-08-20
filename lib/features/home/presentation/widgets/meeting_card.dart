@@ -67,6 +67,23 @@ class MeetingCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 8.sp),
+          Wrap(
+            spacing: 4.sp,
+            children: [
+              _buildTag(
+                context,
+                label: 'Protocol: ${room.streamingProtocol.name.toUpperCase()}',
+                color: _getColorByProtocol(room.streamingProtocol),
+              ),
+              _buildTag(
+                context,
+                label:
+                    'Capacity: ${room.capacity == null ? 'Unlimited' : room.capacity.toString()}',
+                color: Colors.cyanAccent,
+              ),
+            ],
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -114,7 +131,7 @@ class MeetingCard extends StatelessWidget {
                           .outline
                           .withValues(alpha: .2),
                     ),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Row(
@@ -144,5 +161,49 @@ class MeetingCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildTag(
+    BuildContext context, {
+    required String label,
+    required Color color,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: color,
+        ),
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 10.sp,
+            width: 10.sp,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          SizedBox(width: 4.sp),
+          Text(
+            label,
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(fontSize: 11.sp, color: color),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getColorByProtocol(StreamingProtocol protocol) {
+    return switch (protocol) {
+      StreamingProtocol.sfu => Colors.orangeAccent,
+      StreamingProtocol.hls => Colors.purpleAccent,
+    };
   }
 }

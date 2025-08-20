@@ -14,7 +14,17 @@ class RoomMediaStreamSetup extends RoomEvent {}
 class RoomCreated extends RoomEvent {
   final String roomName;
   final String password;
-  const RoomCreated({required this.roomName, required this.password});
+  final RoomType roomType;
+  final StreamingProtocol streamingProtocol;
+  final int? capacity;
+
+  const RoomCreated({
+    required this.roomName,
+    required this.password,
+    this.roomType = RoomType.videoConferencing,
+    this.streamingProtocol = StreamingProtocol.sfu,
+    this.capacity,
+  });
 }
 
 class RoomUpdated extends RoomEvent {

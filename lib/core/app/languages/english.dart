@@ -61,7 +61,7 @@ Map<String, String> english = {
   Strings.textMessages: "Text messages",
   Strings.chooseWhatToShare: "Choose what to share",
   Strings.enterCodeToJoinMeeting: "Enter code to join meeting",
-  Strings.roomCode: "Room code: ",
+  Strings.roomCode: "Code: ",
   Strings.noParticipantsYet: "No participants yet",
   Strings.yourPersonalMeetingsAre: "Your personal meetings are ",
   Strings.endToEndEncrypted: "end-to-end encrypted",

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
-import 'package:waterbus/features/room/data/datasources/meeting_local_data_source.dart';
+import 'package:waterbus/features/room/data/datasources/room_local_data_source.dart';
 
 part 'recent_joined_event.dart';
 part 'recent_joined_state.dart';

@@ -2246,8 +2246,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "fix/update-room-create-request-data"
-      resolved-ref: "05fbdcff1553dfabd6b9d418572599113c9428fc"
+      ref: refactor-v3
+      resolved-ref: d834b3ed1e2d4db3a44cfb57d3f1a90728111b78
       url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
     source: git
     version: "2.0.0"

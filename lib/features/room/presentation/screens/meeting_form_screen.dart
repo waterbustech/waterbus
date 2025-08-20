@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus_sdk/types/externals/room/room_type.dart';
+import 'package:waterbus_sdk/types/externals/rtc/streaming_protocol.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -11,10 +13,6 @@ import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/textfield/shadcn_text_field.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
-
-enum RoomType { videoConferencing, liveStreaming }
-
-enum StreamingProtocol { sfu, hls, moq }
 
 class MeetingFormScreen extends StatefulWidget {
   final bool isChatScreen;
@@ -72,6 +70,11 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
           ChatCreated(
             title: roomName,
             password: password.isEmpty ? null : password,
+            roomType: _selectedRoomType,
+            streamingProtocol: _selectedProtocol,
+            capacity: _maxParticipantsController.text.isEmpty
+                ? null
+                : int.parse(_maxParticipantsController.text),
           ),
         );
       }
@@ -88,6 +91,11 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
           RoomCreated(
             roomName: roomName,
             password: password,
+            roomType: _selectedRoomType,
+            streamingProtocol: _selectedProtocol,
+            capacity: _maxParticipantsController.text.isEmpty
+                ? null
+                : int.parse(_maxParticipantsController.text),
           ),
         );
       }

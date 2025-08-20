@@ -24,8 +24,17 @@ class ChatCurrentConversationCleaned extends ChatEvent {}
 class ChatCreated extends ChatEvent {
   final String title;
   final String? password;
+  final RoomType roomType;
+  final StreamingProtocol streamingProtocol;
+  final int? capacity;
 
-  ChatCreated({required this.title, this.password});
+  ChatCreated({
+    required this.title,
+    this.password,
+    this.roomType = RoomType.videoConferencing,
+    this.streamingProtocol = StreamingProtocol.sfu,
+    this.capacity,
+  });
 }
 
 class ChatArchived extends ChatEvent {

@@ -25,7 +25,7 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
 import 'package:waterbus/features/room/data/datasources/media_config_data_source.dart';
-import 'package:waterbus/features/room/data/datasources/meeting_local_data_source.dart';
+import 'package:waterbus/features/room/data/datasources/room_local_data_source.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/screen_select_dialog.dart';
@@ -329,7 +329,12 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
   Future<void> _handleCreateRoom(RoomCreated event) async {
     final RoomParams params = RoomParams(
-      room: Room(title: event.roomName),
+      room: Room(
+        title: event.roomName,
+        roomType: event.roomType,
+        streamingProtocol: event.streamingProtocol,
+        capacity: event.capacity,
+      ),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
@@ -339,7 +344,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     AppRouter.popUntilToRoot();
 
     if (result.isSuccess) {
-      final Room room = result.value!;
+      Room room = result.value!;
+      room = room.copyWith(latestJoinedAt: DateTime.now());
       _localDataSource.insertOrUpdate(room);
       AppBloc.chatBloc.add(ChatInserted(conversation: room));
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));

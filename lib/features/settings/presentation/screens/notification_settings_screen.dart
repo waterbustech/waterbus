@@ -56,20 +56,6 @@ class NotificationSettingsScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SettingSwitchCard(
-                        label: Strings.newInvitation.i18n,
-                        enabled: settings.newInvitation,
-                        hasDivider: false,
-                        onChanged: (isEnabled) {
-                          AppBloc.notificationSettingBloc.add(
-                            NotificationSettingUpdate(
-                              settings: settings.copyWith(
-                                newInvitation: isEnabled,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
                       LabelWidget(label: Strings.inMeeting.i18n),
                       SettingSwitchCard(
                         label: Strings.participantJoined.i18n,

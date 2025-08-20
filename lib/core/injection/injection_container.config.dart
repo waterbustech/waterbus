@@ -28,8 +28,8 @@ import '../../features/conversation/presentation/bloc/message_bloc.dart'
     as _i738;
 import '../../features/room/data/datasources/media_config_data_source.dart'
     as _i1036;
-import '../../features/room/data/datasources/meeting_local_data_source.dart'
-    as _i583;
+import '../../features/room/data/datasources/room_local_data_source.dart'
+    as _i502;
 import '../../features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart'
     as _i291;
 import '../../features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart'
@@ -76,12 +76,12 @@ _i174.GetIt $initGetIt(
       () => _i213.ThemesDatasourceImpl());
   gh.factory<_i947.ThemesBloc>(
       () => _i947.ThemesBloc(gh<_i213.ThemesLocalDataSource>()));
-  gh.lazySingleton<_i583.RoomLocalDataSource>(
-      () => _i583.RoomLocalDataSourceImpl());
   gh.lazySingleton<_i233.LanguageRepository>(
       () => _i498.LanguageRepositoryImpl());
   gh.lazySingleton<_i1036.MediaConfigLocalDataSource>(
       () => _i1036.MediaConfigLocalDataSourceImpl());
+  gh.lazySingleton<_i502.RoomLocalDataSource>(
+      () => _i502.RoomLocalDataSourceImpl());
   gh.factory<_i469.NotificationSettingBloc>(() => _i469.NotificationSettingBloc(
       gh<_i140.NotificationSettingLocalDataSource>()));
   gh.factory<_i1051.NotificationSettingBloc>(() =>
@@ -91,15 +91,15 @@ _i174.GetIt $initGetIt(
       () => _i839.UserLocalDataSourceImpl());
   gh.lazySingleton<_i1010.LanguageLocalDataSource>(
       () => _i1010.LanguageLocalDataSourceImpl());
-  gh.factory<_i797.AuthBloc>(
-      () => _i797.AuthBloc(gh<_i839.UserLocalDataSource>()));
-  gh.factory<_i211.RecentJoinedBloc>(
-      () => _i211.RecentJoinedBloc(gh<_i583.RoomLocalDataSource>()));
   gh.factory<_i1030.RoomBloc>(() => _i1030.RoomBloc(
         gh<_i921.PipChannel>(),
         gh<_i89.RoomSound>(),
-        gh<_i583.RoomLocalDataSource>(),
+        gh<_i502.RoomLocalDataSource>(),
         gh<_i1036.MediaConfigLocalDataSource>(),
       ));
+  gh.factory<_i797.AuthBloc>(
+      () => _i797.AuthBloc(gh<_i839.UserLocalDataSource>()));
+  gh.factory<_i211.RecentJoinedBloc>(
+      () => _i211.RecentJoinedBloc(gh<_i502.RoomLocalDataSource>()));
   return getIt;
 }

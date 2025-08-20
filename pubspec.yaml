@@ -120,7 +120,7 @@ dependencies:
   waterbus_sdk:
     git:
       url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-      ref: fix/update-room-create-request-data
+      ref: refactor-v3
       
 dependency_overrides:
   archive: ^4.0.7
