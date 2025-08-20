@@ -287,7 +287,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
           if (event.code != null) {
             room = await _handleGetInfoRoom(event.code!);
-            print(room);
           } else {
             AppRouter.pop();
           }
