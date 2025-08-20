@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
+import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
