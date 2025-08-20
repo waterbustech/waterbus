@@ -58,21 +58,20 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
 
     final roomName = _roomNameController.text.trim();
     final password = _passwordController.text;
-    // final maxParticipants = int.tryParse(_maxParticipantsController.text);
 
     if (widget.isChatScreen) {
       if (_isEditing) {
         AppBloc.chatBloc.add(
           ChatUpdated(
             title: roomName,
-            password: password,
+            password: password.isEmpty ? null : password,
           ),
         );
       } else {
         AppBloc.chatBloc.add(
           ChatCreated(
             title: roomName,
-            password: password,
+            password: password.isEmpty ? null : password,
           ),
         );
       }

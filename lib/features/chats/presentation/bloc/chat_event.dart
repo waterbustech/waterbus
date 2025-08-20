@@ -23,9 +23,9 @@ class ChatCurrentConversationCleaned extends ChatEvent {}
 
 class ChatCreated extends ChatEvent {
   final String title;
-  final String password;
+  final String? password;
 
-  ChatCreated({required this.title, required this.password});
+  ChatCreated({required this.title, this.password});
 }
 
 class ChatArchived extends ChatEvent {

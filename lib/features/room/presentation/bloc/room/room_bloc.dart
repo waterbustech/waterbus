@@ -68,7 +68,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomStarted) {
           _mediaConfig = _callSettingsLocalDataSource.getSettings();
 
-          _waterbusSdk.updateMediaConfig(_mediaConfig);
+          await _waterbusSdk.updateMediaConfig(_mediaConfig);
           _waterbusSdk.on<sdk.RoomEvent>().listen(_onRoomEventChanged);
           _waterbusSdk
               .on<sdk.ParticipantEvent>()
@@ -284,13 +284,15 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           Room? room;
           await _waterbusSdk.prepareMedia();
           final mediaDeviceList = await _getAllMediaDevices();
-          event.onPrepareLobby.call(mediaDeviceList, room);
 
           if (event.code != null) {
             room = await _handleGetInfoRoom(event.code!);
+            print(room);
           } else {
             AppRouter.pop();
           }
+
+          event.onPrepareLobby.call(mediaDeviceList, room);
 
           if (state is! RoomPreJoin) {
             emit(_preJoinRoom);
@@ -572,10 +574,11 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         add(RoomDisposed());
       }
     } else {
-      if (state is sdk.RoomStateChanged) {
+      startPiP();
+
+      if (event is sdk.RoomStateChanged) {
         add(RoomDisplayRefreshed());
       }
-      startPiP();
     }
   }
 

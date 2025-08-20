@@ -111,7 +111,7 @@ class PreviewCameraCard extends StatelessWidget {
                       AppBloc.roomBloc.add(RoomAudioToggled());
                     },
                   ),
-                  SizedBox(width: 8.sp),
+                  SizedBox(width: context.isMobile ? 12.sp : 8.sp),
                   if (context.isMobile)
                     PreviewActionButton(
                       shape: BoxShape.circle,
