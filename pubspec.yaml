@@ -118,7 +118,8 @@ dependencies:
 
   # Video call
   waterbus_sdk:
-    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
+    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+
 dependency_overrides:
   archive: ^4.0.7
   intl: ^0.20.2
