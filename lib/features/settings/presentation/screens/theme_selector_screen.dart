@@ -95,7 +95,6 @@ class ThemeSelectorScreen extends StatelessWidget {
           color: Theme.of(context).brightness == Brightness.light
               ? Theme.of(context).colorScheme.surfaceContainer
               : Theme.of(context).colorScheme.surfaceContainerHighest,
-          boxShadow: kDefaultShadow(context),
         ),
         padding: EdgeInsets.symmetric(
           horizontal: 16.sp,

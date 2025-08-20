@@ -22,7 +22,6 @@ import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/archived/presentation/screens/archived_screen.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
@@ -285,7 +284,6 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 1.2,
           ),
-          boxShadow: kDefaultShadow(context),
         ),
         alignment: Alignment.center,
         child: Icon(

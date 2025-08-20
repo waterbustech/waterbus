@@ -164,7 +164,7 @@ class AppTheme {
   }) {
     final themeData = ThemeData(
       brightness: Brightness.dark,
-      fontFamily: GoogleFonts.firaCode().fontFamily,
+      fontFamily: GoogleFonts.spaceMono().fontFamily,
       scaffoldBackgroundColor: _DraculaColors.background,
       // Use the iconic Dracula Purple as the seed for the color scheme.
       colorSchemeSeed: _DraculaColors.purple,
