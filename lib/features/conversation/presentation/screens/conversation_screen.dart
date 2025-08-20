@@ -9,7 +9,6 @@ import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/presentation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/presentation/widgets/conversation_header.dart';
@@ -81,7 +80,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             SizedBox(height: 5.sp),
             ConversationHeader(onBackScreen: widget.onBackScreen),
             SizedBox(height: 5.sp),
-            divider,
+            const Divider(),
             Expanded(
               child: BlocBuilder<MessageBloc, MessageState>(
                 builder: (context, state) {

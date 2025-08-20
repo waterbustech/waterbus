@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class CustomRowButton extends StatelessWidget {
@@ -54,7 +53,7 @@ class CustomRowButton extends StatelessWidget {
         if (showDivider)
           Padding(
             padding: EdgeInsets.only(left: 36.sp),
-            child: divider,
+            child: const Divider(),
           ),
       ],
     );

@@ -6,7 +6,6 @@ import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/settings/domain/entities/notification_settings.dart';
 import 'package:waterbus/features/settings/presentation/bloc/notification_setting_bloc.dart';
@@ -29,7 +28,7 @@ class NotificationSettingsScreen extends StatelessWidget {
           : null,
       body: Column(
         children: [
-          divider,
+          const Divider(),
           Expanded(
             child:
                 BlocBuilder<NotificationSettingBloc, NotificationSettingState>(

@@ -6,7 +6,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/settings/data/repositories/language_repository.dart';
@@ -45,7 +44,7 @@ class _LanguageSelectorScreenState extends State<LanguageSelectorScreen> {
           : null,
       body: Column(
         children: [
-          divider,
+          const Divider(),
           Padding(
             padding: EdgeInsets.all(20.sp),
             child: Container(
@@ -120,7 +119,7 @@ class _LanguageSelectorScreenState extends State<LanguageSelectorScreen> {
                           if (index != Language.values.length - 1)
                             Padding(
                               padding: EdgeInsets.only(left: 12.sp),
-                              child: divider,
+                              child: const Divider(),
                             ),
                         ],
                       ),

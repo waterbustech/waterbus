@@ -11,7 +11,6 @@ import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_done.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
@@ -106,7 +105,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
           : null,
       body: Column(
         children: [
-          divider,
+          const Divider(),
           Expanded(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

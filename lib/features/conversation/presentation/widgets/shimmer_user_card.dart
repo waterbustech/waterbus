@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';
 
 class ShimmerUserCard extends StatelessWidget {
@@ -55,7 +54,7 @@ class ShimmerUserCard extends StatelessWidget {
             padding: EdgeInsets.only(left: 52.5.sp).add(
               EdgeInsets.symmetric(vertical: 2.sp),
             ),
-            child: divider,
+            child: const Divider(),
           ),
         ],
       ),

@@ -6,7 +6,6 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class SettingRowButton extends StatelessWidget {
@@ -105,7 +104,10 @@ class SettingRowButton extends StatelessWidget {
               ),
             ),
             if ((isFirst && !isLast) || (!isFirst && !isLast))
-              Padding(padding: EdgeInsets.only(left: 43.5.sp), child: divider),
+              Padding(
+                padding: EdgeInsets.only(left: 43.5.sp),
+                child: const Divider(),
+              ),
           ],
         ),
       ),

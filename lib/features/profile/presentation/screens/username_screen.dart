@@ -12,7 +12,6 @@ import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
@@ -109,7 +108,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
       ),
       body: Column(
         children: [
-          divider,
+          const Divider(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.sp),
             child: Column(

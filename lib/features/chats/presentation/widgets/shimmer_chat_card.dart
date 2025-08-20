@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/shimmers/fade_shimmer.dart';
 
 class ShimmerChatCard extends StatelessWidget {
@@ -86,7 +85,7 @@ class ShimmerChatCard extends StatelessWidget {
           padding: EdgeInsets.only(
             left: context.isDesktop ? 74.sp : 66.sp,
           ),
-          child: divider,
+          child: const Divider(),
         ),
       ],
     );

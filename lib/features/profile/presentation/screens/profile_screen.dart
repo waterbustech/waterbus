@@ -13,7 +13,6 @@ import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
@@ -168,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 10.sp,
                                   ),
-                                  child: divider,
+                                  child: const Divider(),
                                 ),
                                 GestureWrapper(
                                   onTap: () {

@@ -17,7 +17,6 @@ import 'package:waterbus/features/archived/presentation/bloc/archived_bloc.dart'
 import 'package:waterbus/features/archived/presentation/screens/archived_conversation_screen.dart';
 import 'package:waterbus/features/chats/presentation/widgets/chat_card.dart';
 import 'package:waterbus/features/chats/presentation/widgets/shimmer_chat_card.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/shimmers/shimmer_list.dart';
@@ -140,7 +139,7 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
                                 ChatCard(room: rooms[index]),
                                 Padding(
                                   padding: EdgeInsets.only(left: 58.sp),
-                                  child: divider,
+                                  child: const Divider(),
                                 ),
                               ],
                             ),

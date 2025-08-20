@@ -8,7 +8,6 @@ import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/presentation/widgets/more_action_item.dart';
 import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
@@ -50,7 +49,7 @@ class DetailGroupButton extends StatelessWidget {
                               AppBloc.chatBloc.add(ChatArchived());
                             },
                           ),
-                          divider,
+                          const Divider(),
                         ],
                       ),
                     MoreActionItem(
@@ -64,7 +63,7 @@ class DetailGroupButton extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          divider,
+                          const Divider(),
                           MoreActionItem(
                             title: Strings.leaveGroup.i18n,
                             icon: PhosphorIcons.signOut(),

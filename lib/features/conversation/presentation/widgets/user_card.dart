@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/cached_network_image/cached_network_image.dart';
 import 'package:waterbus/features/conversation/domain/entities/default_avatar_model.dart';
 
@@ -68,7 +67,7 @@ class UserCard extends StatelessWidget {
             padding: EdgeInsets.only(left: 52.5.sp).add(
               EdgeInsets.symmetric(vertical: 2.sp),
             ),
-            child: divider,
+            child: const Divider(),
           ),
         ],
       ),
