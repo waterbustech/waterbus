@@ -256,7 +256,7 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               onChanged: onChanged,
-              dropdownColor: Theme.of(context).colorScheme.surface,
+              dropdownColor: Theme.of(context).scaffoldBackgroundColor,
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurface,

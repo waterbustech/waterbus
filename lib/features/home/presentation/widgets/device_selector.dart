@@ -23,7 +23,7 @@ class DeviceSelector extends StatelessWidget {
         vertical: 6.sp,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.sp),
+        borderRadius: BorderRadius.circular(4.sp),
         border: Border.all(color: colorGray2),
       ),
       child: Row(

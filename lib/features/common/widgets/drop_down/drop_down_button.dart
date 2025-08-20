@@ -59,7 +59,7 @@ Widget showDropdownButton<T>({
         dropdownStyleData: DropdownStyleData(
           width: 250.sp,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.sp),
+            borderRadius: BorderRadius.circular(2.sp),
             color: Theme.of(AppRouter.context!).colorScheme.surfaceContainer,
             boxShadow: [
               BoxShadow(
@@ -75,7 +75,7 @@ Widget showDropdownButton<T>({
           ),
           offset: const Offset(0, -4),
           scrollbarTheme: ScrollbarThemeData(
-            radius: Radius.circular(12.sp),
+            radius: Radius.circular(2.sp),
           ),
         ),
       ),

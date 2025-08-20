@@ -41,37 +41,34 @@ class PreviewCameraCard extends StatelessWidget {
 
         return Stack(
           children: [
-            Material(
-              clipBehavior: Clip.hardEdge,
-              shape: SuperellipseShape(
-                borderRadius: BorderRadius.circular(30.sp),
+            Container(
+              width: width ?? 265.sp,
+              height: height ?? 200.sp,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(4.0),
               ),
-              child: Container(
-                width: width ?? 265.sp,
-                height: height ?? 200.sp,
-                decoration: BoxDecoration(color: Colors.black),
-                child: participant.isVideoEnabled
-                    ? WaterbusMediaView(
-                        mediaSource: participant.cameraSource!,
-                        objectFit:
-                            RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                        mirror: true,
-                      )
-                    : Container(
-                        padding: EdgeInsets.only(
-                          bottom: context.isDesktop ? 0 : 12.sp,
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Camera is off",
-                          style: TextStyle(
-                            color: mCL,
-                            fontSize: context.isDesktop ? 16.sp : 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+              child: participant.isVideoEnabled
+                  ? WaterbusMediaView(
+                      mediaSource: participant.cameraSource!,
+                      objectFit:
+                          RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                      mirror: true,
+                    )
+                  : Container(
+                      padding: EdgeInsets.only(
+                        bottom: context.isDesktop ? 0 : 12.sp,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Camera is off",
+                        style: TextStyle(
+                          color: mCL,
+                          fontSize: context.isDesktop ? 16.sp : 14.sp,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-              ),
+                    ),
             ),
             if (context.isDesktop)
               Positioned(

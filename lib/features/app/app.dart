@@ -7,6 +7,7 @@ import 'package:i18n_extension/i18n_extension.dart';
 import 'package:toastification/toastification.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
+import 'package:waterbus/core/app/themes/preset.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -42,14 +43,11 @@ class _AppState extends State<App> {
                     GlobalCupertinoLocalizations.delegate,
                   ],
                   debugShowCheckedModeBanner: false,
-                  theme: AppTheme.light(
+                  theme: AppTheme.fromPreset(
+                    theme is ThemesStateInitial ? theme.preset : Preset.dracula,
                     extensions: [sizerExtension],
                   ).data,
-                  darkTheme: AppTheme.dark(
-                    extensions: [sizerExtension],
-                  ).data,
-                  themeMode:
-                      theme is ThemesStateInitial ? theme.mode : ThemeMode.dark,
+                  themeMode: ThemeMode.dark,
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(
