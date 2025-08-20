@@ -98,7 +98,7 @@ class MeetingCard extends StatelessWidget {
                   await WaterbusPermissionHandler().checkGrantedForExecute(
                     permissions: [Permission.camera, Permission.microphone],
                     callBack: () async {
-                      AppBloc.roomBloc.add(RoomDialogDisplayed(room: room));
+                      AppBloc.roomBloc.add(RoomInfoGot(room: room));
                     },
                   );
                 },

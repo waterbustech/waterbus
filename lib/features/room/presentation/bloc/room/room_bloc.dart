@@ -106,10 +106,11 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomInfoGot) {
-          final Room? room = await _handleGetInfoRoom(event.roomCode);
+          final Room? room =
+              event.room ?? await _handleGetInfoRoom(event.roomCode ?? "");
 
           if (room != null) {
-            await _displayDialogJoinRoom(room);
+            _displayDialogJoinRoom(room);
 
             emit(_preJoinRoom);
           }
@@ -122,12 +123,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             await _handleLeaveRoom(event);
           }
           emit(_roomInitial);
-        }
-
-        if (event is RoomDialogDisplayed) {
-          await _displayDialogJoinRoom(event.room);
-
-          emit(_preJoinRoom);
         }
 
         if (event is RoomSharingScreenStarted) {
@@ -286,22 +281,19 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
         if (event is RoomPrepareLobby) {
           displayLoadingLayer();
+          Room? room;
           await _waterbusSdk.prepareMedia();
           final mediaDeviceList = await _getAllMediaDevices();
-          AppRouter.pop();
+          event.onPrepareLobby.call(mediaDeviceList, room);
+
+          if (event.code != null) {
+            room = await _handleGetInfoRoom(event.code!);
+          } else {
+            AppRouter.pop();
+          }
 
           if (state is! RoomPreJoin) {
             emit(_preJoinRoom);
-          }
-
-          event.handleUpdate.call(mediaDeviceList);
-        }
-
-        if (event is RoomAttemptJoin) {
-          final Room? room = await _handleGetInfoRoom(event.code);
-
-          if (room != null) {
-            add(RoomJoinedEvent(room: room, password: event.password));
           }
         }
       },
@@ -498,7 +490,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
   }
 
-  Future<void> _displayDialogJoinRoom(Room room) async {
+  void _displayDialogJoinRoom(Room room) {
     final int indexOfMember = room.members.indexWhere(
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
@@ -563,10 +555,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       _roomSound.playSoundRaiseHand();
     } else if (event is sdk.ParticipantJoined) {
       add(RoomSomeoneNewJoined(participant: event.participant));
-    } else if (event is sdk.ParticipantLeft) {
-      _roomSound.playSoundLeaveRoom();
-
-      add(RoomSomeoneLeft(participantId: event.participantId));
     }
   }
 
@@ -584,6 +572,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         add(RoomDisposed());
       }
     } else {
+      if (state is sdk.RoomStateChanged) {
+        add(RoomDisplayRefreshed());
+      }
       startPiP();
     }
   }

@@ -37,25 +37,35 @@ class _LobbyScreenState extends State<LobbyScreen> {
   MediaDeviceInfo? _audioInput;
   MediaDeviceInfo? _audioOutput;
   MediaDeviceInfo? _videoInput;
+
+  Room? _room;
+
   @override
   void initState() {
     super.initState();
 
+    _room = widget.room;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       AppBloc.roomBloc.add(
-        RoomPrepareLobby((val) {
-          final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
+        RoomPrepareLobby(
+          onPrepareLobby: (val, room) {
+            final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
 
-          _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
-          _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
-          _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
+            _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
+            _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
+            _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
 
-          _audioInput = _audioInputs.firstOrNull;
-          _audioOutput = _audioOutputs.firstOrNull;
-          _videoInput = _videoInputs.firstOrNull;
+            _audioInput = _audioInputs.firstOrNull;
+            _audioOutput = _audioOutputs.firstOrNull;
+            _videoInput = _videoInputs.firstOrNull;
 
-          setState(() {});
-        }),
+            _room ??= room;
+
+            setState(() {});
+          },
+          code: widget.room != null ? null : widget.code,
+        ),
       );
     });
   }
@@ -98,11 +108,10 @@ class _LobbyScreenState extends State<LobbyScreen> {
                           ),
                         ),
                       ),
-                      if (context.isDesktop)
+                      if (context.isDesktop && _room != null)
                         Expanded(
                           child: JoinRoomActions(
-                            room: widget.room,
-                            code: widget.code,
+                            room: _room!,
                             isMember: widget.isMember,
                           ),
                         ),
@@ -166,11 +175,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
                           ),
                       ],
                     ),
-                  if (context.isMobile)
+                  if (context.isMobile && _room != null)
                     Padding(
                       padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
                       child: JoinRoomActions(
-                        room: widget.room,
+                        room: _room!,
                         isMember: widget.isMember,
                       ),
                     ),

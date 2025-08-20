@@ -19,15 +19,13 @@ import 'package:waterbus/features/room/data/datasources/meeting_local_data_sourc
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class JoinRoomActions extends StatefulWidget {
-  final Room? room;
-  final String? code;
+  final Room room;
   final bool isMember;
 
   const JoinRoomActions({
     super.key,
     required this.room,
     required this.isMember,
-    this.code,
   });
 
   @override
@@ -58,7 +56,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
   bool get _isMemberInRecentRooms {
     return RoomLocalDataSourceImpl()
             .rooms
-            .indexWhere((room) => room.code == widget.code) !=
+            .indexWhere((room) => room.code == widget.room.code) !=
         -1;
   }
 
@@ -133,30 +131,27 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                 return;
               }
 
-              if (widget.room != null) {
+              if (AppBloc.userBloc.user != null) {
                 AppBloc.roomBloc.add(
                   RoomJoinedEvent(
-                    room: widget.room!,
+                    room: widget.room,
                     isMember: widget.isMember,
                     password: _passwordController.text,
                   ),
                 );
               } else {
-                if (widget.code != null) {
-                  if (_fullNameController.text.isEmpty) {
-                    Strings.invalidName.i18n
-                        .showToast(ToastificationType.error);
-                    return;
-                  }
-
-                  AppBloc.authBloc.add(
-                    AuthLoggedInAndJoinedRoom(
-                      code: widget.code!,
-                      password: _passwordController.text,
-                      fullname: _fullNameController.text,
-                    ),
-                  );
+                if (_fullNameController.text.isEmpty) {
+                  Strings.invalidName.i18n.showToast(ToastificationType.error);
+                  return;
                 }
+
+                AppBloc.authBloc.add(
+                  AuthLoggedInAndJoinedRoom(
+                    room: widget.room,
+                    password: _passwordController.text,
+                    fullname: _fullNameController.text,
+                  ),
+                );
               }
             },
             child: Material(
@@ -204,5 +199,5 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
   }
 
   bool get _isHidePasswordTextField =>
-      widget.isMember || _isMemberInRecentRooms;
+      widget.isMember || _isMemberInRecentRooms || !widget.room.isProtected;
 }

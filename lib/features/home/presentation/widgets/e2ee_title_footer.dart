@@ -37,6 +37,7 @@ class E2eeTitleFooter extends StatelessWidget {
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   showDialogWaterbus(
+                    borderRadius: 12.sp,
                     alignment: Alignment.center,
                     child: const E2eeBottomSheet(),
                   );

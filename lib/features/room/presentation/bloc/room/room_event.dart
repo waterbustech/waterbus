@@ -44,8 +44,9 @@ class RoomJoinedWithPassword extends RoomEvent {
 }
 
 class RoomInfoGot extends RoomEvent {
-  final String roomCode;
-  const RoomInfoGot({required this.roomCode});
+  final String? roomCode;
+  final Room? room;
+  const RoomInfoGot({this.roomCode, this.room});
 }
 
 class RoomLeft extends RoomEvent {
@@ -54,11 +55,6 @@ class RoomLeft extends RoomEvent {
 }
 
 class RoomDisposed extends RoomEvent {}
-
-class RoomDialogDisplayed extends RoomEvent {
-  final Room room;
-  const RoomDialogDisplayed({required this.room});
-}
 
 class RoomSomeoneNewJoined extends RoomEvent {
   final ParticipantInfo participant;
@@ -71,15 +67,9 @@ class RoomSomeoneLeft extends RoomEvent {
 }
 
 class RoomPrepareLobby extends RoomEvent {
-  final Function(Map<String, List<MediaDeviceInfo>>) handleUpdate;
-  const RoomPrepareLobby(this.handleUpdate);
-}
-
-class RoomAttemptJoin extends RoomEvent {
-  final String code;
-  final String password;
-
-  const RoomAttemptJoin({required this.code, required this.password});
+  final Function(Map<String, List<MediaDeviceInfo>>, Room?) onPrepareLobby;
+  final String? code;
+  const RoomPrepareLobby({required this.onPrepareLobby, this.code});
 }
 
 class RoomSharingScreenStarted extends RoomEvent {}

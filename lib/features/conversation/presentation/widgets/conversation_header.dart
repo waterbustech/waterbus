@@ -130,8 +130,7 @@ class ConversationHeader extends StatelessWidget {
                               Permission.microphone,
                             ],
                             callBack: () async {
-                              AppBloc.roomBloc
-                                  .add(RoomDialogDisplayed(room: room));
+                              AppBloc.roomBloc.add(RoomInfoGot(room: room));
                             },
                           );
                         },
