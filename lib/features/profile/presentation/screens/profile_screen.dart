@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/features/common/widgets/textfield/shadcn_text_field.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -146,14 +147,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2.sp),
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .surfaceContainerLowest
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .surfaceContainerHighest,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withValues(alpha: 0.3),
+                              border: Border.all(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .outline
+                                    .withValues(alpha: 0.3),
+                              ),
                             ),
                             child: Column(
                               children: [
@@ -167,7 +170,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 10.sp,
                                   ),
-                                  child: const Divider(),
+                                  child: Divider(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outline
+                                        .withValues(alpha: 0.3),
+                                  ),
                                 ),
                                 GestureWrapper(
                                   onTap: () {
@@ -255,10 +263,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             note: Strings
                                 .enterYourNameAndAddAnOptionalProfilePhoto.i18n,
                           ),
-                          ProfileTextField(
+                          SizedBox(height: 12.sp),
+                          ShadcnTextField(
                             controller: _bioController,
-                            hintText: Strings.bio.i18n,
-                            margin: EdgeInsets.only(top: 16.sp),
+                            label: Strings.bio.i18n,
+                            hint: Strings.bio.i18n,
+                            maxLines: 3,
+                            validator: (val) {
+                              return null;
+                            },
                           ),
                           _TextFieldNote(
                             note: Strings.youCanAddFewLinesAboutYourself.i18n,
@@ -276,14 +289,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2.sp),
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .surfaceContainerLowest
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .surfaceContainerHighest,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceContainerHighest
+                                    .withValues(alpha: 0.3),
                               ),
                               child: Center(
                                 child: Text(
@@ -318,7 +327,6 @@ class _TextFieldNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 12.sp,
         vertical: 5.sp,
       ),
       child: Text(

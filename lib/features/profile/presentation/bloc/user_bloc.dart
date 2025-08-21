@@ -45,7 +45,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }
 
         if (event is UserAvatarUpdated) {
-          await _handleChangeAvatar(event);
+          await _handleAvatarChanged(event);
 
           if (_user != null) {
             emit(_userDone);
@@ -150,7 +150,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  Future<void> _handleChangeAvatar(UserAvatarUpdated event) async {
+  Future<void> _handleAvatarChanged(UserAvatarUpdated event) async {
     final Result<PresignedUrl> presignedUrl =
         await _waterbusSdk.getPresignedUrl();
 

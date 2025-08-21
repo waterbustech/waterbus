@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -240,12 +241,11 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
         ),
         SizedBox(height: 8.sp),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 0.sp),
           decoration: BoxDecoration(
             color: Theme.of(context)
                 .colorScheme
                 .surfaceContainerHighest
-                .withValues(alpha: .1),
+                .withValues(alpha: 0.3),
             borderRadius: BorderRadius.zero,
             border: Border.all(
               color: Theme.of(context).colorScheme.outline.withValues(
@@ -254,27 +254,49 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
             ),
           ),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton<T>(
-              focusColor: Colors.transparent,
+            child: DropdownButton2<T>(
               value: value,
               isExpanded: true,
-              icon: Icon(
-                PhosphorIcons.caretDown(),
-                size: 14.sp,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
               onChanged: onChanged,
-              dropdownColor: Theme.of(context).scaffoldBackgroundColor,
-              style: TextStyle(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
               items: items.map<DropdownMenuItem<T>>((item) {
                 return DropdownMenuItem<T>(
                   value: item,
                   child: itemBuilder(item),
                 );
               }).toList(),
+              buttonStyleData: ButtonStyleData(
+                padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                elevation: 0,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+              ),
+              iconStyleData: IconStyleData(
+                icon: Icon(
+                  PhosphorIcons.caretDown(),
+                  size: 14.sp,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              dropdownStyleData: DropdownStyleData(
+                offset: const Offset(0, -8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.outline.withValues(
+                          alpha: 0.3,
+                        ),
+                  ),
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              menuItemStyleData: MenuItemStyleData(
+                padding: EdgeInsets.symmetric(horizontal: 8.sp),
+              ),
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
           ),
         ),

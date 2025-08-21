@@ -44,9 +44,10 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Theme.of(context).colorScheme.surfaceContainer
-                    : Theme.of(context).colorScheme.surfaceContainerHighest,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withValues(alpha: 0.3),
               ),
               width: 100.w,
               height: 36.sp,

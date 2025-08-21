@@ -63,6 +63,20 @@ class AppColor {
           contentText1: _AyuDarkColors.foreground,
           divider: _AyuDarkColors.selection,
         );
+      case Preset.nord:
+        return AppColor(
+          background: _NordColors.background,
+          error: _NordColors.red,
+          contentText1: _NordColors.foreground,
+          divider: _NordColors.selection,
+        );
+      case Preset.monokaiPro:
+        return AppColor(
+          background: _MonokaiProColors.background,
+          error: _MonokaiProColors.red,
+          contentText1: _MonokaiProColors.foreground,
+          divider: _MonokaiProColors.surface,
+        );
     }
   }
 }
@@ -139,6 +153,30 @@ class _AyuDarkColors {
   static const Color foreground = Color(0xFFbfbdb6);
   static const Color red = Color(0xFFf07178);
   static const Color blue = Color(0xFF59c2ff);
+}
+
+// --- Nord Theme Colors ---
+class _NordColors {
+  const _NordColors();
+
+  static const Color background = Color(0xFF2e3440);
+  static const Color surface = Color(0xFF3b4252);
+  static const Color selection = Color(0xFF434c5e);
+  static const Color foreground = Color(0xFFd8dee9);
+  static const Color red = Color(0xFFbf616a);
+  static const Color blue = Color(0xFF81a1c1);
+}
+
+// --- Monokai Pro Theme Colors ---
+class _MonokaiProColors {
+  const _MonokaiProColors();
+
+  static const Color background = Color(0xFF2d2a2e);
+  static const Color surface = Color(0xFF403e41);
+  static const Color selection = Color(0xFF5b595c);
+  static const Color foreground = Color(0xFFfcfcfa);
+  static const Color red = Color(0xFFff6188);
+  static const Color purple = Color(0xFFab9df2);
 }
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
@@ -300,6 +338,24 @@ class AppTheme {
           accent: _AyuDarkColors.blue,
           error: _AyuDarkColors.red,
           border: _AyuDarkColors.selection,
+        );
+      case Preset.nord:
+        return _PresetColors(
+          background: _NordColors.background,
+          surface: _NordColors.surface,
+          foreground: _NordColors.foreground,
+          accent: _NordColors.blue,
+          error: _NordColors.red,
+          border: _NordColors.selection,
+        );
+      case Preset.monokaiPro:
+        return _PresetColors(
+          background: _MonokaiProColors.background,
+          surface: _MonokaiProColors.surface,
+          foreground: _MonokaiProColors.foreground,
+          accent: _MonokaiProColors.purple,
+          error: _MonokaiProColors.red,
+          border: _MonokaiProColors.selection,
         );
     }
   }
