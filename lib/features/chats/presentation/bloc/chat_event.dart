@@ -32,7 +32,7 @@ class ChatCreated extends ChatEvent {
     required this.title,
     this.password,
     this.roomType = RoomType.videoConferencing,
-    this.streamingProtocol = StreamingProtocol.sfu,
+    this.streamingProtocol = StreamingProtocol.rtc,
     this.capacity,
   });
 }

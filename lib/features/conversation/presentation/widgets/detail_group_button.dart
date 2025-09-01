@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:popover/popover.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -24,7 +23,7 @@ class DetailGroupButton extends StatelessWidget {
     this.onTap,
   });
 
-  bool get _isHost => AppBloc.chatBloc.conversationCurrent?.isHost ?? false;
+  bool get _isHost => AppBloc.chatBloc.conversationCurrent?.isOwner ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +86,8 @@ class DetailGroupButton extends StatelessWidget {
       child: Container(
         width: 64.sp,
         decoration: ShapeDecoration(
-          shape: SuperellipseShape(
-            borderRadius: BorderRadius.circular(25.sp),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.sp),
           ),
           color: Theme.of(context).colorScheme.secondaryContainer,
         ),

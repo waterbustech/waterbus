@@ -202,8 +202,8 @@ class MeetingCard extends StatelessWidget {
 
   Color _getColorByProtocol(StreamingProtocol protocol) {
     return switch (protocol) {
-      StreamingProtocol.sfu => Colors.orangeAccent,
-      StreamingProtocol.hls => Colors.purpleAccent,
+      StreamingProtocol.rtc => Colors.orangeAccent,
+      StreamingProtocol.hls => Colors.tealAccent,
     };
   }
 }

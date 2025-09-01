@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
@@ -18,7 +17,6 @@ import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_setting_button.dart';
 import 'package:waterbus/features/room/presentation/widgets/chat_in_room.dart';
-import 'package:waterbus/features/room/presentation/widgets/stats_view.dart';
 import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 
 class CallSettingsBottomSheet extends StatelessWidget {
@@ -126,24 +124,6 @@ class CallSettingsBottomSheet extends StatelessWidget {
                       } else {
                         onVirtualBackground.call();
                       }
-                    },
-                  ),
-                  CallSettingButton(
-                    icon: PhosphorIcons.chartPieSlice(),
-                    lable: Strings.callStats.i18n,
-                    onTap: () {
-                      AppRouter.pop();
-
-                      showDialogWaterbus(
-                        alignment: Alignment.center,
-                        duration: 200.milliseconds.inMilliseconds,
-                        maxHeight: context.isDesktop ? 450.sp : double.infinity,
-                        maxWidth: context.isDesktop ? 750.sp : null,
-                        child: StatsView(
-                          roomState: roomState,
-                          participants: roomState?.participants ?? [],
-                        ),
-                      );
                     },
                   ),
                   CallSettingButton(

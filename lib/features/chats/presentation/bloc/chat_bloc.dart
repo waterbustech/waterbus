@@ -156,7 +156,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         if (room == null) return;
 
-        if (room.isHost && room.members.length > 1) {
+        if (room.isOwner && room.members.length > 1) {
           Strings.hostCanNotDeleteConversation.i18n
               .showToast(ToastificationType.error);
         } else {

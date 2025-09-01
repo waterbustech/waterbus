@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
@@ -15,18 +14,12 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
-import 'package:waterbus/features/room/data/datasources/room_local_data_source.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class JoinRoomActions extends StatefulWidget {
   final Room room;
-  final bool isMember;
 
-  const JoinRoomActions({
-    super.key,
-    required this.room,
-    required this.isMember,
-  });
+  const JoinRoomActions({super.key, required this.room});
 
   @override
   State<JoinRoomActions> createState() => _JoinRoomActionsState();
@@ -36,6 +29,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late Room _room = widget.room;
 
   Text _readyJoinText(BuildContext context) {
     return Text(
@@ -53,11 +47,13 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
     _fullNameController.text = AppBloc.userBloc.user?.fullName ?? "Waterbus";
   }
 
-  bool get _isMemberInRecentRooms {
-    return RoomLocalDataSourceImpl()
-            .rooms
-            .indexWhere((room) => room.code == widget.room.code) !=
-        -1;
+  @override
+  void didUpdateWidget(JoinRoomActions oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    setState(() {
+      _room = widget.room;
+    });
   }
 
   @override
@@ -98,9 +94,8 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               );
             },
           ),
-          _isHidePasswordTextField
-              ? SizedBox(height: 20.sp)
-              : Padding(
+          _isPasswordRequired()
+              ? Padding(
                   padding: EdgeInsets.only(bottom: 12.sp),
                   child: SizedBox(
                     width: widthButton,
@@ -121,10 +116,11 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
                       controller: _passwordController,
                     ),
                   ),
-                ),
+                )
+              : SizedBox(height: 20.sp),
           GestureWrapper(
             onTap: () {
-              if (!_isHidePasswordTextField &&
+              if (_isPasswordRequired() &&
                   _passwordController.text.length < 6) {
                 Strings.passwordMustBeAtLeast6Characters.i18n
                     .showToast(ToastificationType.error);
@@ -134,8 +130,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               if (AppBloc.userBloc.user != null) {
                 AppBloc.roomBloc.add(
                   RoomJoinedEvent(
-                    room: widget.room,
-                    isMember: widget.isMember,
+                    room: _room,
                     password: _passwordController.text,
                   ),
                 );
@@ -147,7 +142,7 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
 
                 AppBloc.authBloc.add(
                   AuthLoggedInAndJoinedRoom(
-                    room: widget.room,
+                    room: _room,
                     password: _passwordController.text,
                     fullname: _fullNameController.text,
                   ),
@@ -155,8 +150,8 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
               }
             },
             child: Material(
-              shape: SuperellipseShape(
-                borderRadius: BorderRadiusGeometry.circular(10.sp),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(4.sp),
               ),
               clipBehavior: Clip.hardEdge,
               color: Theme.of(context).colorScheme.primaryContainer,
@@ -198,6 +193,13 @@ class _JoinRoomActionsState extends State<JoinRoomActions> {
     );
   }
 
-  bool get _isHidePasswordTextField =>
-      widget.isMember || _isMemberInRecentRooms || !widget.room.isProtected;
+  bool _isPasswordRequired() {
+    if (!_room.isProtected) return false;
+
+    final bool isMember = _room.members.any(
+      (member) => member.user.id == AppBloc.userBloc.user?.id,
+    );
+
+    return !isMember;
+  }
 }

@@ -14,7 +14,6 @@ import 'package:waterbus/features/archived/presentation/screens/archived_screen.
 import 'package:waterbus/features/auth/presentation/screens/login_screen.dart';
 import 'package:waterbus/features/chats/presentation/screens/chats_screen.dart';
 import 'package:waterbus/features/conversation/presentation/screens/conversation_screen.dart';
-import 'package:waterbus/features/conversation/presentation/screens/detail_group_screen.dart';
 import 'package:waterbus/features/home/presentation/screens/home.dart';
 import 'package:waterbus/features/home/presentation/screens/lobby_screen.dart';
 import 'package:waterbus/features/home/presentation/widgets/recent_meetings.dart';
@@ -284,17 +283,6 @@ class ThemeRoute extends GoRouteData with _$ThemeRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ThemeSelectorScreen();
-  }
-}
-
-@TypedGoRoute<DetailGroupRoute>(
-  path: Routes.detailGroupRoute,
-  name: Routes.detailGroupRoute,
-)
-class DetailGroupRoute extends GoRouteData with _$DetailGroupRoute {
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const DetailGroupScreen();
   }
 }
 

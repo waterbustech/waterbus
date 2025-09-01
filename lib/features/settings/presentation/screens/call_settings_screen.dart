@@ -211,7 +211,7 @@ class _SettingScreenState extends State<CallSettingsScreen> {
                       label: Strings.videoQuality.i18n,
                       enabled: true,
                       hasDivider: false,
-                      value: _config.videoConfig.videoQuality.name,
+                      value: _config.videoConfig.videoQuality.label,
                       onChanged: (isEnabled) {},
                     ),
                   ),

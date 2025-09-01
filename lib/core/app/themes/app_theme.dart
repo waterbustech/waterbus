@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:waterbus/core/app/themes/preset.dart';
+import 'package:waterbus/gen/fonts.gen.dart';
 
 class AppColor {
   final Color background;
@@ -207,7 +206,7 @@ class AppTheme {
 
     final themeData = ThemeData(
       brightness: Brightness.dark,
-      fontFamily: GoogleFonts.redHatMono().fontFamily,
+      fontFamily: FontFamily.geistMono,
       scaffoldBackgroundColor: colors.background,
       colorSchemeSeed: colors.accent,
       cardColor: colors.surface,
@@ -240,7 +239,7 @@ class AppTheme {
           color: colors.foreground,
           fontSize: 20,
           fontWeight: FontWeight.w500,
-          fontFamily: GoogleFonts.redHatMono().fontFamily,
+          fontFamily: FontFamily.geistMono,
         ),
       ),
 

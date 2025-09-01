@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
@@ -126,8 +124,8 @@ Future showScreenAsDialog({
     borderRadius: 16.sp,
     child: Material(
       clipBehavior: Clip.hardEdge,
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
       ),
       child: SizedBox(
         height: !AppRouter.context!.isLandscape ? 80.h : 90.h,

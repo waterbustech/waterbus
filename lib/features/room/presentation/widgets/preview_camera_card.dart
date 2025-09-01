@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
 
 import 'package:waterbus/core/constants/color_constants.dart';
@@ -28,8 +27,8 @@ class PreviewCameraCard extends StatelessWidget {
         if (participant == null) {
           return Material(
             clipBehavior: Clip.hardEdge,
-            shape: SuperellipseShape(
-              borderRadius: BorderRadius.circular(30.sp),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.sp),
             ),
             child: Container(
               width: width ?? 265.sp,

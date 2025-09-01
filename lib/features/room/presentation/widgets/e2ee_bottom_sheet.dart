@@ -54,7 +54,7 @@ class E2eeBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 8.sp),
           E2eeLabelLine(
-            icon: LucideIcons.messageCircle,
+            icon: LucideIcons.messageSquareLock,
             label: Strings.textMessages.i18n,
           ),
           SizedBox(height: 40.sp),

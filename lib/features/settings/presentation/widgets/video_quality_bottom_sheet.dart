@@ -48,7 +48,7 @@ class _VideoQualityBottomSheetState extends State<VideoQualityBottomSheet> {
           ...List.generate(
             VideoQualityEnum.values.length,
             (index) => SettingCheckboxCard(
-              label: VideoQualityEnum.values[index].name,
+              label: VideoQualityEnum.values[index].label,
               enabled: _quality == VideoQualityEnum.values[index],
               hasDivider: index < VideoQualityEnum.values.length - 1,
               onTap: () {

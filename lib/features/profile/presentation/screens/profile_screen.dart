@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:waterbus/features/common/widgets/textfield/shadcn_text_field.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -18,6 +17,7 @@ import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/images/waterbus_image_picker.dart';
+import 'package:waterbus/features/common/widgets/textfield/shadcn_text_field.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/profile/presentation/screens/username_screen.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   const Divider(),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                    padding: EdgeInsets.symmetric(horizontal: 20.sp),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

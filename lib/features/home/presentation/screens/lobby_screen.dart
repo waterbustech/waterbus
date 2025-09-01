@@ -10,6 +10,7 @@ import 'package:waterbus/features/common/widgets/drop_down/drop_down_button.dart
 import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
 import 'package:waterbus/features/home/presentation/widgets/device_selector.dart';
 import 'package:waterbus/features/home/presentation/widgets/join_room_actions.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.dart';
 
@@ -60,14 +61,20 @@ class _LobbyScreenState extends State<LobbyScreen> {
             _audioOutput = _audioOutputs.firstOrNull;
             _videoInput = _videoInputs.firstOrNull;
 
-            _room ??= room;
+            _room = room;
 
             setState(() {});
           },
-          code: widget.room != null ? null : widget.code,
+          code: widget.room?.code ?? widget.code,
         ),
       );
     });
+  }
+
+  bool _isPublisher() {
+    if (_room == null) return false;
+
+    return _room!.isOwner || _room!.streamingProtocol == StreamingProtocol.rtc;
   }
 
   @override
@@ -91,34 +98,32 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 800.sp,
-                        ),
-                        width: previewCameraWidth,
-                        child: AspectRatio(
-                          aspectRatio: context.isDesktop ? 16 / 9 : 3 / 4,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return PreviewCameraCard(
-                                width: constraints.maxWidth,
-                                height: constraints.maxHeight,
-                              );
-                            },
+                      if (_isPublisher())
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 800.sp,
+                          ),
+                          width: previewCameraWidth,
+                          child: AspectRatio(
+                            aspectRatio: context.isDesktop ? 16 / 9 : 3 / 4,
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return PreviewCameraCard(
+                                  width: constraints.maxWidth,
+                                  height: constraints.maxHeight,
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
                       if (context.isDesktop && _room != null)
                         Expanded(
-                          child: JoinRoomActions(
-                            room: _room!,
-                            isMember: widget.isMember,
-                          ),
+                          child: JoinRoomActions(room: _room!),
                         ),
                     ],
                   ),
                   SizedBox(height: 18.sp),
-                  if (context.isDesktop)
+                  if (context.isDesktop && _isPublisher())
                     Row(
                       children: [
                         if (_audioInputs.isNotEmpty)
@@ -178,10 +183,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   if (context.isMobile && _room != null)
                     Padding(
                       padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
-                      child: JoinRoomActions(
-                        room: _room!,
-                        isMember: widget.isMember,
-                      ),
+                      child: JoinRoomActions(room: _room!),
                     ),
                 ],
               ),

@@ -24,7 +24,6 @@ List<RouteBase> get $appRoutes => [
       $archivedRoute,
       $langRoute,
       $themeRoute,
-      $detailGroupRoute,
       $chatRoute,
       $recentRoute,
       $licenseRoute,
@@ -568,34 +567,6 @@ mixin _$ThemeRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/appearance',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $detailGroupRoute => GoRouteData.$route(
-      path: '/detail-group',
-      name: '/detail-group',
-      factory: _$DetailGroupRoute._fromState,
-    );
-
-mixin _$DetailGroupRoute on GoRouteData {
-  static DetailGroupRoute _fromState(GoRouterState state) => DetailGroupRoute();
-
-  @override
-  String get location => GoRouteData.$location(
-        '/detail-group',
       );
 
   @override

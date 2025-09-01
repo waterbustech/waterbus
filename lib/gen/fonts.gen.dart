@@ -11,6 +11,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: GeistMono
+  static const String geistMono = 'GeistMono';
+
   /// Font family: Pixelify
   static const String pixelify = 'Pixelify';
 }

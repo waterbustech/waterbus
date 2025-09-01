@@ -1,7 +1,7 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/externals/room/room_type.dart';
 import 'package:waterbus_sdk/types/externals/rtc/streaming_protocol.dart';
@@ -37,7 +37,7 @@ class _MeetingFormScreenState extends State<MeetingFormScreen> {
 
   late final bool _isEditing = widget.isEdit;
   RoomType _selectedRoomType = RoomType.videoConferencing;
-  StreamingProtocol _selectedProtocol = StreamingProtocol.sfu;
+  StreamingProtocol _selectedProtocol = StreamingProtocol.rtc;
 
   @override
   void initState() {

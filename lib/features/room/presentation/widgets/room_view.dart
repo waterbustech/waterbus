@@ -2,28 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:collection/collection.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/presentation/widgets/avatar_card.dart';
+import 'package:waterbus/features/room/presentation/widgets/stats_view.dart';
 
 class RoomView extends StatefulWidget {
   final EdgeInsets? margin;
-  final Participant participantSFU;
-  final List<Participant> participants;
+  final Participant participant;
   final double avatarSize;
   final double? width;
   final bool borderEnabled;
 
   const RoomView({
     super.key,
-    required this.participantSFU,
-    required this.participants,
+    required this.participant,
     this.avatarSize = 80.0,
     this.borderEnabled = true,
     this.margin,
@@ -34,22 +35,16 @@ class RoomView extends StatefulWidget {
   State<RoomView> createState() => _RoomViewState();
 }
 
-class _RoomViewState extends State<RoomView>
-    with AutomaticKeepAliveClientMixin {
-  // Cache computed values to avoid repeated calculations
-  Participant? _cachedParticipant;
-  String? _cachedParticipantId;
-
+class _RoomViewState extends State<RoomView> {
   // Memoized getters with caching
   late final ValueNotifier<Decoration> _shapeNotifier;
   late final ValueNotifier<bool> _shouldDisplayVideoNotifier;
-
-  @override
-  bool get wantKeepAlive => true; // Keep widget alive to prevent rebuilds
+  late Participant _participant;
 
   @override
   void initState() {
     super.initState();
+    _participant = widget.participant;
     _shapeNotifier = ValueNotifier(_computeShape(AudioLevel.kSilence));
     _shouldDisplayVideoNotifier = ValueNotifier(_computeShouldDisplayVideo());
   }
@@ -63,52 +58,47 @@ class _RoomViewState extends State<RoomView>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return StreamBuilder<AudioLevel>(
+      stream: _participant.audioLevelStream,
+      initialData: AudioLevel.kSilence,
+      builder: (context, snapshot) {
+        final AudioLevel audioLevel = !_isAudioEnabled
+            ? AudioLevel.kSilence
+            : snapshot.data ?? AudioLevel.kSilence;
 
-    return RepaintBoundary(
-      // Isolate repaints to this widget only
-      child: StreamBuilder<AudioLevel>(
-        stream: widget.participantSFU.audioLevelStream,
-        initialData: AudioLevel.kSilence,
-        builder: (context, snapshot) {
-          final AudioLevel audioLevel = !_isAudioEnabled
-              ? AudioLevel.kSilence
-              : snapshot.data ?? AudioLevel.kSilence;
+        // Update shape only when audio level changes
+        final newShape = _computeShape(audioLevel);
+        if (_shapeNotifier.value != newShape) {
+          _shapeNotifier.value = newShape;
+        }
 
-          // Update shape only when audio level changes
-          final newShape = _computeShape(audioLevel);
-          if (_shapeNotifier.value != newShape) {
-            _shapeNotifier.value = newShape;
-          }
+        // Update video display state
+        final shouldDisplay = _computeShouldDisplayVideo();
+        if (_shouldDisplayVideoNotifier.value != shouldDisplay) {
+          _shouldDisplayVideoNotifier.value = shouldDisplay;
+        }
 
-          // Update video display state
-          final shouldDisplay = _computeShouldDisplayVideo();
-          if (_shouldDisplayVideoNotifier.value != shouldDisplay) {
-            _shouldDisplayVideoNotifier.value = shouldDisplay;
-          }
+        return ValueListenableBuilder<Decoration>(
+          valueListenable: _shapeNotifier,
+          builder: (context, shape, _) {
+            final bool isHls = _mediaSource?.isHls ?? false;
 
-          return ValueListenableBuilder<Decoration>(
-            valueListenable: _shapeNotifier,
-            builder: (context, shape, _) {
-              return Container(
-                decoration: shape,
-                width: widget.width,
-                child: Container(
-                  margin: widget.margin,
-                  child: Stack(
-                    children: [
-                      _buildMainContent(),
-                      if (kIsWeb) _buildPiPButton(),
-                      _buildNameLabel(),
-                      _buildHandRaiseIndicator(),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+            return Container(
+              margin: widget.margin,
+              decoration: shape,
+              width: widget.width,
+              child: Stack(
+                children: [
+                  _buildMainContent(),
+                  if (kIsWeb && !isHls) _buildPiPButton(),
+                  if (!isHls) _buildNameLabel(),
+                  _buildHandRaiseIndicator(),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -118,9 +108,6 @@ class _RoomViewState extends State<RoomView>
       builder: (context, shouldDisplay, _) {
         if (shouldDisplay) {
           return WaterbusMediaView(
-            key: ValueKey(
-              '${widget.participantSFU.ownerId}_video',
-            ), // Stable key
             objectFit: _isScreenSharing || !widget.borderEnabled
                 ? RTCVideoViewObjectFit.RTCVideoViewObjectFitContain
                 : RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
@@ -136,7 +123,7 @@ class _RoomViewState extends State<RoomView>
 
   Widget _buildAvatarContainer() {
     return Container(
-      key: ValueKey('${widget.participantSFU.ownerId}_avatar'), // Stable key
+      key: ValueKey('${_participant.ownerId}_avatar'), // Stable key
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -153,9 +140,9 @@ class _RoomViewState extends State<RoomView>
         ),
       ),
       child: AvatarCard(
-        urlToImage: participant?.info.user?.avatar,
+        urlToImage: _participant.info.user?.avatar,
         size: widget.avatarSize,
-        label: participant?.info.user?.fullName,
+        label: _participant.info.user?.fullName,
       ),
     );
   }
@@ -163,28 +150,19 @@ class _RoomViewState extends State<RoomView>
   Widget _buildPiPButton() {
     return Positioned(
       right: 10.sp,
-      top: 10.sp,
+      bottom: 10.sp,
       child: GestureWrapper(
         onTap: () {
-          final textureId = widget.participantSFU.cameraSource?.textureId;
+          final textureId = _participant.cameraSource?.textureId;
           if (textureId != null) {
             WaterbusSdk.instance.setPictureInPictureEnabled(
               textureId: textureId.toString(),
             );
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: .2),
-            shape: BoxShape.circle,
-          ),
-          height: 28.sp,
-          width: 28.sp,
-          alignment: Alignment.center,
-          child: Icon(
-            PhosphorIcons.cornersOut(),
-            size: 15.sp,
-          ),
+        child: Icon(
+          LucideIcons.pictureInPicture,
+          size: 22.sp,
         ),
       ),
     );
@@ -194,35 +172,56 @@ class _RoomViewState extends State<RoomView>
     return Positioned(
       left: 10.sp,
       bottom: 10.sp,
-      child: Material(
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(12.sp),
-        ),
-        clipBehavior: Clip.hardEdge,
-        color: Theme.of(context)
-            .colorScheme
-            .surfaceContainerHighest
-            .withValues(alpha: .6),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.sp,
-            vertical: 8.sp,
+      child: GestureWrapper(
+        onTap: () {
+          showDialogWaterbus(
+            alignment: Alignment.center,
+            duration: 200.milliseconds.inMilliseconds,
+            maxHeight: context.isDesktop ? 450.sp : double.infinity,
+            maxWidth: context.isDesktop ? 750.sp : null,
+            child: StatsView(
+              participant: _participant,
+              isScreenShare: _isScreenSharing,
+            ),
+          );
+        },
+        child: Material(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.sp),
           ),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                participant?.info.user?.fullName ?? "",
-                style: TextStyle(
-                  color:
-                      participant?.isMe ?? false ? Colors.yellow : Colors.white,
-                  fontSize: widget.avatarSize / 6,
-                  fontWeight: FontWeight.bold,
+          clipBehavior: Clip.hardEdge,
+          color: Theme.of(context)
+              .colorScheme
+              .surfaceContainerHighest
+              .withValues(alpha: .6),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.sp,
+              vertical: 8.sp,
+            ),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _participant.info.user?.fullName ?? "Waterbus",
+                  style: TextStyle(
+                    color: _participant is LocalParticipant
+                        ? Colors.yellow
+                        : Colors.white,
+                    fontSize: widget.avatarSize / 6,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              _buildStatusIndicator(),
-            ],
+                _buildStatusIndicator(),
+                SizedBox(width: 4.sp),
+                Icon(
+                  LucideIcons.chartNoAxesColumnIncreasing,
+                  size: widget.avatarSize / 6,
+                  color: Colors.greenAccent,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -295,38 +294,15 @@ class _RoomViewState extends State<RoomView>
   }
 
   bool _computeShouldDisplayVideo() {
-    return _mediaSource?.stream != null && _isVideoEnabled;
-  }
-
-  // Cached participant getter with memoization
-  Participant? get participant {
-    final currentId = widget.participantSFU.ownerId;
-
-    // Return cached result if participant ID hasn't changed
-    if (_cachedParticipantId == currentId && _cachedParticipant != null) {
-      return _cachedParticipant;
-    }
-
-    _cachedParticipantId = currentId;
-
-    if (currentId == kIsMine) {
-      _cachedParticipant = widget.participants.firstWhereOrNull(
-        (participant) => participant.isMe,
-      );
-    } else {
-      _cachedParticipant = widget.participants.firstWhereOrNull(
-        (participant) => participant.toString() == currentId,
-      );
-    }
-
-    return _cachedParticipant;
+    return (_mediaSource?.stream != null && _isVideoEnabled) ||
+        (_mediaSource?.isHls ?? false);
   }
 
   // Cached getters to avoid repeated computations
   MediaSource? get _mediaSource {
     return _isScreenSharing
-        ? widget.participantSFU.screenSource
-        : widget.participantSFU.cameraSource;
+        ? _participant.screenSource
+        : _participant.cameraSource;
   }
 
   bool get _hasFirstFrameRendered {
@@ -335,22 +311,22 @@ class _RoomViewState extends State<RoomView>
   }
 
   bool get _isVideoEnabled {
-    return _isScreenSharing || widget.participantSFU.isVideoEnabled;
+    return _isScreenSharing || _participant.isVideoEnabled;
   }
 
   bool get _isAudioEnabled {
-    return !_isScreenSharing && widget.participantSFU.isAudioEnabled;
+    return !_isScreenSharing && _participant.isAudioEnabled;
   }
 
   bool get _isRaisingHand {
-    return !_isScreenSharing && widget.participantSFU.isHandRaising;
+    return !_isScreenSharing && _participant.isHandRaising;
   }
 
   bool get _isScreenSharing {
-    return widget.participantSFU.isSharingScreen;
+    return _participant.isSharingScreen;
   }
 
   CameraType get _cameraType {
-    return widget.participantSFU.cameraType;
+    return _participant.cameraType;
   }
 }

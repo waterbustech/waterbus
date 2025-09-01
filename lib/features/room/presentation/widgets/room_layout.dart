@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -71,6 +70,18 @@ class _RoomLayoutState extends State<RoomLayout>
     bool isCollapsed,
     BoxConstraints constraints,
   ) {
+    if (participants.isEmpty) {
+      return Center(
+        child: Text(
+          'No participants yet',
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
+
     if (isCollapsed) {
       return _buildLayoutMultipleUsersHorizontal(
         context,
@@ -180,8 +191,7 @@ class _RoomLayoutState extends State<RoomLayout>
           curve: Curves.easeInOut,
           child: RoomView(
             key: ValueKey('room_${participants.first.ownerId}_0'),
-            participants: widget.roomState.participants,
-            participantSFU: participants.first,
+            participant: participants.first,
             borderEnabled: participants.length > 1 || context.isMobile,
           ),
         ),
@@ -201,8 +211,7 @@ class _RoomLayoutState extends State<RoomLayout>
                 curve: Curves.easeInOut,
                 child: RoomView(
                   key: ValueKey('room_${participants.last.ownerId}_1'),
-                  participants: widget.roomState.participants,
-                  participantSFU: participants.last,
+                  participant: participants.last,
                 ),
               ),
             ),
@@ -310,8 +319,7 @@ class _RoomLayoutState extends State<RoomLayout>
   }) {
     return RoomView(
       key: key,
-      participants: roomState?.participants ?? [],
-      participantSFU: participant,
+      participant: participant,
       avatarSize: avatarSize,
       width: width,
     );

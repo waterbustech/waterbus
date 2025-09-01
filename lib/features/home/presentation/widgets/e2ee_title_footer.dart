@@ -26,7 +26,7 @@ class E2eeTitleFooter extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 4.sp),
                 child: Icon(
-                  LucideIcons.globeLock,
+                  LucideIcons.shieldCheck,
                   color: Theme.of(context).colorScheme.surfaceTint,
                   size: 12.sp,
                 ),

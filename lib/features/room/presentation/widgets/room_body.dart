@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
 import 'package:waterbus_sdk/types/index.dart' as sdk;
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -553,8 +552,7 @@ class _RoomBodyState extends State<RoomBody> {
                             ? Container(
                                 margin: EdgeInsets.symmetric(horizontal: 12.sp),
                                 child: RoomView(
-                                  participants: _roomState.participants,
-                                  participantSFU: _roomState.localParticipant!
+                                  participant: _roomState.localParticipant!
                                       .copyWith(isSharingScreen: false),
                                   borderEnabled: false,
                                 ),
@@ -634,9 +632,9 @@ class _RoomBodyState extends State<RoomBody> {
                                       child: Material(
                                         color:
                                             Colors.black.withValues(alpha: .35),
-                                        shape: SuperellipseShape(
+                                        shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                            20.sp,
+                                            4.sp,
                                           ),
                                         ),
                                         child: Container(
@@ -732,8 +730,8 @@ class _RoomBodyState extends State<RoomBody> {
     return Material(
       clipBehavior: Clip.hardEdge,
       color: Colors.red,
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(20.sp),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.sp),
       ),
       child: SizedBox(
         height: context.isDesktop ? 40.sp : 30.sp,

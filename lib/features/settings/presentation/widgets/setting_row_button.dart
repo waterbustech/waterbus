@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
@@ -32,10 +31,10 @@ class SettingRowButton extends StatelessWidget {
     return GestureWrapper(
       onTap: onTap,
       child: Material(
-        shape: SuperellipseShape(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(isFirst ? 16.sp : 0),
-            bottom: Radius.circular(isLast ? 16.sp : 0),
+            top: Radius.circular(isFirst ? 4.sp : 0),
+            bottom: Radius.circular(isLast ? 4.sp : 0),
           ),
         ),
         color: Theme.of(context).colorScheme.surfaceDim.withValues(
@@ -50,8 +49,8 @@ class SettingRowButton extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 12.sp),
                     child: Material(
-                      shape: SuperellipseShape(
-                        borderRadius: BorderRadius.circular(12.sp),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.sp),
                       ),
                       color: iconBackground,
                       child: Padding(

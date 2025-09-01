@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 
 class TimeCard extends StatelessWidget {
@@ -21,8 +19,8 @@ class TimeCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.sp),
       child: Material(
         color: Theme.of(context).colorScheme.secondary,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(30.sp),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.sp),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(

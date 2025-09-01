@@ -49,16 +49,14 @@ class RoomScreen extends StatelessWidget {
         if (roomState.localParticipant != null)
           Expanded(
             child: RoomView(
-              participantSFU: roomState.localParticipant!,
-              participants: roomState.participants,
+              participant: roomState.localParticipant!,
               avatarSize: 25.sp,
             ),
           ),
         if (roomState.participants.isNotEmpty)
           Expanded(
             child: RoomView(
-              participantSFU: roomState.participants.first,
-              participants: roomState.participants,
+              participant: roomState.participants.first,
               avatarSize: 25.sp,
             ),
           ),

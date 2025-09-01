@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
 import 'package:waterbus/core/navigator/app_router.dart';
 
 enum FadeTheme { light, dark, lightReverse }
@@ -105,7 +103,7 @@ class _FadeShimmerState extends State<FadeShimmer>
         color: widget.gradient.colors.first,
         clipBehavior: Clip.hardEdge,
         shape: widget.shape == BoxShape.rectangle
-            ? SuperellipseShape(borderRadius: widget.radius)
+            ? RoundedRectangleBorder(borderRadius: widget.radius)
             : const CircleBorder(),
         child: SizedBox(
           width: widget.width,

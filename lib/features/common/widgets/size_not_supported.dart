@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -49,8 +48,8 @@ class SizeNotSupportedWidget extends StatelessWidget {
                       await launchUrl(Uri.parse(kGithubRepo));
                     },
                     child: Material(
-                      shape: SuperellipseShape(
-                        borderRadius: BorderRadius.circular(20.sp),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.sp),
                       ),
                       clipBehavior: Clip.hardEdge,
                       color: Colors.yellow,
