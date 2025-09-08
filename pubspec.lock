@@ -896,9 +896,11 @@ packages:
   flutter_webrtc_plus:
     dependency: transitive
     description:
-      path: "/Users/lambiengcode/Documents/waterbus/flutter-webrtc-plus"
-      relative: false
-    source: path
+      path: "."
+      ref: "feat/upgrade-latest"
+      resolved-ref: "14ee0a1e845f789d404be7be95257c4ab941e8d0"
+      url: "https://github.com/waterbustech/flutter-webrtc-plus.git"
+    source: git
     version: "1.1.0+1"
   freezed_annotation:
     dependency: transitive
@@ -2196,9 +2198,11 @@ packages:
   video_view:
     dependency: transitive
     description:
-      path: "/Users/lambiengcode/Documents/waterbus/flutter_video_view"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "81221be7982f5b355620a496e6420a87917a67b5"
+      url: "https://github.com/xxoo/flutter_video_view.git"
+    source: git
     version: "1.2.2"
   visibility_detector:
     dependency: transitive
@@ -2243,9 +2247,11 @@ packages:
   waterbus_sdk:
     dependency: "direct main"
     description:
-      path: "/Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk"
-      relative: false
-    source: path
+      path: "."
+      ref: temp
+      resolved-ref: "2d397651511f117a7646459330979181c0dd4807"
+      url: "https://github.com/waterbustech/waterbus-flutter-sdk.git"
+    source: git
     version: "2.0.0"
   web:
     dependency: "direct main"
