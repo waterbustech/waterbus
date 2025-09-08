@@ -18,10 +18,6 @@ class $AssetsIconsGen {
   AssetGenImage get colorPicker =>
       const AssetGenImage('assets/icons/color-picker.png');
 
-  /// File path: assets/icons/ic_add_members.png
-  AssetGenImage get icAddMembers =>
-      const AssetGenImage('assets/icons/ic_add_members.png');
-
   /// File path: assets/icons/ic_check.png
   AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
 
@@ -42,15 +38,8 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/launcher_icon.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
-        colorPicker,
-        icAddMembers,
-        icCheck,
-        icGithub,
-        icGoogle,
-        icIncognito,
-        launcherIcon
-      ];
+  List<AssetGenImage> get values =>
+      [colorPicker, icCheck, icGithub, icGoogle, icIncognito, launcherIcon];
 }
 
 class $AssetsImagesGen {

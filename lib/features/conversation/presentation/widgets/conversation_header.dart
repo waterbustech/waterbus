@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/core/navigator/routes.dart';
+import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/features/conversation/presentation/screens/edit_conversation_screen.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -66,41 +69,54 @@ class ConversationHeader extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: ColoredBox(
-                          color: Colors.transparent,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AvatarChat(room: room, size: 30.sp),
-                              SizedBox(width: 10.sp),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      room.title,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                    Text(
-                                      "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
-                                      style: TextStyle(
-                                        color: fCL,
-                                        height: 0.75.sp,
-                                        fontSize: 10.sp,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (context.isMobile) {
+                              EditConversationRoute().push(context);
+                            } else {
+                              showScreenAsDialog(
+                                route: Routes.editConversation,
+                                child: EditConversationScreen(),
+                              );
+                            }
+                          },
+                          child: ColoredBox(
+                            color: Colors.transparent,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AvatarChat(room: room, size: 30.sp),
+                                SizedBox(width: 10.sp),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        room.title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        "${room.members.length} ${(room.members.length < 2 ? Strings.member.i18n : Strings.members.i18n).toLowerCase()}",
+                                        style: TextStyle(
+                                          color: fCL,
+                                          height: 0.75.sp,
+                                          fontSize: 10.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
