@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/core/utils/widgets/shadow_utils.dart';
+import 'package:waterbus/features/home/presentation/widgets/draggable_box.dart';
 import 'package:waterbus/features/home/presentation/widgets/logger_widget.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -21,8 +22,26 @@ class BaseWidget extends StatefulWidget {
 }
 
 class _BaseWidgetState extends State<BaseWidget> {
+  final _stackKey = GlobalKey();
   final _terminalKey = GlobalKey<LoggerWidgetState>();
   late final ValueNotifier<bool> _controller = ValueNotifier<bool>(false);
+  final Size _boxSize = Size(40.sp, 40.sp);
+  final EdgeInsets _margin = EdgeInsets.all(16.sp);
+
+  Offset _fabLikeInitialOffset(
+    BuildContext context, {
+    required Size boxSize,
+    required EdgeInsets margin,
+  }) {
+    final mq = MediaQuery.of(context);
+    final w = mq.size.width;
+    final h = mq.size.height;
+
+    return Offset(
+      w - margin.right * 2 - boxSize.width,
+      h - mq.padding.bottom - margin.bottom * 2 - boxSize.height,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +50,7 @@ class _BaseWidgetState extends State<BaseWidget> {
         top: false,
         bottom: false,
         child: Stack(
+          key: _stackKey,
           children: [
             GestureDetector(
               onTap: () {
@@ -66,27 +86,36 @@ class _BaseWidgetState extends State<BaseWidget> {
                 );
               },
             ),
+            DraggableBox(
+              snap: false,
+              size: _boxSize,
+              margin: _margin,
+              initialOffset: _fabLikeInitialOffset(
+                context,
+                boxSize: _boxSize,
+                margin: _margin,
+              ),
+              onTap: () {
+                _controller.value = !_controller.value;
+              },
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(2.sp),
+                boxShadow: ShadowUtils().shadowButton,
+              ),
+              parentKey: _stackKey,
+              child: Container(
+                padding: EdgeInsets.all(10.sp),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  Assets.icons.icLog.path,
+                  width: 20.sp,
+                  height: 20.sp,
+                  color: mCL,
+                ),
+              ),
+            ),
           ],
-        ),
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          _controller.value = !_controller.value;
-        },
-        child: Container(
-          margin: EdgeInsets.all(16.sp),
-          padding: EdgeInsets.all(10.sp),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(2.sp),
-            boxShadow: ShadowUtils().shadowButton,
-          ),
-          child: Image.asset(
-            Assets.icons.icLog.path,
-            width: 20.sp,
-            height: 20.sp,
-            color: mCL,
-          ),
         ),
       ),
     );
