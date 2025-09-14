@@ -33,13 +33,23 @@ class $AssetsIconsGen {
   AssetGenImage get icIncognito =>
       const AssetGenImage('assets/icons/ic_incognito.png');
 
+  /// File path: assets/icons/ic_log.png
+  AssetGenImage get icLog => const AssetGenImage('assets/icons/ic_log.png');
+
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [colorPicker, icCheck, icGithub, icGoogle, icIncognito, launcherIcon];
+  List<AssetGenImage> get values => [
+        colorPicker,
+        icCheck,
+        icGithub,
+        icGoogle,
+        icIncognito,
+        icLog,
+        launcherIcon
+      ];
 }
 
 class $AssetsImagesGen {

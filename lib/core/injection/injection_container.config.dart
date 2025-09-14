@@ -17,6 +17,7 @@ import '../../features/archived/presentation/bloc/archived_bloc.dart' as _i935;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/chats/presentation/bloc/chat_bloc.dart' as _i1043;
 import '../../features/home/presentation/bloc/home/home_bloc.dart' as _i495;
+import '../../features/home/presentation/bloc/logger/logger_bloc.dart' as _i359;
 import '../../features/profile/presentation/bloc/user_bloc.dart' as _i600;
 import '../../features/room/presentation/bloc/room/room_bloc.dart' as _i1030;
 import '../method_channels/pip_channel.dart' as _i921;
@@ -63,6 +64,7 @@ _i174.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i495.HomeBloc>(() => _i495.HomeBloc());
+  gh.factory<_i359.LoggerBloc>(() => _i359.LoggerBloc());
   gh.factory<_i291.BeautyFiltersBloc>(() => _i291.BeautyFiltersBloc());
   gh.factory<_i600.UserBloc>(() => _i600.UserBloc());
   gh.factory<_i1043.ChatBloc>(() => _i1043.ChatBloc());

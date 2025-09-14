@@ -102,6 +102,7 @@ dependencies:
   easy_animated_indexed_stack: ^0.0.3
   google_fonts: ^6.2.1
   lucide_icons_flutter: ^3.0.7
+  logging: ^1.3.0
 
   # Media
   image_picker: ^1.1.2
@@ -114,9 +115,7 @@ dependencies:
 
   # Video
   waterbus_sdk:
-    git:
-      url: https://github.com/waterbustech/waterbus-flutter-sdk.git
-      ref: temp
+    path: /Users/tranthaituan/Documents/Work/waterbus-flutter-sdk
       
 dependency_overrides:
   archive: ^4.0.7

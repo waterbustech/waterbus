@@ -7,6 +7,7 @@ import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/core/utils/widgets/shadow_utils.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
@@ -50,13 +51,7 @@ class EmptyMeetView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(2.sp),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black54,
-                    blurRadius: 12,
-                    offset: Offset(0, 6),
-                  ),
-                ],
+                boxShadow: ShadowUtils().shadowButton,
               ),
               padding: EdgeInsets.symmetric(
                 vertical: 8.sp,
