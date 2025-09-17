@@ -44,7 +44,9 @@ class _AppState extends State<App> {
                   ],
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.fromPreset(
-                    theme is ThemesStateInitial ? theme.preset : Preset.dracula,
+                    theme is ThemesStateInitial
+                        ? theme.preset
+                        : Preset.tokyoNight,
                     extensions: [sizerExtension],
                   ).data,
                   themeMode: ThemeMode.dark,

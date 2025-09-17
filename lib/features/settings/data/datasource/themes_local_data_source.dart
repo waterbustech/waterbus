@@ -23,11 +23,11 @@ class ThemesDatasourceImpl extends ThemesLocalDataSource {
   Preset getTheme() {
     final String? presetLabel = hiveBox.get(StorageKeys.theme);
 
-    if (presetLabel == null) return Preset.dracula;
+    if (presetLabel == null) return Preset.tokyoNight;
 
     return Preset.values.firstWhere(
       (preset) => preset.name == presetLabel,
-      orElse: () => Preset.dracula,
+      orElse: () => Preset.tokyoNight,
     );
   }
 }
