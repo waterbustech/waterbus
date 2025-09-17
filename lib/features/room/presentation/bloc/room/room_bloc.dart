@@ -648,4 +648,5 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   String? get currentBackground => _currentBackground;
 
   Room? get currentRoom => _currentRoom;
+  sdk.RoomState? get roomState => _waterbusSdk.roomState;
 }

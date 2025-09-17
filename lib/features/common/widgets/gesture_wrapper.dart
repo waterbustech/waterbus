@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class GestureWrapper extends StatefulWidget {
@@ -44,7 +45,7 @@ class _GestureWrapperState extends State<GestureWrapper> {
               }
 
               if (!_enable && widget.onTap != null) {
-                widget.onTap!();
+                widget.onTap?.call();
               }
             }
           : null,

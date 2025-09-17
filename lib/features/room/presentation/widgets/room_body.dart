@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/features/common/widgets/drop_down/show_overlay_option.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
 import 'package:waterbus_sdk/types/index.dart' as sdk;
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -9,15 +10,20 @@ import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/clipboard_utils.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/share_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/home/presentation/widgets/stack_avatar.dart';
+import 'package:waterbus/features/room/domain/entities/call_setting_option_enum.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
@@ -28,6 +34,7 @@ import 'package:waterbus/features/room/presentation/widgets/room_layout.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
 import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
 import 'package:waterbus/features/room/presentation/widgets/virtual_background_in_room.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class RoomBody extends StatefulWidget {
@@ -51,6 +58,7 @@ class _RoomBodyState extends State<RoomBody> {
   final List<MediaDeviceInfo> _videoInputs = [];
   final GlobalKey _audioInputButtonKey = GlobalKey();
   final GlobalKey _videoInputButtonKey = GlobalKey();
+  final GlobalKey _callSettingButtonKey = GlobalKey();
 
   OverlayEntry? _overlay;
   MediaDeviceInfo? _audioInputSelected;
@@ -69,106 +77,6 @@ class _RoomBodyState extends State<RoomBody> {
 
     _audioInputSelected = AppBloc.roomBloc.audioInputSelected;
     _videoInputSelected = AppBloc.roomBloc.videoInputSelected;
-  }
-
-  void _showMicrophoneMenu(
-    BuildContext context, {
-    required List<MediaDeviceInfo> deviceLst,
-    required GlobalKey key,
-    required MediaDeviceInfo? deviceInfoSelected,
-    required Function(MediaDeviceInfo)? onSelectDevice,
-    required Function() removeOverlay,
-  }) {
-    if (_overlay != null) return;
-
-    final RenderBox renderBox =
-        key.currentContext!.findRenderObject() as RenderBox;
-
-    final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);
-
-    _overlay = OverlayEntry(
-      builder: (context) {
-        return Stack(
-          children: [
-            GestureDetector(
-              onTap: removeOverlay,
-              behavior: HitTestBehavior.translucent,
-              child: Container(color: Colors.transparent),
-            ),
-            Positioned(
-              left: buttonPosition.dx,
-              top: buttonPosition.dy -
-                  deviceLst.length * 36.sp -
-                  5.sp -
-                  8.sp * 2,
-              child: Material(
-                color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(4.sp),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8.sp),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(deviceLst.length, (index) {
-                      return GestureWrapper(
-                        isHovered: true,
-                        onTap: () => onSelectDevice?.call(deviceLst[index]),
-                        child: Container(
-                          width: 250.sp,
-                          height: 36.sp,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 8.sp,
-                            horizontal: 10.sp,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.sp),
-                            color: Colors.transparent,
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 18.sp,
-                                child: deviceLst[index] == deviceInfoSelected
-                                    ? PhosphorIcon(
-                                        PhosphorIcons.check(),
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        size: 18.sp,
-                                      )
-                                    : SizedBox.shrink(),
-                              ),
-                              SizedBox(width: 10.sp),
-                              Text(
-                                deviceLst[index].label,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (_overlay != null) {
-      Overlay.of(context).insert(_overlay!);
-    }
   }
 
   void _removeOverlay() {
@@ -483,35 +391,24 @@ class _RoomBodyState extends State<RoomBody> {
                           },
                         ),
                       CallActionButton(
+                        key: _callSettingButtonKey,
                         tooltipMessage: Strings.moreOptions.i18n,
                         icon: PhosphorIcons.dotsThreeOutline(
                           PhosphorIconsStyle.fill,
                         ),
                         onTap: () {
-                          showDialogWaterbus(
-                            onlyShowAsDialog: true,
-                            maxWidth: context.isDesktop ? 350.sp : 290.sp,
-                            paddingBottom: context.isDesktop ? 80.sp : 20.sp,
-                            paddingHorizontal: 10.sp,
-                            alignment: Alignment.bottomCenter,
-                            child: CallSettingsBottomSheet(
-                              onVirtualBackground: () {
-                                setState(() {
-                                  if (_isChatOpened) {
-                                    _isChatOpened = false;
-                                  }
-
-                                  _isVirtualBackground = !_isVirtualBackground;
-                                });
-                              },
-                              onBeautyFiltersTapped: () {
-                                setState(() {
-                                  _isFilterSettingsOpened =
-                                      !_isFilterSettingsOpened;
-                                });
-                              },
-                            ),
-                          );
+                          if (context.isDesktop) {
+                            _handleOpenCallSetting(context);
+                          } else {
+                            showDialogWaterbus(
+                              onlyShowAsDialog: true,
+                              maxWidth: 290.sp,
+                              paddingBottom: 20.sp,
+                              paddingHorizontal: 10.sp,
+                              alignment: Alignment.bottomCenter,
+                              child: CallSettingsBottomSheet(),
+                            );
+                          }
                         },
                       ),
                       if (context.isMobile)
@@ -690,14 +587,123 @@ class _RoomBodyState extends State<RoomBody> {
             : 0;
   }
 
+  Future<void> _handleSelectSettingOption(CallSettingOptionEnum option) async {
+    final room = AppBloc.roomBloc.currentRoom;
+
+    if (option == CallSettingOptionEnum.settings) {
+      showScreenAsDialog(
+        route: Routes.callSettingsRoute,
+        child: CallSettingsScreen(isInRoom: true),
+      );
+    } else if (option == CallSettingOptionEnum.beautyFilters) {
+      setState(() {
+        _isFilterSettingsOpened = !_isFilterSettingsOpened;
+      });
+    } else if (option == CallSettingOptionEnum.shareLink) {
+      await ShareUtils().share(
+        link: room?.inviteLink ?? '',
+        description: room?.title,
+      );
+    } else if (option == CallSettingOptionEnum.virtualBackground) {
+      setState(() {
+        if (_isChatOpened) {
+          _isChatOpened = false;
+        }
+
+        _isVirtualBackground = !_isVirtualBackground;
+      });
+    } else {
+      if (room == null) return;
+
+      showDialogWaterbus(
+        child: SizedBox(
+          height: 90.h,
+          child: ChatInRoom(
+            room: room,
+            onClosePressed: () {
+              AppRouter.pop();
+            },
+          ),
+        ),
+      );
+    }
+  }
+
+  void _handleOpenCallSetting(BuildContext context) {
+    if (_overlay != null) return _removeOverlay();
+
+    _overlay = showOverlayOption<CallSettingOptionEnum>(
+      context,
+      options: CallSettingOptionEnum.settingsDesktop,
+      key: _callSettingButtonKey,
+      width: 200.sp,
+      onSelectOption: (option) async {
+        setState(() {
+          _removeOverlay();
+        });
+
+        await _handleSelectSettingOption(option);
+      },
+      removeOverlay: _removeOverlay,
+      item: (option) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: PhosphorIcon(
+              option.icon,
+              color: Theme.of(context).colorScheme.primary,
+              size: 16.sp,
+            ),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            option.label.i18n,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _handleSelectVideoOutput(BuildContext context) {
     if (_overlay != null) return _removeOverlay();
 
-    _showMicrophoneMenu(
+    _overlay = showOverlayOption<MediaDeviceInfo>(
       context,
-      deviceLst: _videoInputs,
+      options: _videoInputs,
       key: _videoInputButtonKey,
-      onSelectDevice: (option) {
+      item: (device) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: device == _videoInputSelected
+                ? PhosphorIcon(
+                    PhosphorIcons.check(),
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 16.sp,
+                  )
+                : SizedBox.shrink(),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            device.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+      onSelectOption: (option) {
         setState(() {
           _removeOverlay();
           _videoInputSelected = option;
@@ -712,19 +718,44 @@ class _RoomBodyState extends State<RoomBody> {
         );
       },
       removeOverlay: _removeOverlay,
-      deviceInfoSelected: _videoInputSelected,
+      selected: _videoInputSelected,
     );
   }
 
   void _handleSelectAudioOutput(BuildContext context) {
     if (_overlay != null) return _removeOverlay();
 
-    _showMicrophoneMenu(
+    _overlay = showOverlayOption<MediaDeviceInfo>(
       context,
-      deviceLst: _audioInputs,
+      options: _audioInputs,
       key: _audioInputButtonKey,
-      deviceInfoSelected: _audioInputSelected,
-      onSelectDevice: (option) {
+      selected: _audioInputSelected,
+      item: (device) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: device == _audioInputSelected
+                ? PhosphorIcon(
+                    PhosphorIcons.check(),
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 16.sp,
+                  )
+                : SizedBox.shrink(),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            device.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+      onSelectOption: (option) {
         setState(() {
           _audioInputSelected = option;
           _removeOverlay();

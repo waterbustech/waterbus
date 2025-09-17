@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
+
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -12,7 +15,6 @@ import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/home/domain/entities/log_record_extension.dart';
 import 'package:waterbus/features/home/presentation/bloc/logger/logger_bloc.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class LoggerWidget extends StatefulWidget {
   const LoggerWidget({super.key});
@@ -127,6 +129,7 @@ class _LogBodyState extends State<_LogBody> {
       children: [
         Container(
           height: 32.sp,
+          color: Colors.transparent,
           padding: EdgeInsets.symmetric(horizontal: 12.sp)
               .add(EdgeInsetsGeometry.only(bottom: 4.sp)),
           child: Row(
@@ -143,10 +146,8 @@ class _LogBodyState extends State<_LogBody> {
                 width: 25.w,
                 child: TextFieldInput(
                   margin: EdgeInsets.zero,
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 8.5.sp,
-                    horizontal: 4.sp,
-                  ),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 8.5.sp, horizontal: 4.sp),
                   style: TextStyle(
                     fontSize: 8.5.sp,
                     color: Theme.of(context).textTheme.bodyMedium?.color,

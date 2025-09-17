@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:waterbus/features/common/widgets/drop_down/show_overlay_option.dart';
+import 'package:waterbus/features/home/domain/entities/footer_enum.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -27,6 +30,56 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   String _currentTab = sideMenuItems.first.label;
 
   bool get _isCollapsed => _controller.isCollapsed();
+
+  final GlobalKey _overlayKey = GlobalKey();
+  OverlayEntry? _overlay;
+
+  void _removeOverlay() {
+    _overlay?.remove();
+    _overlay = null;
+  }
+
+  void _handleShowInformationOptions(BuildContext context) {
+    if (_overlay != null) return _removeOverlay();
+
+    _overlay = showOverlayOption(
+      context,
+      options: FooterAction.values,
+      key: _overlayKey,
+      width: 225.sp,
+      onSelectOption: (option) async {
+        setState(() {
+          _removeOverlay();
+        });
+
+        option.function.call();
+      },
+      removeOverlay: _removeOverlay,
+      item: (option) => Row(
+        spacing: 8.sp,
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: PhosphorIcon(
+              option.icon,
+              color: option.color,
+              size: 16.sp,
+            ),
+          ),
+          Text(
+            option.label.i18n,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: option.color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,17 +233,25 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
         }
 
         return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2.sp),
-            border: Border.all(
-              color: Theme.of(context).dividerColor,
-            ),
-          ),
           margin: EdgeInsets.all(8.sp),
-          padding: EdgeInsets.symmetric(horizontal: 6.sp),
-          child: SideFooterBody(
-            userAvatar: userAvatar,
-            user: user,
+          child: GestureDetector(
+            onTap: () {
+              _handleShowInformationOptions(context);
+            },
+            child: Container(
+              key: _overlayKey,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2.sp),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 6.sp),
+              child: SideFooterBody(
+                userAvatar: userAvatar,
+                user: user,
+              ),
+            ),
           ),
         );
       },

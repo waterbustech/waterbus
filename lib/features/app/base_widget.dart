@@ -35,8 +35,8 @@ class _BaseWidgetState extends State<BaseWidget> {
     required EdgeInsets margin,
   }) {
     final mq = MediaQuery.of(context);
-    final w = mq.size.width;
-    final h = mq.size.height;
+    final double w = mq.size.width;
+    final double h = mq.size.height;
 
     return Offset(
       w - margin.right * 2 - boxSize.width,

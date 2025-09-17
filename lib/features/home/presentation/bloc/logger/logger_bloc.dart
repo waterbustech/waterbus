@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
+
 import 'package:waterbus/features/home/domain/entities/log_record_extension.dart';
 
 part 'logger_event.dart';
