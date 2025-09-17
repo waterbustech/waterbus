@@ -33,6 +33,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   final GlobalKey _overlayKey = GlobalKey();
   OverlayEntry? _overlay;
+  final LayerLink _link = LayerLink();
 
   void _removeOverlay() {
     _overlay?.remove();
@@ -44,6 +45,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
     _overlay = showOverlayOption(
       context,
+      layerLink: _link,
       options: FooterAction.values,
       key: _overlayKey,
       width: 218.sp,
@@ -245,19 +247,16 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
             onTap: () {
               _handleShowInformationOptions(context);
             },
-            child: Container(
-              key: _overlayKey,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(2.sp),
-                border: Border.all(
-                  color: Theme.of(context).dividerColor,
-                  width: 0.5,
+            child: CompositedTransformTarget(
+              link: _link,
+              child: Container(
+                color: Colors.transparent,
+                key: _overlayKey,
+                padding: EdgeInsets.symmetric(horizontal: 6.sp),
+                child: SideFooterBody(
+                  userAvatar: userAvatar,
+                  user: user,
                 ),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 6.sp),
-              child: SideFooterBody(
-                userAvatar: userAvatar,
-                user: user,
               ),
             ),
           ),

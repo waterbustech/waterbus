@@ -58,6 +58,9 @@ class _RoomBodyState extends State<RoomBody> {
   final GlobalKey _audioInputButtonKey = GlobalKey();
   final GlobalKey _videoInputButtonKey = GlobalKey();
   final GlobalKey _callSettingButtonKey = GlobalKey();
+  final LayerLink _audioInputLink = LayerLink();
+  final LayerLink _videoInputLink = LayerLink();
+  final LayerLink _callSettingLink = LayerLink();
 
   OverlayEntry? _overlay;
   MediaDeviceInfo? _audioInputSelected;
@@ -272,51 +275,57 @@ class _RoomBodyState extends State<RoomBody> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                MediaCallActionButton(
-                  key: _audioInputButtonKey,
-                  onTap: () {
-                    if (_currentUserMedia) {
-                      return;
-                    }
+                CompositedTransformTarget(
+                  link: _audioInputLink,
+                  child: MediaCallActionButton(
+                    key: _audioInputButtonKey,
+                    onTap: () {
+                      if (_currentUserMedia) {
+                        return;
+                      }
 
-                    AppBloc.roomBloc.add(RoomAudioToggled());
-                  },
-                  icon: _currentUserMedia || _isAudioEnabled
-                      ? PhosphorIcons.microphone(
-                          PhosphorIconsStyle.fill,
-                        )
-                      : PhosphorIcons.microphoneSlash(
-                          PhosphorIconsStyle.fill,
-                        ),
-                  title: 'Microphone',
-                  onSelectMediaDevice: () {
-                    _handleSelectAudioOutput(context);
-                  },
-                  settingTooltipMessage: Strings.audioSettings.i18n,
-                  tooltipMessage:
-                      "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
+                      AppBloc.roomBloc.add(RoomAudioToggled());
+                    },
+                    icon: _currentUserMedia || _isAudioEnabled
+                        ? PhosphorIcons.microphone(
+                            PhosphorIconsStyle.fill,
+                          )
+                        : PhosphorIcons.microphoneSlash(
+                            PhosphorIconsStyle.fill,
+                          ),
+                    title: 'Microphone',
+                    onSelectMediaDevice: () {
+                      _handleSelectAudioOutput(context);
+                    },
+                    settingTooltipMessage: Strings.audioSettings.i18n,
+                    tooltipMessage:
+                        "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
+                  ),
                 ),
-                MediaCallActionButton(
-                  key: _videoInputButtonKey,
-                  onTap: () {
-                    if (_currentUserMedia) return;
+                CompositedTransformTarget(
+                  link: _videoInputLink,
+                  child: MediaCallActionButton(
+                    key: _videoInputButtonKey,
+                    onTap: () {
+                      if (_currentUserMedia) return;
 
-                    AppBloc.roomBloc.add(RoomVideoToggled());
-                  },
-                  icon: _currentUserMedia || _isVideoEnabled
-                      ? PhosphorIcons.videoCamera(
-                          PhosphorIconsStyle.fill,
-                        )
-                      : PhosphorIcons.videoCameraSlash(
-                          PhosphorIconsStyle.fill,
-                        ),
-                  title: Strings.camera.i18n,
-                  onSelectMediaDevice: () {
-                    _handleSelectVideoOutput(context);
-                  },
-                  settingTooltipMessage: Strings.videoSettings.i18n,
-                  tooltipMessage:
-                      "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
+                      AppBloc.roomBloc.add(RoomVideoToggled());
+                    },
+                    icon: _currentUserMedia || _isVideoEnabled
+                        ? PhosphorIcons.videoCamera(
+                            PhosphorIconsStyle.fill,
+                          )
+                        : PhosphorIcons.videoCameraSlash(
+                            PhosphorIconsStyle.fill,
+                          ),
+                    title: Strings.camera.i18n,
+                    onSelectMediaDevice: () {
+                      _handleSelectVideoOutput(context);
+                    },
+                    settingTooltipMessage: Strings.videoSettings.i18n,
+                    tooltipMessage:
+                        "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
+                  ),
                 ),
                 CallActionButton(
                   tooltipMessage: Strings.shareScreen.i18n,
@@ -380,26 +389,29 @@ class _RoomBodyState extends State<RoomBody> {
                       });
                     },
                   ),
-                CallActionButton(
-                  key: _callSettingButtonKey,
-                  tooltipMessage: Strings.moreOptions.i18n,
-                  icon: PhosphorIcons.dotsThreeOutline(
-                    PhosphorIconsStyle.fill,
+                CompositedTransformTarget(
+                  link: _callSettingLink,
+                  child: CallActionButton(
+                    key: _callSettingButtonKey,
+                    tooltipMessage: Strings.moreOptions.i18n,
+                    icon: PhosphorIcons.dotsThreeOutline(
+                      PhosphorIconsStyle.fill,
+                    ),
+                    onTap: () {
+                      if (context.isDesktop) {
+                        _handleOpenCallSetting(context);
+                      } else {
+                        showDialogWaterbus(
+                          onlyShowAsDialog: true,
+                          maxWidth: 290.sp,
+                          paddingBottom: 20.sp,
+                          paddingHorizontal: 10.sp,
+                          alignment: Alignment.bottomCenter,
+                          child: CallSettingsBottomSheet(),
+                        );
+                      }
+                    },
                   ),
-                  onTap: () {
-                    if (context.isDesktop) {
-                      _handleOpenCallSetting(context);
-                    } else {
-                      showDialogWaterbus(
-                        onlyShowAsDialog: true,
-                        maxWidth: 290.sp,
-                        paddingBottom: 20.sp,
-                        paddingHorizontal: 10.sp,
-                        alignment: Alignment.bottomCenter,
-                        child: CallSettingsBottomSheet(),
-                      );
-                    }
-                  },
                 ),
                 CallActionButton(
                   tooltipMessage: Strings.leaveCall.i18n,
@@ -601,6 +613,7 @@ class _RoomBodyState extends State<RoomBody> {
     if (_overlay != null) return _removeOverlay();
 
     _overlay = showOverlayOption<CallSettingOptionEnum>(
+      layerLink: _callSettingLink,
       context,
       options: CallSettingOptionEnum.settingsDesktop,
       key: _callSettingButtonKey,
@@ -687,6 +700,7 @@ class _RoomBodyState extends State<RoomBody> {
       },
       removeOverlay: _removeOverlay,
       selected: _videoInputSelected,
+      layerLink: _videoInputLink,
     );
   }
 
@@ -738,6 +752,7 @@ class _RoomBodyState extends State<RoomBody> {
         );
       },
       removeOverlay: _removeOverlay,
+      layerLink: _audioInputLink,
     );
   }
 }

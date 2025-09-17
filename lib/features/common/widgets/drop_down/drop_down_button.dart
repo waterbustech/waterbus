@@ -71,8 +71,11 @@ Widget showDropdownButton<T>({
           padding: EdgeInsets.symmetric(horizontal: 6.sp, vertical: 5.sp),
           width: width ?? 250.sp,
           decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(AppRouter.context!).dividerColor,
+            ),
             borderRadius: BorderRadius.circular(4.sp),
-            color: Theme.of(AppRouter.context!).colorScheme.surfaceContainer,
+            color: Theme.of(AppRouter.context!).colorScheme.surface,
             boxShadow: [
               BoxShadow(
                 offset: Offset(1, 1),

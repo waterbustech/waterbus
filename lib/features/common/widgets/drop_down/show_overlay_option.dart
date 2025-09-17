@@ -9,20 +9,17 @@ OverlayEntry showOverlayOption<T>(
   required GlobalKey key,
   double? width,
   double? height,
+  Offset? offset,
   T? selected,
+  required LayerLink layerLink,
   OverlayEntry? overlay,
   required Function(T)? onSelectOption,
   required Function() removeOverlay,
   required Widget Function(T)? item,
 }) {
-  if (overlay != null) return overlay;
-
   OverlayEntry? overlayCurrent = overlay;
 
-  final RenderBox renderBox =
-      key.currentContext!.findRenderObject() as RenderBox;
-
-  final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);
+  if (overlayCurrent != null) return overlayCurrent;
 
   overlayCurrent = OverlayEntry(
     builder: (context) {
@@ -33,12 +30,10 @@ OverlayEntry showOverlayOption<T>(
             behavior: HitTestBehavior.translucent,
             child: Container(color: Colors.transparent),
           ),
-          Positioned(
-            left: buttonPosition.dx,
-            top: buttonPosition.dy -
-                options.length * (height ?? 32.sp) -
-                5.sp -
-                8.sp * 2,
+          CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: offset ?? Offset(0, -32.sp * options.length - 20.sp),
             child: Material(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(8.sp),
