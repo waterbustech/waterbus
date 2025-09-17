@@ -18,10 +18,6 @@ class $AssetsIconsGen {
   AssetGenImage get colorPicker =>
       const AssetGenImage('assets/icons/color-picker.png');
 
-  /// File path: assets/icons/ic_add_members.png
-  AssetGenImage get icAddMembers =>
-      const AssetGenImage('assets/icons/ic_add_members.png');
-
   /// File path: assets/icons/ic_check.png
   AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
 
@@ -37,19 +33,27 @@ class $AssetsIconsGen {
   AssetGenImage get icIncognito =>
       const AssetGenImage('assets/icons/ic_incognito.png');
 
+  /// File path: assets/icons/ic_log.png
+  AssetGenImage get icLog => const AssetGenImage('assets/icons/ic_log.png');
+
   /// File path: assets/icons/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
 
+  /// File path: assets/icons/launcher_icon_mac.png
+  AssetGenImage get launcherIconMac =>
+      const AssetGenImage('assets/icons/launcher_icon_mac.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         colorPicker,
-        icAddMembers,
         icCheck,
         icGithub,
         icGoogle,
         icIncognito,
-        launcherIcon
+        icLog,
+        launcherIcon,
+        launcherIconMac
       ];
 }
 

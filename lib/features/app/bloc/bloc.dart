@@ -6,6 +6,7 @@ import 'package:waterbus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/conversation/presentation/bloc/message_bloc.dart';
 import 'package:waterbus/features/home/presentation/bloc/home/home_bloc.dart';
+import 'package:waterbus/features/home/presentation/bloc/logger/logger_bloc.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
@@ -26,6 +27,7 @@ class AppBloc {
   static final NotificationSettingBloc notificationSettingBloc =
       getIt<NotificationSettingBloc>();
   static final ThemesBloc themesBloc = getIt<ThemesBloc>();
+  static final LoggerBloc loggerBloc = getIt<LoggerBloc>();
 
   static final List<BlocProvider> providers = [
     BlocProvider<AuthBloc>(
@@ -61,6 +63,9 @@ class AppBloc {
     BlocProvider<NotificationSettingBloc>(
       create: (context) => notificationSettingBloc,
     ),
+    BlocProvider<LoggerBloc>(
+      create: (context) => loggerBloc,
+    ),
   ];
 
   Future<void> bootstrap() async {
@@ -70,6 +75,7 @@ class AppBloc {
     chatBloc.add(ChatStarted());
     messageBloc.add(MessageSocketStarted());
     notificationSettingBloc.add(NotificationSettingGet());
+    loggerBloc.add(LoggerInitialEvent());
   }
 
   ///Singleton factory

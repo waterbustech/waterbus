@@ -141,7 +141,7 @@ PODS:
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
-  - video_view (1.2.2):
+  - video_view (1.2.3):
     - Flutter
     - FlutterMacOS
   - wakelock_plus (0.0.1):
@@ -285,8 +285,8 @@ SPEC CHECKSUMS:
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   super_native_extensions: c2795d6d9aedf4a79fae25cb6160b71b50549189
   url_launcher_macos: 0fba8ddabfc33ce0a9afe7c5fef5aab3d8d2d673
-  video_view: f1006585eefe4409bc0a42f99371e321d734acd4
-  wakelock_plus: 21ddc249ac4b8d018838dbdabd65c5976c308497
+  video_view: b014eb6aa9f9ca89e310f5f57796e20999d0aaec
+  wakelock_plus: 917609be14d812ddd9e9528876538b2263aaa03b
   WebRTC-SDK: 69d4e56b0b4b27d788e87bab9b9a1326ed05b1e3
 
 PODFILE CHECKSUM: 4227eb0cd204c188e84286c766ea60bd8d83e70f

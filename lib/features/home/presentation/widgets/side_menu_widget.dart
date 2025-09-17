@@ -181,7 +181,8 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2.sp),
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(8.sp),
             border: Border.all(
               color: Theme.of(context).dividerColor,
             ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
-import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
@@ -46,12 +45,15 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
             AppRouter.pop();
           },
           child: Center(
-            child: Text(
-              Strings.cancel.i18n,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
+            child: Padding(
+              padding: EdgeInsets.only(left: 12.sp),
+              child: Text(
+                Strings.cancel.i18n,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -72,11 +74,8 @@ class _EditConversationScreenState extends State<EditConversationScreen> {
               }
             },
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              padding: EdgeInsets.all(12.sp)
-                  .add(EdgeInsets.only(right: context.isDesktop ? 12.sp : 0)),
+              color: Colors.transparent,
+              padding: EdgeInsets.all(12.sp),
               child: Text(
                 Strings.done.i18n,
                 style: TextStyle(

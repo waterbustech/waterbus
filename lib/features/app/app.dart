@@ -11,6 +11,7 @@ import 'package:waterbus/core/app/themes/preset.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/app/base_widget.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/settings/presentation/bloc/themes/themes_bloc.dart';
@@ -62,18 +63,9 @@ class _AppState extends State<App> {
                           );
 
                           return SizeNotSupportedWidget(
-                            child: SafeArea(
-                              top: false,
-                              bottom: false,
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (_isKeyboardVisible) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                  }
-                                },
-                                child: child ?? const SizedBox(),
-                              ),
+                            child: BaseWidget(
+                              isKeyboardVisible: _isKeyboardVisible,
+                              child: child,
                             ),
                           );
                         },

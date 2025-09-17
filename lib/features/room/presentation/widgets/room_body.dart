@@ -7,7 +7,6 @@ import 'package:waterbus_sdk/types/index.dart' as sdk;
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
-import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/clipboard_utils.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
@@ -97,51 +96,67 @@ class _RoomBodyState extends State<RoomBody> {
             ),
             Positioned(
               left: buttonPosition.dx,
-              top: buttonPosition.dy - deviceLst.length * 36.sp - 5.sp,
+              top: buttonPosition.dy -
+                  deviceLst.length * 36.sp -
+                  5.sp -
+                  8.sp * 2,
               child: Material(
                 color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(10.sp),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(deviceLst.length, (index) {
-                    return GestureWrapper(
-                      onTap: () => onSelectDevice?.call(deviceLst[index]),
-                      child: Container(
-                        width: 250.sp,
-                        height: 36.sp,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.sp,
-                          vertical: 8.sp,
-                        ),
-                        decoration: BoxDecoration(
-                          color: deviceLst[index] == deviceInfoSelected
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.2)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(index == 0 ? 10.sp : 0),
-                            bottom: Radius.circular(
-                              index == deviceLst.length - 1 ? 10.sp : 0,
-                            ),
+                borderRadius: BorderRadius.circular(4.sp),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.sp),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(deviceLst.length, (index) {
+                      return GestureWrapper(
+                        isHovered: true,
+                        onTap: () => onSelectDevice?.call(deviceLst[index]),
+                        child: Container(
+                          width: 250.sp,
+                          height: 36.sp,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 8.sp,
+                            horizontal: 10.sp,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.sp),
+                            color: Colors.transparent,
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 18.sp,
+                                child: deviceLst[index] == deviceInfoSelected
+                                    ? PhosphorIcon(
+                                        PhosphorIcons.check(),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        size: 18.sp,
+                                      )
+                                    : SizedBox.shrink(),
+                              ),
+                              SizedBox(width: 10.sp),
+                              Text(
+                                deviceLst[index].label,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          deviceLst[index].label,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ),
@@ -345,189 +360,157 @@ class _RoomBodyState extends State<RoomBody> {
             padding: EdgeInsets.symmetric(horizontal: 2.sp),
             width: double.infinity,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                if (context.isDesktop)
-                  _state.isRecording
-                      ? _buildRecWidget()
-                      : SizedBox(width: 80.sp),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      MediaCallActionButton(
-                        key: _audioInputButtonKey,
-                        onTap: () {
-                          if (_currentUserMedia) {
-                            return;
-                          }
+                MediaCallActionButton(
+                  key: _audioInputButtonKey,
+                  onTap: () {
+                    if (_currentUserMedia) {
+                      return;
+                    }
 
-                          AppBloc.roomBloc.add(RoomAudioToggled());
-                        },
-                        icon: _currentUserMedia || _isAudioEnabled
-                            ? PhosphorIcons.microphone(
-                                PhosphorIconsStyle.fill,
-                              )
-                            : PhosphorIcons.microphoneSlash(
-                                PhosphorIconsStyle.fill,
-                              ),
-                        title: 'Microphone',
-                        onSelectMediaDevice: () {
-                          _handleSelectAudioOutput(context);
-                        },
-                        settingTooltipMessage: Strings.audioSettings.i18n,
-                        tooltipMessage:
-                            "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
-                      ),
-                      MediaCallActionButton(
-                        key: _videoInputButtonKey,
-                        onTap: () {
-                          if (_currentUserMedia) return;
-
-                          AppBloc.roomBloc.add(RoomVideoToggled());
-                        },
-                        icon: _currentUserMedia || _isVideoEnabled
-                            ? PhosphorIcons.videoCamera(
-                                PhosphorIconsStyle.fill,
-                              )
-                            : PhosphorIcons.videoCameraSlash(
-                                PhosphorIconsStyle.fill,
-                              ),
-                        title: Strings.camera.i18n,
-                        onSelectMediaDevice: () {
-                          _handleSelectVideoOutput(context);
-                        },
-                        settingTooltipMessage: Strings.videoSettings.i18n,
-                        tooltipMessage:
-                            "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
-                      ),
-                      CallActionButton(
-                        tooltipMessage: Strings.shareScreen.i18n,
-                        icon: PhosphorIcons.monitorArrowUp(
-                          _isSharingScreen
-                              ? PhosphorIconsStyle.fill
-                              : PhosphorIconsStyle.regular,
-                        ),
-                        iconColor: _isSharingScreen
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
-                        backgroundColor: _isSharingScreen
-                            ? Theme.of(context).colorScheme.primaryContainer
-                            : null,
-                        onTap: () {
-                          if (_currentUserMedia) return;
-
-                          if (_isSharingScreen) {
-                            AppBloc.roomBloc.add(RoomSharingScreenStoped());
-                          } else {
-                            AppBloc.roomBloc.add(RoomSharingScreenStarted());
-                          }
-                        },
-                      ),
-                      if (context.isDesktop)
-                        CallActionButton(
-                          tooltipMessage:
-                              "${Strings.raiseHand.i18n} (ctrl + h)",
-                          icon: _isHandRaising
-                              ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.hand(),
-                          iconColor:
-                              _isHandRaising ? Colors.yellow.shade100 : null,
-                          backgroundColor:
-                              _isHandRaising ? Colors.yellow.shade900 : null,
-                          onTap: () {
-                            if (_currentUserMedia) return;
-
-                            AppBloc.roomBloc.add(RoomHandRasingToggled());
-                          },
-                        ),
-                      if (context.isDesktop)
-                        CallActionButton(
-                          tooltipMessage: Strings.chatWithEveryone.i18n,
-                          icon: PhosphorIcons.chatTeardropText(
-                            _isChatOpened
-                                ? PhosphorIconsStyle.fill
-                                : PhosphorIconsStyle.regular,
-                          ),
-                          iconColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
-                          backgroundColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : null,
-                          onTap: () {
-                            setState(() {
-                              if (_isVirtualBackground) {
-                                _isVirtualBackground = false;
-                              }
-
-                              _isChatOpened = !_isChatOpened;
-                            });
-                          },
-                        ),
-                      CallActionButton(
-                        tooltipMessage: Strings.moreOptions.i18n,
-                        icon: PhosphorIcons.dotsThreeOutline(
+                    AppBloc.roomBloc.add(RoomAudioToggled());
+                  },
+                  icon: _currentUserMedia || _isAudioEnabled
+                      ? PhosphorIcons.microphone(
+                          PhosphorIconsStyle.fill,
+                        )
+                      : PhosphorIcons.microphoneSlash(
                           PhosphorIconsStyle.fill,
                         ),
-                        onTap: () {
-                          showDialogWaterbus(
-                            onlyShowAsDialog: true,
-                            maxWidth: context.isDesktop ? 350.sp : 290.sp,
-                            paddingBottom: context.isDesktop ? 80.sp : 20.sp,
-                            paddingHorizontal: 10.sp,
-                            alignment: Alignment.bottomCenter,
-                            child: CallSettingsBottomSheet(
-                              onVirtualBackground: () {
-                                setState(() {
-                                  if (_isChatOpened) {
-                                    _isChatOpened = false;
-                                  }
+                  title: 'Microphone',
+                  onSelectMediaDevice: () {
+                    _handleSelectAudioOutput(context);
+                  },
+                  settingTooltipMessage: Strings.audioSettings.i18n,
+                  tooltipMessage:
+                      "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
+                ),
+                MediaCallActionButton(
+                  key: _videoInputButtonKey,
+                  onTap: () {
+                    if (_currentUserMedia) return;
 
-                                  _isVirtualBackground = !_isVirtualBackground;
-                                });
-                              },
-                              onBeautyFiltersTapped: () {
-                                setState(() {
-                                  _isFilterSettingsOpened =
-                                      !_isFilterSettingsOpened;
-                                });
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      if (context.isMobile)
-                        CallActionButton(
-                          tooltipMessage: Strings.leaveCall.i18n,
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.roomBloc.add(const RoomLeft());
-                          },
+                    AppBloc.roomBloc.add(RoomVideoToggled());
+                  },
+                  icon: _currentUserMedia || _isVideoEnabled
+                      ? PhosphorIcons.videoCamera(
+                          PhosphorIconsStyle.fill,
+                        )
+                      : PhosphorIcons.videoCameraSlash(
+                          PhosphorIconsStyle.fill,
                         ),
-                    ],
+                  title: Strings.camera.i18n,
+                  onSelectMediaDevice: () {
+                    _handleSelectVideoOutput(context);
+                  },
+                  settingTooltipMessage: Strings.videoSettings.i18n,
+                  tooltipMessage:
+                      "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
+                ),
+                CallActionButton(
+                  tooltipMessage: Strings.shareScreen.i18n,
+                  icon: PhosphorIcons.monitorArrowUp(
+                    _isSharingScreen
+                        ? PhosphorIconsStyle.fill
+                        : PhosphorIconsStyle.regular,
                   ),
+                  iconColor: _isSharingScreen
+                      ? Theme.of(context).colorScheme.primary
+                      : null,
+                  backgroundColor: _isSharingScreen
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : null,
+                  onTap: () {
+                    if (_currentUserMedia) return;
+
+                    if (_isSharingScreen) {
+                      AppBloc.roomBloc.add(RoomSharingScreenStoped());
+                    } else {
+                      AppBloc.roomBloc.add(RoomSharingScreenStarted());
+                    }
+                  },
                 ),
                 if (context.isDesktop)
-                  Container(
-                    width: 100.sp,
-                    alignment: Alignment.bottomRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CallActionButton(
-                          tooltipMessage: Strings.leaveCall.i18n,
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.roomBloc.add(const RoomLeft());
-                          },
-                        ),
-                      ],
-                    ),
+                  CallActionButton(
+                    tooltipMessage: "${Strings.raiseHand.i18n} (ctrl + h)",
+                    icon: _isHandRaising
+                        ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
+                        : PhosphorIcons.hand(),
+                    iconColor: _isHandRaising ? Colors.yellow.shade100 : null,
+                    backgroundColor:
+                        _isHandRaising ? Colors.yellow.shade900 : null,
+                    onTap: () {
+                      if (_currentUserMedia) return;
+
+                      AppBloc.roomBloc.add(RoomHandRasingToggled());
+                    },
                   ),
+                if (context.isDesktop)
+                  CallActionButton(
+                    tooltipMessage: Strings.chatWithEveryone.i18n,
+                    icon: PhosphorIcons.chatTeardropText(
+                      _isChatOpened
+                          ? PhosphorIconsStyle.fill
+                          : PhosphorIconsStyle.regular,
+                    ),
+                    iconColor: _isChatOpened
+                        ? Theme.of(context).colorScheme.primary
+                        : null,
+                    backgroundColor: _isChatOpened
+                        ? Theme.of(context).colorScheme.primaryContainer
+                        : null,
+                    onTap: () {
+                      setState(() {
+                        if (_isVirtualBackground) {
+                          _isVirtualBackground = false;
+                        }
+
+                        _isChatOpened = !_isChatOpened;
+                      });
+                    },
+                  ),
+                CallActionButton(
+                  tooltipMessage: Strings.moreOptions.i18n,
+                  icon: PhosphorIcons.dotsThreeOutline(
+                    PhosphorIconsStyle.fill,
+                  ),
+                  onTap: () {
+                    showDialogWaterbus(
+                      onlyShowAsDialog: true,
+                      maxWidth: context.isDesktop ? 350.sp : 290.sp,
+                      paddingBottom: context.isDesktop ? 80.sp : 20.sp,
+                      paddingHorizontal: 10.sp,
+                      alignment: Alignment.bottomCenter,
+                      child: CallSettingsBottomSheet(
+                        onVirtualBackground: () {
+                          setState(() {
+                            if (_isChatOpened) {
+                              _isChatOpened = false;
+                            }
+
+                            _isVirtualBackground = !_isVirtualBackground;
+                          });
+                        },
+                        onBeautyFiltersTapped: () {
+                          setState(() {
+                            _isFilterSettingsOpened = !_isFilterSettingsOpened;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+                CallActionButton(
+                  tooltipMessage: Strings.leaveCall.i18n,
+                  icon: PhosphorIcons.signOut(),
+                  backgroundColor: Colors.red,
+                  onTap: () {
+                    AppBloc.roomBloc.add(const RoomLeft());
+                  },
+                ),
               ],
             ),
           ),
@@ -723,38 +706,6 @@ class _RoomBodyState extends State<RoomBody> {
         );
       },
       removeOverlay: _removeOverlay,
-    );
-  }
-
-  Widget _buildRecWidget() {
-    return Material(
-      clipBehavior: Clip.hardEdge,
-      color: Colors.red,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4.sp),
-      ),
-      child: SizedBox(
-        height: context.isDesktop ? 40.sp : 30.sp,
-        width: context.isDesktop ? 80.sp : 55.sp,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              PhosphorIcons.record(PhosphorIconsStyle.fill),
-              size: context.isDesktop ? 18.sp : 12.sp,
-            ),
-            SizedBox(width: context.isDesktop ? 8.sp : 4.sp),
-            Text(
-              "REC",
-              style: TextStyle(
-                color: mCL,
-                fontSize: context.isDesktop ? 12.sp : 10.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
