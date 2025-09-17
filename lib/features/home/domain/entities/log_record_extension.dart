@@ -15,4 +15,7 @@ extension LogRecordX on LogRecord {
     }
     return Colors.white;
   }
+
+  String get label =>
+      "[${level.name}] ${time.toIso8601String()} $loggerName: $message";
 }

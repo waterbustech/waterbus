@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/constants/color_constants.dart';
+import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/core/utils/widgets/shadow_utils.dart';
 import 'package:waterbus/features/home/presentation/widgets/draggable_box.dart';
@@ -81,37 +82,46 @@ class _BaseWidgetState extends State<BaseWidget> {
                     );
                   },
                   child: value
-                      ? LoggerWidget(key: _terminalKey)
+                      ? Overlay(
+                          initialEntries: [
+                            OverlayEntry(
+                              builder: (_) => LoggerWidget(key: _terminalKey),
+                            ),
+                          ],
+                        )
                       : const SizedBox.shrink(),
                 );
               },
             ),
-            DraggableBox(
-              snap: false,
-              size: _boxSize,
-              margin: _margin,
-              initialOffset: _fabLikeInitialOffset(
-                context,
-                boxSize: _boxSize,
+            Visibility(
+              visible: !context.isMobile,
+              child: DraggableBox(
+                snap: false,
+                size: _boxSize,
                 margin: _margin,
-              ),
-              onTap: () {
-                _controller.value = !_controller.value;
-              },
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(2.sp),
-                boxShadow: ShadowUtils().shadowButton,
-              ),
-              parentKey: _stackKey,
-              child: Container(
-                padding: EdgeInsets.all(10.sp),
-                alignment: Alignment.center,
-                child: Image.asset(
-                  Assets.icons.icLog.path,
-                  width: 20.sp,
-                  height: 20.sp,
-                  color: mCL,
+                initialOffset: _fabLikeInitialOffset(
+                  context,
+                  boxSize: _boxSize,
+                  margin: _margin,
+                ),
+                onTap: () {
+                  _controller.value = !_controller.value;
+                },
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(2.sp),
+                  boxShadow: ShadowUtils().shadowButton,
+                ),
+                parentKey: _stackKey,
+                child: Container(
+                  padding: EdgeInsets.all(10.sp),
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    Assets.icons.icLog.path,
+                    width: 20.sp,
+                    height: 20.sp,
+                    color: mCL,
+                  ),
                 ),
               ),
             ),

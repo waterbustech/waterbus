@@ -12,39 +12,50 @@ Widget showDropdownButton<T>({
   required T? currentData,
   void Function(T?)? onChanged,
   required List<DropdownMenuItem<T>>? items,
-  ButtonStyleData? buttonStyleData,
   Widget? customButton,
   double? width,
+  Widget? hint,
+  double? menuHeight,
+  Offset? offset,
 }) {
   return Theme(
     data: Theme.of(AppRouter.context!).copyWith(
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      hoverColor: Colors.transparent,
+      hoverColor: Theme.of(AppRouter.context!)
+          .colorScheme
+          .primary
+          .withValues(alpha: 0.08),
       focusColor: Colors.transparent,
     ),
     child: DropdownButtonHideUnderline(
       child: DropdownButton2<T>(
+        hint: hint,
         isExpanded: true,
         items: items,
         value: currentData,
         onChanged: onChanged,
         customButton: customButton,
         menuItemStyleData: MenuItemStyleData(
+          height: menuHeight ?? 48.0,
           selectedMenuItemBuilder: (context, child) {
-            return Row(
-              children: [
-                Expanded(child: child),
-                Padding(
-                  padding: EdgeInsets.only(right: 14.sp),
-                  child: Icon(
-                    PhosphorIcons.check(),
-                    size: 16.sp,
-                    color: Theme.of(context).colorScheme.primary,
+            return Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10.sp)),
+              child: Row(
+                children: [
+                  Expanded(child: child),
+                  Padding(
+                    padding: EdgeInsets.only(right: 14.sp),
+                    child: Icon(
+                      PhosphorIcons.check(),
+                      size: 16.sp,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
@@ -57,9 +68,10 @@ Widget showDropdownButton<T>({
           iconSize: 12.sp,
         ),
         dropdownStyleData: DropdownStyleData(
-          width: 250.sp,
+          padding: EdgeInsets.symmetric(horizontal: 6.sp, vertical: 5.sp),
+          width: width ?? 250.sp,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2.sp),
+            borderRadius: BorderRadius.circular(4.sp),
             color: Theme.of(AppRouter.context!).colorScheme.surfaceContainer,
             boxShadow: [
               BoxShadow(
@@ -73,10 +85,8 @@ Widget showDropdownButton<T>({
               ),
             ],
           ),
-          offset: const Offset(0, -4),
-          scrollbarTheme: ScrollbarThemeData(
-            radius: Radius.circular(2.sp),
-          ),
+          offset: offset ?? const Offset(0, -4),
+          scrollbarTheme: ScrollbarThemeData(radius: Radius.circular(2.sp)),
         ),
       ),
     ),

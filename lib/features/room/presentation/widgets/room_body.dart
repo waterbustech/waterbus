@@ -97,51 +97,67 @@ class _RoomBodyState extends State<RoomBody> {
             ),
             Positioned(
               left: buttonPosition.dx,
-              top: buttonPosition.dy - deviceLst.length * 36.sp - 5.sp,
+              top: buttonPosition.dy -
+                  deviceLst.length * 36.sp -
+                  5.sp -
+                  8.sp * 2,
               child: Material(
                 color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(10.sp),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(deviceLst.length, (index) {
-                    return GestureWrapper(
-                      onTap: () => onSelectDevice?.call(deviceLst[index]),
-                      child: Container(
-                        width: 250.sp,
-                        height: 36.sp,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.sp,
-                          vertical: 8.sp,
-                        ),
-                        decoration: BoxDecoration(
-                          color: deviceLst[index] == deviceInfoSelected
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.2)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(index == 0 ? 10.sp : 0),
-                            bottom: Radius.circular(
-                              index == deviceLst.length - 1 ? 10.sp : 0,
-                            ),
+                borderRadius: BorderRadius.circular(4.sp),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.sp),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(deviceLst.length, (index) {
+                      return GestureWrapper(
+                        isHovered: true,
+                        onTap: () => onSelectDevice?.call(deviceLst[index]),
+                        child: Container(
+                          width: 250.sp,
+                          height: 36.sp,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 8.sp,
+                            horizontal: 10.sp,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.sp),
+                            color: Colors.transparent,
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 18.sp,
+                                child: deviceLst[index] == deviceInfoSelected
+                                    ? PhosphorIcon(
+                                        PhosphorIcons.check(),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        size: 18.sp,
+                                      )
+                                    : SizedBox.shrink(),
+                              ),
+                              SizedBox(width: 10.sp),
+                              Text(
+                                deviceLst[index].label,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          deviceLst[index].label,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ),

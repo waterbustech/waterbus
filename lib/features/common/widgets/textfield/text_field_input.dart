@@ -8,6 +8,7 @@ class TextFieldInput extends StatelessWidget {
   final void Function(String)? onChanged;
   final String hintText;
   final TextStyle? hintStyle;
+  final TextStyle? style;
   final int maxLines;
   final int? maxLength;
   final bool isAvailable;
@@ -34,10 +35,12 @@ class TextFieldInput extends StatelessWidget {
   final Function()? onEditingComplete;
   final TextAlign textAlign;
   final BorderRadius? borderRadius;
+  final double? horizontalPadding;
   const TextFieldInput({
     super.key,
     required this.validatorForm,
     required this.hintText,
+    this.style,
     this.hintStyle,
     this.textInputType,
     this.maxLines = 1,
@@ -66,6 +69,7 @@ class TextFieldInput extends StatelessWidget {
     this.onEditingComplete,
     this.textAlign = TextAlign.start,
     this.borderRadius,
+    this.horizontalPadding,
   });
   @override
   Widget build(BuildContext context) {
@@ -86,12 +90,13 @@ class TextFieldInput extends StatelessWidget {
         controller: controller,
         enabled: isAvailable && isActive,
         validator: validatorForm,
-        style: TextStyle(
-          fontSize: 12.sp,
-          color: isAvailable
-              ? Theme.of(context).textTheme.bodyMedium?.color
-              : Theme.of(context).textTheme.titleMedium?.color,
-        ),
+        style: style ??
+            TextStyle(
+              fontSize: 12.sp,
+              color: isAvailable
+                  ? Theme.of(context).textTheme.bodyMedium?.color
+                  : Theme.of(context).textTheme.titleMedium?.color,
+            ),
         textAlign: textAlign,
         cursorColor: Theme.of(context).colorScheme.primary,
         keyboardType: textInputType ?? TextInputType.multiline,
@@ -159,7 +164,7 @@ class TextFieldInput extends StatelessWidget {
     final verticalPadding = height != null ? ((height! - 12.sp) / 2) : 11.0;
 
     return EdgeInsets.symmetric(
-      horizontal: 10,
+      horizontal: horizontalPadding ?? 10,
       vertical: verticalPadding,
     );
   }

@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logging/logging.dart';
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/utils/paginated_list_view.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
+import 'package:waterbus/features/common/widgets/drop_down/drop_down_button.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
+import 'package:waterbus/features/common/widgets/textfield/text_field_input.dart';
 import 'package:waterbus/features/home/domain/entities/log_record_extension.dart';
 import 'package:waterbus/features/home/presentation/bloc/logger/logger_bloc.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -72,17 +77,11 @@ class LoggerWidgetState extends State<LoggerWidget> {
               ),
             ),
             Expanded(
-              child: _LogBody(
-                scrollController: _controller,
-                onJumpBottom: () {
-                  if (_controller.hasClients) {
-                    _controller.animateTo(
-                      _controller.position.maxScrollExtent,
-                      duration: 400.milliseconds,
-                      curve: Curves.easeIn,
-                    );
-                  }
-                },
+              child: IgnorePointer(
+                ignoring: false,
+                child: _LocalNavigator(
+                  child: _LogBody(scrollController: _controller),
+                ),
               ),
             ),
           ],
@@ -92,21 +91,44 @@ class LoggerWidgetState extends State<LoggerWidget> {
   }
 }
 
-class _LogBody extends StatelessWidget {
+class _LogBody extends StatefulWidget {
   final ScrollController scrollController;
-  final Function() onJumpBottom;
 
   const _LogBody({
     required this.scrollController,
-    required this.onJumpBottom,
   });
+
+  @override
+  State<_LogBody> createState() => _LogBodyState();
+}
+
+class _LogBodyState extends State<_LogBody> {
+  final TextEditingController _filterController = TextEditingController();
+  Timer? _debounce;
+  Level? _level;
+
+  @override
+  void initState() {
+    super.initState();
+    _filterController.text = AppBloc.loggerBloc.keyword;
+    _level = AppBloc.loggerBloc.level;
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _filterController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.sp),
+        Container(
+          height: 32.sp,
+          padding: EdgeInsets.symmetric(horizontal: 12.sp)
+              .add(EdgeInsetsGeometry.only(bottom: 4.sp)),
           child: Row(
             children: [
               Text(
@@ -117,12 +139,97 @@ class _LogBody extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              _LogButton(
-                tooltip: "Scroll to the bottom",
-                icon: Icons.arrow_downward_rounded,
-                onTap: () => onJumpBottom.call(),
+              SizedBox(
+                width: 25.w,
+                child: TextFieldInput(
+                  margin: EdgeInsets.zero,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 8.5.sp,
+                    horizontal: 4.sp,
+                  ),
+                  style: TextStyle(
+                    fontSize: 8.5.sp,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 8.5.sp,
+                    color: Theme.of(context).textTheme.titleSmall!.color,
+                  ),
+                  borderRadius: BorderRadius.circular(4.sp),
+                  controller: _filterController,
+                  validatorForm: (val) => null,
+                  onChanged: (val) {
+                    if (_debounce?.isActive ?? false) {
+                      _debounce?.cancel();
+                    }
+
+                    _debounce = Timer(
+                      400.milliseconds,
+                      () {
+                        AppBloc.loggerBloc.add(LoggerFilterEvent(keyword: val));
+                      },
+                    );
+                  },
+                  hintText: 'Filter',
+                ),
               ),
-              SizedBox(width: 6.sp),
+              SizedBox(width: 10.sp),
+              Container(
+                width: 12.w,
+                margin: EdgeInsets.symmetric(vertical: 3.sp),
+                padding: EdgeInsets.symmetric(horizontal: 6.sp),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.sp),
+                  border: Border.all(color: Theme.of(context).dividerColor),
+                ),
+                child: showDropdownButton<Level>(
+                  width: 12.w,
+                  menuHeight: 24.sp,
+                  data: Level.LEVELS,
+                  offset: const Offset(-8, -4),
+                  onChanged: (val) {
+                    setState(() {
+                      if (_level == val) {
+                        _level = null;
+                      } else {
+                        _level = val;
+                      }
+                    });
+
+                    AppBloc.loggerBloc.add(
+                      LoggerFilterEvent(
+                        keyword: _filterController.text,
+                        level: _level,
+                      ),
+                    );
+                  },
+                  currentData: _level,
+                  hint: Text(
+                    'Select level',
+                    style: TextStyle(
+                      fontSize: 9.sp,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
+                    ),
+                  ),
+                  items: Level.LEVELS
+                      .map(
+                        (item) => DropdownMenuItem<Level>(
+                          value: item,
+                          child: Text(
+                            item.name,
+                            style: TextStyle(
+                              fontSize: 9.sp,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium!.color,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              SizedBox(width: 10.sp),
               _LogButton(
                 tooltip: "Delete",
                 icon: Icons.delete_outline_rounded,
@@ -138,7 +245,7 @@ class _LogBody extends StatelessWidget {
           child: BlocBuilder<LoggerBloc, LoggerState>(
             builder: (context, state) {
               return PaginatedListView(
-                controller: scrollController,
+                controller: widget.scrollController,
                 padding:
                     EdgeInsets.symmetric(horizontal: 12.sp, vertical: 8.sp),
                 itemCount: state.records.length,
@@ -146,7 +253,7 @@ class _LogBody extends StatelessWidget {
                   final records = state.records[index];
 
                   return Text(
-                    "[${records.level.name}] ${records.time.toIso8601String()} ${records.loggerName}: ${records.message}",
+                    records.label,
                     style: TextStyle(
                       fontSize: 10.5.sp,
                       color: records.leverColor,
@@ -179,9 +286,25 @@ class _LogButton extends StatelessWidget {
     return GestureWrapper(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 6.sp)
-            .add(EdgeInsetsGeometry.only(bottom: 6.sp, top: 4.sp)),
-        child: Icon(icon, color: mGB, size: 16.sp),
+        padding: EdgeInsets.symmetric(horizontal: 6.sp, vertical: 4.sp),
+        child: Icon(icon, color: mGB, size: 17.sp),
+      ),
+    );
+  }
+}
+
+class _LocalNavigator extends StatelessWidget {
+  final Widget child;
+  const _LocalNavigator({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      onGenerateRoute: (settings) => PageRouteBuilder(
+        pageBuilder: (_, __, ___) => child,
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        opaque: false,
       ),
     );
   }

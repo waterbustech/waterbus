@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 class GestureWrapper extends StatefulWidget {
   final Function? onTap;
@@ -6,6 +7,7 @@ class GestureWrapper extends StatefulWidget {
   final Function? onLongPress;
   final Widget child;
   final bool isCloseKeyboard;
+  final bool isHovered;
 
   const GestureWrapper({
     super.key,
@@ -14,6 +16,7 @@ class GestureWrapper extends StatefulWidget {
     this.onSecondaryTap,
     this.onLongPress,
     this.isCloseKeyboard = true,
+    this.isHovered = false,
   });
 
   @override
@@ -84,7 +87,20 @@ class _GestureWrapperState extends State<GestureWrapper> {
             _enable = false;
           });
         },
-        child: Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
+        child: widget.isHovered
+            ? AnimatedContainer(
+                duration: 100.milliseconds,
+                decoration: BoxDecoration(
+                  color: _enable
+                      ? Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.25)
+                      : Colors.transparent,
+                ),
+                child: widget.child,
+              )
+            : Opacity(opacity: _enable ? 0.5 : 1, child: widget.child),
       ),
     );
   }
