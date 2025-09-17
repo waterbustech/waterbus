@@ -45,7 +45,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }
 
         if (event is UserAvatarUpdated) {
-          await _handleChangeAvatar(event);
+          await _handleAvatarChanged(event);
 
           if (_user != null) {
             emit(_userDone);
@@ -122,10 +122,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }) async {
     if (_user == null) return;
 
+    final String avatar = event.avatar ?? _user!.avatar ?? "";
+
     final Result<bool> result = await _waterbusSdk.updateProfile(
       user: _user!.copyWith(
         fullName: event.fullName,
-        avatar: event.avatar,
+        avatar: avatar,
         bio: event.bio ?? "",
       ),
     );
@@ -139,18 +141,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (result.isSuccess) {
       _user = _user!.copyWith(
         fullName: event.fullName,
-        avatar: event.avatar,
+        avatar: avatar,
         bio: event.bio ?? "",
       );
 
-      Strings.updatedPersonalInformationSuccessfully.i18n
-          .showToast(ToastificationType.success);
+      Strings.updatedPersonalInformationSuccessfully.i18n.showToast(
+        ToastificationType.success,
+      );
     } else {
       result.error.messageException.showToast(ToastificationType.error);
     }
   }
 
-  Future<void> _handleChangeAvatar(UserAvatarUpdated event) async {
+  Future<void> _handleAvatarChanged(UserAvatarUpdated event) async {
     final Result<PresignedUrl> presignedUrl =
         await _waterbusSdk.getPresignedUrl();
 

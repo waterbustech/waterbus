@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/constants.dart';
-import 'package:waterbus/core/utils/platform_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/common/widgets/drop_down/show_overlay_option.dart';
+import 'package:waterbus/features/home/domain/entities/footer_enum.dart';
 import 'package:waterbus/features/home/presentation/widgets/side_footer_body.dart';
 import 'package:waterbus/features/profile/domain/entities/side_menu_item.dart';
 import 'package:waterbus/features/profile/presentation/bloc/user_bloc.dart';
@@ -28,6 +30,58 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   String _currentTab = sideMenuItems.first.label;
 
   bool get _isCollapsed => _controller.isCollapsed();
+
+  final GlobalKey _overlayKey = GlobalKey();
+  OverlayEntry? _overlay;
+  final LayerLink _link = LayerLink();
+
+  void _removeOverlay() {
+    _overlay?.remove();
+    _overlay = null;
+  }
+
+  void _handleShowInformationOptions(BuildContext context) {
+    if (_overlay != null) return _removeOverlay();
+
+    _overlay = showOverlayOption(
+      context,
+      layerLink: _link,
+      options: FooterAction.values,
+      key: _overlayKey,
+      width: 218.sp,
+      onSelectOption: (option) async {
+        setState(() {
+          _removeOverlay();
+        });
+
+        option.function.call();
+      },
+      removeOverlay: _removeOverlay,
+      item: (option) => Row(
+        spacing: 8.sp,
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: PhosphorIcon(
+              option.icon,
+              color: option.color,
+              size: 16.sp,
+            ),
+          ),
+          Text(
+            option.label.i18n,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: option.color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,13 +127,11 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   }
 
   Widget _buildHeader(BuildContext context) {
-    final appLogo = Assets.images.logoRounded.image(height: 24.sp);
+    final appLogo = Assets.icons.launcherIcon.image(height: 28.sp);
 
     return Container(
       height: 50.sp,
-      margin: EdgeInsets.only(
-        top: PlatformUtils.isMacOS ? 10.sp : 4.sp,
-      ),
+      margin: EdgeInsets.only(top: 4.sp),
       padding: EdgeInsets.all(12.sp),
       child: _isCollapsed
           ? appLogo
@@ -184,16 +236,29 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2.sp),
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(8.sp),
             border: Border.all(
               color: Theme.of(context).dividerColor,
             ),
           ),
           margin: EdgeInsets.all(8.sp),
-          padding: EdgeInsets.symmetric(horizontal: 6.sp),
-          child: SideFooterBody(
-            userAvatar: userAvatar,
-            user: user,
+          child: GestureDetector(
+            onTap: () {
+              _handleShowInformationOptions(context);
+            },
+            child: CompositedTransformTarget(
+              link: _link,
+              child: Container(
+                color: Colors.transparent,
+                key: _overlayKey,
+                padding: EdgeInsets.symmetric(horizontal: 6.sp),
+                child: SideFooterBody(
+                  userAvatar: userAvatar,
+                  user: user,
+                ),
+              ),
+            ),
           ),
         );
       },

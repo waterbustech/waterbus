@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:hive_ce/hive.dart';
 import 'package:injectable/injectable.dart';
 
+import 'package:waterbus/core/app/themes/preset.dart';
 import 'package:waterbus/core/constants/storage_keys.dart';
 
 abstract class ThemesLocalDataSource {
-  void setTheme({required String themeMode});
+  void setTheme({required String presetName});
 
-  ThemeMode getTheme();
+  Preset getTheme();
 }
 
 @LazySingleton(as: ThemesLocalDataSource)
@@ -16,19 +15,19 @@ class ThemesDatasourceImpl extends ThemesLocalDataSource {
   final Box hiveBox = Hive.box(StorageKeys.boxAppSettings);
 
   @override
-  void setTheme({required String themeMode}) {
-    hiveBox.put(StorageKeys.theme, themeMode);
+  void setTheme({required String presetName}) {
+    hiveBox.put(StorageKeys.theme, presetName);
   }
 
   @override
-  ThemeMode getTheme() {
-    final String? themeLabel = hiveBox.get(StorageKeys.theme);
+  Preset getTheme() {
+    final String? presetLabel = hiveBox.get(StorageKeys.theme);
 
-    if (themeLabel == null) return ThemeMode.system;
+    if (presetLabel == null) return Preset.tokyoNight;
 
-    return ThemeMode.values.firstWhere(
-      (theme) => theme.name == themeLabel,
-      orElse: () => ThemeMode.dark,
+    return Preset.values.firstWhere(
+      (preset) => preset.name == presetLabel,
+      orElse: () => Preset.tokyoNight,
     );
   }
 }

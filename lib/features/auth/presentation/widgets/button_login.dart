@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 
 class ButtonLogin extends StatelessWidget {
@@ -30,7 +29,6 @@ class ButtonLogin extends StatelessWidget {
           color: Theme.of(context).brightness == Brightness.light
               ? Theme.of(context).colorScheme.surfaceContainer
               : Theme.of(context).colorScheme.surfaceContainerHighest,
-          boxShadow: kDefaultShadow(context),
         ),
         padding: EdgeInsets.symmetric(
           vertical: 11.25.sp,

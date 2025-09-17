@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
 
 import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
@@ -22,15 +21,14 @@ class PreviewCameraCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RoomBloc, RoomState>(
       builder: (context, state) {
-        final ParticipantMediaState? participant =
-            state.callState?.mParticipant;
+        final participant = state.roomState?.localParticipant;
 
         // Return skeleton
         if (participant == null) {
           return Material(
             clipBehavior: Clip.hardEdge,
-            shape: SuperellipseShape(
-              borderRadius: BorderRadius.circular(30.sp),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.sp),
             ),
             child: Container(
               width: width ?? 265.sp,
@@ -42,37 +40,34 @@ class PreviewCameraCard extends StatelessWidget {
 
         return Stack(
           children: [
-            Material(
-              clipBehavior: Clip.hardEdge,
-              shape: SuperellipseShape(
-                borderRadius: BorderRadius.circular(30.sp),
+            Container(
+              width: width ?? 265.sp,
+              height: height ?? 200.sp,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(4.0),
               ),
-              child: Container(
-                width: width ?? 265.sp,
-                height: height ?? 200.sp,
-                decoration: BoxDecoration(color: Colors.black),
-                child: participant.isVideoEnabled
-                    ? WaterbusMediaView(
-                        mediaSource: participant.cameraSource!,
-                        objectFit:
-                            RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                        mirror: true,
-                      )
-                    : Container(
-                        padding: EdgeInsets.only(
-                          bottom: context.isDesktop ? 0 : 12.sp,
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Camera is off",
-                          style: TextStyle(
-                            color: mCL,
-                            fontSize: context.isDesktop ? 16.sp : 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+              child: participant.isVideoEnabled
+                  ? WaterbusMediaView(
+                      mediaSource: participant.cameraSource!,
+                      objectFit:
+                          RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                      mirror: true,
+                    )
+                  : Container(
+                      padding: EdgeInsets.only(
+                        bottom: context.isDesktop ? 0 : 12.sp,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Camera is off",
+                        style: TextStyle(
+                          color: mCL,
+                          fontSize: context.isDesktop ? 16.sp : 14.sp,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-              ),
+                    ),
             ),
             if (context.isDesktop)
               Positioned(
@@ -112,7 +107,7 @@ class PreviewCameraCard extends StatelessWidget {
                       AppBloc.roomBloc.add(RoomAudioToggled());
                     },
                   ),
-                  SizedBox(width: 8.sp),
+                  SizedBox(width: context.isMobile ? 12.sp : 8.sp),
                   if (context.isMobile)
                     PreviewActionButton(
                       shape: BoxShape.circle,

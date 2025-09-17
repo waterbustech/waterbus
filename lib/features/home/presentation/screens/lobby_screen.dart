@@ -10,6 +10,7 @@ import 'package:waterbus/features/common/widgets/drop_down/drop_down_button.dart
 import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
 import 'package:waterbus/features/home/presentation/widgets/device_selector.dart';
 import 'package:waterbus/features/home/presentation/widgets/join_room_actions.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/preview_camera_card.dart';
 
@@ -37,27 +38,43 @@ class _LobbyScreenState extends State<LobbyScreen> {
   MediaDeviceInfo? _audioInput;
   MediaDeviceInfo? _audioOutput;
   MediaDeviceInfo? _videoInput;
+
+  Room? _room;
+
   @override
   void initState() {
     super.initState();
 
+    _room = widget.room;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       AppBloc.roomBloc.add(
-        RoomPrepareLobby((val) {
-          final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
+        RoomPrepareLobby(
+          onPrepareLobby: (val, room) {
+            final Map<String, List<MediaDeviceInfo>> mediaDeviceInfoList = val;
 
-          _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
-          _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
-          _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
+            _audioInputs.addAll(mediaDeviceInfoList['audioinput'] ?? []);
+            _audioOutputs.addAll(mediaDeviceInfoList['audiooutput'] ?? []);
+            _videoInputs.addAll(mediaDeviceInfoList['videoinput'] ?? []);
 
-          _audioInput = _audioInputs.firstOrNull;
-          _audioOutput = _audioOutputs.firstOrNull;
-          _videoInput = _videoInputs.firstOrNull;
+            _audioInput = _audioInputs.firstOrNull;
+            _audioOutput = _audioOutputs.firstOrNull;
+            _videoInput = _videoInputs.firstOrNull;
 
-          setState(() {});
-        }),
+            _room = room;
+
+            setState(() {});
+          },
+          code: widget.room?.code ?? widget.code,
+        ),
       );
     });
+  }
+
+  bool _isPublisher() {
+    if (_room == null) return false;
+
+    return _room!.isOwner || _room!.streamingProtocol == StreamingProtocol.rtc;
   }
 
   @override
@@ -81,35 +98,32 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 800.sp,
-                        ),
-                        width: previewCameraWidth,
-                        child: AspectRatio(
-                          aspectRatio: context.isDesktop ? 16 / 9 : 3 / 4,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return PreviewCameraCard(
-                                width: constraints.maxWidth,
-                                height: constraints.maxHeight,
-                              );
-                            },
+                      if (_isPublisher())
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 800.sp,
+                          ),
+                          width: previewCameraWidth,
+                          child: AspectRatio(
+                            aspectRatio: context.isDesktop ? 16 / 9 : 3 / 4,
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return PreviewCameraCard(
+                                  width: constraints.maxWidth,
+                                  height: constraints.maxHeight,
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      if (context.isDesktop)
+                      if (context.isDesktop && _room != null)
                         Expanded(
-                          child: JoinRoomActions(
-                            room: widget.room,
-                            code: widget.code,
-                            isMember: widget.isMember,
-                          ),
+                          child: JoinRoomActions(room: _room!),
                         ),
                     ],
                   ),
                   SizedBox(height: 18.sp),
-                  if (context.isDesktop)
+                  if (context.isDesktop && _isPublisher())
                     Row(
                       children: [
                         if (_audioInputs.isNotEmpty)
@@ -166,13 +180,10 @@ class _LobbyScreenState extends State<LobbyScreen> {
                           ),
                       ],
                     ),
-                  if (context.isMobile)
+                  if (context.isMobile && _room != null)
                     Padding(
                       padding: EdgeInsets.only(top: 20.sp, bottom: 25.sp),
-                      child: JoinRoomActions(
-                        room: widget.room,
-                        isMember: widget.isMember,
-                      ),
+                      child: JoinRoomActions(room: _room!),
                     ),
                 ],
               ),

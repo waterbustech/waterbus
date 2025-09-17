@@ -42,10 +42,10 @@ class MessageSelected extends MessageEvent {
   MessageSelected({required this.message});
 }
 
-class MessageDeleted extends MessageEvent {
+class MessageDelete extends MessageEvent {
   final int messageId;
 
-  MessageDeleted({required this.messageId});
+  MessageDelete({required this.messageId});
 }
 
 class MessageEditingCancelled extends MessageEvent {}

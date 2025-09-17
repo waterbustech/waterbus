@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
-import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' hide RoomState;
+import 'package:waterbus_sdk/types/index.dart' as sdk;
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
-import 'package:waterbus/core/constants/color_constants.dart';
 import 'package:waterbus/core/extensions/context_extensions.dart';
+import 'package:waterbus/core/navigator/app_router.dart';
+import 'package:waterbus/core/navigator/routes.dart';
 import 'package:waterbus/core/utils/clipboard_utils.dart';
 import 'package:waterbus/core/utils/device_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
+import 'package:waterbus/core/utils/share_utils.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
+import 'package:waterbus/features/common/widgets/drop_down/show_overlay_option.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/common/widgets/tooltip_message.dart';
 import 'package:waterbus/features/home/presentation/widgets/stack_avatar.dart';
+import 'package:waterbus/features/room/domain/entities/call_setting_option_enum.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/beauty_filter_widget.dart';
 import 'package:waterbus/features/room/presentation/widgets/call_action_button.dart';
@@ -28,6 +33,7 @@ import 'package:waterbus/features/room/presentation/widgets/room_layout.dart';
 import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
 import 'package:waterbus/features/room/presentation/widgets/time_display.dart';
 import 'package:waterbus/features/room/presentation/widgets/virtual_background_in_room.dart';
+import 'package:waterbus/features/settings/presentation/screens/call_settings_screen.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 class RoomBody extends StatefulWidget {
@@ -44,14 +50,17 @@ class RoomBody extends StatefulWidget {
 class _RoomBodyState extends State<RoomBody> {
   late RoomState _state;
   late Room _room;
-  late MediaConfig _mediaConfig;
-  late CallState? _callState;
+  late sdk.RoomState _roomState;
 
   final List<MediaDeviceInfo> _audioInputs = [];
   final List<MediaDeviceInfo> _audioOutputs = [];
   final List<MediaDeviceInfo> _videoInputs = [];
   final GlobalKey _audioInputButtonKey = GlobalKey();
   final GlobalKey _videoInputButtonKey = GlobalKey();
+  final GlobalKey _callSettingButtonKey = GlobalKey();
+  final LayerLink _audioInputLink = LayerLink();
+  final LayerLink _videoInputLink = LayerLink();
+  final LayerLink _callSettingLink = LayerLink();
 
   OverlayEntry? _overlay;
   MediaDeviceInfo? _audioInputSelected;
@@ -72,90 +81,6 @@ class _RoomBodyState extends State<RoomBody> {
     _videoInputSelected = AppBloc.roomBloc.videoInputSelected;
   }
 
-  void _showMicrophoneMenu(
-    BuildContext context, {
-    required List<MediaDeviceInfo> deviceLst,
-    required GlobalKey key,
-    required MediaDeviceInfo? deviceInfoSelected,
-    required Function(MediaDeviceInfo)? onSelectDevice,
-    required Function() removeOverlay,
-  }) {
-    if (_overlay != null) return;
-
-    final RenderBox renderBox =
-        key.currentContext!.findRenderObject() as RenderBox;
-
-    final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);
-
-    _overlay = OverlayEntry(
-      builder: (context) {
-        return Stack(
-          children: [
-            GestureDetector(
-              onTap: removeOverlay,
-              behavior: HitTestBehavior.translucent,
-              child: Container(color: Colors.transparent),
-            ),
-            Positioned(
-              left: buttonPosition.dx,
-              top: buttonPosition.dy - deviceLst.length * 36.sp - 5.sp,
-              child: Material(
-                color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(10.sp),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(deviceLst.length, (index) {
-                    return GestureWrapper(
-                      onTap: () => onSelectDevice?.call(deviceLst[index]),
-                      child: Container(
-                        width: 250.sp,
-                        height: 36.sp,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.sp,
-                          vertical: 8.sp,
-                        ),
-                        decoration: BoxDecoration(
-                          color: deviceLst[index] == deviceInfoSelected
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.2)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(index == 0 ? 10.sp : 0),
-                            bottom: Radius.circular(
-                              index == deviceLst.length - 1 ? 10.sp : 0,
-                            ),
-                          ),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          deviceLst[index].label,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (_overlay != null) {
-      Overlay.of(context).insert(_overlay!);
-    }
-  }
-
   void _removeOverlay() {
     _overlay?.remove();
     _overlay = null;
@@ -173,17 +98,17 @@ class _RoomBodyState extends State<RoomBody> {
   void _initValues() {
     _state = widget.state;
     _room = _state.room!;
-    _mediaConfig = _state.mediaConfig ?? MediaConfig();
-    _callState = _state.callState;
+    _roomState = _state.roomState!;
   }
 
-  bool get _isRecordingOnPhone => context.isMobile && _state.isRecording;
-  bool get _currentUserMedia => _callState?.mParticipant == null;
+  bool get _currentUserMedia => _localParticipant == null;
+  Participant? get _localParticipant => _roomState.localParticipant;
   bool get _isSpeakerPhoneEnabled =>
-      _callState!.mParticipant!.isSpeakerPhoneEnabled;
-  bool get _isVideoEnabled => _callState!.mParticipant!.isVideoEnabled;
-  bool get _isAudioEnabled => _callState!.mParticipant!.isAudioEnabled;
-  bool get _isHandRaising => _callState!.mParticipant!.isHandRaising;
+      _localParticipant?.isSpeakerPhoneEnabled ?? false;
+  bool get _isVideoEnabled => _localParticipant?.isVideoEnabled ?? false;
+  bool get _isAudioEnabled => _localParticipant?.isAudioEnabled ?? false;
+  bool get _isHandRaising => _localParticipant?.isHandRaising ?? false;
+  bool get _isSharingScreen => _localParticipant?.isSharingScreen ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -238,15 +163,9 @@ class _RoomBodyState extends State<RoomBody> {
         centerTitle: false,
         leading: Align(
           alignment: Alignment.centerRight,
-          child: _isRecordingOnPhone
-              ? _buildRecWidget()
-              : Assets.icons.launcherIcon.image(height: 30.sp),
+          child: Assets.icons.launcherIcon.image(height: 30.sp),
         ),
-        leadingWidth: context.isDesktop
-            ? 50.sp
-            : _isRecordingOnPhone
-                ? 65.sp
-                : 40.sp,
+        leadingWidth: context.isDesktop ? 50.sp : 40.sp,
         actions: [
           Visibility(
             visible: WebRTC.platformIsMobile,
@@ -352,190 +271,156 @@ class _RoomBodyState extends State<RoomBody> {
             padding: EdgeInsets.symmetric(horizontal: 2.sp),
             width: double.infinity,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                if (context.isDesktop)
-                  _state.isRecording
-                      ? _buildRecWidget()
-                      : SizedBox(width: 80.sp),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      MediaCallActionButton(
-                        key: _audioInputButtonKey,
-                        onTap: () {
-                          if (_currentUserMedia) {
-                            return;
-                          }
+                CompositedTransformTarget(
+                  link: _audioInputLink,
+                  child: MediaCallActionButton(
+                    key: _audioInputButtonKey,
+                    onTap: () {
+                      if (_currentUserMedia) {
+                        return;
+                      }
 
-                          AppBloc.roomBloc.add(RoomAudioToggled());
-                        },
-                        icon: _currentUserMedia || _isAudioEnabled
-                            ? PhosphorIcons.microphone(
-                                PhosphorIconsStyle.fill,
-                              )
-                            : PhosphorIcons.microphoneSlash(
-                                PhosphorIconsStyle.fill,
-                              ),
-                        title: 'Microphone',
-                        onSelectMediaDevice: () {
-                          _handleSelectAudioOutput(context);
-                        },
-                        settingTooltipMessage: Strings.audioSettings.i18n,
-                        tooltipMessage:
-                            "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
-                      ),
-                      MediaCallActionButton(
-                        key: _videoInputButtonKey,
-                        onTap: () {
-                          if (_currentUserMedia) return;
-
-                          AppBloc.roomBloc.add(RoomVideoToggled());
-                        },
-                        icon: _currentUserMedia || _isVideoEnabled
-                            ? PhosphorIcons.videoCamera(
-                                PhosphorIconsStyle.fill,
-                              )
-                            : PhosphorIcons.videoCameraSlash(
-                                PhosphorIconsStyle.fill,
-                              ),
-                        title: Strings.camera.i18n,
-                        onSelectMediaDevice: () {
-                          _handleSelectVideoOutput(context);
-                        },
-                        settingTooltipMessage: Strings.videoSettings.i18n,
-                        tooltipMessage:
-                            "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
-                      ),
-                      CallActionButton(
-                        tooltipMessage: Strings.shareScreen.i18n,
-                        icon: PhosphorIcons.monitorArrowUp(
-                          _callState!.mParticipant!.isSharingScreen
-                              ? PhosphorIconsStyle.fill
-                              : PhosphorIconsStyle.regular,
-                        ),
-                        iconColor: _callState!.mParticipant!.isSharingScreen
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
-                        backgroundColor:
-                            _callState!.mParticipant!.isSharingScreen
-                                ? Theme.of(context).colorScheme.primaryContainer
-                                : null,
-                        onTap: () {
-                          if (_currentUserMedia) return;
-
-                          if (_callState!.mParticipant!.isSharingScreen) {
-                            AppBloc.roomBloc.add(RoomSharingScreenStoped());
-                          } else {
-                            AppBloc.roomBloc.add(RoomSharingScreenStarted());
-                          }
-                        },
-                      ),
-                      if (context.isDesktop)
-                        CallActionButton(
-                          tooltipMessage:
-                              "${Strings.raiseHand.i18n} (ctrl + h)",
-                          icon: _isHandRaising
-                              ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.hand(),
-                          iconColor:
-                              _isHandRaising ? Colors.yellow.shade100 : null,
-                          backgroundColor:
-                              _isHandRaising ? Colors.yellow.shade900 : null,
-                          onTap: () {
-                            if (_currentUserMedia) return;
-
-                            AppBloc.roomBloc.add(RoomHandRasingToggled());
-                          },
-                        ),
-                      if (context.isDesktop)
-                        CallActionButton(
-                          tooltipMessage: Strings.chatWithEveryone.i18n,
-                          icon: PhosphorIcons.chatTeardropText(
-                            _isChatOpened
-                                ? PhosphorIconsStyle.fill
-                                : PhosphorIconsStyle.regular,
+                      AppBloc.roomBloc.add(RoomAudioToggled());
+                    },
+                    icon: _currentUserMedia || _isAudioEnabled
+                        ? PhosphorIcons.microphone(
+                            PhosphorIconsStyle.fill,
+                          )
+                        : PhosphorIcons.microphoneSlash(
+                            PhosphorIconsStyle.fill,
                           ),
-                          iconColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
-                          backgroundColor: _isChatOpened
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : null,
-                          onTap: () {
-                            setState(() {
-                              if (_isVirtualBackground) {
-                                _isVirtualBackground = false;
-                              }
-
-                              _isChatOpened = !_isChatOpened;
-                            });
-                          },
-                        ),
-                      CallActionButton(
-                        tooltipMessage: Strings.moreOptions.i18n,
-                        icon: PhosphorIcons.dotsThreeOutline(
-                          PhosphorIconsStyle.fill,
-                        ),
-                        onTap: () {
-                          showDialogWaterbus(
-                            onlyShowAsDialog: true,
-                            maxWidth: context.isDesktop ? 350.sp : 290.sp,
-                            paddingBottom: context.isDesktop ? 80.sp : 20.sp,
-                            paddingHorizontal: 10.sp,
-                            alignment: Alignment.bottomCenter,
-                            child: CallSettingsBottomSheet(
-                              onVirtualBackground: () {
-                                setState(() {
-                                  if (_isChatOpened) {
-                                    _isChatOpened = false;
-                                  }
-
-                                  _isVirtualBackground = !_isVirtualBackground;
-                                });
-                              },
-                              onBeautyFiltersTapped: () {
-                                setState(() {
-                                  _isFilterSettingsOpened =
-                                      !_isFilterSettingsOpened;
-                                });
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      if (context.isMobile)
-                        CallActionButton(
-                          tooltipMessage: Strings.leaveCall.i18n,
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.roomBloc.add(const RoomLeft());
-                          },
-                        ),
-                    ],
+                    title: 'Microphone',
+                    onSelectMediaDevice: () {
+                      _handleSelectAudioOutput(context);
+                    },
+                    settingTooltipMessage: Strings.audioSettings.i18n,
+                    tooltipMessage:
+                        "${_isVideoEnabled ? Strings.micOff.i18n : Strings.micOn.i18n} (ctrl + d)",
                   ),
                 ),
-                if (context.isDesktop)
-                  Container(
-                    width: 100.sp,
-                    alignment: Alignment.bottomRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CallActionButton(
-                          tooltipMessage: Strings.leaveCall.i18n,
-                          icon: PhosphorIcons.signOut(),
-                          backgroundColor: Colors.red,
-                          onTap: () {
-                            AppBloc.roomBloc.add(const RoomLeft());
-                          },
-                        ),
-                      ],
-                    ),
+                CompositedTransformTarget(
+                  link: _videoInputLink,
+                  child: MediaCallActionButton(
+                    key: _videoInputButtonKey,
+                    onTap: () {
+                      if (_currentUserMedia) return;
+
+                      AppBloc.roomBloc.add(RoomVideoToggled());
+                    },
+                    icon: _currentUserMedia || _isVideoEnabled
+                        ? PhosphorIcons.videoCamera(
+                            PhosphorIconsStyle.fill,
+                          )
+                        : PhosphorIcons.videoCameraSlash(
+                            PhosphorIconsStyle.fill,
+                          ),
+                    title: Strings.camera.i18n,
+                    onSelectMediaDevice: () {
+                      _handleSelectVideoOutput(context);
+                    },
+                    settingTooltipMessage: Strings.videoSettings.i18n,
+                    tooltipMessage:
+                        "${_isVideoEnabled ? Strings.cameraOff.i18n : Strings.cameraOn.i18n} (ctrl + e)",
                   ),
+                ),
+                CallActionButton(
+                  tooltipMessage: Strings.shareScreen.i18n,
+                  icon: PhosphorIcons.monitorArrowUp(
+                    _isSharingScreen
+                        ? PhosphorIconsStyle.fill
+                        : PhosphorIconsStyle.regular,
+                  ),
+                  iconColor: _isSharingScreen
+                      ? Theme.of(context).colorScheme.primary
+                      : null,
+                  backgroundColor: _isSharingScreen
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : null,
+                  onTap: () {
+                    if (_currentUserMedia) return;
+
+                    if (_isSharingScreen) {
+                      AppBloc.roomBloc.add(RoomSharingScreenStoped());
+                    } else {
+                      AppBloc.roomBloc.add(RoomSharingScreenStarted());
+                    }
+                  },
+                ),
+                if (context.isDesktop)
+                  CallActionButton(
+                    tooltipMessage: "${Strings.raiseHand.i18n} (ctrl + h)",
+                    icon: _isHandRaising
+                        ? PhosphorIcons.hand(PhosphorIconsStyle.fill)
+                        : PhosphorIcons.hand(),
+                    iconColor: _isHandRaising ? Colors.yellow.shade100 : null,
+                    backgroundColor:
+                        _isHandRaising ? Colors.yellow.shade900 : null,
+                    onTap: () {
+                      if (_currentUserMedia) return;
+
+                      AppBloc.roomBloc.add(RoomHandRasingToggled());
+                    },
+                  ),
+                if (context.isDesktop)
+                  CallActionButton(
+                    tooltipMessage: Strings.chatWithEveryone.i18n,
+                    icon: PhosphorIcons.chatTeardropText(
+                      _isChatOpened
+                          ? PhosphorIconsStyle.fill
+                          : PhosphorIconsStyle.regular,
+                    ),
+                    iconColor: _isChatOpened
+                        ? Theme.of(context).colorScheme.primary
+                        : null,
+                    backgroundColor: _isChatOpened
+                        ? Theme.of(context).colorScheme.primaryContainer
+                        : null,
+                    onTap: () {
+                      setState(() {
+                        if (_isVirtualBackground) {
+                          _isVirtualBackground = false;
+                        }
+
+                        _isChatOpened = !_isChatOpened;
+                      });
+                    },
+                  ),
+                CompositedTransformTarget(
+                  link: _callSettingLink,
+                  child: CallActionButton(
+                    key: _callSettingButtonKey,
+                    tooltipMessage: Strings.moreOptions.i18n,
+                    icon: PhosphorIcons.dotsThreeOutline(
+                      PhosphorIconsStyle.fill,
+                    ),
+                    onTap: () {
+                      if (context.isDesktop) {
+                        _handleOpenCallSetting(context);
+                      } else {
+                        showDialogWaterbus(
+                          onlyShowAsDialog: true,
+                          maxWidth: 290.sp,
+                          paddingBottom: 20.sp,
+                          paddingHorizontal: 10.sp,
+                          alignment: Alignment.bottomCenter,
+                          child: CallSettingsBottomSheet(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                CallActionButton(
+                  tooltipMessage: Strings.leaveCall.i18n,
+                  icon: PhosphorIcons.signOut(),
+                  backgroundColor: Colors.red,
+                  onTap: () {
+                    AppBloc.roomBloc.add(const RoomLeft());
+                  },
+                ),
               ],
             ),
           ),
@@ -556,20 +441,18 @@ class _RoomBodyState extends State<RoomBody> {
                       curve: Curves.easeInOutExpo,
                       child: SizedBox(
                         width: (100 - _getRightPanelWidth).w,
-                        child: _isFilterSettingsOpened
+                        child: _isFilterSettingsOpened && _currentUserMedia
                             ? Container(
                                 margin: EdgeInsets.symmetric(horizontal: 12.sp),
                                 child: RoomView(
-                                  participants: _room.participants,
-                                  participantSFU: _callState!.mParticipant!
+                                  participant: _roomState.localParticipant!
                                       .copyWith(isSharingScreen: false),
                                   borderEnabled: false,
                                 ),
                               )
                             : RoomLayout(
                                 room: _room,
-                                callState: _callState,
-                                mediaConfig: _mediaConfig,
+                                roomState: _roomState,
                               ),
                       ),
                     ),
@@ -642,9 +525,9 @@ class _RoomBodyState extends State<RoomBody> {
                                       child: Material(
                                         color:
                                             Colors.black.withValues(alpha: .35),
-                                        shape: SuperellipseShape(
+                                        shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                            20.sp,
+                                            4.sp,
                                           ),
                                         ),
                                         child: Container(
@@ -684,14 +567,124 @@ class _RoomBodyState extends State<RoomBody> {
             : 0;
   }
 
+  Future<void> _handleSelectSettingOption(CallSettingOptionEnum option) async {
+    final room = AppBloc.roomBloc.currentRoom;
+
+    if (option == CallSettingOptionEnum.settings) {
+      showScreenAsDialog(
+        route: Routes.callSettingsRoute,
+        child: CallSettingsScreen(isInRoom: true),
+      );
+    } else if (option == CallSettingOptionEnum.beautyFilters) {
+      setState(() {
+        _isFilterSettingsOpened = !_isFilterSettingsOpened;
+      });
+    } else if (option == CallSettingOptionEnum.shareLink) {
+      await ShareUtils().share(
+        link: room?.inviteLink ?? '',
+        description: room?.title,
+      );
+    } else if (option == CallSettingOptionEnum.virtualBackground) {
+      setState(() {
+        if (_isChatOpened) {
+          _isChatOpened = false;
+        }
+
+        _isVirtualBackground = !_isVirtualBackground;
+      });
+    } else {
+      if (room == null) return;
+
+      showDialogWaterbus(
+        child: SizedBox(
+          height: 90.h,
+          child: ChatInRoom(
+            room: room,
+            onClosePressed: () {
+              AppRouter.pop();
+            },
+          ),
+        ),
+      );
+    }
+  }
+
+  void _handleOpenCallSetting(BuildContext context) {
+    if (_overlay != null) return _removeOverlay();
+
+    _overlay = showOverlayOption<CallSettingOptionEnum>(
+      layerLink: _callSettingLink,
+      context,
+      options: CallSettingOptionEnum.settingsDesktop,
+      key: _callSettingButtonKey,
+      width: 200.sp,
+      onSelectOption: (option) async {
+        setState(() {
+          _removeOverlay();
+        });
+
+        await _handleSelectSettingOption(option);
+      },
+      removeOverlay: _removeOverlay,
+      item: (option) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: PhosphorIcon(
+              option.icon,
+              color: Theme.of(context).colorScheme.primary,
+              size: 16.sp,
+            ),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            option.label.i18n,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _handleSelectVideoOutput(BuildContext context) {
     if (_overlay != null) return _removeOverlay();
 
-    _showMicrophoneMenu(
+    _overlay = showOverlayOption<MediaDeviceInfo>(
       context,
-      deviceLst: _videoInputs,
+      options: _videoInputs,
       key: _videoInputButtonKey,
-      onSelectDevice: (option) {
+      item: (device) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: device == _videoInputSelected
+                ? PhosphorIcon(
+                    PhosphorIcons.check(),
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 16.sp,
+                  )
+                : SizedBox.shrink(),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            device.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+      onSelectOption: (option) {
         setState(() {
           _removeOverlay();
           _videoInputSelected = option;
@@ -706,19 +699,45 @@ class _RoomBodyState extends State<RoomBody> {
         );
       },
       removeOverlay: _removeOverlay,
-      deviceInfoSelected: _videoInputSelected,
+      selected: _videoInputSelected,
+      layerLink: _videoInputLink,
     );
   }
 
   void _handleSelectAudioOutput(BuildContext context) {
     if (_overlay != null) return _removeOverlay();
 
-    _showMicrophoneMenu(
+    _overlay = showOverlayOption<MediaDeviceInfo>(
       context,
-      deviceLst: _audioInputs,
+      options: _audioInputs,
       key: _audioInputButtonKey,
-      deviceInfoSelected: _audioInputSelected,
-      onSelectDevice: (option) {
+      selected: _audioInputSelected,
+      item: (device) => Row(
+        children: [
+          SizedBox(
+            width: 16.sp,
+            child: device == _audioInputSelected
+                ? PhosphorIcon(
+                    PhosphorIcons.check(),
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 16.sp,
+                  )
+                : SizedBox.shrink(),
+          ),
+          SizedBox(width: 10.sp),
+          Text(
+            device.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+          ),
+        ],
+      ),
+      onSelectOption: (option) {
         setState(() {
           _audioInputSelected = option;
           _removeOverlay();
@@ -733,38 +752,7 @@ class _RoomBodyState extends State<RoomBody> {
         );
       },
       removeOverlay: _removeOverlay,
-    );
-  }
-
-  Widget _buildRecWidget() {
-    return Material(
-      clipBehavior: Clip.hardEdge,
-      color: Colors.red,
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(20.sp),
-      ),
-      child: SizedBox(
-        height: context.isDesktop ? 40.sp : 30.sp,
-        width: context.isDesktop ? 80.sp : 55.sp,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              PhosphorIcons.record(PhosphorIconsStyle.fill),
-              size: context.isDesktop ? 18.sp : 12.sp,
-            ),
-            SizedBox(width: context.isDesktop ? 8.sp : 4.sp),
-            Text(
-              "REC",
-              style: TextStyle(
-                color: mCL,
-                fontSize: context.isDesktop ? 12.sp : 10.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
+      layerLink: _audioInputLink,
     );
   }
 }

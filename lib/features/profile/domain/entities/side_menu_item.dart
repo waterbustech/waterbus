@@ -19,22 +19,22 @@ class SideMenuItem {
 final List<SideMenuItem> sideMenuItems = [
   SideMenuItem(
     label: Strings.recent,
-    iconData: LucideIcons.proportions,
+    iconData: LucideIcons.layoutDashboard,
   ),
   SideMenuItem(
     label: Strings.chat,
-    iconData: LucideIcons.messageCircle,
+    iconData: LucideIcons.mails,
   ),
   SideMenuItem(
     label: Strings.archivedChats,
-    iconData: LucideIcons.archive,
+    iconData: LucideIcons.package,
   ),
 ];
 
 final List<SideMenuItem> accountMenuItems = [
   SideMenuItem(
     label: Strings.notifications,
-    iconData: LucideIcons.bell,
+    iconData: LucideIcons.megaphone,
   ),
   SideMenuItem(
     label: Strings.appearance,
@@ -42,7 +42,7 @@ final List<SideMenuItem> accountMenuItems = [
   ),
   SideMenuItem(
     label: Strings.language,
-    iconData: LucideIcons.globe,
+    iconData: LucideIcons.bookA,
   ),
   SideMenuItem(
     label: Strings.callSettings,
@@ -50,6 +50,6 @@ final List<SideMenuItem> accountMenuItems = [
   ),
   SideMenuItem(
     label: Strings.licenses,
-    iconData: LucideIcons.badgeCheck,
+    iconData: LucideIcons.scale,
   ),
 ];

@@ -18,10 +18,6 @@ class $AssetsIconsGen {
   AssetGenImage get colorPicker =>
       const AssetGenImage('assets/icons/color-picker.png');
 
-  /// File path: assets/icons/ic_add_members.png
-  AssetGenImage get icAddMembers =>
-      const AssetGenImage('assets/icons/ic_add_members.png');
-
   /// File path: assets/icons/ic_check.png
   AssetGenImage get icCheck => const AssetGenImage('assets/icons/ic_check.png');
 
@@ -41,15 +37,19 @@ class $AssetsIconsGen {
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/icons/launcher_icon.png');
 
+  /// File path: assets/icons/launcher_icon_mac.png
+  AssetGenImage get launcherIconMac =>
+      const AssetGenImage('assets/icons/launcher_icon_mac.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         colorPicker,
-        icAddMembers,
         icCheck,
         icGithub,
         icGoogle,
         icIncognito,
-        launcherIcon
+        launcherIcon,
+        launcherIconMac
       ];
 }
 
@@ -187,23 +187,12 @@ class $AssetsLottiesGen {
   /// File path: assets/lotties/beauty-filters-lottie.json
   String get beautyFiltersLottie => 'assets/lotties/beauty-filters-lottie.json';
 
-  /// File path: assets/lotties/broadcast-lottie.json
-  String get broadcastLottie => 'assets/lotties/broadcast-lottie.json';
-
   /// File path: assets/lotties/request-zoom-out-lottie.json
   String get requestZoomOutLottie =>
       'assets/lotties/request-zoom-out-lottie.json';
 
-  /// File path: assets/lotties/unlock-lottie.json
-  String get unlockLottie => 'assets/lotties/unlock-lottie.json';
-
   /// List of all assets
-  List<String> get values => [
-        beautyFiltersLottie,
-        broadcastLottie,
-        requestZoomOutLottie,
-        unlockLottie
-      ];
+  List<String> get values => [beautyFiltersLottie, requestZoomOutLottie];
 }
 
 class $AssetsSoundsGen {

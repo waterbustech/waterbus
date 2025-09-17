@@ -24,9 +24,9 @@ List<RouteBase> get $appRoutes => [
       $archivedRoute,
       $langRoute,
       $themeRoute,
-      $detailGroupRoute,
       $chatRoute,
       $recentRoute,
+      $editConversationRoute,
       $licenseRoute,
       $roomRoute,
     ];
@@ -584,34 +584,6 @@ mixin _$ThemeRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $detailGroupRoute => GoRouteData.$route(
-      path: '/detail-group',
-      name: '/detail-group',
-      factory: _$DetailGroupRoute._fromState,
-    );
-
-mixin _$DetailGroupRoute on GoRouteData {
-  static DetailGroupRoute _fromState(GoRouterState state) => DetailGroupRoute();
-
-  @override
-  String get location => GoRouteData.$location(
-        '/detail-group',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
 RouteBase get $chatRoute => GoRouteData.$route(
       path: '/chat',
       name: '/chat',
@@ -652,6 +624,35 @@ mixin _$RecentRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/recent',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $editConversationRoute => GoRouteData.$route(
+      path: '/editConversation',
+      name: '/editConversation',
+      factory: _$EditConversationRoute._fromState,
+    );
+
+mixin _$EditConversationRoute on GoRouteData {
+  static EditConversationRoute _fromState(GoRouterState state) =>
+      EditConversationRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/editConversation',
       );
 
   @override

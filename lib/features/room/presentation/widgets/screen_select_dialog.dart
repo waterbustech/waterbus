@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
@@ -120,8 +119,8 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(16.sp),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.sp),
       ),
       child: Container(
         width: 400.sp,
@@ -268,8 +267,8 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
               child: OverflowBar(
                 children: <Widget>[
                   MaterialButton(
-                    shape: SuperellipseShape(
-                      borderRadius: BorderRadius.circular(12.sp),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.sp),
                     ),
                     child: Text(
                       Strings.cancel.i18n,
@@ -280,8 +279,8 @@ class _ScreenSelectDialogState extends State<ScreenSelectDialog> {
                     },
                   ),
                   MaterialButton(
-                    shape: SuperellipseShape(
-                      borderRadius: BorderRadius.circular(12.sp),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.sp),
                     ),
                     color: Theme.of(context).colorScheme.primaryContainer,
                     child: Text(

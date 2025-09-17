@@ -12,7 +12,6 @@ import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/conversation/presentation/bloc/message_bloc.dart';
 import 'package:waterbus/features/conversation/presentation/widgets/list_conversation_shimmers.dart';
@@ -148,7 +147,7 @@ class _ArchivedConversationScreenState
               ),
             ),
             SizedBox(height: 5.sp),
-            divider,
+            const Divider(),
             Expanded(
               child: BlocBuilder<MessageBloc, MessageState>(
                 builder: (context, state) {
@@ -192,7 +191,7 @@ class _ArchivedConversationScreenState
                 },
               ),
             ),
-            divider,
+            const Divider(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
               child: Text(

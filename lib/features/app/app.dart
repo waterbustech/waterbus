@@ -7,9 +7,11 @@ import 'package:i18n_extension/i18n_extension.dart';
 import 'package:toastification/toastification.dart';
 
 import 'package:waterbus/core/app/themes/app_theme.dart';
+import 'package:waterbus/core/app/themes/preset.dart';
 import 'package:waterbus/core/constants/constants.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
+import 'package:waterbus/features/app/base_widget.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
 import 'package:waterbus/features/common/widgets/size_not_supported.dart';
 import 'package:waterbus/features/settings/presentation/bloc/themes/themes_bloc.dart';
@@ -42,14 +44,13 @@ class _AppState extends State<App> {
                     GlobalCupertinoLocalizations.delegate,
                   ],
                   debugShowCheckedModeBanner: false,
-                  theme: AppTheme.light(
+                  theme: AppTheme.fromPreset(
+                    theme is ThemesStateInitial
+                        ? theme.preset
+                        : Preset.tokyoNight,
                     extensions: [sizerExtension],
                   ).data,
-                  darkTheme: AppTheme.dark(
-                    extensions: [sizerExtension],
-                  ).data,
-                  themeMode:
-                      theme is ThemesStateInitial ? theme.mode : ThemeMode.dark,
+                  themeMode: ThemeMode.dark,
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(
@@ -62,18 +63,9 @@ class _AppState extends State<App> {
                           );
 
                           return SizeNotSupportedWidget(
-                            child: SafeArea(
-                              top: false,
-                              bottom: false,
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (_isKeyboardVisible) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                  }
-                                },
-                                child: child ?? const SizedBox(),
-                              ),
+                            child: BaseWidget(
+                              isKeyboardVisible: _isKeyboardVisible,
+                              child: child,
                             ),
                           );
                         },

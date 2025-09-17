@@ -19,7 +19,7 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/chats/presentation/widgets/avatar_chat.dart';
 import 'package:waterbus/features/chats/presentation/widgets/icon_button.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
-import 'package:waterbus/features/conversation/presentation/screens/detail_group_screen.dart';
+import 'package:waterbus/features/conversation/presentation/screens/edit_conversation_screen.dart';
 import 'package:waterbus/features/room/presentation/bloc/room/room_bloc.dart';
 
 class ConversationHeader extends StatelessWidget {
@@ -69,14 +69,14 @@ class ConversationHeader extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: GestureWrapper(
+                        child: GestureDetector(
                           onTap: () {
                             if (context.isMobile) {
-                              DetailGroupRoute().push(context);
+                              EditConversationRoute().push(context);
                             } else {
                               showScreenAsDialog(
-                                route: Routes.archivedRoute,
-                                child: DetailGroupScreen(),
+                                route: Routes.editConversation,
+                                child: EditConversationScreen(),
                               );
                             }
                           },
@@ -87,7 +87,7 @@ class ConversationHeader extends StatelessWidget {
                               children: [
                                 AvatarChat(room: room, size: 30.sp),
                                 SizedBox(width: 10.sp),
-                                Expanded(
+                                Flexible(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -130,8 +130,7 @@ class ConversationHeader extends StatelessWidget {
                               Permission.microphone,
                             ],
                             callBack: () async {
-                              AppBloc.roomBloc
-                                  .add(RoomDialogDisplayed(room: room));
+                              AppBloc.roomBloc.add(RoomInfoGot(room: room));
                             },
                           );
                         },

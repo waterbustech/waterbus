@@ -6,7 +6,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/utils/input_formatter/room_code_formatter.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 
 class EnterRoomCodeField extends StatefulWidget {
   final Function()? onTap;
@@ -45,10 +44,10 @@ class _EnterRoomCodeFieldState extends State<EnterRoomCodeField> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Theme.of(context).colorScheme.surfaceContainer
-                    : Theme.of(context).colorScheme.surfaceContainerHighest,
-                boxShadow: kDefaultShadow(context),
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withValues(alpha: 0.3),
               ),
               width: 100.w,
               height: 36.sp,

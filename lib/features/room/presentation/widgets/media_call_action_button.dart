@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -40,8 +39,8 @@ class MediaCallActionButton extends StatelessWidget {
             width: 84.sp,
             margin: EdgeInsets.only(left: 8.sp),
             decoration: ShapeDecoration(
-              shape: SuperellipseShape(
-                borderRadius: BorderRadius.circular(25.sp),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.sp),
               ),
               color: Color.alphaBlend(
                 Colors.white.withValues(alpha: .1),
@@ -74,8 +73,8 @@ class MediaCallActionButton extends StatelessWidget {
                       onTap: onSelectMediaDevice,
                       child: Material(
                         clipBehavior: Clip.hardEdge,
-                        shape: SuperellipseShape(
-                          borderRadius: BorderRadius.circular(20.sp),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.sp),
                         ),
                         color: Theme.of(context).colorScheme.onInverseSurface,
                         child: Container(

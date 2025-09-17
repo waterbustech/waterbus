@@ -156,7 +156,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         if (room == null) return;
 
-        if (room.isHost && room.members.length > 1) {
+        if (room.isOwner && room.members.length > 1) {
           Strings.hostCanNotDeleteConversation.i18n
               .showToast(ToastificationType.error);
         } else {
@@ -305,7 +305,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     ChatCreated event,
   ) async {
     final RoomParams params = RoomParams(
-      room: Room(title: event.title),
+      room: Room(
+        title: event.title,
+        roomType: event.roomType,
+        streamingProtocol: event.streamingProtocol,
+        capacity: event.capacity,
+      ),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );

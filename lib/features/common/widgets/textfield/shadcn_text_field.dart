@@ -9,6 +9,7 @@ class ShadcnTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final int maxLines;
 
   const ShadcnTextField({
     super.key,
@@ -19,6 +20,7 @@ class ShadcnTextField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.inputFormatters,
+    this.maxLines = 1,
   });
 
   @override
@@ -29,7 +31,7 @@ class ShadcnTextField extends StatelessWidget {
     final foregroundColor = colorScheme.onSurface;
     final secondaryColor = colorScheme.onSurfaceVariant;
     final inputColor =
-        colorScheme.surfaceContainerHighest.withValues(alpha: 0.1);
+        colorScheme.surfaceContainerHighest.withValues(alpha: 0.3);
     final borderColor = colorScheme.outline.withValues(alpha: 0.3);
 
     return Column(
@@ -50,6 +52,7 @@ class ShadcnTextField extends StatelessWidget {
           validator: validator,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
+          maxLines: maxLines,
           style: TextStyle(
             fontSize: 12,
             color: foregroundColor,

@@ -8,11 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
 import 'package:waterbus/core/constants/color_constants.dart';
-import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/app/bloc/bloc.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/app_bar_title_back.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
 import 'package:waterbus/features/profile/domain/entities/check_username_status.dart';
@@ -86,9 +84,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
                     decoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),
-                    padding: EdgeInsets.all(12.sp).add(
-                      EdgeInsets.only(right: context.isDesktop ? 12.sp : 0),
-                    ),
+                    padding: EdgeInsets.all(12.sp),
                     child: Text(
                       Strings.done.i18n,
                       style: TextStyle(
@@ -109,7 +105,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
       ),
       body: Column(
         children: [
-          divider,
+          const Divider(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.sp),
             child: Column(

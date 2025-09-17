@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/modal/show_bottom_sheet.dart';
@@ -23,7 +21,7 @@ Future showDialogWaterbus({
   double paddingBottom = 0.0,
   Color? backgroundColor,
   double paddingHorizontal = 15.0,
-  double borderRadius = 40.0,
+  double borderRadius = 0.0,
   bool dismissible = true,
   Color? barrierColor,
   int? dismissionDuration,
@@ -75,8 +73,8 @@ Future showDialogWaterbus({
     pageBuilder: (context, __, ___) {
       return Dialog(
         alignment: alignment,
-        shape: SuperellipseShape(
-          borderRadius: BorderRadius.circular(borderRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
         ),
         insetPadding: EdgeInsets.only(
           left: paddingHorizontal,
@@ -126,8 +124,8 @@ Future showScreenAsDialog({
     borderRadius: 16.sp,
     child: Material(
       clipBehavior: Clip.hardEdge,
-      shape: SuperellipseShape(
-        borderRadius: BorderRadius.circular(0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
       ),
       child: SizedBox(
         height: !AppRouter.context!.isLandscape ? 80.h : 90.h,

@@ -51,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             fullname: event.fullname,
             callbackConnected: () {
               AppBloc.roomBloc.add(
-                RoomAttemptJoin(code: event.code, password: event.password),
+                RoomJoinedEvent(room: event.room, password: event.password),
               );
             },
           );
@@ -59,7 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (_user != null) emit(_authSuccess);
         } else {
           AppBloc.roomBloc.add(
-            RoomAttemptJoin(code: event.code, password: event.password),
+            RoomJoinedEvent(room: event.room, password: event.password),
           );
         }
       }

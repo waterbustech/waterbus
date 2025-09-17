@@ -35,7 +35,7 @@ extension RoomModelX on Room {
   List<OptionModel> get getOptions {
     final List<OptionModel> options = [];
 
-    if (isHost) {
+    if (isOwner) {
       options.add(
         OptionModel(
           title: Strings.archivedChats.i18n,
@@ -58,7 +58,7 @@ extension RoomModelX on Room {
       ),
     );
 
-    if (!isHost) {
+    if (!isOwner) {
       options.add(
         OptionModel(
           title: Strings.leaveTheConversation.i18n,
@@ -75,13 +75,14 @@ extension RoomModelX on Room {
   }
 
   User? get host {
-    final Member? member =
-        members.firstWhereOrNull((member) => member.role == RoomRole.host);
+    final Member? member = members.firstWhereOrNull(
+      (member) => member.role == RoomRole.onwer,
+    );
 
     return member?.user;
   }
 
-  bool get isHost => host?.id == AppBloc.userBloc.user?.id;
+  bool get isOwner => host?.id == AppBloc.userBloc.user?.id;
 
   String get updateAtText {
     final bool isToday = (updatedAt.day - DateTime.now().day) == 0;

@@ -3,7 +3,7 @@ import 'package:waterbus_sdk/types/index.dart';
 import 'package:waterbus/gen/assets.gen.dart';
 
 const String kAppVersion = 'v2.0.0';
-const String kAppTitle = 'Waterbus';
+const String kAppTitle = 'waterbus';
 const String kGithubRepo = 'https://github.com/lambiengcode/waterbus';
 const String kWaterbusDocs = 'https://docs.waterbus.tech';
 

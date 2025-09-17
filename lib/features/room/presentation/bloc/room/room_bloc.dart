@@ -10,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple_pip_mode/simple_pip.dart';
 import 'package:toastification/toastification.dart';
+import 'package:waterbus_sdk/core/events/waterbus_event_system.dart' as sdk;
+import 'package:waterbus_sdk/flutter_waterbus_sdk.dart' as sdk;
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
-import 'package:waterbus_sdk/types/externals/models/join_room_params.dart';
-import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
 
 import 'package:waterbus/core/extensions/failure_x.dart';
 import 'package:waterbus/core/method_channels/pip_channel.dart';
@@ -25,7 +25,8 @@ import 'package:waterbus/features/chats/presentation/bloc/chat_bloc.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 import 'package:waterbus/features/conversation/domain/entities/string_extension.dart';
 import 'package:waterbus/features/room/data/datasources/media_config_data_source.dart';
-import 'package:waterbus/features/room/data/datasources/meeting_local_data_source.dart';
+import 'package:waterbus/features/room/data/datasources/room_local_data_source.dart';
+import 'package:waterbus/features/room/domain/entities/room_model_x.dart';
 import 'package:waterbus/features/room/presentation/bloc/beauty_filters/beauty_filters_bloc.dart';
 import 'package:waterbus/features/room/presentation/bloc/recent_joined/recent_joined_bloc.dart';
 import 'package:waterbus/features/room/presentation/widgets/screen_select_dialog.dart';
@@ -47,9 +48,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   String? _currentBackground;
   bool _isSubtitleEnabled = false;
   Room? _currentRoom;
-  Participant? _mParticipant;
+  ParticipantInfo? _mParticipant;
   MediaConfig _mediaConfig = MediaConfig();
-  Timer? _subtitleTimer;
   int? _recordId;
   final List<MediaDeviceInfo> audioInputs = [];
   final List<MediaDeviceInfo> videoInputs = [];
@@ -69,9 +69,11 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomStarted) {
           _mediaConfig = _callSettingsLocalDataSource.getSettings();
 
-          _waterbusSdk.updateMediaConfig(_mediaConfig);
-          _waterbusSdk.onEventChangedRegister = _onEventChanged;
-          _waterbusSdk.setOnSubtitle = _onSubtitleChanged;
+          await _waterbusSdk.updateMediaConfig(_mediaConfig);
+          _waterbusSdk.on<sdk.RoomEvent>().listen(_onRoomEventChanged);
+          _waterbusSdk
+              .on<sdk.ParticipantEvent>()
+              .listen(_onParticipantEventChanged);
         }
 
         if (event is RoomCreated) {
@@ -105,10 +107,11 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         }
 
         if (event is RoomInfoGot) {
-          final Room? room = await _handleGetInfoRoom(event.roomCode);
+          final Room? room =
+              event.room ?? await _handleGetRoomInfo(event.roomCode ?? "");
 
           if (room != null) {
-            await _displayDialogJoinRoom(room);
+            _displayDialogJoinRoom(room);
 
             emit(_preJoinRoom);
           }
@@ -121,12 +124,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
             await _handleLeaveRoom(event);
           }
           emit(_roomInitial);
-        }
-
-        if (event is RoomDialogDisplayed) {
-          await _displayDialogJoinRoom(event.room);
-
-          emit(_preJoinRoom);
         }
 
         if (event is RoomSharingScreenStarted) {
@@ -201,7 +198,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         if (event is RoomHandRasingToggled) {
           _waterbusSdk.toggleRaiseHand();
 
-          if (_isHandRaising) {
+          if (_isHandRaisingLocal) {
             _roomSound.playSoundRaiseHand();
           }
 
@@ -285,22 +282,29 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
         if (event is RoomPrepareLobby) {
           displayLoadingLayer();
-          await _waterbusSdk.prepareMedia();
-          final mediaDeviceList = await _getAllMediaDevices();
-          AppRouter.pop();
+          Room? room;
+          Map<String, List<MediaDeviceInfo>> mediaDeviceList = {};
+
+          if (event.code != null) {
+            room = await _handleGetRoomInfo(event.code!);
+
+            final isOwner = room?.isOwner ?? false;
+
+            final isPublisher =
+                room?.streamingProtocol == StreamingProtocol.rtc || isOwner;
+
+            if (isPublisher) {
+              await _waterbusSdk.prepareMedia();
+              mediaDeviceList = await _getAllMediaDevices();
+            }
+          } else {
+            AppRouter.pop();
+          }
+
+          event.onPrepareLobby.call(mediaDeviceList, room);
 
           if (state is! RoomPreJoin) {
             emit(_preJoinRoom);
-          }
-
-          event.handleUpdate.call(mediaDeviceList);
-        }
-
-        if (event is RoomAttemptJoin) {
-          final Room? room = await _handleGetInfoRoom(event.code);
-
-          if (room != null) {
-            add(RoomJoinedEvent(room: room, password: event.password));
           }
         }
       },
@@ -317,7 +321,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
         subtitleStream: _subtitle.stream,
         room: _currentRoom,
         participant: _mParticipant,
-        callState: _waterbusSdk.callState,
+        roomState: _waterbusSdk.roomState,
         mediaConfig: _mediaConfig,
         isRecording: _recordId != null,
       );
@@ -325,17 +329,22 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   RoomPreJoin get _preJoinRoom => RoomPreJoin(
         room: _currentRoom,
         participant: _mParticipant,
-        callState: _waterbusSdk.callState,
+        roomState: _waterbusSdk.roomState,
         mediaConfig: _mediaConfig,
       );
 
   // MARK: Private
-  bool get _isHandRaising =>
-      _waterbusSdk.callState.mParticipant?.isHandRaising ?? false;
+  bool get _isHandRaisingLocal =>
+      _waterbusSdk.roomState.localParticipant?.isHandRaising ?? false;
 
   Future<void> _handleCreateRoom(RoomCreated event) async {
     final RoomParams params = RoomParams(
-      room: Room(title: event.roomName),
+      room: Room(
+        title: event.roomName,
+        roomType: event.roomType,
+        streamingProtocol: event.streamingProtocol,
+        capacity: event.capacity,
+      ),
       password: event.password,
       userId: AppBloc.userBloc.user?.id,
     );
@@ -345,7 +354,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     AppRouter.popUntilToRoot();
 
     if (result.isSuccess) {
-      final Room room = result.value!;
+      Room room = result.value!;
+      room = room.copyWith(latestJoinedAt: DateTime.now());
       _localDataSource.insertOrUpdate(room);
       AppBloc.chatBloc.add(ChatInserted(conversation: room));
       AppBloc.recentJoinedBloc.add(RecentJoinedInserted(room: room));
@@ -388,7 +398,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
   }
 
-  Future<Room?> _handleGetInfoRoom(String roomCode) async {
+  Future<Room?> _handleGetRoomInfo(String roomCode) async {
     final Result<Room> result = await _waterbusSdk.getRoomInfo(code: roomCode);
 
     AppRouter.pop();
@@ -429,7 +439,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   Future<void> _handleLeaveRoom(RoomLeft event) async {
     if (_currentRoom == null || _mParticipant == null) return;
 
-    final List<Participant> participants = _currentRoom!.participants
+    final List<ParticipantInfo> participants = _currentRoom!.participants
         .where((participant) => !participant.isMe)
         .toList();
 
@@ -452,7 +462,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   Future<void> _handleNewParticipant(RoomSomeoneNewJoined event) async {
     if (_currentRoom == null) return;
 
-    final List<Participant> participants =
+    final List<ParticipantInfo> participants =
         _currentRoom!.participants.map((item) => item).toList();
 
     final int indexOfParticipant = participants.indexWhere(
@@ -462,7 +472,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     if (indexOfParticipant != -1) return;
 
     participants.add(
-      Participant(id: event.participant.id, user: event.participant.user),
+      ParticipantInfo(id: event.participant.id, user: event.participant.user),
     );
 
     _currentRoom = _currentRoom!.copyWith(participants: participants);
@@ -477,7 +487,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   ) async {
     if (_currentRoom == null) return;
 
-    final List<Participant> participants =
+    final List<ParticipantInfo> participants =
         _currentRoom!.participants.map((item) => item).toList();
 
     final int indexOfParticipant = participants.indexWhere(
@@ -497,7 +507,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     }
   }
 
-  Future<void> _displayDialogJoinRoom(Room room) async {
+  void _displayDialogJoinRoom(Room room) {
     final int indexOfMember = room.members.indexWhere(
       (member) => member.user.id == AppBloc.userBloc.user?.id,
     );
@@ -509,23 +519,22 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   Future<void> startPiP() async {
     if (WebRTC.platformIsDesktop || kIsWeb) return;
 
-    if (_waterbusSdk.callState.participants.isEmpty) return;
+    if (_waterbusSdk.roomState.remoteParticipants.isEmpty) return;
 
     if (WebRTC.platformIsAndroid) {
       SimplePip().setAutoPipMode();
       return;
     }
 
-    final List<MapEntry<String, ParticipantMediaState>> participants =
-        _waterbusSdk.callState.participants.entries.toList();
+    final List<MapEntry<String, RemoteParticipant>> participants =
+        _waterbusSdk.roomState.remoteParticipants.entries.toList();
 
     participants.sort(
       (a, b) =>
           a.value.audioLevel.threshold.compareTo(b.value.audioLevel.threshold),
     );
 
-    final ParticipantMediaState participantMediaState =
-        participants.first.value;
+    final RemoteParticipant remoteParticipant = participants.first.value;
     final int indexOfParticipant = _currentRoom?.participants.indexWhere(
           (part) => part.id.toString() == participants.first.key,
         ) ??
@@ -533,81 +542,59 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     if (indexOfParticipant == -1) return;
 
-    final Participant participant =
+    final ParticipantInfo participant =
         _currentRoom!.participants[indexOfParticipant];
 
     _pipChannel.startPip(
-      remoteStreamId: participantMediaState.cameraSource?.streamId ?? '',
-      peerConnectionId: participantMediaState.peerConnection.peerConnectionId,
+      remoteStreamId: remoteParticipant.cameraSource?.streamId ?? '',
+      peerConnectionId: remoteParticipant.peerConnection.peerConnectionId,
       myAvatar: AppBloc.userBloc.user?.avatar ?? '',
       remoteAvatar: participant.user?.avatar ?? '',
       remoteName: participant.user?.fullName ?? '',
-      isRemoteCameraEnable: participantMediaState.isVideoEnabled,
+      isRemoteCameraEnable: remoteParticipant.isVideoEnabled,
     );
   }
 
-  void _onEventChanged(CallbackPayload event) {
-    if (event.event == CallbackEvents.roomEnded) {
+  void _onParticipantEventChanged(sdk.ParticipantEvent event) {
+    if (event is sdk.ParticipantLeft) {
+      _roomSound.playSoundLeaveRoom();
+
+      add(RoomSomeoneLeft(participantId: event.participantId));
+    } else if (event is sdk.ParticipantConnectionQualityChanged ||
+        event is sdk.ParticipantE2eeEnabledChanged ||
+        event is sdk.ParticipantScreenSharingChanged ||
+        event is sdk.ParticipantCameraTypeChanged ||
+        event is sdk.ParticipantVideoEnabledChanged ||
+        event is sdk.ParticipantAudioEnabledChanged) {
+      add(RoomDisplayRefreshed());
+    } else if (event is sdk.ParticipantHandRaiseChanged) {
+      add(RoomDisplayRefreshed());
+      _roomSound.playSoundRaiseHand();
+    } else if (event is sdk.ParticipantJoined) {
+      add(RoomSomeoneNewJoined(participant: event.participant));
+    }
+  }
+
+  void _onRoomEventChanged(sdk.RoomEvent event) {
+    if (event is sdk.RoomEnded) {
       if (WebRTC.platformIsAndroid) {
         SimplePip().setAutoPipMode(autoEnter: false);
       } else {
         _pipChannel.stopPip();
       }
+
+      if (state is RoomJoined) {
+        add(const RoomLeft(isReleasedWaterbusSdk: true));
+      } else if (state is RoomPreJoin) {
+        add(RoomDisposed());
+      }
     } else {
       startPiP();
-    }
-    switch (event.event) {
-      case CallbackEvents.shouldBeUpdateState:
+
+      if (event is sdk.RoomStateChanged) {
         add(RoomDisplayRefreshed());
-        break;
-      case CallbackEvents.raiseHand:
-        add(RoomDisplayRefreshed());
-        _roomSound.playSoundRaiseHand();
-        break;
-      case CallbackEvents.newParticipant:
-        if (event.newParticipant == null) return;
-
-        add(RoomSomeoneNewJoined(participant: event.newParticipant!));
-        break;
-      case CallbackEvents.participantHasLeft:
-        final String? participantId = event.participantId;
-        if (participantId == null) return;
-
-        _roomSound.playSoundLeaveRoom();
-
-        add(RoomSomeoneLeft(participantId: participantId));
-        break;
-      case CallbackEvents.roomEnded:
-        if (state is RoomJoined) {
-          add(const RoomLeft(isReleasedWaterbusSdk: true));
-        } else if (state is RoomPreJoin) {
-          add(RoomDisposed());
-        }
+      }
     }
-  }
-
-  void _onSubtitleChanged(Subtitle sub) {
-    if (_currentRoom == null) return;
-
-    final List<Participant> participants =
-        _currentRoom!.participants.map((item) => item).toList();
-
-    final int indexOfParticipant = participants.indexWhere(
-      (participant) => participant.id.toString() == sub.participant,
-    );
-
-    if (indexOfParticipant == -1) return;
-
-    _subtitleTimer?.cancel();
-
-    _subtitle.add(
-      "${participants[indexOfParticipant].user?.fullName}: ${sub.content}",
-    );
-
-    _subtitleTimer = Timer.periodic(3.seconds, (timer) {
-      _subtitle.add("");
-      _subtitleTimer?.cancel();
-    });
   }
 
   Future<Map<String, List<MediaDeviceInfo>>> _getAllMediaDevices() async {
@@ -661,4 +648,5 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   String? get currentBackground => _currentBackground;
 
   Room? get currentRoom => _currentRoom;
+  sdk.RoomState? get roomState => _waterbusSdk.roomState;
 }

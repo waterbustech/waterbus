@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/app/languages/localization.dart';
@@ -48,7 +47,7 @@ class _MessageInputContainerState extends State<MessageInputContainer> {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
-      shape: SuperellipseShape(
+      shape: RoundedRectangleBorder(
         borderRadius: widget.borderRadius,
       ),
       color: Colors.transparent,

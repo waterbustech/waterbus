@@ -45,9 +45,6 @@ dependencies:
   auth:
     path: ./packages/auth
 
-  # Network
-  dio: ^5.7.0
-
   # State management
   flutter_bloc: ^9.1.1
   bloc_concurrency: ^0.3.0
@@ -66,14 +63,13 @@ dependencies:
   firebase_performance: ^0.10.1+7
 
   # Go router
-  go_router: ^15.2.0
+  go_router: ^16.1.0
 
   # Utils
   flutter_localizations:
     sdk: flutter
   lottie: ^3.3.1
   flutter_native_splash: ^2.4.6
-  superellipse_shape: ^0.2.0
   cached_network_image: ^3.4.1
   phosphor_flutter: ^2.1.0
   flutter_sliding_drawer: ^2.0.0
@@ -93,7 +89,7 @@ dependencies:
   i18n_extension: ^15.0.5
   pull_to_refresh: ^2.0.0
   super_sliver_list: ^0.4.1
-  syncfusion_flutter_charts: ^29.2.8
+  fl_chart: ^1.0.0
   popover: ^0.3.1
   super_context_menu: ^0.9.1
   msix: ^3.16.9
@@ -106,22 +102,21 @@ dependencies:
   easy_animated_indexed_stack: ^0.0.3
   google_fonts: ^6.2.1
   lucide_icons_flutter: ^3.0.7
+  logging: ^1.3.0
 
   # Media
   image_picker: ^1.1.2
   image_picker_android: ^0.8.12+23
   image_picker_platform_interface: ^2.10.1
-  simple_native_image_compress: ^3.0.0
+  simple_native_image_compress: ^3.0.2
   flutter_image_compress: ^2.4.0
   file_saver: ^0.2.14
   audioplayers: ^6.1.0
 
-  # Video call
+  # Video
   waterbus_sdk:
-    git:
-      url: https://github.com/waterbustech/waterbus-flutter-sdk
-      ref: migration/v3
-
+    path: /Users/lambiengcode/Documents/waterbus/waterbus-flutter-sdk
+      
 dependency_overrides:
   archive: ^4.0.7
   intl: ^0.20.2
@@ -231,6 +226,18 @@ flutter:
       - asset: assets/fonts/pixelify/PixelifySans-SemiBold.ttf
         weight: 700
       - asset: assets/fonts/pixelify/PixelifySans-Bold.ttf
+        weight: 800
+  - family: GeistMono
+    fonts:
+      - asset: assets/fonts/geist-mono/GeistMono-Regular.ttf
+        weight: 300
+      - asset: assets/fonts/geist-mono/GeistMono-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/geist-mono/GeistMono-Medium.ttf
+        weight: 600
+      - asset: assets/fonts/geist-mono/GeistMono-SemiBold.ttf
+        weight: 700
+      - asset: assets/fonts/geist-mono/GeistMono-Bold.ttf
         weight: 800
 
 import_sorter:

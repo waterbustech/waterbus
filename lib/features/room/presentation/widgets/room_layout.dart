@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 import 'package:waterbus_sdk/utils/extensions/duration_extension.dart';
@@ -12,14 +11,12 @@ import 'package:waterbus/features/room/presentation/widgets/room_view.dart';
 
 class RoomLayout extends StatefulWidget {
   final Room room;
-  final MediaConfig mediaConfig;
-  final CallState? callState;
+  final RoomState roomState;
 
   const RoomLayout({
     super.key,
     required this.room,
-    required this.callState,
-    required this.mediaConfig,
+    required this.roomState,
   });
 
   @override
@@ -29,8 +26,8 @@ class RoomLayout extends StatefulWidget {
 class _RoomLayoutState extends State<RoomLayout>
     with AutomaticKeepAliveClientMixin {
   // Cache participants list to avoid repeated computation
-  List<ParticipantMediaState>? _cachedParticipants;
-  String? _lastCallStateHash;
+  List<Participant>? _cachedParticipants;
+  String? _lastRoomStateHash;
 
   @override
   bool get wantKeepAlive => true;
@@ -69,10 +66,22 @@ class _RoomLayoutState extends State<RoomLayout>
 
   Widget _buildLayout(
     BuildContext context,
-    List<ParticipantMediaState> participants,
+    List<Participant> participants,
     bool isCollapsed,
     BoxConstraints constraints,
   ) {
+    if (participants.isEmpty) {
+      return Center(
+        child: Text(
+          'No participants yet',
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
+
     if (isCollapsed) {
       return _buildLayoutMultipleUsersHorizontal(
         context,
@@ -98,34 +107,33 @@ class _RoomLayoutState extends State<RoomLayout>
   }
 
   // Memoized participants getter with caching
-  List<ParticipantMediaState> _getParticipants() {
+  List<Participant> _getParticipants() {
     // Create a simple hash of the call state to detect changes
-    final currentHash = _generateCallStateHash();
+    final currentHash = _generateRoomStateHash();
 
-    if (_cachedParticipants != null && _lastCallStateHash == currentHash) {
+    if (_cachedParticipants != null && _lastRoomStateHash == currentHash) {
       return _cachedParticipants!;
     }
 
-    _lastCallStateHash = currentHash;
+    _lastRoomStateHash = currentHash;
     _cachedParticipants = _computeParticipants();
 
     return _cachedParticipants!;
   }
 
-  String _generateCallStateHash() {
+  String _generateRoomStateHash() {
     final buffer = StringBuffer();
 
     // Include main participant
-    if (widget.callState?.mParticipant != null) {
-      final p = widget.callState!.mParticipant!;
+    if (widget.roomState.localParticipant != null) {
+      final p = widget.roomState.localParticipant!;
       buffer.write(
         '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}_${p.isHandRaising}',
       );
     }
 
     // Include other participants
-    for (final p
-        in widget.callState?.participants.values ?? <ParticipantMediaState>[]) {
+    for (final p in widget.roomState.remoteParticipants.values) {
       buffer.write(
         '${p.ownerId}_${p.isSharingScreen}_${p.isVideoEnabled}_${p.isAudioEnabled}}_${p.isHandRaising}',
       );
@@ -134,12 +142,12 @@ class _RoomLayoutState extends State<RoomLayout>
     return buffer.toString();
   }
 
-  List<ParticipantMediaState> _computeParticipants() {
-    final List<ParticipantMediaState> participants = [];
+  List<Participant> _computeParticipants() {
+    final List<Participant> participants = [];
 
     // Add main participant
-    if (widget.callState?.mParticipant != null) {
-      final ParticipantMediaState participant = widget.callState!.mParticipant!;
+    if (widget.roomState.localParticipant != null) {
+      final LocalParticipant participant = widget.roomState.localParticipant!;
       participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
@@ -148,8 +156,8 @@ class _RoomLayoutState extends State<RoomLayout>
     }
 
     // Add other participants
-    for (final ParticipantMediaState participant
-        in widget.callState?.participants.values ?? <ParticipantMediaState>[]) {
+    for (final RemoteParticipant participant
+        in widget.roomState.remoteParticipants.values) {
       participants.add(participant.copyWith(isSharingScreen: false));
 
       if (participant.isSharingScreen) {
@@ -162,7 +170,7 @@ class _RoomLayoutState extends State<RoomLayout>
 
   Widget _buildLayoutLess2Users(
     BuildContext context,
-    List<ParticipantMediaState> participants,
+    List<Participant> participants,
     BoxConstraints constraints, {
     Key? key,
   }) {
@@ -183,8 +191,7 @@ class _RoomLayoutState extends State<RoomLayout>
           curve: Curves.easeInOut,
           child: RoomView(
             key: ValueKey('room_${participants.first.ownerId}_0'),
-            participants: widget.room.participants,
-            participantSFU: participants.first,
+            participant: participants.first,
             borderEnabled: participants.length > 1 || context.isMobile,
           ),
         ),
@@ -204,8 +211,7 @@ class _RoomLayoutState extends State<RoomLayout>
                 curve: Curves.easeInOut,
                 child: RoomView(
                   key: ValueKey('room_${participants.last.ownerId}_1'),
-                  participants: widget.room.participants,
-                  participantSFU: participants.last,
+                  participant: participants.last,
                 ),
               ),
             ),
@@ -228,7 +234,7 @@ class _RoomLayoutState extends State<RoomLayout>
 
   Widget _buildLayoutMultipleUsers(
     BuildContext context,
-    List<ParticipantMediaState> participants,
+    List<Participant> participants,
     BoxConstraints constraints, {
     Key? key,
   }) {
@@ -247,7 +253,7 @@ class _RoomLayoutState extends State<RoomLayout>
             child: _buildVideoView(
               context,
               participant: participant,
-              callState: widget.callState,
+              roomState: widget.roomState,
               avatarSize: context.isDesktop ? 50.sp : 35.sp,
               key: ValueKey('grid_item_${participant.ownerId}_$index'),
             ),
@@ -271,7 +277,7 @@ class _RoomLayoutState extends State<RoomLayout>
 
   Widget _buildLayoutMultipleUsersHorizontal(
     BuildContext context,
-    List<ParticipantMediaState> participants,
+    List<Participant> participants,
     BoxConstraints constraints, {
     Key? key,
   }) {
@@ -292,7 +298,7 @@ class _RoomLayoutState extends State<RoomLayout>
               child: _buildVideoView(
                 context,
                 participant: participant,
-                callState: widget.callState,
+                roomState: widget.roomState,
                 avatarSize: context.isDesktop ? 50.sp : 35.sp,
                 key: ValueKey('horizontal_item_${participant.ownerId}_$index'),
               ),
@@ -305,16 +311,15 @@ class _RoomLayoutState extends State<RoomLayout>
 
   Widget _buildVideoView(
     BuildContext context, {
-    required ParticipantMediaState participant,
-    required CallState? callState,
+    required Participant participant,
+    required RoomState? roomState,
     double? width,
     double avatarSize = 35,
     Key? key,
   }) {
     return RoomView(
       key: key,
-      participants: widget.room.participants,
-      participantSFU: participant,
+      participant: participant,
       avatarSize: avatarSize,
       width: width,
     );

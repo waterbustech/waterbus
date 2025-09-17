@@ -3,6 +3,6 @@ part of 'themes_bloc.dart';
 abstract class ThemesEvent {}
 
 class ThemeChanged extends ThemesEvent {
-  final ThemeMode mode;
-  ThemeChanged({required this.mode});
+  final Preset preset;
+  ThemeChanged({required this.preset});
 }

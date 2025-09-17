@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '2.0.0'
+    ext.kotlin_version = '2.1.0'
     
     repositories {
         google()
@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath 'com.android.tools.build:gradle:8.12.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.2'
     }
@@ -17,27 +17,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-    }
-
-    afterEvaluate { project ->
-        if (project.hasProperty('android')) {
-            project.android {
-                if (namespace == null) {
-                    namespace project.group
-                }
-
-                def groupsToConfigure = [
-                        "com.example.waterbus_callkit_incoming",
-//                        "io.flutter.plugins.pathprovider"
-                ]
-
-                if (groupsToConfigure.contains(project.group)) {
-                    kotlinOptions {
-                        jvmTarget = '1.8'
-                    }
-                }
-            }
-        }
     }
 }
 

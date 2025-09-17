@@ -13,7 +13,6 @@ import 'package:waterbus/core/navigator/app_router.dart';
 import 'package:waterbus/core/utils/image_utils.dart';
 import 'package:waterbus/core/utils/modal/show_dialog.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
-import 'package:waterbus/features/common/styles/style.dart';
 import 'package:waterbus/features/common/widgets/dialogs/dialog_loading.dart';
 
 class WaterbusImagePicker {
@@ -142,7 +141,7 @@ class WaterbusImagePicker {
               source: ImageSource.gallery,
               handleFinish: handleFinish,
             ),
-            divider,
+            const Divider(),
             _buildImageModalButton(
               context,
               icon: PhosphorIcons.camera(),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
-
 import 'package:waterbus/core/extensions/context_extensions.dart';
 import 'package:waterbus/core/utils/sizer/sizer.dart';
 import 'package:waterbus/features/common/widgets/gesture_wrapper.dart';
@@ -49,8 +47,8 @@ class CallActionButton extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           shape: shape == BoxShape.circle || context.isMobile
               ? const CircleBorder()
-              : SuperellipseShape(
-                  borderRadius: BorderRadius.circular(20.sp),
+              : RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.sp),
                 ),
           color:
               backgroundColor ?? Theme.of(context).colorScheme.onInverseSurface,

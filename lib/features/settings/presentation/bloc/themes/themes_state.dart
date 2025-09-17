@@ -5,9 +5,9 @@ abstract class ThemesState {
 }
 
 final class ThemesStateInitial extends ThemesState {
-  final ThemeMode mode;
-  ThemesStateInitial({required this.mode});
+  final Preset preset;
+  ThemesStateInitial({required this.preset});
 
   @override
-  List get props => [mode];
+  List get props => [preset];
 }

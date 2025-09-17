@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/types/index.dart';
 
 import 'package:waterbus/core/utils/sizer/sizer.dart';
@@ -24,8 +23,8 @@ class AvatarChat extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       shape: shape == BoxShape.circle
           ? const CircleBorder()
-          : SuperellipseShape(
-              borderRadius: BorderRadius.circular(20.sp),
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.sp),
             ),
       color: Theme.of(context).scaffoldBackgroundColor,
       child: CustomNetworkImage(

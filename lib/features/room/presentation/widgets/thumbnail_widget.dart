@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:waterbus_sdk/flutter_waterbus_sdk.dart';
 
 import 'package:waterbus/core/constants/color_constants.dart';
@@ -30,8 +29,8 @@ class ThumbnailWidget extends StatelessWidget {
             Expanded(
               child: Material(
                 clipBehavior: Clip.hardEdge,
-                shape: SuperellipseShape(
-                  borderRadius: BorderRadius.circular(10.sp),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.sp),
                   side: selected
                       ? BorderSide(
                           width: 2,
