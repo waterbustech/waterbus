@@ -45,7 +45,7 @@ class _GestureWrapperState extends State<GestureWrapper> {
               }
 
               if (!_enable && widget.onTap != null) {
-                widget.onTap!();
+                widget.onTap?.call();
               }
             }
           : null,

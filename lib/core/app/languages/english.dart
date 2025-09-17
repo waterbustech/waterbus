@@ -90,7 +90,7 @@ Map<String, String> english = {
   Strings.online: "Online",
   Strings.meetingWith: "Meeting With",
   Strings.start: "Start",
-  Strings.shareLink: "Share Link",
+  Strings.shareLink: "Share",
   Strings.dataSaver: "Data Saver",
   Strings.balance: "Balance",
   Strings.highQuality: "High Quality",
